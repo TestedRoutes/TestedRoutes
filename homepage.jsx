@@ -1,13 +1,13 @@
 const destinationRail = [
-  { label: "Switzerland", href: "/guides.html" },
-  { label: "Day Trips", href: "/guides.html" },
-  { label: "Road Trips", href: "/guides.html" },
-  { label: "Adventure", href: "/guides.html" },
-  { label: "Expedition Routes", href: "/guides.html" },
-  { label: "Rally Guides", href: "/guides.html" },
-  { label: "Bungee", href: "/guides.html" },
-  { label: "Hiking", href: "/guides.html" },
-  { label: "Everest Preparation", href: "/guides.html" },
+  { label: "Switzerland", href: "guides.html" },
+  { label: "Day Trips", href: "guides.html" },
+  { label: "Road Trips", href: "guides.html" },
+  { label: "Adventure", href: "guides.html" },
+  { label: "Expedition Routes", href: "guides.html" },
+  { label: "Rally Guides", href: "guides.html" },
+  { label: "Bungee", href: "guides.html" },
+  { label: "Hiking", href: "guides.html" },
+  { label: "Everest Preparation", href: "guides.html" },
 ];
 
 const guides = [
@@ -18,7 +18,7 @@ const guides = [
     meta: "Mobile guide + PDF",
     purchases: "412",
     price: "€12.99",
-    href: "/guides/trift-bridge-from-zurich.html",
+    href: "guides/trift-bridge-from-zurich.html",
     image:
       "https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=1200&q=80",
   },
@@ -29,7 +29,7 @@ const guides = [
     meta: "Mobile guide + PDF",
     purchases: "358",
     price: "€9.99",
-    href: "/guides/stoos-ridge-from-zurich.html",
+    href: "guides/stoos-ridge-from-zurich.html",
     image:
       "https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=1200&q=80",
   },
@@ -40,7 +40,7 @@ const guides = [
     meta: "Mobile guide + PDF",
     purchases: "396",
     price: "€12.99",
-    href: "/guides/appenzell-ebenalp-from-zurich.html",
+    href: "guides/appenzell-ebenalp-from-zurich.html",
     image:
       "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1200&q=80",
   },
@@ -51,7 +51,7 @@ const guides = [
     meta: "Mobile guide + PDF",
     purchases: "441",
     price: "€9.99",
-    href: "/guides/mount-rigi-from-zurich.html",
+    href: "guides/mount-rigi-from-zurich.html",
     image:
       "https://images.unsplash.com/photo-1500375592092-40eb2168fd21?auto=format&fit=crop&w=1200&q=80",
   },
@@ -62,7 +62,7 @@ const guides = [
     meta: "Mobile guide + PDF",
     purchases: "304",
     price: "€12.99",
-    href: "/guides/santis-from-zurich.html",
+    href: "guides/santis-from-zurich.html",
     image:
       "https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=1200&q=80",
   },
@@ -73,70 +73,41 @@ const guides = [
     meta: "Mobile guide + PDF",
     purchases: "287",
     price: "€9.99",
-    href: "/guides/flims-caumasee-from-zurich.html",
+    href: "guides/flims-caumasee-from-zurich.html",
     image:
       "https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?auto=format&fit=crop&w=1200&q=80",
   },
 ];
 
 const searchSuggestions = [
-  { label: "Switzerland — Country", href: "/destinations/switzerland/" },
+  { label: "Switzerland — Country", href: "destinations/switzerland/" },
   {
     label: "Zurich — Starting point in Switzerland",
-    href: "/destinations/switzerland/?start=zurich",
+    href: "destinations/switzerland/?start=zurich",
   },
   {
     label: "Triftbrücke from Zurich — Guide",
-    href: "/guides/trift-bridge-from-zurich.html",
+    href: "guides/trift-bridge-from-zurich.html",
   },
   {
     label: "Stoos Ridge from Zurich — Guide",
-    href: "/guides/stoos-ridge-from-zurich.html",
+    href: "guides/stoos-ridge-from-zurich.html",
   },
   {
     label: "Appenzell & Ebenalp from Zurich — Guide",
-    href: "/guides/appenzell-ebenalp-from-zurich.html",
+    href: "guides/appenzell-ebenalp-from-zurich.html",
   },
-  { label: "Mount Rigi from Zurich — Guide", href: "/guides/mount-rigi-from-zurich.html" },
-  { label: "Säntis from Zurich — Guide", href: "/guides/santis-from-zurich.html" },
+  { label: "Mount Rigi from Zurich — Guide", href: "guides/mount-rigi-from-zurich.html" },
+  { label: "Säntis from Zurich — Guide", href: "guides/santis-from-zurich.html" },
   {
     label: "Flims & Caumasee from Zurich — Guide",
-    href: "/guides/flims-caumasee-from-zurich.html",
+    href: "guides/flims-caumasee-from-zurich.html",
   },
   {
     label: "Day trips from Zurich — Guide collection",
-    href: "/destinations/switzerland/?length=daytrip&start=zurich",
+    href: "destinations/switzerland/?length=daytrip&start=zurich",
   },
 ];
-
-const TopNav = () => (
-  <nav className="flex items-center justify-between gap-6 py-4 text-sm">
-    <a className="flex items-center" href="/">
-      <span className="flex flex-col leading-none">
-        <span className="font-serif text-lg font-semibold uppercase tracking-[0.3em] text-slate-900">
-          PIKELIS TRAVEL
-        </span>
-        <span className="mt-1 text-[10px] uppercase tracking-[0.4em] text-slate-500">
-          since 2010
-        </span>
-      </span>
-    </a>
-    <div className="hidden items-center gap-6 text-slate-600 md:flex">
-      <a className="hover:text-slate-900" href="/destinations.html">
-        Destinations
-      </a>
-      <a className="hover:text-slate-900" href="/guides.html">
-        Guides
-      </a>
-      <a className="hover:text-slate-900" href="/inspire.html">
-        Inspire
-      </a>
-      <a className="hover:text-slate-900" href="/about.html">
-        About Me
-      </a>
-    </div>
-  </nav>
-);
 
 const resolveDestinationSearch = (query) => {
   const normalized = query.toLowerCase().trim();
@@ -145,15 +116,15 @@ const resolveDestinationSearch = (query) => {
   }
 
   const guideMatches = {
-    trift: "/guides/trift-bridge-from-zurich.html",
-    stoos: "/guides/stoos-ridge-from-zurich.html",
-    appenzell: "/guides/appenzell-ebenalp-from-zurich.html",
-    ebenalp: "/guides/appenzell-ebenalp-from-zurich.html",
-    rigi: "/guides/mount-rigi-from-zurich.html",
-    "säntis": "/guides/santis-from-zurich.html",
-    santis: "/guides/santis-from-zurich.html",
-    flims: "/guides/flims-caumasee-from-zurich.html",
-    caumasee: "/guides/flims-caumasee-from-zurich.html",
+    trift: "guides/trift-bridge-from-zurich.html",
+    stoos: "guides/stoos-ridge-from-zurich.html",
+    appenzell: "guides/appenzell-ebenalp-from-zurich.html",
+    ebenalp: "guides/appenzell-ebenalp-from-zurich.html",
+    rigi: "guides/mount-rigi-from-zurich.html",
+    "säntis": "guides/santis-from-zurich.html",
+    santis: "guides/santis-from-zurich.html",
+    flims: "guides/flims-caumasee-from-zurich.html",
+    caumasee: "guides/flims-caumasee-from-zurich.html",
   };
 
   const directGuide = Object.keys(guideMatches).find((term) =>
@@ -487,7 +458,7 @@ const GuidePurchasePanel = ({ title, price, tier }) => {
         firsthand travel across 140 countries. Reviewed and updated quarterly.
         Refund available if the guide is not useful for your trip.
       </div>
-      <a className="text-xs font-semibold text-slate-600" href="/inspire">
+      <a className="text-xs font-semibold text-slate-600" href="inspire.html">
         See the trip behind this guide
       </a>
       <div className="rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-xs text-slate-600">
@@ -536,10 +507,9 @@ const PostPurchaseSession = () => (
 );
 function HomepageConcepts() {
   return (
-    <main className="min-h-screen bg-[#f7f4ef] text-slate-900">
-      <div className="mx-auto flex max-w-6xl flex-col gap-10 px-6 pb-16 pt-6">
-        <TopNav />
-
+    <div className="min-h-screen bg-[#f7f4ef] text-slate-900">
+      {React.createElement(window.SiteHeader)}
+      <main className="mx-auto flex max-w-6xl flex-col gap-10 px-6 pb-16 pt-8">
         <section className="space-y-3">
           <div className="space-y-1">
             <p className="text-2xl font-semibold leading-tight md:text-3xl">
@@ -570,8 +540,8 @@ function HomepageConcepts() {
         <SupportMention />
         <AboutMe />
         <Footer />
-      </div>
-    </main>
+      </main>
+    </div>
   );
 }
 

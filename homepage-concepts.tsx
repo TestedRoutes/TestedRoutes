@@ -14,15 +14,15 @@ type Guide = {
 };
 
 const destinationRail = [
-  { label: "Switzerland", href: "/guides.html" },
-  { label: "Day Trips", href: "/guides.html" },
-  { label: "Road Trips", href: "/guides.html" },
-  { label: "Adventure", href: "/guides.html" },
-  { label: "Expedition Routes", href: "/guides.html" },
-  { label: "Rally Guides", href: "/guides.html" },
-  { label: "Bungee", href: "/guides.html" },
-  { label: "Hiking", href: "/guides.html" },
-  { label: "Everest Preparation", href: "/guides.html" },
+  { label: "Switzerland", href: "guides.html" },
+  { label: "Day Trips", href: "guides.html" },
+  { label: "Road Trips", href: "guides.html" },
+  { label: "Adventure", href: "guides.html" },
+  { label: "Expedition Routes", href: "guides.html" },
+  { label: "Rally Guides", href: "guides.html" },
+  { label: "Bungee", href: "guides.html" },
+  { label: "Hiking", href: "guides.html" },
+  { label: "Everest Preparation", href: "guides.html" },
 ];
 
 const resolveDestinationSearch = (query: string) => {
@@ -32,15 +32,15 @@ const resolveDestinationSearch = (query: string) => {
   }
 
   const guideMatches: Record<string, string> = {
-    trift: "/guides/trift-bridge-from-zurich",
-    stoos: "/guides/stoos-ridge-from-zurich",
-    appenzell: "/guides/appenzell-ebenalp-from-zurich",
-    ebenalp: "/guides/appenzell-ebenalp-from-zurich",
-    rigi: "/guides/mount-rigi-from-zurich",
-    säntis: "/guides/santis-from-zurich",
-    santis: "/guides/santis-from-zurich",
-    flims: "/guides/flims-caumasee-from-zurich",
-    caumasee: "/guides/flims-caumasee-from-zurich",
+    trift: "guides/trift-bridge-from-zurich",
+    stoos: "guides/stoos-ridge-from-zurich",
+    appenzell: "guides/appenzell-ebenalp-from-zurich",
+    ebenalp: "guides/appenzell-ebenalp-from-zurich",
+    rigi: "guides/mount-rigi-from-zurich",
+    säntis: "guides/santis-from-zurich",
+    santis: "guides/santis-from-zurich",
+    flims: "guides/flims-caumasee-from-zurich",
+    caumasee: "guides/flims-caumasee-from-zurich",
   };
 
   const directGuide = Object.keys(guideMatches).find((term) =>
@@ -120,7 +120,7 @@ const guides: Guide[] = [
     meta: "Mobile guide + PDF",
     purchases: "412",
     price: "€12.99",
-    href: "/guides/trift-bridge-from-zurich",
+    href: "guides/trift-bridge-from-zurich",
     image:
       "https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=1200&q=80",
   },
@@ -131,7 +131,7 @@ const guides: Guide[] = [
     meta: "Mobile guide + PDF",
     purchases: "358",
     price: "€9.99",
-    href: "/guides/stoos-ridge-from-zurich",
+    href: "guides/stoos-ridge-from-zurich",
     image:
       "https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=1200&q=80",
   },
@@ -142,7 +142,7 @@ const guides: Guide[] = [
     meta: "Mobile guide + PDF",
     purchases: "396",
     price: "€12.99",
-    href: "/guides/appenzell-ebenalp-from-zurich",
+    href: "guides/appenzell-ebenalp-from-zurich",
     image:
       "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1200&q=80",
   },
@@ -153,7 +153,7 @@ const guides: Guide[] = [
     meta: "Mobile guide + PDF",
     purchases: "441",
     price: "€9.99",
-    href: "/guides/mount-rigi-from-zurich",
+    href: "guides/mount-rigi-from-zurich",
     image:
       "https://images.unsplash.com/photo-1500375592092-40eb2168fd21?auto=format&fit=crop&w=1200&q=80",
   },
@@ -164,7 +164,7 @@ const guides: Guide[] = [
     meta: "Mobile guide + PDF",
     purchases: "304",
     price: "€12.99",
-    href: "/guides/santis-from-zurich",
+    href: "guides/santis-from-zurich",
     image:
       "https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=1200&q=80",
   },
@@ -175,70 +175,136 @@ const guides: Guide[] = [
     meta: "Mobile guide + PDF",
     purchases: "287",
     price: "€9.99",
-    href: "/guides/flims-caumasee-from-zurich",
+    href: "guides/flims-caumasee-from-zurich",
     image:
       "https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?auto=format&fit=crop&w=1200&q=80",
   },
 ];
 
 const searchSuggestions = [
-  { label: "Switzerland — Country", href: "/destinations/switzerland" },
+  { label: "Switzerland — Country", href: "destinations/switzerland" },
   {
     label: "Zurich — Starting point in Switzerland",
-    href: "/destinations/switzerland?start=zurich",
+    href: "destinations/switzerland?start=zurich",
   },
   {
     label: "Triftbrücke from Zurich — Guide",
-    href: "/guides/trift-bridge-from-zurich",
+    href: "guides/trift-bridge-from-zurich",
   },
   {
     label: "Stoos Ridge from Zurich — Guide",
-    href: "/guides/stoos-ridge-from-zurich",
+    href: "guides/stoos-ridge-from-zurich",
   },
   {
     label: "Appenzell & Ebenalp from Zurich — Guide",
-    href: "/guides/appenzell-ebenalp-from-zurich",
+    href: "guides/appenzell-ebenalp-from-zurich",
   },
-  { label: "Mount Rigi from Zurich — Guide", href: "/guides/mount-rigi-from-zurich" },
-  { label: "Säntis from Zurich — Guide", href: "/guides/santis-from-zurich" },
+  { label: "Mount Rigi from Zurich — Guide", href: "guides/mount-rigi-from-zurich" },
+  { label: "Säntis from Zurich — Guide", href: "guides/santis-from-zurich" },
   {
     label: "Flims & Caumasee from Zurich — Guide",
-    href: "/guides/flims-caumasee-from-zurich",
+    href: "guides/flims-caumasee-from-zurich",
   },
   {
     label: "Day trips from Zurich — Guide collection",
-    href: "/destinations/switzerland?length=daytrip&start=zurich",
+    href: "destinations/switzerland?length=daytrip&start=zurich",
   },
 ];
 
-const TopNav = () => (
-  <nav className="flex items-center justify-between gap-6 py-4 text-sm">
-    <a className="flex items-center" href="/">
-      <span className="flex flex-col leading-none">
-        <span className="font-serif text-lg font-semibold uppercase tracking-[0.3em] text-slate-900">
-          PIKELIS TRAVEL
-        </span>
-        <span className="mt-1 text-[10px] uppercase tracking-[0.4em] text-slate-500">
-          since 2010
-        </span>
-      </span>
-    </a>
-    <div className="hidden items-center gap-6 text-slate-600 md:flex">
-      <a className="hover:text-slate-900" href="/destinations">
-        Destinations
-      </a>
-      <a className="hover:text-slate-900" href="/guides">
-        Guides
-      </a>
-      <a className="hover:text-slate-900" href="/inspire">
-        Inspire
-      </a>
-      <a className="hover:text-slate-900" href="/about">
-        About Me
-      </a>
-    </div>
-  </nav>
-);
+function getPrimaryNavSlug(): "home" | "destinations" | "guides" | "inspire" | "about" | null {
+  const pathname = (window.location.pathname || "").replace(/\\/g, "/");
+  const pathOnly = pathname.split("?")[0].split("#")[0];
+  if (pathOnly === "/" || pathOnly === "" || /\/index\.html$/i.test(pathOnly)) {
+    return "home";
+  }
+  const parts = pathOnly.split("/").filter(Boolean);
+  const last = parts.length ? parts[parts.length - 1] : "";
+  if (!last || /^index\.html$/i.test(last)) {
+    return "home";
+  }
+  if (last === "destinations.html") return "destinations";
+  if (last === "guides.html") return "guides";
+  if (last === "inspire.html") return "inspire";
+  if (last === "about.html") return "about";
+  return null;
+}
+
+function primaryNavLinkClass(
+  slug: "destinations" | "guides" | "inspire" | "about",
+): string {
+  const active = getPrimaryNavSlug();
+  const isActive = active === slug;
+  if (isActive) {
+    return "font-semibold text-slate-900 underline decoration-slate-800/35 decoration-1 underline-offset-[6px]";
+  }
+  return "font-normal text-slate-600 hover:text-slate-900";
+}
+
+function logoLinkClassName(): string {
+  const active = getPrimaryNavSlug();
+  const base = "flex shrink-0 items-center border-b-2 border-transparent";
+  if (active === "home") {
+    return `${base} border-slate-900/35`;
+  }
+  return base;
+}
+
+const SiteHeader = () => {
+  const active = getPrimaryNavSlug();
+  return (
+    <header className="sticky top-0 z-50 border-b border-slate-200/60 bg-[#f7f4ef]/95 backdrop-blur-sm">
+      <nav
+        className="mx-auto flex h-14 max-w-6xl items-center justify-between gap-6 px-6 text-sm text-slate-900"
+        aria-label="Primary"
+      >
+        <a
+          className={logoLinkClassName()}
+          href="index.html"
+          aria-current={active === "home" ? "page" : undefined}
+        >
+          <span className="flex flex-col leading-none">
+            <span className="font-serif text-lg font-semibold uppercase tracking-[0.3em] text-slate-900">
+              PIKELIS TRAVEL
+            </span>
+            <span className="mt-1 text-[10px] uppercase tracking-[0.4em] text-slate-500">
+              since 2010
+            </span>
+          </span>
+        </a>
+        <div className="hidden items-center gap-6 md:flex">
+          <a
+            className={primaryNavLinkClass("destinations")}
+            href="destinations.html"
+            aria-current={active === "destinations" ? "page" : undefined}
+          >
+            Destinations
+          </a>
+          <a
+            className={primaryNavLinkClass("guides")}
+            href="guides.html"
+            aria-current={active === "guides" ? "page" : undefined}
+          >
+            Guides
+          </a>
+          <a
+            className={primaryNavLinkClass("inspire")}
+            href="inspire.html"
+            aria-current={active === "inspire" ? "page" : undefined}
+          >
+            Inspire
+          </a>
+          <a
+            className={primaryNavLinkClass("about")}
+            href="about.html"
+            aria-current={active === "about" ? "page" : undefined}
+          >
+            About Me
+          </a>
+        </div>
+      </nav>
+    </header>
+  );
+};
 
 const SearchBar = () => {
   const [query, setQuery] = useState("");
@@ -517,7 +583,7 @@ const GuidePurchasePanel = ({
         firsthand travel across 140 countries. Reviewed and updated quarterly.
         Refund available if the guide is not useful for your trip.
       </div>
-      <a className="text-xs font-semibold text-slate-600" href="/inspire">
+      <a className="text-xs font-semibold text-slate-600" href="inspire.html">
         See the trip behind this guide
       </a>
       <div className="rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-xs text-slate-600">
@@ -567,10 +633,9 @@ const PostPurchaseSession = () => (
 
 export default function HomepageConcepts() {
   return (
-    <main className="min-h-screen bg-[#f7f4ef] text-slate-900">
-      <div className="mx-auto flex max-w-6xl flex-col gap-10 px-6 pb-16 pt-6">
-        <TopNav />
-
+    <div className="min-h-screen bg-[#f7f4ef] text-slate-900">
+      <SiteHeader />
+      <main className="mx-auto flex max-w-6xl flex-col gap-10 px-6 pb-16 pt-8">
         <section className="space-y-3">
           <div className="space-y-1">
             <p className="text-2xl font-semibold leading-tight md:text-3xl">
@@ -601,8 +666,8 @@ export default function HomepageConcepts() {
         <SupportMention />
         <AboutMe />
         <Footer />
-      </div>
-    </main>
+      </main>
+    </div>
   );
 }
 

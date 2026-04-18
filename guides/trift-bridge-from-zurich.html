@@ -7,25 +7,26 @@
     <script src="https://cdn.tailwindcss.com"></script>
   </head>
   <body class="bg-[#f7f4ef] font-sans text-slate-900">
-    <main class="mx-auto flex max-w-5xl flex-col gap-5 px-6 pb-12 pt-10">
-      <nav class="flex items-center justify-between gap-6 py-4 text-sm">
-        <a class="flex items-center" href="/">
+    <header class="sticky top-0 z-50 border-b border-slate-200/60 bg-[#f7f4ef]/95 backdrop-blur-sm">
+      <nav
+        class="mx-auto flex h-14 max-w-6xl items-center justify-between gap-6 px-6 text-sm text-slate-900"
+        aria-label="Primary"
+      >
+        <a class="flex shrink-0 items-center" href="../index.html">
           <span class="flex flex-col leading-none">
-            <span class="font-serif text-lg font-semibold uppercase tracking-[0.3em] text-slate-900">
-              PIKELIS TRAVEL
-            </span>
-            <span class="mt-1 text-[10px] uppercase tracking-[0.4em] text-slate-500">
-              since 2010
-            </span>
+            <span class="font-serif text-lg font-semibold uppercase tracking-[0.3em] text-slate-900">PIKELIS TRAVEL</span>
+            <span class="mt-1 text-[10px] uppercase tracking-[0.4em] text-slate-500">since 2010</span>
           </span>
         </a>
         <div class="hidden items-center gap-6 text-slate-600 md:flex">
-          <a class="hover:text-slate-900" href="/destinations.html">Destinations</a>
-          <a class="hover:text-slate-900" href="/guides.html">Guides</a>
-          <a class="hover:text-slate-900" href="/inspire.html">Inspire</a>
-          <a class="hover:text-slate-900" href="/about.html">About Me</a>
+          <a class="hover:text-slate-900" href="../destinations.html">Destinations</a>
+          <a class="hover:text-slate-900" href="../guides.html">Guides</a>
+          <a class="hover:text-slate-900" href="../inspire.html">Inspire</a>
+          <a class="hover:text-slate-900" href="../about.html">About Me</a>
         </div>
       </nav>
+    </header>
+    <main class="mx-auto flex max-w-6xl flex-col gap-5 px-6 pb-12 pt-8">
 
       <section class="grid gap-4 rounded-[20px] bg-white p-4 shadow-[0_2px_8px_rgba(0,0,0,0.04)] ring-1 ring-slate-200 md:grid-cols-[1.05fr_0.95fr] md:items-stretch">
         <div class="space-y-1.5 rounded-[14px] bg-[#fdfcfa] p-4 md:border-r md:border-[#e8e6e3] md:pr-5">
@@ -61,8 +62,8 @@
         </div>
         <div class="h-full min-h-[300px] overflow-hidden rounded-[12px] bg-slate-100">
           <img
-            src="https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=1400&q=80"
-            alt="Triftbrücke suspension bridge"
+            src="../public/images/triftbrucke-hero.jpg"
+            alt="Triftbrücke suspension bridge above glacier lake near Gadmen, Switzerland"
             class="h-full w-full object-cover"
           />
         </div>
@@ -202,6 +203,60 @@
             </div>
           </section>
 
+          <section class="my-12" aria-label="Inspiration">
+            <p class="mb-3 font-['Georgia',serif] text-[20px] font-medium leading-snug text-[#1a1816]">
+              Triftbrücke from Zurich
+            </p>
+            <div class="max-w-[720px] space-y-4 text-base font-normal leading-[1.6] text-[#444441]">
+              <p>
+                I did the Triftbrücke hike with a friend on a clear morning, starting straight from the parking lot at 9:30 — no gondola, just the trail and the climb ahead. The path gains height quickly, and within the first hour you already feel far away from the valley. It's steady work, but the kind that keeps you motivated because the landscape keeps opening up around you.
+              </p>
+              <p>
+                By 11:30 we reached the suspension bridge. Seeing it appear suddenly above the turquoise glacier lake is one of those moments that makes the whole ascent worth it. Standing there, with the wind moving the bridge slightly and the glacier right in front of us, felt wild and real in the best possible way.
+              </p>
+              <p>
+                We walked the entire route up and down — about 15 km with 1,200 m of ascent in roughly 5.5 hours. It's a proper hike, but very doable in a day and one of those routes I keep recommending to friends who want a big alpine experience without needing technical skills.
+              </p>
+            </div>
+            <div class="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+              <img
+                src="../assets/public/20201018%20Triftbrucke/20201018_100027.jpg"
+                alt="Triftbrücke hike: morning trail above the valley"
+                class="aspect-[4/3] w-full rounded-[12px] object-cover"
+                loading="lazy"
+                decoding="async"
+              />
+              <img
+                src="../assets/public/20201018%20Triftbrucke/20201018_111328.jpg"
+                alt="Triftbrücke hike: path gaining height toward the glacier"
+                class="aspect-[4/3] w-full rounded-[12px] object-cover"
+                loading="lazy"
+                decoding="async"
+              />
+              <img
+                src="../assets/public/20201018%20Triftbrucke/20201018_114042.jpg"
+                alt="Triftbrücke hike: turquoise glacier lake below the route"
+                class="aspect-[4/3] w-full rounded-[12px] object-cover"
+                loading="lazy"
+                decoding="async"
+              />
+              <img
+                src="../assets/public/20201018%20Triftbrucke/20201018_114417.jpg"
+                alt="Triftbrücke suspension bridge above the glacier"
+                class="aspect-[4/3] w-full rounded-[12px] object-cover"
+                loading="lazy"
+                decoding="async"
+              />
+              <img
+                src="../assets/public/20201018%20Triftbrucke/20201018_130613.jpg"
+                alt="Triftbrücke hike: alpine views along the full day route"
+                class="aspect-[4/3] w-full rounded-[12px] object-cover"
+                loading="lazy"
+                decoding="async"
+              />
+            </div>
+          </section>
+
           <section class="mt-8">
             <p class="mb-3 font-['Georgia',serif] text-xl font-semibold text-[#1a1816]">Save time and money</p>
             <div class="grid grid-cols-3 gap-8">
@@ -259,5 +314,6 @@
         </aside>
       </section>
     </main>
+    <script defer src="../nav-active.js"></script>
   </body>
 </html>

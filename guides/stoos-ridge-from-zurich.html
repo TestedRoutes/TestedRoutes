@@ -7,25 +7,26 @@
     <script src="https://cdn.tailwindcss.com"></script>
   </head>
   <body class="bg-[#f7f4ef] text-slate-900">
-    <main class="mx-auto flex max-w-5xl flex-col gap-8 px-6 pb-16 pt-10">
-      <nav class="flex items-center justify-between gap-6 py-4 text-sm">
-        <a class="flex items-center" href="/">
+    <header class="sticky top-0 z-50 border-b border-slate-200/60 bg-[#f7f4ef]/95 backdrop-blur-sm">
+      <nav
+        class="mx-auto flex h-14 max-w-6xl items-center justify-between gap-6 px-6 text-sm text-slate-900"
+        aria-label="Primary"
+      >
+        <a class="flex shrink-0 items-center" href="../index.html">
           <span class="flex flex-col leading-none">
-            <span class="font-serif text-lg font-semibold uppercase tracking-[0.3em] text-slate-900">
-              PIKELIS TRAVEL
-            </span>
-            <span class="mt-1 text-[10px] uppercase tracking-[0.4em] text-slate-500">
-              since 2010
-            </span>
+            <span class="font-serif text-lg font-semibold uppercase tracking-[0.3em] text-slate-900">PIKELIS TRAVEL</span>
+            <span class="mt-1 text-[10px] uppercase tracking-[0.4em] text-slate-500">since 2010</span>
           </span>
         </a>
         <div class="hidden items-center gap-6 text-slate-600 md:flex">
-          <a class="hover:text-slate-900" href="/destinations.html">Destinations</a>
-          <a class="hover:text-slate-900" href="/guides.html">Guides</a>
-          <a class="hover:text-slate-900" href="/inspire.html">Inspire</a>
-          <a class="hover:text-slate-900" href="/about.html">About Me</a>
+          <a class="hover:text-slate-900" href="../destinations.html">Destinations</a>
+          <a class="hover:text-slate-900" href="../guides.html">Guides</a>
+          <a class="hover:text-slate-900" href="../inspire.html">Inspire</a>
+          <a class="hover:text-slate-900" href="../about.html">About Me</a>
         </div>
       </nav>
+    </header>
+    <main class="mx-auto flex max-w-6xl flex-col gap-8 px-6 pb-16 pt-8">
 
       <section class="grid gap-6 rounded-[28px] bg-white p-6 shadow-sm ring-1 ring-slate-200 md:grid-cols-[1.1fr_0.9fr]">
         <div class="space-y-4">
@@ -64,5 +65,6 @@
         </div>
       </section>
     </main>
+    <script defer src="../nav-active.js"></script>
   </body>
 </html>
