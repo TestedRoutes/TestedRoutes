@@ -63,6 +63,60 @@ const extremeExperiences = [
 
 const categoryChips = ["Switzerland", "New Zealand", "Expeditions", "Mountains", "Extreme Experiences", "Route Ideas"];
 
+const ACTIVITY_GROUPS = [
+  { key: "Summit", label: "Mountains & Summits", buckets: ["Summit"] },
+  { key: "Hike", label: "Hikes & Trails", buckets: ["Hike"] },
+  { key: "Expedition", label: "Expeditions", buckets: ["Expedition"] },
+  { key: "RoadTrip", label: "Road Trips", buckets: ["Road Trip"] },
+  { key: "Water", label: "Water & Ocean", buckets: ["Diving", "Swimming"] },
+  { key: "Extreme", label: "Extreme Experiences", buckets: ["Extreme Sport"] },
+];
+
+function StoryScrollCard({ story }) {
+  const slug = story.slug || "";
+  const href = slug ? `inspire-story.html?slug=${encodeURIComponent(slug)}` : null;
+  const geo = story.metadata?.geography?.country || story.metadata?.geography?.continent || "";
+  const title = story.title || "";
+  const year = story.date ? story.date.slice(0, 4) : "";
+  const Tag = href ? "a" : "div";
+  return (
+    <Tag
+      href={href || undefined}
+      className="flex-none snap-start w-[75vw] max-w-[280px] sm:w-60 overflow-hidden rounded-2xl bg-white shadow-sm ring-1 ring-slate-200 transition hover:shadow-md hover:-translate-y-0.5"
+    >
+      <div className="relative aspect-[4/3] overflow-hidden bg-slate-100">
+        {story.heroPhoto ? (
+          <img src={story.heroPhoto} alt={title} className="h-full w-full object-cover" loading="lazy" />
+        ) : (
+          <div className="flex h-full w-full items-center justify-center text-xs text-slate-400">No photo</div>
+        )}
+      </div>
+      <div className="flex flex-col gap-0.5 p-3">
+        {geo ? <p className="text-[10px] font-semibold uppercase tracking-wider text-slate-400">{geo}</p> : null}
+        <p className="line-clamp-2 text-sm font-semibold leading-snug text-slate-900">{title}</p>
+        {year ? <p className="mt-1 text-[11px] text-slate-500">{year}</p> : null}
+      </div>
+    </Tag>
+  );
+}
+
+function GroupedScrollRow({ groupLabel, stories }) {
+  if (!stories.length) return null;
+  return (
+    <div className="w-full min-w-0">
+      <div className="mb-3 flex items-baseline gap-3">
+        <p className="text-xl font-semibold text-slate-900">{groupLabel}</p>
+        <span className="text-sm text-slate-400">{stories.length}</span>
+      </div>
+      <div className="no-scrollbar -mx-4 flex gap-3 overflow-x-auto px-4 pb-3 snap-x snap-mandatory sm:-mx-6 sm:px-6">
+        {stories.map((story) => (
+          <StoryScrollCard key={story.id} story={story} />
+        ))}
+      </div>
+    </div>
+  );
+}
+
 function SiteHeaderOrFallback() {
   if (typeof window !== "undefined" && typeof window.SiteHeader === "function") {
     return React.createElement(window.SiteHeader);
@@ -233,6 +287,29 @@ export default function InspirePage(props = {}) {
     toggleFacet,
     clearFacetSelection,
   } = browse;
+
+  const groupedStories = React.useMemo(() => {
+    if (!contentLoaderMod || !facetFilteredStories.length) return [];
+    const projectFn = contentLoaderMod.projectInspireStoryFacetValues;
+    if (typeof projectFn !== "function") return [];
+    const assigned = new Set();
+    const result = [];
+    for (const g of ACTIVITY_GROUPS) {
+      const matched = facetFilteredStories.filter((story) => {
+        if (assigned.has(story.id)) return false;
+        const vals = projectFn(story);
+        const acts = vals.activity || [];
+        return g.buckets.some((b) => acts.includes(b));
+      });
+      if (matched.length) {
+        matched.forEach((s) => assigned.add(s.id));
+        result.push({ key: g.key, label: g.label, stories: matched });
+      }
+    }
+    const others = facetFilteredStories.filter((s) => !assigned.has(s.id));
+    if (others.length) result.push({ key: "Other", label: "More Stories", stories: others });
+    return result;
+  }, [contentLoaderMod, facetFilteredStories]);
 
   const getOptsForDim = (dim) => {
     if (!facetOptions) return [];
@@ -424,22 +501,32 @@ export default function InspirePage(props = {}) {
               </InspireEmptyBlock>
             ) : (
               <>
-                <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5 lg:grid-cols-3 lg:gap-6">
-                  {pagedStories.map((story) => (
-                    <InspireStoryCard key={story.id} story={story} contentLoaderMod={contentLoaderMod} />
-                  ))}
-                </div>
-                {hasMoreStories ? (
-                  <div className="mt-6 flex justify-center">
-                    <button
-                      type="button"
-                      className="rounded-full border border-slate-200 bg-white px-6 py-2.5 text-xs font-semibold text-slate-800 shadow-sm transition hover:border-slate-300 hover:bg-slate-50"
-                      onClick={() => setVisibleCount((c) => c + INSPIRE_PAGE_SIZE)}
-                    >
-                      Load more journeys
-                    </button>
+                {!hasActiveFilters && !searchInput.trim() ? (
+                  <div className="flex flex-col gap-10">
+                    {groupedStories.map(({ key, label, stories }) => (
+                      <GroupedScrollRow key={key} groupLabel={label} stories={stories} />
+                    ))}
                   </div>
-                ) : null}
+                ) : (
+                  <>
+                    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5 lg:grid-cols-3 lg:gap-6">
+                      {pagedStories.map((story) => (
+                        <InspireStoryCard key={story.id} story={story} contentLoaderMod={contentLoaderMod} />
+                      ))}
+                    </div>
+                    {hasMoreStories ? (
+                      <div className="mt-6 flex justify-center">
+                        <button
+                          type="button"
+                          className="rounded-full border border-slate-200 bg-white px-6 py-2.5 text-xs font-semibold text-slate-800 shadow-sm transition hover:border-slate-300 hover:bg-slate-50"
+                          onClick={() => setVisibleCount((c) => c + INSPIRE_PAGE_SIZE)}
+                        >
+                          Load more journeys
+                        </button>
+                      </div>
+                    ) : null}
+                  </>
+                )}
               </>
             )}
           </section>
