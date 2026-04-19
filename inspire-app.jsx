@@ -88,10 +88,11 @@ const INSPIRE_FACET_UI = [
 
 const INSPIRE_PAGE_SIZE = 12;
 
-const InspireStoryCardComponent =
-  typeof window !== "undefined" && typeof window.InspireStoryCard === "function"
+function getInspireStoryCard() {
+  return typeof window !== "undefined" && typeof window.InspireStoryCard === "function"
     ? window.InspireStoryCard
     : null;
+}
 
 function emptyInspireFacetSelection() {
   return {
@@ -247,50 +248,30 @@ function InspirePage() {
   React.useEffect(() => {
     let cancelled = false;
 
+    const display = window.inspireDisplay;
+    const loader = window.loadInspireStories;
+
+    if (!display || typeof loader !== "function") {
+      console.error("[InspirePage] window.inspireDisplay or window.loadInspireStories not found — check script order in inspire.html");
+      setContentStoriesReady(true);
+      return;
+    }
+
+    setContentLoaderMod(display);
+
     (async () => {
       try {
-        const inspireScript = document.querySelector('script[src*="inspire-app.jsx"]');
-        const inspireAppUrl = inspireScript?.src
-          ? new URL(inspireScript.src)
-          : new URL("./inspire-app.jsx", window.location.href);
-        const utilsBase = new URL("./src/utils/", inspireAppUrl);
-        const dataHref = new URL("loadInspireStoriesData.js?v=5", utilsBase).href;
-        const displayHref = new URL("inspireStoryDisplay.js?v=1", utilsBase).href;
-        const [dataMod, displayMod] = await Promise.all([
-          import(/* @vite-ignore */ dataHref),
-          import(/* @vite-ignore */ displayHref),
-        ]);
-
-        if (cancelled) return;
-
-        const mod = {
-          ...displayMod,
-          loadInspireStories: dataMod.loadInspireStories,
-          loadStories: dataMod.loadStories,
-          default: dataMod.default,
-        };
-
-        setContentLoaderMod(mod);
-
-        const load = mod.loadInspireStories || mod.default;
-
-        const list = await load();
-
-        if (cancelled) return;
-
-        setContentStories(list);
+        const list = await loader();
+        if (!cancelled) setContentStories(list);
       } catch (e) {
-        if (e instanceof Error) console.error("[loadInspireStories] failed", e.message);
-
+        console.error("[loadInspireStories] failed:", e.message);
         if (!cancelled) setContentStories([]);
       } finally {
         if (!cancelled) setContentStoriesReady(true);
       }
     })();
 
-    return () => {
-      cancelled = true;
-    };
+    return () => { cancelled = true; };
   }, []);
 
   const renderFacetGroups = () => {
@@ -537,15 +518,16 @@ function InspirePage() {
           ) : (
             <>
               <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5 lg:grid-cols-3 lg:gap-6">
-                {pagedStories.map((story) =>
-                  InspireStoryCardComponent ? (
-                    <InspireStoryCardComponent
+                {pagedStories.map((story) => {
+                  const Card = getInspireStoryCard();
+                  return Card ? (
+                    <Card
                       key={story.id}
                       story={story}
                       contentLoaderMod={contentLoaderMod}
                     />
-                  ) : null,
-                )}
+                  ) : null;
+                })}
               </div>
               {hasMoreStories ? (
                 <div className="mt-6 flex justify-center">
