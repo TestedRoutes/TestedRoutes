@@ -6,7 +6,7 @@ export const GUIDES = [
     meta: "PDF guide",
     price: "€12.99",
     href: "guides/trift-bridge-from-zurich.html",
-    image: "Content/Stories/Triftbrucke from Zurich/Hero-triftfrucke.jpg",
+    image: "Content/Stories/Triftbrucke%20from%20Zurich/Hero-triftfrucke.jpg",
   },
   {
     category: "Day Trip",
