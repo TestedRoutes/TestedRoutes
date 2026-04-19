@@ -8,126 +8,14 @@
     <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-eval' https://unpkg.com https://cdn.tailwindcss.com https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://cdn.tailwindcss.com; img-src 'self' data: https:; connect-src 'self' https:; font-src 'self' https:;">
     <script src="https://cdn.tailwindcss.com"></script>
   </head>
-  <body class="bg-[#f7f4ef] text-slate-900">
-    <header class="sticky top-0 z-50 border-b border-slate-200/60 bg-[#f7f4ef]/95 backdrop-blur-sm">
-      <nav
-        class="mx-auto flex h-14 max-w-6xl items-center justify-between gap-6 px-6 text-sm text-slate-900"
-        aria-label="Primary"
-      >
-        <a class="flex shrink-0 items-center" href="index.html">
-          <span class="flex flex-col leading-none">
-            <span class="font-serif text-lg font-semibold uppercase tracking-[0.3em] text-slate-900">PIKELIS TRAVEL</span>
-            <span class="mt-1 text-[10px] uppercase tracking-[0.4em] text-slate-500">since 2010</span>
-          </span>
-        </a>
-        <div class="hidden items-center gap-6 text-slate-600 md:flex">
-          <a class="hover:text-slate-900" href="destinations.html">Destinations</a>
-          <a class="hover:text-slate-900" href="guides.html">Guides</a>
-          <a class="hover:text-slate-900" href="inspire.html">Inspire</a>
-          <a class="hover:text-slate-900" href="about.html">About Me</a>
-        </div>
-      </nav>
-    </header>
-    <main class="mx-auto flex max-w-6xl flex-col gap-10 px-6 pb-16 pt-8">
-      <section class="space-y-6">
-        <div class="flex items-center justify-between">
-          <h1 class="text-2xl font-semibold">Guides</h1>
-          <span class="text-xs text-slate-500">Switzerland · Zurich day trips</span>
-        </div>
-        <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          <div class="rounded-3xl bg-white shadow-sm ring-1 ring-slate-200">
-            <div class="h-44 w-full overflow-hidden">
-              <img src="https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=1200&q=80" alt="Triftbrücke from Zurich" class="h-full w-full object-cover" loading="lazy" decoding="async" />
-            </div>
-            <div class="space-y-3 p-4">
-              <p class="text-xs uppercase tracking-[0.2em] text-slate-500">DAY TRIP</p>
-              <h3 class="text-lg font-semibold text-slate-900">Triftbrücke from Zurich</h3>
-              <p class="text-sm text-slate-600">1 day • Mobile guide + PDF</p>
-              <p class="text-xs text-slate-500">412 purchased</p>
-              <div class="flex items-center justify-between pt-2">
-                <span class="text-sm font-semibold text-slate-900">From €12.99</span>
-                <a class="rounded-full bg-slate-900 px-4 py-2 text-xs font-semibold text-white" href="guides/trift-bridge-from-zurich.html">View Guide</a>
-              </div>
-            </div>
-          </div>
-          <div class="rounded-3xl bg-white shadow-sm ring-1 ring-slate-200">
-            <div class="h-44 w-full overflow-hidden">
-              <img src="https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=1200&q=80" alt="Stoos Ridge from Zurich" class="h-full w-full object-cover" loading="lazy" decoding="async" />
-            </div>
-            <div class="space-y-3 p-4">
-              <p class="text-xs uppercase tracking-[0.2em] text-slate-500">DAY TRIP</p>
-              <h3 class="text-lg font-semibold text-slate-900">Stoos Ridge from Zurich</h3>
-              <p class="text-sm text-slate-600">1 day • Mobile guide + PDF</p>
-              <p class="text-xs text-slate-500">358 purchased</p>
-              <div class="flex items-center justify-between pt-2">
-                <span class="text-sm font-semibold text-slate-900">From €9.99</span>
-                <a class="rounded-full bg-slate-900 px-4 py-2 text-xs font-semibold text-white" href="guides/stoos-ridge-from-zurich.html">View Guide</a>
-              </div>
-            </div>
-          </div>
-          <div class="rounded-3xl bg-white shadow-sm ring-1 ring-slate-200">
-            <div class="h-44 w-full overflow-hidden">
-              <img src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1200&q=80" alt="Appenzell & Ebenalp from Zurich" class="h-full w-full object-cover" loading="lazy" decoding="async" />
-            </div>
-            <div class="space-y-3 p-4">
-              <p class="text-xs uppercase tracking-[0.2em] text-slate-500">DAY TRIP</p>
-              <h3 class="text-lg font-semibold text-slate-900">Appenzell & Ebenalp from Zurich</h3>
-              <p class="text-sm text-slate-600">1 day • Mobile guide + PDF</p>
-              <p class="text-xs text-slate-500">396 purchased</p>
-              <div class="flex items-center justify-between pt-2">
-                <span class="text-sm font-semibold text-slate-900">From €12.99</span>
-                <a class="rounded-full bg-slate-900 px-4 py-2 text-xs font-semibold text-white" href="guides/appenzell-ebenalp-from-zurich.html">View Guide</a>
-              </div>
-            </div>
-          </div>
-          <div class="rounded-3xl bg-white shadow-sm ring-1 ring-slate-200">
-            <div class="h-44 w-full overflow-hidden">
-              <img src="https://images.unsplash.com/photo-1500375592092-40eb2168fd21?auto=format&fit=crop&w=1200&q=80" alt="Mount Rigi from Zurich" class="h-full w-full object-cover" loading="lazy" decoding="async" />
-            </div>
-            <div class="space-y-3 p-4">
-              <p class="text-xs uppercase tracking-[0.2em] text-slate-500">DAY TRIP</p>
-              <h3 class="text-lg font-semibold text-slate-900">Mount Rigi from Zurich</h3>
-              <p class="text-sm text-slate-600">1 day • Mobile guide + PDF</p>
-              <p class="text-xs text-slate-500">441 purchased</p>
-              <div class="flex items-center justify-between pt-2">
-                <span class="text-sm font-semibold text-slate-900">From €9.99</span>
-                <a class="rounded-full bg-slate-900 px-4 py-2 text-xs font-semibold text-white" href="guides/mount-rigi-from-zurich.html">View Guide</a>
-              </div>
-            </div>
-          </div>
-          <div class="rounded-3xl bg-white shadow-sm ring-1 ring-slate-200">
-            <div class="h-44 w-full overflow-hidden">
-              <img src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=1200&q=80" alt="Säntis from Zurich" class="h-full w-full object-cover" loading="lazy" decoding="async" />
-            </div>
-            <div class="space-y-3 p-4">
-              <p class="text-xs uppercase tracking-[0.2em] text-slate-500">DAY TRIP</p>
-              <h3 class="text-lg font-semibold text-slate-900">Säntis from Zurich</h3>
-              <p class="text-sm text-slate-600">1 day • Mobile guide + PDF</p>
-              <p class="text-xs text-slate-500">304 purchased</p>
-              <div class="flex items-center justify-between pt-2">
-                <span class="text-sm font-semibold text-slate-900">From €12.99</span>
-                <a class="rounded-full bg-slate-900 px-4 py-2 text-xs font-semibold text-white" href="guides/santis-from-zurich.html">View Guide</a>
-              </div>
-            </div>
-          </div>
-          <div class="rounded-3xl bg-white shadow-sm ring-1 ring-slate-200">
-            <div class="h-44 w-full overflow-hidden">
-              <img src="https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?auto=format&fit=crop&w=1200&q=80" alt="Flims & Caumasee from Zurich" class="h-full w-full object-cover" loading="lazy" decoding="async" />
-            </div>
-            <div class="space-y-3 p-4">
-              <p class="text-xs uppercase tracking-[0.2em] text-slate-500">DAY TRIP</p>
-              <h3 class="text-lg font-semibold text-slate-900">Flims & Caumasee from Zurich</h3>
-              <p class="text-sm text-slate-600">1 day • Mobile guide + PDF</p>
-              <p class="text-xs text-slate-500">287 purchased</p>
-              <div class="flex items-center justify-between pt-2">
-                <span class="text-sm font-semibold text-slate-900">From €9.99</span>
-                <a class="rounded-full bg-slate-900 px-4 py-2 text-xs font-semibold text-white" href="guides/flims-caumasee-from-zurich.html">View Guide</a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-    </main>
-    <script defer src="nav-active.js"></script>
+  <body class="bg-[#f7f4ef]">
+    <div id="root"></div>
+    <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/@babel/standalone@7.24.7/babel.min.js" integrity="sha384-AISI5AuDG6E8DeEiFMVB3rGQxhZt24OU0avMp+GMV64+tpnA3+Z6F5MT0f96iPva" crossorigin="anonymous"></script>
+    <script src="src/data/guides.js"></script>
+    <script type="text/babel" src="./SiteHeader.jsx?v=9"></script>
+    <script type="text/babel" src="./footer.jsx?v=1"></script>
+    <script type="text/babel" src="./guides-app.jsx?v=1"></script>
   </body>
 </html>
