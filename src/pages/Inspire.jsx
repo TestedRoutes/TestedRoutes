@@ -107,6 +107,96 @@ function InspireEmptyBlock({ title, description, children }) {
   );
 }
 
+function FeaturedStoryHero({ stories, ready }) {
+  const featured = React.useMemo(() => {
+    if (!stories || !stories.length) return null;
+    return [...stories].sort((a, b) => {
+      const da = a.date || "";
+      const db = b.date || "";
+      return db.localeCompare(da);
+    })[0];
+  }, [stories]);
+
+  const country = featured?.metadata?.geography?.country || "";
+  const continent = featured?.metadata?.geography?.continent || "";
+  const location = [country, continent].filter(Boolean).join(", ");
+  const tags = featured?.metadata?.classification?.activity_tags?.slice(0, 3) || [];
+  const storyHref = featured ? `inspire-story.html?story=${encodeURIComponent(featured.slug)}` : "guides.html";
+
+  return (
+    <section className="grid w-full min-w-0 gap-5 rounded-[28px] bg-white p-5 shadow-sm ring-1 ring-slate-200 sm:gap-6 sm:p-6 md:grid-cols-[1.15fr_0.85fr] md:p-8 md:pb-8">
+      <a
+        href={featured ? storyHref : undefined}
+        className="group relative aspect-[4/3] min-h-[11rem] w-full overflow-hidden rounded-2xl bg-slate-100 sm:aspect-[3/2] sm:min-h-0 sm:rounded-3xl md:aspect-auto md:h-64"
+      >
+        {featured?.heroPhoto ? (
+          <>
+            <img
+              src={featured.heroPhoto}
+              alt={featured.title}
+              className="absolute inset-0 h-full w-full object-cover transition duration-500 group-hover:scale-[1.03]"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-black/10 to-transparent" />
+            {location ? (
+              <span className="absolute bottom-3 left-3 rounded-full bg-black/40 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wider text-white backdrop-blur-sm">
+                {location}
+              </span>
+            ) : null}
+          </>
+        ) : (
+          <div className="absolute inset-0 flex items-center justify-center px-4 text-center text-xs font-medium leading-relaxed text-slate-400 sm:text-sm">
+            {ready ? "No photo available" : "Loading…"}
+          </div>
+        )}
+      </a>
+
+      <div className="flex flex-col justify-between gap-5 sm:gap-6">
+        <div className="space-y-3 sm:space-y-4">
+          <p className="text-3xl font-semibold leading-tight tracking-tight sm:text-4xl md:text-[2.5rem]">Inspire</p>
+          {featured ? (
+            <>
+              <p className="text-[11px] font-semibold uppercase tracking-wider text-slate-400">Latest story</p>
+              <p className="text-[15px] font-semibold leading-snug text-slate-800 sm:text-base">{featured.title}</p>
+              {tags.length > 0 && (
+                <div className="flex flex-wrap gap-1.5">
+                  {tags.map((t) => (
+                    <span key={t} className="rounded-full bg-slate-100 px-2.5 py-0.5 text-[10px] font-medium text-slate-600">
+                      {t}
+                    </span>
+                  ))}
+                </div>
+              )}
+              <p className="text-sm leading-relaxed text-slate-500">
+                Real journeys — built from 15 years of independent travel across 140 countries.
+              </p>
+            </>
+          ) : (
+            <p className="text-[15px] leading-relaxed text-slate-600 sm:text-sm">
+              Real journeys behind the guides — built from 15 years of independent travel across 140 countries.
+            </p>
+          )}
+        </div>
+        <div className="flex flex-wrap gap-2 sm:gap-3">
+          {featured ? (
+            <a
+              href={storyHref}
+              className="rounded-full bg-slate-900 px-5 py-2.5 text-xs font-semibold text-white shadow-sm transition hover:bg-slate-800 active:scale-[0.98]"
+            >
+              Read story →
+            </a>
+          ) : null}
+          <a
+            href="guides.html"
+            className="rounded-full border border-slate-200 bg-white px-5 py-2.5 text-xs font-semibold text-slate-700 shadow-sm transition hover:border-slate-300 hover:bg-slate-50 active:scale-[0.98]"
+          >
+            Explore Guides
+          </a>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 /**
  * @param {{
  *   loadModule?: () => Promise<Record<string, unknown>>,
@@ -197,38 +287,7 @@ export default function InspirePage(props = {}) {
             {!contentStoriesReady ? "Loading stories…" : `Loaded ${contentStories.length} stories`}
           </p>
 
-          <section className="grid w-full min-w-0 gap-5 rounded-[28px] bg-white p-5 shadow-sm ring-1 ring-slate-200 sm:gap-6 sm:p-6 md:grid-cols-[1.15fr_0.85fr] md:p-8 md:pb-8">
-            <div className="relative aspect-[4/3] min-h-[11rem] w-full overflow-hidden rounded-2xl bg-slate-100 sm:aspect-[3/2] sm:min-h-0 sm:rounded-3xl md:aspect-auto md:h-64">
-              <div className="absolute inset-0 flex items-center justify-center px-4 text-center text-xs font-medium leading-relaxed text-slate-400 sm:text-sm">
-                Featured hero image placeholder
-              </div>
-            </div>
-            <div className="flex flex-col justify-between gap-5 sm:gap-6">
-              <div className="space-y-3 sm:space-y-4">
-                <p className="text-3xl font-semibold leading-tight tracking-tight sm:text-4xl md:text-[2.5rem]">Inspire</p>
-                <p className="text-[15px] leading-relaxed text-slate-600 sm:text-sm">
-                  Real journeys behind the guides — built from 15 years of independent travel across 140 countries.
-                </p>
-                <p className="text-sm leading-relaxed text-slate-500">
-                  Routes tested in the real world, from Swiss alpine day trips to overland expeditions across continents.
-                </p>
-              </div>
-              <div className="flex flex-wrap gap-2 sm:gap-3">
-                <button
-                  type="button"
-                  className="rounded-full bg-slate-900 px-5 py-2.5 text-xs font-semibold text-white shadow-sm transition hover:bg-slate-800 active:scale-[0.98]"
-                >
-                  Explore Guides
-                </button>
-                <button
-                  type="button"
-                  className="rounded-full border border-slate-200 bg-white px-5 py-2.5 text-xs font-semibold text-slate-700 shadow-sm transition hover:border-slate-300 hover:bg-slate-50 active:scale-[0.98]"
-                >
-                  View Expeditions
-                </button>
-              </div>
-            </div>
-          </section>
+          <FeaturedStoryHero stories={contentStories} ready={contentStoriesReady} />
 
           <div className="flex w-full min-w-0 flex-col gap-3">
             <div className="w-full rounded-[28px] bg-white p-4 shadow-sm ring-1 ring-slate-200 sm:p-5 md:p-6">
