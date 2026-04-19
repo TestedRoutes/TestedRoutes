@@ -357,16 +357,7 @@ const SupportMention = () => (
   </section>
 );
 
-const Footer = () => (
-  <footer className="flex flex-col gap-4 border-t border-slate-200 py-8 text-xs text-slate-500 md:flex-row md:items-center md:justify-between">
-    <p>© 2026 Pikelis Travel. All rights reserved.</p>
-    <div className="flex items-center gap-4">
-      <span>Contact</span>
-      <span>Terms</span>
-      <span>Privacy</span>
-    </div>
-  </footer>
-);
+const Footer = () => window.SiteFooter ? React.createElement(window.SiteFooter) : null;
 
 const addOnOptions = [
   {

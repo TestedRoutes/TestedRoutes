@@ -8,13 +8,29 @@ function aboutAsset(filename) {
 
 
 
+function SiteHeaderOrFallback() {
+  if (typeof window !== "undefined" && typeof window.SiteHeader === "function") {
+    return React.createElement(window.SiteHeader);
+  }
+  return (
+    <header className="border-b border-slate-200 bg-white px-4 py-3 shadow-sm sm:px-6">
+      <nav className="mx-auto flex max-w-6xl flex-wrap items-center gap-4 text-sm">
+        <a href="index.html" className="font-semibold text-slate-900">Pikelis Travel</a>
+        <a href="guides.html" className="text-slate-600 hover:text-slate-900">Guides</a>
+        <a href="inspire.html" className="text-slate-600 hover:text-slate-900">Inspire</a>
+        <a href="about.html" className="font-semibold text-slate-900">About Me</a>
+      </nav>
+    </header>
+  );
+}
+
 function AboutMePage() {
 
   return (
 
     <div className="min-h-screen bg-[#f7f4ef] text-slate-900">
 
-      {React.createElement(window.SiteHeader)}
+      <SiteHeaderOrFallback />
 
       <main className="mx-auto flex max-w-6xl flex-col gap-10 px-6 pb-16 pt-8">
 
