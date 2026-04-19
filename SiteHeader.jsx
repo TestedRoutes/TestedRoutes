@@ -46,6 +46,15 @@ function logoLinkClassName() {
 
 function SiteHeader() {
   var active = getPrimaryNavSlug();
+  var [menuOpen, setMenuOpen] = React.useState(false);
+
+  var navLinks = [
+    { slug: "destinations", href: "destinations.html", label: "Destinations" },
+    { slug: "guides", href: "guides.html", label: "Guides" },
+    { slug: "inspire", href: "inspire.html", label: "Inspire" },
+    { slug: "about", href: "about.html", label: "About Me" },
+  ];
+
   return (
     <header className="sticky top-0 z-50 border-b border-slate-200/60 bg-[#f7f4ef]/95 backdrop-blur-sm">
       <nav
@@ -66,37 +75,70 @@ function SiteHeader() {
             </span>
           </span>
         </a>
+
+        {/* Desktop nav */}
         <div className="hidden items-center gap-6 md:flex">
-          <a
-            className={primaryNavLinkClass("destinations")}
-            href="destinations.html"
-            aria-current={active === "destinations" ? "page" : undefined}
-          >
-            Destinations
-          </a>
-          <a
-            className={primaryNavLinkClass("guides")}
-            href="guides.html"
-            aria-current={active === "guides" ? "page" : undefined}
-          >
-            Guides
-          </a>
-          <a
-            className={primaryNavLinkClass("inspire")}
-            href="inspire.html"
-            aria-current={active === "inspire" ? "page" : undefined}
-          >
-            Inspire
-          </a>
-          <a
-            className={primaryNavLinkClass("about")}
-            href="about.html"
-            aria-current={active === "about" ? "page" : undefined}
-          >
-            About Me
-          </a>
+          {navLinks.map(function (link) {
+            return (
+              <a
+                key={link.slug}
+                className={primaryNavLinkClass(link.slug)}
+                href={link.href}
+                aria-current={active === link.slug ? "page" : undefined}
+              >
+                {link.label}
+              </a>
+            );
+          })}
         </div>
+
+        {/* Mobile hamburger button */}
+        <button
+          className="flex items-center justify-center rounded-lg p-2 text-slate-600 hover:bg-slate-100 md:hidden"
+          aria-label={menuOpen ? "Close menu" : "Open menu"}
+          aria-expanded={menuOpen}
+          onClick={function () { setMenuOpen(function (o) { return !o; }); }}
+        >
+          {menuOpen ? (
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <line x1="18" y1="6" x2="6" y2="18" />
+              <line x1="6" y1="6" x2="18" y2="18" />
+            </svg>
+          ) : (
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <line x1="3" y1="6" x2="21" y2="6" />
+              <line x1="3" y1="12" x2="21" y2="12" />
+              <line x1="3" y1="18" x2="21" y2="18" />
+            </svg>
+          )}
+        </button>
       </nav>
+
+      {/* Mobile dropdown menu */}
+      {menuOpen ? (
+        <div className="border-t border-slate-200/60 bg-[#f7f4ef] px-6 py-4 md:hidden">
+          <div className="flex flex-col gap-1">
+            {navLinks.map(function (link) {
+              return (
+                <a
+                  key={link.slug}
+                  href={link.href}
+                  aria-current={active === link.slug ? "page" : undefined}
+                  className={
+                    "rounded-xl px-3 py-3 text-sm " +
+                    (active === link.slug
+                      ? "font-semibold text-slate-900 bg-slate-100"
+                      : "font-normal text-slate-600 hover:bg-slate-100 hover:text-slate-900")
+                  }
+                  onClick={function () { setMenuOpen(false); }}
+                >
+                  {link.label}
+                </a>
+              );
+            })}
+          </div>
+        </div>
+      ) : null}
     </header>
   );
 }
