@@ -116,8 +116,8 @@ async function processManifestEntry(basePath, entry) {
   }
   const folderName = /** @type {any} */ (entry).folder.trim();
   const metaFile = typeof /** @type {any} */ (entry).metaFile === "string" ? /** @type {any} */ (entry).metaFile.trim() : "";
-  if (!metaFile || !/^Meta-.+\.txt$/i.test(metaFile)) {
-    console.warn("[loadInspireStories] Skipping folder (metaFile must match Meta-*.txt pattern):", folderName);
+  if (!metaFile || !/Meta-.+\.txt$/i.test(metaFile)) {
+    console.warn("[loadInspireStories] Skipping folder (metaFile must end with Meta-*.txt):", folderName);
     return null;
   }
 
@@ -130,7 +130,7 @@ async function processManifestEntry(basePath, entry) {
   let metadata = {};
   let storyContent = "";
 
-  if (knownStoryFile && /^Story-/i.test(knownStoryFile) && /\.md$/i.test(knownStoryFile)) {
+  if (knownStoryFile && /^Story-/i.test(knownStoryFile) && /\.(md|txt)$/i.test(knownStoryFile)) {
     const storyUrl = joinContentUrl(basePath, folderName, knownStoryFile);
     let metaRaw = "";
     [metaRaw, storyContent] = await Promise.all([
@@ -164,7 +164,7 @@ async function processManifestEntry(basePath, entry) {
       typeof metadata.story_file === "string" && metadata.story_file.trim()
         ? /** @type {string} */ (metadata.story_file).trim()
         : "";
-    if (fallbackFile && /^Story-/i.test(fallbackFile) && /\.md$/i.test(fallbackFile)) {
+    if (fallbackFile && /^Story-/i.test(fallbackFile) && /\.(md|txt)$/i.test(fallbackFile)) {
       try {
         storyContent = await fetchText(joinContentUrl(basePath, folderName, fallbackFile));
       } catch (e) {
