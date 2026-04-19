@@ -5,8 +5,10 @@
   var key = window.SITE_CONFIG && window.SITE_CONFIG.googleMapsKey;
 
   if (!key || key === "YOUR_GOOGLE_MAPS_API_KEY") {
+    el.style.overflow = "hidden";
+    el.style.position = "relative";
     el.innerHTML =
-      '<iframe src="https://www.openstreetmap.org/export/embed.html?bbox=8.334%2C46.710%2C8.390%2C46.745&layer=mapnik&marker=46.7298%2C8.3719" width="100%" height="320" style="border:0;display:block" loading="lazy"></iframe>';
+      '<iframe src="https://www.openstreetmap.org/export/embed.html?bbox=8.334%2C46.710%2C8.390%2C46.745&layer=mapnik&marker=46.7298%2C8.3719" width="100%" height="360" style="border:0;display:block;margin-bottom:-40px" loading="lazy"></iframe>';
     return;
   }
 

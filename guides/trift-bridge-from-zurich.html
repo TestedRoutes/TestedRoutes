@@ -232,17 +232,17 @@
               <img
                 src="../Content/Stories/Triftbrucke%20from%20Zurich/20201018_113355.jpg"
                 alt="Triftbrücke suspension bridge above the glacier"
-                class="h-full w-full object-cover"
-                loading="lazy" decoding="async"
+                class="h-full w-full cursor-pointer object-cover"
+                loading="lazy" decoding="async" onclick="openLightbox(0)"
               />
               <div class="grid grid-cols-2 grid-rows-2 gap-2">
-                <img src="../Content/Stories/Triftbrucke%20from%20Zurich/20201018_100027.jpg" alt="Morning trail above the valley" class="h-full w-full object-cover" loading="lazy" decoding="async" />
-                <img src="../Content/Stories/Triftbrucke%20from%20Zurich/20201018_111328.jpg" alt="Path gaining height toward the glacier" class="h-full w-full object-cover" loading="lazy" decoding="async" />
-                <img src="../Content/Stories/Triftbrucke%20from%20Zurich/20201018_114042.jpg" alt="Turquoise glacier lake below the route" class="h-full w-full object-cover" loading="lazy" decoding="async" />
+                <img src="../Content/Stories/Triftbrucke%20from%20Zurich/20201018_100027.jpg" alt="Morning trail above the valley" class="h-full w-full cursor-pointer object-cover" loading="lazy" decoding="async" onclick="openLightbox(1)" />
+                <img src="../Content/Stories/Triftbrucke%20from%20Zurich/20201018_111328.jpg" alt="Path gaining height toward the glacier" class="h-full w-full cursor-pointer object-cover" loading="lazy" decoding="async" onclick="openLightbox(2)" />
+                <img src="../Content/Stories/Triftbrucke%20from%20Zurich/20201018_114042.jpg" alt="Turquoise glacier lake below the route" class="h-full w-full cursor-pointer object-cover" loading="lazy" decoding="async" onclick="openLightbox(3)" />
                 <div class="relative overflow-hidden">
                   <img src="../Content/Stories/Triftbrucke%20from%20Zurich/20201018_130613.jpg" alt="Alpine views along the route" class="h-full w-full object-cover" loading="lazy" decoding="async" />
                   <button
-                    onclick="document.getElementById('photo-modal').classList.remove('hidden')"
+                    onclick="openLightbox(4)"
                     class="absolute bottom-3 right-3 flex items-center gap-1.5 rounded-lg bg-white px-3 py-1.5 text-[13px] font-semibold text-slate-900 shadow-md hover:bg-slate-50"
                   >
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
@@ -263,18 +263,64 @@
               </div>
             </div>
 
-            <!-- Photo modal / lightbox -->
-            <div id="photo-modal" class="fixed inset-0 z-50 hidden flex-col bg-black/90" onclick="this.classList.add('hidden')">
-              <button class="absolute right-5 top-5 text-white text-3xl leading-none">&times;</button>
-              <div class="flex h-full snap-x snap-mandatory gap-4 overflow-x-auto p-8 pt-16" style="scrollbar-width:none">
-                <img src="../Content/Stories/Triftbrucke%20from%20Zurich/20201018_113355.jpg" class="h-full w-auto shrink-0 snap-start rounded-lg object-contain" />
-                <img src="../Content/Stories/Triftbrucke%20from%20Zurich/20201018_100027.jpg" class="h-full w-auto shrink-0 snap-start rounded-lg object-contain" />
-                <img src="../Content/Stories/Triftbrucke%20from%20Zurich/20201018_111328.jpg" class="h-full w-auto shrink-0 snap-start rounded-lg object-contain" />
-                <img src="../Content/Stories/Triftbrucke%20from%20Zurich/20201018_114042.jpg" class="h-full w-auto shrink-0 snap-start rounded-lg object-contain" />
-                <img src="../Content/Stories/Triftbrucke%20from%20Zurich/20201018_130613.jpg" class="h-full w-auto shrink-0 snap-start rounded-lg object-contain" />
+            <!-- Lightbox -->
+            <div id="photo-modal" class="fixed inset-0 z-50 hidden items-center justify-center bg-white">
+              <!-- Top bar -->
+              <div class="absolute inset-x-0 top-0 flex h-14 items-center justify-between px-5">
+                <button onclick="closeLightbox()" class="flex h-9 w-9 items-center justify-center rounded-full hover:bg-slate-100">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-slate-700" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+                </button>
+                <span id="lb-counter" class="text-sm font-medium text-slate-700">1 / 5</span>
+                <div class="w-9"></div>
               </div>
+              <!-- Image -->
+              <img id="lb-img" src="" alt="" class="max-h-[80vh] max-w-[80vw] rounded-lg object-contain shadow-md" />
+              <!-- Prev -->
+              <button onclick="lbNav(-1)" class="absolute left-4 flex h-10 w-10 items-center justify-center rounded-full border border-slate-200 bg-white shadow hover:bg-slate-50">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-slate-700" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>
+              </button>
+              <!-- Next -->
+              <button onclick="lbNav(1)" class="absolute right-4 flex h-10 w-10 items-center justify-center rounded-full border border-slate-200 bg-white shadow hover:bg-slate-50">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-slate-700" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+              </button>
             </div>
             <style>#photo-modal.hidden{display:none}#photo-modal:not(.hidden){display:flex}</style>
+            <script>
+              var lbPhotos = [
+                {src:'../Content/Stories/Triftbrucke%20from%20Zurich/20201018_113355.jpg', alt:'Triftbrücke suspension bridge'},
+                {src:'../Content/Stories/Triftbrucke%20from%20Zurich/20201018_100027.jpg', alt:'Morning trail above the valley'},
+                {src:'../Content/Stories/Triftbrucke%20from%20Zurich/20201018_111328.jpg', alt:'Path gaining height toward the glacier'},
+                {src:'../Content/Stories/Triftbrucke%20from%20Zurich/20201018_114042.jpg', alt:'Turquoise glacier lake'},
+                {src:'../Content/Stories/Triftbrucke%20from%20Zurich/20201018_130613.jpg', alt:'Alpine views along the route'}
+              ];
+              var lbIdx = 0;
+              function openLightbox(i) {
+                lbIdx = i || 0;
+                lbShow();
+                document.getElementById('photo-modal').classList.remove('hidden');
+                document.body.style.overflow = 'hidden';
+              }
+              function closeLightbox() {
+                document.getElementById('photo-modal').classList.add('hidden');
+                document.body.style.overflow = '';
+              }
+              function lbNav(dir) {
+                lbIdx = (lbIdx + dir + lbPhotos.length) % lbPhotos.length;
+                lbShow();
+              }
+              function lbShow() {
+                var p = lbPhotos[lbIdx];
+                document.getElementById('lb-img').src = p.src;
+                document.getElementById('lb-img').alt = p.alt;
+                document.getElementById('lb-counter').textContent = (lbIdx + 1) + ' / ' + lbPhotos.length;
+              }
+              document.addEventListener('keydown', function(e) {
+                if (document.getElementById('photo-modal').classList.contains('hidden')) return;
+                if (e.key === 'ArrowRight') lbNav(1);
+                if (e.key === 'ArrowLeft') lbNav(-1);
+                if (e.key === 'Escape') closeLightbox();
+              });
+            </script>
           </section>
 
           <section class="mt-8">
