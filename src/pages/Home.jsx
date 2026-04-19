@@ -122,22 +122,29 @@ const SearchBar = () => {
 };
 
 const GuideCard = ({ guide }) => (
-  <div className="group overflow-hidden rounded-3xl bg-white shadow-sm ring-1 ring-slate-200 transition hover:-translate-y-1 hover:shadow-md">
+  <div className={`group overflow-hidden rounded-3xl bg-white shadow-sm ring-1 ring-slate-200 transition${guide.coming_soon ? "" : " hover:-translate-y-1 hover:shadow-md"}`}>
     <div className="h-44 w-full overflow-hidden">
-      <img
-        src={guide.image}
-        alt={guide.title}
-        className="h-full w-full object-cover transition duration-300 group-hover:scale-105"
-      />
+      {guide.coming_soon ? (
+        <div className="flex h-full w-full items-center justify-center bg-slate-100">
+          <span className="rounded-full bg-slate-200 px-4 py-1.5 text-xs font-semibold uppercase tracking-widest text-slate-500">Coming soon</span>
+        </div>
+      ) : (
+        <img
+          src={guide.image}
+          alt={guide.title}
+          className="h-full w-full object-cover transition duration-300 group-hover:scale-105"
+        />
+      )}
     </div>
     <div className="space-y-3 p-4">
       <p className="text-xs uppercase tracking-[0.2em] text-slate-500">{guide.category.toUpperCase()}</p>
       <h3 className="text-lg font-semibold text-slate-900">{guide.title}</h3>
       <p className="text-sm text-slate-600">{guide.duration} • {guide.meta}</p>
-      {guide.purchases ? <p className="text-xs text-slate-500">{guide.purchases} purchased</p> : null}
       <div className="flex items-center justify-between pt-2">
         <span className="text-sm font-semibold text-slate-900">From {guide.price}</span>
-        {guide.href ? (
+        {guide.coming_soon ? (
+          <span className="rounded-full bg-slate-100 px-4 py-2 text-xs font-semibold text-slate-400">Coming soon</span>
+        ) : guide.href ? (
           <a className="rounded-full bg-slate-900 px-4 py-2 text-xs font-semibold text-white" href={guide.href}>
             View Guide
           </a>
