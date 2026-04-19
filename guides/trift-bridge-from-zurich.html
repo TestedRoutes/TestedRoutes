@@ -71,17 +71,120 @@
 
       <section class="grid gap-7 lg:grid-cols-[2fr_1fr]">
         <div>
-          <section class="-mt-1 space-y-2">
-            <p class="text-base font-semibold text-slate-900">Location</p>
-            <p class="text-sm text-slate-600">
-              Day trip distance from Zurich into the Bernese Oberland.
-            </p>
-            <div class="h-56 overflow-hidden rounded-2xl bg-slate-100">
-              <img
-                src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1200&q=80"
-                alt="Orientation map showing Zurich and Trift region"
-                class="h-full w-full object-cover"
-              />
+          <section class="-mt-1">
+            <p class="mb-4 text-base font-semibold text-slate-900">Itinerary</p>
+            <div class="grid gap-5 lg:grid-cols-[1fr_1.3fr]">
+
+              <!-- Itinerary steps -->
+              <div>
+
+                <!-- Start -->
+                <div class="flex items-start gap-3">
+                  <div class="flex flex-col items-center">
+                    <div class="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-orange-500 text-white shadow-sm">
+                      <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+                    </div>
+                    <div class="my-1 w-0.5 flex-1 bg-orange-200" style="min-height:1.5rem"></div>
+                  </div>
+                  <div class="pb-3 pt-1.5">
+                    <p class="text-[10px] font-semibold uppercase tracking-wider text-orange-500">Starting location</p>
+                    <p class="text-sm font-semibold text-slate-900">Gadmen / Triftbahn station</p>
+                  </div>
+                </div>
+
+                <!-- Transport: hiking -->
+                <div class="flex items-start gap-3">
+                  <div class="flex flex-col items-center">
+                    <div class="flex h-7 w-7 shrink-0 items-center justify-center rounded-full border-2 border-dashed border-slate-300 bg-white text-sm">🥾</div>
+                    <div class="my-1 w-0.5 flex-1 bg-orange-200" style="min-height:1.5rem"></div>
+                  </div>
+                  <div class="pt-1">
+                    <p class="text-xs text-slate-500">Hiking <span class="font-medium text-slate-700">· 45 min</span></p>
+                  </div>
+                </div>
+
+                <!-- Stop: Trift mountain hut -->
+                <div class="flex items-start gap-3">
+                  <div class="flex flex-col items-center">
+                    <div class="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border-2 border-slate-300 bg-white shadow-sm text-slate-500">
+                      <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+                    </div>
+                    <div class="my-1 w-0.5 flex-1 bg-orange-200" style="min-height:1.5rem"></div>
+                  </div>
+                  <div class="pb-3 pt-1.5">
+                    <p class="text-sm font-semibold text-slate-900">Trift mountain hut</p>
+                    <p class="text-xs text-slate-500">Rest stop with valley views</p>
+                  </div>
+                </div>
+
+                <!-- Transport: hiking -->
+                <div class="flex items-start gap-3">
+                  <div class="flex flex-col items-center">
+                    <div class="flex h-7 w-7 shrink-0 items-center justify-center rounded-full border-2 border-dashed border-slate-300 bg-white text-sm">🥾</div>
+                    <div class="my-1 w-0.5 flex-1 bg-orange-200" style="min-height:1.5rem"></div>
+                  </div>
+                  <div class="pt-1">
+                    <p class="text-xs text-slate-500">Hiking <span class="font-medium text-slate-700">· 30 min</span></p>
+                  </div>
+                </div>
+
+                <!-- Highlight: Trift suspension bridge -->
+                <div class="flex items-start gap-3">
+                  <div class="flex flex-col items-center">
+                    <div class="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-slate-900 text-white shadow-sm">
+                      <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+                    </div>
+                    <div class="my-1 w-0.5 flex-1 bg-orange-200" style="min-height:1.5rem"></div>
+                  </div>
+                  <div class="pb-3 pt-1.5">
+                    <p class="text-[10px] font-semibold uppercase tracking-wider text-slate-500">Main stop · Sightseeing</p>
+                    <p class="text-sm font-semibold text-slate-900">Trift suspension bridge</p>
+                  </div>
+                </div>
+
+                <!-- Transport: return hike -->
+                <div class="flex items-start gap-3">
+                  <div class="flex flex-col items-center">
+                    <div class="flex h-7 w-7 shrink-0 items-center justify-center rounded-full border-2 border-dashed border-slate-300 bg-white text-sm">🥾</div>
+                    <div class="my-1 w-0.5 flex-1 bg-orange-200" style="min-height:1.5rem"></div>
+                  </div>
+                  <div class="pt-1">
+                    <p class="text-xs text-slate-500">Return hike <span class="font-medium text-slate-700">· 1.5h</span></p>
+                  </div>
+                </div>
+
+                <!-- End -->
+                <div class="flex items-start gap-3">
+                  <div class="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-orange-500 text-white shadow-sm">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+                  </div>
+                  <div class="pt-1.5">
+                    <p class="text-[10px] font-semibold uppercase tracking-wider text-orange-500">End point</p>
+                    <p class="text-sm font-semibold text-slate-900">Gadmen / Triftbahn station</p>
+                  </div>
+                </div>
+
+                <!-- Legend -->
+                <div class="mt-4 flex items-center gap-4 text-[10px] text-slate-400">
+                  <span class="flex items-center gap-1.5"><span class="inline-block h-2.5 w-2.5 rounded-full bg-orange-500"></span>Start / End</span>
+                  <span class="flex items-center gap-1.5"><span class="inline-block h-2.5 w-2.5 rounded-full bg-slate-900"></span>Main stop</span>
+                </div>
+              </div>
+
+              <!-- Map -->
+              <div
+                id="route-map"
+                data-origin="46.7184,8.3482"
+                data-destination="46.7298,8.3719"
+                data-waypoints="46.7254,8.3635"
+                data-mode="walking"
+                data-fallback-href="https://www.google.com/maps/dir/46.7184,8.3482/46.7254,8.3635/46.7298,8.3719"
+                class="overflow-hidden rounded-2xl border border-slate-200"
+              >
+                <!-- filled by route-map.js -->
+                <div class="flex h-[320px] items-center justify-center bg-slate-100 text-xs text-slate-400">Loading map…</div>
+              </div>
+
             </div>
           </section>
 
@@ -314,6 +417,8 @@
         </aside>
       </section>
     </main>
-    <script defer src="../nav-active.js"></script>
+    <script src="../nav-active.js" defer></script>
+    <script src="../site-config.js"></script>
+    <script src="../route-map.js" defer></script>
   </body>
 </html>
