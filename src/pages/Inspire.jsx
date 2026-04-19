@@ -15,7 +15,6 @@
  * @see ../hooks/useInspireBrowseState.js
  */
 import * as React from "react";
-import SiteHeader from "../components/SiteHeader.jsx";
 import InspireStoryCard from "../components/inspire/InspireStoryCard.jsx";
 import { useInspireBrowseState, INSPIRE_FACET_UI, INSPIRE_PAGE_SIZE } from "../hooks/useInspireBrowseState.js";
 
@@ -47,19 +46,103 @@ const collections = [
   },
 ];
 
+function aboutAsset(filename) {
+  return "/About%20me/" + encodeURIComponent(filename);
+}
+
 const extremeExperiences = [
-  "Running with the bulls — Spain",
-  "Shark diving — South Africa",
-  "Volcano boarding — Nicaragua",
-  "Skydiving & paragliding",
-  "Ice climbing & glacier travel",
-  "Riding the iron ore train — Mauritania",
-  "Summit pushes above 6,000 m",
-  "Remote border crossings — West Africa",
+  { label: "Running with the bulls — Spain", file: "Pamplona 2019.jpg" },
+  { label: "Shark diving — Fiji", file: "Sharks Fiji 2025.jpg" },
+  { label: "Volcano boarding — Nicaragua", file: "Volcano Nicaragua 2019.jpg" },
+  { label: "Skydiving & paragliding", file: "Paragliding.jpg" },
+  { label: "Ice climbing & glacier travel", file: "Ice climbing Italy 2019.jpg" },
+  { label: "Riding the iron ore train — Mauritania", file: "Iron Ore train Mauritania 2023.jpg" },
+  { label: "Summit pushes above 6,000 m", file: "Alaska 2019 v2.jpg" },
+  { label: "Remote border crossings — West Africa", file: "Africa Rally - Makoko Nigeria 2025.jpg" },
 ];
 
 const categoryChips = ["Switzerland", "New Zealand", "Expeditions", "Mountains", "Extreme Experiences", "Route Ideas"];
 
+const ACTIVITY_GROUPS = [
+  { key: "Summit", label: "Mountains & Summits", buckets: ["Summit"] },
+  { key: "Hike", label: "Hikes & Trails", buckets: ["Hike"] },
+  { key: "Expedition", label: "Expeditions", buckets: ["Expedition"] },
+  { key: "RoadTrip", label: "Road Trips", buckets: ["Road Trip"] },
+  { key: "Water", label: "Water & Ocean", buckets: ["Diving", "Swimming"] },
+  { key: "Extreme", label: "Extreme Experiences", buckets: ["Extreme Sport"] },
+];
+
+function StoryScrollCard({ story }) {
+  const slug = story.slug || "";
+  const href = slug ? `inspire-story.html?slug=${encodeURIComponent(slug)}` : null;
+  const geo = story.metadata?.geography?.country || story.metadata?.geography?.continent || "";
+  const title = story.title || "";
+  const year = story.date ? story.date.slice(0, 4) : "";
+  const Tag = href ? "a" : "div";
+  return (
+    <Tag
+      href={href || undefined}
+      className="flex-none snap-start w-[75vw] max-w-[280px] sm:w-60 overflow-hidden rounded-2xl bg-white shadow-sm ring-1 ring-slate-200 transition hover:shadow-md hover:-translate-y-0.5"
+    >
+      <div className="relative aspect-[4/3] overflow-hidden bg-slate-100">
+        {story.heroPhoto ? (
+          <img src={story.heroPhoto} alt={title} className="h-full w-full object-cover" loading="lazy" />
+        ) : (
+          <div className="flex h-full w-full items-center justify-center text-xs text-slate-400">No photo</div>
+        )}
+      </div>
+      <div className="flex flex-col gap-0.5 p-3">
+        {geo ? <p className="text-[10px] font-semibold uppercase tracking-wider text-slate-400">{geo}</p> : null}
+        <p className="line-clamp-2 text-sm font-semibold leading-snug text-slate-900">{title}</p>
+        {year ? <p className="mt-1 text-[11px] text-slate-500">{year}</p> : null}
+      </div>
+    </Tag>
+  );
+}
+
+function GroupedScrollRow({ groupLabel, stories }) {
+  if (!stories.length) return null;
+  return (
+    <div className="w-full min-w-0">
+      <div className="mb-3 flex items-baseline gap-3">
+        <p className="text-xl font-semibold text-slate-900">{groupLabel}</p>
+        <span className="text-sm text-slate-400">{stories.length}</span>
+      </div>
+      <div className="no-scrollbar -mx-4 flex gap-3 overflow-x-auto px-4 pb-3 snap-x snap-mandatory sm:-mx-6 sm:px-6">
+        {stories.map((story) => (
+          <StoryScrollCard key={story.id} story={story} />
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function SiteHeaderOrFallback() {
+  if (typeof window !== "undefined" && typeof window.SiteHeader === "function") {
+    return React.createElement(window.SiteHeader);
+  }
+  return (
+    <header className="border-b border-slate-200 bg-white px-4 py-3 shadow-sm sm:px-6">
+      <nav className="mx-auto flex max-w-6xl flex-wrap items-center gap-4 text-sm">
+        <a href="index.html" className="font-semibold text-slate-900">
+          Pikelis Travel
+        </a>
+        <a href="destinations.html" className="text-slate-600 hover:text-slate-900">
+          Destinations
+        </a>
+        <a href="guides.html" className="text-slate-600 hover:text-slate-900">
+          Guides
+        </a>
+        <a href="inspire.html" className="font-semibold text-slate-900">
+          Inspire
+        </a>
+        <a href="about.html" className="text-slate-600 hover:text-slate-900">
+          About
+        </a>
+      </nav>
+    </header>
+  );
+}
 
 const Footer = () => (
   <footer className="flex flex-col gap-4 border-t border-slate-200 py-8 text-xs text-slate-500 md:flex-row md:items-center md:justify-between">
@@ -205,6 +288,29 @@ export default function InspirePage(props = {}) {
     clearFacetSelection,
   } = browse;
 
+  const groupedStories = React.useMemo(() => {
+    if (!contentLoaderMod || !facetFilteredStories.length) return [];
+    const projectFn = contentLoaderMod.projectInspireStoryFacetValues;
+    if (typeof projectFn !== "function") return [];
+    const assigned = new Set();
+    const result = [];
+    for (const g of ACTIVITY_GROUPS) {
+      const matched = facetFilteredStories.filter((story) => {
+        if (assigned.has(story.id)) return false;
+        const vals = projectFn(story);
+        const acts = vals.activity || [];
+        return g.buckets.some((b) => acts.includes(b));
+      });
+      if (matched.length) {
+        matched.forEach((s) => assigned.add(s.id));
+        result.push({ key: g.key, label: g.label, stories: matched });
+      }
+    }
+    const others = facetFilteredStories.filter((s) => !assigned.has(s.id));
+    if (others.length) result.push({ key: "Other", label: "More Stories", stories: others });
+    return result;
+  }, [contentLoaderMod, facetFilteredStories]);
+
   const getOptsForDim = (dim) => {
     if (!facetOptions) return [];
     if (dim === "country" && facetSelection.continent?.length > 0 && contentLoaderMod) {
@@ -255,7 +361,7 @@ export default function InspirePage(props = {}) {
 
   return (
     <div className="min-h-screen bg-[#f7f4ef] text-slate-900">
-      <SiteHeader />
+      <SiteHeaderOrFallback />
       <main className="w-full pb-16 pt-6 text-slate-900 sm:pt-8">
         <div className="mx-auto flex w-full min-w-0 max-w-6xl flex-col gap-8 px-4 sm:gap-10 sm:px-6">
           <p className="w-full text-[10px] font-medium tabular-nums tracking-wide text-slate-400 sm:text-[11px]">
@@ -306,8 +412,8 @@ export default function InspirePage(props = {}) {
                     onChange={(e) => setSortKey(e.target.value)}
                     className="rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs font-medium text-slate-800 focus:border-slate-300 focus:outline-none focus:ring-2 focus:ring-slate-200"
                   >
-                    <option value="content">Photos &amp; stories first</option>
                     <option value="recent">Most recent</option>
+                    <option value="popular">Popular</option>
                     <option value="oldest">Oldest</option>
                     <option value="alpha">Alphabetical</option>
                     <option value="difficulty">Difficulty</option>
@@ -395,22 +501,32 @@ export default function InspirePage(props = {}) {
               </InspireEmptyBlock>
             ) : (
               <>
-                <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5 lg:grid-cols-3 lg:gap-6">
-                  {pagedStories.map((story) => (
-                    <InspireStoryCard key={story.id} story={story} contentLoaderMod={contentLoaderMod} />
-                  ))}
-                </div>
-                {hasMoreStories ? (
-                  <div className="mt-6 flex justify-center">
-                    <button
-                      type="button"
-                      className="rounded-full border border-slate-200 bg-white px-6 py-2.5 text-xs font-semibold text-slate-800 shadow-sm transition hover:border-slate-300 hover:bg-slate-50"
-                      onClick={() => setVisibleCount((c) => c + INSPIRE_PAGE_SIZE)}
-                    >
-                      Load more journeys
-                    </button>
+                {!hasActiveFilters && !searchInput.trim() ? (
+                  <div className="flex flex-col gap-10">
+                    {groupedStories.map(({ key, label, stories }) => (
+                      <GroupedScrollRow key={key} groupLabel={label} stories={stories} />
+                    ))}
                   </div>
-                ) : null}
+                ) : (
+                  <>
+                    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5 lg:grid-cols-3 lg:gap-6">
+                      {pagedStories.map((story) => (
+                        <InspireStoryCard key={story.id} story={story} contentLoaderMod={contentLoaderMod} />
+                      ))}
+                    </div>
+                    {hasMoreStories ? (
+                      <div className="mt-6 flex justify-center">
+                        <button
+                          type="button"
+                          className="rounded-full border border-slate-200 bg-white px-6 py-2.5 text-xs font-semibold text-slate-800 shadow-sm transition hover:border-slate-300 hover:bg-slate-50"
+                          onClick={() => setVisibleCount((c) => c + INSPIRE_PAGE_SIZE)}
+                        >
+                          Load more journeys
+                        </button>
+                      </div>
+                    ) : null}
+                  </>
+                )}
               </>
             )}
           </section>
@@ -463,9 +579,14 @@ export default function InspirePage(props = {}) {
             </div>
             <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
               {extremeExperiences.map((item) => (
-                <div key={item} className="rounded-2xl bg-white p-4 text-xs text-slate-500 shadow-sm ring-1 ring-slate-200">
-                  <div className="mb-3 h-24 rounded-xl bg-slate-100" />
-                  {item}
+                <div key={item.label} className="overflow-hidden rounded-2xl bg-white shadow-sm ring-1 ring-slate-200">
+                  <img
+                    src={aboutAsset(item.file)}
+                    alt={item.label}
+                    className="h-36 w-full object-cover object-center"
+                    loading="lazy"
+                  />
+                  <p className="p-3 text-center text-[11px] font-medium leading-snug text-slate-600">{item.label}</p>
                 </div>
               ))}
             </div>
