@@ -1,8 +1,6 @@
-/**
- * Featured Inspire story card (React). Loaded before inspire-app.jsx; exposes `InspireStoryCard` on window.
- * @param {{ story: object, contentLoaderMod: object }} props
- */
-function InspireStoryCard({ story, contentLoaderMod }) {
+import * as React from "react";
+
+export default function InspireStoryCard({ story, contentLoaderMod }) {
   const {
     geoLabel: geo,
     categoryDurationLine: catDur,
@@ -59,10 +57,8 @@ function InspireStoryCard({ story, contentLoaderMod }) {
               {diff}
             </span>
           ) : null}
-          {story.metadata &&
-          story.metadata.suitability &&
-          (story.metadata.suitability.family_friendly === true ||
-            story.metadata.suitability.family_friendly === "true") ? (
+          {story.metadata?.suitability?.family_friendly === true ||
+          story.metadata?.suitability?.family_friendly === "true" ? (
             <span className="inline-flex items-center gap-1 text-xs font-medium text-slate-600">
               <span aria-hidden>👨‍👩‍👧</span>
               Family
@@ -100,5 +96,3 @@ function InspireStoryCard({ story, contentLoaderMod }) {
     </div>
   );
 }
-
-window.InspireStoryCard = InspireStoryCard;

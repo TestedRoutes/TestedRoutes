@@ -5,36 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Pikelis Travel Inspire</title>
     <meta name="description" content="Real journeys behind the guides — built from 15 years of independent travel across 140 countries. Routes tested in the field, from Swiss alpine day trips to overland expeditions." />
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-eval' https://unpkg.com https://cdn.tailwindcss.com https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://cdn.tailwindcss.com; img-src 'self' data: https:; connect-src 'self' https:; font-src 'self' https:;">
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="/src/utils/inspireFilterQuery.js"></script>
   </head>
   <body class="bg-[#f7f4ef]">
-    <script>
-      (function () {
-        if (location.protocol !== "file:") return;
-        var tip = document.createElement("div");
-        tip.setAttribute("role", "status");
-        tip.style.cssText =
-          "margin:0;padding:10px 14px;font:13px/1.4 system-ui,sans-serif;background:#fef3c7;color:#92400e;border-bottom:1px solid #fcd34d;";
-        tip.innerHTML =
-          "<strong>Opened as a local file.</strong> Browsers usually block loading story data from disk. " +
-          "From this folder run <code style=\"background:#fff;padding:2px 6px;border-radius:4px\">npx --yes serve .</code> " +
-          "and open the <code style=\"background:#fff;padding:2px 6px;border-radius:4px\">inspire.html</code> URL shown in the terminal (e.g. <code style=\"background:#fff;padding:2px 6px;border-radius:4px\">http://localhost:3000/inspire.html</code>).";
-        document.addEventListener("DOMContentLoaded", function () {
-          document.body.insertBefore(tip, document.body.firstChild);
-        });
-      })();
-    </script>
     <div id="root"></div>
-    <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
-    <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
-    <script src="https://unpkg.com/@babel/standalone@7.24.7/babel.min.js" integrity="sha384-AISI5AuDG6E8DeEiFMVB3rGQxhZt24OU0avMp+GMV64+tpnA3+Z6F5MT0f96iPva" crossorigin="anonymous"></script>
-    <script src="./src/utils/inspireFilterQuery.js?v=1"></script>
-    <script src="./src/utils/inspireStoryDisplay.js?v=2"></script>
-    <script src="./src/utils/loadInspireStoriesData.js?v=7"></script>
-    <script type="text/babel" src="./SiteHeader.jsx?v=9"></script>
-    <script type="text/babel" src="./src/components/inspire/InspireStoryCard.jsx?v=2"></script>
-    <script type="text/babel" src="./footer.jsx?v=1"></script>
-    <script type="text/babel" src="./inspire-app.jsx?v=32"></script>
+    <script type="module" src="/src/entries/inspire.jsx"></script>
   </body>
 </html>
