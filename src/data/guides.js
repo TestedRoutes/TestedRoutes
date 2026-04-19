@@ -1,4 +1,4 @@
-window.GUIDES = [
+export const GUIDES = [
   {
     category: "Day Trip",
     title: "Triftbrücke from Zurich",

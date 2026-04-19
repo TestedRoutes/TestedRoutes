@@ -583,6 +583,36 @@ function inspireStoryActivityTagsArray(m) {
   return uniqueSortedFacetValues(parts);
 }
 
+function bucketActivityFromStory(story) {
+  try {
+    const m = safeMetadata(story.metadata);
+    const cls = inspireClassificationObject(m);
+    const rawCat = (
+      pickFirstString(cls, ["journey_category", "activity_category"]) ||
+      pickFirstString(m, ["journey_category", "category", "trip_type"]) || ""
+    ).toLowerCase().replace(/_/g, " ");
+    const allTags = [
+      ...(Array.isArray(cls.activity_tags) ? cls.activity_tags : []),
+      ...(Array.isArray(cls.tags) ? cls.tags : []),
+      ...(Array.isArray(m.activity_tags) ? m.activity_tags : []),
+      ...(Array.isArray(m.tags) ? m.tags : []),
+    ].join(" ").toLowerCase();
+    const titleText = ((story.title || "") + " " + (story.folderName || "")).toLowerCase();
+    const text = `${rawCat} ${allTags} ${titleText}`;
+    const buckets = new Set();
+    if (/expedition/.test(rawCat)) buckets.add("Expedition");
+    if (/summit|mountaineer|peak.bag|aconcagua|denali|kilimanjaro/.test(text)) buckets.add("Summit");
+    if (/\bhike\b|hiking|\btrek\b|trekking|alpine day|day hike/.test(text)) buckets.add("Hike");
+    if (/roadtrip|\broad[\s-]?trip\b|rally|transfagarasan|multi[\s-]?day[\s-]?trip|overland/.test(text)) buckets.add("Road Trip");
+    if (/\bdiv(e|ing)\b|shark dive|scuba/.test(text)) buckets.add("Diving");
+    if (/\bswim\w*|open[\s-]?water|lake[\s-]?cross/.test(text)) buckets.add("Swimming");
+    if (/boarding|skydiv|paraglid|bungee|extreme[\s-]?sport/.test(text)) buckets.add("Extreme Sport");
+    return [...buckets];
+  } catch {
+    return [];
+  }
+}
+
 export function projectInspireStoryFacetValues(story) {
   const U = INSPIRE_FACET_UNSPECIFIED;
   try {
@@ -596,7 +626,7 @@ export function projectInspireStoryFacetValues(story) {
     const daysNum = durationDaysNumber(m);
     let duration = daysNum !== null && durationBucketsFromDays(daysNum).length ? durationBucketsFromDays(daysNum) : [];
     if (!duration.length) { const dur = durationDisplayFromMetadata(m); duration = dur ? [dur] : [U]; }
-    const act = inspireStoryActivityTagsArray(m);
+    const act = bucketActivityFromStory(story);
     const activity = act.length ? act : [U];
     const diffRaw = getInspireStoryDifficulty(m);
     const difficulty = diffRaw ? [diffRaw] : [U];
