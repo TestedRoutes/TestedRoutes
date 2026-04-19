@@ -36,7 +36,7 @@ function isLikelyMetaFilename(name) {
 function isLikelyStoryFilename(name) {
   const n = typeof name === "string" ? name.trim() : "";
   if (!n) return false;
-  return /^(Story|story)[-._].*\.(md|txt)$/i.test(n);
+  return /^(\d{8}-)?((Story|Inspire)[-._]).*\.(md|txt)$/i.test(n);
 }
 
 function normalizeBasePath(basePath) {

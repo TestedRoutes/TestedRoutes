@@ -1,4 +1,5 @@
 import * as React from "react";
+import { useState } from "react";
 
 function getPrimaryNavSlug() {
   var pathname = (window.location.pathname || "").replace(/\\/g, "/");
@@ -39,8 +40,17 @@ function logoLinkClassName() {
   return base;
 }
 
+const NAV_LINKS = [
+  { slug: "destinations", label: "Destinations", href: "destinations.html" },
+  { slug: "guides", label: "Guides", href: "guides.html" },
+  { slug: "inspire", label: "Inspire", href: "inspire.html" },
+  { slug: "about", label: "About Me", href: "about.html" },
+];
+
 export default function SiteHeader() {
   var active = getPrimaryNavSlug();
+  const [menuOpen, setMenuOpen] = useState(false);
+
   return (
     <header className="sticky top-0 z-50 border-b border-slate-200/60 bg-[#f7f4ef]/95 backdrop-blur-sm">
       <nav
@@ -61,37 +71,64 @@ export default function SiteHeader() {
             </span>
           </span>
         </a>
+
+        {/* Desktop nav */}
         <div className="hidden items-center gap-6 md:flex">
-          <a
-            className={primaryNavLinkClass("destinations")}
-            href="destinations.html"
-            aria-current={active === "destinations" ? "page" : undefined}
-          >
-            Destinations
-          </a>
-          <a
-            className={primaryNavLinkClass("guides")}
-            href="guides.html"
-            aria-current={active === "guides" ? "page" : undefined}
-          >
-            Guides
-          </a>
-          <a
-            className={primaryNavLinkClass("inspire")}
-            href="inspire.html"
-            aria-current={active === "inspire" ? "page" : undefined}
-          >
-            Inspire
-          </a>
-          <a
-            className={primaryNavLinkClass("about")}
-            href="about.html"
-            aria-current={active === "about" ? "page" : undefined}
-          >
-            About Me
-          </a>
+          {NAV_LINKS.map((link) => (
+            <a
+              key={link.slug}
+              className={primaryNavLinkClass(link.slug)}
+              href={link.href}
+              aria-current={active === link.slug ? "page" : undefined}
+            >
+              {link.label}
+            </a>
+          ))}
         </div>
+
+        {/* Mobile hamburger button */}
+        <button
+          className="flex h-9 w-9 items-center justify-center rounded-lg text-slate-600 hover:bg-slate-100 hover:text-slate-900 md:hidden"
+          aria-label={menuOpen ? "Close menu" : "Open menu"}
+          aria-expanded={menuOpen}
+          onClick={() => setMenuOpen((o) => !o)}
+        >
+          {menuOpen ? (
+            <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+              <line x1="2" y1="2" x2="16" y2="16" />
+              <line x1="16" y1="2" x2="2" y2="16" />
+            </svg>
+          ) : (
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+              <line x1="3" y1="5" x2="17" y2="5" />
+              <line x1="3" y1="10" x2="17" y2="10" />
+              <line x1="3" y1="15" x2="17" y2="15" />
+            </svg>
+          )}
+        </button>
       </nav>
+
+      {/* Mobile dropdown menu */}
+      {menuOpen && (
+        <div className="border-t border-slate-200/60 bg-[#f7f4ef] px-6 pb-4 pt-2 md:hidden">
+          {NAV_LINKS.map((link) => (
+            <a
+              key={link.slug}
+              href={link.href}
+              aria-current={active === link.slug ? "page" : undefined}
+              className={
+                "block py-3 text-sm border-b border-slate-100 last:border-0 " +
+                (active === link.slug
+                  ? "font-semibold text-slate-900"
+                  : "font-normal text-slate-600")
+              }
+              onClick={() => setMenuOpen(false)}
+            >
+              {link.label}
+            </a>
+          ))}
+        </div>
+      )}
     </header>
   );
 }

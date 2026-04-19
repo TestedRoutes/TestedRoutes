@@ -46,15 +46,19 @@ const collections = [
   },
 ];
 
+function aboutAsset(filename) {
+  return "/About%20me/" + encodeURIComponent(filename);
+}
+
 const extremeExperiences = [
-  "Running with the bulls — Spain",
-  "Shark diving — South Africa",
-  "Volcano boarding — Nicaragua",
-  "Skydiving & paragliding",
-  "Ice climbing & glacier travel",
-  "Riding the iron ore train — Mauritania",
-  "Summit pushes above 6,000 m",
-  "Remote border crossings — West Africa",
+  { label: "Running with the bulls — Spain", file: "Pamplona 2019.jpg" },
+  { label: "Shark diving — Fiji", file: "Sharks Fiji 2025.jpg" },
+  { label: "Volcano boarding — Nicaragua", file: "Volcano Nicaragua 2019.jpg" },
+  { label: "Skydiving & paragliding", file: "Paragliding.jpg" },
+  { label: "Ice climbing & glacier travel", file: "Ice climbing Italy 2019.jpg" },
+  { label: "Riding the iron ore train — Mauritania", file: "Iron Ore train Mauritania 2023.jpg" },
+  { label: "Summit pushes above 6,000 m", file: "Alaska 2019 v2.jpg" },
+  { label: "Remote border crossings — West Africa", file: "Africa Rally - Makoko Nigeria 2025.jpg" },
 ];
 
 const categoryChips = ["Switzerland", "New Zealand", "Expeditions", "Mountains", "Extreme Experiences", "Route Ideas"];
@@ -488,9 +492,14 @@ export default function InspirePage(props = {}) {
             </div>
             <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
               {extremeExperiences.map((item) => (
-                <div key={item} className="rounded-2xl bg-white p-4 text-xs text-slate-500 shadow-sm ring-1 ring-slate-200">
-                  <div className="mb-3 h-24 rounded-xl bg-slate-100" />
-                  {item}
+                <div key={item.label} className="overflow-hidden rounded-2xl bg-white shadow-sm ring-1 ring-slate-200">
+                  <img
+                    src={aboutAsset(item.file)}
+                    alt={item.label}
+                    className="h-36 w-full object-cover object-center"
+                    loading="lazy"
+                  />
+                  <p className="p-3 text-center text-[11px] font-medium leading-snug text-slate-600">{item.label}</p>
                 </div>
               ))}
             </div>

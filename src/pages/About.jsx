@@ -2,7 +2,7 @@ import * as React from "react";
 import SiteHeader from "../components/SiteHeader.jsx";
 
 function aboutAsset(filename) {
-  return "/" + encodeURIComponent(filename);
+  return "/About%20me/" + encodeURIComponent(filename);
 }
 
 export default function AboutMePage() {
