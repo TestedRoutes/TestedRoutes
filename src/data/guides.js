@@ -6,7 +6,13 @@ export const GUIDES = [
     meta: "PDF guide",
     price: "€12.99",
     href: "guides/trift-bridge-from-zurich.html",
-    image: "Content/Stories/Triftbrucke%20from%20Zurich/Hero-triftfrucke.jpg",
+    images: [
+      "Content/Stories/Triftbrucke%20from%20Zurich/Hero-triftfrucke.jpg",
+      "Content/Stories/Triftbrucke%20from%20Zurich/20201018_100027.jpg",
+      "Content/Stories/Triftbrucke%20from%20Zurich/20201018_111328.jpg",
+      "Content/Stories/Triftbrucke%20from%20Zurich/20201018_114042.jpg",
+      "Content/Stories/Triftbrucke%20from%20Zurich/20201018_130613.jpg",
+    ],
   },
   {
     category: "Day Trip",
