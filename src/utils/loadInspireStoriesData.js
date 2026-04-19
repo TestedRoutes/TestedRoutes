@@ -8,9 +8,9 @@
 
 const PHOTO_EXT = /\.(jpe?g|png)$/i;
 
-const DEFAULT_CONTENT_BASE = "/Content/Inspire/";
+const DEFAULT_CONTENT_BASE = "/Content/Stories/";
 
-const DEFAULT_MANIFEST_URL = "/Content/Inspire/stories-manifest.json";
+const DEFAULT_MANIFEST_URL = "/Content/Stories/stories-manifest.json";
 
 function resolveFetchBasePath(options) {
   const raw = options.basePath;
