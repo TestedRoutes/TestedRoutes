@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "vite build && cp -r guides dist/ && cp route-map.js nav-active.js dist/",
     "preview": "vite preview"
   },
   "dependencies": {
