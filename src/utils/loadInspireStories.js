@@ -104,7 +104,112 @@ async function fetchText(url) {
 }
 
 /**
+ * Process a single manifest entry, fetching metadata and story content in parallel where possible.
+ * @param {string} basePath
+ * @param {unknown} entry
+ * @returns {Promise<InspireStory | null>}
+ */
+async function processManifestEntry(basePath, entry) {
+  if (!entry || typeof entry !== "object" || typeof entry.folder !== "string" || !entry.folder.trim()) {
+    console.warn("[loadInspireStories] Skipping invalid manifest entry (missing folder).", entry);
+    return null;
+  }
+  const folderName = /** @type {any} */ (entry).folder.trim();
+  const metaFile = typeof /** @type {any} */ (entry).metaFile === "string" ? /** @type {any} */ (entry).metaFile.trim() : "";
+  if (!metaFile || !/^Meta-.+\.txt$/i.test(metaFile)) {
+    console.warn("[loadInspireStories] Skipping folder (metaFile must match Meta-*.txt pattern):", folderName);
+    return null;
+  }
+
+  const metaUrl = joinContentUrl(basePath, folderName, metaFile);
+  const knownStoryFile =
+    typeof /** @type {any} */ (entry).storyFile === "string" && /** @type {any} */ (entry).storyFile.trim()
+      ? /** @type {any} */ (entry).storyFile.trim()
+      : null;
+
+  let metadata = {};
+  let storyContent = "";
+
+  if (knownStoryFile && /^Story-/i.test(knownStoryFile) && /\.md$/i.test(knownStoryFile)) {
+    const storyUrl = joinContentUrl(basePath, folderName, knownStoryFile);
+    let metaRaw = "";
+    [metaRaw, storyContent] = await Promise.all([
+      fetchText(metaUrl),
+      fetchText(storyUrl).catch((e) => {
+        console.warn("[loadInspireStories] Story markdown missing or unreadable (using empty body):", folderName, e);
+        return "";
+      }),
+    ]);
+    try {
+      metadata = JSON.parse(metaRaw);
+      if (!metadata || typeof metadata !== "object" || Array.isArray(metadata)) {
+        throw new Error("Metadata must be a JSON object");
+      }
+    } catch (e) {
+      console.warn("[loadInspireStories] Skipping story (invalid or missing metadata JSON):", folderName, e);
+      return null;
+    }
+  } else {
+    try {
+      const metaRaw = await fetchText(metaUrl);
+      metadata = JSON.parse(metaRaw);
+      if (!metadata || typeof metadata !== "object" || Array.isArray(metadata)) {
+        throw new Error("Metadata must be a JSON object");
+      }
+    } catch (e) {
+      console.warn("[loadInspireStories] Skipping story (invalid or missing metadata JSON):", folderName, e);
+      return null;
+    }
+    const fallbackFile =
+      typeof metadata.story_file === "string" && metadata.story_file.trim()
+        ? /** @type {string} */ (metadata.story_file).trim()
+        : "";
+    if (fallbackFile && /^Story-/i.test(fallbackFile) && /\.md$/i.test(fallbackFile)) {
+      try {
+        storyContent = await fetchText(joinContentUrl(basePath, folderName, fallbackFile));
+      } catch (e) {
+        console.warn("[loadInspireStories] Story markdown missing or unreadable (using empty body):", folderName, e);
+      }
+    }
+  }
+
+  const title = typeof metadata.title === "string" ? metadata.title.trim() : "";
+  if (!title) {
+    console.warn("[loadInspireStories] Skipping story (metadata.title required):", folderName);
+    return null;
+  }
+
+  const manifestPhotos = Array.isArray(/** @type {any} */ (entry).photos)
+    ? /** @type {any} */ (entry).photos.filter((p) => typeof p === "string")
+    : [];
+  const photoNames = collectPhotoFilenames(metadata, manifestPhotos);
+  const photos = photoNames.map((name) => joinContentUrl(basePath, folderName, name));
+  const heroPhoto = photos.length ? photos[0] : null;
+
+  const slug =
+    typeof metadata.story_id === "string" && metadata.story_id.trim()
+      ? slugifyFolderName(metadata.story_id.trim())
+      : slugifyFolderName(folderName);
+
+  const id =
+    typeof metadata.id === "string" && metadata.id.trim()
+      ? metadata.id.trim()
+      : typeof metadata.story_id === "string" && metadata.story_id.trim()
+        ? metadata.story_id.trim()
+        : slug;
+
+  const date =
+    typeof metadata.date === "string" && /^\d{4}-\d{2}-\d{2}/.test(metadata.date)
+      ? metadata.date.slice(0, 10)
+      : parseLeadingDateFromFolder(folderName);
+
+  return { id, slug, folderName, title, date, metadata, storyContent, photos, heroPhoto };
+}
+
+/**
  * Load stories using fetch + stories-manifest.json (browser-safe).
+ * All entries are fetched in parallel; metadata and story content are also fetched
+ * in parallel per entry when the storyFile is known from the manifest.
  * @param {{ basePath?: string, manifestUrl?: string | false, stories?: InspireStoryManifestEntry[] }} options
  */
 async function loadInspireStoriesWithFetch(options) {
@@ -133,94 +238,8 @@ async function loadInspireStoriesWithFetch(options) {
     }
   }
 
-  const out = [];
-  for (const entry of entries) {
-    if (!entry || typeof entry !== "object" || typeof entry.folder !== "string" || !entry.folder.trim()) {
-      console.warn("[loadInspireStories] Skipping invalid manifest entry (missing folder).", entry);
-      continue;
-    }
-    const folderName = entry.folder.trim();
-    const metaFile = typeof entry.metaFile === "string" ? entry.metaFile.trim() : "";
-    if (!metaFile || !/^Meta-.+\.txt$/i.test(metaFile)) {
-      console.warn(
-        "[loadInspireStories] Skipping folder (metaFile must match Meta-*.txt pattern):",
-        folderName,
-      );
-      continue;
-    }
-
-    let metadata = {};
-    try {
-      const metaUrl = joinContentUrl(basePath, folderName, metaFile);
-      const metaRaw = await fetchText(metaUrl);
-      metadata = JSON.parse(metaRaw);
-      if (!metadata || typeof metadata !== "object" || Array.isArray(metadata)) {
-        throw new Error("Metadata must be a JSON object");
-      }
-    } catch (e) {
-      console.warn("[loadInspireStories] Skipping story (invalid or missing metadata JSON):", folderName, e);
-      continue;
-    }
-
-    const title = typeof metadata.title === "string" ? metadata.title.trim() : "";
-    if (!title) {
-      console.warn("[loadInspireStories] Skipping story (metadata.title required):", folderName);
-      continue;
-    }
-
-    let storyContent = "";
-    const storyFile =
-      typeof entry.storyFile === "string" && entry.storyFile.trim()
-        ? entry.storyFile.trim()
-        : typeof metadata.story_file === "string" && metadata.story_file.trim()
-          ? /** @type {string} */ (metadata.story_file).trim()
-          : "";
-
-    if (storyFile && /^Story-/i.test(storyFile) && /\.md$/i.test(storyFile)) {
-      try {
-        const storyUrl = joinContentUrl(basePath, folderName, storyFile);
-        storyContent = await fetchText(storyUrl);
-      } catch (e) {
-        console.warn("[loadInspireStories] Story markdown missing or unreadable (using empty body):", folderName, e);
-      }
-    }
-
-    const manifestPhotos = Array.isArray(entry.photos) ? entry.photos.filter((p) => typeof p === "string") : [];
-    const photoNames = collectPhotoFilenames(metadata, manifestPhotos);
-    const photos = photoNames.map((name) => joinContentUrl(basePath, folderName, name));
-    const heroPhoto = photos.length ? photos[0] : null;
-
-    const slug =
-      typeof metadata.story_id === "string" && metadata.story_id.trim()
-        ? slugifyFolderName(metadata.story_id.trim())
-        : slugifyFolderName(folderName);
-
-    const id =
-      typeof metadata.id === "string" && metadata.id.trim()
-        ? metadata.id.trim()
-        : typeof metadata.story_id === "string" && metadata.story_id.trim()
-          ? metadata.story_id.trim()
-          : slug;
-
-    const date =
-      typeof metadata.date === "string" && /^\d{4}-\d{2}-\d{2}/.test(metadata.date)
-        ? metadata.date.slice(0, 10)
-        : parseLeadingDateFromFolder(folderName);
-
-    out.push({
-      id,
-      slug,
-      folderName,
-      title,
-      date,
-      metadata,
-      storyContent,
-      photos,
-      heroPhoto,
-    });
-  }
-
-  return out;
+  const results = await Promise.all(entries.map((entry) => processManifestEntry(basePath, entry)));
+  return /** @type {InspireStory[]} */ (results.filter(Boolean));
 }
 
 /**

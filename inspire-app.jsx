@@ -243,15 +243,6 @@ function InspireEmptyBlock({ title, description, children }) {
   );
 }
 
-const categoryChips = [
-  "Switzerland",
-  "New Zealand",
-  "Expeditions",
-  "Mountains",
-  "Extreme Experiences",
-  "Route Ideas",
-];
-
 const INSPIRE_FACET_UI = [
   { dim: "continent", label: "Continent" },
   { dim: "country", label: "Country" },
@@ -573,16 +564,6 @@ function InspirePage() {
           ) : null}
             </section>
 
-            <section className="-mx-1 flex gap-2 overflow-x-auto px-1 pb-1 sm:mx-0 sm:flex-wrap sm:overflow-visible sm:px-0 sm:pb-0">
-          {categoryChips.map((label) => (
-            <span
-              key={label}
-              className="shrink-0 rounded-full border border-slate-200 bg-white px-4 py-2 text-xs font-semibold leading-snug tracking-wide text-slate-600"
-            >
-              {label}
-            </span>
-          ))}
-        </section>
 
         <section className="space-y-5 sm:space-y-6">
           <div className="flex flex-col gap-1 sm:flex-row sm:items-end sm:justify-between sm:gap-4">
