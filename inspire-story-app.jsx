@@ -110,8 +110,24 @@ function InspireStoryPage() {
     let cancelled = false;
     (async () => {
       try {
-        const mod = await import("./src/utils/loadInspireStories.js");
+        const storyScript = document.querySelector('script[src*="inspire-story-app.jsx"]');
+        const storyAppUrl = storyScript?.src
+          ? new URL(storyScript.src)
+          : new URL("./inspire-story-app.jsx", window.location.href);
+        const utilsBase = new URL("./src/utils/", storyAppUrl);
+        const dataHref = new URL("loadInspireStoriesData.js?v=5", utilsBase).href;
+        const displayHref = new URL("inspireStoryDisplay.js?v=1", utilsBase).href;
+        const [dataMod, displayMod] = await Promise.all([
+          import(/* @vite-ignore */ dataHref),
+          import(/* @vite-ignore */ displayHref),
+        ]);
         if (cancelled) return;
+        const mod = {
+          ...displayMod,
+          loadInspireStories: dataMod.loadInspireStories,
+          loadStories: dataMod.loadStories,
+          default: dataMod.default,
+        };
         setHelpers(mod);
         const load = mod.loadInspireStories || mod.default;
         const list = await load();
@@ -172,9 +188,25 @@ function InspireStoryPage() {
       ? helpers.getInspireStoryHeroAlt(story)
       : "Story";
 
+  const header =
+    typeof window !== "undefined" && typeof window.SiteHeader === "function"
+      ? React.createElement(window.SiteHeader)
+      : (
+          <header className="border-b border-slate-200 bg-white px-4 py-3 shadow-sm sm:px-6">
+            <nav className="mx-auto flex max-w-6xl flex-wrap items-center gap-4 text-sm">
+              <a href="index.html" className="font-semibold text-slate-900">
+                Pikelis Travel
+              </a>
+              <a href="inspire.html" className="font-semibold text-slate-900">
+                Inspire
+              </a>
+            </nav>
+          </header>
+        );
+
   return (
     <div className="min-h-screen bg-[#f7f4ef] text-slate-900">
-      {React.createElement(window.SiteHeader)}
+      {header}
       <main className="mx-auto flex max-w-6xl flex-col gap-8 px-4 pb-16 pt-6 sm:px-6 sm:pt-8">
         <div>
           <a

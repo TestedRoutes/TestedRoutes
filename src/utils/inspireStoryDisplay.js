@@ -34,6 +34,105 @@ function pickFirstString(obj, keys) {
 }
 
 /**
+ * @param {Record<string, unknown>} m
+ * @returns {Record<string, unknown>}
+ */
+function inspireGeographyObject(m) {
+  try {
+    const g = m.geography;
+    if (g && typeof g === "object" && !Array.isArray(g)) return /** @type {Record<string, unknown>} */ (g);
+  } catch {
+    /* ignore */
+  }
+  return {};
+}
+
+/**
+ * @param {Record<string, unknown>} m
+ * @returns {Record<string, unknown>}
+ */
+function inspireClassificationObject(m) {
+  try {
+    const c = m.classification;
+    if (c && typeof c === "object" && !Array.isArray(c)) return /** @type {Record<string, unknown>} */ (c);
+  } catch {
+    /* ignore */
+  }
+  return {};
+}
+
+/**
+ * @param {Record<string, unknown>} m
+ * @returns {Record<string, unknown>}
+ */
+function inspireDifficultyObject(m) {
+  try {
+    const d = m.difficulty;
+    if (d && typeof d === "object" && !Array.isArray(d)) return /** @type {Record<string, unknown>} */ (d);
+  } catch {
+    /* ignore */
+  }
+  return {};
+}
+
+/**
+ * @param {Record<string, unknown>} m
+ * @returns {Record<string, unknown>}
+ */
+function inspireTimingObject(m) {
+  try {
+    const t = m.timing;
+    if (t && typeof t === "object" && !Array.isArray(t)) return /** @type {Record<string, unknown>} */ (t);
+  } catch {
+    /* ignore */
+  }
+  return {};
+}
+
+/**
+ * @param {Record<string, unknown>} m
+ * @returns {Record<string, unknown>}
+ */
+function inspireBudgetObject(m) {
+  try {
+    const b = m.budget;
+    if (b && typeof b === "object" && !Array.isArray(b)) return /** @type {Record<string, unknown>} */ (b);
+  } catch {
+    /* ignore */
+  }
+  return {};
+}
+
+/**
+ * @param {Record<string, unknown>} m
+ * @returns {Record<string, unknown>}
+ */
+function inspireSuitabilityObject(m) {
+  try {
+    const s = m.suitability;
+    if (s && typeof s === "object" && !Array.isArray(s)) return /** @type {Record<string, unknown>} */ (s);
+  } catch {
+    /* ignore */
+  }
+  return {};
+}
+
+/**
+ * Humanize snake_case filter tokens (europe → Europe).
+ * @param {string} s
+ */
+function humanizeGeoToken(s) {
+  const t = String(s ?? "").trim();
+  if (!t) return "";
+  if (/[A-Z]/.test(t) && !/_/.test(t)) return t;
+  return t
+    .split(/_/g)
+    .filter(Boolean)
+    .map((w) => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase())
+    .join(" ");
+}
+
+/**
  * @param {unknown} value
  * @returns {string}
  */
@@ -94,10 +193,14 @@ export function formatInspireJourneyCategoryLabel(raw) {
  */
 export function getInspireStoryGeoFields(metadata) {
   const m = safeMetadata(metadata);
+  const geo = inspireGeographyObject(m);
   const country = formatInspireJourneyCategoryLabel(
-    pickFirstString(m, ["country", "location_country", "country_name"]),
+    pickFirstString(geo, ["country", "location_country", "country_name"]) ||
+      pickFirstString(m, ["country", "location_country", "country_name"]),
   );
-  const continent = formatInspireJourneyCategoryLabel(pickFirstString(m, ["continent", "region_continent"]));
+  const continentRaw =
+    pickFirstString(geo, ["continent", "region_continent"]) || pickFirstString(m, ["continent", "region_continent"]);
+  const continent = formatInspireJourneyCategoryLabel(humanizeGeoToken(continentRaw) || continentRaw);
   return { country, continent };
 }
 
@@ -120,9 +223,46 @@ export function getInspireStoryGeoLabel(metadata) {
 /**
  * @param {Record<string, unknown>} m
  */
+function durationDaysNumber(m) {
+  try {
+    const timing = inspireTimingObject(m);
+    const raw =
+      timing.duration_days ??
+      m.duration_days ??
+      m.trip_duration_days ??
+      m.journey_duration_days ??
+      timing.duration_nights;
+    if (typeof raw === "number" && Number.isFinite(raw)) return Math.max(0, Math.floor(raw));
+    const n = parseInt(String(raw ?? "").trim(), 10);
+    return Number.isFinite(n) ? Math.max(0, n) : null;
+  } catch {
+    return null;
+  }
+}
+
+/**
+ * @param {number|null} days
+ * @returns {string[]}
+ */
+function durationBucketsFromDays(days) {
+  if (days === null || days === undefined) return [];
+  if (days < 1) return ["< 1 day"];
+  if (days === 1) return ["1 day"];
+  if (days <= 3) return ["1–3 days"];
+  if (days <= 7) return ["4–7 days"];
+  if (days <= 14) return ["1–2 weeks"];
+  return ["2+ weeks"];
+}
+
 function durationDisplayFromMetadata(m) {
-  const daysRaw = m.duration_days ?? m.trip_duration_days ?? m.journey_duration_days;
-  const fromDays = formatInspireDurationDays(daysRaw);
+  const daysNum = durationDaysNumber(m);
+  if (daysNum !== null) {
+    const fromDays = formatInspireDurationDays(daysNum);
+    if (fromDays) return fromDays;
+  }
+  const fromDays = formatInspireDurationDays(
+    m.duration_days ?? m.trip_duration_days ?? m.journey_duration_days ?? inspireTimingObject(m).duration_days,
+  );
   if (fromDays) return fromDays;
   return pickFirstString(m, ["duration", "journey_duration", "trip_duration"]);
 }
@@ -134,8 +274,11 @@ function durationDisplayFromMetadata(m) {
 export function getInspireStoryCategoryDurationLine(metadata) {
   try {
     const m = safeMetadata(metadata);
-    const catRaw = pickFirstString(m, ["journey_category", "category", "trip_type"]);
-    const cat = formatInspireJourneyCategoryLabel(catRaw);
+    const cls = inspireClassificationObject(m);
+    const catRaw =
+      pickFirstString(cls, ["journey_category", "activity_category", "primary_collection"]) ||
+      pickFirstString(m, ["journey_category", "category", "trip_type"]);
+    const cat = formatInspireJourneyCategoryLabel(String(catRaw || "").replace(/_/g, " "));
     const dur = durationDisplayFromMetadata(m);
     if (cat && dur) return `${cat} · ${dur}`;
     return cat || dur;
@@ -150,8 +293,11 @@ export function getInspireStoryCategoryDurationLine(metadata) {
 export function getInspireStoryDifficulty(metadata) {
   try {
     const m = safeMetadata(metadata);
-    const raw = pickFirstString(m, ["difficulty", "effort", "difficulty_level"]);
-    return formatInspireDifficultyLabel(raw);
+    const diff = inspireDifficultyObject(m);
+    const raw =
+      pickFirstString(diff, ["overall_level", "level", "rating"]) ||
+      pickFirstString(m, ["difficulty", "effort", "difficulty_level"]);
+    return formatInspireDifficultyLabel(String(raw || "").replace(/_/g, " "));
   } catch {
     return "";
   }
@@ -182,6 +328,10 @@ export function getInspireStoryGuideUrl(metadata) {
 export function inspireStoryHasGuide(metadata) {
   try {
     const m = safeMetadata(metadata);
+    const g = m.guide && typeof m.guide === "object" && !Array.isArray(m.guide) ? /** @type {Record<string, unknown>} */ (m.guide) : {};
+    if (g.has_guide === true || g.has_guide === "true" || g.has_guide === 1 || g.has_guide === "1") {
+      return true;
+    }
     if (m.has_guide === true || m.has_guide === "true" || m.has_guide === 1 || m.has_guide === "1") {
       return true;
     }
@@ -292,6 +442,13 @@ export function normalizeInspireSearchQuery(query) {
 function inspireMetadataActivityTagsText(m) {
   try {
     const parts = [];
+    const cls = inspireClassificationObject(m);
+    const clsTags = cls.activity_tags ?? cls.tags;
+    if (Array.isArray(clsTags)) {
+      for (const item of clsTags) {
+        if (typeof item === "string" && item.trim()) parts.push(item.trim());
+      }
+    }
     const keys = ["activity_tags", "tags", "activities", "tag_list", "keywords"];
     for (const k of keys) {
       const v = m[k];
@@ -323,17 +480,24 @@ export function getInspireStorySearchHaystack(story) {
     const m = safeMetadata(st.metadata);
     const title = typeof st.title === "string" ? st.title.trim() : "";
     const { country, continent } = getInspireStoryGeoFields(m);
-    const category = pickFirstString(m, ["journey_category", "category", "trip_type"]);
-    const city = pickFirstString(m, [
-      "nearest_major_city",
-      "nearest_city",
-      "major_city",
-      "city",
-      "hub_city",
-    ]);
+    const geo = inspireGeographyObject(m);
+    const cls = inspireClassificationObject(m);
+    const category =
+      pickFirstString(cls, ["journey_category", "activity_category", "primary_collection"]) ||
+      pickFirstString(m, ["journey_category", "category", "trip_type"]);
+    const city =
+      pickFirstString(geo, ["nearest_major_city", "nearest_city", "major_city", "city", "hub_city"]) ||
+      pickFirstString(m, [
+        "nearest_major_city",
+        "nearest_city",
+        "major_city",
+        "city",
+        "hub_city",
+      ]);
+    const sid = pickFirstString(m, ["story_id", "slug"]);
     const tags = inspireMetadataActivityTagsText(m);
     const md = getInspireStoryMarkdownExcerpt(st, { maxLength: 180000 });
-    const chunks = [title, country, continent, category, city, tags, md];
+    const chunks = [title, country, continent, category, city, sid, tags, md];
     return chunks
       .filter(Boolean)
       .join(" ")
@@ -496,6 +660,9 @@ export function sortInspireStoriesByKey(stories, sortKey) {
       case "difficulty":
         arr.sort(cmpDifficulty);
         break;
+      case "popular":
+        arr.sort(cmpDateRecent);
+        break;
       case "recent":
       default:
         arr.sort(cmpDateRecent);
@@ -609,6 +776,28 @@ function flattenMetaMulti(m, keys) {
 function inspireStoryActivityTagsArray(m) {
   const parts = [];
   try {
+    const cls = inspireClassificationObject(m);
+    const jc = pickFirstString(cls, ["journey_category", "activity_category"]);
+    if (jc) parts.push(jc.replace(/_/g, " "));
+    const pc = pickFirstString(cls, ["primary_collection"]);
+    if (pc) parts.push(pc);
+    const clsTags = cls.activity_tags ?? cls.tags;
+    if (Array.isArray(clsTags)) {
+      for (const item of clsTags) {
+        if (typeof item === "string" && item.trim()) parts.push(item.trim());
+      }
+    } else if (typeof clsTags === "string" && clsTags.trim()) {
+      clsTags.split(/[,;]/).forEach((piece) => {
+        const t = piece.trim();
+        if (t) parts.push(t);
+      });
+    }
+    const allCol = cls.all_collections;
+    if (Array.isArray(allCol)) {
+      for (const item of allCol) {
+        if (typeof item === "string" && item.trim()) parts.push(item.trim());
+      }
+    }
     const keys = ["activity_tags", "tags", "activities", "tag_list", "keywords"];
     for (const k of keys) {
       const v = m[k];
@@ -660,23 +849,57 @@ export function projectInspireStoryFacetValues(story) {
     const geo = getInspireStoryGeoFields(m);
     const continent = geo.continent ? [geo.continent] : [U];
     const country = geo.country ? [geo.country] : [U];
-    const dur = durationDisplayFromMetadata(m);
-    const duration = dur ? [dur] : [U];
+    const daysNum = durationDaysNumber(m);
+    let duration =
+      daysNum !== null && durationBucketsFromDays(daysNum).length
+        ? durationBucketsFromDays(daysNum)
+        : [];
+    if (!duration.length) {
+      const dur = durationDisplayFromMetadata(m);
+      duration = dur ? [dur] : [U];
+    }
     const act = inspireStoryActivityTagsArray(m);
     const activity = act.length ? act : [U];
     const diffRaw = getInspireStoryDifficulty(m);
     const difficulty = diffRaw ? [diffRaw] : [U];
-    const suitableFor = flattenMetaMulti(m, [
+    const suit = inspireSuitabilityObject(m);
+    const suitLabels = [];
+    if (suit.family_friendly === true || suit.family_friendly === "true" || suit.family_friendly === 1) {
+      suitLabels.push("Families");
+    }
+    if (suit.solo_friendly === true || suit.solo_friendly === "true" || suit.solo_friendly === 1) {
+      suitLabels.push("Solo");
+    }
+    if (suit.beginner_friendly === true || suit.beginner_friendly === "true" || suit.beginner_friendly === 1) {
+      suitLabels.push("Beginners");
+    }
+    const suitableFromFlat = flattenMetaMulti(m, [
       "suitable_for",
       "suitable_for_tags",
       "audience",
       "travelers",
       "group_type",
     ]);
+    const suitableFor = uniqueSortedFacetValues([...suitLabels, ...suitableFromFlat]);
     const suitableForOut = suitableFor.length ? suitableFor : [U];
-    const seasonVals = flattenMetaMulti(m, ["season", "travel_season", "best_season", "months", "ideal_months"]);
+    const timing = inspireTimingObject(m);
+    const bestSeasons = timing.best_seasons ?? timing.seasons ?? m.best_seasons;
+    const seasonFromTiming = Array.isArray(bestSeasons)
+      ? bestSeasons.filter((x) => typeof x === "string" && x.trim()).map((x) => humanizeGeoToken(x))
+      : [];
+    const seasonVals = uniqueSortedFacetValues([
+      ...seasonFromTiming,
+      ...flattenMetaMulti(m, ["season", "travel_season", "best_season", "months", "ideal_months"]),
+    ]);
     const season = seasonVals.length ? seasonVals : [U];
-    const budgetVals = flattenMetaMulti(m, ["budget", "budget_level", "cost_level", "trip_budget"]);
+    const bud = inspireBudgetObject(m);
+    const budgetStr =
+      pickFirstString(bud, ["level", "tier", "category"]) ||
+      (typeof m.budget === "string" ? m.budget.trim() : "");
+    const budgetVals = uniqueSortedFacetValues([
+      ...(budgetStr ? [humanizeGeoToken(budgetStr.replace(/_/g, " ")) || budgetStr] : []),
+      ...flattenMetaMulti(m, ["budget", "budget_level", "cost_level", "trip_budget"]),
+    ]);
     const budget = budgetVals.length ? budgetVals : [U];
     const guide = inspireStoryHasGuide(m) ? ["Yes"] : ["No"];
     return {
