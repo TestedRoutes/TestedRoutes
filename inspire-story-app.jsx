@@ -7,7 +7,7 @@ function markdownToSafeHtml(md) {
     if (typeof DOMPurify !== "undefined" && typeof DOMPurify.sanitize === "function") {
       return DOMPurify.sanitize(raw, { USE_PROFILES: { html: true } });
     }
-    return raw;
+    return "";
   } catch {
     return "";
   }
@@ -235,7 +235,7 @@ function InspireStoryPage() {
 
             {galleryUrls.length ? (
               <section className="rounded-[28px] bg-white p-6 shadow-sm ring-1 ring-slate-200">
-                <p className="mb-4 text-xs font-semibold uppercase tracking-[0.2em] text-slate-500">Gallery</p>
+                <h2 className="mb-4 text-xs font-semibold uppercase tracking-[0.2em] text-slate-500">Gallery</h2>
                 <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
                   {galleryUrls.map((url, i) => (
                     <GalleryImage key={`${i}-${url}`} src={url} alt={heroAlt} />
@@ -262,7 +262,7 @@ function InspireStoryPage() {
 
             {guideHref ? (
               <section className="rounded-[28px] bg-white p-6 shadow-sm ring-1 ring-slate-200">
-                <p className="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500">Guide</p>
+                <h2 className="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500">Guide</h2>
                 <a
                   href={guideHref}
                   className="mt-3 inline-flex rounded-full bg-slate-900 px-5 py-2 text-xs font-semibold text-white"

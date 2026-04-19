@@ -22,7 +22,7 @@ function AboutMePage() {
 
           <div className="space-y-4">
 
-            <p className="text-3xl font-semibold md:text-4xl">About Me</p>
+            <h1 className="text-3xl font-semibold md:text-4xl">About Me</h1>
 
             <p className="text-sm leading-relaxed text-slate-600">
 
@@ -118,11 +118,11 @@ function AboutMePage() {
 
             <div className="space-y-3">
 
-              <p className="text-lg font-semibold text-slate-900">
+              <h2 className="text-lg font-semibold text-slate-900">
 
                 This map shows where I've planned trips myself.
 
-              </p>
+              </h2>
 
               <p className="text-sm text-slate-600">
 
@@ -170,11 +170,11 @@ function AboutMePage() {
 
           <div className="space-y-3">
 
-            <p className="text-lg font-semibold text-slate-900">
+            <h2 className="text-lg font-semibold text-slate-900">
 
               Why these guides work better in real life
 
-            </p>
+            </h2>
 
             <p className="text-sm text-slate-600">
 
@@ -224,11 +224,11 @@ function AboutMePage() {
 
         <section className="space-y-4">
 
-          <p className="text-lg font-semibold text-slate-900">
+          <h2 className="text-lg font-semibold text-slate-900">
 
             Road expeditions I've completed myself
 
-          </p>
+          </h2>
 
           <div className="grid gap-4 md:grid-cols-3">
 
@@ -304,11 +304,11 @@ function AboutMePage() {
 
         <section className="space-y-4">
 
-          <p className="text-lg font-semibold text-slate-900">
+          <h2 className="text-lg font-semibold text-slate-900">
 
             Mountains climbed
 
-          </p>
+          </h2>
 
           <div className="grid gap-3 md:grid-cols-3">
 
@@ -384,11 +384,11 @@ function AboutMePage() {
 
         <section className="space-y-4">
 
-          <p className="text-lg font-semibold text-slate-900">
+          <h2 className="text-lg font-semibold text-slate-900">
 
             How I test the routes behind my guides
 
-          </p>
+          </h2>
 
           <p className="text-sm text-slate-600">
 
@@ -526,7 +526,7 @@ function AboutMePage() {
 
           <div className="space-y-3">
 
-            <p className="text-lg font-semibold text-slate-900">Why I do this</p>
+            <h2 className="text-lg font-semibold text-slate-900">Why I do this</h2>
 
             <p className="text-sm text-slate-600">
 
@@ -570,11 +570,11 @@ function AboutMePage() {
 
         <section className="flex flex-col items-start gap-4 rounded-[28px] bg-white p-6 shadow-sm ring-1 ring-slate-200 md:flex-row md:items-center md:justify-between">
 
-          <p className="text-lg font-semibold text-slate-900">
+          <h2 className="text-lg font-semibold text-slate-900">
 
             Ready to travel more and plan less?
 
-          </p>
+          </h2>
 
           <button className="rounded-full bg-slate-900 px-6 py-2 text-xs font-semibold text-white">
 

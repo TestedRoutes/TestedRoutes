@@ -263,7 +263,7 @@ const GuideCard = ({ guide }) => (
       <p className="text-xs uppercase tracking-[0.2em] text-slate-500">
         {guide.category.toUpperCase()}
       </p>
-      <p className="text-lg font-semibold text-slate-900">{guide.title}</p>
+      <h3 className="text-lg font-semibold text-slate-900">{guide.title}</h3>
       <p className="text-sm text-slate-600">
         {guide.duration} • {guide.meta}
       </p>
@@ -512,9 +512,9 @@ function HomepageConcepts() {
       <main className="mx-auto flex max-w-6xl flex-col gap-10 px-6 pb-16 pt-8">
         <section className="space-y-3">
           <div className="space-y-1">
-            <p className="text-2xl font-semibold leading-tight md:text-3xl">
+            <h1 className="text-2xl font-semibold leading-tight md:text-3xl">
               Travel more. Waste less time planning.
-            </p>
+            </h1>
             <p className="text-sm leading-snug text-slate-600">
               Premium travel guides built from 15 years of independent travel across 140 countries — every route personally tested.
             </p>
@@ -525,7 +525,7 @@ function HomepageConcepts() {
 
         <section className="space-y-6">
           <div className="flex items-center justify-between">
-            <p className="text-xl font-semibold">Browse guides</p>
+            <h2 className="text-xl font-semibold">Browse guides</h2>
             <button className="text-xs font-semibold text-slate-600">
               View all
             </button>

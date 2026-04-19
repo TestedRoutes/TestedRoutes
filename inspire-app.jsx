@@ -392,10 +392,8 @@ function InspirePage() {
         if (cancelled) return;
 
         setContentStories(list);
-
-        console.log("[loadInspireStories] loaded stories", list);
       } catch (e) {
-        console.error("[loadInspireStories] failed", e);
+        if (e instanceof Error) console.error("[loadInspireStories] failed", e.message);
 
         if (!cancelled) setContentStories([]);
       } finally {
@@ -460,9 +458,9 @@ function InspirePage() {
           </div>
           <div className="flex flex-col justify-between gap-5 sm:gap-6">
             <div className="space-y-3 sm:space-y-4">
-              <p className="text-3xl font-semibold leading-tight tracking-tight sm:text-4xl md:text-[2.5rem]">
+              <h1 className="text-3xl font-semibold leading-tight tracking-tight sm:text-4xl md:text-[2.5rem]">
                 Inspire
-              </p>
+              </h1>
               <p className="text-[15px] leading-relaxed text-slate-600 sm:text-sm">
                 Real journeys behind the guides — built from 15 years of
                 independent travel across 140 countries.
@@ -750,7 +748,7 @@ function InspirePage() {
         </section>
 
         <section className="space-y-6">
-          <p className="text-xl font-semibold">Explore by type of journey</p>
+          <h2 className="text-xl font-semibold">Explore by type of journey</h2>
           <div className="grid gap-6 md:grid-cols-2">
             {collections.map((collection) => (
               <div
@@ -759,7 +757,7 @@ function InspirePage() {
               >
                 <div className="h-40 rounded-2xl bg-slate-100"></div>
                 <div className="mt-4 space-y-2">
-                  <p className="text-lg font-semibold">{collection.title}</p>
+                  <h3 className="text-lg font-semibold">{collection.title}</h3>
                   <p className="text-sm text-slate-600">{collection.intro}</p>
                   <div className="flex flex-wrap gap-2 text-xs text-slate-500">
                     {collection.examples.map((example) => (
@@ -781,7 +779,7 @@ function InspirePage() {
         </section>
 
         <section className="space-y-6">
-          <p className="text-xl font-semibold">Journeys I've actually done</p>
+          <h2 className="text-xl font-semibold">Journeys I've actually done</h2>
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
             {journeys.map((journey) => (
               <div
@@ -804,7 +802,7 @@ function InspirePage() {
                   <p className="text-xs uppercase tracking-[0.2em] text-slate-500">
                     {journey.category}
                   </p>
-                  <p className="text-lg font-semibold">{journey.title}</p>
+                  <h3 className="text-lg font-semibold">{journey.title}</h3>
                   <p className="text-sm text-slate-600">
                     {journey.summary}
                   </p>
@@ -842,9 +840,9 @@ function InspirePage() {
 
         <section className="space-y-4">
           <div>
-            <p className="text-xl font-semibold">
+            <h2 className="text-xl font-semibold">
               How I test the routes behind my guides
-            </p>
+            </h2>
             <p className="mt-2 text-sm text-slate-600">
               I don’t build routes from a desk. I test them in the field —
               through altitude, logistics, terrain, and real-world uncertainty.
@@ -865,7 +863,7 @@ function InspirePage() {
 
         <section className="flex flex-col items-start gap-4 rounded-[28px] bg-white p-6 shadow-sm ring-1 ring-slate-200 md:flex-row md:items-center md:justify-between">
           <div>
-            <p className="text-lg font-semibold">
+            <h2 className="text-lg font-semibold">
               Ready to turn inspiration into a real route?
             </p>
           </div>
