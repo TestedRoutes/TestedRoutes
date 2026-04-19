@@ -38,18 +38,18 @@
     new google.maps.Polyline({
       map: map,
       path: [origin, dest],
-      strokeColor: "#f97316",
+      strokeColor: "#2f6b7a",
       strokeWeight: 3,
-      strokeOpacity: 0.9,
+      strokeOpacity: 0.85,
     });
 
-    // Orange dot at origin
+    // Start dot at origin
     new google.maps.Marker({
       map: map,
       position: origin,
       icon: {
         url: "data:image/svg+xml;charset=UTF-8," + encodeURIComponent(
-          '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"><circle cx="8" cy="8" r="6" fill="#f97316" stroke="white" stroke-width="2"/></svg>'
+          '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"><circle cx="8" cy="8" r="6" fill="#2f6b7a" stroke="white" stroke-width="2"/></svg>'
         ),
         scaledSize: new google.maps.Size(16, 16),
         anchor: new google.maps.Point(8, 8),
