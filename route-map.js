@@ -13,13 +13,14 @@
   el.style.height = "320px";
 
   window._ptInitMap = function () {
-    var originLat = parseFloat(el.dataset.originLat);
-    var originLng = parseFloat(el.dataset.originLng);
-    var destLat   = parseFloat(el.dataset.destLat);
-    var destLng   = parseFloat(el.dataset.destLng);
+    // data-points="lat,lng|lat,lng|lat,lng" — 2 to 5 pipe-separated points
+    var raw = (el.dataset.points || "").trim();
+    var points = raw.split("|").map(function (p) {
+      var parts = p.trim().split(",");
+      return { lat: parseFloat(parts[0]), lng: parseFloat(parts[1]) };
+    }).filter(function (p) { return !isNaN(p.lat) && !isNaN(p.lng); });
 
-    var origin = { lat: originLat, lng: originLng };
-    var dest   = { lat: destLat,   lng: destLng   };
+    if (points.length < 2) return;
 
     var map = new google.maps.Map(el, {
       mapTypeControl: false,
@@ -28,25 +29,39 @@
       zoomControlOptions: { position: google.maps.ControlPosition.RIGHT_CENTER },
     });
 
-    // Fit bounds to show both points with padding
+    // Fit bounds around all points
     var bounds = new google.maps.LatLngBounds();
-    bounds.extend(origin);
-    bounds.extend(dest);
+    points.forEach(function (p) { bounds.extend(p); });
     map.fitBounds(bounds, { top: 40, right: 40, bottom: 40, left: 40 });
 
-    // Direct line
+    // Line through all points
     new google.maps.Polyline({
       map: map,
-      path: [origin, dest],
+      path: points,
       strokeColor: "#2f6b7a",
       strokeWeight: 3,
       strokeOpacity: 0.85,
     });
 
-    // Start dot at origin
+    // Small dot at every intermediate point (not first or last)
+    for (var i = 1; i < points.length - 1; i++) {
+      new google.maps.Marker({
+        map: map,
+        position: points[i],
+        icon: {
+          url: "data:image/svg+xml;charset=UTF-8," + encodeURIComponent(
+            '<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12"><circle cx="6" cy="6" r="4" fill="#2f6b7a" stroke="white" stroke-width="1.5"/></svg>'
+          ),
+          scaledSize: new google.maps.Size(12, 12),
+          anchor: new google.maps.Point(6, 6),
+        },
+      });
+    }
+
+    // Start dot
     new google.maps.Marker({
       map: map,
-      position: origin,
+      position: points[0],
       icon: {
         url: "data:image/svg+xml;charset=UTF-8," + encodeURIComponent(
           '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"><circle cx="8" cy="8" r="6" fill="#2f6b7a" stroke="white" stroke-width="2"/></svg>'
@@ -56,7 +71,7 @@
       },
     });
 
-    // PT pin at destination
+    // PT pin at last point
     var ptSvg =
       '<svg xmlns="http://www.w3.org/2000/svg" width="52" height="62" viewBox="0 0 52 62">' +
       '<path d="M26 0C11.64 0 0 11.64 0 26c0 19.5 26 36 26 36S52 45.5 52 26C52 11.64 40.36 0 26 0z" fill="#1a1816"/>' +
@@ -66,7 +81,7 @@
 
     new google.maps.Marker({
       map: map,
-      position: dest,
+      position: points[points.length - 1],
       icon: {
         url: "data:image/svg+xml;charset=UTF-8," + encodeURIComponent(ptSvg),
         scaledSize: new google.maps.Size(52, 62),
