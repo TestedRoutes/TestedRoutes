@@ -28,57 +28,23 @@
 
     <main class="mx-auto max-w-6xl px-6 pb-16 pt-8">
 
+      <!-- Breadcrumb -->
+      <nav class="mb-5 flex items-center gap-1.5 text-[12px] text-slate-400" aria-label="Breadcrumb">
+        <a href="../guides.html" class="hover:text-slate-600">Guides</a>
+        <span>›</span>
+        <a href="../guides.html" class="hover:text-slate-600">Switzerland</a>
+        <span>›</span>
+        <span class="text-slate-600">Triftbrücke from Zurich</span>
+      </nav>
+
       <!-- 1. Title block -->
       <div class="mb-4">
         <p class="text-[12px] uppercase tracking-[0.1em] text-slate-500">SWITZERLAND • DAY TRIP • HIKING</p>
         <h1 class="mt-1 text-[32px] font-semibold leading-tight text-slate-900">Triftbrücke from Zurich</h1>
         <p class="mt-1 text-[15px] text-slate-500">A full alpine day from Zurich ending at one of Switzerland's most dramatic suspension bridges, high above a turquoise glacier lake.</p>
-        <div class="mt-3 flex flex-wrap items-center gap-x-5 gap-y-1 border-t border-slate-200 pt-3 text-[13px] text-slate-600">
-          <span><span class="font-semibold text-slate-800">Duration:</span> 1 day</span>
-          <span class="text-slate-300">|</span>
-          <span><span class="font-semibold text-slate-800">Effort:</span> ~3–4 h total (with gondola)</span>
-          <span class="text-slate-300">|</span>
-          <span><span class="font-semibold text-slate-800">Altitude:</span> 1,720 m (bridge level)</span>
-          <span class="text-slate-300">|</span>
-          <span><span class="font-semibold text-slate-800">Access:</span> Car ~2 h · Public transport ~3.5 h from Zürich</span>
-          <span class="text-slate-300">|</span>
-          <span><span class="font-semibold text-slate-800">Highlight:</span> 170 m suspension bridge</span>
-        </div>
       </div>
 
-      <!-- 2. Gallery — Viator style (desktop) -->
-      <div class="mb-8 hidden overflow-hidden rounded-xl md:flex md:gap-2" style="height:440px">
-        <!-- Thumbnail strip -->
-        <div class="flex w-[108px] shrink-0 flex-col gap-2 overflow-y-auto" style="scrollbar-width:none">
-          <img id="thumb-0" src="../Content/Stories/Triftbrucke%20from%20Zurich/Hero-triftfrucke.jpg"    alt="Bridge" onclick="gallerySelect(0)" class="h-[78px] w-full cursor-pointer rounded-lg object-cover ring-2 ring-[#2f6b7a]" />
-          <img id="thumb-1" src="../Content/Stories/Triftbrucke%20from%20Zurich/20201018_100027.jpg"    alt="Trail"  onclick="gallerySelect(1)" class="h-[78px] w-full cursor-pointer rounded-lg object-cover ring-1 ring-slate-200 hover:ring-2 hover:ring-[#2f6b7a]" />
-          <img id="thumb-2" src="../Content/Stories/Triftbrucke%20from%20Zurich/20201018_111328.jpg"    alt="Path"   onclick="gallerySelect(2)" class="h-[78px] w-full cursor-pointer rounded-lg object-cover ring-1 ring-slate-200 hover:ring-2 hover:ring-[#2f6b7a]" />
-          <img id="thumb-3" src="../Content/Stories/Triftbrucke%20from%20Zurich/20201018_114042.jpg"    alt="Lake"   onclick="gallerySelect(3)" class="h-[78px] w-full cursor-pointer rounded-lg object-cover ring-1 ring-slate-200 hover:ring-2 hover:ring-[#2f6b7a]" />
-          <div class="relative h-[78px] w-full shrink-0 cursor-pointer overflow-hidden rounded-lg" onclick="openLightbox(4)">
-            <img src="../Content/Stories/Triftbrucke%20from%20Zurich/20201018_130613.jpg" alt="More" class="h-full w-full object-cover" />
-            <div class="absolute inset-0 flex flex-col items-center justify-center bg-black/55">
-              <span class="text-[11px] font-bold text-white">See</span>
-              <span class="text-[11px] font-bold text-white">More</span>
-            </div>
-          </div>
-        </div>
-        <!-- Main image -->
-        <div class="relative flex-1 overflow-hidden rounded-xl">
-          <img id="gallery-main" src="../Content/Stories/Triftbrucke%20from%20Zurich/Hero-triftfrucke.jpg" alt="Triftbrücke" class="h-full w-full cursor-pointer object-cover" onclick="openLightbox(galleryIdx)" />
-          <!-- Prev -->
-          <button onclick="galleryNav(-1)" class="absolute left-3 top-1/2 flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full bg-white/90 shadow hover:bg-white">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-slate-700" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>
-          </button>
-          <!-- Next -->
-          <button onclick="galleryNav(1)" class="absolute right-3 top-1/2 flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full bg-white/90 shadow hover:bg-white">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-slate-700" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
-          </button>
-          <!-- Counter -->
-          <span id="gallery-counter" class="absolute bottom-3 right-3 rounded-md bg-black/50 px-2 py-0.5 text-[12px] font-medium text-white">1 / 5</span>
-        </div>
-      </div>
-
-      <!-- Mobile: swipeable carousel -->
+      <!-- Mobile: swipeable carousel + purchase -->
       <div class="mb-6 md:hidden">
         <div class="flex snap-x snap-mandatory gap-2 overflow-x-auto rounded-xl pb-1" style="scrollbar-width:none">
           <img src="../Content/Stories/Triftbrucke%20from%20Zurich/Hero-triftfrucke.jpg" alt="Bridge" class="h-52 w-[80vw] shrink-0 snap-start rounded-xl object-cover" onclick="openLightbox(0)" />
@@ -87,141 +53,290 @@
           <img src="../Content/Stories/Triftbrucke%20from%20Zurich/20201018_114042.jpg"  alt="Lake"  class="h-52 w-[80vw] shrink-0 snap-start rounded-xl object-cover" onclick="openLightbox(3)" />
           <img src="../Content/Stories/Triftbrucke%20from%20Zurich/20201018_130613.jpg"  alt="Views" class="h-52 w-[80vw] shrink-0 snap-start rounded-xl object-cover" onclick="openLightbox(4)" />
         </div>
+        <div class="mt-4 rounded-2xl bg-white p-5 shadow ring-1 ring-slate-200">
+          <p class="text-2xl font-semibold text-slate-900">€12.99</p>
+          <button class="mt-3 w-full rounded-full bg-slate-900 px-4 py-2.5 text-sm font-semibold text-white">Get the Guide</button>
+          <p class="mt-2 text-center text-[12px] text-[#0f6e56]">Risk-free · 30-day full refund</p>
+        </div>
       </div>
 
-      <!-- 3. Content + Sidebar -->
-      <div class="grid gap-8 lg:grid-cols-[2fr_1fr]">
-        <div class="space-y-10">
+      <!-- Desktop: two-column grid spanning full page height -->
+      <div class="hidden md:grid md:grid-cols-[1fr_300px] md:items-start md:gap-6">
 
-          <!-- Location -->
-          <section>
-            <p class="mb-4 text-base font-semibold text-slate-900">Location</p>
-            <div class="grid gap-5 lg:grid-cols-[1fr_1.3fr]">
-              <div>
-                <div class="flex items-start gap-3">
-                  <div class="flex flex-col items-center">
-                    <div class="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#2f6b7a] text-white shadow-sm">
-                      <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
-                    </div>
-                    <div class="my-1 w-0.5 flex-1 bg-[#c8dde1]" style="min-height:3rem"></div>
-                  </div>
-                  <div class="pb-3 pt-1.5">
-                    <p class="text-[10px] font-semibold uppercase tracking-wider text-[#2f6b7a]">Starting point</p>
-                    <p class="text-sm font-semibold text-slate-900">Zurich HB</p>
-                  </div>
-                </div>
-                <div class="flex items-start gap-3">
-                  <div class="flex flex-col items-center">
-                    <div class="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-slate-900 text-white shadow-sm">
-                      <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
-                    </div>
-                    <div class="my-1 w-0.5 flex-1 bg-[#c8dde1]" style="min-height:3rem"></div>
-                  </div>
-                  <div class="pb-3 pt-1.5">
-                    <p class="text-[10px] font-semibold uppercase tracking-wider text-slate-500">Destination</p>
-                    <p class="text-sm font-semibold text-slate-900">Triftbrücke suspension bridge</p>
-                  </div>
-                </div>
-                <div class="flex items-start gap-3">
+        <!-- Left: gallery + all content -->
+        <div>
+
+          <!-- Mosaic gallery -->
+          <div class="mb-8 overflow-hidden rounded-xl" style="display:grid;grid-template-columns:1.6fr 1fr 1fr;grid-template-rows:1fr 1fr;gap:4px;height:420px">
+            <img src="../Content/Stories/Triftbrucke%20from%20Zurich/Hero-triftfrucke.jpg" alt="Triftbrücke suspension bridge" onclick="openLightbox(0)" class="h-full w-full cursor-pointer object-cover" style="grid-row:1/3" />
+            <img src="../Content/Stories/Triftbrucke%20from%20Zurich/20201018_100027.jpg"  alt="Morning trail"                onclick="openLightbox(1)" class="h-full w-full cursor-pointer object-cover" />
+            <img src="../Content/Stories/Triftbrucke%20from%20Zurich/20201018_111328.jpg"  alt="Path gaining height"           onclick="openLightbox(2)" class="h-full w-full cursor-pointer object-cover" />
+            <img src="../Content/Stories/Triftbrucke%20from%20Zurich/20201018_114042.jpg"  alt="Turquoise glacier lake"        onclick="openLightbox(3)" class="h-full w-full cursor-pointer object-cover" />
+            <div class="relative h-full w-full cursor-pointer overflow-hidden" onclick="openLightbox(4)">
+              <img src="../Content/Stories/Triftbrucke%20from%20Zurich/20201018_130613.jpg" alt="Alpine views" class="h-full w-full object-cover" />
+              <div class="absolute inset-0 flex items-center justify-center bg-black/45">
+                <span class="flex items-center gap-2 rounded-full bg-white/90 px-4 py-1.5 text-[13px] font-semibold text-slate-900">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 10h16M4 14h16M4 18h16"/></svg>
+                  View all
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Content sections -->
+          <div class="space-y-10">
+
+        <!-- Trip specs -->
+        <section>
+          <p class="mb-4 font-['Georgia',serif] text-xl font-semibold text-[#1a1816]">Trip details</p>
+          <div class="overflow-hidden rounded-2xl border border-slate-200 bg-white">
+            <div class="divide-y divide-slate-100">
+              <div class="grid grid-cols-[160px_1fr] gap-4 px-5 py-3 md:grid-cols-[200px_1fr]">
+                <p class="text-[11px] font-semibold uppercase tracking-wider text-slate-400 self-center">Duration</p>
+                <p class="text-[14px] text-slate-900">1 full day</p>
+              </div>
+              <div class="grid grid-cols-[160px_1fr] gap-4 px-5 py-3 md:grid-cols-[200px_1fr]">
+                <p class="text-[11px] font-semibold uppercase tracking-wider text-slate-400 self-center">Walking time</p>
+                <p class="text-[14px] text-slate-900">~3–4 h total (with gondola)</p>
+              </div>
+              <div class="grid grid-cols-[160px_1fr] gap-4 px-5 py-3 md:grid-cols-[200px_1fr]">
+                <p class="text-[11px] font-semibold uppercase tracking-wider text-slate-400 self-center">Altitude</p>
+                <p class="text-[14px] text-slate-900">1,720 m (bridge level)</p>
+              </div>
+              <div class="grid grid-cols-[160px_1fr] gap-4 px-5 py-3 md:grid-cols-[200px_1fr]">
+                <p class="text-[11px] font-semibold uppercase tracking-wider text-slate-400 self-center">Access</p>
+                <p class="text-[14px] text-slate-900">Train + bus, or car</p>
+              </div>
+              <div class="grid grid-cols-[160px_1fr] gap-4 px-5 py-3 md:grid-cols-[200px_1fr]">
+                <p class="text-[11px] font-semibold uppercase tracking-wider text-slate-400 self-center">Highlight</p>
+                <p class="text-[14px] text-slate-900">170 m suspension bridge above glacier lake</p>
+              </div>
+              <div class="grid grid-cols-[160px_1fr] gap-4 px-5 py-3 md:grid-cols-[200px_1fr] bg-slate-50">
+                <p class="text-[11px] font-semibold uppercase tracking-wider text-slate-400 self-center">Last verified</p>
+                <p class="text-[14px] text-slate-900">April 2026 — route active, gondola operating</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Location -->
+        <section>
+          <p class="mb-4 font-['Georgia',serif] text-xl font-semibold text-[#1a1816]">Location</p>
+          <div class="grid items-start gap-5 md:grid-cols-[280px_1fr]">
+            <div>
+              <div class="flex items-start gap-3">
+                <div class="flex flex-col items-center">
                   <div class="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#2f6b7a] text-white shadow-sm">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
                   </div>
-                  <div class="pt-1.5">
-                    <p class="text-[10px] font-semibold uppercase tracking-wider text-[#2f6b7a]">Finish</p>
-                    <p class="text-sm font-semibold text-slate-900">Zurich HB</p>
-                  </div>
+                  <div class="my-1 w-0.5 flex-1 bg-[#c8dde1]" style="min-height:3rem"></div>
+                </div>
+                <div class="pb-3 pt-1.5">
+                  <p class="text-[10px] font-semibold uppercase tracking-wider text-[#2f6b7a]">Starting point</p>
+                  <p class="text-sm font-semibold text-slate-900">Zurich HB</p>
                 </div>
               </div>
-              <div id="route-map" data-points="47.3782,8.5403|46.7298,8.3719" class="overflow-hidden rounded-2xl border border-slate-200 bg-slate-100"></div>
+              <div class="flex items-start gap-3">
+                <div class="flex flex-col items-center">
+                  <div class="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-slate-900 text-white shadow-sm">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+                  </div>
+                  <div class="my-1 w-0.5 flex-1 bg-[#c8dde1]" style="min-height:3rem"></div>
+                </div>
+                <div class="pb-3 pt-1.5">
+                  <p class="text-[10px] font-semibold uppercase tracking-wider text-slate-500">Destination</p>
+                  <p class="text-sm font-semibold text-slate-900">Triftbrücke suspension bridge</p>
+                </div>
+              </div>
+              <div class="flex items-start gap-3">
+                <div class="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#2f6b7a] text-white shadow-sm">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+                </div>
+                <div class="pt-1.5">
+                  <p class="text-[10px] font-semibold uppercase tracking-wider text-[#2f6b7a]">Finish</p>
+                  <p class="text-sm font-semibold text-slate-900">Zurich HB</p>
+                </div>
+              </div>
             </div>
-          </section>
-
-          <!-- Why / Who -->
-          <div class="grid grid-cols-1 gap-8 lg:grid-cols-2">
-            <section>
-              <p class="mb-3 font-['Georgia',serif] text-xl font-semibold text-[#1a1816]">Why this trip</p>
-              <ul class="space-y-[0.6rem]">
-                <li class="flex items-start gap-3"><span class="mt-0.5 text-[#0f6e56] font-semibold">✓</span><span class="text-[15px] leading-[1.6] text-[#444441]">Best suspension bridge hike near Zürich</span></li>
-                <li class="flex items-start gap-3"><span class="mt-0.5 text-[#0f6e56] font-semibold">✓</span><span class="text-[15px] leading-[1.6] text-[#444441]">Real glacier landscape without overnight stay</span></li>
-                <li class="flex items-start gap-3"><span class="mt-0.5 text-[#0f6e56] font-semibold">✓</span><span class="text-[15px] leading-[1.6] text-[#444441]">Feels remote but fits into one day</span></li>
-                <li class="flex items-start gap-3"><span class="mt-0.5 text-[#0f6e56] font-semibold">✓</span><span class="text-[15px] leading-[1.6] text-[#444441]">No technical skills required</span></li>
-              </ul>
-              <p class="mt-4 rounded-md border-l-[3px] border-l-[#ea580c] bg-[#fff5ed] px-[14px] py-[10px] text-[13px] font-medium leading-[1.6] text-[#853005]">
-                ⚠️ Not suitable if you have a fear of heights or exposed bridge crossings.
-              </p>
-            </section>
-            <section>
-              <p class="mb-3 font-['Georgia',serif] text-xl font-semibold text-[#1a1816]">Who this is for</p>
-              <ul class="space-y-[0.6rem]">
-                <li class="flex items-start gap-3"><span class="mt-0.5 text-[#2f6b7a] font-semibold">✓</span><span class="text-[15px] leading-[1.6] text-[#444441]">Based in Zurich for 1–2 days or more</span></li>
-                <li class="flex items-start gap-3"><span class="mt-0.5 text-[#2f6b7a] font-semibold">✓</span><span class="text-[15px] leading-[1.6] text-[#444441]">Comfortable walking uphill for 2–3 hours</span></li>
-                <li class="flex items-start gap-3"><span class="mt-0.5 text-[#2f6b7a] font-semibold">✓</span><span class="text-[15px] leading-[1.6] text-[#444441]">Prefer independent travel</span></li>
-                <li class="flex items-start gap-3"><span class="mt-0.5 text-[#2f6b7a] font-semibold">✓</span><span class="text-[15px] leading-[1.6] text-[#444441]">Prefer clear step-by-step logistics, not inspiration</span></li>
-              </ul>
-            </section>
+            <div id="route-map" data-points="47.3782,8.5403|46.7298,8.3719" class="overflow-hidden rounded-2xl border border-slate-200 bg-slate-100"></div>
           </div>
+        </section>
 
-          <!-- What you get -->
+        <!-- Why / Who -->
+        <div class="grid grid-cols-1 gap-8 md:grid-cols-2">
           <section>
-            <p class="mb-3 font-['Georgia',serif] text-xl font-semibold text-[#1a1816]">What you get</p>
-            <div class="space-y-[0.6rem]">
-              <div class="flex items-start gap-3"><span class="mt-0.5 text-[#7f77dd] font-semibold">✓</span><span class="text-[15px] leading-[1.6] text-[#444441]">3 route variants compared: gondola up/down, gondola up/hike down, full hike from Gadmen</span></div>
-              <div class="flex items-start gap-3"><span class="mt-0.5 text-[#7f77dd] font-semibold">✓</span><span class="text-[15px] leading-[1.6] text-[#444441]">Step-by-step day plan for both car and public transport with exact timings</span></div>
-              <div class="flex items-start gap-3"><span class="mt-0.5 text-[#7f77dd] font-semibold">✓</span><span class="text-[15px] leading-[1.6] text-[#444441]">Gondola booking guide: schedule, capacity, pricing, and how to avoid missing your slot</span></div>
-              <div class="flex items-start gap-3"><span class="mt-0.5 text-[#7f77dd] font-semibold">✓</span><span class="text-[15px] leading-[1.6] text-[#444441]">Weather go/no-go rules using MeteoSwiss — when to postpone</span></div>
-              <div class="flex items-start gap-3"><span class="mt-0.5 text-[#7f77dd] font-semibold">✓</span><span class="text-[15px] leading-[1.6] text-[#444441]">Full cost breakdown: gondola, parking, train tickets, and saver fare tips</span></div>
-              <div class="flex items-start gap-3"><span class="mt-0.5 text-[#7f77dd] font-semibold">✓</span><span class="text-[15px] leading-[1.6] text-[#444441]">Complete packing list and what to eat and drink on the route</span></div>
-            </div>
+            <p class="mb-3 font-['Georgia',serif] text-xl font-semibold text-[#1a1816]">Why this trip</p>
+            <ul class="space-y-[0.6rem]">
+              <li class="flex items-start gap-3"><span class="mt-0.5 font-semibold text-[#0f6e56]">✓</span><span class="text-[15px] leading-[1.6] text-[#444441]">Best suspension bridge hike near Zürich</span></li>
+              <li class="flex items-start gap-3"><span class="mt-0.5 font-semibold text-[#0f6e56]">✓</span><span class="text-[15px] leading-[1.6] text-[#444441]">Real glacier landscape without overnight stay</span></li>
+              <li class="flex items-start gap-3"><span class="mt-0.5 font-semibold text-[#0f6e56]">✓</span><span class="text-[15px] leading-[1.6] text-[#444441]">Feels remote but fits into one day</span></li>
+              <li class="flex items-start gap-3"><span class="mt-0.5 font-semibold text-[#0f6e56]">✓</span><span class="text-[15px] leading-[1.6] text-[#444441]">No technical skills required</span></li>
+            </ul>
+            <p class="mt-4 rounded-md border-l-[3px] border-l-[#ea580c] bg-[#fff5ed] px-[14px] py-[10px] text-[13px] font-medium leading-[1.6] text-[#853005]">
+              ⚠️ Not suitable if you have a fear of heights or exposed bridge crossings.
+            </p>
           </section>
-
-          <!-- Story -->
-          <section aria-label="Inspiration">
-            <p class="mb-3 font-['Georgia',serif] text-[20px] font-medium leading-snug text-[#1a1816]">Triftbrücke from Zurich</p>
-            <div class="max-w-[680px] space-y-4 text-base leading-[1.7] text-[#444441]">
-              <p>I did the Triftbrücke hike with a friend on a clear morning, starting straight from the parking lot at 9:30 — no gondola, just the trail and the climb ahead. The path gains height quickly, and within the first hour you already feel far away from the valley. It's steady work, but the kind that keeps you motivated because the landscape keeps opening up around you.</p>
-              <p>By 11:30 we reached the suspension bridge. Seeing it appear suddenly above the turquoise glacier lake is one of those moments that makes the whole ascent worth it. Standing there, with the wind moving the bridge slightly and the glacier right in front of us, felt wild and real in the best possible way.</p>
-              <p>We walked the entire route up and down — about 15 km with 1,200 m of ascent in roughly 5.5 hours. It's a proper hike, but very doable in a day and one of those routes I keep recommending to friends who want a big alpine experience without needing technical skills.</p>
-            </div>
-          </section>
-
-          <!-- Save time and money -->
           <section>
-            <p class="mb-3 font-['Georgia',serif] text-xl font-semibold text-[#1a1816]">Save time and money</p>
-            <div class="grid grid-cols-3 gap-4">
-              <div class="rounded-lg border border-[#e8e6e3] bg-white p-5">
-                <p class="mb-1 text-[13px] uppercase tracking-wide text-[#444441]">Guided tour</p>
-                <p class="mb-1 text-[15px] font-semibold text-[#444441]">€120–180</p>
-                <p class="text-[13px] text-[#444441]">Fixed schedule · Group pace</p>
-              </div>
-              <div class="rounded-lg border border-[#e8e6e3] bg-white p-5">
-                <p class="mb-1 text-[13px] uppercase tracking-wide text-[#444441]">Plan yourself</p>
-                <p class="mb-1 text-[15px] font-semibold text-[#444441]">8+ hours</p>
-                <p class="text-[13px] text-[#444441]">Research · Risk of gaps</p>
-              </div>
-              <div class="rounded-lg border-2 border-[#2f6b7a] bg-white p-5">
-                <p class="mb-1 text-[13px] uppercase tracking-wide text-[#444441]">This guide</p>
-                <p class="mb-1 text-[15px] font-semibold text-[#444441]">€12.99</p>
-                <p class="text-[13px] text-[#444441]">30 min · Complete route</p>
-              </div>
-            </div>
+            <p class="mb-3 font-['Georgia',serif] text-xl font-semibold text-[#1a1816]">Who this is for</p>
+            <ul class="space-y-[0.6rem]">
+              <li class="flex items-start gap-3"><span class="mt-0.5 font-semibold text-[#2f6b7a]">✓</span><span class="text-[15px] leading-[1.6] text-[#444441]">Based in Zurich for 1–2 days or more</span></li>
+              <li class="flex items-start gap-3"><span class="mt-0.5 font-semibold text-[#2f6b7a]">✓</span><span class="text-[15px] leading-[1.6] text-[#444441]">Comfortable walking uphill for 2–3 hours</span></li>
+              <li class="flex items-start gap-3"><span class="mt-0.5 font-semibold text-[#2f6b7a]">✓</span><span class="text-[15px] leading-[1.6] text-[#444441]">Prefer independent travel</span></li>
+              <li class="flex items-start gap-3"><span class="mt-0.5 font-semibold text-[#2f6b7a]">✓</span><span class="text-[15px] leading-[1.6] text-[#444441]">Prefer clear step-by-step logistics, not inspiration</span></li>
+            </ul>
           </section>
-
         </div>
 
-        <!-- Purchase card -->
-        <aside class="rounded-2xl bg-white p-5 shadow-lg ring-1 ring-slate-200 lg:sticky lg:top-6 lg:self-start">
-          <p class="text-sm font-semibold text-slate-900">Purchase</p>
-          <p class="mt-2 text-3xl font-semibold text-slate-900">€12.99</p>
-          <p class="mt-1 text-xs text-slate-500">PDF guide · Instant download</p>
-          <button class="mt-4 w-full rounded-full bg-slate-900 px-4 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-slate-700">
-            Get the Complete Route Plan
+        <!-- What you get -->
+        <section>
+          <p class="mb-3 font-['Georgia',serif] text-xl font-semibold text-[#1a1816]">What you get</p>
+          <div class="space-y-[0.6rem]">
+            <div class="flex items-start gap-3"><span class="mt-0.5 font-semibold text-[#7f77dd]">✓</span><span class="text-[15px] leading-[1.6] text-[#444441]">3 route variants compared: gondola up/down, gondola up/hike down, full hike from Gadmen</span></div>
+            <div class="flex items-start gap-3"><span class="mt-0.5 font-semibold text-[#7f77dd]">✓</span><span class="text-[15px] leading-[1.6] text-[#444441]">Step-by-step day plan for both car and public transport with exact timings</span></div>
+            <div class="flex items-start gap-3"><span class="mt-0.5 font-semibold text-[#7f77dd]">✓</span><span class="text-[15px] leading-[1.6] text-[#444441]">Gondola booking guide: schedule, capacity, pricing, and how to avoid missing your slot</span></div>
+            <div class="flex items-start gap-3"><span class="mt-0.5 font-semibold text-[#7f77dd]">✓</span><span class="text-[15px] leading-[1.6] text-[#444441]">Weather go/no-go rules using MeteoSwiss — when to postpone</span></div>
+            <div class="flex items-start gap-3"><span class="mt-0.5 font-semibold text-[#7f77dd]">✓</span><span class="text-[15px] leading-[1.6] text-[#444441]">Full cost breakdown: gondola, parking, train tickets, and saver fare tips</span></div>
+            <div class="flex items-start gap-3"><span class="mt-0.5 font-semibold text-[#7f77dd]">✓</span><span class="text-[15px] leading-[1.6] text-[#444441]">Complete packing list and what to eat and drink on the route</span></div>
+          </div>
+        </section>
+
+        <!-- Story -->
+        <section aria-label="Inspiration">
+          <p class="mb-3 font-['Georgia',serif] text-xl font-semibold text-[#1a1816]">My Experience</p>
+          <div class="max-w-[680px] space-y-4 text-base leading-[1.7] text-[#444441]">
+            <p>I did the Triftbrücke hike with a friend on a clear morning, starting straight from the parking lot at 9:30 — no gondola, just the trail and the climb ahead. The path gains height quickly, and within the first hour you already feel far away from the valley. It's steady work, but the kind that keeps you motivated because the landscape keeps opening up around you.</p>
+            <p>By 11:30 we reached the suspension bridge. Seeing it appear suddenly above the turquoise glacier lake is one of those moments that makes the whole ascent worth it. Standing there, with the wind moving the bridge slightly and the glacier right in front of us, felt wild and real in the best possible way.</p>
+            <p>We walked the entire route up and down — about 15 km with 1,200 m of ascent in roughly 5.5 hours. It's a proper hike, but very doable in a day and one of those routes I keep recommending to friends who want a big alpine experience without needing technical skills.</p>
+          </div>
+        </section>
+
+        <!-- Save time and money -->
+        <section>
+          <p class="mb-3 font-['Georgia',serif] text-xl font-semibold text-[#1a1816]">Save time and money</p>
+          <div class="grid grid-cols-1 gap-4 sm:grid-cols-3">
+            <div class="rounded-lg border border-[#e8e6e3] bg-white p-5">
+              <p class="mb-1 text-[13px] uppercase tracking-wide text-[#444441]">Guided tour</p>
+              <p class="mb-1 text-[15px] font-semibold text-[#444441]">€120–180</p>
+              <p class="text-[13px] text-[#444441]">Fixed schedule · Group pace</p>
+            </div>
+            <div class="rounded-lg border border-[#e8e6e3] bg-white p-5">
+              <p class="mb-1 text-[13px] uppercase tracking-wide text-[#444441]">Plan yourself</p>
+              <p class="mb-1 text-[15px] font-semibold text-[#444441]">8+ hours</p>
+              <p class="text-[13px] text-[#444441]">Research · Risk of gaps</p>
+            </div>
+            <div class="rounded-lg border-2 border-[#2f6b7a] bg-white p-5">
+              <p class="mb-1 text-[13px] uppercase tracking-wide text-[#444441]">This guide</p>
+              <p class="mb-1 text-[15px] font-semibold text-[#444441]">€12.99</p>
+              <p class="text-[13px] text-[#444441]">30 min · Complete route</p>
+            </div>
+          </div>
+        </section>
+
+          <!-- About the author -->
+          <section class="rounded-2xl border border-slate-200 bg-white p-6">
+            <div class="flex items-start gap-5">
+              <div class="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-[#1a1816] text-white font-serif text-lg font-semibold">PP</div>
+              <div>
+                <p class="text-[11px] font-semibold uppercase tracking-wider text-slate-400">Written by</p>
+                <p class="mt-0.5 text-[17px] font-semibold text-slate-900">Paulius Pikelis</p>
+                <p class="mt-2 text-[14px] leading-relaxed text-slate-600">15 years of independent travel. 140 countries. Every route on this site personally walked, driven, or hiked — then written up so you don't have to figure it out from scratch.</p>
+                <p class="mt-3 text-[14px] font-semibold italic text-[#1a1816]">"AI hasn't been there. I have."</p>
+              </div>
+            </div>
+          </section>
+
+          <!-- FAQ -->
+          <section>
+            <p class="mb-4 font-['Georgia',serif] text-xl font-semibold text-[#1a1816]">Frequently asked questions</p>
+            <div class="divide-y divide-slate-200 rounded-2xl border border-slate-200 bg-white">
+              <details class="group px-5 py-4">
+                <summary class="cursor-pointer list-none text-[14px] font-semibold text-slate-900 marker:hidden">
+                  <span class="flex items-center justify-between">Is this guide up to date?<span class="ml-3 text-slate-400 group-open:rotate-180 transition-transform">▾</span></span>
+                </summary>
+                <p class="mt-2 text-[13px] leading-relaxed text-slate-600">Route last verified April 2026. The Triftbahn gondola was operating and the bridge was open. The guide includes a section on checking current conditions before you go.</p>
+              </details>
+              <details class="group px-5 py-4">
+                <summary class="cursor-pointer list-none text-[14px] font-semibold text-slate-900 marker:hidden">
+                  <span class="flex items-center justify-between">What format is the guide?<span class="ml-3 text-slate-400 group-open:rotate-180 transition-transform">▾</span></span>
+                </summary>
+                <p class="mt-2 text-[13px] leading-relaxed text-slate-600">PDF — works on any device, no internet required once downloaded. Save it to your phone before you leave and use it offline on the trail.</p>
+              </details>
+              <details class="group px-5 py-4">
+                <summary class="cursor-pointer list-none text-[14px] font-semibold text-slate-900 marker:hidden">
+                  <span class="flex items-center justify-between">What if the weather is bad on my day?<span class="ml-3 text-slate-400 group-open:rotate-180 transition-transform">▾</span></span>
+                </summary>
+                <p class="mt-2 text-[13px] leading-relaxed text-slate-600">The guide includes clear go/no-go rules using MeteoSwiss — so you know when to postpone before you've already driven two hours. It also explains what "partly cloudy" actually means for this specific valley.</p>
+              </details>
+              <details class="group px-5 py-4">
+                <summary class="cursor-pointer list-none text-[14px] font-semibold text-slate-900 marker:hidden">
+                  <span class="flex items-center justify-between">Can I get a refund if it doesn't work for me?<span class="ml-3 text-slate-400 group-open:rotate-180 transition-transform">▾</span></span>
+                </summary>
+                <p class="mt-2 text-[13px] leading-relaxed text-slate-600">Yes — 30-day full refund, no questions asked. If the guide doesn't deliver what it promises, just email and I'll refund you the same day.</p>
+              </details>
+            </div>
+          </section>
+
+          </div><!-- /content sections -->
+        </div><!-- /left column -->
+
+        <!-- Right column: sticky purchase card -->
+        <aside class="sticky top-20 rounded-2xl bg-white p-6 shadow-lg ring-1 ring-slate-200">
+          <p class="text-xs font-semibold uppercase tracking-wider text-slate-400">PDF Guide</p>
+          <p class="mt-1 text-[36px] font-semibold leading-none text-slate-900">€12.99</p>
+          <p class="mt-1 text-sm text-slate-500">Instant download</p>
+          <button class="mt-5 w-full rounded-full bg-slate-900 px-4 py-3 text-sm font-semibold text-white shadow-sm hover:bg-slate-700">
+            Get the Guide
           </button>
-          <p class="mt-3 text-[13px] font-medium text-[#0f6e56]">Risk-free · 30-day full refund</p>
-          <p class="mt-3 text-xs text-slate-400">One-time purchase</p>
+          <div class="mt-4 space-y-2.5">
+            <div class="flex items-start gap-2.5">
+              <svg xmlns="http://www.w3.org/2000/svg" class="mt-0.5 h-4 w-4 shrink-0 text-[#0f6e56]" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+              <p class="text-[13px] text-slate-700"><span class="font-semibold">Risk-free</span> · 30-day full refund</p>
+            </div>
+            <div class="flex items-start gap-2.5">
+              <svg xmlns="http://www.w3.org/2000/svg" class="mt-0.5 h-4 w-4 shrink-0 text-[#0f6e56]" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+              <p class="text-[13px] text-slate-700"><span class="font-semibold">One-time purchase</span> · No subscription</p>
+            </div>
+            <div class="flex items-start gap-2.5">
+              <svg xmlns="http://www.w3.org/2000/svg" class="mt-0.5 h-4 w-4 shrink-0 text-[#0f6e56]" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+              <p class="text-[13px] text-slate-700"><span class="font-semibold">Works offline</span> · Save to phone</p>
+            </div>
+          </div>
         </aside>
+
+      </div><!-- /desktop grid -->
+
+      <!-- Bottom CTA -->
+      <div class="mt-16 rounded-2xl bg-[#1a1816] px-8 py-10 text-center text-white">
+        <p class="font-['Georgia',serif] text-[26px] font-semibold leading-snug">Travel more.<br>Waste less time planning.</p>
+        <p class="mt-3 text-[14px] text-slate-400">Premium travel guides built from 15 years of independent travel across 140 countries.</p>
+        <p class="mt-1 text-[14px] font-medium text-slate-300 italic">AI hasn't been there. I have.</p>
+        <div class="mt-6 flex flex-col items-center gap-3">
+          <button class="rounded-full bg-white px-8 py-3 text-sm font-semibold text-slate-900 shadow hover:bg-slate-100">
+            Get the Guide — €12.99
+          </button>
+          <p class="text-[12px] text-slate-500">PDF · Instant download · 30-day refund</p>
+        </div>
       </div>
 
     </main>
+
+    <!-- Footer -->
+    <footer class="mt-12 border-t border-slate-200 bg-[#f7f4ef]">
+      <div class="mx-auto max-w-6xl px-6 py-10">
+        <div class="flex flex-col items-start gap-6 md:flex-row md:items-center md:justify-between">
+          <div>
+            <span class="font-serif text-sm font-semibold uppercase tracking-[0.3em] text-slate-900">Pikelis Travel</span>
+            <p class="mt-1 text-[12px] text-slate-400">15 years · 140 countries · every route personally tested</p>
+          </div>
+          <nav class="flex gap-5 text-[13px] text-slate-500">
+            <a href="../guides.html" class="hover:text-slate-900">Guides</a>
+            <a href="../inspire.html" class="hover:text-slate-900">Inspire</a>
+            <a href="../about.html" class="hover:text-slate-900">About</a>
+          </nav>
+        </div>
+        <p class="mt-6 text-[11px] text-slate-400">© 2026 Pikelis Travel. All rights reserved.</p>
+      </div>
+    </footer>
 
     <!-- Lightbox -->
     <div id="photo-modal" class="fixed inset-0 z-50 hidden items-center justify-center bg-white">
