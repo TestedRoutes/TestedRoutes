@@ -36,7 +36,7 @@ function isLikelyMetaFilename(name) {
 function isLikelyStoryFilename(name) {
   const n = typeof name === "string" ? name.trim() : "";
   if (!n) return false;
-  return /^(Story|story)[-._].*\.(md|txt)$/i.test(n);
+  return /^(\d{8}[\s-])?(\d{2}[\s-]\d{2}[\s-])?((Story|Inspire)[-._]).*\.(md|txt)$/i.test(n);
 }
 
 function normalizeBasePath(basePath) {
@@ -80,7 +80,10 @@ function slugifyFolderName(folderName) {
 }
 
 function sortPhotoFilenames(names) {
-  return [...names].filter((n) => PHOTO_EXT.test(n)).sort((a, b) => a.localeCompare(b, undefined, { numeric: true }));
+  const valid = [...names].filter((n) => PHOTO_EXT.test(n));
+  const heroes = valid.filter((n) => /^hero/i.test(n));
+  const rest = valid.filter((n) => !/^hero/i.test(n)).sort((a, b) => a.localeCompare(b, undefined, { numeric: true }));
+  return [...heroes, ...rest];
 }
 
 function collectPhotoFilenames(metadata, extraPhotos) {

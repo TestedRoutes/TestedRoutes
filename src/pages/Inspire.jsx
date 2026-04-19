@@ -15,6 +15,7 @@
  * @see ../hooks/useInspireBrowseState.js
  */
 import * as React from "react";
+import SiteHeader from "../components/SiteHeader.jsx";
 import InspireStoryCard from "../components/inspire/InspireStoryCard.jsx";
 import { useInspireBrowseState, INSPIRE_FACET_UI, INSPIRE_PAGE_SIZE } from "../hooks/useInspireBrowseState.js";
 
@@ -59,32 +60,6 @@ const extremeExperiences = [
 
 const categoryChips = ["Switzerland", "New Zealand", "Expeditions", "Mountains", "Extreme Experiences", "Route Ideas"];
 
-function SiteHeaderOrFallback() {
-  if (typeof window !== "undefined" && typeof window.SiteHeader === "function") {
-    return React.createElement(window.SiteHeader);
-  }
-  return (
-    <header className="border-b border-slate-200 bg-white px-4 py-3 shadow-sm sm:px-6">
-      <nav className="mx-auto flex max-w-6xl flex-wrap items-center gap-4 text-sm">
-        <a href="index.html" className="font-semibold text-slate-900">
-          Pikelis Travel
-        </a>
-        <a href="destinations.html" className="text-slate-600 hover:text-slate-900">
-          Destinations
-        </a>
-        <a href="guides.html" className="text-slate-600 hover:text-slate-900">
-          Guides
-        </a>
-        <a href="inspire.html" className="font-semibold text-slate-900">
-          Inspire
-        </a>
-        <a href="about.html" className="text-slate-600 hover:text-slate-900">
-          About
-        </a>
-      </nav>
-    </header>
-  );
-}
 
 const Footer = () => (
   <footer className="flex flex-col gap-4 border-t border-slate-200 py-8 text-xs text-slate-500 md:flex-row md:items-center md:justify-between">
@@ -280,7 +255,7 @@ export default function InspirePage(props = {}) {
 
   return (
     <div className="min-h-screen bg-[#f7f4ef] text-slate-900">
-      <SiteHeaderOrFallback />
+      <SiteHeader />
       <main className="w-full pb-16 pt-6 text-slate-900 sm:pt-8">
         <div className="mx-auto flex w-full min-w-0 max-w-6xl flex-col gap-8 px-4 sm:gap-10 sm:px-6">
           <p className="w-full text-[10px] font-medium tabular-nums tracking-wide text-slate-400 sm:text-[11px]">
@@ -331,8 +306,8 @@ export default function InspirePage(props = {}) {
                     onChange={(e) => setSortKey(e.target.value)}
                     className="rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs font-medium text-slate-800 focus:border-slate-300 focus:outline-none focus:ring-2 focus:ring-slate-200"
                   >
+                    <option value="content">Photos &amp; stories first</option>
                     <option value="recent">Most recent</option>
-                    <option value="popular">Popular</option>
                     <option value="oldest">Oldest</option>
                     <option value="alpha">Alphabetical</option>
                     <option value="difficulty">Difficulty</option>

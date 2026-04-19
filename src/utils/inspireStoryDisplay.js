@@ -454,6 +454,22 @@ function cmpDifficulty(a, b) {
   return la.localeCompare(lb, undefined, { sensitivity: "base" }) || cmpTitleLocale(a, b);
 }
 
+function contentRank(story) {
+  const hasPhotos = Array.isArray(story?.photos) && story.photos.length > 0;
+  const hasText = typeof story?.storyContent === "string" && story.storyContent.trim().length > 0;
+  if (hasPhotos && hasText) return 0;
+  if (hasPhotos) return 1;
+  if (hasText) return 2;
+  return 3;
+}
+
+function cmpContent(a, b) {
+  const ra = contentRank(a);
+  const rb = contentRank(b);
+  if (ra !== rb) return ra - rb;
+  return cmpDateRecent(a, b);
+}
+
 export function sortInspireStoriesByKey(stories, sortKey) {
   try {
     if (!Array.isArray(stories)) return [];
@@ -463,9 +479,10 @@ export function sortInspireStoriesByKey(stories, sortKey) {
       case "oldest": arr.sort(cmpDateOldest); break;
       case "alpha": arr.sort(cmpTitleLocale); break;
       case "difficulty": arr.sort(cmpDifficulty); break;
+      case "recent": arr.sort(cmpDateRecent); break;
       case "popular":
-      case "recent":
-      default: arr.sort(cmpDateRecent); break;
+      case "content":
+      default: arr.sort(cmpContent); break;
     }
     return arr;
   } catch {

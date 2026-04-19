@@ -44,7 +44,7 @@ export function useInspireBrowseState(options = {}) {
   const [contentLoaderMod, setContentLoaderMod] = React.useState(null);
   const [searchInput, setSearchInput] = React.useState("");
   const [debouncedSearch, setDebouncedSearch] = React.useState("");
-  const [sortKey, setSortKey] = React.useState("recent");
+  const [sortKey, setSortKey] = React.useState("content");
   const [facetSelection, setFacetSelection] = React.useState(() => createEmptyFacetFromLib());
   const [mobileFiltersOpen, setMobileFiltersOpen] = React.useState(false);
   const [desktopFiltersOpen, setDesktopFiltersOpen] = React.useState(true);
