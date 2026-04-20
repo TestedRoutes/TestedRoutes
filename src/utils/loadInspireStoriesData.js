@@ -1,6 +1,6 @@
 /**
  * Inspire story data loader: manifest + per-folder files via fetch().
- * No framework dependencies — works in any ES module context.
+ * No framework dependencies – works in any ES module context.
  *
  * Default paths assume Vite publicDir = "assets/public", so
  * assets/public/Content/Inspire/ is served at /Content/Inspire/.

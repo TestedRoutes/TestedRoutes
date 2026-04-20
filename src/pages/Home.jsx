@@ -16,15 +16,15 @@ const destinationRail = [
 ];
 
 const searchSuggestions = [
-  { label: "Switzerland — Country", href: "destinations/switzerland/" },
-  { label: "Zurich — Starting point in Switzerland", href: "destinations/switzerland/?start=zurich" },
-  { label: "Triftbrücke from Zurich — Guide", href: "guides/trift-bridge-from-zurich.html" },
-  { label: "Stoos Ridge from Zurich — Guide", href: "guides/stoos-ridge-from-zurich.html" },
-  { label: "Appenzell & Ebenalp from Zurich — Guide", href: "guides/appenzell-ebenalp-from-zurich.html" },
-  { label: "Mount Rigi from Zurich — Guide", href: "guides/mount-rigi-from-zurich.html" },
-  { label: "Säntis from Zurich — Guide", href: "guides/santis-from-zurich.html" },
-  { label: "Flims & Caumasee from Zurich — Guide", href: "guides/flims-caumasee-from-zurich.html" },
-  { label: "Day trips from Zurich — Guide collection", href: "destinations/switzerland/?length=daytrip&start=zurich" },
+  { label: "Switzerland – Country", href: "destinations/switzerland/" },
+  { label: "Zurich – Starting point in Switzerland", href: "destinations/switzerland/?start=zurich" },
+  { label: "Triftbrücke from Zurich – Guide", href: "guides/trift-bridge-from-zurich.html" },
+  { label: "Stoos Ridge from Zurich – Guide", href: "guides/stoos-ridge-from-zurich.html" },
+  { label: "Appenzell & Ebenalp from Zurich – Guide", href: "guides/appenzell-ebenalp-from-zurich.html" },
+  { label: "Mount Rigi from Zurich – Guide", href: "guides/mount-rigi-from-zurich.html" },
+  { label: "Säntis from Zurich – Guide", href: "guides/santis-from-zurich.html" },
+  { label: "Flims & Caumasee from Zurich – Guide", href: "guides/flims-caumasee-from-zurich.html" },
+  { label: "Day trips from Zurich – Guide collection", href: "destinations/switzerland/?length=daytrip&start=zurich" },
 ];
 
 const resolveDestinationSearch = (query) => {
@@ -248,7 +248,7 @@ export default function HomepageConcepts() {
               Travel more. Waste less time planning
             </h1>
             <p className="text-sm leading-snug text-slate-600">
-              Premium travel guides built from 15 years independent travel across 140 countries. AI has not been there — I have!
+              Premium travel guides built from 15 years independent travel across 140 countries. AI has not been there – I have!
             </p>
           </div>
           <SearchBar />

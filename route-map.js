@@ -53,7 +53,7 @@
         }).addTo(map);
       }
 
-      // Start marker — teal circle with "S"
+      // Start marker – teal circle with "S"
       L.marker(points[0], {
         icon: L.divIcon({
           html: '<div style="width:28px;height:28px;border-radius:50%;background:#2f6b7a;border:2.5px solid white;box-shadow:0 2px 6px rgba(0,0,0,.35);display:flex;align-items:center;justify-content:center;font-family:Georgia,serif;font-size:12px;font-weight:700;color:white;letter-spacing:0">S</div>',
@@ -62,7 +62,7 @@
         zIndex: 9,
       }).addTo(map).bindTooltip("Start", { permanent: false });
 
-      // Destination / finish marker — dark PT pin
+      // Destination / finish marker – dark PT pin
       var ptSvg =
         '<svg xmlns="http://www.w3.org/2000/svg" width="36" height="44" viewBox="0 0 52 62">' +
         '<path d="M26 0C11.64 0 0 11.64 0 26c0 19.5 26 36 26 36S52 45.5 52 26 40.36 0 26 0z" fill="#1a1816"/>' +
@@ -85,7 +85,7 @@
   el.style.height = "320px";
 
   window._ptInitMap = function () {
-    // data-points="lat,lng|lat,lng|lat,lng" — 2 to 5 pipe-separated points
+    // data-points="lat,lng|lat,lng|lat,lng" – 2 to 5 pipe-separated points
     var raw = (el.dataset.points || "").trim();
     var points = raw.split("|").map(function (p) {
       var parts = p.trim().split(",");

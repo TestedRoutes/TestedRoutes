@@ -38,7 +38,7 @@ function normSlug(s) {
   return String(s || "").trim().toLowerCase();
 }
 
-// Same grouping logic as Inspire.jsx — keep in sync if you update categories there
+// Same grouping logic as Inspire.jsx – keep in sync if you update categories there
 const ACTIVITY_GROUPS = [
   { key: "Mountains", label: "Mountains, Summits & Hiking", buckets: ["Summit", "Hike"], patterns: [/toubkal|three.?peaks|s.ntis|triftbr|alpine.?pass|appenzell|ebenalp|hike.*geneva/i] },
   { key: "Water",    label: "Water & Ocean",               buckets: ["Diving", "Swimming"], patterns: [/cebu|bohol|philippine/i] },
@@ -225,7 +225,7 @@ export default function InspireStoryPage() {
     }
   }, [phase, story]);
 
-  // Display fields (geo, duration, difficulty, guide, excerpt — no date)
+  // Display fields (geo, duration, difficulty, guide, excerpt – no date)
   const display = React.useMemo(() => {
     if (!story) return { geoLabel: "", categoryDurationLine: "", difficultyLabel: "", hasGuide: false, guideUrl: "", heroAlt: "Story", excerpt: "" };
     return getInspireFeaturedCardDisplay(story);
@@ -326,7 +326,7 @@ export default function InspireStoryPage() {
                 decoding="async"
               />
             ) : null}
-            {/* Gradient overlay — heavier at the bottom so text is always readable */}
+            {/* Gradient overlay – heavier at the bottom so text is always readable */}
             <div className="absolute inset-0 bg-gradient-to-t from-slate-900/92 via-slate-900/45 to-slate-900/10" />
 
             {/* Content positioned over the overlay */}
@@ -350,14 +350,14 @@ export default function InspireStoryPage() {
                 {story.title}
               </h1>
 
-              {/* Tagline — excerpt from story text */}
+              {/* Tagline – excerpt from story text */}
               {display.excerpt ? (
                 <p className="mt-3 max-w-2xl text-sm leading-relaxed text-white/70 sm:text-base line-clamp-2 md:line-clamp-none">
                   {display.excerpt}
                 </p>
               ) : null}
 
-              {/* Meta pills row — no dates */}
+              {/* Meta pills row – no dates */}
               <div className="mt-5 flex flex-wrap items-center gap-2.5">
                 {display.geoLabel ? (
                   <span className="rounded-full bg-white/15 px-3 py-1.5 text-xs font-medium text-white backdrop-blur-sm">
@@ -393,7 +393,7 @@ export default function InspireStoryPage() {
               {/* ── Left column: story body + gallery ── */}
               <div className="min-w-0 flex-1 flex flex-col gap-6 self-start">
 
-                {/* Quick facts — mobile only (desktop sees sidebar) */}
+                {/* Quick facts – mobile only (desktop sees sidebar) */}
                 <div className="md:hidden rounded-[20px] bg-white p-5 shadow-sm ring-1 ring-slate-200">
                   <p className="mb-3 text-[10px] font-bold uppercase tracking-[0.2em] text-slate-400">Quick Facts</p>
                   <dl className="flex flex-col gap-2.5">
@@ -464,7 +464,7 @@ export default function InspireStoryPage() {
               <div className="hidden w-72 shrink-0 md:block">
                 <div className="sticky top-[88px] flex flex-col gap-4">
 
-                  {/* Guide CTA card — specific guide if available, otherwise generic */}
+                  {/* Guide CTA card – specific guide if available, otherwise generic */}
                   <div className="rounded-[20px] bg-slate-900 p-6 text-white shadow-lg">
                     {guideHref ? (
                       <>
@@ -548,7 +548,7 @@ export default function InspireStoryPage() {
               </div>
             </div>
 
-            {/* ── Guide CTA — full-width block below story ── */}
+            {/* ── Guide CTA – full-width block below story ── */}
             {guideHref ? (
               <div className="mt-10 rounded-[28px] bg-white p-8 shadow-sm ring-1 ring-slate-200 md:flex md:items-center md:justify-between md:gap-8">
                 <div className="min-w-0">
@@ -557,7 +557,7 @@ export default function InspireStoryPage() {
                     Planning your own {story.title}?
                   </h2>
                   <p className="mt-2 max-w-xl text-sm leading-relaxed text-slate-600">
-                    The full guide covers everything — permits, agencies, gear list, route logistics, costs and the key lessons from doing this for real.
+                    The full guide covers everything – permits, agencies, gear list, route logistics, costs and the key lessons from doing this for real.
                   </p>
                 </div>
                 <div className="mt-6 shrink-0 md:mt-0">
@@ -576,7 +576,7 @@ export default function InspireStoryPage() {
               <SimilarStoriesRow stories={similarStories} groupLabel={currentGroup.label} />
             ) : null}
 
-            {/* ── Dark conversion block — matches guide page bottom ── */}
+            {/* ── Dark conversion block – matches guide page bottom ── */}
             <div className="mt-12 rounded-[28px] bg-[#1a1816] px-8 py-12 text-center text-white">
               <p className="font-serif text-2xl font-semibold leading-snug sm:text-3xl">
                 Travel more.<br />Waste less time planning.
@@ -606,7 +606,7 @@ export default function InspireStoryPage() {
             </div>
           </main>
 
-          {/* ── Mobile sticky bottom bar — slides up after hero leaves view ── */}
+          {/* ── Mobile sticky bottom bar – slides up after hero leaves view ── */}
           <div
             className={
               "fixed bottom-0 left-0 right-0 z-40 md:hidden border-t border-slate-200 bg-white/96 backdrop-blur-md transition-transform duration-300 " +

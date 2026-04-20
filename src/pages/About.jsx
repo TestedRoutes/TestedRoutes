@@ -133,9 +133,9 @@ export default function AboutMePage() {
           <h2 className="text-lg font-semibold text-slate-900">Mountains climbed</h2>
           <div className="grid gap-3 md:grid-cols-3">
             {[
-              { caption: "Aconcagua (6,961 m) — Argentina", file: "7_Summits_Aconcagua 2017.jpg", alt: "High-altitude ascent day on Aconcagua in the Andes, Argentina" },
-              { caption: "Denali (6,190 m) — USA", file: "7_Summits_Denali 2022.jpg", alt: "Glacier and ridge terrain on a Denali expedition in Alaska, USA" },
-              { caption: "Kilimanjaro (5,895 m) — Tanzania", file: "7_Summits_Kilimanjaro 2016.jpg", alt: "Dawn light on the approach to Kilimanjaro summit, Tanzania" },
+              { caption: "Aconcagua (6,961 m) – Argentina", file: "7_Summits_Aconcagua 2017.jpg", alt: "High-altitude ascent day on Aconcagua in the Andes, Argentina" },
+              { caption: "Denali (6,190 m) – USA", file: "7_Summits_Denali 2022.jpg", alt: "Glacier and ridge terrain on a Denali expedition in Alaska, USA" },
+              { caption: "Kilimanjaro (5,895 m) – Tanzania", file: "7_Summits_Kilimanjaro 2016.jpg", alt: "Dawn light on the approach to Kilimanjaro summit, Tanzania" },
             ].map((item) => (
               <div key={item.caption} className="rounded-2xl bg-white p-4 shadow-sm ring-1 ring-slate-200">
                 <img
@@ -195,7 +195,7 @@ export default function AboutMePage() {
           </div>
           <img
             src={aboutAsset("Why I do this.jpg")}
-            alt="Why I do this — turning travel experience into practical guides"
+            alt="Why I do this – turning travel experience into practical guides"
             className="h-44 w-full rounded-2xl object-cover object-center shadow-sm ring-1 ring-slate-200"
             loading="lazy"
           />

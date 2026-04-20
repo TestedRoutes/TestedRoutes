@@ -1,6 +1,6 @@
 /**
  * Normalized display helpers for Inspire story metadata and markdown.
- * Safe on missing or malformed input — never throws from public exports.
+ * Safe on missing or malformed input – never throws from public exports.
  */
 
 function safeMetadata(metadata) {
