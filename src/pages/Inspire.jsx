@@ -101,6 +101,24 @@ function StoryScrollCard({ story }) {
 }
 
 function GroupedScrollRow({ groupLabel, stories }) {
+  const scrollRef = React.useRef(null);
+  const [canScrollLeft, setCanScrollLeft] = React.useState(false);
+  const [canScrollRight, setCanScrollRight] = React.useState(true);
+
+  const updateArrows = React.useCallback(() => {
+    const el = scrollRef.current;
+    if (!el) return;
+    setCanScrollLeft(el.scrollLeft > 8);
+    setCanScrollRight(el.scrollLeft < el.scrollWidth - el.clientWidth - 8);
+  }, []);
+
+  const scroll = (dir) => {
+    const el = scrollRef.current;
+    if (!el) return;
+    const cardWidth = el.querySelector("a,div")?.offsetWidth || 240;
+    el.scrollBy({ left: dir * (cardWidth + 12), behavior: "smooth" });
+  };
+
   if (!stories.length) return null;
   return (
     <div className="w-full min-w-0">
@@ -108,10 +126,34 @@ function GroupedScrollRow({ groupLabel, stories }) {
         <p className="text-xl font-semibold text-slate-900">{groupLabel}</p>
         <span className="text-sm text-slate-400">{stories.length}</span>
       </div>
-      <div className="no-scrollbar -mx-4 flex gap-3 overflow-x-auto px-4 pb-3 snap-x snap-mandatory sm:-mx-6 sm:px-6">
-        {stories.map((story) => (
-          <StoryScrollCard key={story.id} story={story} />
-        ))}
+      <div className="relative">
+        <div
+          ref={scrollRef}
+          onScroll={updateArrows}
+          className="no-scrollbar -mx-4 flex gap-3 overflow-x-auto px-4 pb-3 snap-x snap-mandatory sm:-mx-6 sm:px-6"
+        >
+          {stories.map((story) => (
+            <StoryScrollCard key={story.id} story={story} />
+          ))}
+        </div>
+        {canScrollLeft && (
+          <button
+            onClick={() => scroll(-1)}
+            aria-label="Scroll left"
+            className="absolute left-0 top-1/2 z-10 -translate-y-1/2 -translate-x-1 flex h-10 w-10 items-center justify-center rounded-full bg-white shadow-md ring-1 ring-slate-200 transition hover:shadow-lg active:scale-95"
+          >
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+          </button>
+        )}
+        {canScrollRight && (
+          <button
+            onClick={() => scroll(1)}
+            aria-label="Scroll right"
+            className="absolute right-0 top-1/2 z-10 -translate-y-1/2 translate-x-1 flex h-10 w-10 items-center justify-center rounded-full bg-white shadow-md ring-1 ring-slate-200 transition hover:shadow-lg active:scale-95"
+          >
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+          </button>
+        )}
       </div>
     </div>
   );
