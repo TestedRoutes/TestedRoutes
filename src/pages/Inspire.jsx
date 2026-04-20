@@ -506,7 +506,7 @@ export default function InspirePage(props = {}) {
           </section>
 
           <section className="grid w-full min-w-0 gap-4 rounded-[28px] bg-white p-6 shadow-sm ring-1 ring-slate-200 md:grid-cols-4">
-            {["140 countries", "15 years of independent planning", "5/7 summits completed", "Routes tested with family and friends"].map(
+            {["140+ countries", "15+ years of independent planning", "5/7 summits completed", "Routes tested in real trips"].map(
               (item) => (
                 <div key={item} className="rounded-2xl bg-slate-50 px-4 py-4 text-xs font-semibold text-slate-700">
                   {item}
