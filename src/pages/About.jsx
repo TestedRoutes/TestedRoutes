@@ -52,7 +52,7 @@ export default function AboutMePage() {
               </div>
             ))}
           </div>
-          <div className="grid gap-4 md:grid-cols-[1.1fr_0.9fr] md:items-start">
+          <div className="grid gap-6 rounded-[28px] bg-white p-6 shadow-sm ring-1 ring-slate-200 md:grid-cols-[1.1fr_0.9fr] md:items-start">
             <div className="space-y-3">
               <h2 className="text-lg font-semibold text-slate-900">
                 This map shows where I've planned trips myself.
@@ -65,7 +65,7 @@ export default function AboutMePage() {
               </p>
               <p className="text-sm text-slate-600">That's the experience behind these guides.</p>
             </div>
-            <div className="overflow-hidden rounded-2xl bg-white shadow-sm ring-1 ring-slate-200">
+            <div className="overflow-hidden rounded-2xl shadow-sm ring-1 ring-slate-200">
               <img
                 src={aboutAsset("Countries_visited.jpg")}
                 alt="World map highlighting countries where trips were planned and tested in person"
