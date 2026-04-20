@@ -12,6 +12,7 @@ export default defineConfig({
         inspire: resolve(__dirname, "inspire.html"),
         guides: resolve(__dirname, "guides.html"),
         about: resolve(__dirname, "about.html"),
+        destinations: resolve(__dirname, "destinations.html"),
         "inspire-story": resolve(__dirname, "inspire-story.html"),
       },
     },
