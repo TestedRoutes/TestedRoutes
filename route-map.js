@@ -5,10 +5,80 @@
   var key = window.SITE_CONFIG && window.SITE_CONFIG.googleMapsKey;
 
   if (!key || key === "YOUR_GOOGLE_MAPS_API_KEY") {
-    el.style.overflow = "hidden";
+    // ── Leaflet fallback (free, no API key, supports multiple markers) ──
+    var raw = (el.dataset.points || "").trim();
+    var points = raw.split("|").map(function (p) {
+      var parts = p.trim().split(",");
+      return [parseFloat(parts[0]), parseFloat(parts[1])];
+    }).filter(function (p) { return !isNaN(p[0]) && !isNaN(p[1]); });
+
+    if (!points.length) return;
+
+    el.style.height = "360px";
     el.style.position = "relative";
-    el.innerHTML =
-      '<iframe src="https://www.openstreetmap.org/export/embed.html?bbox=8.334%2C46.710%2C8.390%2C46.745&layer=mapnik&marker=46.7298%2C8.3719" width="100%" height="360" style="border:0;display:block;margin-bottom:-40px" loading="lazy"></iframe>';
+
+    // Inject Leaflet CSS
+    var link = document.createElement("link");
+    link.rel = "stylesheet";
+    link.href = "https://unpkg.com/leaflet@1.9.4/dist/leaflet.css";
+    document.head.appendChild(link);
+
+    // Load Leaflet JS then initialise
+    var lfScript = document.createElement("script");
+    lfScript.src = "https://unpkg.com/leaflet@1.9.4/dist/leaflet.js";
+    lfScript.onload = function () {
+      var map = L.map(el, { zoomControl: true });
+
+      L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+        attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+        maxZoom: 18,
+      }).addTo(map);
+
+      // Fit to all points
+      map.fitBounds(points.length > 1 ? points : [points[0], points[0]], { padding: [40, 40] });
+      if (points.length === 1) map.setZoom(12);
+
+      // Line connecting all points
+      if (points.length > 1) {
+        L.polyline(points, { color: "#2f6b7a", weight: 3, opacity: 0.85 }).addTo(map);
+      }
+
+      // Intermediate stop dots (not first or last)
+      for (var i = 1; i < points.length - 1; i++) {
+        L.marker(points[i], {
+          icon: L.divIcon({
+            html: '<div style="width:10px;height:10px;border-radius:50%;background:#2f6b7a;border:2px solid white;box-shadow:0 1px 3px rgba(0,0,0,.3)"></div>',
+            iconSize: [10, 10], iconAnchor: [5, 5], className: "",
+          }),
+        }).addTo(map);
+      }
+
+      // Start marker — teal circle with "S"
+      L.marker(points[0], {
+        icon: L.divIcon({
+          html: '<div style="width:28px;height:28px;border-radius:50%;background:#2f6b7a;border:2.5px solid white;box-shadow:0 2px 6px rgba(0,0,0,.35);display:flex;align-items:center;justify-content:center;font-family:Georgia,serif;font-size:12px;font-weight:700;color:white;letter-spacing:0">S</div>',
+          iconSize: [28, 28], iconAnchor: [14, 14], className: "",
+        }),
+        zIndex: 9,
+      }).addTo(map).bindTooltip("Start", { permanent: false });
+
+      // Destination / finish marker — dark PT pin
+      var ptSvg =
+        '<svg xmlns="http://www.w3.org/2000/svg" width="36" height="44" viewBox="0 0 52 62">' +
+        '<path d="M26 0C11.64 0 0 11.64 0 26c0 19.5 26 36 26 36S52 45.5 52 26 40.36 0 26 0z" fill="#1a1816"/>' +
+        '<circle cx="26" cy="25" r="18" fill="#1a1816" stroke="white" stroke-width="2.5"/>' +
+        '<text x="26" y="31" text-anchor="middle" font-family="Georgia,serif" font-size="14" font-weight="bold" fill="white" letter-spacing="1.5">PT</text>' +
+        '</svg>';
+
+      L.marker(points[points.length - 1], {
+        icon: L.divIcon({
+          html: ptSvg,
+          iconSize: [36, 44], iconAnchor: [18, 44], className: "",
+        }),
+        zIndex: 10,
+      }).addTo(map).bindTooltip("Destination", { permanent: false });
+    };
+    document.head.appendChild(lfScript);
     return;
   }
 
