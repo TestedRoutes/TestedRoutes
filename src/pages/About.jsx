@@ -15,19 +15,21 @@ export default function AboutMePage() {
           <div className="space-y-4">
             <h1 className="text-3xl font-semibold md:text-4xl">About Me</h1>
             <p className="text-sm leading-relaxed text-slate-600">
-              I don't build guides from desk research or generic itineraries.
-              Every route here comes from trips I've planned and tested myself
-              across 140+ countries - from simple day hikes in Switzerland to
-              overland routes through West Africa.
+              I do not build guides from desk research or generic itineraries.
+              Every route here comes from trips I have planned and tested myself
+              across more than 140 countries, from day hikes in Switzerland to
+              overland travel through West Africa.
             </p>
             <p className="text-sm leading-relaxed text-slate-600">
-              After 15+ years planning trips independently, I know where travel
-              plans usually break: connections that don't work, stops that take
-              longer than expected, and routes that look good on paper but fail in
-              real life.
+              After more than 15 years of independent trip planning, I know where travel plans usually fail:
             </p>
+            <ul className="space-y-1 text-sm leading-relaxed text-slate-600">
+              <li className="flex gap-2"><span className="mt-0.5 shrink-0 text-slate-400">•</span>connections that do not work</li>
+              <li className="flex gap-2"><span className="mt-0.5 shrink-0 text-slate-400">•</span>unrealistic travel timings</li>
+              <li className="flex gap-2"><span className="mt-0.5 shrink-0 text-slate-400">•</span>routes that look simple on paper but break once the journey starts</li>
+            </ul>
             <p className="text-sm leading-relaxed text-slate-600">
-              These guides are built to avoid exactly that.
+              These guides are designed to help you avoid exactly that.
             </p>
             <a
               className="inline-flex text-sm font-medium text-slate-900 underline decoration-slate-300 underline-offset-4 transition hover:text-slate-700 hover:decoration-slate-500"
