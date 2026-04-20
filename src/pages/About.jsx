@@ -37,7 +37,7 @@ export default function AboutMePage() {
             </a>
           </div>
           <img
-            src={aboutAsset("About me.jpg")}
+            src={aboutAsset("About me2.jpg")}
             alt="Portrait of the author on the road"
             className="h-auto max-h-none w-full rounded-[18px] object-cover object-center shadow-[0_20px_60px_rgba(0,0,0,0.08)] md:h-full md:min-h-[320px] md:max-h-[420px]"
             loading="lazy"
@@ -67,7 +67,7 @@ export default function AboutMePage() {
             </div>
             <div className="overflow-hidden rounded-2xl shadow-sm ring-1 ring-slate-200">
               <img
-                src={aboutAsset("Countries_visited.jpg")}
+                src={aboutAsset("Countries_visited v2.jpg")}
                 alt="World map highlighting countries where trips were planned and tested in person"
                 className="h-full min-h-[11rem] w-full object-cover object-center"
                 loading="lazy"
@@ -151,14 +151,14 @@ export default function AboutMePage() {
           </p>
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {[
-              { label: "Running with the bulls - Spain", file: "Pamplona 2019.jpg", alt: "Running of the bulls street scene in Pamplona, Spain" },
+              { label: "Running with the bulls - Spain", file: "Running with bulls Pamplona 2019.jpg", alt: "Running of the bulls street scene in Pamplona, Spain" },
               { label: "Shark diving - Fiji", file: "Sharks Fiji 2025.jpg", alt: "Shark diving in clear blue water off Fiji" },
               { label: "Volcano boarding - Nicaragua", file: "Nicaragua boarding 2019.jpg", alt: "Boarding down volcanic ash slopes in Nicaragua" },
               { label: "Paragliding - Brazil", file: "Paragliding.jpg", alt: "Paragliding over coastal hills in Brazil" },
               { label: "Ice climbing - Italy", file: "Ice climbing Italy 2019.jpg", alt: "Ice climbing on a frozen waterfall in the Italian Alps" },
-              { label: "Summits above 6,000 m - Alaska", file: "Alaska 2019 v2.jpg", alt: "Summits above 6,000 m in Alaska (Denali expedition)" },
+              { label: "Summits above 6,000 m - Alaska", file: "Summits Alaska 2019 v2.jpg", alt: "Summits above 6,000 m in Alaska (Denali expedition)" },
               { label: "Iron ore train - Mauritania", file: "Iron Ore train Mauritania 2023.jpg", alt: "Riding the iron ore train across the Mauritanian desert" },
-              { label: "Remote places - Makoko, Nigeria", file: "Africa Rally - Makoko Nigeria 2025.jpg", alt: "Makoko stilt community and waterways in Lagos, Nigeria" },
+              { label: "Remote places - Makoko, Nigeria", file: "Makoko Nigeria 2025.jpg", alt: "Makoko stilt community and waterways in Lagos, Nigeria" },
             ].map((item) => (
               <div key={item.label} className="rounded-2xl bg-white p-4 shadow-sm ring-1 ring-slate-200">
                 <img
