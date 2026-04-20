@@ -27,7 +27,7 @@ export async function loadGuides() {
         country: s.metadata?.geography?.country || "",
         duration: timing.duration_display || `${timing.duration_days || ""} day${timing.duration_days !== 1 ? "s" : ""}`.trim(),
         difficulty: diff.overall_level || "",
-        price: g.guide_price || "",
+        price: g.guide_price ? `€${g.guide_price}` : "",
         currency: g.guide_currency || "EUR",
         image: s.heroPhoto || null,
         href: g.guide_page || pdfHref || null,
