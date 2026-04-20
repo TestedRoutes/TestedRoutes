@@ -65,10 +65,10 @@ export default function AboutMePage() {
               <ul className="space-y-1 text-sm text-slate-600">
                 <li className="flex gap-2"><span className="mt-0.5 shrink-0 text-slate-400">•</span>which border crossings slow trips down</li>
                 <li className="flex gap-2"><span className="mt-0.5 shrink-0 text-slate-400">•</span>which connections save hours</li>
-                <li className="flex gap-2"><span className="mt-0.5 shrink-0 text-slate-400">•</span>how to combine destinations into routes that make sense</li>
+                <li className="flex gap-2"><span className="mt-0.5 shrink-0 text-slate-400">•</span>how to combine destinations into routes that flow naturally</li>
                 <li className="flex gap-2"><span className="mt-0.5 shrink-0 text-slate-400">•</span>how to turn ideas on a map into journeys that actually work</li>
               </ul>
-              <p className="text-sm text-slate-600">That experience shapes every guide I create.</p>
+              <p className="text-sm text-slate-600">This perspective shapes how each guide is structured.</p>
             </div>
             <div className="overflow-hidden rounded-2xl shadow-sm ring-1 ring-slate-200">
               <img
@@ -182,10 +182,10 @@ export default function AboutMePage() {
           <div className="space-y-3">
             <h2 className="text-lg font-semibold text-slate-900">Why I do this</h2>
             <p className="text-sm text-slate-600">
-              I believe independent travel should feel exciting, not overwhelming.
+              Independent travel should feel exciting, not overwhelming.
             </p>
             <p className="text-sm text-slate-600">
-              After visiting 140+ countries and planning trips across some of the world's most remote places, I create guides that turn real experience into clear, practical steps anyone can follow.
+              I create guides that turn complex trips into clear, practical steps that are easy to follow.
             </p>
             <p className="text-sm text-slate-600">
               So you spend less time planning and more time exploring.
