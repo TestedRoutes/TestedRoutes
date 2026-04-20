@@ -55,15 +55,18 @@ export default function AboutMePage() {
           <div className="grid gap-6 rounded-[28px] bg-white p-6 shadow-sm ring-1 ring-slate-200 md:grid-cols-[1.1fr_0.9fr] md:items-start">
             <div className="space-y-3">
               <h2 className="text-lg font-semibold text-slate-900">
-                This map shows where I've planned trips myself.
+                This map shows where I have planned trips myself.
               </h2>
               <p className="text-sm text-slate-600">
-                Traveling across regions changes how you think about routes. You
-                learn which border crossings are slow, which transport shortcuts
-                actually save time, and how to combine places into something that
-                works as a real trip - not just a list on a map.
+                Traveling across regions changes how you think about routes. Over time, you learn:
               </p>
-              <p className="text-sm text-slate-600">That's the experience behind these guides.</p>
+              <ul className="space-y-1 text-sm text-slate-600">
+                <li className="flex gap-2"><span className="mt-0.5 shrink-0 text-slate-400">•</span>which border crossings slow trips down</li>
+                <li className="flex gap-2"><span className="mt-0.5 shrink-0 text-slate-400">•</span>which connections save hours</li>
+                <li className="flex gap-2"><span className="mt-0.5 shrink-0 text-slate-400">•</span>how to combine destinations into routes that make sense</li>
+                <li className="flex gap-2"><span className="mt-0.5 shrink-0 text-slate-400">•</span>how to turn ideas on a map into journeys that actually work</li>
+              </ul>
+              <p className="text-sm text-slate-600">That experience shapes every guide I create.</p>
             </div>
             <div className="overflow-hidden rounded-2xl shadow-sm ring-1 ring-slate-200">
               <img
