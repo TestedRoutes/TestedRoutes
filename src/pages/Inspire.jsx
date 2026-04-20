@@ -132,7 +132,7 @@ function GroupedScrollRow({ groupLabel, stories }) {
         <div
           ref={scrollRef}
           onScroll={updateArrows}
-          className="no-scrollbar -mx-4 flex gap-3 overflow-x-auto px-4 pb-3 snap-x snap-mandatory sm:-mx-6 sm:px-6"
+          className="no-scrollbar flex gap-3 overflow-x-auto pb-3 snap-x snap-mandatory"
         >
           {stories.map((story) => (
             <StoryScrollCard key={story.id} story={story} />
@@ -142,7 +142,7 @@ function GroupedScrollRow({ groupLabel, stories }) {
           <button
             onClick={() => scroll(-1)}
             aria-label="Scroll left"
-            className="absolute left-0 top-1/2 z-10 -translate-y-1/2 -translate-x-1 flex h-10 w-10 items-center justify-center rounded-full bg-white shadow-md ring-1 ring-slate-200 transition hover:shadow-lg active:scale-95"
+            className="absolute -left-4 top-[40%] z-10 -translate-y-1/2 flex h-10 w-10 items-center justify-center rounded-full bg-white shadow-lg ring-1 ring-slate-200 transition hover:shadow-xl active:scale-95"
           >
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
           </button>
@@ -151,7 +151,7 @@ function GroupedScrollRow({ groupLabel, stories }) {
           <button
             onClick={() => scroll(1)}
             aria-label="Scroll right"
-            className="absolute right-0 top-1/2 z-10 -translate-y-1/2 translate-x-1 flex h-10 w-10 items-center justify-center rounded-full bg-white shadow-md ring-1 ring-slate-200 transition hover:shadow-lg active:scale-95"
+            className="absolute -right-4 top-[40%] z-10 -translate-y-1/2 flex h-10 w-10 items-center justify-center rounded-full bg-white shadow-lg ring-1 ring-slate-200 transition hover:shadow-xl active:scale-95"
           >
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
           </button>
