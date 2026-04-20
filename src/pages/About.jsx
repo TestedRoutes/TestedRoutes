@@ -94,8 +94,8 @@ export default function AboutMePage() {
             </p>
           </div>
           <img
-            src={aboutAsset("Matterhorn 2020.jpg")}
-            alt="Alpine scenery near the Matterhorn on a high-mountain trip"
+            src={aboutAsset("Why these guides work.jpg")}
+            alt="Why these guides work better in real life"
             className="h-44 w-full rounded-2xl object-cover object-center shadow-sm ring-1 ring-slate-200"
             loading="lazy"
           />
@@ -105,9 +105,9 @@ export default function AboutMePage() {
           <h2 className="text-lg font-semibold text-slate-900">Road expeditions I've completed myself</h2>
           <div className="grid gap-4 md:grid-cols-3">
             {[
-              { title: "Mongol Rally", file: "Africa Rally 2023.jpg", alt: "Convoy vehicles on a long-distance rally stage across open terrain" },
+              { title: "Mongol Rally", file: "Mongol rally.jpg", alt: "Convoy vehicles on a long-distance rally stage across open terrain" },
               { title: "Africa Rally", file: "Africa rally - Desert 2023.jpg", alt: "Desert driving during the Africa Rally" },
-              { title: "Australia Rally", file: "Mountain biking 2025.jpg", alt: "Remote dirt route and wide landscape during a long-distance rally stage" },
+              { title: "Australia Rally", file: "Australia.JPG", alt: "Remote dirt route and wide landscape during a long-distance rally stage" },
             ].map((item) => (
               <div key={item.title} className="rounded-2xl bg-white p-4 shadow-sm ring-1 ring-slate-200">
                 <img
@@ -185,8 +185,8 @@ export default function AboutMePage() {
             </p>
           </div>
           <img
-            src={aboutAsset("Mt Cook - NZ 2026.jpg")}
-            alt="Aoraki Mount Cook region in New Zealand at golden hour"
+            src={aboutAsset("Why I do this.jpg")}
+            alt="Why I do this — turning travel experience into practical guides"
             className="h-44 w-full rounded-2xl object-cover object-center shadow-sm ring-1 ring-slate-200"
             loading="lazy"
           />
