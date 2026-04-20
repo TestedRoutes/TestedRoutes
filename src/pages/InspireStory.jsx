@@ -265,6 +265,21 @@ export default function InspireStoryPage() {
 
   const guideHref = display.guideUrl || "";
 
+  // Mobile sticky bottom bar: slides up once the hero scrolls out of view
+  const heroRef = React.useRef(null);
+  const [showStickyBar, setShowStickyBar] = React.useState(false);
+  React.useEffect(() => {
+    if (!story) return;
+    const el = heroRef.current;
+    if (!el || typeof IntersectionObserver === "undefined") return;
+    const obs = new IntersectionObserver(
+      ([entry]) => setShowStickyBar(!entry.isIntersecting),
+      { threshold: 0 }
+    );
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, [story]);
+
   return (
     <div className="min-h-screen bg-[#f7f4ef] text-slate-900">
       <SiteHeader />
@@ -300,7 +315,7 @@ export default function InspireStoryPage() {
       {phase === "ready" && story ? (
         <>
           {/* ── HERO ─────────────────────────────────────────────────────────── */}
-          <div className="relative w-full overflow-hidden bg-slate-800" style={{ minHeight: 440 }}>
+          <div ref={heroRef} className="relative w-full overflow-hidden bg-slate-800" style={{ minHeight: 440 }}>
             {heroSrc ? (
               <img
                 src={heroSrc}
@@ -407,14 +422,12 @@ export default function InspireStoryPage() {
                       </div>
                     ) : null}
                   </dl>
-                  {guideHref ? (
-                    <a
-                      href={guideHref}
-                      className="mt-4 flex w-full items-center justify-center rounded-full bg-slate-900 py-2.5 text-xs font-semibold text-white transition hover:bg-slate-800"
-                    >
-                      Read the full guide →
-                    </a>
-                  ) : null}
+                  <a
+                    href={guideHref || "guides.html"}
+                    className="mt-4 flex w-full items-center justify-center rounded-full bg-slate-900 py-2.5 text-xs font-semibold text-white transition hover:bg-slate-800"
+                  >
+                    {guideHref ? "Read the full guide →" : "Browse all guides →"}
+                  </a>
                 </div>
 
                 {/* Story body */}
@@ -451,24 +464,42 @@ export default function InspireStoryPage() {
               <div className="hidden w-72 shrink-0 md:block">
                 <div className="sticky top-[88px] flex flex-col gap-4">
 
-                  {/* Guide CTA card */}
-                  {guideHref ? (
-                    <div className="rounded-[20px] bg-slate-900 p-6 text-white shadow-lg">
-                      <p className="mb-2 text-[10px] font-bold uppercase tracking-[0.2em] text-white/50">
-                        Planning this trip?
-                      </p>
-                      <p className="text-base font-semibold leading-snug">{story.title}</p>
-                      <p className="mt-2 text-xs leading-relaxed text-white/60">
-                        The full guide covers permits, gear, logistics, costs and everything you need to plan this yourself.
-                      </p>
-                      <a
-                        href={guideHref}
-                        className="mt-4 flex w-full items-center justify-center rounded-full bg-white py-2.5 text-xs font-semibold text-slate-900 transition hover:bg-slate-100"
-                      >
-                        Read the full guide →
-                      </a>
-                    </div>
-                  ) : null}
+                  {/* Guide CTA card — specific guide if available, otherwise generic */}
+                  <div className="rounded-[20px] bg-slate-900 p-6 text-white shadow-lg">
+                    {guideHref ? (
+                      <>
+                        <p className="mb-2 text-[10px] font-bold uppercase tracking-[0.2em] text-white/50">
+                          Planning this trip?
+                        </p>
+                        <p className="text-base font-semibold leading-snug">{story.title}</p>
+                        <p className="mt-2 text-xs leading-relaxed text-white/60">
+                          The full guide covers permits, gear, logistics, costs and everything you need to plan this yourself.
+                        </p>
+                        <a
+                          href={guideHref}
+                          className="mt-4 flex w-full items-center justify-center rounded-full bg-white py-2.5 text-xs font-semibold text-slate-900 transition hover:bg-slate-100"
+                        >
+                          Read the full guide →
+                        </a>
+                      </>
+                    ) : (
+                      <>
+                        <p className="mb-2 text-[10px] font-bold uppercase tracking-[0.2em] text-white/50">
+                          Turn inspiration into a plan
+                        </p>
+                        <p className="text-base font-semibold leading-snug">Pikelis Travel Guides</p>
+                        <p className="mt-2 text-xs leading-relaxed text-white/60">
+                          Route-tested guides built from 15 years of independent travel. PDF format, works offline.
+                        </p>
+                        <a
+                          href="guides.html"
+                          className="mt-4 flex w-full items-center justify-center rounded-full bg-white py-2.5 text-xs font-semibold text-slate-900 transition hover:bg-slate-100"
+                        >
+                          Browse all guides →
+                        </a>
+                      </>
+                    )}
+                  </div>
 
                   {/* Quick facts card */}
                   <div className="rounded-[20px] bg-white p-5 shadow-sm ring-1 ring-slate-200">
@@ -545,28 +576,60 @@ export default function InspireStoryPage() {
               <SimilarStoriesRow stories={similarStories} groupLabel={currentGroup.label} />
             ) : null}
 
-            {/* ── Footer CTA — two cards ── */}
-            <div className="mt-12 grid gap-4 sm:grid-cols-2">
-              <a
-                href="inspire.html"
-                className="flex flex-col gap-2 rounded-[20px] bg-white p-6 shadow-sm ring-1 ring-slate-200 transition hover:shadow-md"
-              >
-                <span className="text-2xl">🗺</span>
-                <span className="text-base font-semibold text-slate-900">Explore more stories</span>
-                <span className="text-sm text-slate-500">Browse all journeys and find inspiration for your next trip.</span>
-                <span className="mt-1 text-xs font-semibold text-slate-400">View all stories →</span>
-              </a>
-              <a
-                href="guides.html"
-                className="flex flex-col gap-2 rounded-[20px] bg-white p-6 shadow-sm ring-1 ring-slate-200 transition hover:shadow-md"
-              >
-                <span className="text-2xl">📖</span>
-                <span className="text-base font-semibold text-slate-900">Browse all guides</span>
-                <span className="text-sm text-slate-500">Practical, route-tested guides to plan your own adventure.</span>
-                <span className="mt-1 text-xs font-semibold text-slate-400">View all guides →</span>
-              </a>
+            {/* ── Dark conversion block — matches guide page bottom ── */}
+            <div className="mt-12 rounded-[28px] bg-[#1a1816] px-8 py-12 text-center text-white">
+              <p className="font-serif text-2xl font-semibold leading-snug sm:text-3xl">
+                Travel more.<br />Waste less time planning.
+              </p>
+              <p className="mx-auto mt-3 max-w-md text-sm text-slate-400">
+                Premium travel guides built from 15 years of independent travel across 140 countries.
+              </p>
+              <p className="mt-1 text-sm font-medium italic text-slate-300">"AI hasn't been there. I have."</p>
+              <div className="mt-7 flex flex-col items-center gap-3">
+                {guideHref ? (
+                  <a
+                    href={guideHref}
+                    className="rounded-full bg-white px-8 py-3 text-sm font-semibold text-slate-900 shadow transition hover:bg-slate-100"
+                  >
+                    Get the {story.title} guide →
+                  </a>
+                ) : (
+                  <a
+                    href="guides.html"
+                    className="rounded-full bg-white px-8 py-3 text-sm font-semibold text-slate-900 shadow transition hover:bg-slate-100"
+                  >
+                    Browse all guides →
+                  </a>
+                )}
+                <p className="text-xs text-slate-500">PDF · Instant download · 30-day refund</p>
+              </div>
             </div>
           </main>
+
+          {/* ── Mobile sticky bottom bar — slides up after hero leaves view ── */}
+          <div
+            className={
+              "fixed bottom-0 left-0 right-0 z-40 md:hidden border-t border-slate-200 bg-white/96 backdrop-blur-md transition-transform duration-300 " +
+              (showStickyBar ? "translate-y-0" : "translate-y-full")
+            }
+          >
+            <div className="flex items-center justify-between gap-4 px-4 py-3">
+              <div className="min-w-0">
+                <p className="text-[10px] font-semibold uppercase tracking-wide text-slate-400">
+                  {guideHref ? "Planning this trip?" : "Ready to plan?"}
+                </p>
+                <p className="truncate text-sm font-semibold text-slate-900">
+                  {guideHref ? story.title : "Pikelis Travel Guides"}
+                </p>
+              </div>
+              <a
+                href={guideHref || "guides.html"}
+                className="shrink-0 rounded-full bg-slate-900 px-5 py-2.5 text-xs font-semibold text-white transition hover:bg-slate-700"
+              >
+                {guideHref ? "Get the guide →" : "Browse guides →"}
+              </a>
+            </div>
+          </div>
         </>
       ) : null}
 
