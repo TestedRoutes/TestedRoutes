@@ -72,17 +72,17 @@ const ACTIVITY_GROUPS = [
   { key: "Extreme", label: "Extreme Experiences", buckets: ["Extreme Sport"] },
 ];
 
-function StoryScrollCard({ story }) {
+function StoryScrollCard({ story, contentLoaderMod }) {
   const slug = story.slug || "";
   const href = slug ? `inspire-story.html?slug=${encodeURIComponent(slug)}` : null;
-  const geo = story.metadata?.geography?.country || story.metadata?.geography?.continent || "";
   const title = story.title || "";
-  const year = story.date ? story.date.slice(0, 4) : "";
+  const display = contentLoaderMod?.getInspireFeaturedCardDisplay?.(story) || {};
+  const { geoLabel, categoryDurationLine, difficultyLabel, hasGuide, excerpt } = display;
   const Tag = href ? "a" : "div";
   return (
     <Tag
       href={href || undefined}
-      className="flex-none snap-start w-[75vw] max-w-[280px] sm:w-60 overflow-hidden rounded-2xl bg-white shadow-sm ring-1 ring-slate-200 transition hover:shadow-md hover:-translate-y-0.5"
+      className="flex-none snap-start w-[75vw] max-w-[280px] sm:w-64 overflow-hidden rounded-2xl bg-white shadow-sm ring-1 ring-slate-200 transition hover:shadow-md hover:-translate-y-0.5"
     >
       <div className="relative aspect-[4/3] overflow-hidden bg-slate-100">
         {story.heroPhoto ? (
@@ -91,16 +91,23 @@ function StoryScrollCard({ story }) {
           <div className="flex h-full w-full items-center justify-center text-xs text-slate-400">No photo</div>
         )}
       </div>
-      <div className="flex flex-col gap-0.5 p-3">
-        {geo ? <p className="text-[10px] font-semibold uppercase tracking-wider text-slate-400">{geo}</p> : null}
-        <p className="line-clamp-2 text-sm font-semibold leading-snug text-slate-900">{title}</p>
-        {year ? <p className="mt-1 text-[11px] text-slate-500">{year}</p> : null}
+      <div className="flex flex-col gap-1.5 p-3">
+        {geoLabel ? <p className="text-[10px] font-semibold uppercase tracking-wider text-slate-400">{geoLabel}</p> : null}
+        <div className="flex items-start justify-between gap-2">
+          <p className="line-clamp-2 text-sm font-semibold leading-snug text-slate-900">{title}</p>
+          {hasGuide ? (
+            <span className="shrink-0 rounded-full bg-slate-900 px-2 py-0.5 text-[9px] font-bold uppercase tracking-wider text-white">Guide</span>
+          ) : null}
+        </div>
+        {categoryDurationLine ? <p className="text-[11px] text-slate-500">{categoryDurationLine}</p> : null}
+        {excerpt ? <p className="line-clamp-2 text-[11px] leading-relaxed text-slate-500">{excerpt}</p> : null}
+        {difficultyLabel ? <p className="mt-0.5 text-[10px] font-medium text-slate-400">{difficultyLabel}</p> : null}
       </div>
     </Tag>
   );
 }
 
-function GroupedScrollRow({ groupLabel, stories }) {
+function GroupedScrollRow({ groupLabel, stories, contentLoaderMod }) {
   const scrollRef = React.useRef(null);
   const [canScrollLeft, setCanScrollLeft] = React.useState(false);
   const [canScrollRight, setCanScrollRight] = React.useState(true);
@@ -135,7 +142,7 @@ function GroupedScrollRow({ groupLabel, stories }) {
           className="no-scrollbar flex gap-3 overflow-x-auto pb-3 snap-x snap-mandatory"
         >
           {stories.map((story) => (
-            <StoryScrollCard key={story.id} story={story} />
+            <StoryScrollCard key={story.id} story={story} contentLoaderMod={contentLoaderMod} />
           ))}
         </div>
         {canScrollLeft && (
@@ -548,7 +555,7 @@ export default function InspirePage(props = {}) {
                 {!hasActiveFilters && !searchInput.trim() ? (
                   <div className="flex flex-col gap-10">
                     {groupedStories.map(({ key, label, stories }) => (
-                      <GroupedScrollRow key={key} groupLabel={label} stories={stories} />
+                      <GroupedScrollRow key={key} groupLabel={label} stories={stories} contentLoaderMod={contentLoaderMod} />
                     ))}
                   </div>
                 ) : (
