@@ -52,14 +52,14 @@ function aboutAsset(filename) {
 }
 
 const extremeExperiences = [
-  { label: "Running with the bulls – Spain", file: "Pamplona 2019.jpg" },
+  { label: "Running with the bulls – Spain", file: "Running with bulls Pamplona 2019.jpg" },
   { label: "Shark diving – Fiji", file: "Sharks Fiji 2025.jpg" },
-  { label: "Volcano boarding – Nicaragua", file: "Volcano Nicaragua 2019.jpg" },
+  { label: "Volcano boarding – Nicaragua", file: "Nicaragua boarding 2019.jpg" },
   { label: "Skydiving & paragliding", file: "Paragliding.jpg" },
   { label: "Ice climbing & glacier travel", file: "Ice climbing Italy 2019.jpg" },
   { label: "Riding the iron ore train – Mauritania", file: "Iron Ore train Mauritania 2023.jpg" },
-  { label: "Summit pushes above 6,000 m", file: "Alaska 2019 v2.jpg" },
-  { label: "Remote border crossings – West Africa", file: "Africa Rally - Makoko Nigeria 2025.jpg" },
+  { label: "Summit pushes above 6,000 m", file: "Summits Alaska 2019 v2.jpg" },
+  { label: "Remote border crossings – West Africa", file: "Makoko Nigeria 2025.jpg" },
 ];
 
 const categoryChips = ["Switzerland", "New Zealand", "Expeditions", "Mountains", "Extreme Experiences", "Route Ideas"];
