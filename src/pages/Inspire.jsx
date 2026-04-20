@@ -65,12 +65,54 @@ const extremeExperiences = [
 const categoryChips = ["Switzerland", "New Zealand", "Expeditions", "Mountains", "Extreme Experiences", "Route Ideas"];
 
 const ACTIVITY_GROUPS = [
-  { key: "Summit", label: "Mountains & Summits", buckets: ["Summit"] },
-  { key: "Hike", label: "Hikes & Trails", buckets: ["Hike"] },
-  { key: "Expedition", label: "Expeditions", buckets: ["Expedition"] },
-  { key: "RoadTrip", label: "Road Trips", buckets: ["Road Trip"] },
-  { key: "Water", label: "Water & Ocean", buckets: ["Diving", "Swimming"] },
-  { key: "Extreme", label: "Extreme Experiences", buckets: ["Extreme Sport"] },
+  {
+    key: "Mountains",
+    label: "Mountains, Summits & Hiking",
+    buckets: ["Summit", "Hike"],
+    patterns: [/toubkal|three.?peaks|s.ntis|triftbr|alpine.?pass|appenzell|ebenalp|hike.*geneva/i],
+  },
+  {
+    key: "Water",
+    label: "Water & Ocean",
+    buckets: ["Diving", "Swimming"],
+    patterns: [/cebu|bohol|philippine/i],
+  },
+  {
+    key: "Islands",
+    label: "Islands",
+    buckets: [],
+    patterns: [/tuvalu|bioko/i],
+  },
+  {
+    key: "RoadTrip",
+    label: "Road Trips",
+    buckets: ["Road Trip"],
+    patterns: [/morocco/i],
+  },
+  {
+    key: "Expedition",
+    label: "Expeditions",
+    buckets: ["Expedition"],
+    patterns: [/nigeria|africa.?rally|crossing/i],
+  },
+  {
+    key: "Weekend",
+    label: "Weekend Escapes",
+    buckets: [],
+    patterns: [/diavolezza|montreux|jazz|bad.?ragaz|morcote|lugano/i],
+  },
+  {
+    key: "Cities",
+    label: "City Trips",
+    buckets: [],
+    patterns: [/st[.\s]*gallen|luzern|lucerne|\bzurich\b|lausanne/i],
+  },
+  {
+    key: "Extreme",
+    label: "Extreme Experiences",
+    buckets: ["Extreme Sport"],
+    patterns: [],
+  },
 ];
 
 function StoryScrollCard({ story, contentLoaderMod }) {
@@ -234,7 +276,10 @@ export default function InspirePage(props = {}) {
         if (assigned.has(story.id)) return false;
         const vals = projectFn(story);
         const acts = vals.activity || [];
-        return g.buckets.some((b) => acts.includes(b));
+        const bucketMatch = g.buckets.some((b) => acts.includes(b));
+        const text = `${story.title || ""} ${story.folderName || ""}`;
+        const patternMatch = g.patterns?.some((p) => p.test(text)) ?? false;
+        return bucketMatch || patternMatch;
       });
       if (matched.length) {
         matched.forEach((s) => assigned.add(s.id));
