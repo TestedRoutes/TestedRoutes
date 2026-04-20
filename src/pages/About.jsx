@@ -85,17 +85,19 @@ export default function AboutMePage() {
           <div className="space-y-3">
             <h2 className="text-lg font-semibold text-slate-900">Why these guides work better in real life</h2>
             <p className="text-sm text-slate-600">
-              These guides are built the way real trips actually happen — not as
-              lists of attractions, but as clear routes you can follow step by step.
+              These guides are built the way real trips actually happen, not as lists of attractions, but as clear routes you can follow step by step.
             </p>
             <p className="text-sm text-slate-600">
-              Each guide focuses on what travelers usually struggle with most:
-              how to get there, how long things really take, what to skip, and how
-              to combine stops efficiently in one day.
+              Each guide focuses on what travellers usually struggle with most:
             </p>
+            <ul className="space-y-1 text-sm text-slate-600">
+              <li className="flex gap-2"><span className="mt-0.5 shrink-0 text-slate-400">•</span>how to get there</li>
+              <li className="flex gap-2"><span className="mt-0.5 shrink-0 text-slate-400">•</span>how long things actually take</li>
+              <li className="flex gap-2"><span className="mt-0.5 shrink-0 text-slate-400">•</span>what is worth skipping</li>
+              <li className="flex gap-2"><span className="mt-0.5 shrink-0 text-slate-400">•</span>how to combine stops efficiently in one day</li>
+            </ul>
             <p className="text-sm text-slate-600">
-              The goal is simple: help you spend less time planning and more time
-              experiencing the place.
+              The result is a route you can follow with confidence, not just inspiration on a page.
             </p>
           </div>
           <img
