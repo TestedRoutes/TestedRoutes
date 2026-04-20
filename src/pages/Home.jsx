@@ -245,10 +245,10 @@ export default function HomepageConcepts() {
         <section className="space-y-3">
           <div className="space-y-1">
             <h1 className="text-2xl font-semibold leading-tight md:text-3xl">
-              Travel more. Waste less time planning.
+              Travel more. Waste less time planning
             </h1>
             <p className="text-sm leading-snug text-slate-600">
-              Premium travel guides built from 15 years of independent travel across 140 countries — every route personally tested.
+              Premium travel guides built from 15 years independent travel across 140 countries. AI has not been there — I have!
             </p>
           </div>
           <SearchBar />
