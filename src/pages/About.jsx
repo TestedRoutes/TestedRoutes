@@ -194,9 +194,9 @@ export default function AboutMePage() {
 
         <section className="flex flex-col items-start gap-4 rounded-[28px] bg-white p-6 shadow-sm ring-1 ring-slate-200 md:flex-row md:items-center md:justify-between">
           <h2 className="text-lg font-semibold text-slate-900">Ready to travel more and plan less?</h2>
-          <button className="rounded-full bg-slate-900 px-6 py-2 text-xs font-semibold text-white">
+          <a href="guides.html" className="rounded-full bg-slate-900 px-6 py-2 text-xs font-semibold text-white transition hover:bg-slate-800">
             Browse Guides
-          </button>
+          </a>
         </section>
 
       </main>
