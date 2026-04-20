@@ -569,15 +569,11 @@ export default function InspirePage(props = {}) {
           <section className="flex flex-col items-start gap-4 rounded-[28px] bg-white p-6 shadow-sm ring-1 ring-slate-200 md:flex-row md:items-center md:justify-between">
             <div>
               <p className="text-lg font-semibold">Ready to turn inspiration into a real route?</p>
+              <p className="mt-1 text-sm text-slate-500">Premium guides built from 15 years of independent travel across 140 countries.</p>
             </div>
-            <div className="flex flex-wrap gap-3">
-              <button type="button" className="rounded-full bg-slate-900 px-5 py-2 text-xs font-semibold text-white">
-                Browse Guides
-              </button>
-              <button type="button" className="rounded-full border border-slate-200 px-5 py-2 text-xs font-semibold text-slate-700">
-                Explore Destinations
-              </button>
-            </div>
+            <a href="guides.html" className="shrink-0 rounded-full bg-slate-900 px-6 py-2.5 text-xs font-semibold text-white transition hover:bg-slate-800">
+              Browse Guides →
+            </a>
           </section>
 
           <Footer />

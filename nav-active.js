@@ -34,16 +34,13 @@
 
     }
 
-    if (last === "destinations.html") return "destinations";
-
-    if (last === "guides.html") return "guides";
-
-    if (last === "inspire.html") return "inspire";
-
-    if (last === "inspire-story.html") return "inspire";
-
-    if (last === "about.html") return "about";
-
+    if (last === "destinations.html" || last === "destinations") return "destinations";
+    if (last === "guides.html" || last === "guides") return "guides";
+    if (last === "inspire.html" || last === "inspire") return "inspire";
+    if (last === "inspire-story.html" || last === "inspire-story") return "inspire";
+    if (last === "about.html" || last === "about") return "about";
+    // Sub-pages (e.g. /guides/trift-bridge-from-zurich)
+    if (parts.length >= 2 && parts[parts.length - 2] === "guides") return "guides";
     return null;
 
   }

@@ -388,10 +388,10 @@ export default function InspireStoryPage() {
 
           {/* ── MAIN CONTENT ─────────────────────────────────────────────────── */}
           <main className="mx-auto max-w-6xl px-4 pb-16 pt-8 sm:px-6">
-            <div className="flex items-start gap-8">
+            <div className="flex gap-8">
 
               {/* ── Left column: story body + gallery ── */}
-              <div className="min-w-0 flex-1 flex flex-col gap-6">
+              <div className="min-w-0 flex-1 flex flex-col gap-6 self-start">
 
                 {/* Quick facts — mobile only (desktop sees sidebar) */}
                 <div className="md:hidden rounded-[20px] bg-white p-5 shadow-sm ring-1 ring-slate-200">
