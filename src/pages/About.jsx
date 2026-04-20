@@ -177,11 +177,13 @@ export default function AboutMePage() {
           <div className="space-y-3">
             <h2 className="text-lg font-semibold text-slate-900">Why I do this</h2>
             <p className="text-sm text-slate-600">
-              I want to help more people travel independently without wasting days or weeks on chaotic planning.
+              I believe independent travel should feel exciting, not overwhelming.
             </p>
-            <p className="text-sm text-slate-600">Good travel should feel exciting - not overwhelming.</p>
             <p className="text-sm text-slate-600">
-              These guides are my way of turning years of firsthand experience into something practical, simple, and useful for other travelers.
+              After visiting 140+ countries and planning trips across some of the world's most remote places, I create guides that turn real experience into clear, practical steps anyone can follow.
+            </p>
+            <p className="text-sm text-slate-600">
+              So you spend less time planning and more time exploring.
             </p>
           </div>
           <img
