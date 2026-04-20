@@ -112,6 +112,8 @@ function GroupedScrollRow({ groupLabel, stories }) {
     setCanScrollRight(el.scrollLeft < el.scrollWidth - el.clientWidth - 8);
   }, []);
 
+  React.useEffect(() => { updateArrows(); }, [updateArrows]);
+
   const scroll = (dir) => {
     const el = scrollRef.current;
     if (!el) return;
