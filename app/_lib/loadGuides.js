@@ -89,26 +89,46 @@ export async function loadGuides() {
         : "");
 
     const price = guide.guide_price ? `€${guide.guide_price}` : "";
-    // Turn old .html page paths into clean /guides/slug URLs.
-    // Keep external links intact. Fall back to the PDF if no page is set.
-    let href = null;
+
+    // Derive canonical URL slug. Prefer the explicit guide_page path
+    // (e.g. "guides/trift-bridge-from-zurich.html") because metadata.slug
+    // may differ from it in spelling (German vs. English).
+    let pageSlug = slug;
     if (typeof guide.guide_page === "string" && guide.guide_page.trim()) {
-      href = `/guides/${slug}`;
+      const m = guide.guide_page.trim().match(/guides\/([^/]+?)(?:\.html)?$/i);
+      if (m) pageSlug = m[1];
+    }
+
+    let href = null;
+    if (guide.guide_page) {
+      href = `/guides/${pageSlug}`;
     } else if (guide.guide_pdf) {
       href = `${folderUrl}${encodeURIComponent(guide.guide_pdf)}`;
     }
 
     results.push({
-      slug,
+      slug: pageSlug,
+      folder,
+      metadataSlug: slug,
       title,
       category,
       duration: durationDisplay,
       price,
       image: heroUrl,
-      href: href || `/guides/${slug}`,
+      href: href || `/guides/${pageSlug}`,
       purchases: guide.purchases || null,
+      // Pass the raw metadata and photos through for detail-page rendering.
+      metadata,
+      photos: Array.isArray(entry.photos) ? entry.photos : [],
+      folderUrl,
+      heroName: heroName || null,
     });
   }
 
   return results;
+}
+
+export async function loadGuideBySlug(slug) {
+  const all = await loadGuides();
+  return all.find((g) => g.slug === slug) || null;
 }

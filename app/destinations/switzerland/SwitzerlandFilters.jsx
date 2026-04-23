@@ -27,7 +27,7 @@ const DAY_TRIPS = [
     title: "Stoos Ridge from Zurich",
     price: "From €9.99",
     purchased: 358,
-    href: "/guides/stoos-ridge-from-zurich",
+    coming_soon: true,
     image: "https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=1200&q=80",
     length: "daytrip",
     start: "zurich",
@@ -37,7 +37,7 @@ const DAY_TRIPS = [
     title: "Appenzell & Ebenalp from Zurich",
     price: "From €12.99",
     purchased: 396,
-    href: "/guides/appenzell-ebenalp-from-zurich",
+    coming_soon: true,
     image: "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1200&q=80",
     length: "daytrip",
     start: "zurich",
@@ -47,7 +47,7 @@ const DAY_TRIPS = [
     title: "Mount Rigi from Zurich",
     price: "From €9.99",
     purchased: 441,
-    href: "/guides/mount-rigi-from-zurich",
+    coming_soon: true,
     image: "https://images.unsplash.com/photo-1500375592092-40eb2168fd21?auto=format&fit=crop&w=1200&q=80",
     length: "daytrip",
     start: "zurich",
@@ -57,7 +57,7 @@ const DAY_TRIPS = [
     title: "Säntis from Zurich",
     price: "From €12.99",
     purchased: 304,
-    href: "/guides/santis-from-zurich",
+    coming_soon: true,
     image: "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=1200&q=80",
     length: "daytrip",
     start: "zurich",
@@ -67,7 +67,7 @@ const DAY_TRIPS = [
     title: "Flims & Caumasee from Zurich",
     price: "From €9.99",
     purchased: 287,
-    href: "/guides/flims-caumasee-from-zurich",
+    coming_soon: true,
     image: "https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?auto=format&fit=crop&w=1200&q=80",
     length: "daytrip",
     start: "zurich",
@@ -180,7 +180,7 @@ export default function SwitzerlandPage() {
             <p className="text-lg font-semibold text-slate-900">Day trips from Zurich</p>
             <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
               {filteredDayTrips.map((card) => (
-                <div key={card.href} className="rounded-3xl bg-white shadow-sm ring-1 ring-slate-200">
+                <div key={card.title} className="rounded-3xl bg-white shadow-sm ring-1 ring-slate-200">
                   <div className="h-44 w-full overflow-hidden rounded-t-3xl">
                     <img src={card.image} alt={card.title} className="h-full w-full object-cover" />
                   </div>
@@ -191,12 +191,18 @@ export default function SwitzerlandPage() {
                     <p className="text-xs text-slate-500">{card.purchased} purchased</p>
                     <div className="flex items-center justify-between pt-2">
                       <span className="text-sm font-semibold text-slate-900">{card.price}</span>
-                      <Link
-                        href={card.href}
-                        className="rounded-full bg-slate-900 px-4 py-2 text-xs font-semibold text-white"
-                      >
-                        View Guide
-                      </Link>
+                      {card.coming_soon ? (
+                        <span className="rounded-full bg-slate-100 px-4 py-2 text-xs font-semibold text-slate-400">
+                          Coming soon
+                        </span>
+                      ) : (
+                        <Link
+                          href={card.href}
+                          className="rounded-full bg-slate-900 px-4 py-2 text-xs font-semibold text-white"
+                        >
+                          View Guide
+                        </Link>
+                      )}
                     </div>
                   </div>
                 </div>
