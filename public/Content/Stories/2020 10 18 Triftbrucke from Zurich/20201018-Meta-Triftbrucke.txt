@@ -1,0 +1,318 @@
+{
+  "guide": {
+    "has_guide": true,
+    "guide_status": "available",
+    "guide_pdf": "Guide-Triftbrucke_from_Zurich-Apr2026.pdf",
+    "guide_price": "12.99",
+    "guide_currency": "EUR",
+    "guide_format": ["PDF"],
+    "guide_page": "guides/trift-bridge-from-zurich.html"
+  },
+  "hero": {
+    "eyebrow": "SWITZERLAND • DAY TRIP • HIKING",
+    "subtitle": "A full alpine day from Zurich ending at one of Switzerland's most dramatic suspension bridges, high above a turquoise glacier lake.",
+    "primary_stats": [
+      { "label": "Duration", "value": "1 day" },
+      { "label": "Effort", "value": "~3–4 h total (with gondola)" },
+      { "label": "Altitude", "value": "1,720 m (bridge level)" },
+      { "label": "Access", "value": "Car ~2 h · Public transport ~3.5 h from Zürich" },
+      { "label": "Highlight", "value": "170 m suspension bridge" }
+    ]
+  },
+  "sales": {
+    "why_this_trip": [
+      "Best suspension bridge hike near Zürich",
+      "Real glacier landscape without overnight stay",
+      "Feels remote but fits into one day",
+      "No technical skills required"
+    ],
+    "who_this_is_for": [
+      "Based in Zurich for 1–2 days or more",
+      "Comfortable walking uphill for 2–3 hours",
+      "Prefer independent travel",
+      "Prefer clear step-by-step logistics, not inspiration"
+    ],
+    "what_you_get": [
+      "3 route variants compared: gondola up/down, gondola up/hike down, full hike from Gadmen",
+      "Step-by-step day plan for both car and public transport with exact timings",
+      "Gondola booking guide: schedule, capacity, pricing, and how to avoid missing your slot",
+      "Weather go/no-go rules using MeteoSwiss — when to postpone",
+      "Full cost breakdown: gondola, parking, train tickets, and saver fare tips",
+      "Complete packing list and what to eat and drink on the route"
+    ],
+    "difficulty_at_a_glance": [
+      "Steepness: consistent uphill ~1.5 h",
+      "Exposure: suspension bridge only",
+      "Trail: marked alpine hiking path",
+      "Fitness: ~450 m ascent / ~6 km"
+    ],
+    "not_suitable": [
+      "If you have a fear of heights",
+      "If you have a fear of exposed bridge crossings"
+    ]
+  },
+  "story_id": "switzerland-triftbrucke-2020",
+  "title": "Triftbrücke from Zurich",
+  "slug": "triftbrucke-from-zurich",
+  "status": "published",
+  "created_date": "2026-04-18",
+  "last_updated": "2026-04-18",
+  "language": "en",
+  "geography": {
+    "continent": "europe",
+    "country": "Switzerland",
+    "country_code": "CH",
+    "regions": ["Bern", "Bernese Oberland", "Gadmen"],
+    "nearest_major_city": "Lucerne",
+    "nearest_major_city_distance_km": 85,
+    "coordinates": { "lat": 46.6958, "lng": 8.3526 },
+    "starting_point": {
+      "name": "Triftbahn Valley Station",
+      "type": "trailhead",
+      "coordinates": { "lat": 46.7184, "lng": 8.3482 }
+    }
+  },
+  "classification": {
+    "primary_collection": "Switzerland",
+    "all_collections": ["Switzerland", "Day Trips", "Hiking", "Suspension Bridges", "Alpine Lakes"],
+    "journey_category": "day_trip",
+    "activity_category": "outdoor_hiking",
+    "activity_tags": [
+      "suspension bridge hike",
+      "alpine day hike",
+      "glacier valley views",
+      "mountain lake viewpoint",
+      "cable car access",
+      "Swiss Alps hiking",
+      "photography stop",
+      "Zurich day trip"
+    ],
+    "journey_style": "self_guided",
+    "highlights": [
+      "Crossing the dramatic Trift suspension bridge high above the gorge",
+      "Wide glacier valley views with snow-covered peaks",
+      "A realistic one-day alpine adventure from Zurich",
+      "Photogenic mix of forest trail, rock, lake, and high mountains",
+      "Big-mountain feel without a multi-day commitment"
+    ]
+  },
+  "difficulty": {
+    "overall_level": "moderate",
+    "physical_fitness_required": "high",
+    "technical_skill_required": "basic",
+    "elevation_gain_m": 1200,
+    "max_altitude_m": 1720,
+    "total_distance_km": 15,
+    "difficulty_factors": [
+      "15 km with 1,200 m of ascent — a long, demanding alpine day",
+      "Exposure on the suspension bridge",
+      "Possible snow or ice in shoulder season",
+      "Long day when done from Zurich including transport",
+      "Rocky and uneven footing in the upper alpine section"
+    ],
+    "not_suitable_if": [
+      "You have a strong fear of heights",
+      "You are uncomfortable on exposed, swaying bridges",
+      "You lack the fitness for a 5.5-hour mountain hike",
+      "There is fresh snow or ice and you do not have the right gear",
+      "You need step-free or wheelchair access"
+    ]
+  },
+  "suitability": {
+    "family_friendly": true,
+    "min_age_recommended": 12,
+    "solo_friendly": true,
+    "beginner_friendly": false,
+    "wheelchair_accessible": false,
+    "ideal_group_size": "1–4 people",
+    "tested_with": ["adult travelers"],
+    "ideal_for": ["photographers", "active explorers", "couples", "solo travelers"]
+  },
+  "timing": {
+    "duration_days": 1,
+    "duration_hours": 5.5,
+    "duration_display": "1 day from Zurich, with about 5.5 hours of hiking",
+    "best_months": [6, 7, 8, 9, 10],
+    "best_seasons": ["summer", "fall"],
+    "avoid_months": [11, 12, 1, 2, 3, 4],
+    "time_of_day": "full_day",
+    "weather_dependent": true,
+    "snow_season_accessible": false
+  },
+  "logistics": {
+    "transportation_required": ["train", "bus", "public_transport", "cable_car"],
+    "transportation_difficulty": "moderate",
+    "car_required": false,
+    "4x4_required": false,
+    "public_transport_accessible": true,
+    "accommodation_type": "none",
+    "permits_required": false,
+    "permits_info": "",
+    "bookings_required": ["Triftbahn cable car in busy periods"],
+    "bookings_advance_days": 3,
+    "special_equipment": [
+      "good hiking shoes",
+      "waterproof jacket",
+      "warm layer",
+      "water and snacks",
+      "microspikes in shoulder season if snow or ice is present"
+    ],
+    "rental_equipment_available": false
+  },
+  "budget": {
+    "level": "moderate",
+    "estimated_cost_usd": { "min": 70, "max": 150, "currency": "CHF" },
+    "cost_breakdown": {
+      "transport": 40,
+      "food": 20,
+      "equipment_rental": 0,
+      "accommodation": 0,
+      "activities": 32
+    },
+    "money_saving_tips": [
+      "Use public transport passes or saver tickets from Zurich",
+      "Bring your own lunch and snacks instead of relying on mountain food",
+      "Travel on a weekday to avoid crowds and last-minute transport changes"
+    ]
+  },
+  "differentiation": {
+    "unique_selling_points": [
+      "One of the most dramatic suspension bridge hikes you can do as a Zurich day trip",
+      "Combines forest trail, glacier lake, rocky alpine terrain, and a high bridge in one route",
+      "Feels far wilder than most easy-access Swiss day hikes",
+      "Genuine adrenaline moment on the bridge without needing technical skills",
+      "Strong visual payoff in every direction — exceptional for photography"
+    ],
+    "what_makes_this_special": "Triftbrücke delivers a true high-alpine atmosphere in a single day from Zurich. The full valley approach through forest, rock, and glacier scenery makes it a complete mountain experience, not just a bridge stop.",
+    "best_for_crowd_type": "active_explorers",
+    "crowd_level": "moderate",
+    "scenic_rating": 5,
+    "adrenaline_level": 4
+  },
+  "maintenance": {
+    "last_verified_date": "2026-04-18",
+    "verification_frequency_months": 12,
+    "next_update_due": "2027-04-18",
+    "route_status": "active",
+    "content_quality_score": 4,
+    "needs_attention": false,
+    "attention_notes": ""
+  },
+  "relationships": {
+    "similar_stories": [],
+    "combine_with": [],
+    "combine_description": "",
+    "prerequisite_for": [],
+    "easier_alternative": "",
+    "harder_alternative": ""
+  },
+  "discovery": {
+    "search_synonyms": [
+      "Triftbrucke",
+      "Triftbrücke",
+      "Trift Bridge",
+      "Hangebrucke Trift",
+      "Hängebrücke Trift",
+      "Triftbahn hike",
+      "Trift suspension bridge",
+      "Triftsee hike"
+    ],
+    "alternative_names": ["Trift Bridge", "Hängebrücke Trift", "Trift Suspension Bridge"],
+    "appears_in_searches": [
+      "how to visit Triftbrucke from Zurich",
+      "best day trip hike from Zurich Switzerland",
+      "Trift Bridge hike Switzerland",
+      "Triftbrucke cable car and hike",
+      "Swiss suspension bridge hike day trip",
+      "Triftbrucke in autumn",
+      "Triftsee and Triftbrucke hike guide"
+    ]
+  },
+  "credibility": {
+    "times_completed": 1,
+    "most_recent_completion": "2020-10-18",
+    "tested_by": "pikelis",
+    "verified_facts": [
+      "Done car-to-car without the cable car, starting at 9:30 from the parking lot",
+      "Bridge reached at 11:30 — roughly 2 hours from the trailhead",
+      "Total route: ~15 km with 1,200 m of ascent in about 5.5 hours",
+      "The bridge sways in the wind and sits high above the turquoise glacier lake",
+      "Snow can appear on the route in shoulder season (October)"
+    ],
+    "common_mistakes": [
+      "Underestimating the full day when starting from Zurich including transport",
+      "Arriving without checking Triftbahn operating times and weather",
+      "Wearing casual shoes for a rocky mountain trail",
+      "Assuming the bridge is fine for anyone who dislikes heights"
+    ],
+    "insider_tips": [
+      "Start early from Zurich — arriving at the trailhead by 9:30 gives a comfortable day",
+      "Bring layers even on sunny days — the upper valley is significantly colder than the city",
+      "Get your best bridge photos before midday crowds arrive",
+      "The whole valley approach is part of the experience, not just a warm-up",
+      "Fresh snow makes the scenery even better but traction and timing matter much more"
+    ]
+  },
+  "content": {
+    "story_file": "Story-Triftbrucke.md",
+    "story_type": "full_story",
+    "word_count": 230,
+    "reading_time_minutes": 1,
+    "media": {
+      "hero_image": "Hero-triftfrucke.jpg",
+      "hero_alt": "Trift suspension bridge stretching across a rocky alpine gorge with snow-covered mountains behind",
+      "gallery_images": [
+        "20201018_113355.jpg",
+        "20201018_114042.jpg",
+        "20201018_130613.jpg",
+        "20201018_100027.jpg",
+        "20201018_111328.jpg"
+      ],
+      "has_video": false,
+      "video_url": ""
+    },
+    "featured_in_homepage": false,
+    "featured_priority": 5
+  },
+  "seo": {
+    "meta_title": "Triftbrücke from Zurich: Epic Swiss Day Hike",
+    "meta_description": "A dramatic day hike from Zurich to Triftbrücke with a suspension bridge, glacier lake views, and big alpine scenery in the Swiss Alps.",
+    "keywords": [
+      "Triftbrücke",
+      "Trift Bridge",
+      "Zurich day trip",
+      "Switzerland hiking",
+      "suspension bridge hike",
+      "Swiss Alps day hike",
+      "Triftbahn",
+      "Triftsee",
+      "Gadmen hike",
+      "Bernese Oberland"
+    ],
+    "search_tags": [
+      "day trips from Zurich",
+      "best hikes near Zurich",
+      "Swiss suspension bridges",
+      "alpine lake hike Switzerland",
+      "autumn hikes Switzerland",
+      "dramatic mountain hikes Europe"
+    ]
+  },
+  "route": {
+    "mode": "hiking",
+    "map_zoom": 13,
+    "points": [
+      { "name": "Zurich HB", "lat": 47.3782, "lng": 8.5403, "type": "start" },
+      { "name": "Gadmen / Triftbahn Station", "lat": 46.7184, "lng": 8.3482, "type": "stop" },
+      { "name": "Trift Suspension Bridge", "lat": 46.7298, "lng": 8.3719, "type": "highlight" },
+      { "name": "Zurich HB", "lat": 47.3782, "lng": 8.5403, "type": "end" }
+    ]
+  },
+  "analytics": {
+    "views": 0,
+    "guide_conversions": 0,
+    "conversion_rate": 0.0,
+    "avg_time_on_page": 0,
+    "bounce_rate": 0.0
+  }
+}

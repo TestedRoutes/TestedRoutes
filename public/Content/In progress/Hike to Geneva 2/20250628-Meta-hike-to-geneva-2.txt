@@ -1,0 +1,195 @@
+{
+  "guide": {
+    "has_guide": false,
+    "guide_status": "none",
+    "guide_url": "",
+    "guide_price_usd": 0,
+    "guide_format": [],
+    "includes_in_guide": []
+  },
+  "guide_what_you_get": [],
+  "hero": {
+    "eyebrow": "SWITZERLAND • LONG-DISTANCE HIKE • SUMMER",
+    "subtitle": "Second hike to Geneva — different route, different season, the same satisfaction of walking into the city on foot.",
+    "primary_stats": [
+      { "label": "Duration", "value": "2 days" },
+      { "label": "Effort", "value": "Hard" },
+      { "label": "Altitude", "value": "Variable" },
+      { "label": "Access", "value": "Train back from Geneva" },
+      { "label": "Highlight", "value": "Walking into Geneva via a different route" }
+    ]
+  },
+  "sales": {
+    "why_this_trip": [
+      "The second attempt on a route you have done before always shows you what you missed the first time",
+      "Summer light and longer days change the character of the western Swiss countryside completely",
+      "A different approach line to the same finish point — Geneva seen from a new direction"
+    ],
+    "who_this_is_for": [
+      "Anyone who completed the first Geneva hike and wants more",
+      "Long-distance walkers looking for a summer version of the route",
+      "People building a Swiss walking habit — this is a companion to the April route"
+    ],
+    "what_you_get": [
+      "A full two-day walk through western Switzerland in summer",
+      "Different views, warmer temperatures and longer evenings",
+      "The finish in Geneva — the same destination, a different journey"
+    ],
+    "difficulty_at_a_glance": [
+      "Hard: two days of sustained distance",
+      "Summer heat adds a physical dimension that spring does not have"
+    ],
+    "not_suitable": [
+      "First-time long-distance hikers — do the April version first",
+      "Travellers uncomfortable in summer heat for extended periods"
+    ]
+  },
+  "story_id": "switzerland-hike-to-geneva-2-summer-2025",
+  "title": "Hike to Geneva 2 — Summer Route",
+  "slug": "hike-to-geneva-2-summer-switzerland",
+  "primary_collection": "Inspire",
+  "all_collections": ["Inspire"],
+  "status": "published",
+  "created_date": "2025-06-28",
+  "last_updated": "2026-04-19",
+  "language": "en",
+  "geography": {
+    "continent": "europe",
+    "country": "Switzerland",
+    "country_code": "CH",
+    "region": "Vaud / Genève",
+    "city": "Geneva",
+    "specific_location": "Western Switzerland to Geneva (summer route)"
+  },
+  "classification": {
+    "journey_category": "weekend",
+    "activity_category": ["outdoor_hiking"],
+    "journey_style": "self_guided",
+    "best_for_crowd_type": ["active_explorers", "expedition_minded"]
+  },
+  "difficulty": {
+    "overall_level": "hard",
+    "physical_fitness_required": "high",
+    "technical_skill_required": "none",
+    "elevation_gain_m": 800,
+    "total_distance_km": 55,
+    "exposure_level": "low",
+    "navigation_required": true
+  },
+  "suitability": {
+    "min_age": 14,
+    "family_friendly": false,
+    "solo_friendly": true,
+    "group_friendly": true,
+    "insider_tips": [
+      "Start early to avoid the hottest hours — summer hiking in Switzerland starts at dawn",
+      "Carry more water than spring — summer heat changes the hydration calculation significantly"
+    ],
+    "common_mistakes": [
+      "Assuming the summer version is easier — heat adds real difficulty",
+      "Packing the same kit as spring — lighter layers but more sun protection needed"
+    ]
+  },
+  "timing": {
+    "best_seasons": ["summer"],
+    "shoulder_season_note": "Late June through July — before August heat peaks",
+    "duration_hours": 0,
+    "duration_days": 2,
+    "time_of_day_start": "early morning"
+  },
+  "logistics": {
+    "transportation_required": ["train"],
+    "accommodation_type": "hotel",
+    "base_city": "Geneva",
+    "special_equipment": ["hiking boots", "sun protection", "extra water capacity"]
+  },
+  "budget": {
+    "level": "moderate",
+    "estimated_cost_usd_per_person": 200,
+    "cost_notes": "One overnight, food and return train. Budget CHF 150–250."
+  },
+  "differentiation": {
+    "unique_factors": [
+      "Companion to the April Geneva hike — different season, different experience",
+      "Summer countryside in western Switzerland has a different quality to spring"
+    ],
+    "compared_to_alternatives": "Warmer and lusher than the April version; more demanding in heat"
+  },
+  "maintenance": {
+    "last_verified": "2025-06-29",
+    "seasonal_closure": false,
+    "route_status": "active",
+    "notes": ""
+  },
+  "relationships": {
+    "related_stories": ["switzerland-hike-to-geneva-2025"],
+    "related_guides": [],
+    "suggested_next": ["lausanne-day-trip", "lake-geneva-circuit"]
+  },
+  "route": {
+    "mode": "hiking",
+    "map_zoom": 9,
+    "points": [
+      { "name": "Starting Point (western Switzerland)", "lat": 46.5000, "lng": 6.3500, "type": "start" },
+      { "name": "En Route", "lat": 46.3500, "lng": 6.2500, "type": "stop" },
+      { "name": "Geneva", "lat": 46.2044, "lng": 6.1432, "type": "highlight" }
+    ]
+  },
+  "discovery": {
+    "search_synonyms": ["hike to Geneva summer", "Switzerland western walk summer", "Geneva long hike"],
+    "long_tail_phrases": [
+      "second hike to Geneva Switzerland summer route",
+      "walking to Geneva from western Switzerland summer",
+      "multi-day hiking route to Geneva June July"
+    ],
+    "crowd_level": "low",
+    "hidden_gem": true
+  },
+  "credibility": {
+    "personal_experience": true,
+    "visit_date": "2025-06-29",
+    "times_done": 1,
+    "verified_by": "author"
+  },
+  "content": {
+    "media": {
+      "hero_image": "20250628_090148.jpg",
+      "gallery_images": [
+        "20250628_090148.jpg",
+        "20250628_093143.jpg",
+        "20250628_094016.jpg",
+        "20250628_112146.jpg",
+        "20250628_142134.jpg",
+        "20250628_142520.jpg",
+        "20250628_152012.jpg",
+        "20250628_152601.jpg",
+        "20250628_152751.jpg",
+        "20250628_152756.jpg",
+        "20250628_152813.jpg",
+        "20250628_153014.jpg",
+        "20250628_160240.jpg",
+        "20250628_160959.jpg",
+        "20250629_095116.jpg",
+        "20250629_112202.jpg",
+        "20250629_115143.jpg",
+        "20250629_123657.jpg",
+        "20250629_130258.jpg",
+        "20250629_130727.jpg"
+      ]
+    },
+    "story_file": "",
+    "has_video": false,
+    "has_guide_pdf": false
+  },
+  "seo": {
+    "meta_title": "Hike to Geneva 2 — Summer Walking Route",
+    "meta_description": "Second hike to Geneva through western Switzerland — summer version. Different route, longer evenings, the same finish on Lake Geneva.",
+    "og_title": "Hike to Geneva 2 — Summer Route",
+    "og_description": "The summer version of the walk to Geneva — longer days, different countryside, same finish point."
+  },
+  "analytics": {
+    "page_views": 0,
+    "avg_time_on_page": 0,
+    "conversion_rate": 0
+  }
+}

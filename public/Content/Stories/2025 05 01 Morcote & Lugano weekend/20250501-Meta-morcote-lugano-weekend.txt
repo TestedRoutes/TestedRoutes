@@ -1,0 +1,195 @@
+{
+  "guide": {
+    "has_guide": false,
+    "guide_status": "none",
+    "guide_url": "",
+    "guide_price_usd": 0,
+    "guide_format": [],
+    "includes_in_guide": []
+  },
+  "guide_what_you_get": [],
+  "hero": {
+    "eyebrow": "SWITZERLAND • WEEKEND • LAKE LUGANO",
+    "subtitle": "Morcote and Lugano — the Italian-Swiss south at its most relaxed, best reached when the rest of Switzerland feels too busy.",
+    "primary_stats": [
+      { "label": "Duration", "value": "Weekend (2 days)" },
+      { "label": "Effort", "value": "Easy" },
+      { "label": "Altitude", "value": "270 m (Lugano lake level)" },
+      { "label": "Access", "value": "Lugano (train from Zurich ~2h)" },
+      { "label": "Highlight", "value": "Morcote village on the lake" }
+    ]
+  },
+  "sales": {
+    "why_this_trip": [
+      "Morcote is one of Switzerland's most photogenic villages — arcades, steps and a lake view that doesn't feel Swiss",
+      "Lugano has the feel of northern Italy with Swiss infrastructure — the best of both",
+      "A 2-hour train ride from Zurich delivers a completely different climate and atmosphere",
+      "Lake Lugano in spring is calm, warm and often crowd-free"
+    ],
+    "who_this_is_for": [
+      "Zurich-based travellers wanting a slow weekend without a long journey",
+      "Anyone who appreciates Italian lake town atmosphere without crossing into Italy",
+      "Couples looking for a relaxed, beautiful weekend destination"
+    ],
+    "what_you_get": [
+      "Morcote's arcaded streets and lakeside stairways",
+      "Lugano city: the promenade, the old town and lake views from above",
+      "Mediterranean atmosphere in a Swiss setting",
+      "A weekend that resets without needing a flight"
+    ],
+    "difficulty_at_a_glance": [
+      "Very easy: mostly flat lakeside walking and cafe stops",
+      "Morcote has steps — comfortable shoes helpful"
+    ],
+    "not_suitable": [
+      "Travellers looking for active adventure or mountain experiences",
+      "Anyone coming for nightlife — Lugano is relaxed after dark"
+    ]
+  },
+  "story_id": "switzerland-morcote-lugano-weekend-2025",
+  "title": "Morcote and Lugano Weekend — Swiss-Italian South",
+  "slug": "morcote-lugano-weekend-lake-switzerland",
+  "primary_collection": "Inspire",
+  "all_collections": ["Inspire"],
+  "status": "published",
+  "created_date": "2025-05-01",
+  "last_updated": "2026-04-19",
+  "language": "en",
+  "geography": {
+    "continent": "europe",
+    "country": "Switzerland",
+    "country_code": "CH",
+    "region": "Ticino",
+    "city": "Lugano",
+    "specific_location": "Morcote, Lake Lugano"
+  },
+  "classification": {
+    "journey_category": "weekend",
+    "activity_category": ["road_trips", "wildlife_nature"],
+    "journey_style": "self_guided",
+    "best_for_crowd_type": ["active_explorers", "off_the_beaten_path"]
+  },
+  "difficulty": {
+    "overall_level": "easy",
+    "physical_fitness_required": "low",
+    "technical_skill_required": "none",
+    "elevation_gain_m": 0,
+    "total_distance_km": 10,
+    "exposure_level": "low",
+    "navigation_required": false
+  },
+  "suitability": {
+    "min_age": 0,
+    "family_friendly": true,
+    "solo_friendly": true,
+    "group_friendly": true,
+    "insider_tips": [
+      "Take the boat from Lugano to Morcote — the lake approach makes the village look its best",
+      "Monte San Salvatore above Lugano gives a full panorama over the lake and towards the Alps",
+      "Morcote is quietest early morning or late afternoon — midday fills up in summer"
+    ],
+    "common_mistakes": [
+      "Skipping Morcote and staying only in Lugano — the village is the highlight",
+      "Coming only in summer when the lakeside is crowded — spring and autumn are better"
+    ]
+  },
+  "timing": {
+    "best_seasons": ["spring", "fall"],
+    "shoulder_season_note": "Spring (April–May) is ideal — blossom, calm water and before summer crowds arrive",
+    "duration_hours": 0,
+    "duration_days": 2,
+    "time_of_day_start": "morning"
+  },
+  "logistics": {
+    "transportation_required": ["train", "boat"],
+    "accommodation_type": "hotel",
+    "base_city": "Lugano",
+    "special_equipment": []
+  },
+  "budget": {
+    "level": "moderate",
+    "estimated_cost_usd_per_person": 300,
+    "cost_notes": "Swiss Half Fare covers train; accommodation in Lugano varies. Budget CHF 200–400 for a weekend including meals."
+  },
+  "differentiation": {
+    "unique_factors": [
+      "Italian atmosphere without leaving Switzerland",
+      "Morcote: one of Switzerland's most photographed villages",
+      "2 hours from Zurich — minimal travel for maximum contrast"
+    ],
+    "compared_to_alternatives": "Warmer and more Mediterranean than Zurich lake; easier than Engadin; more local-feeling than Interlaken"
+  },
+  "maintenance": {
+    "last_verified": "2025-05-17",
+    "seasonal_closure": false,
+    "route_status": "active",
+    "notes": ""
+  },
+  "relationships": {
+    "related_stories": [],
+    "related_guides": [],
+    "suggested_next": ["lugano-monte-bre", "locarno-lake-maggiore", "bellinzona"]
+  },
+  "route": {
+    "mode": "train",
+    "map_zoom": 11,
+    "points": [
+      { "name": "Lugano", "lat": 46.0037, "lng": 8.9511, "type": "start" },
+      { "name": "Morcote", "lat": 45.9239, "lng": 8.9042, "type": "highlight" }
+    ]
+  },
+  "discovery": {
+    "search_synonyms": ["Morcote Switzerland", "Lugano weekend", "Ticino lake town", "Lake Lugano day trip"],
+    "long_tail_phrases": [
+      "Morcote Lugano weekend trip from Zurich",
+      "most beautiful village Switzerland Lake Lugano",
+      "Ticino weekend travel guide",
+      "Lugano Switzerland Italian atmosphere"
+    ],
+    "crowd_level": "moderate",
+    "hidden_gem": false
+  },
+  "credibility": {
+    "personal_experience": true,
+    "visit_date": "2025-05-17",
+    "times_done": 1,
+    "verified_by": "author"
+  },
+  "content": {
+    "media": {
+      "hero_image": "20250517_110745.jpg",
+      "gallery_images": [
+        "20250517_110745.jpg",
+        "20250517_110914.jpg",
+        "20250517_111039.jpg",
+        "20250517_112458.jpg",
+        "20250517_112700.jpg",
+        "20250517_112838.jpg",
+        "20250517_112956.jpg",
+        "20250517_113949.jpg",
+        "20250517_114248.jpg",
+        "20250517_115504.jpg",
+        "20250517_120923.jpg",
+        "20250517_122030.jpg",
+        "20250517_122358.jpg",
+        "20250517_201624.jpg",
+        "20250517_201708.jpg",
+        "20250517_201919.jpg"
+      ]
+    },
+    "story_file": "20250517-Inspire-story-Morcote-Lugano.txt",
+    "has_video": false,
+    "has_guide_pdf": false
+  },
+  "seo": {
+    "meta_title": "Morcote and Lugano — Swiss Weekend on Lake Lugano",
+    "meta_description": "A weekend in Morcote and Lugano — Italian atmosphere, lakeside arcades and Switzerland's most photogenic village.",
+    "og_title": "Morcote and Lugano — Swiss-Italian South",
+    "og_description": "Italy without leaving Switzerland. Morcote's lakeside arcades and Lugano's calm — the perfect 2-day reset."
+  },
+  "analytics": {
+    "page_views": 0,
+    "avg_time_on_page": 0,
+    "conversion_rate": 0
+  }
+}

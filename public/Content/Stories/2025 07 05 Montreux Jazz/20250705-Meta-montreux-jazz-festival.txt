@@ -1,0 +1,185 @@
+{
+  "guide": {
+    "has_guide": false,
+    "guide_status": "none",
+    "guide_url": "",
+    "guide_price_usd": 0,
+    "guide_format": [],
+    "includes_in_guide": []
+  },
+  "guide_what_you_get": [],
+  "hero": {
+    "eyebrow": "SWITZERLAND • MUSIC FESTIVAL • LAKE GENEVA",
+    "subtitle": "Montreux Jazz Festival on Lake Geneva — one of the world's great music festivals, in one of Switzerland's most beautiful settings.",
+    "primary_stats": [
+      { "label": "Duration", "value": "Weekend (or full festival: 2 weeks)" },
+      { "label": "Effort", "value": "Easy" },
+      { "label": "Altitude", "value": "375 m (lake level)" },
+      { "label": "Access", "value": "Montreux (train from Zurich ~2.5h)" },
+      { "label": "Highlight", "value": "Live music on Lake Geneva" }
+    ]
+  },
+  "sales": {
+    "why_this_trip": [
+      "Montreux Jazz Festival is one of Europe's most iconic summer festivals — 50+ years of history",
+      "Free outdoor stages on the lakeside run all day — the paid shows are optional",
+      "The setting is extraordinary: lake, Alps, and evening light that turns the whole city golden",
+      "Montreux itself is beautiful — a festival visit doubles as a Lake Geneva stay"
+    ],
+    "who_this_is_for": [
+      "Music lovers who want a festival with atmosphere, not just noise",
+      "Zurich-based visitors looking for a summer event that is also a beautiful destination",
+      "Anyone combining Lausanne or Geneva with a Montreux stop"
+    ],
+    "what_you_get": [
+      "Free outdoor concerts on the Montreux promenade throughout the day",
+      "Indoor headliner shows (ticketed) in the Casino and Stravinski Auditorium",
+      "Lake Geneva in summer evening light — the best version of it",
+      "A walkable festival in a walkable Swiss town"
+    ],
+    "difficulty_at_a_glance": [
+      "Very easy: everything happens on the flat lakeside promenade",
+      "Ticketed shows sell out — book months in advance for headliners"
+    ],
+    "not_suitable": [
+      "Travellers expecting a wild camping festival — Montreux is civilised and expensive",
+      "Budget visitors — accommodation in Montreux during the festival is at a premium"
+    ]
+  },
+  "story_id": "switzerland-montreux-jazz-festival-2025",
+  "title": "Montreux Jazz Festival — Lake Geneva Music Weekend",
+  "slug": "montreux-jazz-festival-lake-geneva",
+  "primary_collection": "Inspire",
+  "all_collections": ["Inspire"],
+  "status": "published",
+  "created_date": "2025-07-05",
+  "last_updated": "2026-04-19",
+  "language": "en",
+  "geography": {
+    "continent": "europe",
+    "country": "Switzerland",
+    "country_code": "CH",
+    "region": "Vaud",
+    "city": "Montreux",
+    "specific_location": "Montreux lakeside promenade, Lake Geneva"
+  },
+  "classification": {
+    "journey_category": "weekend",
+    "activity_category": ["wildlife_nature"],
+    "journey_style": "self_guided",
+    "best_for_crowd_type": ["active_explorers", "off_the_beaten_path"]
+  },
+  "difficulty": {
+    "overall_level": "easy",
+    "physical_fitness_required": "low",
+    "technical_skill_required": "none",
+    "elevation_gain_m": 0,
+    "total_distance_km": 5,
+    "exposure_level": "low",
+    "navigation_required": false
+  },
+  "suitability": {
+    "min_age": 0,
+    "family_friendly": true,
+    "solo_friendly": true,
+    "group_friendly": true,
+    "insider_tips": [
+      "The free outdoor stages are genuinely excellent — you do not need a ticket to experience the festival",
+      "Book accommodation in Vevey or Lausanne if Montreux is sold out — 15 minutes by train",
+      "Chateau de Chillon is a 20-minute walk east and worth adding if the day allows",
+      "Arrive early afternoon to get a spot near the outdoor stages for evening performances"
+    ],
+    "common_mistakes": [
+      "Booking nothing in advance — both accommodation and ticketed shows sell out fast",
+      "Expecting budget-friendly pricing — Montreux during the festival is peak Switzerland pricing",
+      "Only attending the free stages and missing the unique indoor show atmosphere"
+    ]
+  },
+  "timing": {
+    "best_seasons": ["summer"],
+    "shoulder_season_note": "Festival runs 2 weeks in July — attend outside this window for a quiet Lake Geneva visit",
+    "duration_hours": 0,
+    "duration_days": 2,
+    "time_of_day_start": "afternoon"
+  },
+  "logistics": {
+    "transportation_required": ["train"],
+    "accommodation_type": "hotel",
+    "base_city": "Montreux",
+    "special_equipment": []
+  },
+  "budget": {
+    "level": "expensive",
+    "estimated_cost_usd_per_person": 400,
+    "cost_notes": "Accommodation during festival is expensive. Free stages are free. Ticketed shows CHF 50–200+. Budget CHF 300–500 for a weekend."
+  },
+  "differentiation": {
+    "unique_factors": [
+      "One of the world's most famous jazz festivals, in one of Switzerland's most beautiful lake settings",
+      "Free outdoor stages mean the atmosphere is accessible without any ticket",
+      "Evening light on Lake Geneva during July is extraordinary — festival or not"
+    ],
+    "compared_to_alternatives": "More beautiful setting than Glastonbury; more intimate than Coachella; more accessible than Burning Man"
+  },
+  "maintenance": {
+    "last_verified": "2025-07-06",
+    "seasonal_closure": true,
+    "route_status": "seasonal_closure",
+    "notes": "Festival runs for ~2 weeks in July annually — check exact dates each year at montreuxjazz.com"
+  },
+  "relationships": {
+    "related_stories": [],
+    "related_guides": [],
+    "suggested_next": ["lausanne", "chillon-castle", "vevey-lake-geneva"]
+  },
+  "route": {
+    "mode": "train",
+    "map_zoom": 13,
+    "points": [
+      { "name": "Montreux Train Station", "lat": 46.4311, "lng": 6.9124, "type": "start" },
+      { "name": "Montreux Lakeside Promenade", "lat": 46.4320, "lng": 6.9121, "type": "highlight" }
+    ]
+  },
+  "discovery": {
+    "search_synonyms": ["Montreux Jazz Festival", "Lake Geneva festival", "Switzerland summer festival", "Montreux concert"],
+    "long_tail_phrases": [
+      "Montreux Jazz Festival weekend trip from Zurich",
+      "Montreux Jazz free outdoor stages Lake Geneva",
+      "how to visit Montreux Jazz Festival guide",
+      "Switzerland summer music festival July"
+    ],
+    "crowd_level": "very_high",
+    "hidden_gem": false
+  },
+  "credibility": {
+    "personal_experience": true,
+    "visit_date": "2025-07-06",
+    "times_done": 1,
+    "verified_by": "author"
+  },
+  "content": {
+    "media": {
+      "hero_image": "20250705_184135.jpg",
+      "gallery_images": [
+        "20250705_184135.jpg",
+        "20250705_193028.jpg",
+        "20250705_210429.jpg",
+        "20250706_112451.jpg"
+      ]
+    },
+    "story_file": "20250706-Inspire-story-Montreaux.txt",
+    "has_video": false,
+    "has_guide_pdf": false
+  },
+  "seo": {
+    "meta_title": "Montreux Jazz Festival — Lake Geneva Weekend",
+    "meta_description": "Montreux Jazz Festival on Lake Geneva — free outdoor stages, mountain backdrop and Switzerland's most beautiful festival setting.",
+    "og_title": "Montreux Jazz Festival — Lake Geneva",
+    "og_description": "One of Europe's great festivals in one of Switzerland's most beautiful settings. Music, lake and summer light."
+  },
+  "analytics": {
+    "page_views": 0,
+    "avg_time_on_page": 0,
+    "conversion_rate": 0
+  }
+}

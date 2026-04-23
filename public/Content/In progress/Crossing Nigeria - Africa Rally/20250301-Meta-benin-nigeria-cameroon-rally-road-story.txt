@@ -1,0 +1,185 @@
+{
+  "guide": {
+    "has_guide": false,
+    "guide_status": "none",
+    "guide_url": "",
+    "guide_price_usd": 0,
+    "guide_format": [],
+    "includes_in_guide": []
+  },
+  "guide_what_you_get": [],
+  "hero": {
+    "eyebrow": "WEST AFRICA • OVERLAND • ROAD TRIP",
+    "subtitle": "Cotonou to Cameroon via Lagos and Abuja — 50 checkpoints, one border crossing where 7 km takes 3 hours.",
+    "primary_stats": [
+      { "label": "Duration", "value": "Multi-day drive" },
+      { "label": "Effort", "value": "High" },
+      { "label": "Altitude", "value": "N/A" },
+      { "label": "Access", "value": "Cotonou, Benin" },
+      { "label": "Highlight", "value": "Mbanga border crossing" }
+    ]
+  },
+  "sales": {
+    "why_this_trip": [
+      "One of West Africa's most demanding overland connections — pure endurance driving",
+      "Real-world travel experience: 50 checkpoints between Nigerian cities",
+      "Mbanga crossing is a legendary off-road border passage rarely used by tourists",
+      "The route spans three countries and multiple climate and landscape zones"
+    ],
+    "who_this_is_for": [
+      "Experienced overland travellers and rally participants",
+      "Road trip enthusiasts with a genuine tolerance for uncertainty",
+      "Anyone building a West Africa overland route from Benin to Cameroon"
+    ],
+    "what_you_get": [
+      "A continuous drive through Cotonou, Lagos, Abuja and the Nigerian highlands",
+      "Approximately 50 police and military checkpoints — part of standard travel across Nigeria",
+      "The Mbanga border crossing: extreme off-road conditions, river crossings, 7 km in 3+ hours",
+      "An overland experience that defines the word endurance"
+    ],
+    "difficulty_at_a_glance": [
+      "Driving difficulty: extreme on Mbanga crossing sections",
+      "Logistics: complex — accommodation is scarce in smaller highland towns",
+      "Documentation: Nigerian visa and Cameroon visa required in advance"
+    ],
+    "not_suitable": [
+      "Standard vehicles without ground clearance — Mbanga requires off-road capability",
+      "Travellers without experience navigating West African checkpoints",
+      "Anyone without flexible timing — delays can add days"
+    ]
+  },
+  "story_id": "benin-nigeria-cameroon-overland-rally-2025",
+  "title": "Benin to Cameroon Overland via Nigeria",
+  "slug": "benin-nigeria-cameroon-rally-road-story",
+  "primary_collection": "Inspire",
+  "all_collections": ["Inspire"],
+  "status": "published",
+  "created_date": "2025-03-01",
+  "last_updated": "2026-04-19",
+  "language": "en",
+  "geography": {
+    "continent": "africa",
+    "country": "Nigeria",
+    "country_code": "NG",
+    "region": "West Africa",
+    "city": "Lagos / Abuja",
+    "specific_location": "Cotonou → Lagos → Abuja → Mbanga → Cameroon"
+  },
+  "classification": {
+    "journey_category": "week_trip",
+    "activity_category": ["road_trips"],
+    "journey_style": "self_guided",
+    "best_for_crowd_type": ["expedition_minded", "off_the_beaten_path", "road_trippers"]
+  },
+  "difficulty": {
+    "overall_level": "extreme",
+    "physical_fitness_required": "medium",
+    "technical_skill_required": "intermediate",
+    "elevation_gain_m": 0,
+    "total_distance_km": 0,
+    "exposure_level": "high",
+    "navigation_required": true
+  },
+  "suitability": {
+    "min_age": 18,
+    "family_friendly": false,
+    "solo_friendly": false,
+    "group_friendly": true,
+    "insider_tips": [
+      "Most Nigerian checkpoints are manageable — patience and politeness go a long way",
+      "Mbanga crossing requires a local guide and ideally someone with prior knowledge",
+      "Accommodation near the Nigerian highlands near Lafia and Gembu is very limited — plan ahead",
+      "Carry cash in Nigerian naira and CFA francs — cards are unreliable outside cities"
+    ],
+    "common_mistakes": [
+      "Choosing Mbanga without understanding the road conditions — it is not a normal border crossing",
+      "Underestimating checkpoint frequency — 50 stops between major cities is not unusual",
+      "Relying on digital maps alone — offline navigation is essential"
+    ]
+  },
+  "timing": {
+    "best_seasons": ["fall", "winter", "spring"],
+    "shoulder_season_note": "Rainy season (May–October) makes the Mbanga crossing significantly worse — sections become impassable",
+    "duration_hours": 0,
+    "duration_days": 5,
+    "time_of_day_start": "early morning"
+  },
+  "logistics": {
+    "transportation_required": ["car", "4x4"],
+    "accommodation_type": "hotel",
+    "base_city": "Cotonou",
+    "special_equipment": ["4x4 vehicle with high clearance", "spare fuel", "offline maps", "multiple currencies"]
+  },
+  "budget": {
+    "level": "moderate",
+    "estimated_cost_usd_per_person": 500,
+    "cost_notes": "Fuel, visa fees, and accommodation across three countries. Informal checkpoint fees may add small costs. Budget $300–700 depending on vehicle and routing."
+  },
+  "differentiation": {
+    "unique_factors": [
+      "Mbanga crossing: one of West Africa's most demanding overland border passages",
+      "50 checkpoints is a genuine number — not an exaggeration",
+      "Part of an Africa Rally — undertaken with purpose, not by accident"
+    ],
+    "compared_to_alternatives": "Tougher than conventional West Africa routes; less remote than Sahara crossings; defined by institutional friction rather than wilderness"
+  },
+  "maintenance": {
+    "last_verified": "2025-03-01",
+    "seasonal_closure": false,
+    "route_status": "active",
+    "notes": "Road conditions on Mbanga crossing change seasonally; verify local reports before attempting"
+  },
+  "relationships": {
+    "related_stories": ["cameroon-mount-cameroon-2025"],
+    "related_guides": [],
+    "suggested_next": ["cameroon-douala", "cameroon-mount-cameroon"]
+  },
+  "route": {
+    "mode": "car",
+    "map_zoom": 6,
+    "points": [
+      { "name": "Cotonou, Benin", "lat": 6.3654, "lng": 2.4183, "type": "start" },
+      { "name": "Lagos, Nigeria", "lat": 6.5244, "lng": 3.3792, "type": "stop" },
+      { "name": "Abuja, Nigeria", "lat": 9.0765, "lng": 7.3986, "type": "stop" },
+      { "name": "Mbanga Border Crossing", "lat": 4.5000, "lng": 9.3500, "type": "highlight" },
+      { "name": "Douala, Cameroon", "lat": 4.0511, "lng": 9.7679, "type": "end" }
+    ]
+  },
+  "discovery": {
+    "search_synonyms": ["overland Nigeria Cameroon", "West Africa road trip", "Benin Nigeria drive", "Africa rally overland"],
+    "long_tail_phrases": [
+      "overland drive from Benin through Nigeria to Cameroon",
+      "Mbanga border crossing Nigeria Cameroon",
+      "driving through Nigeria checkpoints",
+      "West Africa overland route Cotonou to Douala"
+    ],
+    "crowd_level": "very_low",
+    "hidden_gem": true
+  },
+  "credibility": {
+    "personal_experience": true,
+    "visit_date": "2025-03-01",
+    "times_done": 1,
+    "verified_by": "author"
+  },
+  "content": {
+    "media": {
+      "hero_image": "",
+      "gallery_images": []
+    },
+    "story_file": "20250301-Inspire-benin-nigeria-cameroon-rally-road-story.txt",
+    "has_video": false,
+    "has_guide_pdf": false
+  },
+  "seo": {
+    "meta_title": "Benin to Cameroon Overland via Nigeria",
+    "meta_description": "Drive from Cotonou through Lagos and Abuja to Cameroon. 50 checkpoints, the Mbanga crossing, and 7 km that take 3 hours.",
+    "og_title": "Benin to Cameroon Overland via Nigeria",
+    "og_description": "West Africa overland: 50 checkpoints, a legendary border crossing, and a route that defines endurance travel."
+  },
+  "analytics": {
+    "page_views": 0,
+    "avg_time_on_page": 0,
+    "conversion_rate": 0
+  }
+}

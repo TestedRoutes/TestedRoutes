@@ -4,7 +4,6 @@ import { resolve } from "path";
 
 export default defineConfig({
   plugins: [react()],
-  publicDir: "assets/public",
   build: {
     rollupOptions: {
       input: {

@@ -1,0 +1,205 @@
+{
+  "guide": {
+    "has_guide": false,
+    "guide_status": "none",
+    "guide_url": "",
+    "guide_price_usd": 0,
+    "guide_format": [],
+    "includes_in_guide": []
+  },
+  "guide_what_you_get": [],
+  "hero": {
+    "eyebrow": "SAMOA • ISLAND ROAD TRIP • PACIFIC CULTURE",
+    "subtitle": "Upolu and Savai'i by road — colorful villages, a church on every corner, and a Pacific rhythm that sets its own pace.",
+    "primary_stats": [
+      { "label": "Duration", "value": "5–7 days" },
+      { "label": "Effort", "value": "Easy" },
+      { "label": "Altitude", "value": "Sea level" },
+      { "label": "Access", "value": "Apia (Upolu)" },
+      { "label": "Highlight", "value": "Colorful village culture" }
+    ]
+  },
+  "sales": {
+    "why_this_trip": [
+      "Samoa is one of the most authentically Polynesian cultures still functioning on community terms",
+      "Churches define the landscape — every village has at least one and community pride shows in everything",
+      "Upolu and Savai'i together give a complete picture — connected by short ferry crossing",
+      "The road reveals what beach postcards never show: a living, colourful, deeply social country"
+    ],
+    "who_this_is_for": [
+      "Travellers who want Pacific culture beyond resorts and snorkelling",
+      "Road trippers looking for an island circuit with genuine character at every stop",
+      "Anyone combining Samoa with Tuvalu, Tonga or other Pacific island nations"
+    ],
+    "what_you_get": [
+      "A road trip across Upolu with stops at coastal villages, waterfalls and traditional fale stays",
+      "Savai'i island — less visited, bigger, and more rural than Upolu",
+      "Church architecture on every corner — a visual guide to community identity",
+      "A Pacific travel experience far from the tourist infrastructure of Bora Bora or Fiji"
+    ],
+    "difficulty_at_a_glance": [
+      "Easy: paved roads, clear signage and welcoming communities",
+      "Driving on the right-hand side of the road (they switched in 2009)",
+      "Sunday is almost entirely closed — plan any Savai'i ferry crossing around this"
+    ],
+    "not_suitable": [
+      "Travellers who need beach club infrastructure or 5-star resorts throughout",
+      "Anyone who needs to rush — Samoa moves slowly by design"
+    ]
+  },
+  "story_id": "samoa-upolu-savaii-roadtrip-2025",
+  "title": "Samoa — Upolu and Savai'i Island Road Trip",
+  "slug": "samoa-upolu-savaii-islands",
+  "primary_collection": "Inspire",
+  "all_collections": ["Inspire"],
+  "status": "published",
+  "created_date": "2025-01-02",
+  "last_updated": "2026-04-19",
+  "language": "en",
+  "geography": {
+    "continent": "oceania",
+    "country": "Samoa",
+    "country_code": "WS",
+    "region": "Upolu / Savai'i",
+    "city": "Apia",
+    "specific_location": "Upolu and Savai'i Islands"
+  },
+  "classification": {
+    "journey_category": "week_trip",
+    "activity_category": ["road_trips", "island_hopping", "wildlife_nature"],
+    "journey_style": "self_guided",
+    "best_for_crowd_type": ["road_trippers", "off_the_beaten_path", "active_explorers"]
+  },
+  "difficulty": {
+    "overall_level": "easy",
+    "physical_fitness_required": "low",
+    "technical_skill_required": "none",
+    "elevation_gain_m": 0,
+    "total_distance_km": 200,
+    "exposure_level": "low",
+    "navigation_required": false
+  },
+  "suitability": {
+    "min_age": 0,
+    "family_friendly": true,
+    "solo_friendly": true,
+    "group_friendly": true,
+    "insider_tips": [
+      "Sunday is sacred — virtually nothing operates; plan your Savai'i ferry for Saturday or Monday",
+      "Fale stays (traditional open-sided beach huts) are the most authentic accommodation option",
+      "Community-run guesthouses give more context than any hotel",
+      "Ask in each village before photographing — courtesy is always appreciated and usually rewarded"
+    ],
+    "common_mistakes": [
+      "Assuming the ferry runs on Sunday — it may not, and your entire schedule can shift",
+      "Spending all time near Apia instead of driving the full circuit",
+      "Overlooking Savai'i — it is less visited and arguably more authentic than Upolu"
+    ]
+  },
+  "timing": {
+    "best_seasons": ["spring", "fall", "winter"],
+    "shoulder_season_note": "Wet season December–March brings heat and rain; dry season May–October is most comfortable",
+    "duration_hours": 0,
+    "duration_days": 6,
+    "time_of_day_start": "morning"
+  },
+  "logistics": {
+    "transportation_required": ["plane", "car", "boat"],
+    "accommodation_type": "guesthouse",
+    "base_city": "Apia",
+    "special_equipment": ["cash (limited card acceptance outside Apia)", "reef shoes", "sunscreen"]
+  },
+  "budget": {
+    "level": "budget",
+    "estimated_cost_usd_per_person": 700,
+    "cost_notes": "Flights via Fiji or Auckland are the main cost. On-island costs are low: fale stays, local food, cheap car hire. Budget $500–900 total."
+  },
+  "differentiation": {
+    "unique_factors": [
+      "One of the most church-dense countries in the world — the architecture tells the whole story",
+      "Community-based travel in a Pacific nation that functions on communal, not tourist, terms",
+      "Savai'i: one of the least-visited large Pacific islands"
+    ],
+    "compared_to_alternatives": "More culturally engaged than Fiji resorts; cheaper and less known than French Polynesia; more authentic than Vanuatu's Port Vila"
+  },
+  "maintenance": {
+    "last_verified": "2025-01-02",
+    "seasonal_closure": false,
+    "route_status": "active",
+    "notes": ""
+  },
+  "relationships": {
+    "related_stories": ["tuvalu-funafuti-atoll-2024", "fiji-honeymoon-yasawa-taveuni-2025"],
+    "related_guides": [],
+    "suggested_next": ["tonga", "niue", "cook-islands"]
+  },
+  "route": {
+    "mode": "car",
+    "map_zoom": 9,
+    "points": [
+      { "name": "Apia, Upolu", "lat": -13.8314, "lng": -171.7674, "type": "start" },
+      { "name": "South Coast, Upolu", "lat": -14.0500, "lng": -171.5000, "type": "stop" },
+      { "name": "Savai'i Ferry Terminal", "lat": -13.9000, "lng": -172.0667, "type": "stop" },
+      { "name": "Savai'i Island", "lat": -13.5000, "lng": -172.5000, "type": "highlight" }
+    ]
+  },
+  "discovery": {
+    "search_synonyms": ["Samoa road trip", "Upolu Savaii", "Pacific island roadtrip", "Samoa village travel"],
+    "long_tail_phrases": [
+      "Samoa road trip Upolu and Savaii",
+      "how to travel Samoa independently",
+      "Samoa fale stays authentic travel",
+      "Samoa church villages Pacific culture"
+    ],
+    "crowd_level": "low",
+    "hidden_gem": true
+  },
+  "credibility": {
+    "personal_experience": true,
+    "visit_date": "2025-01-02",
+    "times_done": 1,
+    "verified_by": "author"
+  },
+  "content": {
+    "media": {
+      "hero_image": "20241229_110508.jpg",
+      "gallery_images": [
+        "20241229_110508.jpg",
+        "20241229_115317.jpg",
+        "20241229_115649.jpg",
+        "20241229_124756.jpg",
+        "20241229_125512.jpg",
+        "20241229_135708.jpg",
+        "20241229_153914.jpg",
+        "20241229_160431.jpg",
+        "20241229_185432.jpg",
+        "20241229_190038.jpg",
+        "20241230_122359.jpg",
+        "20241230_130147.jpg",
+        "20241230_133954.jpg",
+        "20241230_144816.jpg",
+        "20241231_074340.jpg",
+        "20241231_100029.jpg",
+        "20241231_104524.jpg",
+        "20241231_115231.jpg",
+        "20241231_122452.jpg",
+        "20250101_133452.jpg",
+        "20250101_145129.jpg"
+      ]
+    },
+    "story_file": "20250102-Inspire-samoa-upolu-savaii-islands.txt",
+    "has_video": false,
+    "has_guide_pdf": false
+  },
+  "seo": {
+    "meta_title": "Samoa Road Trip — Upolu and Savai'i Islands",
+    "meta_description": "Drive Upolu and Savai'i in Samoa — colorful villages, churches everywhere and a Pacific community culture that runs on its own rules.",
+    "og_title": "Samoa — Upolu and Savai'i Road Trip",
+    "og_description": "Colorful villages, a church on every corner, and a Pacific rhythm unlike any beach resort. Samoa by road."
+  },
+  "analytics": {
+    "page_views": 0,
+    "avg_time_on_page": 0,
+    "conversion_rate": 0
+  }
+}

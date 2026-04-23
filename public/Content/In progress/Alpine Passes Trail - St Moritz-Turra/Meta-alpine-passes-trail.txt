@@ -1,0 +1,51 @@
+{
+  "story_id": "switzerland-alpine-passes-trail-st-moritz-turra",
+  "title": "Alpine Passes Trail: St Moritz → Turra",
+  "slug": "alpine-passes-trail-st-moritz-turra",
+  "status": "published",
+  "language": "en",
+  "geography": {
+    "continent": "europe",
+    "country": "Switzerland",
+    "country_code": "CH",
+    "regions": ["Graubünden", "Engadin", "St. Moritz"],
+    "nearest_major_city": "St. Moritz"
+  },
+  "classification": {
+    "primary_collection": "Switzerland",
+    "all_collections": ["Switzerland", "Multi-day Hikes", "Alpine Passes", "Engadin"],
+    "journey_category": "multi_day_trip",
+    "activity_category": "outdoor_hiking",
+    "activity_tags": ["alpine pass hike", "high altitude trail", "multi-day hike", "Swiss Alps", "self-guided"],
+    "journey_style": "self_guided",
+    "highlights": [
+      "Crossing multiple high alpine passes",
+      "Remote mountain scenery in the Engadin valley",
+      "Self-guided route from St. Moritz to Turra"
+    ]
+  },
+  "difficulty": {
+    "overall_level": "hard",
+    "physical_fitness_required": "high",
+    "elevation_gain_m": 2800,
+    "total_distance_km": 55,
+    "duration_days": 4
+  },
+  "timing": {
+    "duration_days": 4,
+    "duration_display": "3–5 days",
+    "best_seasons": ["summer"]
+  },
+  "guide": {
+    "has_guide": true,
+    "guide_status": "published",
+    "guide_pdf": "Guide-Alpine_Passes_Trail_StMoritz-Turra_Apr2026.pdf",
+    "guide_price": "19.99",
+    "guide_currency": "EUR",
+    "guide_format": ["PDF"]
+  },
+  "seo": {
+    "meta_title": "Alpine Passes Trail: St Moritz to Turra — Self-Guided Hike",
+    "meta_description": "A multi-day self-guided hike across alpine passes from St. Moritz to Turra in the Swiss Engadin. Complete route plan with timing, logistics and transport."
+  }
+}

@@ -1,0 +1,188 @@
+{
+  "guide": {
+    "has_guide": false,
+    "guide_status": "none",
+    "guide_url": "",
+    "guide_price_usd": 0,
+    "guide_format": [],
+    "includes_in_guide": []
+  },
+  "guide_what_you_get": [],
+  "hero": {
+    "eyebrow": "SWITZERLAND • WEEKEND • HIGH ALPINE",
+    "subtitle": "Diavolezza above the Engadin — glaciers, high ridges and Piz Palü from one of Switzerland's great alpine vantage points.",
+    "primary_stats": [
+      { "label": "Duration", "value": "Weekend (2 days)" },
+      { "label": "Effort", "value": "Moderate" },
+      { "label": "Altitude", "value": "2,978 m (Diavolezza terrace)" },
+      { "label": "Access", "value": "Pontresina / St. Moritz (train from Zurich ~3h)" },
+      { "label": "Highlight", "value": "Morteratsch glacier panorama" }
+    ]
+  },
+  "sales": {
+    "why_this_trip": [
+      "Diavolezza terrace at 2,978 m gives one of Switzerland's most direct views onto active glaciers",
+      "Piz Palü and the Morteratsch glacier form a panorama that stops you immediately",
+      "The Engadin valley combines alpine drama with comfortable Swiss infrastructure",
+      "Cable car access means the high alpine is available without mountaineering fitness"
+    ],
+    "who_this_is_for": [
+      "Anyone wanting high-alpine views without a serious ascent",
+      "Zurich-based travellers looking for an Engadin weekend",
+      "Photographers and landscape lovers — the glacier panorama at sunrise is exceptional"
+    ],
+    "what_you_get": [
+      "The Diavolezza terrace: views over Morteratsch glacier and surrounding 4,000 m peaks",
+      "The Engadin valley below — St. Moritz and Pontresina as base towns",
+      "Optional hiking routes from the terrace for those who want to go further",
+      "The closest most people will ever get to a living glacier without climbing gear"
+    ],
+    "difficulty_at_a_glance": [
+      "Easy to moderate: cable car to 2,978 m; terrace walking is flat",
+      "Optional ridge hike adds difficulty and exposure"
+    ],
+    "not_suitable": [
+      "Travellers looking for beaches or low-altitude warmth",
+      "Budget-sensitive visitors — Engadin is the most expensive Swiss valley"
+    ]
+  },
+  "story_id": "switzerland-diavolezza-engadin-weekend-2025",
+  "title": "Diavolezza Weekend — Engadin Glaciers Above St. Moritz",
+  "slug": "diavolezza-engadin-glacier-weekend",
+  "primary_collection": "Inspire",
+  "all_collections": ["Inspire"],
+  "status": "published",
+  "created_date": "2025-06-20",
+  "last_updated": "2026-04-19",
+  "language": "en",
+  "geography": {
+    "continent": "europe",
+    "country": "Switzerland",
+    "country_code": "CH",
+    "region": "Graubünden / Engadin",
+    "city": "Pontresina",
+    "specific_location": "Diavolezza, Upper Engadin"
+  },
+  "classification": {
+    "journey_category": "weekend",
+    "activity_category": ["outdoor_hiking", "mountain_climbing"],
+    "journey_style": "self_guided",
+    "best_for_crowd_type": ["active_explorers", "experienced_mountaineers"]
+  },
+  "difficulty": {
+    "overall_level": "moderate",
+    "physical_fitness_required": "medium",
+    "technical_skill_required": "none",
+    "elevation_gain_m": 800,
+    "total_distance_km": 12,
+    "exposure_level": "moderate",
+    "navigation_required": false
+  },
+  "suitability": {
+    "min_age": 8,
+    "family_friendly": true,
+    "solo_friendly": true,
+    "group_friendly": true,
+    "insider_tips": [
+      "The cable car opens early — go up for sunrise before the crowds arrive",
+      "Pontresina is a better base than St. Moritz — cheaper and closer to the trails",
+      "The glacier is visibly retreating — this landscape is changing; go sooner rather than later",
+      "Bernina Express train runs through the valley — combine with a rail day if the legs need rest"
+    ],
+    "common_mistakes": [
+      "Staying only on the terrace — the short ridge walks extend the experience significantly",
+      "Going only in winter (ski season) and missing the summer glacier views",
+      "Booking St. Moritz accommodation — Pontresina is 10 minutes away and half the price"
+    ]
+  },
+  "timing": {
+    "best_seasons": ["summer", "fall"],
+    "shoulder_season_note": "Summer (June–September) for glacier views and hiking; winter for skiing from the same cable car",
+    "duration_hours": 0,
+    "duration_days": 2,
+    "time_of_day_start": "morning"
+  },
+  "logistics": {
+    "transportation_required": ["train", "cable_car"],
+    "accommodation_type": "hotel",
+    "base_city": "Pontresina",
+    "special_equipment": ["sunscreen (UV at altitude is extreme)", "layers", "hiking boots"]
+  },
+  "budget": {
+    "level": "expensive",
+    "estimated_cost_usd_per_person": 500,
+    "cost_notes": "Engadin is Switzerland's most expensive region — accommodation and cable cars carry a premium. Swiss Half Fare covers train. Budget CHF 400–600 for a weekend."
+  },
+  "differentiation": {
+    "unique_factors": [
+      "Direct view onto Morteratsch glacier — one of Switzerland's most dramatic glacier panoramas",
+      "Accessible by cable car — high alpine without mountaineering commitment",
+      "Engadin summer: the valley in full green below the permanent snow line above"
+    ],
+    "compared_to_alternatives": "More dramatic than Rigi or Pilatus; easier than Aletsch glacier access; more intimate than Jungfraujoch crowds"
+  },
+  "maintenance": {
+    "last_verified": "2025-06-22",
+    "seasonal_closure": false,
+    "route_status": "active",
+    "notes": "Cable car has seasonal maintenance closures — check Diavolezza.ch before travelling"
+  },
+  "relationships": {
+    "related_stories": [],
+    "related_guides": [],
+    "suggested_next": ["engadin-piz-languard", "bernina-express", "pontresina-hiking"]
+  },
+  "route": {
+    "mode": "cable_car",
+    "map_zoom": 12,
+    "points": [
+      { "name": "Pontresina", "lat": 46.4894, "lng": 9.9006, "type": "start" },
+      { "name": "Diavolezza Cable Car Station", "lat": 46.4009, "lng": 9.9726, "type": "stop" },
+      { "name": "Diavolezza Terrace", "lat": 46.4033, "lng": 9.9733, "type": "highlight" }
+    ]
+  },
+  "discovery": {
+    "search_synonyms": ["Diavolezza hike", "Engadin glacier view", "St Moritz weekend", "Morteratsch glacier Switzerland"],
+    "long_tail_phrases": [
+      "Diavolezza weekend trip from Zurich Engadin",
+      "Morteratsch glacier viewpoint Switzerland",
+      "best alpine views Engadin summer",
+      "Diavolezza cable car hiking guide"
+    ],
+    "crowd_level": "moderate",
+    "hidden_gem": false
+  },
+  "credibility": {
+    "personal_experience": true,
+    "visit_date": "2025-06-22",
+    "times_done": 1,
+    "verified_by": "author"
+  },
+  "content": {
+    "media": {
+      "hero_image": "20250622_054540.jpg",
+      "gallery_images": [
+        "20250621_121144.jpg",
+        "20250621_203300.jpg",
+        "20250622_054540.jpg",
+        "20250622_093509.jpg",
+        "20250622_110710.jpg",
+        "20250622_140305.jpg"
+      ]
+    },
+    "story_file": "20250621-Inspire-Story-Diavolezza.txt",
+    "has_video": false,
+    "has_guide_pdf": false
+  },
+  "seo": {
+    "meta_title": "Diavolezza Weekend — Engadin Glaciers, Switzerland",
+    "meta_description": "Diavolezza at 2,978 m above the Engadin — Morteratsch glacier panorama and Piz Palü views from one of Switzerland's great vantage points.",
+    "og_title": "Diavolezza — Engadin Glacier Views, Switzerland",
+    "og_description": "Glaciers, 4,000 m peaks and the Morteratsch panorama — a weekend above the Engadin from the Diavolezza terrace."
+  },
+  "analytics": {
+    "page_views": 0,
+    "avg_time_on_page": 0,
+    "conversion_rate": 0
+  }
+}

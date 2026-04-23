@@ -1,0 +1,182 @@
+{
+  "guide": {
+    "has_guide": false,
+    "guide_status": "none",
+    "guide_url": "",
+    "guide_price_usd": 0,
+    "guide_format": [],
+    "includes_in_guide": []
+  },
+  "guide_what_you_get": [],
+  "hero": {
+    "eyebrow": "PHILIPPINES • WEEKEND TRIP • WATER ACTIVITIES",
+    "subtitle": "Whale sharks at Oslob and Kawasan Falls canyoning — 40 hours in the Philippines that feel complete.",
+    "primary_stats": [
+      { "label": "Duration", "value": "40 hours" },
+      { "label": "Effort", "value": "Moderate" },
+      { "label": "Altitude", "value": "Sea level" },
+      { "label": "Access", "value": "Cebu City" },
+      { "label": "Highlight", "value": "Whale sharks + canyoning" }
+    ]
+  },
+  "sales": {
+    "why_this_trip": [
+      "Swim with whale sharks — one of the ocean's most powerful scale-shifting moments",
+      "Kawasan Falls canyoning through turquoise jungle water is the ideal follow-up",
+      "Proves how much is possible in under 48 hours from anywhere in Asia",
+      "Bohol and Cebu work perfectly together as a short Philippines circuit"
+    ],
+    "who_this_is_for": [
+      "Asia-based travellers with a long weekend and a late booking mindset",
+      "Water and ocean enthusiasts looking for a short but rich island trip",
+      "First-timers to the Philippines wanting the greatest hits in minimal time"
+    ],
+    "what_you_get": [
+      "Swimming with whale sharks near Oslob — an experience that immediately changes your sense of scale",
+      "A full canyoning route through Kawasan Falls and turquoise jungle canyons",
+      "The feeling of a complete trip in less than two full days"
+    ],
+    "difficulty_at_a_glance": [
+      "Whale sharks: easy — guided swim in open water near the shore",
+      "Kawasan canyoning: moderate — swimming, jumping, and scrambling through canyons"
+    ],
+    "not_suitable": [
+      "Non-swimmers — canyoning requires confidence in water",
+      "Travellers who need slow, relaxed days — this is a packed short trip"
+    ]
+  },
+  "story_id": "philippines-bohol-cebu-2024",
+  "title": "Cebu and Bohol, Philippines — 40 Hours",
+  "slug": "bohol-cebu-philippines-40-hours",
+  "primary_collection": "Inspire",
+  "all_collections": ["Inspire"],
+  "status": "published",
+  "created_date": "2024-10-07",
+  "last_updated": "2026-04-19",
+  "language": "en",
+  "geography": {
+    "continent": "asia",
+    "country": "Philippines",
+    "country_code": "PH",
+    "region": "Visayas",
+    "city": "Cebu City",
+    "specific_location": "Oslob / Kawasan Falls / Cebu / Bohol"
+  },
+  "classification": {
+    "journey_category": "weekend",
+    "activity_category": ["water_activities", "wildlife_nature"],
+    "journey_style": "tour_available",
+    "best_for_crowd_type": ["active_explorers", "island_hoppers"]
+  },
+  "difficulty": {
+    "overall_level": "moderate",
+    "physical_fitness_required": "medium",
+    "technical_skill_required": "none",
+    "elevation_gain_m": 0,
+    "total_distance_km": 0,
+    "exposure_level": "low",
+    "navigation_required": false
+  },
+  "suitability": {
+    "min_age": 10,
+    "family_friendly": true,
+    "solo_friendly": true,
+    "group_friendly": true,
+    "insider_tips": [
+      "Book the Oslob whale shark swim early — crowds build quickly after 8am",
+      "Kawasan canyoning is most enjoyable with a private or small-group guide",
+      "Cebu City is the practical base — flights from most Asian hubs are cheap",
+      "The late Thursday booking approach works — Asia flights to Cebu are affordable"
+    ],
+    "common_mistakes": [
+      "Spending too long in Cebu City — the best of this trip is outside the capital",
+      "Skipping Kawasan thinking it is just a waterfall — the canyoning route is the real experience"
+    ]
+  },
+  "timing": {
+    "best_seasons": ["year_round"],
+    "shoulder_season_note": "Avoid typhoon season (July–September) — storms can disrupt island access and water activities",
+    "duration_hours": 40,
+    "duration_days": 2,
+    "time_of_day_start": "morning"
+  },
+  "logistics": {
+    "transportation_required": ["plane", "boat", "car"],
+    "accommodation_type": "hotel",
+    "base_city": "Cebu City",
+    "special_equipment": ["swimwear", "water shoes for canyoning"]
+  },
+  "budget": {
+    "level": "budget",
+    "estimated_cost_usd_per_person": 200,
+    "cost_notes": "Budget flights from within Asia, local tours for whale sharks and canyoning are very affordable. Total under $200 for the weekend from Singapore/Bangkok."
+  },
+  "differentiation": {
+    "unique_factors": [
+      "A genuinely complete travel experience in under 40 hours",
+      "Two iconic Philippines experiences back to back with minimal planning",
+      "Living proof that living in Asia opens short trip options most people don't consider"
+    ],
+    "compared_to_alternatives": "Faster and cheaper than a Palawan circuit; less crowded than Boracay; more experiential than El Nido short stays"
+  },
+  "maintenance": {
+    "last_verified": "2024-10-17",
+    "seasonal_closure": false,
+    "route_status": "active",
+    "notes": "Oslob whale shark interaction faces ongoing ethical debate — check current status and operator guidelines before visiting"
+  },
+  "relationships": {
+    "related_stories": [],
+    "related_guides": [],
+    "suggested_next": ["philippines-palawan", "philippines-siargao"]
+  },
+  "route": {
+    "mode": "mixed",
+    "map_zoom": 9,
+    "points": [
+      { "name": "Cebu City", "lat": 10.3157, "lng": 123.8854, "type": "start" },
+      { "name": "Oslob, Cebu", "lat": 9.5263, "lng": 123.3894, "type": "stop" },
+      { "name": "Kawasan Falls", "lat": 9.8033, "lng": 123.3854, "type": "highlight" },
+      { "name": "Panglao, Bohol", "lat": 9.5770, "lng": 123.7632, "type": "stop" }
+    ]
+  },
+  "discovery": {
+    "search_synonyms": ["whale sharks Oslob", "Kawasan Falls canyoning", "Philippines short trip", "Cebu Bohol weekend"],
+    "long_tail_phrases": [
+      "swimming with whale sharks Oslob Cebu Philippines",
+      "Kawasan Falls canyoning tour Cebu",
+      "Philippines 40 hour trip from Singapore",
+      "Cebu and Bohol weekend itinerary"
+    ],
+    "crowd_level": "high",
+    "hidden_gem": false
+  },
+  "credibility": {
+    "personal_experience": true,
+    "visit_date": "2024-10-07",
+    "times_done": 1,
+    "verified_by": "author"
+  },
+  "content": {
+    "media": {
+      "hero_image": "Philippines 2024.jpg",
+      "gallery_images": [
+        "Philippines 2024.jpg"
+      ]
+    },
+    "story_file": "20241017-Inspire-story-Philippines.txt",
+    "has_video": false,
+    "has_guide_pdf": false
+  },
+  "seo": {
+    "meta_title": "Cebu and Bohol, Philippines — 40 Hours",
+    "meta_description": "Whale sharks at Oslob and Kawasan Falls canyoning in 40 hours. A quick but complete Philippines trip from anywhere in Asia.",
+    "og_title": "Cebu and Bohol — 40 Hours in the Philippines",
+    "og_description": "Swim with whale sharks and canyon through turquoise jungle water. The Philippines in under two days."
+  },
+  "analytics": {
+    "page_views": 0,
+    "avg_time_on_page": 0,
+    "conversion_rate": 0
+  }
+}
