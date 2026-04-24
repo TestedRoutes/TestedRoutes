@@ -8,7 +8,7 @@ import {
   inspireListPrimaryDestinationIsGuide,
   getInspireStoryGuideUrl,
   inspireStoryHasGuide,
-} from "../../src/utils/inspireStoryDisplay";
+} from "../_lib/inspireStoryDisplay";
 import InspireBrowse from "./InspireBrowse";
 
 export const metadata = {

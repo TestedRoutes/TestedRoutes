@@ -6,7 +6,7 @@ import {
   getInspireFeaturedCardDisplay,
   getInspireStoryHeroAlt,
   getInspireStoryGuideUrl,
-} from "../../../src/utils/inspireStoryDisplay";
+} from "../../_lib/inspireStoryDisplay";
 
 export async function generateStaticParams() {
   const stories = await loadInspireStories();
