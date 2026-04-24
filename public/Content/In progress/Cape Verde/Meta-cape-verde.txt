@@ -1,0 +1,49 @@
+{
+  "story_id": "cape-verde-island-route",
+  "title": "Cape Verde Island Route",
+  "slug": "cape-verde-island-route",
+  "status": "published",
+  "language": "en",
+  "geography": {
+    "continent": "africa",
+    "country": "Cape Verde",
+    "country_code": "CV",
+    "regions": ["Santiago", "Santo Antão", "Fogo"],
+    "nearest_major_city": "Praia"
+  },
+  "classification": {
+    "primary_collection": "Africa",
+    "all_collections": ["Africa", "Island Trips", "Road Trips", "Cape Verde"],
+    "journey_category": "multi_day_trip",
+    "activity_category": "island_exploration",
+    "activity_tags": ["island hopping", "road trip", "volcanic landscape", "hiking", "Atlantic islands", "self-guided"],
+    "journey_style": "self_guided",
+    "highlights": [
+      "Island hopping between Santiago, Santo Antão and Fogo",
+      "Hiking on the Fogo volcano",
+      "Remote Atlantic island scenery"
+    ]
+  },
+  "difficulty": {
+    "overall_level": "moderate",
+    "physical_fitness_required": "medium",
+    "duration_days": 10
+  },
+  "timing": {
+    "duration_days": 10,
+    "duration_display": "1–2 weeks",
+    "best_seasons": ["winter", "spring"]
+  },
+  "guide": {
+    "has_guide": true,
+    "guide_status": "published",
+    "guide_pdf": "Guide-Cape_Verde_Apr2026.pdf",
+    "guide_price": "24.99",
+    "guide_currency": "EUR",
+    "guide_format": ["PDF"]
+  },
+  "seo": {
+    "meta_title": "Cape Verde Island Route — Self-Guided Travel Guide",
+    "meta_description": "A complete self-guided route through Cape Verde covering the best islands, transport connections, hiking, and logistics. Personally tested."
+  }
+}

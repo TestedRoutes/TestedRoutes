@@ -1,3 +1,6 @@
 node_modules/
 .claude/
 /site-config.js
+.next/
+out/
+dist/

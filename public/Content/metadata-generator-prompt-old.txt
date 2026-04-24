@@ -1,0 +1,714 @@
+You are a travel metadata specialist. Generate a complete metadata.json file for this travel story.
+
+
+
+═══════════════════════════════════════════════════════════════
+
+STORY TEXT
+
+═══════════════════════════════════════════════════════════════
+
+\[PASTE YOUR STORY TEXT HERE]
+
+
+
+═══════════════════════════════════════════════════════════════
+
+PHOTOS
+
+═══════════════════════════════════════════════════════════════
+
+\[LIST YOUR PHOTO FILENAMES AND DESCRIPTIONS]
+
+Example:
+
+\- hero.jpg: Person sitting above glacier lake with suspension bridge
+
+\- img1.jpg: Approach trail through forest
+
+\- img2.jpg: Suspension bridge crossing
+
+\- img3.jpg: Glacier valley view
+
+
+
+═══════════════════════════════════════════════════════════════
+
+GUIDE INFO (Manual - I'll fill this myself)
+
+═══════════════════════════════════════════════════════════════
+
+Has guide available: \[Yes/No]
+
+Guide status: \[available / in\_progress / planned / none]
+
+Guide URL: \[if applicable]
+
+Guide price USD: \[if applicable]
+
+
+
+═══════════════════════════════════════════════════════════════
+
+INSTRUCTIONS
+
+═══════════════════════════════════════════════════════════════
+
+
+
+Generate a complete metadata.json file with ALL these sections:
+
+
+
+1\. GUIDE (at top for easy manual editing later)
+
+2\. CORE IDENTIFICATION
+
+3\. GEOGRAPHY
+
+4\. CLASSIFICATION
+
+5\. DIFFICULTY \& FITNESS
+
+6\. SUITABILITY
+
+7\. TIMING \& DURATION
+
+8\. LOGISTICS \& PRACTICAL
+
+9\. BUDGET
+
+10\. DIFFERENTIATION (NEW - what makes this unique)
+
+11\. MAINTENANCE (NEW - tracking freshness)
+
+12\. RELATIONSHIPS (NEW - related stories)
+
+13\. DISCOVERY (NEW - search optimization)
+
+14\. CREDIBILITY (NEW - trust signals)
+
+15\. CONTENT \& MEDIA
+
+16\. SEO
+
+17\. ANALYTICS
+
+
+
+═══════════════════════════════════════════════════════════════
+
+CONTROLLED VOCABULARIES - USE THESE EXACT VALUES
+
+═══════════════════════════════════════════════════════════════
+
+
+
+IMPORTANT: 
+
+\- Enums/categories = lowercase (europe, moderate, hiking)
+
+\- Proper nouns = Proper Case (Switzerland, Zurich, Bernese Alps)
+
+
+
+continent: europe, asia, africa, north\_america, south\_america, oceania, antarctica
+
+
+
+journey\_category: day\_trip, weekend, week\_trip, multi\_week, expedition
+
+
+
+activity\_category: 
+
+&#x20; adventure\_sports, outdoor\_hiking, mountain\_climbing, road\_trips\_driving,
+
+&#x20; cultural\_heritage, food\_drink, water\_activities, extreme\_sports,
+
+&#x20; wildlife\_nature, multi\_day\_expeditions, urban\_exploration, winter\_sports,
+
+&#x20; cycling\_biking, photography\_tours, wellness\_relaxation, air\_activities,
+
+&#x20; underground\_caving, desert\_expeditions, jungle\_trekking, island\_hopping,
+
+&#x20; rail\_journeys
+
+
+
+activity\_tags: \[unlimited - be specific to the story]
+
+
+
+difficulty overall\_level: easy, moderate, challenging, extreme
+
+
+
+physical\_fitness\_required: low, medium, high, very\_high
+
+
+
+technical\_skill\_required: none, basic, intermediate, advanced, expert
+
+
+
+budget level: budget, moderate, expensive, luxury
+
+
+
+best\_seasons: spring, summer, fall, winter, year\_round
+
+
+
+journey\_style: self\_guided, needs\_guide, tour\_available
+
+
+
+story\_type: teaser (if guide exists), full\_story (if no guide)
+
+
+
+guide\_status: available, in\_progress, planned, none
+
+
+
+route\_status: active, seasonal\_closure, permanently\_changed, under\_construction
+
+
+
+crowd\_level: very\_low, low, moderate, high, very\_high
+
+
+
+best\_for\_crowd\_type: 
+
+&#x20; photography\_enthusiasts, adrenaline\_seekers, families\_with\_teens,
+
+&#x20; first\_time\_hikers, experienced\_mountaineers, couples, solo\_travelers,
+
+&#x20; adventure\_seekers, culture\_lovers, nature\_lovers, road\_trippers
+
+
+
+transportation: 
+
+&#x20; train, car, 4x4, boat, plane, cable\_car, public\_transport, 
+
+&#x20; rental\_car, own\_vehicle, bicycle, motorcycle, bus
+
+
+
+accommodation\_type: 
+
+&#x20; day\_trip, camping, hostel, hotel, guesthouse, mountain\_hut, 
+
+&#x20; self\_catering, luxury\_lodge, homestay
+
+
+
+═══════════════════════════════════════════════════════════════
+
+COMPLETE JSON STRUCTURE
+
+═══════════════════════════════════════════════════════════════
+
+
+
+Generate the metadata following this exact structure:
+
+
+
+{
+
+&#x20; "guide": {
+
+&#x20;   "has\_guide": false,
+
+&#x20;   "guide\_status": "none",
+
+&#x20;   "guide\_url": "",
+
+&#x20;   "guide\_price\_usd": 0,
+
+&#x20;   "guide\_format": \[],
+
+&#x20;   "includes\_in\_guide": \[]
+
+&#x20; },
+
+&#x20; 
+
+&#x20; "story\_id": "\[country]-\[location]-\[year]",
+
+&#x20; "title": "\[Clear descriptive title]",
+
+&#x20; "slug": "\[url-friendly-slug-lowercase-with-hyphens]",
+
+&#x20; "status": "published",
+
+&#x20; "created\_date": "\[YYYY-MM-DD - use today's date]",
+
+&#x20; "last\_updated": "\[YYYY-MM-DD - use today's date]",
+
+&#x20; "language": "en",
+
+&#x20; 
+
+&#x20; "geography": {
+
+&#x20;   "continent": "\[lowercase enum]",
+
+&#x20;   "country": "\[Proper Case]",
+
+&#x20;   "country\_code": "\[ISO code e.g. CH, IS, NZ]",
+
+&#x20;   "regions": \["\[Proper Case regions]"],
+
+&#x20;   "nearest\_major\_city": "\[Proper Case]",
+
+&#x20;   "nearest\_major\_city\_distance\_km": \[number],
+
+&#x20;   "coordinates": {
+
+&#x20;     "lat": \[latitude decimal],
+
+&#x20;     "lng": \[longitude decimal]
+
+&#x20;   },
+
+&#x20;   "starting\_point": {
+
+&#x20;     "name": "\[Starting location]",
+
+&#x20;     "type": "\[train\_station | airport | city\_center | parking\_lot | trailhead]",
+
+&#x20;     "coordinates": {
+
+&#x20;       "lat": \[latitude],
+
+&#x20;       "lng": \[longitude]
+
+&#x20;     }
+
+&#x20;   }
+
+&#x20; },
+
+&#x20; 
+
+&#x20; "classification": {
+
+&#x20;   "primary\_collection": "\[main category]",
+
+&#x20;   "all\_collections": \["\[collection1]", "\[collection2]"],
+
+&#x20;   "journey\_category": "\[enum]",
+
+&#x20;   "activity\_category": "\[enum]",
+
+&#x20;   "activity\_tags": \[
+
+&#x20;     "\[specific activities relevant to this story]"
+
+&#x20;   ],
+
+&#x20;   "journey\_style": "\[enum]",
+
+&#x20;   "highlights": \[
+
+&#x20;     "\[3-5 key highlights that make this special]"
+
+&#x20;   ]
+
+&#x20; },
+
+&#x20; 
+
+&#x20; "difficulty": {
+
+&#x20;   "overall\_level": "\[enum]",
+
+&#x20;   "physical\_fitness\_required": "\[enum]",
+
+&#x20;   "technical\_skill\_required": "\[enum]",
+
+&#x20;   "elevation\_gain\_m": \[number or 0],
+
+&#x20;   "max\_altitude\_m": \[number or 0],
+
+&#x20;   "total\_distance\_km": \[number or 0],
+
+&#x20;   "difficulty\_factors": \[
+
+&#x20;     "\[specific factors that make it challenging]"
+
+&#x20;   ],
+
+&#x20;   "not\_suitable\_if": \[
+
+&#x20;     "\[conditions that make this unsuitable]"
+
+&#x20;   ]
+
+&#x20; },
+
+&#x20; 
+
+&#x20; "suitability": {
+
+&#x20;   "family\_friendly": \[true or false],
+
+&#x20;   "min\_age\_recommended": \[number or null],
+
+&#x20;   "solo\_friendly": \[true or false],
+
+&#x20;   "beginner\_friendly": \[true or false],
+
+&#x20;   "wheelchair\_accessible": \[true or false],
+
+&#x20;   "ideal\_group\_size": "\[description]",
+
+&#x20;   "tested\_with": \["\[who tested this]"],
+
+&#x20;   "ideal\_for": \[
+
+&#x20;     "\[target audiences - 2-4 types]"
+
+&#x20;   ]
+
+&#x20; },
+
+&#x20; 
+
+&#x20; "timing": {
+
+&#x20;   "duration\_days": \[number],
+
+&#x20;   "duration\_hours": \[number or null],
+
+&#x20;   "duration\_display": "\[human readable description]",
+
+&#x20;   "best\_months": \[\[numeric months 1-12]],
+
+&#x20;   "best\_seasons": \["\[season enums]"],
+
+&#x20;   "avoid\_months": \[\[numeric months 1-12]],
+
+&#x20;   "time\_of\_day": "\[morning | afternoon | full\_day | multi\_day | flexible]",
+
+&#x20;   "weather\_dependent": \[true or false],
+
+&#x20;   "snow\_season\_accessible": \[true or false]
+
+&#x20; },
+
+&#x20; 
+
+&#x20; "logistics": {
+
+&#x20;   "transportation\_required": \["\[transport types]"],
+
+&#x20;   "transportation\_difficulty": "\[easy | moderate | challenging]",
+
+&#x20;   "car\_required": \[true or false],
+
+&#x20;   "4x4\_required": \[true or false],
+
+&#x20;   "public\_transport\_accessible": \[true or false],
+
+&#x20;   "accommodation\_type": "\[enum]",
+
+&#x20;   "permits\_required": \[true or false],
+
+&#x20;   "permits\_info": "\[details if true]",
+
+&#x20;   "bookings\_required": \["\[what needs booking]"],
+
+&#x20;   "bookings\_advance\_days": \[number],
+
+&#x20;   "special\_equipment": \[
+
+&#x20;     "\[required gear]"
+
+&#x20;   ],
+
+&#x20;   "rental\_equipment\_available": \[true or false]
+
+&#x20; },
+
+&#x20; 
+
+&#x20; "budget": {
+
+&#x20;   "level": "\[enum]",
+
+&#x20;   "estimated\_cost\_usd": {
+
+&#x20;     "min": \[number],
+
+&#x20;     "max": \[number],
+
+&#x20;     "currency": "\[USD | EUR | CHF | etc]"
+
+&#x20;   },
+
+&#x20;   "cost\_breakdown": {
+
+&#x20;     "transport": \[number],
+
+&#x20;     "food": \[number],
+
+&#x20;     "equipment\_rental": \[number],
+
+&#x20;     "accommodation": \[number],
+
+&#x20;     "activities": \[number]
+
+&#x20;   },
+
+&#x20;   "money\_saving\_tips": \[
+
+&#x20;     "\[2-3 practical money-saving tips]"
+
+&#x20;   ]
+
+&#x20; },
+
+&#x20; 
+
+&#x20; "differentiation": {
+
+&#x20;   "unique\_selling\_points": \[
+
+&#x20;     "\[3-5 things that make THIS story unique compared to similar ones]"
+
+&#x20;   ],
+
+&#x20;   "what\_makes\_this\_special": "\[1-2 sentence compelling uniqueness statement]",
+
+&#x20;   "best\_for\_crowd\_type": "\[enum from controlled vocab]",
+
+&#x20;   "crowd\_level": "\[enum]",
+
+&#x20;   "scenic\_rating": \[1-5],
+
+&#x20;   "adrenaline\_level": \[1-5]
+
+&#x20; },
+
+&#x20; 
+
+&#x20; "maintenance": {
+
+&#x20;   "last\_verified\_date": "\[YYYY-MM-DD - use today's date]",
+
+&#x20;   "verification\_frequency\_months": 12,
+
+&#x20;   "next\_update\_due": "\[YYYY-MM-DD - add 12 months to today]",
+
+&#x20;   "route\_status": "active",
+
+&#x20;   "content\_quality\_score": 4,
+
+&#x20;   "needs\_attention": false,
+
+&#x20;   "attention\_notes": ""
+
+&#x20; },
+
+&#x20; 
+
+&#x20; "relationships": {
+
+&#x20;   "similar\_stories": \[],
+
+&#x20;   "combine\_with": \[],
+
+&#x20;   "combine\_description": "",
+
+&#x20;   "prerequisite\_for": \[],
+
+&#x20;   "easier\_alternative": "",
+
+&#x20;   "harder\_alternative": ""
+
+&#x20; },
+
+&#x20; 
+
+&#x20; "discovery": {
+
+&#x20;   "search\_synonyms": \[
+
+&#x20;     "\[alternative names, spellings, common search terms]"
+
+&#x20;   ],
+
+&#x20;   "alternative\_names": \[
+
+&#x20;     "\[official alternative names]"
+
+&#x20;   ],
+
+&#x20;   "appears\_in\_searches": \[
+
+&#x20;     "\[long-tail search phrases this should rank for]"
+
+&#x20;   ]
+
+&#x20; },
+
+&#x20; 
+
+&#x20; "credibility": {
+
+&#x20;   "times\_completed": 1,
+
+&#x20;   "most\_recent\_completion": "\[YYYY-MM-DD if known]",
+
+&#x20;   "tested\_by": "pikelis",
+
+&#x20;   "verified\_facts": \[
+
+&#x20;     "\[what specific facts were personally verified]"
+
+&#x20;   ],
+
+&#x20;   "common\_mistakes": \[
+
+&#x20;     "\[2-4 common mistakes people make on this route]"
+
+&#x20;   ],
+
+&#x20;   "insider\_tips": \[
+
+&#x20;     "\[3-5 insider tips from personal experience]"
+
+&#x20;   ]
+
+&#x20; },
+
+&#x20; 
+
+&#x20; "content": {
+
+&#x20;   "story\_file": "story.txt",
+
+&#x20;   "story\_type": "\[teaser if guide exists, full\_story if no guide]",
+
+&#x20;   "word\_count": \[estimate from story text],
+
+&#x20;   "reading\_time\_minutes": \[word\_count / 200],
+
+&#x20;   "media": {
+
+&#x20;     "hero\_image": "hero.jpg",
+
+&#x20;     "hero\_alt": "\[descriptive alt text for accessibility]",
+
+&#x20;     "gallery\_images": \[
+
+&#x20;       "\[list of image filenames]"
+
+&#x20;     ],
+
+&#x20;     "has\_video": false,
+
+&#x20;     "video\_url": ""
+
+&#x20;   },
+
+&#x20;   "featured\_in\_homepage": false,
+
+&#x20;   "featured\_priority": 5
+
+&#x20; },
+
+&#x20; 
+
+&#x20; "seo": {
+
+&#x20;   "meta\_title": "\[Max 60 chars - include location and activity]",
+
+&#x20;   "meta\_description": "\[Max 155 chars - compelling description with key details]",
+
+&#x20;   "keywords": \[
+
+&#x20;     "\[5-10 primary keywords]"
+
+&#x20;   ],
+
+&#x20;   "search\_tags": \[
+
+&#x20;     "\[additional searchable phrases]"
+
+&#x20;   ]
+
+&#x20; },
+
+&#x20; 
+
+&#x20; "analytics": {
+
+&#x20;   "views": 0,
+
+&#x20;   "guide\_conversions": 0,
+
+&#x20;   "conversion\_rate": 0.0,
+
+&#x20;   "avg\_time\_on\_page": 0,
+
+&#x20;   "bounce\_rate": 0.0
+
+&#x20; }
+
+}
+
+
+
+═══════════════════════════════════════════════════════════════
+
+CRITICAL REQUIREMENTS
+
+═══════════════════════════════════════════════════════════════
+
+
+
+1\. ✅ Output ONLY valid JSON (no explanations, no markdown, no ```json```)
+
+2\. ✅ Start with { and end with }
+
+3\. ✅ All enum values must match controlled vocabulary exactly
+
+4\. ✅ All enum values lowercase EXCEPT proper nouns (countries, cities, regions)
+
+5\. ✅ Dates in YYYY-MM-DD format
+
+6\. ✅ Coordinates as decimal numbers
+
+7\. ✅ Meta title max 60 characters
+
+8\. ✅ Meta description max 155 characters
+
+9\. ✅ story\_id format: \[country]-\[location]-\[year] all lowercase with hyphens
+
+10\. ✅ Fill ALL fields - use null, 0, \[], or "" for unknown values
+
+11\. ✅ Be specific in differentiation, credibility, and discovery sections
+
+12\. ✅ Extract real insider tips and common mistakes from the story
+
+13\. ✅ Generate realistic search synonyms people would actually use
+
+
+
+═══════════════════════════════════════════════════════════════
+
+OUTPUT
+
+═══════════════════════════════════════════════════════════════
+
+
+
+Provide ONLY the complete JSON metadata. No preamble. No explanation. Just JSON.
+

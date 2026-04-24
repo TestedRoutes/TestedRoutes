@@ -1,0 +1,194 @@
+{
+  "guide": {
+    "has_guide": false,
+    "guide_status": "in_progress",
+    "guide_url": "",
+    "guide_price_usd": 0,
+    "guide_format": [],
+    "includes_in_guide": []
+  },
+  "guide_what_you_get": [],
+  "hero": {
+    "eyebrow": "UNITED KINGDOM • CHALLENGE • MOUNTAIN HIKING",
+    "subtitle": "Ben Nevis, Scafell Pike and Snowdon — Scotland, England and Wales in 24 hours, with seven minutes to spare.",
+    "primary_stats": [
+      { "label": "Duration", "value": "24 hours" },
+      { "label": "Effort", "value": "Extreme" },
+      { "label": "Altitude", "value": "1,345 m (Ben Nevis)" },
+      { "label": "Access", "value": "London → Fort William → Wasdale → Llanberis" },
+      { "label": "Highlight", "value": "3 summits, 1 day" }
+    ]
+  },
+  "sales": {
+    "why_this_trip": [
+      "One of the UK's most famous endurance challenges — 3 country high points in 24 hours",
+      "Combines mountain hiking with long overnight drives — a test of full team endurance",
+      "Each summit has a completely different character: clear ridge, dark snow, wet fog",
+      "Finished with 7 minutes to spare — proof that it's achievable without specialist training"
+    ],
+    "who_this_is_for": [
+      "Fit hikers who want a structured endurance challenge",
+      "Groups of 2–5 looking for something to organize together",
+      "People who want to tick all three UK high points in one attempt"
+    ],
+    "what_you_get": [
+      "3,000 m of ascent across three separate mountains",
+      "38 km of hiking across Scotland, England and Wales",
+      "750 km of driving between peaks",
+      "A genuine test of physical and logistical endurance"
+    ],
+    "difficulty_at_a_glance": [
+      "Hiking: hard, multiple long ascents including a snowy, night-time summit",
+      "Driving: 750 km between peaks, mostly overnight",
+      "Sleep: almost none — this is the biggest challenge"
+    ],
+    "not_suitable": [
+      "Anyone who needs full rest between big hiking days",
+      "Solo attempts — navigation on Scafell Pike in the dark is very difficult",
+      "People who underestimate the driving component"
+    ]
+  },
+  "story_id": "united-kingdom-national-three-peaks-2023",
+  "title": "National Three Peaks Challenge in 24 Hours",
+  "slug": "national-three-peaks-challenge-24-hours",
+  "primary_collection": "Inspire",
+  "all_collections": ["Inspire"],
+  "status": "published",
+  "created_date": "2023-11-11",
+  "last_updated": "2026-04-19",
+  "language": "en",
+  "geography": {
+    "continent": "europe",
+    "country": "United Kingdom",
+    "country_code": "GB",
+    "region": "Scotland / England / Wales",
+    "city": "Fort William / Wasdale Head / Llanberis",
+    "specific_location": "Ben Nevis, Scafell Pike, Snowdon"
+  },
+  "classification": {
+    "journey_category": "day_trip",
+    "activity_category": ["outdoor_hiking", "mountain_climbing"],
+    "journey_style": "self_guided",
+    "best_for_crowd_type": ["adrenaline_seekers", "experienced_mountaineers", "active_explorers"]
+  },
+  "difficulty": {
+    "overall_level": "extreme",
+    "physical_fitness_required": "very_high",
+    "technical_skill_required": "basic",
+    "elevation_gain_m": 3000,
+    "total_distance_km": 38,
+    "exposure_level": "high",
+    "navigation_required": true
+  },
+  "suitability": {
+    "min_age": 18,
+    "family_friendly": false,
+    "solo_friendly": false,
+    "group_friendly": true,
+    "insider_tips": [
+      "Download offline maps for Scafell Pike — there is no reception on the mountain",
+      "Start Ben Nevis by noon to keep time on your side for all three summits",
+      "Designate a driver who sleeps between peaks if possible — fatigue is the main risk",
+      "Fish and chips on the drive north is tradition — keep the stop short"
+    ],
+    "common_mistakes": [
+      "No mobile signal on Scafell Pike — multiple peaks look identical in the dark",
+      "Underestimating descent time on wet rock (Snowdon was slower than expected)",
+      "Assuming daylight for Scafell — expect a night ascent with headlamps"
+    ]
+  },
+  "timing": {
+    "best_seasons": ["spring", "summer", "fall"],
+    "shoulder_season_note": "November attempt succeeded but with snow on Scafell and rain on Snowdon — be prepared for winter conditions",
+    "duration_hours": 24,
+    "duration_days": 1,
+    "time_of_day_start": "afternoon (Ben Nevis) → night (Scafell Pike) → morning (Snowdon)"
+  },
+  "logistics": {
+    "transportation_required": ["car"],
+    "accommodation_type": "none",
+    "base_city": "London",
+    "special_equipment": ["headlamp", "waterproofs", "hiking poles", "warm layers for summit"]
+  },
+  "budget": {
+    "level": "moderate",
+    "estimated_cost_usd_per_person": 150,
+    "cost_notes": "Fuel for ~2,000 km round trip from London is the main cost. No accommodation needed. Budget £50–120 per person depending on fuel sharing."
+  },
+  "differentiation": {
+    "unique_factors": [
+      "Three countries, three high points, one continuous push — no overnight sleep",
+      "Navigation required on Scafell Pike at midnight with no reception",
+      "Finished with 7 minutes remaining — as close to the limit as it gets"
+    ],
+    "compared_to_alternatives": "More demanding than single summit days; less technical than Alpine objectives; the driving adds a unique endurance layer"
+  },
+  "maintenance": {
+    "last_verified": "2023-11-11",
+    "seasonal_closure": false,
+    "route_status": "active",
+    "notes": "All three mountains are permanently accessible. Snowdon has a railway option but challenge requires hiking."
+  },
+  "relationships": {
+    "related_stories": [],
+    "related_guides": [],
+    "suggested_next": ["scotland-isle-of-skye", "wales-brecon-beacons"]
+  },
+  "route": {
+    "mode": "mixed",
+    "map_zoom": 6,
+    "points": [
+      { "name": "London", "lat": 51.5074, "lng": -0.1278, "type": "start" },
+      { "name": "Ben Nevis, Fort William", "lat": 56.7969, "lng": -5.0035, "type": "stop" },
+      { "name": "Scafell Pike, Wasdale", "lat": 54.4541, "lng": -3.2107, "type": "stop" },
+      { "name": "Snowdon Summit", "lat": 53.0685, "lng": -4.0763, "type": "highlight" }
+    ]
+  },
+  "discovery": {
+    "search_synonyms": ["3 peaks challenge UK", "three peaks 24 hours", "national three peaks", "ben nevis scafell snowdon"],
+    "long_tail_phrases": [
+      "national three peaks challenge 24 hours UK",
+      "how to complete three peaks challenge in one day",
+      "ben nevis scafell pike snowdon same day",
+      "three peaks challenge driving route from London"
+    ],
+    "crowd_level": "low",
+    "hidden_gem": false
+  },
+  "credibility": {
+    "personal_experience": true,
+    "visit_date": "2023-11-11",
+    "times_done": 1,
+    "verified_by": "author"
+  },
+  "content": {
+    "media": {
+      "hero_image": "20231111_100826.jpg",
+      "gallery_images": [
+        "20231111_100826.jpg",
+        "20231111_135604.jpg",
+        "20231111_154031.jpg",
+        "20231111_155337.jpg",
+        "20231112_021717.jpg",
+        "20231112_021731.jpg",
+        "20231112_090239.jpg",
+        "20231112_104207.jpg",
+        "20231112_135431.jpg"
+      ]
+    },
+    "story_file": "20231111-Inspire-Story-Three_peaks_challenge.txt",
+    "has_video": false,
+    "has_guide_pdf": false
+  },
+  "seo": {
+    "meta_title": "National Three Peaks Challenge in 24 Hours",
+    "meta_description": "Climb Ben Nevis, Scafell Pike and Snowdon in 24 hours. A raw account of the UK three peaks challenge — 3,000 m ascent, 38 km hiking, 750 km driving.",
+    "og_title": "National Three Peaks Challenge in 24 Hours",
+    "og_description": "Scotland, England and Wales in one day — 3 summits, almost no sleep, and 7 minutes to spare."
+  },
+  "analytics": {
+    "page_views": 0,
+    "avg_time_on_page": 0,
+    "conversion_rate": 0
+  }
+}

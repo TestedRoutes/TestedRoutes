@@ -1,0 +1,343 @@
+You are a travel metadata specialist. Generate a complete metadata.json file for this travel story.
+
+═══════════════════════════════════════════════════════════════
+LOCAL FILE CONTEXT RULE
+═══════════════════════════════════════════════════════════════
+
+Assume metadata.json is located in a folder containing:
+
+story.txt
+hero.jpg
+additional .jpg gallery images
+guide.pdf (if available)
+
+Use story.txt and guide.pdf (if available) as the PRIMARY source for:
+
+hero
+sales
+highlights
+difficulty
+suitability
+insider tips
+common mistakes
+SEO phrases
+search synonyms
+discovery
+credibility
+
+If hero.jpg exists:
+
+content.media.hero_image = "hero.jpg"
+
+All remaining .jpg files:
+
+content.media.gallery_images
+
+Do NOT invent images.
+
+═══════════════════════════════════════════════════════════════
+STRICT SOURCE RULE — READ THIS BEFORE GENERATING ANYTHING
+═══════════════════════════════════════════════════════════════
+
+PRIORITY ORDER for every field:
+  1. guide.pdf   — always the primary source. Use exact figures, exact
+                   place names, and exact claims stated in the guide.
+  2. story.txt   — use for tone, personal experience details, and any
+                   facts not covered in the guide.
+  3. Inference   — ONLY if a value cannot be found in either source.
+                   Mark inferred values with a comment // inferred
+
+DO NOT invent, estimate, or paraphrase figures that appear in the
+source files. If the guide says "5 hours", write "5 hours" — not
+"approximately 5–6 hours". If the guide says "Gadmen bus stop",
+write "Gadmen bus stop" — not "Gadmen village".
+
+FIELDS THAT MUST COME DIRECTLY FROM THE GUIDE (if guide exists):
+
+  hero.primary_stats — every label/value pair must match the guide
+  hero.eyebrow       — use country, journey type, and activity from guide
+  hero.subtitle      — one sentence that reflects the guide's own framing
+  sales.why_this_trip         — use the guide's own selling points
+  sales.who_this_is_for       — use the guide's stated audience
+  sales.what_you_get          — list exactly what the guide contains
+  sales.difficulty_at_a_glance — use the guide's difficulty language
+  sales.not_suitable           — use the guide's own exclusions
+
+  difficulty.elevation_gain_m  — exact figure from guide
+  difficulty.total_distance_km — exact figure from guide
+  timing.duration_hours        — exact figure from guide
+  logistics.transportation_required — exact modes from guide
+  logistics.special_equipment  — exact gear list from guide
+
+If the guide PDF is not available, fall back to story.txt for the
+above fields, then inference as last resort.
+
+═══════════════════════════════════════════════════════════════
+STORY TEXT
+═══════════════════════════════════════════════════════════════
+
+[PASTE YOUR STORY TEXT HERE. Otherwise auto-detect from folder.]
+
+═══════════════════════════════════════════════════════════════
+PHOTOS
+═══════════════════════════════════════════════════════════════
+
+[List filenames only if needed. Otherwise auto-detect from folder.]
+
+═══════════════════════════════════════════════════════════════
+GUIDE INFO (Manual - I'll fill this myself)
+═══════════════════════════════════════════════════════════════
+
+Has guide available: [Yes/No]
+Guide status: [available / in_progress / planned / none]
+Guide URL: [if applicable]
+Guide price USD: [if applicable]
+
+═══════════════════════════════════════════════════════════════
+INSTRUCTIONS
+═══════════════════════════════════════════════════════════════
+
+Generate a complete metadata.json file with ALL sections:
+
+1. GUIDE
+2. HERO
+3. SALES
+4. CORE IDENTIFICATION
+5. GEOGRAPHY
+6. CLASSIFICATION
+7. DIFFICULTY & FITNESS
+8. SUITABILITY
+9. TIMING & DURATION
+10. LOGISTICS & PRACTICAL
+11. BUDGET
+12. DIFFERENTIATION
+13. MAINTENANCE
+14. RELATIONSHIPS
+15. DISCOVERY
+16. CREDIBILITY
+17. CONTENT & MEDIA
+18. SEO
+19. ANALYTICS
+
+═══════════════════════════════════════════════════════════════
+HERO FIELD RULES
+═══════════════════════════════════════════════════════════════
+
+hero.eyebrow
+
+Example:
+SWITZERLAND • DAY TRIP • HIKE
+
+hero.subtitle
+
+One concise descriptive sentence.
+
+hero.primary_stats MUST contain EXACTLY:
+
+Duration
+Effort
+Altitude
+Access
+Highlight
+
+═══════════════════════════════════════════════════════════════
+SALES FIELD RULES
+═══════════════════════════════════════════════════════════════
+
+sales.why_this_trip
+3–5 bullets
+
+sales.who_this_is_for
+3–5 bullets
+
+sales.what_you_get
+4–6 bullets
+
+sales.difficulty_at_a_glance
+2–4 bullets
+
+sales.not_suitable
+1–3 bullets
+
+All bullets must be short and practical.
+
+═══════════════════════════════════════════════════════════════
+CONTROLLED VOCABULARIES
+═══════════════════════════════════════════════════════════════
+
+IMPORTANT:
+
+Enums/categories = lowercase
+Proper nouns = Proper Case
+
+continent:
+europe, asia, africa, north_america, south_america, oceania, antarctica
+
+journey_category:
+day_trip, weekend, week_trip, multi_week, expedition
+
+activity_category:
+outdoor_hiking, mountain_climbing, road_trips, water_activities,
+winter_sports, cycling_biking, air_activities, desert_expeditions,
+jungle_trekking, island_hopping, rail_journeys, wildlife_nature, extreme_sports
+
+difficulty overall_level:
+easy, moderate, hard, extreme
+
+physical_fitness_required:
+low, medium, high, very_high
+
+technical_skill_required:
+none, basic, intermediate, advanced, expert
+
+budget level:
+budget, moderate, expensive, luxury
+
+best_seasons:
+spring, summer, fall, winter, year_round
+
+journey_style:
+self_guided, needs_guide, tour_available
+
+guide_status:
+available, in_progress, planned, none
+
+route_status:
+active, seasonal_closure, permanently_changed, under_construction
+
+crowd_level:
+very_low, low, moderate, high, very_high
+
+best_for_crowd_type:
+adrenaline_seekers, experienced_mountaineers, road_trippers, expedition_minded,
+active_explorers, island_hoppers, budget_adventurers, off_the_beaten_path  
+
+transportation:
+train, car, 4x4, boat, plane, cable_car, public_transport, bicycle, motorcycle, bus
+
+accommodation_type:
+none, camping, hostel, hotel, guesthouse, mountain_hut,
+self_catering, luxury_lodge, homestay
+
+═══════════════════════════════════════════════════════════════
+ROUTE FIELD RULES
+═══════════════════════════════════════════════════════════════
+
+route.points: 2–5 entries covering the key stops of the journey.
+Always include "start". Always include the main "highlight".
+Include "end" only if it differs from start OR if it is a meaningful
+return point (e.g. back to the airport/station the trip began from).
+Add "stop" entries for significant intermediate points only — not
+every minor stop. Max 5 points total.
+
+point types:
+  start     — first point of the journey (train station, airport, city)
+  stop      — significant intermediate point (transfer, overnight, border)
+  highlight — the main attraction or goal of the trip
+  end       — final return/finish point
+
+point fields:
+  name              — place name (Proper Case)
+  lat / lng         — real coordinates (look up accurately)
+  type              — one of: start, stop, highlight, end
+
+route-level fields:
+  mode              — primary transport: hiking, train, bus, car, 4x4,
+                      boat, plane, motorcycle, bicycle, mixed
+  map_zoom          — 5–15 (continent=5, country=7, region=9,
+                      day hike=13, single trail=15)
+
+The map renders a direct line through all points in order.
+Use real coordinates — wrong coordinates produce a wrong map.
+
+═══════════════════════════════════════════════════════════════
+JSON STRUCTURE ADDITION (NEW)
+═══════════════════════════════════════════════════════════════
+
+Insert after "guide":
+
+"guide_what_you_get": [
+  "Leave blank — fill in manually after reviewing the guide PDF",
+  "Each bullet = one concrete thing the buyer receives (a plan, a list, a rule, a comparison)",
+  "Copy exact section titles or deliverables from the guide — do not paraphrase"
+],
+
+"hero": {
+  "eyebrow": "",
+  "subtitle": "",
+  "primary_stats": [
+    { "label": "Duration", "value": "" },
+    { "label": "Effort", "value": "" },
+    { "label": "Altitude", "value": "" },
+    { "label": "Access", "value": "" },
+    { "label": "Highlight", "value": "" }
+  ]
+},
+
+"sales": {
+  "why_this_trip": [],
+  "who_this_is_for": [],
+  "what_you_get": [],
+  "difficulty_at_a_glance": [],
+  "not_suitable": []
+},
+
+"route": {
+  "mode": "",
+  "map_zoom": 13,
+  "points": [
+    { "name": "", "lat": 0, "lng": 0, "type": "start" },
+    { "name": "", "lat": 0, "lng": 0, "type": "highlight" }
+  ]
+},
+
+═══════════════════════════════════════════════════════════════
+CRITICAL REQUIREMENTS
+═══════════════════════════════════════════════════════════════
+
+Output ONLY valid JSON
+
+Start with {
+End with }
+
+Fill ALL fields
+
+Use:
+
+null
+0
+[]
+""
+
+if unknown
+
+hero.primary_stats MUST contain exactly 5 entries
+
+sales arrays MUST always exist
+
+Meta title max 60 characters
+
+Meta description max 155 characters
+
+story_id format:
+
+country-location-year
+
+Example:
+
+switzerland-triftbrucke-2020
+
+Generate realistic:
+
+insider_tips
+common_mistakes
+search_synonyms
+long-tail search phrases
+
+Extract from story.txt wherever possible.
+
+═══════════════════════════════════════════════════════════════
+OUTPUT
+═══════════════════════════════════════════════════════════════
+
+Provide ONLY the complete JSON metadata.

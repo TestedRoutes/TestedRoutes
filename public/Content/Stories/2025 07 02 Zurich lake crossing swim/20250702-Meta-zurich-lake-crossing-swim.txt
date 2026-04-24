@@ -1,0 +1,185 @@
+{
+  "guide": {
+    "has_guide": false,
+    "guide_status": "none",
+    "guide_url": "",
+    "guide_price_usd": 0,
+    "guide_format": [],
+    "includes_in_guide": []
+  },
+  "guide_what_you_get": [],
+  "hero": {
+    "eyebrow": "SWITZERLAND • OPEN WATER SWIMMING • ANNUAL EVENT",
+    "subtitle": "9,000 swimmers cross Lake Zurich together — 1.5 km of open water in one of Switzerland's great annual traditions.",
+    "primary_stats": [
+      { "label": "Duration", "value": "30–60 minutes swimming" },
+      { "label": "Effort", "value": "Moderate" },
+      { "label": "Altitude", "value": "406 m" },
+      { "label": "Access", "value": "Zurich city" },
+      { "label": "Highlight", "value": "9,000 swimmers, Lake Zurich crossing" }
+    ]
+  },
+  "sales": {
+    "why_this_trip": [
+      "One of Switzerland's largest outdoor sport events — 9,000 swimmers in one crossing",
+      "1.5 km across Lake Zurich in open water: a city event that feels like an adventure",
+      "The energy of crossing with thousands of others makes the swim feel bigger than its distance",
+      "An annual Zurich tradition that locals protect fiercely and tourists rarely discover"
+    ],
+    "who_this_is_for": [
+      "Swimmers with open-water confidence who want an event, not just a solo swim",
+      "Zurich residents and visitors willing to plan around the annual date",
+      "Anyone who wants to experience Switzerland through sport, not just scenery"
+    ],
+    "what_you_get": [
+      "A 1.5 km open-water crossing of Lake Zurich alongside 9,000 other swimmers",
+      "The start — thousands of people entering the water together",
+      "A finishing point on the opposite shore with the city behind you",
+      "An annual event that has the energy of a race and the atmosphere of a community tradition"
+    ],
+    "difficulty_at_a_glance": [
+      "Moderate: 1.5 km open water swim — manageable for regular swimmers",
+      "Cold water (around 20°C in July) — wetsuit optional but useful for slower swimmers"
+    ],
+    "not_suitable": [
+      "Non-swimmers or those without open-water experience",
+      "Anyone uncomfortable swimming in a large crowd"
+    ]
+  },
+  "story_id": "switzerland-zurich-lake-crossing-swim-2025",
+  "title": "Swimming Across Lake Zurich — Annual Lake Crossing",
+  "slug": "zurich-lake-crossing-swim",
+  "primary_collection": "Inspire",
+  "all_collections": ["Inspire"],
+  "status": "published",
+  "created_date": "2025-07-02",
+  "last_updated": "2026-04-19",
+  "language": "en",
+  "geography": {
+    "continent": "europe",
+    "country": "Switzerland",
+    "country_code": "CH",
+    "region": "Zurich",
+    "city": "Zurich",
+    "specific_location": "Lake Zurich crossing (Zürichseequerbad)"
+  },
+  "classification": {
+    "journey_category": "day_trip",
+    "activity_category": ["water_activities", "extreme_sports"],
+    "journey_style": "tour_available",
+    "best_for_crowd_type": ["active_explorers", "adrenaline_seekers"]
+  },
+  "difficulty": {
+    "overall_level": "moderate",
+    "physical_fitness_required": "medium",
+    "technical_skill_required": "basic",
+    "elevation_gain_m": 0,
+    "total_distance_km": 1.5,
+    "exposure_level": "low",
+    "navigation_required": false
+  },
+  "suitability": {
+    "min_age": 14,
+    "family_friendly": false,
+    "solo_friendly": true,
+    "group_friendly": true,
+    "insider_tips": [
+      "Registration opens months in advance — it sells out; book as soon as registration opens",
+      "The event takes place once a year in early July — build your travel around the date",
+      "Wear a bright swim cap — staying visible in a 9,000-person crossing matters",
+      "The start zone is crowded and chaotic — find your space and commit to the pace early"
+    ],
+    "common_mistakes": [
+      "Leaving registration too late — this event fills quickly",
+      "Starting too close to the front if you are a slower swimmer",
+      "Underestimating the psychological impact of open water with that many bodies around you"
+    ]
+  },
+  "timing": {
+    "best_seasons": ["summer"],
+    "shoulder_season_note": "Annual event in early July — no alternative dates",
+    "duration_hours": 1,
+    "duration_days": 0.5,
+    "time_of_day_start": "morning"
+  },
+  "logistics": {
+    "transportation_required": ["public_transport", "train"],
+    "accommodation_type": "none",
+    "base_city": "Zurich",
+    "special_equipment": ["swimwear", "swim cap (provided)", "optional wetsuit", "goggles"]
+  },
+  "budget": {
+    "level": "budget",
+    "estimated_cost_usd_per_person": 30,
+    "cost_notes": "Registration fee only — typically CHF 20–30. Everything else is the city around you."
+  },
+  "differentiation": {
+    "unique_factors": [
+      "9,000 swimmers crossing in one event — scale that makes a 1.5 km swim feel epic",
+      "Annual Zurich institution — locals mark their summer calendar around it",
+      "A sport experience in a city not usually associated with sport events"
+    ],
+    "compared_to_alternatives": "More atmospheric than a solo lake swim; less intense than a triathlon; more social than any open-water race"
+  },
+  "maintenance": {
+    "last_verified": "2025-07-02",
+    "seasonal_closure": true,
+    "route_status": "seasonal_closure",
+    "notes": "Annual event only — check the official Zürichseequerbad registration for next year's date"
+  },
+  "relationships": {
+    "related_stories": [],
+    "related_guides": [],
+    "suggested_next": ["zurich-limmat-river-swim", "zurich-day-trips"]
+  },
+  "route": {
+    "mode": "boat",
+    "map_zoom": 13,
+    "points": [
+      { "name": "Mythenquai Start", "lat": 47.3534, "lng": 8.5298, "type": "start" },
+      { "name": "Lake Zurich Crossing", "lat": 47.3469, "lng": 8.5376, "type": "highlight" },
+      { "name": "Tiefenbrunnen Finish", "lat": 47.3440, "lng": 8.5634, "type": "end" }
+    ]
+  },
+  "discovery": {
+    "search_synonyms": ["Zurich lake swim", "Zürichseequerbad", "Lake Zurich crossing", "Switzerland open water swimming"],
+    "long_tail_phrases": [
+      "Zurich lake crossing swim event annual",
+      "Zürichseequerbad registration how to enter",
+      "Lake Zurich open water swim 9000 people",
+      "swimming across Lake Zurich experience"
+    ],
+    "crowd_level": "very_high",
+    "hidden_gem": false
+  },
+  "credibility": {
+    "personal_experience": true,
+    "visit_date": "2025-07-02",
+    "times_done": 1,
+    "verified_by": "author"
+  },
+  "content": {
+    "media": {
+      "hero_image": "20250702_160657.jpg",
+      "gallery_images": [
+        "20250702_155714.jpg",
+        "20250702_160657.jpg",
+        "20250702_193128.jpg"
+      ]
+    },
+    "story_file": "20250702-Inspire-zurich-lake-crossing-swim.txt",
+    "has_video": false,
+    "has_guide_pdf": false
+  },
+  "seo": {
+    "meta_title": "Zurich Lake Crossing Swim — 9,000 Swimmers, 1.5 km",
+    "meta_description": "Swim 1.5 km across Lake Zurich alongside 9,000 others. Switzerland's annual lake crossing — a city tradition worth planning your trip around.",
+    "og_title": "Lake Zurich Crossing Swim — Annual Event",
+    "og_description": "9,000 swimmers, one lake, 1.5 km. Switzerland's greatest open-water tradition."
+  },
+  "analytics": {
+    "page_views": 0,
+    "avg_time_on_page": 0,
+    "conversion_rate": 0
+  }
+}

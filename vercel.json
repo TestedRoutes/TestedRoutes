@@ -1,0 +1,23 @@
+{
+  "framework": null,
+  "buildCommand": "next build",
+  "outputDirectory": "out",
+  "cleanUrls": true,
+  "trailingSlash": false,
+  "redirects": [
+    { "source": "/index.html", "destination": "/", "permanent": true },
+    { "source": "/about.html", "destination": "/about", "permanent": true },
+    { "source": "/destinations.html", "destination": "/destinations", "permanent": true },
+    { "source": "/guides.html", "destination": "/guides", "permanent": true },
+    { "source": "/inspire.html", "destination": "/inspire", "permanent": true },
+    {
+      "source": "/inspire-story.html",
+      "has": [{ "type": "query", "key": "slug", "value": "(?<slug>.+)" }],
+      "destination": "/inspire/:slug",
+      "permanent": true
+    },
+    { "source": "/inspire-story.html", "destination": "/inspire", "permanent": true },
+    { "source": "/guides/:slug.html", "destination": "/guides/:slug", "permanent": true },
+    { "source": "/destinations/switzerland/index.html", "destination": "/destinations/switzerland", "permanent": true }
+  ]
+}

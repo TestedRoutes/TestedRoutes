@@ -1,0 +1,212 @@
+{
+  "guide": {
+    "has_guide": false,
+    "guide_status": "none",
+    "guide_url": "",
+    "guide_price_usd": 0,
+    "guide_format": [],
+    "includes_in_guide": []
+  },
+  "guide_what_you_get": [],
+  "hero": {
+    "eyebrow": "ROMANIA • ROAD TRIP • EUROPE",
+    "subtitle": "Country 140 in Europe — Transfăgărășan, the Parliament Palace, and a country that surprises every time.",
+    "primary_stats": [
+      { "label": "Duration", "value": "5 days" },
+      { "label": "Effort", "value": "Easy" },
+      { "label": "Altitude", "value": "2,042 m (Transfăgărășan pass)" },
+      { "label": "Access", "value": "Bucharest or Brasov" },
+      { "label": "Highlight", "value": "Transfăgărășan highway" }
+    ]
+  },
+  "sales": {
+    "why_this_trip": [
+      "Transfăgărășan is one of Europe's most dramatic mountain roads — built by Ceaușescu through the Carpathians",
+      "Bucharest's Parliament Palace is the world's largest civilian building by footprint — staggering in scale",
+      "Romania punches above its weight for nature, castles, food and cost",
+      "Country 140 in Europe — part of a personal journey through every European nation"
+    ],
+    "who_this_is_for": [
+      "Road trippers who want Eastern Europe beyond Prague and Budapest",
+      "History and architecture enthusiasts drawn to Communist-era ambition",
+      "Travellers looking for a European drive that feels genuinely different"
+    ],
+    "what_you_get": [
+      "The Transfăgărășan pass — serpentine mountain road through the Southern Carpathians",
+      "Bucharest: the Parliament Palace and a capital city with surprising energy",
+      "Transylvania: Brasov, Sibiu and medieval towns between mountain ranges",
+      "A country that is still developing its tourist infrastructure — raw and affordable"
+    ],
+    "difficulty_at_a_glance": [
+      "Road trip difficulty: easy — well-maintained main roads, basic GPS navigation",
+      "Transfăgărășan: seasonal (usually open June–October), switchbacks require patience"
+    ],
+    "not_suitable": [
+      "Travellers expecting Western European infrastructure everywhere",
+      "Anyone attempting Transfăgărășan outside the summer season — it is snow-closed"
+    ]
+  },
+  "story_id": "romania-roadtrip-country-140-2025",
+  "title": "Romania Road Trip — Country 140 in Europe",
+  "slug": "romania-country-140-europe-journey",
+  "primary_collection": "Inspire",
+  "all_collections": ["Inspire"],
+  "status": "published",
+  "created_date": "2025-04-28",
+  "last_updated": "2026-04-19",
+  "language": "en",
+  "geography": {
+    "continent": "europe",
+    "country": "Romania",
+    "country_code": "RO",
+    "region": "Transylvania / Wallachia / Bucharest",
+    "city": "Bucharest",
+    "specific_location": "Transfăgărășan, Bucharest, Brasov, Sibiu"
+  },
+  "classification": {
+    "journey_category": "week_trip",
+    "activity_category": ["road_trips"],
+    "journey_style": "self_guided",
+    "best_for_crowd_type": ["road_trippers", "off_the_beaten_path", "active_explorers"]
+  },
+  "difficulty": {
+    "overall_level": "easy",
+    "physical_fitness_required": "low",
+    "technical_skill_required": "none",
+    "elevation_gain_m": 0,
+    "total_distance_km": 600,
+    "exposure_level": "low",
+    "navigation_required": false
+  },
+  "suitability": {
+    "min_age": 0,
+    "family_friendly": true,
+    "solo_friendly": true,
+    "group_friendly": true,
+    "insider_tips": [
+      "Check the Transfăgărășan opening date before planning — it typically opens in late June",
+      "Bucharest requires at least one full day — underestimating it is the most common mistake",
+      "The Parliament Palace tour must be booked in advance — walk-in capacity is limited",
+      "Romanian food is excellent and dramatically cheaper than Western Europe — eat at local restaurants"
+    ],
+    "common_mistakes": [
+      "Visiting Transfăgărășan when it is still closed (before June) — check current status",
+      "Skipping Sibiu for Brasov — both are worth a night each",
+      "Only seeing Bucharest from a cab — the old town and Communist-era layers require walking"
+    ]
+  },
+  "timing": {
+    "best_seasons": ["spring", "summer", "fall"],
+    "shoulder_season_note": "Transfăgărășan open June–October typically; spring and autumn best for avoiding summer crowds",
+    "duration_hours": 0,
+    "duration_days": 5,
+    "time_of_day_start": "morning"
+  },
+  "logistics": {
+    "transportation_required": ["plane", "car"],
+    "accommodation_type": "hotel",
+    "base_city": "Bucharest",
+    "special_equipment": []
+  },
+  "budget": {
+    "level": "budget",
+    "estimated_cost_usd_per_person": 600,
+    "cost_notes": "Romania is very affordable — accommodation, food and fuel well below Western European costs. Budget $500–800 for a week including flights."
+  },
+  "differentiation": {
+    "unique_factors": [
+      "Country 140 in Europe — part of a personal continent completion challenge",
+      "Parliament Palace: the world's largest civilian building, still not fully used",
+      "Transfăgărășan: built as a military road, now one of the most photogenic drives in Europe"
+    ],
+    "compared_to_alternatives": "Cheaper than Czech Republic or Hungary; more dramatic driving than the Balkans coast; less known than Slovakia"
+  },
+  "maintenance": {
+    "last_verified": "2025-04-28",
+    "seasonal_closure": true,
+    "route_status": "seasonal_closure",
+    "notes": "Transfăgărășan closes November–May/June due to snow — confirm opening before planning"
+  },
+  "relationships": {
+    "related_stories": [],
+    "related_guides": [],
+    "suggested_next": ["bulgaria-plovdiv", "moldova", "ukraine-lviv"]
+  },
+  "route": {
+    "mode": "car",
+    "map_zoom": 7,
+    "points": [
+      { "name": "Bucharest", "lat": 44.4268, "lng": 26.1025, "type": "start" },
+      { "name": "Brasov", "lat": 45.6427, "lng": 25.5887, "type": "stop" },
+      { "name": "Transfăgărășan Pass", "lat": 45.6037, "lng": 24.6124, "type": "highlight" },
+      { "name": "Sibiu", "lat": 45.7983, "lng": 24.1256, "type": "stop" }
+    ]
+  },
+  "discovery": {
+    "search_synonyms": ["Romania road trip", "Transfagarasan highway", "Bucharest Parliament Palace", "Transylvania drive"],
+    "long_tail_phrases": [
+      "Romania road trip Transfagarasan Bucharest Brasov",
+      "Transfagarasan mountain pass Romania",
+      "driving Transylvania Romania itinerary",
+      "Bucharest Parliament Palace visit"
+    ],
+    "crowd_level": "moderate",
+    "hidden_gem": false
+  },
+  "credibility": {
+    "personal_experience": true,
+    "visit_date": "2025-04-28",
+    "times_done": 1,
+    "verified_by": "author"
+  },
+  "content": {
+    "media": {
+      "hero_image": "20250424_111307.jpg",
+      "gallery_images": [
+        "20250424_111307.jpg",
+        "20250424_112320.jpg",
+        "20250424_131743.jpg",
+        "20250424_140239.jpg",
+        "20250424_140540.jpg",
+        "20250424_141315.jpg",
+        "20250424_141450.jpg",
+        "20250424_165228.jpg",
+        "20250424_185804.jpg",
+        "20250424_194856.jpg",
+        "20250425_082626.jpg",
+        "20250425_085305.jpg",
+        "20250425_112654.jpg",
+        "20250425_112751.jpg",
+        "20250425_134003.jpg",
+        "20250425_134423.jpg",
+        "20250425_163448.jpg",
+        "20250425_190005.jpg",
+        "20250425_190226.jpg",
+        "20250426_110239.jpg",
+        "20250426_113227.jpg",
+        "20250426_162905.jpg",
+        "20250427_135746.jpg",
+        "20250427_180425.jpg",
+        "20250427_210125.jpg",
+        "20250428_103438.jpg",
+        "20250428_110941.jpg",
+        "20250428_111253.jpg",
+        "20250428_111342.jpg"
+      ]
+    },
+    "story_file": "20250428-Inspire-romania-country-140-europe-journey.txt",
+    "has_video": false,
+    "has_guide_pdf": false
+  },
+  "seo": {
+    "meta_title": "Romania Road Trip — Transfăgărășan and Bucharest",
+    "meta_description": "Drive Romania from Bucharest to the Transfăgărășan pass and Transylvania. Country 140 in Europe — and one of its best road trips.",
+    "og_title": "Romania Road Trip — Country 140 in Europe",
+    "og_description": "Transfăgărășan mountain highway, the world's largest civilian building, and Transylvanian towns. Romania surprises."
+  },
+  "analytics": {
+    "page_views": 0,
+    "avg_time_on_page": 0,
+    "conversion_rate": 0
+  }
+}

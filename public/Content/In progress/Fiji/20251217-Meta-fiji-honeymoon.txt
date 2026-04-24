@@ -1,0 +1,180 @@
+{
+  "guide": {
+    "has_guide": false,
+    "guide_status": "none",
+    "guide_url": "",
+    "guide_price_usd": 0,
+    "guide_format": [],
+    "includes_in_guide": []
+  },
+  "guide_what_you_get": [],
+  "hero": {
+    "eyebrow": "FIJI • ISLAND HOPPING • HONEYMOON",
+    "subtitle": "White sand, kava ceremonies and reef sharks from the shore — Fiji as a honeymoon that didn't need to try hard.",
+    "primary_stats": [
+      { "label": "Duration", "value": "1–2 weeks" },
+      { "label": "Effort", "value": "Easy" },
+      { "label": "Altitude", "value": "Sea level" },
+      { "label": "Access", "value": "Nadi International Airport" },
+      { "label": "Highlight", "value": "Reefs, sharks and kava" }
+    ]
+  },
+  "sales": {
+    "why_this_trip": [
+      "Reef sharks visible from the shore — no boat, no dive gear, just steps into the water",
+      "Kava ceremonies and evening singing that feel like daily life, not tourist shows",
+      "Yasawa Islands, Taveuni and Nadi each show a different side of the country",
+      "Time moves differently here — plans become optional, and that turns out to be the right approach"
+    ],
+    "who_this_is_for": [
+      "Couples wanting a honeymoon or special trip that is genuinely memorable without effort",
+      "Ocean and marine life enthusiasts who want reef access without complex logistics",
+      "Travellers who want island-to-island variety without leaving the same warm atmosphere"
+    ],
+    "what_you_get": [
+      "White sand beaches and clear water as the baseline, not the highlight",
+      "Reef sharks and marine life visible from just a few meters offshore",
+      "Kava ceremonies and traditional singing as part of evening culture",
+      "Island hopping between Nadi, the Yasawa Islands and Taveuni"
+    ],
+    "difficulty_at_a_glance": [
+      "Effort level: very low — Fiji is designed for recovery and presence",
+      "Logistics: easy — island transfers by ferry or small plane are well-organised"
+    ],
+    "not_suitable": [
+      "Travellers who need activity and structure to feel satisfied",
+      "Budget travellers — Fiji's most memorable islands and resorts carry a premium"
+    ]
+  },
+  "story_id": "fiji-honeymoon-yasawa-taveuni-2025",
+  "title": "Fiji — Honeymoon in the Pacific",
+  "slug": "fiji-honeymoon-yasawa-taveuni",
+  "primary_collection": "Inspire",
+  "all_collections": ["Inspire"],
+  "status": "published",
+  "created_date": "2025-12-17",
+  "last_updated": "2026-04-19",
+  "language": "en",
+  "geography": {
+    "continent": "oceania",
+    "country": "Fiji",
+    "country_code": "FJ",
+    "region": "Yasawa Islands / Taveuni / Viti Levu",
+    "city": "Nadi",
+    "specific_location": "Nadi, Yasawa Islands, Taveuni"
+  },
+  "classification": {
+    "journey_category": "week_trip",
+    "activity_category": ["island_hopping", "water_activities", "wildlife_nature"],
+    "journey_style": "self_guided",
+    "best_for_crowd_type": ["island_hoppers", "active_explorers"]
+  },
+  "difficulty": {
+    "overall_level": "easy",
+    "physical_fitness_required": "low",
+    "technical_skill_required": "none",
+    "elevation_gain_m": 0,
+    "total_distance_km": 0,
+    "exposure_level": "low",
+    "navigation_required": false
+  },
+  "suitability": {
+    "min_age": 0,
+    "family_friendly": true,
+    "solo_friendly": true,
+    "group_friendly": true,
+    "insider_tips": [
+      "Reef sharks near shore are common — ask your resort which beach is best for them",
+      "Kava ceremonies are sincere invitations — accept them",
+      "The Yasawa Flyer ferry is the classic way to island-hop — book ahead in high season",
+      "Taveuni is worth the extra effort for its dive sites and waterfall interior"
+    ],
+    "common_mistakes": [
+      "Spending all time in Nadi — the real Fiji starts once you leave the main island",
+      "Over-scheduling — the best Fiji days are the unplanned ones"
+    ]
+  },
+  "timing": {
+    "best_seasons": ["spring", "fall", "winter"],
+    "shoulder_season_note": "Cyclone season November–April carries risk; peak dry season June–October is the safest and most comfortable",
+    "duration_hours": 0,
+    "duration_days": 10,
+    "time_of_day_start": "morning"
+  },
+  "logistics": {
+    "transportation_required": ["plane", "boat"],
+    "accommodation_type": "luxury_lodge",
+    "base_city": "Nadi",
+    "special_equipment": ["snorkel gear (available at most resorts)", "reef shoes"]
+  },
+  "budget": {
+    "level": "expensive",
+    "estimated_cost_usd_per_person": 2000,
+    "cost_notes": "Fiji resorts and island transfers are premium — budget $1,500–3,000+ per person for 10 days depending on accommodation level"
+  },
+  "differentiation": {
+    "unique_factors": [
+      "Reef sharks accessible from shore without a dive boat — rare globally",
+      "Kava and song ceremonies feel genuinely integrated into daily island life",
+      "Tuvalu connection — same Pacific honeymoon, completely different worlds"
+    ],
+    "compared_to_alternatives": "More culturally engaged than Maldives; easier and warmer than New Zealand; more remote than Bali"
+  },
+  "maintenance": {
+    "last_verified": "2025-12-17",
+    "seasonal_closure": false,
+    "route_status": "active",
+    "notes": ""
+  },
+  "relationships": {
+    "related_stories": ["tuvalu-funafuti-atoll-2024"],
+    "related_guides": [],
+    "suggested_next": ["samoa-upolu-savaii", "tonga", "vanuatu"]
+  },
+  "route": {
+    "mode": "boat",
+    "map_zoom": 8,
+    "points": [
+      { "name": "Nadi, Viti Levu", "lat": -17.7765, "lng": 177.4356, "type": "start" },
+      { "name": "Yasawa Islands", "lat": -16.8500, "lng": 177.5000, "type": "stop" },
+      { "name": "Taveuni", "lat": -16.8333, "lng": 179.9667, "type": "highlight" }
+    ]
+  },
+  "discovery": {
+    "search_synonyms": ["Fiji honeymoon", "Yasawa Islands", "Fiji reef sharks", "kava ceremony Fiji"],
+    "long_tail_phrases": [
+      "Fiji honeymoon islands Yasawa Taveuni",
+      "reef sharks from shore Fiji",
+      "kava ceremony experience Fiji",
+      "Fiji island hopping route Nadi"
+    ],
+    "crowd_level": "moderate",
+    "hidden_gem": false
+  },
+  "credibility": {
+    "personal_experience": true,
+    "visit_date": "2025-12-17",
+    "times_done": 1,
+    "verified_by": "author"
+  },
+  "content": {
+    "media": {
+      "hero_image": "",
+      "gallery_images": []
+    },
+    "story_file": "20251217 Inspire-Story-Fiji.txt",
+    "has_video": false,
+    "has_guide_pdf": false
+  },
+  "seo": {
+    "meta_title": "Fiji — Honeymoon in the Pacific Islands",
+    "meta_description": "Reef sharks from the shore, kava ceremonies, and empty Yasawa beaches. Fiji as a honeymoon that needed no effort to be perfect.",
+    "og_title": "Fiji — Honeymoon in the Pacific",
+    "og_description": "White sand, reef sharks metres from shore, and kava at sunset. Why Fiji was the right honeymoon choice."
+  },
+  "analytics": {
+    "page_views": 0,
+    "avg_time_on_page": 0,
+    "conversion_rate": 0
+  }
+}
