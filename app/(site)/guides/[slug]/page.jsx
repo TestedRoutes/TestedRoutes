@@ -132,24 +132,9 @@ export default async function GuideDetailPage({ params }) {
   const meta = guide.metadata || {};
   const hero = meta.hero || {};
   const sales = meta.sales || {};
-  const media = meta.content?.media || {};
 
-  const photos = [];
-  const heroPhoto = media.hero_image
-    ? `${guide.folderUrl}${encodeURIComponent(media.hero_image)}`
-    : guide.image;
-  if (heroPhoto) photos.push(heroPhoto);
-  if (Array.isArray(media.gallery_images)) {
-    for (const name of media.gallery_images) {
-      if (typeof name === "string") {
-        photos.push(`${guide.folderUrl}${encodeURIComponent(name)}`);
-      }
-    }
-  }
-
-  const pdfHref = meta.guide?.guide_pdf
-    ? `${guide.folderUrl}${encodeURIComponent(meta.guide.guide_pdf)}`
-    : null;
+  const photos = [guide.image, ...(guide.galleryPhotos || [])].filter(Boolean);
+  const pdfHref = guide.guidePdfUrl || null;
 
   return (
     <main className="mx-auto max-w-6xl px-6 pb-16 pt-8">
