@@ -23,12 +23,31 @@ export async function generateMetadata({ params }) {
   const story = await findStory(slug);
   if (!story) return {};
   const seo = story.metadata?.seo || {};
+  const title = `${seo.meta_title || story.title} · Pikelis Travel`;
+  const description =
+    seo.meta_description ||
+    story.metadata?.hero?.subtitle ||
+    story.title;
+  const image = story.heroPhoto || "/images/triftbrucke-hero.jpg";
+  const canonical = `/inspire/${story.slug}`;
+
   return {
-    title: `${seo.meta_title || story.title} · Pikelis Travel`,
-    description:
-      seo.meta_description ||
-      story.metadata?.hero?.subtitle ||
-      story.title,
+    title,
+    description,
+    alternates: { canonical },
+    openGraph: {
+      type: "article",
+      url: canonical,
+      title,
+      description,
+      images: [{ url: image, alt: story.title }],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+      images: [image],
+    },
   };
 }
 

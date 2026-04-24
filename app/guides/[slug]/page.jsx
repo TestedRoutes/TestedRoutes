@@ -12,12 +12,33 @@ export async function generateMetadata({ params }) {
   const guide = await loadGuideBySlug(slug);
   if (!guide) return {};
   const seo = guide.metadata?.seo || {};
+  const title = seo.meta_title
+    ? `${seo.meta_title} · Pikelis Travel`
+    : `${guide.title} · Pikelis Travel`;
+  const description =
+    seo.meta_description ||
+    guide.metadata?.hero?.subtitle ||
+    `Self-guided travel guide: ${guide.title}.`;
+  const image = guide.image || "/images/triftbrucke-hero.jpg";
+  const canonical = `/guides/${guide.slug}`;
+
   return {
-    title: seo.meta_title ? `${seo.meta_title} · Pikelis Travel` : `${guide.title} · Pikelis Travel`,
-    description:
-      seo.meta_description ||
-      guide.metadata?.hero?.subtitle ||
-      `Self-guided travel guide: ${guide.title}.`,
+    title,
+    description,
+    alternates: { canonical },
+    openGraph: {
+      type: "article",
+      url: canonical,
+      title,
+      description,
+      images: [{ url: image, alt: guide.title }],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+      images: [image],
+    },
   };
 }
 
