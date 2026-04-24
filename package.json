@@ -8,11 +8,13 @@
     "build": "next build",
     "start": "next start",
     "sanity:dev": "sanity dev",
-    "sanity:deploy": "sanity deploy"
+    "sanity:deploy": "sanity deploy",
+    "publish": "node --env-file=.env.local scripts/publish-to-sanity.mjs"
   },
   "dependencies": {
     "@sanity/image-url": "^1.1.0",
     "@sanity/vision": "^3.88.0",
+    "js-yaml": "^4.1.1",
     "marked": "^18.0.2",
     "next": "^15.5.15",
     "next-sanity": "^9.12.0",
