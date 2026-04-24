@@ -1,7 +1,7 @@
 import Link from "next/link";
-import HomeSearchBar from "./_components/HomeSearchBar";
-import HomeGuideCard from "./_components/HomeGuideCard";
-import { HOME_GUIDES } from "./_lib/homeGuides";
+import HomeSearchBar from "../_components/HomeSearchBar";
+import HomeGuideCard from "../_components/HomeGuideCard";
+import { HOME_GUIDES } from "../_lib/homeGuides";
 
 const DESTINATION_RAIL = [
   { label: "Switzerland", href: "/destinations/switzerland" },

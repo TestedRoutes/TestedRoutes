@@ -1,12 +1,12 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { marked } from "marked";
-import { loadInspireStories } from "../../_lib/loadInspireStories";
+import { loadInspireStories } from "../../../_lib/loadInspireStories";
 import {
   getInspireFeaturedCardDisplay,
   getInspireStoryHeroAlt,
   getInspireStoryGuideUrl,
-} from "../../_lib/inspireStoryDisplay";
+} from "../../../_lib/inspireStoryDisplay";
 
 export async function generateStaticParams() {
   const stories = await loadInspireStories();

@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { loadGuides, loadGuideBySlug } from "../../_lib/loadGuides";
+import { loadGuides, loadGuideBySlug } from "../../../_lib/loadGuides";
 
 export async function generateStaticParams() {
   const guides = await loadGuides();

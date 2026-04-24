@@ -4,3 +4,11 @@ node_modules/
 .next/
 out/
 dist/
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# Sanity
+.sanity/

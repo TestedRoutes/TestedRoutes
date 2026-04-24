@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { loadGuides } from "../_lib/loadGuides";
+import { loadGuides } from "../../_lib/loadGuides";
 
 export const metadata = {
   title: "Guides · Pikelis Travel",

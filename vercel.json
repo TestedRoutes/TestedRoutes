@@ -1,7 +1,5 @@
 {
-  "framework": null,
-  "buildCommand": "next build",
-  "outputDirectory": "out",
+  "framework": "nextjs",
   "cleanUrls": true,
   "trailingSlash": false,
   "redirects": [

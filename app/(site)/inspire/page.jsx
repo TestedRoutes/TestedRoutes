@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { loadInspireStories } from "../_lib/loadInspireStories";
+import { loadInspireStories } from "../../_lib/loadInspireStories";
 import {
   getInspireFeaturedCardDisplay,
   getInspireStoryHeroAlt,
@@ -8,7 +8,7 @@ import {
   inspireListPrimaryDestinationIsGuide,
   getInspireStoryGuideUrl,
   inspireStoryHasGuide,
-} from "../_lib/inspireStoryDisplay";
+} from "../../_lib/inspireStoryDisplay";
 import InspireBrowse from "./InspireBrowse";
 
 export const metadata = {
