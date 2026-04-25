@@ -7,6 +7,7 @@ import {
   getInspireStoryHeroAlt,
   getInspireStoryGuideUrl,
 } from "../../../_lib/inspireStoryDisplay";
+import NewsletterForm from "../../../_components/NewsletterForm";
 
 export async function generateStaticParams() {
   const stories = await loadInspireStories();
@@ -318,6 +319,9 @@ export default async function InspireStoryPage({ params }) {
               </div>
             </div>
           </aside>
+        </div>
+        <div className="mx-auto mt-12 max-w-3xl">
+          <NewsletterForm variant="story" source="story-end" />
         </div>
       </main>
     </>
