@@ -1,11 +1,18 @@
+import NewsletterForm from "./NewsletterForm";
+
 export default function SiteFooter() {
   return (
-    <footer className="mx-auto flex max-w-6xl flex-col gap-4 border-t border-slate-200 px-6 py-8 text-xs text-slate-500 md:flex-row md:items-center md:justify-between">
-      <p>© {new Date().getFullYear()} Pikelis Travel. All rights reserved.</p>
-      <div className="flex items-center gap-4">
-        <span>Contact</span>
-        <span>Terms</span>
-        <span>Privacy</span>
+    <footer className="mx-auto flex max-w-6xl flex-col gap-8 border-t border-slate-200 px-6 py-10 md:flex-row md:items-start md:justify-between">
+      <div className="md:max-w-sm">
+        <NewsletterForm variant="footer" source="footer" />
+      </div>
+      <div className="flex flex-col gap-3 text-xs text-slate-500 md:items-end">
+        <p>© {new Date().getFullYear()} Pikelis Travel. All rights reserved.</p>
+        <div className="flex items-center gap-4">
+          <span>Contact</span>
+          <span>Terms</span>
+          <span>Privacy</span>
+        </div>
       </div>
     </footer>
   );

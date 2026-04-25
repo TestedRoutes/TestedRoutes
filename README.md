@@ -23,6 +23,14 @@ Set these in Vercel (Production + Preview) and in `.env.local` for development.
 - `NEXT_PUBLIC_SITE_URL` — e.g. `https://pikelistravel.com`; used to build
   the Polar checkout `successUrl`
 
+### Beehiiv (newsletter)
+
+- `BEEHIIV_API_KEY` — workspace API key from Beehiiv → Settings → API
+- `BEEHIIV_PUBLICATION_ID` — V2 publication ID, starts with `pub_…`. Double
+  opt-in is configured publication-side in Beehiiv (recommended on for GDPR);
+  the *Opt in Redirect URL* should be set to
+  `https://pikelistravel.com/newsletter/confirmed`
+
 ### Wiring a guide for sale
 
 1. Create the product in Polar (with the PDF as a *File Downloads* benefit)
