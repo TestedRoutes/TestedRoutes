@@ -12,6 +12,7 @@
     "publish": "node --env-file=.env.local scripts/publish-to-sanity.mjs"
   },
   "dependencies": {
+    "@polar-sh/nextjs": "^0.9.5",
     "@sanity/image-url": "^1.1.0",
     "@sanity/vision": "^3.88.0",
     "js-yaml": "^4.1.1",

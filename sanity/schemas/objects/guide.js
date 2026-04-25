@@ -80,5 +80,21 @@ export default {
         "URL slug for the guide landing page under /guides/. Leave blank to use the story slug. Set this only if the guide URL must differ from the story URL (e.g. for historic links you want to preserve).",
       hidden: ({ parent }) => !parent?.hasGuide,
     },
+    {
+      name: "polarProductId",
+      title: "Polar product ID",
+      type: "string",
+      description:
+        "UUID from Polar dashboard. Create the product in Polar (with the PDF as a File Downloads benefit), copy its ID here. Polar is the source of truth for the charged price and the file delivery; the price field above is display-only.",
+      hidden: ({ parent }) => !parent?.hasGuide,
+    },
+    {
+      name: "purchasesCount",
+      title: "Purchases (lifetime)",
+      type: "number",
+      description: "Auto-incremented by the Polar webhook on each paid order. Do not edit manually.",
+      readOnly: true,
+      hidden: ({ parent }) => !parent?.hasGuide,
+    },
   ],
 };

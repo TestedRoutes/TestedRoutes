@@ -134,7 +134,10 @@ export default async function GuideDetailPage({ params }) {
   const sales = meta.sales || {};
 
   const photos = [guide.image, ...(guide.galleryPhotos || [])].filter(Boolean);
-  const pdfHref = guide.guidePdfUrl || null;
+  const checkoutHref = guide.polarProductId
+    ? `/api/checkout?products=${encodeURIComponent(guide.polarProductId)}`
+    : null;
+  const pdfHref = !checkoutHref ? guide.guidePdfUrl || null : null;
 
   return (
     <main className="mx-auto max-w-6xl px-6 pb-16 pt-8">
@@ -205,7 +208,14 @@ export default async function GuideDetailPage({ params }) {
           {guide.price ? (
             <p className="text-2xl font-semibold text-slate-900">{guide.price}</p>
           ) : null}
-          {pdfHref ? (
+          {checkoutHref ? (
+            <a
+              href={checkoutHref}
+              className="mt-3 block w-full rounded-full bg-slate-900 px-4 py-2.5 text-center text-sm font-semibold text-white transition hover:bg-slate-800"
+            >
+              Get the Guide
+            </a>
+          ) : pdfHref ? (
             <a
               href={pdfHref}
               className="mt-3 block w-full rounded-full bg-slate-900 px-4 py-2.5 text-center text-sm font-semibold text-white transition hover:bg-slate-800"

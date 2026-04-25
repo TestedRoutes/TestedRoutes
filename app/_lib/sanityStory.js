@@ -58,6 +58,8 @@ const STORY_PROJECTION = /* groq */ `
     currency,
     format,
     pageSlug,
+    polarProductId,
+    purchasesCount,
     "pdfUrl": pdf.asset->url
   },
   whyThisTrip, whoThisIsFor, whatYouGet, difficultyAtAGlance, notSuitableSales,
@@ -310,13 +312,14 @@ export function shapeGuide(doc) {
     price,
     image: heroUrl,
     href: `/guides/${pageSlug}`,
-    purchases: null,
+    purchases: doc.guide?.purchasesCount || 0,
     metadata,
     photos: [heroUrl, ...galleryUrls].filter(Boolean),
     galleryPhotos: galleryUrls,
     folderUrl: "",
     heroName: doc.heroImage?.alt || null,
     guidePdfUrl: doc.guide?.pdfUrl || null,
+    polarProductId: doc.guide?.polarProductId || null,
   };
 }
 
