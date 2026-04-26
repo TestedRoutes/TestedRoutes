@@ -3,7 +3,7 @@ import { loadInspireStories } from "./_lib/loadInspireStories";
 
 export const dynamic = "force-static";
 
-const SITE_URL = "https://pikelistravel.com";
+const SITE_URL = "https://testedroutes.com";
 
 export default async function sitemap() {
   const now = new Date();

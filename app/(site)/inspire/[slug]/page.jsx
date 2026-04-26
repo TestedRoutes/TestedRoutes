@@ -24,7 +24,7 @@ export async function generateMetadata({ params }) {
   const story = await findStory(slug);
   if (!story) return {};
   const seo = story.metadata?.seo || {};
-  const title = `${seo.meta_title || story.title} · Pikelis Travel`;
+  const title = `${seo.meta_title || story.title} · TestedRoutes`;
   const description =
     seo.meta_description ||
     story.metadata?.hero?.subtitle ||
@@ -270,7 +270,7 @@ export default async function InspireStoryPage({ params }) {
                     <p className="mb-2 text-[10px] font-bold uppercase tracking-[0.2em] text-white/50">
                       Turn inspiration into a plan
                     </p>
-                    <p className="text-base font-semibold leading-snug">Pikelis Travel Guides</p>
+                    <p className="text-base font-semibold leading-snug">TestedRoutes Guides</p>
                     <p className="mt-2 text-xs leading-relaxed text-white/60">
                       Route-tested guides built from 15 years of independent travel. PDF format,
                       works offline.

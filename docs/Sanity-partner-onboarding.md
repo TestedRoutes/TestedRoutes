@@ -1,6 +1,6 @@
-# Pikelis Travel — Partner Onboarding
+# TestedRoutes — Partner Onboarding
 
-Welcome. This guide walks you through publishing stories and guides on **pikelistravel.com**. Once you've accepted the Sanity invite and logged in, you should be able to publish a full story in under an hour.
+Welcome. This guide walks you through publishing stories and guides on **testedroutes.com**. Once you've accepted the Sanity invite and logged in, you should be able to publish a full story in under an hour.
 
 ---
 
@@ -23,10 +23,10 @@ Welcome. This guide walks you through publishing stories and guides on **pikelis
 
 ## What you'll be doing
 
-Pikelis Travel has two content types that live on the public site:
+TestedRoutes has two content types that live on the public site:
 
-- **Inspire stories** (`pikelistravel.com/inspire/<slug>`) — travel stories, personal accounts, photo essays. Every trip starts as a story.
-- **Guides** (`pikelistravel.com/guides/<slug>`) — stories that also include a paid PDF travel guide. Guides appear both on `/inspire` (as the story) and on `/guides` (as the purchasable guide).
+- **Inspire stories** (`testedroutes.com/inspire/<slug>`) — travel stories, personal accounts, photo essays. Every trip starts as a story.
+- **Guides** (`testedroutes.com/guides/<slug>`) — stories that also include a paid PDF travel guide. Guides appear both on `/inspire` (as the story) and on `/guides` (as the purchasable guide).
 
 **Key idea: a guide is just a story with a "Has guide" flag turned on.** You don't create two documents — you create one story and optionally attach guide details.
 
@@ -37,7 +37,7 @@ Pikelis Travel has two content types that live on the public site:
 1. Check your email for a message from **Sanity** titled something like *"You're invited to the PikelisTravel project"*
 2. Click the invite link
 3. Create a Sanity account (or sign in if you already have one) — you can use Google / GitHub / email-password sign-up
-4. You'll land in Studio at: **https://pikelis-travel.vercel.app/studio**
+4. You'll land in Studio at: **https://testedroutes.vercel.app/studio**
 5. Bookmark that URL — it's where you'll work from now on
 
 If the invite link expired or you can't find the email, ask Paulius to re-send it from https://www.sanity.io/manage/project/y3gc8dx6/members.
@@ -92,7 +92,7 @@ Use anything you're comfortable with:
 
 Aim for **300–1500 words** depending on the story. The Triftbrücke existing story is about 230 words; the Denali story is 1200 words. Both work on the site.
 
-**Style notes for Pikelis Travel:**
+**Style notes for TestedRoutes:**
 - First-person POV ("I did the climb", "we drove")
 - Specific details (real timings, real costs, real mistakes)
 - Short paragraphs (2–4 sentences each)
@@ -324,7 +324,7 @@ No manual deploys. No waiting for a build. Publish = live.
 
 Studio currently doesn't have a live preview window. To check how something looks:
 
-- Publish the story — it appears at `https://pikelis-travel.vercel.app/inspire/<slug>`
+- Publish the story — it appears at `https://testedroutes.vercel.app/inspire/<slug>`
 - If something's wrong, fix and republish — the site updates in 30 seconds
 - If it's very wrong, unpublish from Studio
 

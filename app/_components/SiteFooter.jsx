@@ -7,7 +7,7 @@ export default function SiteFooter() {
         <NewsletterForm variant="footer" source="footer" />
       </div>
       <div className="flex flex-col gap-3 text-xs text-slate-500 md:items-end">
-        <p>© {new Date().getFullYear()} Pikelis Travel. All rights reserved.</p>
+        <p>© {new Date().getFullYear()} TestedRoutes. All rights reserved.</p>
         <div className="flex items-center gap-4">
           <span>Contact</span>
           <span>Terms</span>

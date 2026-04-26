@@ -1,4 +1,4 @@
-# PikelisTravel
+# TestedRoutes
 
 ## Environment variables
 
@@ -19,4 +19,4 @@ Set these in Vercel (Production + Preview) and in `.env.local` for development.
 - `BEEHIIV_PUBLICATION_ID` — V2 publication ID, starts with `pub_…`. Double
   opt-in is configured publication-side in Beehiiv (recommended on for GDPR);
   the *Opt in Redirect URL* should be set to
-  `https://pikelistravel.com/newsletter/confirmed`
+  `https://testedroutes.com/newsletter/confirmed`

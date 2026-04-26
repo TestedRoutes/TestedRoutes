@@ -13,8 +13,8 @@ export async function generateMetadata({ params }) {
   if (!guide) return {};
   const seo = guide.metadata?.seo || {};
   const title = seo.meta_title
-    ? `${seo.meta_title} · Pikelis Travel`
-    : `${guide.title} · Pikelis Travel`;
+    ? `${seo.meta_title} · TestedRoutes`
+    : `${guide.title} · TestedRoutes`;
   const description =
     seo.meta_description ||
     guide.metadata?.hero?.subtitle ||
