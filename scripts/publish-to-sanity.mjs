@@ -589,7 +589,7 @@ async function main() {
   console.log(`\n✓ Published.`);
   console.log(`  Story:  https://pikelistravel.com/inspire/${doc.slug.current}`);
   if (guideUrl) console.log(`  Guide:  ${guideUrl}`);
-  console.log(`  Studio: https://pikelis-travel.vercel.app/studio/desk/story;${doc._id}\n`);
+  console.log(`  Studio: https://testedroutes.vercel.app/studio/desk/story;${doc._id}\n`);
   console.log("Live site will update in ~30s via the Sanity → Vercel webhook.\n");
 }
 

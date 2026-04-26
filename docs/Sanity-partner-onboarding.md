@@ -34,10 +34,10 @@ TestedRoutes has two content types that live on the public site:
 
 ## Getting access
 
-1. Check your email for a message from **Sanity** titled something like *"You're invited to the PikelisTravel project"*
+1. Check your email for a message from **Sanity** titled something like *"You're invited to the TestedRoutes project"*
 2. Click the invite link
 3. Create a Sanity account (or sign in if you already have one) — you can use Google / GitHub / email-password sign-up
-4. You'll land in Studio at: **https://pikelis-travel.vercel.app/studio**
+4. You'll land in Studio at: **https://testedroutes.vercel.app/studio**
 5. Bookmark that URL — it's where you'll work from now on
 
 If the invite link expired or you can't find the email, ask Paulius to re-send it from https://www.sanity.io/manage/project/y3gc8dx6/members.
@@ -324,7 +324,7 @@ No manual deploys. No waiting for a build. Publish = live.
 
 Studio currently doesn't have a live preview window. To check how something looks:
 
-- Publish the story — it appears at `https://pikelis-travel.vercel.app/inspire/<slug>`
+- Publish the story — it appears at `https://testedroutes.vercel.app/inspire/<slug>`
 - If something's wrong, fix and republish — the site updates in 30 seconds
 - If it's very wrong, unpublish from Studio
 

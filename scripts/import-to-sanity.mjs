@@ -673,7 +673,7 @@ async function main() {
   }
 
   console.log(`\n✓ Import complete.\n`);
-  console.log(`Open Studio: https://pikelis-travel.vercel.app/studio\n`);
+  console.log(`Open Studio: https://testedroutes.vercel.app/studio\n`);
 }
 
 main().catch((err) => {
