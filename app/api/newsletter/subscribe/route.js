@@ -46,7 +46,7 @@ export async function POST(request) {
     email,
     reactivate_existing: true,
     send_welcome_email: true,
-    utm_source: "pikelistravel.com",
+    utm_source: "testedroutes.com",
     utm_medium: source || "site",
     ...(language ? { custom_fields: [{ name: "language", value: language }] } : {}),
   };

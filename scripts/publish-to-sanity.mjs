@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * Pikelis Travel — publish a single story folder to Sanity.
+ * TestedRoutes — publish a single story folder to Sanity.
  *
  * Expected folder layout:
  *   <folder>/
@@ -531,7 +531,7 @@ async function buildStoryDoc(fm, body, heroName, galleryNames, pdfName) {
 
 async function main() {
   console.log(
-    `\nPikelis Travel → Sanity publish\n` +
+    `\nTestedRoutes → Sanity publish\n` +
       `  folder:   ${folder}\n` +
       `  mode:     ${DRY_RUN ? "DRY-RUN (no writes)" : "LIVE"}\n`,
   );
@@ -583,13 +583,13 @@ async function main() {
 
   const guideUrl =
     fm.guide?.hasGuide && (fm.guide?.pageSlug || doc.slug.current)
-      ? `https://pikelistravel.com/guides/${fm.guide?.pageSlug || doc.slug.current}`
+      ? `https://testedroutes.com/guides/${fm.guide?.pageSlug || doc.slug.current}`
       : null;
 
   console.log(`\n✓ Published.`);
-  console.log(`  Story:  https://pikelistravel.com/inspire/${doc.slug.current}`);
+  console.log(`  Story:  https://testedroutes.com/inspire/${doc.slug.current}`);
   if (guideUrl) console.log(`  Guide:  ${guideUrl}`);
-  console.log(`  Studio: https://pikelis-travel.vercel.app/studio/desk/story;${doc._id}\n`);
+  console.log(`  Studio: https://testedroutes.com/studio/desk/story;${doc._id}\n`);
   console.log("Live site will update in ~30s via the Sanity → Vercel webhook.\n");
 }
 
