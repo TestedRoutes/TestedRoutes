@@ -3,18 +3,6 @@
   "cleanUrls": true,
   "trailingSlash": false,
   "redirects": [
-    {
-      "source": "/:path*",
-      "has": [{ "type": "host", "value": "pikelistravel.com" }],
-      "destination": "https://testedroutes.com/:path*",
-      "permanent": true
-    },
-    {
-      "source": "/:path*",
-      "has": [{ "type": "host", "value": "www.pikelistravel.com" }],
-      "destination": "https://testedroutes.com/:path*",
-      "permanent": true
-    },
     { "source": "/index.html", "destination": "/", "permanent": true },
     { "source": "/about.html", "destination": "/about", "permanent": true },
     { "source": "/destinations.html", "destination": "/destinations", "permanent": true },
