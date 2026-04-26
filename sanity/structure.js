@@ -1,6 +1,6 @@
 export const structure = (S) =>
   S.list()
-    .title("Pikelis Travel")
+    .title("TestedRoutes")
     .items([
       S.listItem()
         .title("Stories")

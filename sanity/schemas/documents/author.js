@@ -3,7 +3,7 @@ export default {
   title: "Author",
   type: "document",
   description:
-    "A person who writes stories for Pikelis Travel — you or a travel partner. Authors are selected on each story.",
+    "A person who writes stories for TestedRoutes — you or a travel partner. Authors are selected on each story.",
   fields: [
     {
       name: "name",

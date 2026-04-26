@@ -2,7 +2,7 @@
  * Sanity → Next.js on-demand revalidation webhook.
  *
  * Wire up at https://www.sanity.io/manage/project/y3gc8dx6/api/webhooks
- *   URL:     https://pikelistravel.com/api/revalidate
+ *   URL:     https://testedroutes.com/api/revalidate
  *   Trigger: Create, Update, Delete
  *   Filter:  _type in ["story", "destination", "collection", "category", "author"]
  *   Method:  POST
@@ -10,7 +10,7 @@
  *   Projection: { _type, "slug": slug.current, guide }
  *
  * Manually verify with:
- *   curl -X POST https://pikelistravel.com/api/revalidate \
+ *   curl -X POST https://testedroutes.com/api/revalidate \
  *     -H "x-sanity-revalidate-secret: $SECRET" \
  *     -H "content-type: application/json" \
  *     -d '{"_type":"story","slug":"triftbrucke-from-zurich","guide":{"hasGuide":true}}'

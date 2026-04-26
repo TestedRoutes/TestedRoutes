@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * Pikelis Travel — one-time content import into Sanity.
+ * TestedRoutes — one-time content import into Sanity.
  *
  * Reads public/Content/Stories/**, uploads images + PDFs to Sanity's asset
  * pipeline, creates or updates destination / author / collection / category /
@@ -209,7 +209,7 @@ function authorRef() {
     name: "Paulius Pikelis",
     slug: { _type: "slug", current: "paulius-pikelis" },
     role: "owner",
-    bio: "Founder of Pikelis Travel. 15 years of independent travel across 140 countries.",
+    bio: "Founder of TestedRoutes. 15 years of independent travel across 140 countries.",
   });
 }
 
@@ -569,7 +569,7 @@ async function fileExists(p) {
 
 async function main() {
   console.log(
-    `\nPikelis Travel → Sanity import\n` +
+    `\nTestedRoutes → Sanity import\n` +
       `  project: ${PROJECT_ID}  dataset: ${DATASET}  apiVersion: ${API_VERSION}\n` +
       `  mode: ${DRY_RUN ? "DRY-RUN (no writes)" : "LIVE (will write to Sanity)"}` +
       (LIMIT !== Infinity ? `  limit: ${LIMIT}` : "") +
@@ -673,7 +673,7 @@ async function main() {
   }
 
   console.log(`\n✓ Import complete.\n`);
-  console.log(`Open Studio: https://pikelis-travel.vercel.app/studio\n`);
+  console.log(`Open Studio: https://testedroutes.vercel.app/studio\n`);
 }
 
 main().catch((err) => {

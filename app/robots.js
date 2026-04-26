@@ -1,6 +1,6 @@
 export const dynamic = "force-static";
 
-const SITE_URL = "https://pikelistravel.com";
+const SITE_URL = "https://testedroutes.com";
 
 export default function robots() {
   return {

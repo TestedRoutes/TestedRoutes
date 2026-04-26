@@ -2,7 +2,7 @@ import Link from "next/link";
 import { loadGuides } from "../../_lib/loadGuides";
 
 export const metadata = {
-  title: "Guides · Pikelis Travel",
+  title: "Guides · TestedRoutes",
   description:
     "Every guide is a real route, tested in the field. Buy once, follow step by step.",
 };
