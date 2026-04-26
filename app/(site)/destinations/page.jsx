@@ -1,5 +1,5 @@
 export const metadata = {
-  title: "Destinations · Pikelis Travel",
+  title: "Destinations · TestedRoutes",
   description: "Self-guided travel routes across the countries and regions I have personally tested.",
 };
 

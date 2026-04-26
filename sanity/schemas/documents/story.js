@@ -3,7 +3,7 @@ export default {
   title: "Story",
   type: "document",
   description:
-    'The core Pikelis Travel content unit. Every trip is a "story". Turn on "Has guide" under the Commerce tab if this story has a sellable PDF — it will then appear on the Guides page.',
+    'The core TestedRoutes content unit. Every trip is a "story". Turn on "Has guide" under the Commerce tab if this story has a sellable PDF — it will then appear on the Guides page.',
   groups: [
     { name: "content", title: "Content", default: true },
     { name: "location", title: "Location" },

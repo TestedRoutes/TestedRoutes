@@ -8,7 +8,7 @@ import { apiVersion, dataset, projectId } from "./sanity/env";
 
 export default defineConfig({
   name: "pikelis-travel",
-  title: "Pikelis Travel",
+  title: "TestedRoutes",
   basePath: "/studio",
   projectId,
   dataset,

@@ -1,4 +1,4 @@
-# Pikelis Travel — Partner Onboarding
+# TestedRoutes — Partner Onboarding
 
 Welcome. This guide walks you through publishing stories and guides on **pikelistravel.com**. Once you've accepted the Sanity invite and logged in, you should be able to publish a full story in under an hour.
 
@@ -23,7 +23,7 @@ Welcome. This guide walks you through publishing stories and guides on **pikelis
 
 ## What you'll be doing
 
-Pikelis Travel has two content types that live on the public site:
+TestedRoutes has two content types that live on the public site:
 
 - **Inspire stories** (`pikelistravel.com/inspire/<slug>`) — travel stories, personal accounts, photo essays. Every trip starts as a story.
 - **Guides** (`pikelistravel.com/guides/<slug>`) — stories that also include a paid PDF travel guide. Guides appear both on `/inspire` (as the story) and on `/guides` (as the purchasable guide).
@@ -92,7 +92,7 @@ Use anything you're comfortable with:
 
 Aim for **300–1500 words** depending on the story. The Triftbrücke existing story is about 230 words; the Denali story is 1200 words. Both work on the site.
 
-**Style notes for Pikelis Travel:**
+**Style notes for TestedRoutes:**
 - First-person POV ("I did the climb", "we drove")
 - Specific details (real timings, real costs, real mistakes)
 - Short paragraphs (2–4 sentences each)

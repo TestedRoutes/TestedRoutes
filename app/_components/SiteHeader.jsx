@@ -55,7 +55,7 @@ export default function SiteHeader() {
         >
           <span className="flex flex-col leading-none">
             <span className="font-serif text-lg font-semibold uppercase tracking-[0.3em] text-slate-900">
-              PIKELIS TRAVEL
+              TestedRoutes
             </span>
             <span className="mt-1 text-[10px] uppercase tracking-[0.4em] text-slate-500">
               since 2010

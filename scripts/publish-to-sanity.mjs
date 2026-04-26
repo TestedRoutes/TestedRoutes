@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * Pikelis Travel — publish a single story folder to Sanity.
+ * TestedRoutes — publish a single story folder to Sanity.
  *
  * Expected folder layout:
  *   <folder>/
@@ -531,7 +531,7 @@ async function buildStoryDoc(fm, body, heroName, galleryNames, pdfName) {
 
 async function main() {
   console.log(
-    `\nPikelis Travel → Sanity publish\n` +
+    `\nTestedRoutes → Sanity publish\n` +
       `  folder:   ${folder}\n` +
       `  mode:     ${DRY_RUN ? "DRY-RUN (no writes)" : "LIVE"}\n`,
   );

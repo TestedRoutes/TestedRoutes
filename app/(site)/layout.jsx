@@ -10,29 +10,29 @@ const DEFAULT_DESCRIPTION =
 
 export const metadata = {
   metadataBase: new URL(SITE_URL),
-  title: "Pikelis Travel",
+  title: "TestedRoutes",
   description: DEFAULT_DESCRIPTION,
   alternates: {
     canonical: "/",
   },
   openGraph: {
     type: "website",
-    siteName: "Pikelis Travel",
+    siteName: "TestedRoutes",
     url: SITE_URL,
-    title: "Pikelis Travel",
+    title: "TestedRoutes",
     description: DEFAULT_DESCRIPTION,
     images: [
       {
         url: DEFAULT_OG,
         width: 1200,
         height: 630,
-        alt: "Pikelis Travel",
+        alt: "TestedRoutes",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Pikelis Travel",
+    title: "TestedRoutes",
     description: DEFAULT_DESCRIPTION,
     images: [DEFAULT_OG],
   },
