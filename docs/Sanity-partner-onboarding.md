@@ -34,7 +34,7 @@ TestedRoutes has two content types that live on the public site:
 
 ## Getting access
 
-1. Check your email for a message from **Sanity** titled something like *"You're invited to the PikelisTravel project"*
+1. Check your email for a message from **Sanity** titled something like *"You're invited to the TestedRoutes project"*
 2. Click the invite link
 3. Create a Sanity account (or sign in if you already have one) — you can use Google / GitHub / email-password sign-up
 4. You'll land in Studio at: **https://testedroutes.vercel.app/studio**
