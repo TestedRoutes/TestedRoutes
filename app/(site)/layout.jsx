@@ -1,6 +1,7 @@
 import ConstructionBanner from "../_components/ConstructionBanner";
 import SiteHeader from "../_components/SiteHeader";
 import SiteFooter from "../_components/SiteFooter";
+import PostHogProvider from "../_components/PostHogProvider";
 
 
 const SITE_URL = "https://testedroutes.com";
@@ -40,11 +41,11 @@ export const metadata = {
 
 export default function SiteLayout({ children }) {
   return (
-    <>
+    <PostHogProvider>
       <ConstructionBanner />
       <SiteHeader />
       {children}
       <SiteFooter />
-    </>
+    </PostHogProvider>
   );
 }
