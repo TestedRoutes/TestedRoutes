@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import posthog from "posthog-js";
 
 /**
  * Reusable Beehiiv signup form.
@@ -38,6 +39,7 @@ export default function NewsletterForm({ variant = "footer", source, headline, s
       }
       setStatus("success");
       setEmail("");
+      posthog.capture("newsletter_signup", { source });
     } catch {
       setStatus("error");
       setMessage("Network error. Try again?");
