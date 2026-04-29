@@ -51,6 +51,7 @@ const STORY_PROJECTION = /* groq */ `
   budgetLevel, estimatedCost, costBreakdown, moneySavingTips,
   uniqueSellingPoints, whatMakesThisSpecial, bestForCrowdType,
   crowdLevel, scenicRating, adrenalineLevel,
+  lastReviewedDate, routePoints,
   guide {
     hasGuide,
     status,
@@ -213,6 +214,11 @@ function buildLegacyMetadata(doc) {
       adrenaline_level: doc.adrenalineLevel,
     },
 
+    maintenance: {
+      last_reviewed_date: doc.lastReviewedDate,
+      route_points: doc.routePoints,
+    },
+
     sales: {
       why_this_trip: doc.whyThisTrip,
       who_this_is_for: doc.whoThisIsFor,
@@ -302,6 +308,7 @@ export function shapeGuide(doc, currency = "EUR") {
     .map((i) => imageUrl(i, 1600))
     .filter(Boolean);
   const metadata = buildLegacyMetadata(doc);
+  const storyContent = portableTextToMarkdown(doc.body);
 
   const pageSlug = doc.guide?.pageSlug || doc.slug;
   const category =
@@ -326,6 +333,10 @@ export function shapeGuide(doc, currency = "EUR") {
     href: `/guides/${pageSlug}`,
     purchases: doc.guide?.purchasesCount || 0,
     metadata,
+    storyContent,
+    coordinates: doc.coordinates || null,
+    startingPoint: doc.startingPoint || null,
+    routePoints: doc.routePoints || null,
     photos: [heroUrl, ...galleryUrls].filter(Boolean),
     galleryPhotos: galleryUrls,
     folderUrl: "",

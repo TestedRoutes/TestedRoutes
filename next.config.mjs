@@ -2,6 +2,10 @@ import { withSentryConfig } from "@sentry/nextjs";
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   trailingSlash: false,
+  // react-leaflet@4 trips "Map container is already initialized" under React 18
+  // Strict Mode's double-mount in dev. Strict Mode has no effect on production
+  // builds, so this only changes dev behaviour.
+  reactStrictMode: false,
   images: {
     remotePatterns: [
       { protocol: "https", hostname: "cdn.sanity.io" },
