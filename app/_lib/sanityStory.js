@@ -64,6 +64,24 @@ const STORY_PROJECTION = /* groq */ `
     "pdfUrl": pdf.asset->url
   },
   whyThisTrip, whoThisIsFor, whatYouGet, difficultyAtAGlance, notSuitableSales,
+  faq[]{ question, answer },
+  testimonials[]{ quote, author, location },
+  "similarStories": similarStories[]->{
+    _id,
+    title,
+    "slug": slug.current,
+    eyebrow,
+    durationDisplay,
+    heroImage,
+    "destination": destination->{ name, country },
+    guide{
+      hasGuide,
+      status,
+      "pageSlug": pageSlug,
+      "pricingTier": pricingTier->{ prices },
+      customPrices
+    }
+  },
   "primaryCollection": primaryCollection->{ name, "slug": slug.current },
   "allCollections": allCollections[]->{ name, "slug": slug.current },
   "journeyCategory": journeyCategory->{ name, "slug": slug.current },
@@ -225,6 +243,8 @@ function buildLegacyMetadata(doc) {
       what_you_get: doc.whatYouGet,
       difficulty_at_a_glance: doc.difficultyAtAGlance,
       not_suitable: doc.notSuitableSales,
+      faq: Array.isArray(doc.faq) ? doc.faq : [],
+      testimonials: Array.isArray(doc.testimonials) ? doc.testimonials : [],
     },
 
     guide: doc.guide
@@ -302,6 +322,26 @@ export function resolveGuidePrices(guide) {
   return [];
 }
 
+function shapeRelatedGuide(ref, currency = "EUR") {
+  if (!ref || !ref.guide?.hasGuide) return null;
+  const slug = ref.guide?.pageSlug || ref.slug;
+  if (!slug) return null;
+  const prices = resolveGuidePrices(ref.guide);
+  const chosen =
+    prices.find((p) => p?.currency === currency) ||
+    prices.find((p) => p?.currency === "EUR") ||
+    null;
+  return {
+    title: ref.title,
+    slug,
+    href: `/guides/${slug}`,
+    image: imageUrl(ref.heroImage, 800),
+    eyebrow: ref.eyebrow || ref.destination?.country || ref.destination?.name || null,
+    duration: ref.durationDisplay || "",
+    price: chosen ? formatPrice(chosen.amount, chosen.currency) : "",
+  };
+}
+
 export function shapeGuide(doc, currency = "EUR") {
   const heroUrl = imageUrl(doc.heroImage, 1600);
   const galleryUrls = (doc.galleryImages || [])
@@ -319,6 +359,13 @@ export function shapeGuide(doc, currency = "EUR") {
     prices.find((p) => p?.currency === "EUR") ||
     null;
   const price = chosen ? formatPrice(chosen.amount, chosen.currency) : "";
+
+  const relatedGuides = Array.isArray(doc.similarStories)
+    ? doc.similarStories
+        .map((r) => shapeRelatedGuide(r, currency))
+        .filter(Boolean)
+        .slice(0, 4)
+    : [];
 
   return {
     slug: pageSlug,
@@ -339,6 +386,7 @@ export function shapeGuide(doc, currency = "EUR") {
     routePoints: doc.routePoints || null,
     photos: [heroUrl, ...galleryUrls].filter(Boolean),
     galleryPhotos: galleryUrls,
+    relatedGuides,
     folderUrl: "",
     heroName: doc.heroImage?.alt || null,
     guidePdfUrl: doc.guide?.pdfUrl || null,

@@ -583,6 +583,83 @@ export default {
       of: [{ type: "string" }],
       hidden: ({ document }) => !document?.guide?.hasGuide,
     },
+    {
+      name: "faq",
+      title: "FAQ override",
+      type: "array",
+      group: "commerce",
+      fieldset: "sales",
+      description:
+        "Optional. When populated, replaces the standard 4-question FAQ on the public guide page with this list. Leave empty to use the standard set.",
+      of: [
+        {
+          type: "object",
+          name: "faqItem",
+          fields: [
+            {
+              name: "question",
+              title: "Question",
+              type: "string",
+              validation: (Rule) => Rule.required().max(160),
+            },
+            {
+              name: "answer",
+              title: "Answer",
+              type: "text",
+              rows: 3,
+              validation: (Rule) => Rule.required().max(800),
+            },
+          ],
+          preview: { select: { title: "question" } },
+        },
+      ],
+      hidden: ({ document }) => !document?.guide?.hasGuide,
+    },
+    {
+      name: "testimonials",
+      title: "Testimonials",
+      type: "array",
+      group: "commerce",
+      fieldset: "sales",
+      description:
+        "Optional. Reader/buyer quotes shown above the comparison block. Section is hidden when this list is empty.",
+      of: [
+        {
+          type: "object",
+          name: "testimonial",
+          fields: [
+            {
+              name: "quote",
+              title: "Quote",
+              type: "text",
+              rows: 3,
+              validation: (Rule) => Rule.required().max(500),
+            },
+            {
+              name: "author",
+              title: "Author name",
+              type: "string",
+              validation: (Rule) => Rule.required().max(80),
+            },
+            {
+              name: "location",
+              title: "Location / context",
+              type: "string",
+              description: 'e.g. "Hiked Sept 2025" or "Zurich, CH"',
+              validation: (Rule) => Rule.max(80),
+            },
+          ],
+          preview: {
+            select: { title: "author", subtitle: "quote" },
+            prepare({ title, subtitle }) {
+              const trimmed = subtitle ? subtitle.slice(0, 80) + (subtitle.length > 80 ? "…" : "") : "";
+              return { title, subtitle: trimmed };
+            },
+          },
+        },
+      ],
+      hidden: ({ document }) => !document?.guide?.hasGuide,
+    },
 
     /* ──────────────── CLASSIFICATION ──────────────── */
     {

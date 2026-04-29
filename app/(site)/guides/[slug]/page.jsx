@@ -252,34 +252,39 @@ function SaveTimeComparison({ price }) {
 
 const STANDARD_FAQ = [
   {
-    q: "Is this guide up to date?",
-    a: "Yes. Every TestedRoutes guide is reviewed regularly — the date at the top of the trip details shows when it was last reviewed. Reviews flag broken bookings, transport changes, prices, and seasonal closures so the guide stays accurate as conditions change.",
+    question: "Is this guide up to date?",
+    answer:
+      "Yes. Every TestedRoutes guide is reviewed regularly — the date at the top of the trip details shows when it was last reviewed. Reviews flag broken bookings, transport changes, prices, and seasonal closures so the guide stays accurate as conditions change.",
   },
   {
-    q: "What format is the guide?",
-    a: "PDF, downloadable instantly after purchase. It works offline once saved to your phone, tablet, or laptop — no app required.",
+    question: "What format is the guide?",
+    answer:
+      "PDF, downloadable instantly after purchase. It works offline once saved to your phone, tablet, or laptop — no app required.",
   },
   {
-    q: "What if the weather is bad on my day?",
-    a: "The guide includes go/no-go decision rules and weather-dependent alternatives where they exist. If the trip is fully weather-dependent and your dates don't work, request a refund within 30 days.",
+    question: "What if the weather is bad on my day?",
+    answer:
+      "The guide includes go/no-go decision rules and weather-dependent alternatives where they exist. If the trip is fully weather-dependent and your dates don't work, request a refund within 30 days.",
   },
   {
-    q: "Can I get a refund if it doesn't work for me?",
-    a: "Yes — 30 days, no questions asked. Email refunds@testedroutes.com with your order ID. Full details in our refund policy.",
+    question: "Can I get a refund if it doesn't work for me?",
+    answer:
+      "Yes — 30 days, no questions asked. Email refunds@testedroutes.com with your order ID. Full details in our refund policy.",
   },
 ];
 
-function FaqAccordion() {
+function FaqAccordion({ items }) {
+  const list = Array.isArray(items) && items.length ? items : STANDARD_FAQ;
   return (
     <section>
       <p className="mb-4 font-['Georgia',serif] text-xl font-semibold text-[#1a1816]">
         Frequently asked questions
       </p>
       <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white divide-y divide-slate-100">
-        {STANDARD_FAQ.map(({ q, a }) => (
-          <details key={q} className="group">
+        {list.map(({ question, answer }) => (
+          <details key={question} className="group">
             <summary className="flex cursor-pointer list-none items-center justify-between gap-4 px-5 py-4 text-sm font-medium text-slate-900 hover:bg-slate-50">
-              <span>{q}</span>
+              <span>{question}</span>
               <span
                 aria-hidden
                 className="text-slate-400 transition group-open:rotate-180"
@@ -287,8 +292,87 @@ function FaqAccordion() {
                 ▾
               </span>
             </summary>
-            <div className="px-5 pb-4 text-sm leading-relaxed text-slate-600">{a}</div>
+            <div className="px-5 pb-4 text-sm leading-relaxed text-slate-600 whitespace-pre-line">
+              {answer}
+            </div>
           </details>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+function Testimonials({ items }) {
+  if (!Array.isArray(items) || items.length === 0) return null;
+  return (
+    <section>
+      <p className="mb-4 font-['Georgia',serif] text-xl font-semibold text-[#1a1816]">
+        What readers say
+      </p>
+      <div className="grid gap-4 md:grid-cols-2">
+        {items.map(({ quote, author, location }, i) => (
+          <figure
+            key={`${author}-${i}`}
+            className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm"
+          >
+            <span aria-hidden className="font-['Georgia',serif] text-3xl leading-none text-[#0f6e56]">
+              “
+            </span>
+            <blockquote className="mt-1 text-sm leading-relaxed text-slate-700">
+              {quote}
+            </blockquote>
+            <figcaption className="mt-3 text-xs text-slate-500">
+              <span className="font-semibold text-slate-900">{author}</span>
+              {location ? <span> · {location}</span> : null}
+            </figcaption>
+          </figure>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+function RelatedGuides({ items }) {
+  if (!Array.isArray(items) || items.length === 0) return null;
+  return (
+    <section className="mt-12 border-t border-slate-200 pt-10">
+      <p className="mb-5 font-['Georgia',serif] text-2xl font-semibold text-[#1a1816]">
+        You might also like
+      </p>
+      <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+        {items.map((g) => (
+          <Link
+            key={g.slug}
+            href={g.href}
+            className="group flex flex-col overflow-hidden rounded-2xl bg-white shadow-sm ring-1 ring-slate-200 transition hover:-translate-y-0.5 hover:shadow-md"
+          >
+            {g.image ? (
+              <img
+                src={g.image}
+                alt={g.title}
+                className="aspect-[4/3] w-full object-cover"
+                loading="lazy"
+              />
+            ) : (
+              <div className="aspect-[4/3] w-full bg-slate-100" />
+            )}
+            <div className="flex flex-1 flex-col gap-1 p-4">
+              {g.eyebrow ? (
+                <p className="text-[10px] font-semibold uppercase tracking-wider text-slate-400">
+                  {g.eyebrow}
+                </p>
+              ) : null}
+              <p className="font-['Georgia',serif] text-base font-semibold leading-snug text-slate-900 group-hover:text-slate-700">
+                {g.title}
+              </p>
+              <div className="mt-auto flex items-center justify-between pt-2 text-xs text-slate-500">
+                {g.duration ? <span>{g.duration}</span> : <span />}
+                {g.price ? (
+                  <span className="font-semibold text-slate-900">{g.price}</span>
+                ) : null}
+              </div>
+            </div>
+          </Link>
         ))}
       </div>
     </section>
@@ -494,8 +578,9 @@ export default async function GuideDetailPage({ params }) {
           <NotSuitableWarning items={sales.not_suitable} />
           <CheckBulletSection title="What you get" items={sales.what_you_get} />
           <MyExperience markdown={guide.storyContent} />
+          <Testimonials items={sales.testimonials} />
           <SaveTimeComparison price={guide.price} />
-          <FaqAccordion />
+          <FaqAccordion items={sales.faq} />
         </div>
 
         <BuyBox
@@ -504,6 +589,8 @@ export default async function GuideDetailPage({ params }) {
           pdfHref={pdfHref}
         />
       </div>
+
+      <RelatedGuides items={guide.relatedGuides} />
 
       <BottomCta
         price={guide.price}
