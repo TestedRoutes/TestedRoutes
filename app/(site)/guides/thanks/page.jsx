@@ -13,7 +13,7 @@ export default function ThanksPage() {
       <h1 className="text-3xl font-semibold text-slate-900">Thank you for your purchase</h1>
       <p className="text-base text-slate-600">
         Your guide is on the way to your inbox. The email contains a personal,
-        signed download link — keep it, you can re-download from it anytime.
+        signed download link – keep it, you can re-download from it anytime.
       </p>
       <p className="text-sm text-slate-500">
         Didn&apos;t see it after a few minutes? Check spam, or reach out to{" "}

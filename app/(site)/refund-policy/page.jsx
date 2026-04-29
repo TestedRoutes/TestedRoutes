@@ -82,8 +82,8 @@ export default function RefundPolicyPage() {
         <h2 className="text-lg font-semibold text-slate-900">5. Beyond 30 days</h2>
         <p className="text-sm leading-relaxed text-slate-600">
           We can't promise refunds outside the 30-day window, but if you have a
-          genuine issue with a guide — something inaccurate, broken, or
-          unusable — please get in touch anyway. We'd rather make it right than
+          genuine issue with a guide – something inaccurate, broken, or
+          unusable – please get in touch anyway. We'd rather make it right than
           leave it.
         </p>
       </section>

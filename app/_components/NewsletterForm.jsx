@@ -50,11 +50,11 @@ export default function NewsletterForm({ variant = "footer", source, headline, s
     return (
       <form onSubmit={onSubmit} className="flex w-full items-center justify-center gap-2 text-sm">
         {status === "success" ? (
-          <span className="text-[#f7f4ef]">Thanks — check your inbox to confirm.</span>
+          <span className="text-[#f7f4ef]">Thanks – check your inbox to confirm.</span>
         ) : (
           <>
             <span className="hidden text-[#f7f4ef]/80 sm:inline">
-              {headline || "Launching June 2026 — get notified:"}
+              {headline || "Launching June 2026 – get notified:"}
             </span>
             <input
               type="email"
@@ -94,7 +94,7 @@ export default function NewsletterForm({ variant = "footer", source, headline, s
         </p>
         {status === "success" ? (
           <p className="mt-5 rounded-2xl bg-white/10 p-4 text-sm">
-            Thanks — check your inbox to confirm your subscription.
+            Thanks – check your inbox to confirm your subscription.
           </p>
         ) : (
           <form onSubmit={onSubmit} className="mt-5 flex flex-col gap-2 sm:flex-row">
@@ -132,7 +132,7 @@ export default function NewsletterForm({ variant = "footer", source, headline, s
       </p>
       {status === "success" ? (
         <p className="rounded-lg bg-slate-100 p-3 text-xs text-slate-700">
-          Thanks — check your inbox to confirm.
+          Thanks – check your inbox to confirm.
         </p>
       ) : (
         <form onSubmit={onSubmit} className="flex flex-col gap-2 sm:flex-row">

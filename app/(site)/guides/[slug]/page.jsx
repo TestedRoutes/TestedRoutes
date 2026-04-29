@@ -251,7 +251,7 @@ function SaveTimeComparison({ price }) {
           <p className="text-[11px] font-semibold uppercase tracking-wider text-[#0f6e56]">
             This guide
           </p>
-          <p className="mt-2 text-lg font-semibold text-slate-900">{price || "—"}</p>
+          <p className="mt-2 text-lg font-semibold text-slate-900">{price || "–"}</p>
           <p className="mt-1 text-xs text-slate-700">30 min · Complete route</p>
         </div>
       </div>
@@ -263,12 +263,12 @@ const STANDARD_FAQ = [
   {
     question: "Is this guide up to date?",
     answer:
-      "Yes. Every TestedRoutes guide is reviewed regularly — the date at the top of the trip details shows when it was last reviewed. Reviews flag broken bookings, transport changes, prices, and seasonal closures so the guide stays accurate as conditions change.",
+      "Yes. Every TestedRoutes guide is reviewed regularly – the date at the top of the trip details shows when it was last reviewed. Reviews flag broken bookings, transport changes, prices, and seasonal closures so the guide stays accurate as conditions change.",
   },
   {
     question: "What format is the guide?",
     answer:
-      "PDF, downloadable instantly after purchase. It works offline once saved to your phone, tablet, or laptop — no app required.",
+      "PDF, downloadable instantly after purchase. It works offline once saved to your phone, tablet, or laptop – no app required.",
   },
   {
     question: "What if the weather is bad on my day?",
@@ -278,7 +278,7 @@ const STANDARD_FAQ = [
   {
     question: "Can I get a refund if it doesn't work for me?",
     answer:
-      "Yes — 30 days, no questions asked. Email refunds@testedroutes.com with your order ID. Full details in our refund policy.",
+      "Yes – 30 days, no questions asked. Email refunds@testedroutes.com with your order ID. Full details in our refund policy.",
   },
 ];
 

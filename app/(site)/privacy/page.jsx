@@ -32,7 +32,7 @@ export default function PrivacyPage() {
         <p className="text-xs text-slate-500">
           Legal entity details:{" "}
           <strong>
-            [Company code · Registered address · VAT number — to be completed on
+            [Company code · Registered address · VAT number – to be completed on
             registration]
           </strong>
           . Contact:{" "}
@@ -79,7 +79,7 @@ export default function PrivacyPage() {
         <p className="text-sm leading-relaxed text-slate-600">
           We use PostHog to understand how the site is used (e.g. which guides
           are viewed, which buttons are clicked). Our PostHog setup is
-          configured for in-memory storage only — no cookies, no localStorage,
+          configured for in-memory storage only – no cookies, no localStorage,
           no persistent device identifiers. Each page view is effectively
           anonymous and is not linked across sessions. We also do not capture
           your IP address. Legal basis: legitimate interest in measuring site
@@ -99,7 +99,7 @@ export default function PrivacyPage() {
         <p className="text-sm leading-relaxed text-slate-600">
           We use one cookie, <code>tr_currency</code>, to remember the currency
           you've selected to view prices in. It contains a 3-letter currency
-          code (e.g. <code>EUR</code>) — nothing else. This is a strictly
+          code (e.g. <code>EUR</code>) – nothing else. This is a strictly
           necessary cookie for the site's functionality and does not require
           consent.
         </p>
@@ -116,40 +116,40 @@ export default function PrivacyPage() {
           <li className="flex gap-2">
             <span className="mt-0.5 shrink-0 text-slate-400">•</span>
             <span>
-              <strong>Vercel</strong> — hosting and content delivery for
+              <strong>Vercel</strong> – hosting and content delivery for
               testedroutes.com.
             </span>
           </li>
           <li className="flex gap-2">
             <span className="mt-0.5 shrink-0 text-slate-400">•</span>
             <span>
-              <strong>Sanity</strong> — content management for our guides and
+              <strong>Sanity</strong> – content management for our guides and
               stories.
             </span>
           </li>
           <li className="flex gap-2">
             <span className="mt-0.5 shrink-0 text-slate-400">•</span>
             <span>
-              <strong>Beehiiv</strong> — newsletter delivery.
+              <strong>Beehiiv</strong> – newsletter delivery.
             </span>
           </li>
           <li className="flex gap-2">
             <span className="mt-0.5 shrink-0 text-slate-400">•</span>
             <span>
-              <strong>Polar Software Inc.</strong> — payment processing and
+              <strong>Polar Software Inc.</strong> – payment processing and
               merchant of record for purchases.
             </span>
           </li>
           <li className="flex gap-2">
             <span className="mt-0.5 shrink-0 text-slate-400">•</span>
             <span>
-              <strong>PostHog</strong> — anonymous, cookie-free site analytics.
+              <strong>PostHog</strong> – anonymous, cookie-free site analytics.
             </span>
           </li>
           <li className="flex gap-2">
             <span className="mt-0.5 shrink-0 text-slate-400">•</span>
             <span>
-              <strong>Sentry</strong> — technical error tracking with no
+              <strong>Sentry</strong> – technical error tracking with no
               personal data.
             </span>
           </li>
@@ -238,8 +238,8 @@ export default function PrivacyPage() {
       <section className="space-y-3 rounded-[28px] bg-white p-8 shadow-sm ring-1 ring-slate-200">
         <h2 className="text-lg font-semibold text-slate-900">7. Changes to this policy</h2>
         <p className="text-sm leading-relaxed text-slate-600">
-          If we change how we handle data — for example by adding a new
-          analytics tool — we'll update this page and bump the "last updated"
+          If we change how we handle data – for example by adding a new
+          analytics tool – we'll update this page and bump the "last updated"
           date. Material changes will be announced on the site or, where
           appropriate, by email.
         </p>
