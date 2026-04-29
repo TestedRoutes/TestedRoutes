@@ -381,6 +381,7 @@ export function shapeGuide(doc, currency = "EUR") {
     purchases: doc.guide?.purchasesCount || 0,
     metadata,
     storyContent,
+    bodyBlocks: Array.isArray(doc.body) ? doc.body : [],
     coordinates: doc.coordinates || null,
     startingPoint: doc.startingPoint || null,
     routePoints: doc.routePoints || null,

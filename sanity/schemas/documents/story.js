@@ -198,6 +198,31 @@ export default {
                     title: "Open in new tab",
                     initialValue: true,
                   },
+                  {
+                    name: "isAffiliate",
+                    type: "boolean",
+                    title: "Affiliate link",
+                    description:
+                      'Tick if this URL pays a commission. Affiliate links surface on the public "Get the links free" page and (when category is "Essential booking") are opened in tabs at checkout if the buyer leaves the tickbox on.',
+                    initialValue: false,
+                  },
+                  {
+                    name: "affiliateCategory",
+                    type: "string",
+                    title: "Affiliate category",
+                    description:
+                      "Only meaningful when Affiliate link is on. Drives which links open at checkout vs. only appear on the Get-the-links-free page.",
+                    options: {
+                      list: [
+                        { title: "Essential booking (open at checkout)", value: "essential_booking" },
+                        { title: "Gear", value: "gear" },
+                        { title: "Tour / activity", value: "tour" },
+                        { title: "General", value: "general" },
+                      ],
+                      layout: "radio",
+                    },
+                    hidden: ({ parent }) => !parent?.isAffiliate,
+                  },
                 ],
               },
             ],

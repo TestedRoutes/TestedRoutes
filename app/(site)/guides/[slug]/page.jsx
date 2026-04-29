@@ -1,10 +1,15 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { marked } from "marked";
 import { loadGuides, loadGuideBySlug } from "../../../_lib/loadGuides";
 import { getRequestCurrency } from "../../../_lib/currency";
+import {
+  getEssentialBookings,
+  getAffiliateLinks,
+} from "../../../_lib/affiliateLinks";
 import LocationMap from "../../../_components/LocationMapClient";
 import GuideGallery from "../../../_components/GuideGallery";
+import GuideBody from "../../../_components/GuideBody";
+import BuyBox from "../../../_components/BuyBox";
 
 export async function generateStaticParams() {
   const guides = await loadGuides();
@@ -198,25 +203,6 @@ function LocationSection({ start, destination, finish, points }) {
   );
 }
 
-function MyExperience({ markdown }) {
-  if (!markdown || !markdown.trim()) return null;
-  let html = "";
-  try {
-    html = marked.parse(markdown, { breaks: true, gfm: true });
-  } catch {
-    return null;
-  }
-  return (
-    <section>
-      <p className="mb-4 font-['Georgia',serif] text-xl font-semibold text-[#1a1816]">My Experience</p>
-      <div
-        className="text-sm leading-relaxed text-slate-700 [&_p]:my-3 [&_h2]:mt-6 [&_h2]:mb-2 [&_h2]:font-['Georgia',serif] [&_h2]:text-lg [&_h2]:font-semibold [&_h2]:text-[#1a1816] [&_h3]:mt-4 [&_h3]:mb-2 [&_h3]:font-semibold [&_h3]:text-[#1a1816] [&_a]:text-slate-900 [&_a]:underline [&_blockquote]:border-l-2 [&_blockquote]:border-slate-200 [&_blockquote]:pl-4 [&_blockquote]:text-slate-600 [&_ul]:my-3 [&_ul]:list-disc [&_ul]:pl-6 [&_ol]:my-3 [&_ol]:list-decimal [&_ol]:pl-6"
-        dangerouslySetInnerHTML={{ __html: html }}
-      />
-    </section>
-  );
-}
-
 function SaveTimeComparison({ price }) {
   return (
     <section>
@@ -379,62 +365,6 @@ function RelatedGuides({ items }) {
   );
 }
 
-function BuyBox({ price, checkoutHref, pdfHref }) {
-  const button = checkoutHref ? (
-    <a
-      href={checkoutHref}
-      className="block w-full rounded-full bg-slate-900 px-4 py-2.5 text-center text-sm font-semibold text-white transition hover:bg-slate-800"
-    >
-      Get the Guide
-    </a>
-  ) : pdfHref ? (
-    <a
-      href={pdfHref}
-      className="block w-full rounded-full bg-slate-900 px-4 py-2.5 text-center text-sm font-semibold text-white transition hover:bg-slate-800"
-    >
-      Get the Guide
-    </a>
-  ) : (
-    <button
-      type="button"
-      disabled
-      className="block w-full rounded-full bg-slate-300 px-4 py-2.5 text-center text-sm font-semibold text-white"
-    >
-      Coming soon
-    </button>
-  );
-
-  const trustItems = [
-    { label: "Risk-free", rest: "30-day full refund" },
-    { label: "One-time purchase", rest: "No subscription" },
-    { label: "Works offline", rest: "Save to phone" },
-  ];
-
-  return (
-    <aside className="h-fit rounded-2xl bg-white p-6 shadow ring-1 ring-slate-200 md:sticky md:top-6 md:self-start">
-      <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-slate-400">
-        PDF Guide
-      </p>
-      {price ? (
-        <p className="mt-2 text-3xl font-semibold text-slate-900">{price}</p>
-      ) : null}
-      <p className="mt-1 text-xs text-slate-500">Instant download</p>
-      <div className="mt-4">{button}</div>
-      <ul className="mt-4 space-y-2 text-sm text-slate-700">
-        {trustItems.map(({ label, rest }) => (
-          <li key={label} className="flex gap-2">
-            <span aria-hidden className="mt-0.5 shrink-0 text-[#0f6e56]">✓</span>
-            <span>
-              <strong className="font-semibold text-slate-900">{label}</strong>
-              <span className="text-slate-500"> · {rest}</span>
-            </span>
-          </li>
-        ))}
-      </ul>
-    </aside>
-  );
-}
-
 function BottomCta({ price, checkoutHref, pdfHref }) {
   const href = checkoutHref || pdfHref;
   const buttonLabel = price
@@ -514,6 +444,9 @@ export default async function GuideDetailPage({ params }) {
 
   const location = buildLocation(guide);
   const showLocation = !!(location.start || location.destination);
+  const essentialBookings = getEssentialBookings(guide.bodyBlocks);
+  const affiliateLinks = getAffiliateLinks(guide.bodyBlocks);
+  const hasAffiliateLinks = affiliateLinks.length > 0;
 
   return (
     <main className="mx-auto max-w-6xl px-6 pb-16 pt-8">
@@ -577,7 +510,12 @@ export default async function GuideDetailPage({ params }) {
           </div>
           <NotSuitableWarning items={sales.not_suitable} />
           <CheckBulletSection title="What you get" items={sales.what_you_get} />
-          <MyExperience markdown={guide.storyContent} />
+          <GuideBody
+            blocks={guide.bodyBlocks}
+            checkoutHref={checkoutHref}
+            pdfHref={pdfHref}
+            price={guide.price}
+          />
           <Testimonials items={sales.testimonials} />
           <SaveTimeComparison price={guide.price} />
           <FaqAccordion items={sales.faq} />
@@ -587,6 +525,9 @@ export default async function GuideDetailPage({ params }) {
           price={guide.price}
           checkoutHref={checkoutHref}
           pdfHref={pdfHref}
+          linksHref={hasAffiliateLinks ? `/guides/${guide.slug}/links` : null}
+          hasAffiliateLinks={hasAffiliateLinks}
+          essentialBookings={essentialBookings.map((l) => l.href)}
         />
       </div>
 

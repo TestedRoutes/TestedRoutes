@@ -16,6 +16,7 @@
   "dependencies": {
     "@polar-sh/nextjs": "^0.9.5",
     "@polar-sh/sdk": "^0.47.1",
+    "@portabletext/react": "^6.0.3",
     "@sanity/image-url": "^1.1.0",
     "@sanity/vision": "^3.88.0",
     "@sentry/nextjs": "^10.50.0",
