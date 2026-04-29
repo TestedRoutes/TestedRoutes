@@ -528,8 +528,8 @@ async function buildStoryDoc(entry, metadata, storyMd) {
     mapZoom: metadata?.route?.map_zoom || undefined,
     routePoints,
 
-    lastVerifiedDate: metadata?.maintenance?.last_verified_date || undefined,
-    verificationFrequencyMonths: metadata?.maintenance?.verification_frequency_months || undefined,
+    lastReviewedDate: metadata?.maintenance?.last_reviewed_date || metadata?.maintenance?.last_verified_date || undefined,
+    reviewFrequencyMonths: metadata?.maintenance?.review_frequency_months || metadata?.maintenance?.verification_frequency_months || undefined,
     nextUpdateDue: metadata?.maintenance?.next_update_due || undefined,
     routeStatus: metadata?.maintenance?.route_status || undefined,
     contentQualityScore: metadata?.maintenance?.content_quality_score || undefined,

@@ -198,6 +198,31 @@ export default {
                     title: "Open in new tab",
                     initialValue: true,
                   },
+                  {
+                    name: "isAffiliate",
+                    type: "boolean",
+                    title: "Affiliate link",
+                    description:
+                      'Tick if this URL pays a commission. Affiliate links surface on the public "Get the links free" page and (when category is "Essential booking") are opened in tabs at checkout if the buyer leaves the tickbox on.',
+                    initialValue: false,
+                  },
+                  {
+                    name: "affiliateCategory",
+                    type: "string",
+                    title: "Affiliate category",
+                    description:
+                      "Only meaningful when Affiliate link is on. Drives which links open at checkout vs. only appear on the Get-the-links-free page.",
+                    options: {
+                      list: [
+                        { title: "Essential booking (open at checkout)", value: "essential_booking" },
+                        { title: "Gear", value: "gear" },
+                        { title: "Tour / activity", value: "tour" },
+                        { title: "General", value: "general" },
+                      ],
+                      layout: "radio",
+                    },
+                    hidden: ({ parent }) => !parent?.isAffiliate,
+                  },
                 ],
               },
             ],
@@ -583,6 +608,83 @@ export default {
       of: [{ type: "string" }],
       hidden: ({ document }) => !document?.guide?.hasGuide,
     },
+    {
+      name: "faq",
+      title: "FAQ override",
+      type: "array",
+      group: "commerce",
+      fieldset: "sales",
+      description:
+        "Optional. When populated, replaces the standard 4-question FAQ on the public guide page with this list. Leave empty to use the standard set.",
+      of: [
+        {
+          type: "object",
+          name: "faqItem",
+          fields: [
+            {
+              name: "question",
+              title: "Question",
+              type: "string",
+              validation: (Rule) => Rule.required().max(160),
+            },
+            {
+              name: "answer",
+              title: "Answer",
+              type: "text",
+              rows: 3,
+              validation: (Rule) => Rule.required().max(800),
+            },
+          ],
+          preview: { select: { title: "question" } },
+        },
+      ],
+      hidden: ({ document }) => !document?.guide?.hasGuide,
+    },
+    {
+      name: "testimonials",
+      title: "Testimonials",
+      type: "array",
+      group: "commerce",
+      fieldset: "sales",
+      description:
+        "Optional. Reader/buyer quotes shown above the comparison block. Section is hidden when this list is empty.",
+      of: [
+        {
+          type: "object",
+          name: "testimonial",
+          fields: [
+            {
+              name: "quote",
+              title: "Quote",
+              type: "text",
+              rows: 3,
+              validation: (Rule) => Rule.required().max(500),
+            },
+            {
+              name: "author",
+              title: "Author name",
+              type: "string",
+              validation: (Rule) => Rule.required().max(80),
+            },
+            {
+              name: "location",
+              title: "Location / context",
+              type: "string",
+              description: 'e.g. "Hiked Sept 2025" or "Zurich, CH"',
+              validation: (Rule) => Rule.max(80),
+            },
+          ],
+          preview: {
+            select: { title: "author", subtitle: "quote" },
+            prepare({ title, subtitle }) {
+              const trimmed = subtitle ? subtitle.slice(0, 80) + (subtitle.length > 80 ? "…" : "") : "";
+              return { title, subtitle: trimmed };
+            },
+          },
+        },
+      ],
+      hidden: ({ document }) => !document?.guide?.hasGuide,
+    },
 
     /* ──────────────── CLASSIFICATION ──────────────── */
     {
@@ -731,8 +833,23 @@ export default {
     },
 
     /* Maintenance */
-    { name: "lastVerifiedDate", title: "Last verified", type: "date", group: "internal", fieldset: "maintenance" },
-    { name: "verificationFrequencyMonths", title: "Verification frequency (months)", type: "number", group: "internal", fieldset: "maintenance" },
+    {
+      name: "lastReviewedDate",
+      title: "Last reviewed",
+      type: "date",
+      group: "internal",
+      fieldset: "maintenance",
+      description:
+        'Most recent date a human or AI reviewer confirmed this content was still accurate. Surfaced on the public guide page as "Last reviewed: <month> <year>". Distinct from a hard fact-by-fact verification — implies a soft "still good" check.',
+    },
+    {
+      name: "reviewFrequencyMonths",
+      title: "Review frequency (months)",
+      type: "number",
+      group: "internal",
+      fieldset: "maintenance",
+      description: "How often this guide should be re-reviewed by the AI review job.",
+    },
     { name: "nextUpdateDue", title: "Next update due", type: "date", group: "internal", fieldset: "maintenance" },
     {
       name: "routeStatus",

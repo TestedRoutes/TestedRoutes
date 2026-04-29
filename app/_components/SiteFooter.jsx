@@ -1,3 +1,4 @@
+import Link from "next/link";
 import NewsletterForm from "./NewsletterForm";
 
 export default function SiteFooter() {
@@ -8,15 +9,22 @@ export default function SiteFooter() {
       </div>
       <div className="flex flex-col gap-3 text-xs text-slate-500 md:items-end">
         <p>© {new Date().getFullYear()} TestedRoutes. All rights reserved.</p>
-        <div className="flex items-center gap-4">
+        <div className="flex flex-wrap items-center gap-x-4 gap-y-2 md:justify-end">
           <a
             href="mailto:hello@testedroutes.com"
             className="transition hover:text-slate-700"
           >
             Contact
           </a>
-          <span>Terms</span>
-          <span>Privacy</span>
+          <Link href="/terms" className="transition hover:text-slate-700">
+            Terms
+          </Link>
+          <Link href="/privacy" className="transition hover:text-slate-700">
+            Privacy
+          </Link>
+          <Link href="/refund-policy" className="transition hover:text-slate-700">
+            Refunds
+          </Link>
         </div>
       </div>
     </footer>
