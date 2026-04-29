@@ -35,27 +35,35 @@ export default {
       hidden: ({ parent }) => !parent?.hasGuide,
     },
     {
-      name: "price",
-      title: "Price",
-      type: "number",
-      description: "Price in the currency selected below.",
-      validation: (Rule) => Rule.min(0),
+      name: "pricingTier",
+      title: "Pricing tier",
+      type: "reference",
+      to: [{ type: "pricingTier" }],
+      description:
+        "Pick a tier; the guide inherits all currency prices from it. For one-off pricing, leave the tier and fill Custom prices below — those override the tier.",
       hidden: ({ parent }) => !parent?.hasGuide,
     },
     {
-      name: "currency",
-      title: "Currency",
-      type: "string",
-      options: {
-        list: [
-          { title: "EUR €", value: "EUR" },
-          { title: "USD $", value: "USD" },
-          { title: "GBP £", value: "GBP" },
-          { title: "CHF", value: "CHF" },
-        ],
-      },
-      initialValue: "EUR",
+      name: "customPrices",
+      title: "Custom prices (override tier)",
+      type: "array",
+      of: [{ type: "priceEntry" }],
+      description:
+        "Optional. When set, these prices override the tier for this guide only. Required when the tier is Premium.",
       hidden: ({ parent }) => !parent?.hasGuide,
+      validation: (Rule) =>
+        Rule.custom((entries) => {
+          if (!Array.isArray(entries) || entries.length === 0) return true;
+          const currencies = entries.map((e) => e?.currency).filter(Boolean);
+          if (!currencies.includes("EUR")) {
+            return "Custom prices must include EUR (org default currency).";
+          }
+          const dupes = currencies.filter((c, i) => currencies.indexOf(c) !== i);
+          if (dupes.length) {
+            return `Duplicate currency: ${[...new Set(dupes)].join(", ")}`;
+          }
+          return true;
+        }),
     },
     {
       name: "format",
@@ -78,6 +86,23 @@ export default {
       type: "string",
       description:
         "URL slug for the guide landing page under /guides/. Leave blank to use the story slug. Set this only if the guide URL must differ from the story URL (e.g. for historic links you want to preserve).",
+      hidden: ({ parent }) => !parent?.hasGuide,
+    },
+    {
+      name: "polarProductId",
+      title: "Polar product ID",
+      type: "string",
+      description:
+        "UUID set by sync:polar after the product is created. Do not edit manually — re-running the sync script keeps it in step with the tier.",
+      readOnly: true,
+      hidden: ({ parent }) => !parent?.hasGuide,
+    },
+    {
+      name: "purchasesCount",
+      title: "Purchases (lifetime)",
+      type: "number",
+      description: "Auto-incremented by the Polar webhook on each paid order. Do not edit manually.",
+      readOnly: true,
       hidden: ({ parent }) => !parent?.hasGuide,
     },
   ],

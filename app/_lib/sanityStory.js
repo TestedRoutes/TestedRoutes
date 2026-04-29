@@ -54,10 +54,12 @@ const STORY_PROJECTION = /* groq */ `
   guide {
     hasGuide,
     status,
-    price,
-    currency,
     format,
     pageSlug,
+    polarProductId,
+    purchasesCount,
+    customPrices,
+    "pricingTier": pricingTier->{ name, "slug": slug.current, prices, displayOrder },
     "pdfUrl": pdf.asset->url
   },
   whyThisTrip, whoThisIsFor, whatYouGet, difficultyAtAGlance, notSuitableSales,
@@ -223,8 +225,6 @@ function buildLegacyMetadata(doc) {
       ? {
           has_guide: !!doc.guide.hasGuide,
           guide_status: doc.guide.status,
-          guide_price: doc.guide.price != null ? String(doc.guide.price) : undefined,
-          guide_currency: doc.guide.currency,
           guide_format: doc.guide.format,
           guide_page: doc.guide.pageSlug
             ? `guides/${doc.guide.pageSlug}.html`
@@ -285,6 +285,17 @@ export function shapeStory(doc) {
   };
 }
 
+export function resolveGuidePrices(guide) {
+  if (!guide) return [];
+  if (Array.isArray(guide.customPrices) && guide.customPrices.length) {
+    return guide.customPrices;
+  }
+  if (Array.isArray(guide.pricingTier?.prices) && guide.pricingTier.prices.length) {
+    return guide.pricingTier.prices;
+  }
+  return [];
+}
+
 export function shapeGuide(doc) {
   const heroUrl = imageUrl(doc.heroImage, 1600);
   const galleryUrls = (doc.galleryImages || [])
@@ -295,10 +306,9 @@ export function shapeGuide(doc) {
   const pageSlug = doc.guide?.pageSlug || doc.slug;
   const category =
     (doc.journeyCategory?.name || doc.journeyCategory?.slug || "Guide").replace(/_/g, " ");
-  const price =
-    doc.guide?.price != null
-      ? formatPrice(doc.guide.price, doc.guide.currency)
-      : "";
+  const prices = resolveGuidePrices(doc.guide);
+  const eur = prices.find((p) => p?.currency === "EUR");
+  const price = eur ? formatPrice(eur.amount, "EUR") : "";
 
   return {
     slug: pageSlug,
@@ -308,15 +318,17 @@ export function shapeGuide(doc) {
     category,
     duration: doc.durationDisplay || "",
     price,
+    prices,
     image: heroUrl,
     href: `/guides/${pageSlug}`,
-    purchases: null,
+    purchases: doc.guide?.purchasesCount || 0,
     metadata,
     photos: [heroUrl, ...galleryUrls].filter(Boolean),
     galleryPhotos: galleryUrls,
     folderUrl: "",
     heroName: doc.heroImage?.alt || null,
     guidePdfUrl: doc.guide?.pdfUrl || null,
+    polarProductId: doc.guide?.polarProductId || null,
   };
 }
 

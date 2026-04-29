@@ -9,9 +9,13 @@
     "start": "next start",
     "sanity:dev": "sanity dev",
     "sanity:deploy": "sanity deploy",
-    "publish": "node --env-file=.env.local scripts/publish-to-sanity.mjs"
+    "publish": "node --env-file=.env.local scripts/publish-to-sanity.mjs",
+    "setup:pricing": "node --env-file=.env.local scripts/setup-pricing-tiers.mjs",
+    "sync:polar": "node --env-file=.env.local scripts/sync-polar-products.mjs"
   },
   "dependencies": {
+    "@polar-sh/nextjs": "^0.9.5",
+    "@polar-sh/sdk": "^0.47.1",
     "@sanity/image-url": "^1.1.0",
     "@sanity/vision": "^3.88.0",
     "@sentry/nextjs": "^10.50.0",

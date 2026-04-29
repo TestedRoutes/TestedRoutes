@@ -2,6 +2,7 @@ import author from "./documents/author";
 import category from "./documents/category";
 import collection from "./documents/collection";
 import destination from "./documents/destination";
+import pricingTier from "./documents/pricingTier";
 import story from "./documents/story";
 
 import guide from "./objects/guide";
@@ -11,6 +12,7 @@ import estimatedCost from "./objects/estimatedCost";
 import costBreakdown from "./objects/costBreakdown";
 import routePoint from "./objects/routePoint";
 import socialLink from "./objects/socialLink";
+import priceEntry from "./objects/priceEntry";
 
 import galleryGrid from "./blocks/galleryGrid";
 import mapEmbed from "./blocks/mapEmbed";
@@ -25,6 +27,7 @@ export const schemaTypes = [
   author,
   collection,
   category,
+  pricingTier,
 
   // objects
   guide,
@@ -34,6 +37,7 @@ export const schemaTypes = [
   costBreakdown,
   routePoint,
   socialLink,
+  priceEntry,
 
   // portable text blocks
   galleryGrid,

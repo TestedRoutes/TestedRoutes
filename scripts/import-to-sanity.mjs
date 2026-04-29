@@ -327,8 +327,9 @@ async function buildStoryDoc(entry, metadata, storyMd) {
       _type: "guide",
       hasGuide: g.has_guide === true || g.has_guide === "true",
       status: g.guide_status || undefined,
-      price: g.guide_price ? Number(g.guide_price) : undefined,
-      currency: g.guide_currency || undefined,
+      pricingTier: g.guide_pricing_tier
+        ? { _type: "reference", _ref: `pricingTier-${g.guide_pricing_tier}` }
+        : undefined,
       format: Array.isArray(g.guide_format) ? g.guide_format : undefined,
       pdf: pdfAssetRef
         ? { _type: "file", asset: { _type: "reference", _ref: pdfAssetRef } }

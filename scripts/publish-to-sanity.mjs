@@ -132,8 +132,13 @@ function validateFrontmatter(fm) {
   if (fm.status && !["draft", "published", "archived"].includes(fm.status)) {
     errs.push(`status must be draft | published | archived (got "${fm.status}")`);
   }
-  if (fm.guide?.hasGuide && fm.guide?.price == null) {
-    errs.push("guide.price is required when guide.hasGuide is true");
+  if (fm.guide?.hasGuide && !fm.guide?.pricingTier) {
+    errs.push(
+      "guide.pricingTier is required when guide.hasGuide is true (slug, e.g. 'day-trip', 'expedition')",
+    );
+  }
+  if (fm.guide?.customPrices != null && !Array.isArray(fm.guide.customPrices)) {
+    errs.push("guide.customPrices must be an array of { currency, amount }");
   }
   if (errs.length) {
     exit(`Frontmatter validation failed:\n  - ${errs.join("\n  - ")}`);
@@ -330,8 +335,17 @@ async function buildStoryDoc(fm, body, heroName, galleryNames, pdfName) {
       _type: "guide",
       hasGuide: !!g.hasGuide,
       status: g.status || undefined,
-      price: g.price != null ? Number(g.price) : undefined,
-      currency: g.currency || undefined,
+      pricingTier: g.pricingTier
+        ? { _type: "reference", _ref: `pricingTier-${g.pricingTier}` }
+        : undefined,
+      customPrices: Array.isArray(g.customPrices)
+        ? g.customPrices.map((p) => ({
+            _type: "priceEntry",
+            _key: randomKey(),
+            currency: String(p.currency || "").toUpperCase(),
+            amount: Number(p.amount),
+          }))
+        : undefined,
       format: Array.isArray(g.format) ? g.format : g.hasGuide ? ["PDF"] : undefined,
       pdf: pdfRef ? { _type: "file", asset: { _type: "reference", _ref: pdfRef } } : undefined,
       pageSlug: g.pageSlug || undefined,
