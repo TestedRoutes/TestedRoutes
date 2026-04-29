@@ -87,7 +87,7 @@ export default function GuideBody({ blocks, checkoutHref, pdfHref, price }) {
   return (
     <section>
       <p className="mb-4 font-['Georgia',serif] text-xl font-semibold text-[#1a1816]">
-        From the guide
+        My Experience
       </p>
       <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
         <PortableText value={preview} components={components} />

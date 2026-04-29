@@ -129,15 +129,38 @@ function NotSuitableWarning({ items }) {
   );
 }
 
-function TimelinePin({ color }) {
-  // Teardrop pin matching the LocationMap markers.
+function TimelineBadge({ label, color }) {
+  // Round badge matching the start / finish markers on the LocationMap.
   return (
-    <svg width="22" height="30" viewBox="0 0 28 38" aria-hidden className="shrink-0">
+    <span
+      aria-hidden
+      className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-[10px] font-bold text-white ring-2 ring-white"
+      style={{ backgroundColor: color, boxShadow: "0 2px 6px rgba(0,0,0,0.25)" }}
+    >
+      {label}
+    </span>
+  );
+}
+
+function TimelineDrop({ label, color }) {
+  // Teardrop matching the destination marker on the LocationMap.
+  return (
+    <svg width="26" height="34" viewBox="0 0 36 48" aria-hidden className="shrink-0">
       <path
-        d="M14 0C6.27 0 0 6.27 0 14c0 9.5 14 24 14 24s14-14.5 14-24C28 6.27 21.73 0 14 0z"
+        d="M18 0C8.06 0 0 8.06 0 18c0 12.5 18 30 18 30s18-17.5 18-30C36 8.06 27.94 0 18 0z"
         fill={color}
       />
-      <circle cx="14" cy="14" r="5" fill="#ffffff" />
+      <text
+        x="18"
+        y="22"
+        textAnchor="middle"
+        fontFamily="-apple-system, BlinkMacSystemFont, sans-serif"
+        fontSize="11"
+        fontWeight="700"
+        fill="#ffffff"
+      >
+        {label}
+      </text>
     </svg>
   );
 }
@@ -154,8 +177,8 @@ function LocationSection({ start, destination, finish, points }) {
           {start ? (
             <li className="flex gap-3">
               <span className="relative mt-0.5">
-                <TimelinePin color={startColor} />
-                <span className="absolute left-[10px] top-7 h-8 w-px bg-slate-300" />
+                <TimelineBadge label="S" color={startColor} />
+                <span className="absolute left-[13px] top-7 h-8 w-px bg-slate-300" />
               </span>
               <span>
                 <span className="block text-[11px] font-semibold uppercase tracking-wider text-slate-400">
@@ -168,9 +191,9 @@ function LocationSection({ start, destination, finish, points }) {
           {destination ? (
             <li className="flex gap-3">
               <span className="relative mt-0.5">
-                <TimelinePin color={destColor} />
+                <TimelineDrop label="TR" color={destColor} />
                 {finish ? (
-                  <span className="absolute left-[10px] top-7 h-8 w-px bg-slate-300" />
+                  <span className="absolute left-[13px] top-9 h-7 w-px bg-slate-300" />
                 ) : null}
               </span>
               <span>
@@ -184,7 +207,7 @@ function LocationSection({ start, destination, finish, points }) {
           {finish ? (
             <li className="flex gap-3">
               <span className="mt-0.5">
-                <TimelinePin color={startColor} />
+                <TimelineBadge label="F" color={startColor} />
               </span>
               <span>
                 <span className="block text-[11px] font-semibold uppercase tracking-wider text-slate-400">
@@ -477,12 +500,9 @@ export default async function GuideDetailPage({ params }) {
         ) : null}
       </div>
 
-      <div className="mb-8">
-        <GuideGallery photos={photos} />
-      </div>
-
-      <div className="grid gap-8 md:grid-cols-[1fr_300px]">
+      <div className="grid gap-6 md:grid-cols-[1fr_320px] lg:gap-8">
         <div className="space-y-10">
+          <GuideGallery photos={photos} />
           {hero.primary_stats || maintenance.last_reviewed_date ? (
             <section>
               <p className="mb-4 font-['Georgia',serif] text-xl font-semibold text-[#1a1816]">
