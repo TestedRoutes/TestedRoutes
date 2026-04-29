@@ -525,8 +525,8 @@ export default async function GuideDetailPage({ params }) {
           price={guide.price}
           checkoutHref={checkoutHref}
           pdfHref={pdfHref}
-          linksHref={hasAffiliateLinks ? `/guides/${guide.slug}/links` : null}
-          hasAffiliateLinks={hasAffiliateLinks}
+          linksHref={`/guides/${guide.slug}/links`}
+          hasAffiliateLinks={true}
           essentialBookings={essentialBookings.map((l) => l.href)}
         />
       </div>
