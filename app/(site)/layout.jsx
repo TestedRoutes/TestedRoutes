@@ -2,6 +2,7 @@ import ConstructionBanner from "../_components/ConstructionBanner";
 import SiteHeader from "../_components/SiteHeader";
 import SiteFooter from "../_components/SiteFooter";
 import PostHogProvider from "../_components/PostHogProvider";
+import { getRequestCurrency } from "../_lib/currency";
 
 
 const SITE_URL = "https://testedroutes.com";
@@ -39,11 +40,12 @@ export const metadata = {
   },
 };
 
-export default function SiteLayout({ children }) {
+export default async function SiteLayout({ children }) {
+  const currency = await getRequestCurrency();
   return (
     <PostHogProvider>
       <ConstructionBanner />
-      <SiteHeader />
+      <SiteHeader currency={currency} />
       {children}
       <SiteFooter />
     </PostHogProvider>

@@ -296,7 +296,7 @@ export function resolveGuidePrices(guide) {
   return [];
 }
 
-export function shapeGuide(doc) {
+export function shapeGuide(doc, currency = "EUR") {
   const heroUrl = imageUrl(doc.heroImage, 1600);
   const galleryUrls = (doc.galleryImages || [])
     .map((i) => imageUrl(i, 1600))
@@ -307,8 +307,11 @@ export function shapeGuide(doc) {
   const category =
     (doc.journeyCategory?.name || doc.journeyCategory?.slug || "Guide").replace(/_/g, " ");
   const prices = resolveGuidePrices(doc.guide);
-  const eur = prices.find((p) => p?.currency === "EUR");
-  const price = eur ? formatPrice(eur.amount, "EUR") : "";
+  const chosen =
+    prices.find((p) => p?.currency === currency) ||
+    prices.find((p) => p?.currency === "EUR") ||
+    null;
+  const price = chosen ? formatPrice(chosen.amount, chosen.currency) : "";
 
   return {
     slug: pageSlug,

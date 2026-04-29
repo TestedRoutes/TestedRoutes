@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { loadGuides } from "../../_lib/loadGuides";
+import { getRequestCurrency } from "../../_lib/currency";
 
 export const metadata = {
   title: "Guides · TestedRoutes",
@@ -49,7 +50,8 @@ function GuideCard({ guide }) {
 }
 
 export default async function GuidesPage() {
-  const guides = await loadGuides();
+  const currency = await getRequestCurrency();
+  const guides = await loadGuides(currency);
 
   return (
     <main className="mx-auto flex max-w-6xl flex-col gap-10 px-6 pb-16 pt-8">

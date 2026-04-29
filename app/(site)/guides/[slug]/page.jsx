@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { loadGuides, loadGuideBySlug } from "../../../_lib/loadGuides";
+import { getRequestCurrency } from "../../../_lib/currency";
 
 export async function generateStaticParams() {
   const guides = await loadGuides();
@@ -126,7 +127,8 @@ function Gallery({ photos }) {
 
 export default async function GuideDetailPage({ params }) {
   const { slug } = await params;
-  const guide = await loadGuideBySlug(slug);
+  const currency = await getRequestCurrency();
+  const guide = await loadGuideBySlug(slug, currency);
   if (!guide) notFound();
 
   const meta = guide.metadata || {};

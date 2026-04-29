@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
+import CurrencySwitcher from "./CurrencySwitcher";
 
 const NAV_LINKS = [
   { slug: "destinations", label: "Destinations", href: "/destinations" },
@@ -37,7 +38,7 @@ function logoLinkClassName(active) {
   return base;
 }
 
-export default function SiteHeader() {
+export default function SiteHeader({ currency = "EUR" }) {
   const pathname = usePathname();
   const active = getActiveSlug(pathname);
   const [menuOpen, setMenuOpen] = useState(false);
@@ -74,6 +75,7 @@ export default function SiteHeader() {
               {link.label}
             </Link>
           ))}
+          <CurrencySwitcher current={currency} />
         </div>
 
         <button
@@ -115,6 +117,9 @@ export default function SiteHeader() {
               {link.label}
             </Link>
           ))}
+          <div className="pt-3">
+            <CurrencySwitcher current={currency} />
+          </div>
         </div>
       )}
     </header>
