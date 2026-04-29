@@ -1,10 +1,34 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 export default function GuideGallery({ photos }) {
+  const [index, setIndex] = useState(0);
   const [open, setOpen] = useState(false);
+  const stripRef = useRef(null);
+  const total = photos?.length || 0;
 
+  const next = useCallback(
+    () => setIndex((i) => (i + 1) % Math.max(total, 1)),
+    [total],
+  );
+  const prev = useCallback(
+    () => setIndex((i) => (i - 1 + Math.max(total, 1)) % Math.max(total, 1)),
+    [total],
+  );
+
+  // Arrow keys advance the hero when the lightbox is closed.
+  useEffect(() => {
+    if (open || total < 2) return;
+    const onKey = (e) => {
+      if (e.key === "ArrowRight") next();
+      if (e.key === "ArrowLeft") prev();
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [next, prev, open, total]);
+
+  // Lightbox: lock body scroll + Escape closes.
   useEffect(() => {
     if (!open) return;
     const onKey = (e) => {
@@ -18,72 +42,97 @@ export default function GuideGallery({ photos }) {
     };
   }, [open]);
 
-  if (!photos?.length) return null;
-  const main = photos[0];
-  const rest = photos.slice(1, 5);
-  const total = photos.length;
+  // Keep the active thumbnail in view as the user advances.
+  useEffect(() => {
+    const strip = stripRef.current;
+    if (!strip) return;
+    const active = strip.querySelector(`[data-thumb="${index}"]`);
+    if (active) active.scrollIntoView({ block: "nearest", inline: "center", behavior: "smooth" });
+  }, [index]);
+
+  if (!total) return null;
+  const current = photos[index];
 
   return (
     <>
-      {/* Mobile: horizontal swipe row */}
-      <div className="md:hidden">
-        <div className="flex snap-x snap-mandatory gap-2 overflow-x-auto rounded-xl pb-1">
-          {photos.slice(0, 5).map((p, i) => (
-            <img
-              key={p}
-              src={p}
-              alt=""
-              className="h-52 w-[80vw] shrink-0 snap-start rounded-xl object-cover"
-              loading={i === 0 ? "eager" : "lazy"}
-            />
-          ))}
-        </div>
-        {total > 5 ? (
-          <button
-            type="button"
-            onClick={() => setOpen(true)}
-            className="mt-2 inline-flex items-center gap-1 rounded-full bg-white/95 px-3 py-1.5 text-xs font-semibold text-slate-900 shadow ring-1 ring-slate-200"
-          >
-            View all {total} photos
-          </button>
-        ) : null}
-      </div>
-
-      {/* Desktop: mosaic with View all overlay on last tile */}
-      <div
-        className="relative hidden overflow-hidden rounded-xl md:grid"
-        style={{
-          gridTemplateColumns: "1.6fr 1fr 1fr",
-          gridTemplateRows: "1fr 1fr",
-          gap: 4,
-          height: 420,
-        }}
-      >
-        <img
-          src={main}
-          alt=""
-          className="h-full w-full object-cover"
-          style={{ gridRow: "1 / 3" }}
-        />
-        {rest.map((p, i) => (
-          <div key={p} className="relative h-full w-full">
-            <img src={p} alt="" className="h-full w-full object-cover" loading="lazy" />
-            {i === rest.length - 1 ? (
+      <div className="space-y-3">
+        {/* Hero image with navigation arrows */}
+        <div className="relative overflow-hidden rounded-xl bg-slate-100">
+          <img
+            src={current}
+            alt=""
+            className="block aspect-[3/2] w-full object-cover"
+            loading="eager"
+          />
+          {total > 1 ? (
+            <>
+              <button
+                type="button"
+                onClick={prev}
+                aria-label="Previous photo"
+                className="absolute left-3 top-1/2 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-white/90 text-2xl text-slate-900 shadow ring-1 ring-slate-200 transition hover:bg-white"
+              >
+                ‹
+              </button>
+              <button
+                type="button"
+                onClick={next}
+                aria-label="Next photo"
+                className="absolute right-3 top-1/2 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-white/90 text-2xl text-slate-900 shadow ring-1 ring-slate-200 transition hover:bg-white"
+              >
+                ›
+              </button>
+              <span className="absolute bottom-3 right-3 rounded-full bg-slate-900/70 px-2.5 py-1 text-xs font-medium text-white">
+                {index + 1} / {total}
+              </span>
               <button
                 type="button"
                 onClick={() => setOpen(true)}
-                aria-label={`View all ${total} photos`}
-                className="absolute bottom-3 right-3 inline-flex items-center gap-2 rounded-full bg-white/95 px-4 py-2 text-xs font-semibold text-slate-900 shadow-md ring-1 ring-slate-200 transition hover:bg-white"
+                className="absolute bottom-3 left-3 inline-flex items-center gap-2 rounded-full bg-white/95 px-3 py-1.5 text-xs font-semibold text-slate-900 shadow ring-1 ring-slate-200 transition hover:bg-white"
               >
                 <span aria-hidden>≡</span>
-                <span>View all</span>
+                <span>View all {total}</span>
               </button>
-            ) : null}
+            </>
+          ) : null}
+        </div>
+
+        {/* Thumbnail strip */}
+        {total > 1 ? (
+          <div
+            ref={stripRef}
+            className="flex snap-x snap-mandatory gap-2 overflow-x-auto pb-1"
+          >
+            {photos.map((p, i) => {
+              const isActive = i === index;
+              return (
+                <button
+                  key={p}
+                  type="button"
+                  data-thumb={i}
+                  onClick={() => setIndex(i)}
+                  aria-label={`Photo ${i + 1}`}
+                  aria-current={isActive ? "true" : undefined}
+                  className={`relative h-16 w-24 shrink-0 snap-start overflow-hidden rounded-lg transition ${
+                    isActive
+                      ? "ring-2 ring-slate-900"
+                      : "opacity-60 ring-1 ring-slate-200 hover:opacity-100"
+                  }`}
+                >
+                  <img
+                    src={p}
+                    alt=""
+                    className="h-full w-full object-cover"
+                    loading="lazy"
+                  />
+                </button>
+              );
+            })}
           </div>
-        ))}
+        ) : null}
       </div>
 
-      {/* Lightbox-style full grid */}
+      {/* Lightbox: full grid of every photo */}
       {open ? (
         <div
           className="fixed inset-0 z-50 flex items-start justify-center overflow-y-auto bg-slate-900/85 p-4 sm:p-8"
@@ -102,14 +151,23 @@ export default function GuideGallery({ photos }) {
               ×
             </button>
             <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
-              {photos.map((p) => (
-                <img
+              {photos.map((p, i) => (
+                <button
                   key={p}
-                  src={p}
-                  alt=""
-                  className="aspect-[4/3] w-full rounded-xl object-cover"
-                  loading="lazy"
-                />
+                  type="button"
+                  onClick={() => {
+                    setIndex(i);
+                    setOpen(false);
+                  }}
+                  className="block overflow-hidden rounded-xl"
+                >
+                  <img
+                    src={p}
+                    alt=""
+                    className="aspect-[4/3] w-full object-cover"
+                    loading="lazy"
+                  />
+                </button>
               ))}
             </div>
           </div>
