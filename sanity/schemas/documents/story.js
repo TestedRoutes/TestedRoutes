@@ -731,8 +731,23 @@ export default {
     },
 
     /* Maintenance */
-    { name: "lastVerifiedDate", title: "Last verified", type: "date", group: "internal", fieldset: "maintenance" },
-    { name: "verificationFrequencyMonths", title: "Verification frequency (months)", type: "number", group: "internal", fieldset: "maintenance" },
+    {
+      name: "lastReviewedDate",
+      title: "Last reviewed",
+      type: "date",
+      group: "internal",
+      fieldset: "maintenance",
+      description:
+        'Most recent date a human or AI reviewer confirmed this content was still accurate. Surfaced on the public guide page as "Last reviewed: <month> <year>". Distinct from a hard fact-by-fact verification — implies a soft "still good" check.',
+    },
+    {
+      name: "reviewFrequencyMonths",
+      title: "Review frequency (months)",
+      type: "number",
+      group: "internal",
+      fieldset: "maintenance",
+      description: "How often this guide should be re-reviewed by the AI review job.",
+    },
     { name: "nextUpdateDue", title: "Next update due", type: "date", group: "internal", fieldset: "maintenance" },
     {
       name: "routeStatus",
