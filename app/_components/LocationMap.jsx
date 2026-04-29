@@ -18,19 +18,29 @@ const defaultIcon = L.icon({
   shadowSize: [41, 41],
 });
 
-function pinIcon(color) {
-  const html = `<span style="display:inline-block;width:20px;height:20px;border-radius:9999px;background:${color};border:3px solid #ffffff;box-shadow:0 2px 6px rgba(0,0,0,0.3)"></span>`;
+function dropPinIcon(color) {
+  // Teardrop pin with a white inner dot — matches the legacy Pikelis Travel
+  // design. Anchored at the tip of the drop so it points exactly at the
+  // marker's lat/lng.
+  const html = `
+    <svg width="28" height="38" viewBox="0 0 28 38" xmlns="http://www.w3.org/2000/svg" style="filter:drop-shadow(0 2px 4px rgba(0,0,0,0.35))">
+      <path d="M14 0C6.27 0 0 6.27 0 14c0 9.5 14 24 14 24s14-14.5 14-24C28 6.27 21.73 0 14 0z" fill="${color}"/>
+      <circle cx="14" cy="14" r="5" fill="#ffffff"/>
+    </svg>
+  `;
   return L.divIcon({
     className: "tr-map-pin",
     html,
-    iconSize: [20, 20],
-    iconAnchor: [10, 10],
+    iconSize: [28, 38],
+    iconAnchor: [14, 38],
   });
 }
 
-const START_ICON = pinIcon("#0f6e56");
-const FINISH_ICON = pinIcon("#1f2937");
-const DEST_ICON = pinIcon("#b04a3a");
+const START_COLOR = "#0f6e56";
+const DEST_COLOR = "#1f2937";
+const START_ICON = dropPinIcon(START_COLOR);
+const FINISH_ICON = dropPinIcon(START_COLOR);
+const DEST_ICON = dropPinIcon(DEST_COLOR);
 
 export default function LocationMap({ start, destination, finish, points, zoom = 9 }) {
   const markers = [];
@@ -76,7 +86,7 @@ export default function LocationMap({ start, destination, finish, points, zoom =
       {polyline ? (
         <Polyline
           positions={polyline.map((p) => [p.lat, p.lng])}
-          pathOptions={{ color: "#1f2937", weight: 3, opacity: 0.7, dashArray: "6 6" }}
+          pathOptions={{ color: START_COLOR, weight: 3, opacity: 0.85 }}
         />
       ) : null}
     </MapContainer>

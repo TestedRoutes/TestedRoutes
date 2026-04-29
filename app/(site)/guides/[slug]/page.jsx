@@ -4,6 +4,7 @@ import { marked } from "marked";
 import { loadGuides, loadGuideBySlug } from "../../../_lib/loadGuides";
 import { getRequestCurrency } from "../../../_lib/currency";
 import LocationMap from "../../../_components/LocationMapClient";
+import GuideGallery from "../../../_components/GuideGallery";
 
 export async function generateStaticParams() {
   const guides = await loadGuides();
@@ -123,50 +124,23 @@ function NotSuitableWarning({ items }) {
   );
 }
 
-function Gallery({ photos }) {
-  if (!photos.length) return null;
-  const main = photos[0];
-  const rest = photos.slice(1, 5);
+function TimelinePin({ color }) {
+  // Teardrop pin matching the LocationMap markers.
   return (
-    <>
-      <div className="md:hidden">
-        <div className="flex snap-x snap-mandatory gap-2 overflow-x-auto rounded-xl pb-1">
-          {photos.slice(0, 5).map((p, i) => (
-            <img
-              key={p}
-              src={p}
-              alt=""
-              className="h-52 w-[80vw] shrink-0 snap-start rounded-xl object-cover"
-              loading={i === 0 ? "eager" : "lazy"}
-            />
-          ))}
-        </div>
-      </div>
-      <div
-        className="hidden overflow-hidden rounded-xl md:grid"
-        style={{
-          gridTemplateColumns: "1.6fr 1fr 1fr",
-          gridTemplateRows: "1fr 1fr",
-          gap: 4,
-          height: 420,
-        }}
-      >
-        <img
-          src={main}
-          alt=""
-          className="h-full w-full object-cover"
-          style={{ gridRow: "1 / 3" }}
-        />
-        {rest.map((p) => (
-          <img key={p} src={p} alt="" className="h-full w-full object-cover" loading="lazy" />
-        ))}
-      </div>
-    </>
+    <svg width="22" height="30" viewBox="0 0 28 38" aria-hidden className="shrink-0">
+      <path
+        d="M14 0C6.27 0 0 6.27 0 14c0 9.5 14 24 14 24s14-14.5 14-24C28 6.27 21.73 0 14 0z"
+        fill={color}
+      />
+      <circle cx="14" cy="14" r="5" fill="#ffffff" />
+    </svg>
   );
 }
 
 function LocationSection({ start, destination, finish, points }) {
   if (!start && !destination) return null;
+  const startColor = "#0f6e56";
+  const destColor = "#1f2937";
   return (
     <section>
       <p className="mb-4 font-['Georgia',serif] text-xl font-semibold text-[#1a1816]">Location</p>
@@ -175,8 +149,8 @@ function LocationSection({ start, destination, finish, points }) {
           {start ? (
             <li className="flex gap-3">
               <span className="relative mt-0.5">
-                <span className="block h-5 w-5 rounded-full bg-[#0f6e56] ring-4 ring-[#0f6e56]/15" />
-                <span className="absolute left-1/2 top-5 h-10 w-px -translate-x-1/2 bg-slate-300" />
+                <TimelinePin color={startColor} />
+                <span className="absolute left-[10px] top-7 h-8 w-px bg-slate-300" />
               </span>
               <span>
                 <span className="block text-[11px] font-semibold uppercase tracking-wider text-slate-400">
@@ -189,9 +163,9 @@ function LocationSection({ start, destination, finish, points }) {
           {destination ? (
             <li className="flex gap-3">
               <span className="relative mt-0.5">
-                <span className="block h-5 w-5 rounded-full bg-[#b04a3a] ring-4 ring-[#b04a3a]/15" />
+                <TimelinePin color={destColor} />
                 {finish ? (
-                  <span className="absolute left-1/2 top-5 h-10 w-px -translate-x-1/2 bg-slate-300" />
+                  <span className="absolute left-[10px] top-7 h-8 w-px bg-slate-300" />
                 ) : null}
               </span>
               <span>
@@ -205,7 +179,7 @@ function LocationSection({ start, destination, finish, points }) {
           {finish ? (
             <li className="flex gap-3">
               <span className="mt-0.5">
-                <span className="block h-5 w-5 rounded-full bg-slate-800 ring-4 ring-slate-800/15" />
+                <TimelinePin color={startColor} />
               </span>
               <span>
                 <span className="block text-[11px] font-semibold uppercase tracking-wider text-slate-400">
@@ -347,26 +321,29 @@ function BuyBox({ price, checkoutHref, pdfHref }) {
   );
 
   const trustItems = [
-    "Risk-free · 30-day full refund",
-    "One-time purchase · No subscription",
-    "Works offline · Save to phone",
+    { label: "Risk-free", rest: "30-day full refund" },
+    { label: "One-time purchase", rest: "No subscription" },
+    { label: "Works offline", rest: "Save to phone" },
   ];
 
   return (
-    <aside className="h-fit rounded-2xl bg-white p-6 shadow ring-1 ring-slate-200 md:sticky md:top-6">
-      <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#0f6e56]">
+    <aside className="h-fit rounded-2xl bg-white p-6 shadow ring-1 ring-slate-200 md:sticky md:top-6 md:self-start">
+      <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-slate-400">
         PDF Guide
       </p>
       {price ? (
-        <p className="mt-1 text-3xl font-semibold text-slate-900">{price}</p>
+        <p className="mt-2 text-3xl font-semibold text-slate-900">{price}</p>
       ) : null}
       <p className="mt-1 text-xs text-slate-500">Instant download</p>
       <div className="mt-4">{button}</div>
-      <ul className="mt-4 space-y-2 text-xs text-slate-700">
-        {trustItems.map((t) => (
-          <li key={t} className="flex gap-2">
+      <ul className="mt-4 space-y-2 text-sm text-slate-700">
+        {trustItems.map(({ label, rest }) => (
+          <li key={label} className="flex gap-2">
             <span aria-hidden className="mt-0.5 shrink-0 text-[#0f6e56]">✓</span>
-            <span>{t}</span>
+            <span>
+              <strong className="font-semibold text-slate-900">{label}</strong>
+              <span className="text-slate-500"> · {rest}</span>
+            </span>
           </li>
         ))}
       </ul>
@@ -484,7 +461,7 @@ export default async function GuideDetailPage({ params }) {
       </div>
 
       <div className="mb-8">
-        <Gallery photos={photos} />
+        <GuideGallery photos={photos} />
       </div>
 
       <div className="grid gap-8 md:grid-cols-[1fr_300px]">
@@ -510,14 +487,12 @@ export default async function GuideDetailPage({ params }) {
             />
           ) : null}
 
-          <CheckBulletSection title="Why this trip" items={sales.why_this_trip} />
-          <CheckBulletSection title="Who this is for" items={sales.who_this_is_for} />
+          <div className="grid gap-8 md:grid-cols-2">
+            <CheckBulletSection title="Why this trip" items={sales.why_this_trip} />
+            <CheckBulletSection title="Who this is for" items={sales.who_this_is_for} />
+          </div>
           <NotSuitableWarning items={sales.not_suitable} />
           <CheckBulletSection title="What you get" items={sales.what_you_get} />
-          <CheckBulletSection
-            title="Difficulty at a glance"
-            items={sales.difficulty_at_a_glance}
-          />
           <MyExperience markdown={guide.storyContent} />
           <SaveTimeComparison price={guide.price} />
           <FaqAccordion />
