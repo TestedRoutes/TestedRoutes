@@ -14,9 +14,34 @@
 import { Checkout } from "@polar-sh/nextjs";
 
 const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
+const ACCESS_TOKEN = process.env.POLAR_ACCESS_TOKEN;
 
-export const GET = Checkout({
-  accessToken: process.env.POLAR_ACCESS_TOKEN,
-  successUrl: `${baseUrl}/guides/thanks?checkout_id={CHECKOUT_ID}`,
-  server: process.env.POLAR_SERVER === "production" ? "production" : "sandbox",
-});
+if (!ACCESS_TOKEN) {
+  console.error("[polar-checkout] POLAR_ACCESS_TOKEN is not set");
+}
+
+const checkoutHandler = ACCESS_TOKEN
+  ? Checkout({
+      accessToken: ACCESS_TOKEN,
+      successUrl: `${baseUrl}/guides/thanks?checkout_id={CHECKOUT_ID}`,
+      server: process.env.POLAR_SERVER === "production" ? "production" : "sandbox",
+    })
+  : null;
+
+export async function GET(request) {
+  if (!checkoutHandler) {
+    return Response.json(
+      { error: "POLAR_ACCESS_TOKEN not configured in deployed environment" },
+      { status: 503 },
+    );
+  }
+  try {
+    return await checkoutHandler(request);
+  } catch (err) {
+    console.error("[polar-checkout] handler threw:", err);
+    return Response.json(
+      { error: "checkout handler error", message: String(err?.message || err) },
+      { status: 500 },
+    );
+  }
+}
