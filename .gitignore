@@ -16,5 +16,11 @@ dist/
 # Story drafts authored locally before publishing to Sanity
 drafts/
 
+# Per-folder artifacts written by `npm run publish -- --generate-metadata`.
+# These can land in tracked story folders (e.g. public/Content/Stories/...)
+# so ignore them globally rather than relying on folder location.
+metadata.generated.json
+metadata.generation-debug.txt
+
 # Sentry Config File
 .env.sentry-build-plugin

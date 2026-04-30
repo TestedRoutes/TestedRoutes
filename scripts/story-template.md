@@ -1,3 +1,22 @@
+<!--
+This template shows the YAML frontmatter for a new-style story folder.
+
+The publish CLI also accepts your EXISTING legacy folder format directly:
+  <folder>/
+    20201018-Meta-*.txt            ← old-format JSON metadata (auto-translated)
+    20201018-Inspire-Story-*.md    ← body (full file treated as markdown)
+    Hero-*.jpg                     ← hero image
+    20201018_*.jpg                 ← gallery
+    Guide-*.pdf                    ← optional guide PDF
+    *.pptx                         ← ignored (source file)
+
+No edits needed for legacy folders — just run: npm run publish -- <folder>
+
+For new drafts written from scratch, copy this template to
+<folder>/story.md (frontmatter + body) OR split it:
+  <folder>/metadata.yaml   ← just the frontmatter
+  <folder>/story.md        ← just the markdown body
+-->
 ---
 # ─────────── REQUIRED ───────────
 title: Your Story Title Here
