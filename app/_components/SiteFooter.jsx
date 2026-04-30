@@ -14,6 +14,9 @@ export default function SiteFooter() {
           <Link href="/contact" className="transition hover:text-slate-700">
             Contact
           </Link>
+          <Link href="/faq" className="transition hover:text-slate-700">
+            FAQ
+          </Link>
           <Link href="/legal-notice" className="transition hover:text-slate-700">
             Legal
           </Link>

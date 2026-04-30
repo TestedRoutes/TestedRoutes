@@ -16,6 +16,14 @@ export default function ContactPage() {
           We&apos;re a small team and we read everything that comes in. Most
           messages get a real human reply within two business days.
         </p>
+        <p className="mt-2 text-sm leading-relaxed text-slate-500">
+          Quick question? Try our{" "}
+          <Link className="underline hover:text-slate-700" href="/faq">
+            FAQ
+          </Link>{" "}
+          first – it covers delivery, refunds, formats, devices, and our
+          update policy.
+        </p>
       </section>
 
       <section className="rounded-[28px] bg-white p-8 shadow-sm ring-1 ring-slate-200">
