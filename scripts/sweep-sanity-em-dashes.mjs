@@ -11,14 +11,15 @@
  * Scope:
  *   - Walks `body` (Portable Text array) on every published story
  *   - Walks the long-form text fields where editors paste prose:
- *       eyebrow, subtitle, whyThisTrip, whoThisIsFor, whatYouGet,
- *       difficultyAtAGlance, notSuitableSales, whatMakesThisSpecial,
- *       moneySavingTips, permitsInfo, attentionNotes, faq[].question,
- *       faq[].answer, testimonials[].quote
- *   - Skips the title field (rare em-dash use, and titles drive slugs
- *     + URLs; safer to leave untouched and review case-by-case)
+ *       title, metaTitle, metaDescription, eyebrow, subtitle,
+ *       whyThisTrip, whoThisIsFor, whatYouGet, difficultyAtAGlance,
+ *       notSuitableSales, whatMakesThisSpecial, moneySavingTips,
+ *       permitsInfo, attentionNotes, faq[].question, faq[].answer,
+ *       testimonials[].quote
  *   - Skips fields that are typically machine-generated or short labels
  *     (storyId, slug, status, currency codes, geopoints, etc.)
+ *   - Title text is independent of slug.current, so dash swaps in title
+ *     have no URL/SEO side-effects.
  *
  * Idempotency: runs safely as many times as you want — the en-dash is
  * never re-replaced, no side effects on already-clean stories.
@@ -79,6 +80,9 @@ const sanity = createClient({
 
 // Plain string fields where editors paste prose.
 const STRING_FIELDS = [
+  "title",
+  "metaTitle",
+  "metaDescription",
   "eyebrow",
   "subtitle",
   "whyThisTrip",
@@ -347,6 +351,8 @@ async function main() {
       _id,
       title,
       "slug": slug.current,
+      metaTitle,
+      metaDescription,
       eyebrow,
       subtitle,
       body,
