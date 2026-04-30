@@ -56,10 +56,56 @@ export default function TermsPage() {
       <section className="space-y-3 rounded-[28px] bg-white p-8 shadow-sm ring-1 ring-slate-200">
         <h2 className="text-lg font-semibold text-slate-900">3. Our guides</h2>
         <p className="text-sm leading-relaxed text-slate-600">
-          TestedRoutes guides are digital travel guides – written by us, based
-          on routes we have personally tested. Each guide is delivered as a
-          digital document immediately after payment.
+          TestedRoutes guides are digital travel guides – written by us,
+          drawing on routes we have personally travelled. Each guide is
+          delivered as a digital document immediately after payment.
         </p>
+
+        <h3 className="pt-2 text-sm font-semibold text-slate-900">
+          What &quot;tested&quot; means
+        </h3>
+        <p className="text-sm leading-relaxed text-slate-600">
+          We use the name <strong>TestedRoutes</strong> because every guide
+          we publish is grounded in real travel – ours or, in a small number
+          of cases, the trusted travel partners and contributors we work with.
+          It is an honest, best-effort label, not a guarantee that every
+          metre of every published route was walked, driven, or boated by us
+          at the moment of publication.
+        </p>
+        <p className="text-sm leading-relaxed text-slate-600">
+          Specifically, &quot;tested&quot; means:
+        </p>
+        <ul className="space-y-1 text-sm leading-relaxed text-slate-600">
+          <li className="flex gap-2">
+            <span className="mt-0.5 shrink-0 text-slate-400">•</span>
+            we have travelled the route, or
+          </li>
+          <li className="flex gap-2">
+            <span className="mt-0.5 shrink-0 text-slate-400">•</span>
+            we have travelled significant parts of the route and have
+            assembled the remainder from the best available local knowledge
+            (operators, transport providers, official sources), or
+          </li>
+          <li className="flex gap-2">
+            <span className="mt-0.5 shrink-0 text-slate-400">•</span>
+            the route has been adjusted since our last visit because something
+            on the ground changed (a closure, a re-route, a permit change),
+            and we have done our best to reflect that change accurately.
+          </li>
+        </ul>
+        <p className="text-sm leading-relaxed text-slate-600">
+          If you find anything in a guide that is wrong, out of date, or no
+          longer matches reality on the ground, please email{" "}
+          <a className="underline" href="mailto:hello@testedroutes.com">
+            hello@testedroutes.com
+          </a>
+          . We update guides on receipt of credible reports – correcting them
+          is part of the product.
+        </p>
+
+        <h3 className="pt-2 text-sm font-semibold text-slate-900">
+          Travel changes
+        </h3>
         <p className="text-sm leading-relaxed text-slate-600">
           We work hard to keep guides accurate and up to date, but travel
           changes – transport timetables, prices, opening hours and route
