@@ -56,15 +56,79 @@ export default function TermsPage() {
       <section className="space-y-3 rounded-[28px] bg-white p-8 shadow-sm ring-1 ring-slate-200">
         <h2 className="text-lg font-semibold text-slate-900">3. Our guides</h2>
         <p className="text-sm leading-relaxed text-slate-600">
-          TestedRoutes guides are digital travel guides — written by us, based
+          TestedRoutes guides are digital travel guides – written by us, based
           on routes we have personally tested. Each guide is delivered as a
           digital document immediately after payment.
         </p>
         <p className="text-sm leading-relaxed text-slate-600">
           We work hard to keep guides accurate and up to date, but travel
-          changes — transport timetables, prices, opening hours and route
+          changes – transport timetables, prices, opening hours and route
           conditions all shift. The guides are advisory. You are responsible
           for your own travel decisions and your own safety.
+        </p>
+
+        <h3 className="pt-2 text-sm font-semibold text-slate-900">
+          What the &quot;Last reviewed&quot; date means
+        </h3>
+        <p className="text-sm leading-relaxed text-slate-600">
+          Each guide displays a <em>Last reviewed</em> date on its page. That
+          date is the most recent point at which we (or our review process)
+          re-checked the route&apos;s key facts and confirmed the guide still
+          reflects what someone would find on the ground. It is{" "}
+          <strong>not</strong> a guarantee that the route was physically
+          re-walked, re-driven, or re-boated on that date.
+        </p>
+        <p className="text-sm leading-relaxed text-slate-600">
+          A review covers, at minimum:
+        </p>
+        <ul className="space-y-1 text-sm leading-relaxed text-slate-600">
+          <li className="flex gap-2">
+            <span className="mt-0.5 shrink-0 text-slate-400">•</span>
+            <span>
+              <strong>Access &amp; permits</strong> – the route is still
+              legally and practically accessible; no new closures, permit
+              regimes, or restrictions have been introduced.
+            </span>
+          </li>
+          <li className="flex gap-2">
+            <span className="mt-0.5 shrink-0 text-slate-400">•</span>
+            <span>
+              <strong>Transport</strong> – the named transport options still
+              exist, and timetables / fares have not changed in ways that
+              break the plan.
+            </span>
+          </li>
+          <li className="flex gap-2">
+            <span className="mt-0.5 shrink-0 text-slate-400">•</span>
+            <span>
+              <strong>Operators &amp; bookings</strong> – named operators,
+              accommodations, huts, ferries, ticket platforms, and similar
+              third parties are still in business and still bookable through
+              the channels described.
+            </span>
+          </li>
+          <li className="flex gap-2">
+            <span className="mt-0.5 shrink-0 text-slate-400">•</span>
+            <span>
+              <strong>Seasonality &amp; conditions</strong> – the season
+              windows we recommend still hold; we surface any newly known
+              closures, weather constraints, or hazards.
+            </span>
+          </li>
+          <li className="flex gap-2">
+            <span className="mt-0.5 shrink-0 text-slate-400">•</span>
+            <span>
+              <strong>Reader reports</strong> – we incorporate any credible
+              reports we&apos;ve received since the last review.
+            </span>
+          </li>
+        </ul>
+        <p className="text-sm leading-relaxed text-slate-600">
+          Reviews are performed by a human reviewer, or by an automated
+          review process that flags suspected changes for a human to confirm.
+          When a review identifies a material change, we update the guide and
+          bump the <em>Last reviewed</em> date; minor cosmetic edits alone do
+          not bump the date.
         </p>
       </section>
 
