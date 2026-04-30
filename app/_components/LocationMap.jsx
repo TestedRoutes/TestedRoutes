@@ -47,17 +47,22 @@ function dropPinIcon(label, color) {
 
 const START_ICON = badgeIcon("S", START_COLOR);
 const FINISH_ICON = badgeIcon("F", START_COLOR);
-const DEST_ICON = dropPinIcon("TR", DEST_COLOR);
 
 function isCoincident(a, b) {
   if (!a || !b) return false;
   return Math.abs(a.lat - b.lat) < 0.0001 && Math.abs(a.lng - b.lng) < 0.0001;
 }
 
-export default function LocationMap({ start, destination, finish, points, zoom = 8 }) {
+export default function LocationMap({ start, destinations, finish, points, zoom = 8 }) {
+  const dests = Array.isArray(destinations) ? destinations : [];
   const markers = [];
   if (start) markers.push({ ...start, icon: START_ICON });
-  if (destination) markers.push({ ...destination, icon: DEST_ICON });
+  dests.forEach((d, i) => {
+    // Preserve "TR" branding when the legacy single-destination fallback is
+    // active; use ordinal numbers when the new routeStops array drives it.
+    const label = d.legacy ? "TR" : String(i + 1);
+    markers.push({ ...d, icon: dropPinIcon(label, DEST_COLOR) });
+  });
   if (finish) {
     // If the finish is coincident with the start (round trip), nudge it a few
     // hundred metres so both badges are visually distinguishable.

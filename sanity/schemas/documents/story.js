@@ -309,6 +309,24 @@ export default {
       type: "startingPoint",
       group: "location",
     },
+    {
+      name: "routeStops",
+      title: "Route stops (in order)",
+      type: "array",
+      group: "location",
+      of: [{ type: "routeStop" }],
+      validation: (Rule) => Rule.max(10),
+      description:
+        'Named points on the route between starting point and finish. Stop #1 is the primary destination shown on the timeline. Up to 10 stops. Leave empty to fall back to the legacy single destination derived from the story title + map coordinates.',
+    },
+    {
+      name: "finishPoint",
+      title: "Finish point",
+      type: "startingPoint",
+      group: "location",
+      description:
+        'Where the route ends. Leave empty for a round trip (the page will reuse the starting point as the finish).',
+    },
 
     /* ──────────────── DETAILS (difficulty, suitability, timing, logistics, budget, differentiation) ──────────────── */
     /* Difficulty */

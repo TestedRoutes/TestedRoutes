@@ -165,10 +165,13 @@ function TimelineDrop({ label, color }) {
   );
 }
 
-function LocationSection({ start, destination, finish, points }) {
-  if (!start && !destination) return null;
+function LocationSection({ start, destinations, finish, points }) {
+  const dests = Array.isArray(destinations) ? destinations : [];
+  if (!start && dests.length === 0) return null;
   const startColor = "#0f6e56";
   const destColor = "#1f2937";
+  const lastDestIndex = dests.length - 1;
+  const multi = dests.length > 1;
   return (
     <section>
       <p className="mb-4 font-['Georgia',serif] text-xl font-semibold text-[#1a1816]">Location</p>
@@ -178,7 +181,9 @@ function LocationSection({ start, destination, finish, points }) {
             <li className="flex gap-3">
               <span className="relative mt-0.5">
                 <TimelineBadge label="S" color={startColor} />
-                <span className="absolute left-[13px] top-7 h-8 w-px bg-slate-300" />
+                {dests.length > 0 || finish ? (
+                  <span className="absolute left-[13px] top-7 h-8 w-px bg-slate-300" />
+                ) : null}
               </span>
               <span>
                 <span className="block text-[11px] font-semibold uppercase tracking-wider text-slate-400">
@@ -188,22 +193,27 @@ function LocationSection({ start, destination, finish, points }) {
               </span>
             </li>
           ) : null}
-          {destination ? (
-            <li className="flex gap-3">
-              <span className="relative mt-0.5">
-                <TimelineDrop label="TR" color={destColor} />
-                {finish ? (
-                  <span className="absolute left-[13px] top-9 h-7 w-px bg-slate-300" />
-                ) : null}
-              </span>
-              <span>
-                <span className="block text-[11px] font-semibold uppercase tracking-wider text-slate-400">
-                  Destination
+          {dests.map((d, i) => {
+            const showConnector = i < lastDestIndex || !!finish;
+            const label = d.legacy ? "TR" : String(i + 1);
+            const eyebrow = multi ? `Stop ${i + 1}` : "Destination";
+            return (
+              <li key={`dest-${i}`} className="flex gap-3">
+                <span className="relative mt-0.5">
+                  <TimelineDrop label={label} color={destColor} />
+                  {showConnector ? (
+                    <span className="absolute left-[13px] top-9 h-7 w-px bg-slate-300" />
+                  ) : null}
                 </span>
-                <span className="text-sm font-medium text-slate-900">{destination.name}</span>
-              </span>
-            </li>
-          ) : null}
+                <span>
+                  <span className="block text-[11px] font-semibold uppercase tracking-wider text-slate-400">
+                    {eyebrow}
+                  </span>
+                  <span className="text-sm font-medium text-slate-900">{d.name}</span>
+                </span>
+              </li>
+            );
+          })}
           {finish ? (
             <li className="flex gap-3">
               <span className="mt-0.5">
@@ -219,7 +229,7 @@ function LocationSection({ start, destination, finish, points }) {
           ) : null}
         </ol>
         <div className="h-[320px] overflow-hidden rounded-xl ring-1 ring-slate-200">
-          <LocationMap start={start} destination={destination} finish={finish} points={points} />
+          <LocationMap start={start} destinations={dests} finish={finish} points={points} />
         </div>
       </div>
     </section>
@@ -431,21 +441,48 @@ function buildLocation(guide) {
         lng: guide.startingPoint.coordinates.lng,
       }
     : null;
-  const destination = guide.coordinates && guide.title
-    ? {
+
+  // Prefer the new routeStops array. Fall back to a single legacy
+  // destination derived from story.title + story.coordinates so guides
+  // authored before the multi-stop schema keep rendering unchanged.
+  let destinations = [];
+  if (Array.isArray(guide.routeStops) && guide.routeStops.length > 0) {
+    destinations = guide.routeStops
+      .filter((s) => s?.name && s?.coordinates?.lat && s?.coordinates?.lng)
+      .map((s) => ({
+        name: s.name,
+        type: s.type || null,
+        lat: s.coordinates.lat,
+        lng: s.coordinates.lng,
+      }));
+  } else if (guide.coordinates?.lat && guide.coordinates?.lng && guide.title) {
+    destinations = [
+      {
         name: guide.title,
         lat: guide.coordinates.lat,
         lng: guide.coordinates.lng,
+        legacy: true,
+      },
+    ];
+  }
+
+  // Finish: prefer explicit finishPoint; fall back to start (round-trip).
+  const finish = guide.finishPoint?.name && guide.finishPoint?.coordinates
+    ? {
+        name: guide.finishPoint.name,
+        lat: guide.finishPoint.coordinates.lat,
+        lng: guide.finishPoint.coordinates.lng,
       }
-    : null;
-  // Round-trip assumption when no explicit finish point: finish = start.
-  const finish = start ? { ...start } : null;
+    : start
+      ? { ...start }
+      : null;
+
   const points = Array.isArray(guide.routePoints)
     ? guide.routePoints
         .map((p) => p?.coordinates && { lat: p.coordinates.lat, lng: p.coordinates.lng })
         .filter(Boolean)
     : null;
-  return { start, destination, finish, points };
+  return { start, destinations, finish, points };
 }
 
 export default async function GuideDetailPage({ params }) {
@@ -466,7 +503,7 @@ export default async function GuideDetailPage({ params }) {
   const pdfHref = !checkoutHref ? guide.guidePdfUrl || null : null;
 
   const location = buildLocation(guide);
-  const showLocation = !!(location.start || location.destination);
+  const showLocation = !!(location.start || (location.destinations && location.destinations.length > 0));
   const essentialBookings = getEssentialBookings(guide.bodyBlocks);
   const affiliateLinks = getAffiliateLinks(guide.bodyBlocks);
   const hasAffiliateLinks = affiliateLinks.length > 0;
@@ -518,7 +555,7 @@ export default async function GuideDetailPage({ params }) {
           {showLocation ? (
             <LocationSection
               start={location.start}
-              destination={location.destination}
+              destinations={location.destinations}
               finish={location.finish}
               points={location.points}
             />
