@@ -60,20 +60,50 @@ export default function PrivacyPage() {
         <p className="text-sm leading-relaxed text-slate-600">
           When you buy a guide, the transaction is processed by{" "}
           <strong>Polar Software Inc.</strong> as our Merchant of Record. Polar
-          collects the details needed to take payment and issue an invoice
-          (typically your email, billing country and payment method) under{" "}
+          collects the details needed to take payment, issue an invoice, and
+          comply with payment-card and tax-reporting rules. Per{" "}
           <a
             className="underline"
             href="https://polar.sh/legal/privacy"
             target="_blank"
             rel="noopener noreferrer"
           >
-            Polar's Privacy Policy
+            Polar&apos;s Privacy Policy
           </a>
-          . We receive only the information needed to fulfil the order
-          (typically the order ID, product purchased, and the buyer's email so we
-          can deliver the guide and respond to support questions). Legal basis:
-          performance of the contract for the digital guide (Art. 6(1)(b) GDPR).
+          , this typically includes your name, email address, phone number
+          (if provided), billing address, payment-card type and last four
+          digits, business name and tax number (if you check the
+          &quot;purchasing as a business&quot; box at checkout), and the
+          IP-address-based coarse geolocation of your device. Polar in turn
+          uses <strong>Stripe, Inc.</strong> as their payment processor for
+          the actual card-handling step (see{" "}
+          <a
+            className="underline"
+            href="https://polar.sh/legal/payment-processing-partners"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Polar&apos;s payment-processing partners
+          </a>
+          ). Polar also engages additional sub-processors (hosting, email,
+          error-reporting, support tooling) listed at{" "}
+          <a
+            className="underline"
+            href="https://polar.sh/legal/sub-processors"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            polar.sh/legal/sub-processors
+          </a>
+          .
+        </p>
+        <p className="text-sm leading-relaxed text-slate-600">
+          We (TestedRoutes) receive only the information needed to fulfil
+          the order: typically the order ID, the product purchased, and your
+          email address (so we can deliver the guide and respond to support
+          questions). We do not receive your full payment-card data – Polar
+          and Stripe handle that. Legal basis: performance of the contract
+          for the digital guide (Art. 6(1)(b) GDPR).
         </p>
 
         <h3 className="text-sm font-semibold text-slate-900">Analytics</h3>
@@ -297,7 +327,19 @@ export default function PrivacyPage() {
             <span className="mt-0.5 shrink-0 text-slate-400">•</span>
             <span>
               <strong>Polar Software Inc.</strong> – payment processing and
-              merchant of record for purchases.
+              merchant of record for purchases. Polar in turn engages{" "}
+              <strong>Stripe, Inc.</strong> (US / Ireland) as their payment
+              processor and additional sub-processors (hosting, invoicing,
+              fraud monitoring) listed at{" "}
+              <a
+                className="underline"
+                href="https://polar.sh/legal/sub-processors"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                polar.sh/legal/sub-processors
+              </a>
+              .
             </span>
           </li>
           <li className="flex gap-2">
