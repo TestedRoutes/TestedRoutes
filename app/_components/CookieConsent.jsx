@@ -2,6 +2,7 @@
 
 import { useEffect } from "react";
 import klaroConfig from "../_lib/klaroConfig";
+import "./klaroOverrides.css";
 
 /**
  * Mounts the Klaro cookie-consent banner once on the client.

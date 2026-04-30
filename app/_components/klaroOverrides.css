@@ -1,0 +1,304 @@
+/*
+ * Klaro design overrides — match TestedRoutes' visual language.
+ *
+ * Klaro ships with utilitarian Bootstrap-era styles. We import their
+ * default CSS first (for layout/positioning) and then apply these
+ * overrides to bring it in line with the rest of the site:
+ *
+ *   - white card on slate-200 ring (matches legal-page sections)
+ *   - rounded-3xl corners (matches /terms, /privacy section cards)
+ *   - Georgia headings (matches guide pages and section titles)
+ *   - slate-900 primary button (matches "Search Guides", "Get the Guide")
+ *   - emerald-700 accent on toggles + links (matches the "S" trail badge)
+ *   - subtle drop-shadow with a slate cast (matches site cards)
+ *
+ * All selectors are scoped under `#klaro` so they only affect the
+ * consent UI and never leak into the rest of the page.
+ */
+
+/* ── Reset Klaro's bundled font / colour vars where we can ────────── */
+
+#klaro,
+#klaro .cookie-notice,
+#klaro .cookie-modal,
+#klaro .cm-modal {
+  font-family:
+    -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue",
+    Arial, sans-serif !important;
+  color: rgb(71, 85, 105) !important; /* slate-600 */
+  letter-spacing: 0;
+}
+
+/* ── Banner (bottom-of-page notice) ───────────────────────────────── */
+
+#klaro .cookie-notice {
+  background: #ffffff !important;
+  color: rgb(71, 85, 105) !important;
+  border: 1px solid rgb(226, 232, 240) !important; /* slate-200 */
+  border-radius: 24px !important;
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.08) !important;
+  padding: 1.25rem 1.5rem !important;
+  max-width: 720px !important;
+  margin: 1rem !important;
+}
+
+#klaro .cookie-notice .cn-title,
+#klaro .cookie-notice h1,
+#klaro .cookie-notice h2 {
+  font-family: Georgia, "Times New Roman", serif !important;
+  color: rgb(15, 23, 42) !important; /* slate-900 */
+  font-weight: 600 !important;
+  font-size: 1.125rem !important; /* text-lg */
+  letter-spacing: 0;
+  margin: 0 0 0.5rem 0 !important;
+}
+
+#klaro .cookie-notice .cn-body,
+#klaro .cookie-notice p {
+  color: rgb(71, 85, 105) !important; /* slate-600 */
+  font-size: 0.875rem !important; /* text-sm */
+  line-height: 1.6 !important;
+  margin: 0 0 0.75rem 0 !important;
+}
+
+#klaro .cookie-notice .cn-ok {
+  margin-top: 0.5rem !important;
+  display: flex !important;
+  flex-wrap: wrap !important;
+  gap: 0.5rem !important;
+  align-items: center !important;
+}
+
+/* ── Modal (per-service preferences) ──────────────────────────────── */
+
+#klaro .cookie-modal {
+  background: rgba(15, 23, 42, 0.45) !important; /* slate-900/45 */
+}
+
+#klaro .cookie-modal .cm-modal {
+  background: #ffffff !important;
+  border: 1px solid rgb(226, 232, 240) !important; /* slate-200 */
+  border-radius: 28px !important;
+  box-shadow: 0 24px 56px rgba(15, 23, 42, 0.15) !important;
+  max-width: 640px !important;
+}
+
+#klaro .cookie-modal .cm-header,
+#klaro .cookie-modal .cm-body {
+  padding: 1.5rem 1.75rem !important;
+}
+
+#klaro .cookie-modal .cm-modal-title,
+#klaro .cookie-modal h1,
+#klaro .cookie-modal h2 {
+  font-family: Georgia, "Times New Roman", serif !important;
+  color: rgb(15, 23, 42) !important;
+  font-weight: 600 !important;
+  font-size: 1.5rem !important; /* text-2xl */
+  letter-spacing: 0;
+  margin: 0 0 0.75rem 0 !important;
+}
+
+#klaro .cookie-modal .cm-close {
+  color: rgb(100, 116, 139) !important; /* slate-500 */
+  opacity: 1;
+  font-size: 1.25rem !important;
+}
+
+#klaro .cookie-modal .cm-close:hover {
+  color: rgb(15, 23, 42) !important;
+}
+
+#klaro .cookie-modal p {
+  color: rgb(71, 85, 105) !important;
+  font-size: 0.875rem !important;
+  line-height: 1.6 !important;
+  margin: 0 0 0.75rem 0 !important;
+}
+
+/* ── Buttons (banner + modal) ─────────────────────────────────────── */
+
+#klaro .cm-btn {
+  border-radius: 9999px !important;
+  padding: 0.625rem 1.25rem !important;
+  font-weight: 600 !important;
+  font-size: 0.8125rem !important; /* text-[13px] */
+  letter-spacing: 0;
+  border: 1px solid transparent !important;
+  cursor: pointer;
+  transition: background-color 0.15s ease, border-color 0.15s ease,
+    color 0.15s ease;
+}
+
+/* Primary action — accept-all / save */
+#klaro .cm-btn.cm-btn-success,
+#klaro .cm-btn.cm-btn-accept,
+#klaro .cm-btn.cm-btn-accept-all {
+  background: rgb(15, 23, 42) !important; /* slate-900 */
+  color: #ffffff !important;
+  border-color: rgb(15, 23, 42) !important;
+}
+
+#klaro .cm-btn.cm-btn-success:hover,
+#klaro .cm-btn.cm-btn-accept:hover,
+#klaro .cm-btn.cm-btn-accept-all:hover {
+  background: rgb(30, 41, 59) !important; /* slate-800 */
+  border-color: rgb(30, 41, 59) !important;
+}
+
+/* Secondary — decline / decline-all */
+#klaro .cm-btn.cm-btn-danger,
+#klaro .cm-btn.cm-btn-decline {
+  background: #ffffff !important;
+  color: rgb(15, 23, 42) !important;
+  border-color: rgb(203, 213, 225) !important; /* slate-300 */
+}
+
+#klaro .cm-btn.cm-btn-danger:hover,
+#klaro .cm-btn.cm-btn-decline:hover {
+  background: rgb(248, 250, 252) !important; /* slate-50 */
+  border-color: rgb(148, 163, 184) !important; /* slate-400 */
+}
+
+/* Tertiary — manage choices / learn more */
+#klaro .cn-learn-more,
+#klaro .cm-link {
+  color: rgb(15, 110, 86) !important; /* emerald-700 */
+  text-decoration: underline !important;
+  text-underline-offset: 2px;
+  background: none !important;
+  border: none !important;
+  padding: 0 !important;
+  font-weight: 500 !important;
+  font-size: 0.875rem !important;
+}
+
+#klaro .cn-learn-more:hover,
+#klaro .cm-link:hover {
+  color: rgb(11, 80, 63) !important; /* darker emerald */
+}
+
+/* ── Service / purpose list ───────────────────────────────────────── */
+
+#klaro .cm-services,
+#klaro .cm-purposes {
+  margin-top: 1rem !important;
+}
+
+#klaro .cm-purpose,
+#klaro .cm-list-item {
+  padding: 1rem 0 !important;
+  position: relative !important;
+  border-top: 1px solid rgb(241, 245, 249) !important; /* slate-100 */
+}
+
+#klaro .cm-purpose:first-child,
+#klaro .cm-list-item:first-child {
+  border-top: 1px solid rgb(226, 232, 240) !important; /* slate-200 */
+}
+
+/* The label wraps title + slider. Push the title clear of the
+   absolute-positioned slider on the left. (Klaro default uses a
+   .cm-switch-container wrapper with padding-left:66px; v0.7 renders
+   .cm-list-label directly, so we add the padding here.) */
+#klaro .cm-purpose .cm-list-label,
+#klaro .cm-list-item .cm-list-label {
+  display: block !important;
+  position: relative !important;
+  padding-left: 66px !important;
+  min-height: 30px !important;
+  cursor: pointer;
+}
+
+#klaro .cm-purpose .cm-list-label .cm-switch,
+#klaro .cm-list-item .cm-list-label .cm-switch {
+  position: absolute !important;
+  left: 0 !important;
+  top: 0 !important;
+}
+
+#klaro .cm-list-title,
+#klaro .cm-purpose .title {
+  color: rgb(15, 23, 42) !important;
+  font-weight: 600 !important;
+  font-size: 0.9375rem !important;
+  display: inline-block !important;
+}
+
+#klaro .cm-required {
+  color: rgb(100, 116, 139) !important; /* slate-500 */
+  font-size: 0.8125rem !important;
+  margin-left: 0.5rem !important;
+  font-weight: 400 !important;
+}
+
+#klaro .cm-list-description,
+#klaro .cm-purpose .description {
+  color: rgb(100, 116, 139) !important; /* slate-500 */
+  font-size: 0.8125rem !important;
+  line-height: 1.55 !important;
+  margin-top: 0.25rem !important;
+  padding-left: 66px !important; /* align with title (clear of slider) */
+}
+
+/* The "↓ N services" expand link inside a purpose group */
+#klaro .cm-purpose .cm-services-info,
+#klaro .cm-purpose a.cm-link {
+  margin-left: 66px !important;
+  margin-top: 0.5rem !important;
+  display: inline-block !important;
+}
+
+/* ── Toggle switches ──────────────────────────────────────────────── */
+
+#klaro .cm-list-input + .cm-list-label .slider,
+#klaro .cm-list-input:not(:checked) + .cm-list-label .slider {
+  background-color: rgb(203, 213, 225) !important; /* slate-300 */
+}
+
+#klaro .cm-list-input:checked + .cm-list-label .slider,
+#klaro .cm-list-input.required + .cm-list-label .slider {
+  background-color: rgb(15, 110, 86) !important; /* emerald-700 */
+}
+
+#klaro .slider:before {
+  background-color: #ffffff !important;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.2);
+}
+
+/* ── Footer ───────────────────────────────────────────────────────── */
+
+#klaro .cm-footer {
+  border-top: 1px solid rgb(226, 232, 240) !important;
+  padding: 1rem 1.75rem !important;
+}
+
+#klaro .cm-powered-by,
+#klaro .cm-credit {
+  color: rgb(148, 163, 184) !important; /* slate-400 */
+  font-size: 0.6875rem !important; /* text-[11px] */
+}
+
+#klaro .cm-powered-by a {
+  color: rgb(148, 163, 184) !important;
+  text-decoration: underline;
+}
+
+/* ── Mobile sizing ────────────────────────────────────────────────── */
+
+@media (max-width: 640px) {
+  #klaro .cookie-notice {
+    margin: 0.75rem !important;
+    padding: 1rem 1.25rem !important;
+    border-radius: 20px !important;
+  }
+  #klaro .cookie-modal .cm-modal {
+    border-radius: 24px !important;
+  }
+  #klaro .cookie-modal .cm-header,
+  #klaro .cookie-modal .cm-body,
+  #klaro .cookie-modal .cm-footer {
+    padding-left: 1.25rem !important;
+    padding-right: 1.25rem !important;
+  }
+}
