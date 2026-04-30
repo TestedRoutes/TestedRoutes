@@ -1,5 +1,6 @@
 import Link from "next/link";
 import NewsletterForm from "./NewsletterForm";
+import CookieSettingsButton from "./CookieSettingsButton";
 
 export default function SiteFooter() {
   return (
@@ -34,6 +35,7 @@ export default function SiteFooter() {
           <Link href="/security" className="transition hover:text-slate-700">
             Security
           </Link>
+          <CookieSettingsButton />
         </div>
       </div>
     </footer>
