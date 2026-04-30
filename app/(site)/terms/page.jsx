@@ -30,7 +30,7 @@ export default function TermsPage() {
         <p className="text-xs text-slate-500">
           Legal entity details:{" "}
           <strong>
-            [Company code · Registered address · VAT number — to be completed
+            [Company code · Registered address · VAT number – to be completed
             on registration]
           </strong>
           . Contact:{" "}
@@ -56,13 +56,13 @@ export default function TermsPage() {
       <section className="space-y-3 rounded-[28px] bg-white p-8 shadow-sm ring-1 ring-slate-200">
         <h2 className="text-lg font-semibold text-slate-900">3. Our guides</h2>
         <p className="text-sm leading-relaxed text-slate-600">
-          TestedRoutes guides are digital travel guides — written by us, based
+          TestedRoutes guides are digital travel guides – written by us, based
           on routes we have personally tested. Each guide is delivered as a
           digital document immediately after payment.
         </p>
         <p className="text-sm leading-relaxed text-slate-600">
           We work hard to keep guides accurate and up to date, but travel
-          changes — transport timetables, prices, opening hours and route
+          changes – transport timetables, prices, opening hours and route
           conditions all shift. The guides are advisory. You are responsible
           for your own travel decisions and your own safety.
         </p>
@@ -166,8 +166,8 @@ export default function TermsPage() {
       <section className="space-y-3 rounded-[28px] bg-white p-8 shadow-sm ring-1 ring-slate-200">
         <h2 className="text-lg font-semibold text-slate-900">8. Intellectual property</h2>
         <p className="text-sm leading-relaxed text-slate-600">
-          All content on testedroutes.com — guides, photographs, maps, text,
-          and design — is owned by MB TestedRoutes or its licensors and is
+          All content on testedroutes.com – guides, photographs, maps, text,
+          and design – is owned by MB TestedRoutes or its licensors and is
           protected by copyright. The licence in section 5 is the only right
           you receive in our content; nothing else on the site grants you
           additional rights.
@@ -218,7 +218,7 @@ export default function TermsPage() {
           These terms are governed by the laws of the Republic of Lithuania.
           If you are a consumer resident in another EU country, you also
           benefit from the mandatory consumer protections of your country of
-          residence — these terms do not override those.
+          residence – these terms do not override those.
         </p>
         <p className="text-sm leading-relaxed text-slate-600">
           Disputes that we cannot resolve informally may be brought before the

@@ -48,11 +48,11 @@ export default async function GuideLinksPage({ params }) {
       </nav>
 
       <h1 className="text-3xl font-semibold leading-tight text-slate-900 md:text-4xl">
-        {guide.title} — booking links
+        {guide.title} – booking links
       </h1>
       <p className="mt-3 text-sm leading-relaxed text-slate-600">
         Curated bookings, gear, and tours we recommend for this trip. These
-        links pay us a small commission when you buy through them — the full{" "}
+        links pay us a small commission when you buy through them – the full{" "}
         <Link className="underline" href={guideHref}>
           {guide.title} guide
         </Link>{" "}
@@ -102,7 +102,7 @@ export default async function GuideLinksPage({ params }) {
         </p>
         <p className="mt-1 text-sm leading-relaxed text-slate-600">
           The PDF guide bundles these links with the day-by-day itinerary,
-          transport timings, weather rules, and route variants — everything
+          transport timings, weather rules, and route variants – everything
           you need so you don't have to plan from scratch.
         </p>
         <Link
