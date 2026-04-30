@@ -8,6 +8,11 @@ export default function robots() {
       {
         userAgent: "*",
         allow: "/",
+        // /go/* is a 302 redirector for short campaign links. No content
+        // to index; keeps Google focused on canonical /guides/<slug> pages.
+        // /api/* are server endpoints, never indexed.
+        // /studio/* is the embedded Sanity Studio — editor UI only.
+        disallow: ["/go/", "/api/", "/studio/"],
       },
     ],
     sitemap: `${SITE_URL}/sitemap.xml`,
