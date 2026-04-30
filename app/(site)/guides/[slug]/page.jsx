@@ -567,6 +567,22 @@ export default async function GuideDetailPage({ params }) {
           </div>
           <NotSuitableWarning items={sales.not_suitable} />
           <CheckBulletSection title="What you get" items={sales.what_you_get} />
+          {hasAffiliateLinks ? (
+            <aside
+              role="note"
+              aria-label="Affiliate disclosure"
+              className="rounded-2xl border border-amber-200 bg-amber-50 px-5 py-3 text-xs leading-relaxed text-amber-900"
+            >
+              <strong>Affiliate disclosure.</strong> Some links below are
+              affiliate links – if you click and buy on the destination site,
+              we may earn a commission at no extra cost to you. As an Amazon
+              Associate, TestedRoutes earns from qualifying purchases.{" "}
+              <Link href="/privacy" className="underline">
+                More on how this works
+              </Link>
+              .
+            </aside>
+          ) : null}
           <GuideBody
             blocks={guide.bodyBlocks}
             checkoutHref={checkoutHref}
