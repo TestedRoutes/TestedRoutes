@@ -17,6 +17,9 @@ export default function SiteFooter() {
           >
             Contact
           </a>
+          <Link href="/legal-notice" className="transition hover:text-slate-700">
+            Legal
+          </Link>
           <Link href="/terms" className="transition hover:text-slate-700">
             Terms
           </Link>
@@ -25,6 +28,12 @@ export default function SiteFooter() {
           </Link>
           <Link href="/refund-policy" className="transition hover:text-slate-700">
             Refunds
+          </Link>
+          <Link href="/accessibility" className="transition hover:text-slate-700">
+            Accessibility
+          </Link>
+          <Link href="/security" className="transition hover:text-slate-700">
+            Security
           </Link>
           <CookieSettingsButton />
         </div>

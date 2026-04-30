@@ -6,7 +6,7 @@ export const metadata = {
     "30-day no-questions-asked refunds on every TestedRoutes guide. How to request a refund and how long it takes.",
 };
 
-const LAST_UPDATED = "29 April 2026";
+const LAST_UPDATED = "30 April 2026";
 
 export default function RefundPolicyPage() {
   return (
@@ -91,11 +91,27 @@ export default function RefundPolicyPage() {
       <section className="space-y-3 rounded-[28px] bg-white p-8 shadow-sm ring-1 ring-slate-200">
         <h2 className="text-lg font-semibold text-slate-900">6. Your statutory rights</h2>
         <p className="text-sm leading-relaxed text-slate-600">
-          If you are a consumer in the European Union, you have a statutory right
-          to withdraw from a purchase within 14 days under the EU Consumer Rights
-          Directive. Our 30-day refund policy is in addition to that right and
-          does not limit it. Nothing in this policy affects mandatory consumer
-          protections you have under the law of your country of residence.
+          If you are a consumer in the European Union, the European Economic
+          Area, or the United Kingdom, you would normally have a 14-day right
+          of withdrawal for distance purchases under the EU Consumer Rights
+          Directive (Article 16(m)) or its UK equivalent. Because our guides
+          are digital content delivered immediately on payment, you waive
+          that 14-day right at checkout when you request immediate delivery
+          – see{" "}
+          <Link className="underline" href="/terms">
+            Terms of Service section&nbsp;3
+          </Link>
+          .
+        </p>
+        <p className="text-sm leading-relaxed text-slate-600">
+          Our voluntary 30-day no-questions-asked refund (sections 1–5
+          above) is offered <strong>separately from – and on top of –</strong>{" "}
+          that statutory waiver. It applies to all buyers, regardless of
+          country, and is more generous than the statutory 14-day window.
+        </p>
+        <p className="text-sm leading-relaxed text-slate-600">
+          Nothing in this policy affects mandatory consumer protections you
+          have under the law of your country of residence.
         </p>
       </section>
 
