@@ -72,7 +72,7 @@ export default function HomeSearchBar() {
   };
 
   return (
-    <div className="w-full">
+    <div className="mx-auto w-full max-w-2xl">
       <div className="flex w-full flex-col gap-3 rounded-2xl bg-white p-4 shadow-sm ring-1 ring-slate-200 md:flex-row md:items-center">
         <div className="flex flex-1 items-center gap-3 rounded-xl bg-slate-50 px-4 py-2.5 text-sm text-slate-500">
           <span className="h-2 w-2 rounded-full bg-slate-900" />
