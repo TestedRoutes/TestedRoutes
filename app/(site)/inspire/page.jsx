@@ -14,7 +14,7 @@ import InspireBrowse from "./InspireBrowse";
 export const metadata = {
   title: "Inspire · TestedRoutes",
   description:
-    "Travel stories and journey ideas from 15 years of independent trips across 140 countries — the field work behind every guide.",
+    "Travel stories and journey ideas from 15 years of independent trips across 140 countries – the field work behind every guide.",
 };
 
 const COLLECTIONS = [
