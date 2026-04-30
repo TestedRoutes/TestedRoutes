@@ -404,9 +404,13 @@ export default function PrivacyPage() {
         <h2 className="text-lg font-semibold text-slate-900">5. Your rights</h2>
         <p className="text-sm leading-relaxed text-slate-600">
           Under the GDPR you have the right to: access the personal data we
-          hold about you, ask us to correct it if it's wrong, ask us to delete
-          it, restrict or object to certain processing, and ask for a portable
-          copy. To exercise any of these rights, email{" "}
+          hold about you, ask us to correct it if it&apos;s wrong, ask us to
+          delete it, restrict or object to certain processing, and ask for a
+          portable copy. To exercise any of these rights, use our{" "}
+          <Link className="underline" href="/contact">
+            contact form
+          </Link>{" "}
+          (select <em>Privacy / data request</em> as the topic) or email{" "}
           <a className="underline" href="mailto:hello@testedroutes.com">
             hello@testedroutes.com
           </a>

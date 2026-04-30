@@ -11,12 +11,9 @@ export default function SiteFooter() {
       <div className="flex flex-col gap-3 text-xs text-slate-500 md:items-end">
         <p>© {new Date().getFullYear()} TestedRoutes. All rights reserved.</p>
         <div className="flex flex-wrap items-center gap-x-4 gap-y-2 md:justify-end">
-          <a
-            href="mailto:hello@testedroutes.com"
-            className="transition hover:text-slate-700"
-          >
+          <Link href="/contact" className="transition hover:text-slate-700">
             Contact
-          </a>
+          </Link>
           <Link href="/legal-notice" className="transition hover:text-slate-700">
             Legal
           </Link>
