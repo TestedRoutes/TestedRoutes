@@ -35,6 +35,9 @@ export default function SiteFooter() {
           <Link href="/security" className="transition hover:text-slate-700">
             Security
           </Link>
+          <Link href="/sitemap" className="transition hover:text-slate-700">
+            Sitemap
+          </Link>
           <CookieSettingsButton />
         </div>
       </div>
