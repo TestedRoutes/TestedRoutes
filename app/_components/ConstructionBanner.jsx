@@ -15,7 +15,7 @@ export default function ConstructionBanner() {
       <NewsletterForm
         variant="compact"
         source="top-banner"
-        headline="Launching June 2026 — get notified:"
+        headline="Launching June 2026 – get notified:"
       />
     </div>
   );

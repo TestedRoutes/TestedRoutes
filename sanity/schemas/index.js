@@ -11,6 +11,7 @@ import startingPoint from "./objects/startingPoint";
 import estimatedCost from "./objects/estimatedCost";
 import costBreakdown from "./objects/costBreakdown";
 import routePoint from "./objects/routePoint";
+import routeStop from "./objects/routeStop";
 import socialLink from "./objects/socialLink";
 import priceEntry from "./objects/priceEntry";
 
@@ -36,6 +37,7 @@ export const schemaTypes = [
   estimatedCost,
   costBreakdown,
   routePoint,
+  routeStop,
   socialLink,
   priceEntry,
 
