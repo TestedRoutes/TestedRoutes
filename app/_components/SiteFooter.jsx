@@ -1,5 +1,6 @@
 import Link from "next/link";
 import NewsletterForm from "./NewsletterForm";
+import CookieSettingsButton from "./CookieSettingsButton";
 
 export default function SiteFooter() {
   return (
@@ -25,6 +26,7 @@ export default function SiteFooter() {
           <Link href="/refund-policy" className="transition hover:text-slate-700">
             Refunds
           </Link>
+          <CookieSettingsButton />
         </div>
       </div>
     </footer>

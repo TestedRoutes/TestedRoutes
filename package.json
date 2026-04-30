@@ -21,6 +21,7 @@
     "@sanity/vision": "^3.88.0",
     "@sentry/nextjs": "^10.50.0",
     "js-yaml": "^4.1.1",
+    "klaro": "^0.7.21",
     "leaflet": "^1.9.4",
     "marked": "^18.0.2",
     "next": "^15.5.15",
