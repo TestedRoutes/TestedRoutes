@@ -75,6 +75,18 @@ export default function BuyBox({
           </Link>
         ) : null}
       </div>
+      {targetHref ? (
+        <p className="mt-2 text-center text-xs text-slate-500">
+          30-day refunds, no questions asked.{" "}
+          <Link
+            href="/refund-policy"
+            className="underline decoration-slate-400 underline-offset-2 hover:text-slate-700"
+          >
+            Read the policy
+          </Link>
+          .
+        </p>
+      ) : null}
       {bookingCount > 0 ? (
         <label className="mt-3 flex cursor-pointer items-start gap-2 rounded-lg bg-slate-50 px-3 py-2 text-xs text-slate-700">
           <input
