@@ -5,12 +5,9 @@ tagged affiliate URL at click time, with country-aware retailer/region routing.
 
 | Suggested PDF link text | URL to paste in PDF |
 |---|---|
-| AllTrails Pro | https://testedroutes.com/go/alltrails-pro |
 | Revolut card | https://testedroutes.com/go/revolut |
 | Saily eSIM | https://testedroutes.com/go/saily-esim |
-| Swiss Travel Pass | https://testedroutes.com/go/swiss-travel-pass |
 | Reserve the Triftbahn cable car | https://testedroutes.com/go/triftbrucke-cable-car |
+| Compare car rentals from Zurich | https://testedroutes.com/go/triftbrucke-car-rental |
 | See the full Triftbrücke gear kit | https://testedroutes.com/go/triftbrucke-day-hike-kit |
-| Stay overnight in Innertkirchen | https://testedroutes.com/go/triftbrucke-hotel-innertkirchen |
-| Book the train from Zurich to Meiringen | https://testedroutes.com/go/triftbrucke-zurich-train |
-| Book a Welcome Pickups transfer | https://testedroutes.com/go/welcome-pickups |
+| Search SBB train schedules | https://testedroutes.com/go/triftbrucke-sbb-train |
