@@ -33,14 +33,14 @@ links:
   # ─── Money: cards & FX ─────────────────────────────────────────────
   - slug: revolut
     label: Revolut
-    category: essentials
+    category: currency
     url: https://www.revolut.com/
     program: revolut
     linkText: Revolut card
 
   - slug: wise
     label: Wise
-    category: essentials
+    category: currency
     url: https://wise.com/
     program: wise
     linkText: Wise card
@@ -48,7 +48,7 @@ links:
   # ─── Connectivity: eSIM ────────────────────────────────────────────
   - slug: saily-esim
     label: Saily eSIM
-    category: essentials
+    category: esim
     url: https://saily.com/
     program: saily
     linkText: Saily eSIM
@@ -56,21 +56,21 @@ links:
   # ─── Apps ──────────────────────────────────────────────────────────
   - slug: nordvpn
     label: NordVPN
-    category: essentials
+    category: vpn
     url: https://nordvpn.com/
     program: nordvpn
     linkText: NordVPN
 
   - slug: alltrails-pro
     label: AllTrails Pro
-    category: essentials
+    category: hiking_apps
     url: https://www.alltrails.com/plus
     program: alltrails
     linkText: AllTrails Pro
 
   - slug: komoot
     label: Komoot
-    category: essentials
+    category: hiking_apps
     url: https://www.komoot.com/
     program: komoot
     linkText: Komoot

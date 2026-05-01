@@ -24,43 +24,62 @@ export async function generateMetadata({ params }) {
 }
 
 /**
- * Display order for affiliate categories. Used to sort the flat table
- * so essential bookings appear first, ephemera last. Categories not
- * listed here fall through to the bottom under their own raw value.
+ * Two-table category model:
+ *
+ *   TRIP_SPECIFIC — items the reader books for this trip (hotel,
+ *   transport, tickets, etc.). Render in the first table.
+ *
+ *   TRAVEL_ESSENTIALS — always-on stack the reader keeps across trips
+ *   (insurance, eSIM, VPN, currency, hiking apps, credit cards).
+ *   Render in the second table.
+ *
+ * Categories within each group display in the order listed below.
+ * Mirrors the dropdowns in sanity/schemas/documents/{affiliateLink,
+ * story}.js — keep in sync.
  */
-const CATEGORY_ORDER = [
-  { value: "essential_booking", label: "Essential booking" },
-  { value: "accommodation", label: "Accommodation" },
-  { value: "tour", label: "Tour / ticket" },
+const TRIP_SPECIFIC = [
+  { value: "flights", label: "Flights" },
+  { value: "cars", label: "Cars" },
   { value: "transport", label: "Transport" },
+  { value: "tickets", label: "Tickets" },
+  { value: "hotels", label: "Hotels" },
+  { value: "restaurant", label: "Restaurant" },
   { value: "gear", label: "Gear" },
-  { value: "essentials", label: "Essential" },
-  { value: "dining", label: "Dining" },
-  { value: "general", label: "Other" },
 ];
 
-const CATEGORY_INDEX = new Map(CATEGORY_ORDER.map((c, i) => [c.value, { ...c, sort: i }]));
+const TRAVEL_ESSENTIALS = [
+  { value: "insurance", label: "Insurance" },
+  { value: "esim", label: "eSIM" },
+  { value: "vpn", label: "VPN" },
+  { value: "currency", label: "Currency" },
+  { value: "hiking_apps", label: "Hiking apps" },
+  { value: "credit_cards", label: "Credit cards" },
+];
+
+const CATEGORY_INDEX = new Map([
+  ...TRIP_SPECIFIC.map((c, i) => [c.value, { ...c, sort: i, group: "trip" }]),
+  ...TRAVEL_ESSENTIALS.map((c, i) => [c.value, { ...c, sort: i, group: "essentials" }]),
+]);
 
 /**
- * Flatten the guide's affiliateLinks references into a single array of
- * row-shaped objects, sorted by CATEGORY_ORDER then alphabetically by
- * label. Each row carries everything the 4-column table needs.
+ * Flatten the guide's affiliateLinks references into row-shaped
+ * objects, partitioned into trip-specific vs travel-essentials and
+ * sorted by category order within each group.
  */
-function flattenAffiliateRows(refs) {
-  if (!Array.isArray(refs) || refs.length === 0) return [];
-  const rows = [];
+function buildRowGroups(refs) {
+  const trip = [];
+  const essentials = [];
+  if (!Array.isArray(refs)) return { trip, essentials };
+
   for (const r of refs) {
     if (!r?.slug) continue;
-    const catKey = r.category || "general";
-    const catEntry = CATEGORY_INDEX.get(catKey) || {
-      value: catKey,
-      label: catKey,
-      sort: 999,
-    };
+    const catKey = r.category;
+    const catEntry = CATEGORY_INDEX.get(catKey);
+    if (!catEntry) continue; // legacy / unknown categories skipped silently
     const program = r.program || "other";
     const programLabel =
       program === "other" ? "Direct" : PROGRAM_CONFIG[program]?.label || program;
-    rows.push({
+    const row = {
       slug: r.slug,
       href: `/go/${r.slug}`,
       label: r.label || r.slug,
@@ -68,31 +87,33 @@ function flattenAffiliateRows(refs) {
       categoryLabel: catEntry.label,
       categorySort: catEntry.sort,
       programLabel,
-    });
+    };
+    (catEntry.group === "trip" ? trip : essentials).push(row);
   }
-  rows.sort((a, b) => {
+  const sorter = (a, b) => {
     if (a.categorySort !== b.categorySort) return a.categorySort - b.categorySort;
     return a.label.localeCompare(b.label);
-  });
-  return rows;
+  };
+  trip.sort(sorter);
+  essentials.sort(sorter);
+  return { trip, essentials };
 }
 
 /**
- * Body-extracted fallback for older guides that haven't been migrated
- * to the affiliateLinks reference workflow. Maps body-link shape onto
- * the same 4-column row shape.
+ * Backward-compat fallback for older guides that still use body
+ * markdown affiliate links rather than the affiliateLinks reference
+ * array. Maps onto the same row shape; old categories that don't
+ * exist in the new model are silently skipped.
  */
-function rowsFromBodyExtraction(blocks) {
+function rowGroupsFromBody(blocks) {
   const groups = groupAffiliateLinks(blocks);
-  const rows = [];
+  const trip = [];
+  const essentials = [];
   for (const g of groups) {
-    const catEntry = CATEGORY_INDEX.get(g.value) || {
-      value: g.value,
-      label: g.value,
-      sort: 999,
-    };
+    const catEntry = CATEGORY_INDEX.get(g.value);
+    if (!catEntry) continue;
     for (const l of g.links) {
-      rows.push({
+      const row = {
         slug: null,
         href: l.href,
         label: l.text || l.href,
@@ -100,11 +121,85 @@ function rowsFromBodyExtraction(blocks) {
         categoryLabel: catEntry.label,
         categorySort: catEntry.sort,
         programLabel: "Direct",
-      });
+      };
+      (catEntry.group === "trip" ? trip : essentials).push(row);
     }
   }
-  rows.sort((a, b) => a.categorySort - b.categorySort);
-  return rows;
+  const sorter = (a, b) => a.categorySort - b.categorySort;
+  trip.sort(sorter);
+  essentials.sort(sorter);
+  return { trip, essentials };
+}
+
+function LinkTable({ rows }) {
+  return (
+    <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white">
+      {/* Header — desktop only; on mobile each row stacks. */}
+      <div className="hidden border-b border-slate-200 bg-slate-50 px-5 py-3 text-[11px] font-semibold uppercase tracking-wider text-slate-500 md:grid md:grid-cols-[140px_140px_minmax(0,1fr)_auto] md:gap-6">
+        <div>Category</div>
+        <div>Provider</div>
+        <div>Description</div>
+        <div className="w-32" />
+      </div>
+      <div className="divide-y divide-slate-100">
+        {rows.map((r) => (
+          <div
+            key={r.href}
+            className="grid grid-cols-1 gap-2 px-5 py-4 md:grid-cols-[140px_140px_minmax(0,1fr)_auto] md:items-center md:gap-6"
+          >
+            <div>
+              <p className="text-[10px] font-semibold uppercase tracking-wider text-slate-400 md:hidden">
+                Category
+              </p>
+              <p className="text-xs font-medium uppercase tracking-wide text-slate-600">
+                {r.categoryLabel}
+              </p>
+            </div>
+            <div>
+              <p className="text-[10px] font-semibold uppercase tracking-wider text-slate-400 md:hidden">
+                Provider
+              </p>
+              <p className="text-sm text-slate-700">{r.programLabel}</p>
+            </div>
+            <div className="min-w-0">
+              <p className="text-[10px] font-semibold uppercase tracking-wider text-slate-400 md:hidden">
+                Description
+              </p>
+              <p className="text-sm font-medium text-slate-900">{r.label}</p>
+              {r.linkText && r.linkText !== r.label ? (
+                <p className="mt-0.5 text-xs italic text-slate-500">
+                  {r.linkText}
+                </p>
+              ) : null}
+            </div>
+            <div>
+              <a
+                href={r.href}
+                target="_blank"
+                rel="noopener noreferrer sponsored"
+                className="inline-flex w-full justify-center rounded-full bg-slate-900 px-5 py-2 text-xs font-semibold text-white transition hover:bg-slate-800 md:w-32"
+              >
+                Open link →
+              </a>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function SectionHeading({ title, hint }) {
+  return (
+    <div className="mb-3 mt-10">
+      <p className="font-['Georgia',serif] text-xl font-semibold text-[#1a1816]">
+        {title}
+      </p>
+      {hint ? (
+        <p className="mt-1 text-xs leading-relaxed text-slate-500">{hint}</p>
+      ) : null}
+    </div>
+  );
 }
 
 export default async function GuideLinksPage({ params }) {
@@ -114,12 +209,13 @@ export default async function GuideLinksPage({ params }) {
 
   // Prefer the structured affiliateLinks reference array. Fall back to
   // body extraction for guides authored before that field existed.
-  const rows =
+  const { trip, essentials } =
     Array.isArray(guide.affiliateLinks) && guide.affiliateLinks.length > 0
-      ? flattenAffiliateRows(guide.affiliateLinks)
-      : rowsFromBodyExtraction(guide.bodyBlocks);
+      ? buildRowGroups(guide.affiliateLinks)
+      : rowGroupsFromBody(guide.bodyBlocks);
 
   const guideHref = `/guides/${guide.slug}`;
+  const isEmpty = trip.length === 0 && essentials.length === 0;
 
   return (
     <main className="mx-auto max-w-5xl px-6 pb-16 pt-8">
@@ -170,67 +266,32 @@ export default async function GuideLinksPage({ params }) {
         </p>
       </aside>
 
-      {rows.length === 0 ? (
+      {isEmpty ? (
         <p className="mt-8 rounded-2xl border border-dashed border-slate-200 bg-slate-50 px-5 py-6 text-sm text-slate-500">
           No affiliate links have been added to this guide yet.
         </p>
       ) : (
-        <div className="mt-8 overflow-hidden rounded-2xl border border-slate-200 bg-white">
-          {/* Header — desktop only; on mobile each row stacks. */}
-          <div className="hidden border-b border-slate-200 bg-slate-50 px-5 py-3 text-[11px] font-semibold uppercase tracking-wider text-slate-500 md:grid md:grid-cols-[140px_140px_minmax(0,1fr)_auto] md:gap-6">
-            <div>Type</div>
-            <div>Provider</div>
-            <div>Description</div>
-            <div className="w-32" />
-          </div>
-          <div className="divide-y divide-slate-100">
-            {rows.map((r) => (
-              <div
-                key={r.href}
-                className="grid grid-cols-1 gap-2 px-5 py-4 md:grid-cols-[140px_140px_minmax(0,1fr)_auto] md:items-center md:gap-6"
-              >
-                {/* Mobile-only column labels keep stacked rows readable. */}
-                <div>
-                  <p className="text-[10px] font-semibold uppercase tracking-wider text-slate-400 md:hidden">
-                    Type
-                  </p>
-                  <p className="text-xs font-medium uppercase tracking-wide text-slate-600">
-                    {r.categoryLabel}
-                  </p>
-                </div>
-                <div>
-                  <p className="text-[10px] font-semibold uppercase tracking-wider text-slate-400 md:hidden">
-                    Provider
-                  </p>
-                  <p className="text-sm text-slate-700">{r.programLabel}</p>
-                </div>
-                <div className="min-w-0">
-                  <p className="text-[10px] font-semibold uppercase tracking-wider text-slate-400 md:hidden">
-                    Description
-                  </p>
-                  <p className="text-sm font-medium text-slate-900">
-                    {r.label}
-                  </p>
-                  {r.linkText && r.linkText !== r.label ? (
-                    <p className="mt-0.5 text-xs italic text-slate-500">
-                      {r.linkText}
-                    </p>
-                  ) : null}
-                </div>
-                <div>
-                  <a
-                    href={r.href}
-                    target="_blank"
-                    rel="noopener noreferrer sponsored"
-                    className="inline-flex w-full justify-center rounded-full bg-slate-900 px-5 py-2 text-xs font-semibold text-white transition hover:bg-slate-800 md:w-32"
-                  >
-                    Open link →
-                  </a>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
+        <>
+          {trip.length > 0 ? (
+            <>
+              <SectionHeading
+                title="Trip specific"
+                hint="Bookings and gear for this particular trip – pick the ones you need."
+              />
+              <LinkTable rows={trip} />
+            </>
+          ) : null}
+
+          {essentials.length > 0 ? (
+            <>
+              <SectionHeading
+                title="Travel essentials"
+                hint="The always-on stack we use across every trip – same picks regardless of destination."
+              />
+              <LinkTable rows={essentials} />
+            </>
+          ) : null}
+        </>
       )}
 
       <div className="mt-10 max-w-3xl rounded-2xl border border-slate-200 bg-[#f1faf6] p-6">

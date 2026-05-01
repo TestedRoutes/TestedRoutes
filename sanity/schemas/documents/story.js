@@ -211,15 +211,26 @@ export default {
                     type: "string",
                     title: "Affiliate category",
                     description:
-                      "Only meaningful when Affiliate link is on. Drives which links open at checkout vs. only appear on the Get-the-links-free page.",
+                      "Only meaningful when Affiliate link is on. Drives display grouping on the public links page (Trip-specific table vs Travel essentials table).",
                     options: {
                       list: [
-                        { title: "Essential booking (open at checkout)", value: "essential_booking" },
+                        // Trip-specific
+                        { title: "Flights", value: "flights" },
+                        { title: "Cars", value: "cars" },
+                        { title: "Transport", value: "transport" },
+                        { title: "Tickets", value: "tickets" },
+                        { title: "Hotels", value: "hotels" },
+                        { title: "Restaurant", value: "restaurant" },
                         { title: "Gear", value: "gear" },
-                        { title: "Tour / activity", value: "tour" },
-                        { title: "General", value: "general" },
+                        // Travel essentials
+                        { title: "Insurance", value: "insurance" },
+                        { title: "eSIM", value: "esim" },
+                        { title: "VPN", value: "vpn" },
+                        { title: "Currency", value: "currency" },
+                        { title: "Hiking apps", value: "hiking_apps" },
+                        { title: "Credit cards", value: "credit_cards" },
                       ],
-                      layout: "radio",
+                      layout: "dropdown",
                     },
                     hidden: ({ parent }) => !parent?.isAffiliate,
                   },

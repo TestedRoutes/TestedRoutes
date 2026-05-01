@@ -24,10 +24,10 @@ references:
   - welcome-pickups     # Generic transfer fallback (rare for this trip)
 
 links:
-  # ─── Essential bookings (open at checkout) ─────────────────────────
+  # ─── Hotels ────────────────────────────────────────────────────────
   - slug: triftbrucke-hotel-innertkirchen
     label: Hotel Hof und Post (Innertkirchen)
-    category: essential_booking
+    category: hotels
     url: https://www.booking.com/searchresults.html?ss=Innertkirchen+Switzerland&group_adults=2&no_rooms=1
     program: booking
     linkText: Stay overnight in Innertkirchen
@@ -37,9 +37,10 @@ links:
       and the train back to Zurich can be missed if you start the hike
       from Meiringen instead.
 
+  # ─── Tickets ───────────────────────────────────────────────────────
   - slug: triftbrucke-cable-car
     label: Trift cable car (Triftbahn) ticket
-    category: tour
+    category: tickets
     url: https://www.grimselwelt.ch/en/mountain-railway/trift-cable-car/
     program: other
     linkText: Reserve the Triftbahn cable car

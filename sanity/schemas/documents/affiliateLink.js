@@ -79,24 +79,28 @@ export default {
       title: "Category",
       type: "string",
       description:
-        'Drives display grouping on /guides/<slug>/links. "Essential booking" links also open in tabs at checkout if the buyer leaves the tickbox on.',
+        "Drives display grouping on /guides/<slug>/links. Trip-specific categories appear in the first table; travel essentials in the second.",
       options: {
         list: [
-          {
-            title: "Essential booking (open at checkout)",
-            value: "essential_booking",
-          },
-          { title: "Gear", value: "gear" },
-          { title: "Tour / activity / ticket", value: "tour" },
+          // Trip-specific (first table on the page)
+          { title: "Flights", value: "flights" },
+          { title: "Cars", value: "cars" },
           { title: "Transport", value: "transport" },
-          { title: "Accommodation", value: "accommodation" },
-          { title: "Insurance / money / connectivity", value: "essentials" },
-          { title: "Restaurant / cafe reservation", value: "dining" },
-          { title: "General", value: "general" },
+          { title: "Tickets", value: "tickets" },
+          { title: "Hotels", value: "hotels" },
+          { title: "Restaurant", value: "restaurant" },
+          { title: "Gear", value: "gear" },
+          // Travel essentials (second table)
+          { title: "Insurance", value: "insurance" },
+          { title: "eSIM", value: "esim" },
+          { title: "VPN", value: "vpn" },
+          { title: "Currency", value: "currency" },
+          { title: "Hiking apps", value: "hiking_apps" },
+          { title: "Credit cards", value: "credit_cards" },
         ],
         layout: "dropdown",
       },
-      initialValue: "general",
+      initialValue: "hotels",
       validation: (Rule) => Rule.required(),
     },
     {
