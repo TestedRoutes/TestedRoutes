@@ -772,17 +772,141 @@ function categoryRef(value, type /* "journey" | "activity" */) {
 
 /* ────────── markdown → Portable Text ────────── */
 
-function mdToPortableText(md) {
+/**
+ * Walk marked's inline tokens and build a Portable Text children array
+ * + the markDefs they reference. Handles plain text, bold/italic
+ * decorators, and inline links (with optional affiliate enrichment
+ * looked up by URL against affiliateMap).
+ *
+ * affiliateMap is a Map<canonicalUrl, { isAffiliate, program, category }>
+ * where canonicalUrl is the lower-cased URL with a trailing-slash
+ * normalisation applied. Pass an empty Map to skip affiliate tagging.
+ */
+function inlineTokensToChildren(tokens, affiliateMap) {
+  const children = [];
+  const markDefs = [];
+
+  const pushSpan = (text, marks = []) => {
+    if (!text) return;
+    children.push({
+      _type: "span",
+      _key: randomKey(),
+      text,
+      marks,
+    });
+  };
+
+  const walk = (node, currentMarks) => {
+    if (!node) return;
+    if (typeof node === "string") {
+      pushSpan(node, currentMarks);
+      return;
+    }
+    switch (node.type) {
+      case "text":
+        // marked emits nested tokens for text containing inline markdown
+        if (Array.isArray(node.tokens) && node.tokens.length > 0) {
+          for (const child of node.tokens) walk(child, currentMarks);
+        } else {
+          pushSpan(node.text || "", currentMarks);
+        }
+        break;
+      case "strong":
+        for (const child of node.tokens || []) walk(child, [...currentMarks, "strong"]);
+        break;
+      case "em":
+        for (const child of node.tokens || []) walk(child, [...currentMarks, "em"]);
+        break;
+      case "codespan":
+        pushSpan(node.text || "", [...currentMarks, "code"]);
+        break;
+      case "link": {
+        const href = node.href || "";
+        if (!href) {
+          // No URL — just render the text inline
+          for (const child of node.tokens || []) walk(child, currentMarks);
+          return;
+        }
+        const markKey = randomKey();
+        const meta = affiliateMap.get(canonicaliseUrl(href)) || null;
+        markDefs.push({
+          _type: "link",
+          _key: markKey,
+          href,
+          blank: true,
+          isAffiliate: !!meta,
+          ...(meta && meta.program ? { affiliateProgram: meta.program } : {}),
+          ...(meta && meta.category ? { affiliateCategory: meta.category } : {}),
+        });
+        const innerMarks = [...currentMarks, markKey];
+        if (Array.isArray(node.tokens) && node.tokens.length > 0) {
+          for (const child of node.tokens) walk(child, innerMarks);
+        } else {
+          pushSpan(node.text || href, innerMarks);
+        }
+        break;
+      }
+      case "br":
+        pushSpan("\n", currentMarks);
+        break;
+      default:
+        // Fallback: render visible text if the token has any
+        if (typeof node.text === "string") {
+          pushSpan(node.text, currentMarks);
+        } else if (Array.isArray(node.tokens)) {
+          for (const child of node.tokens) walk(child, currentMarks);
+        }
+    }
+  };
+
+  for (const t of tokens || []) walk(t, []);
+
+  // Empty paragraphs need at least one span so Sanity validates the block
+  if (children.length === 0) {
+    children.push({ _type: "span", _key: randomKey(), text: "", marks: [] });
+  }
+  return { children, markDefs };
+}
+
+/**
+ * Normalise a URL for affiliate-map lookup. Lower-cased host, no
+ * trailing slash, query string preserved (some affiliate URLs depend
+ * on params). Yaml-declared URLs and body-markdown URLs go through
+ * the same normaliser so equivalents match.
+ */
+function canonicaliseUrl(href) {
+  if (!href) return "";
+  try {
+    const u = new URL(href);
+    u.hostname = u.hostname.toLowerCase();
+    let path = u.pathname.replace(/\/+$/, "") || "/";
+    return `${u.protocol}//${u.hostname}${path}${u.search}`;
+  } catch {
+    return String(href).trim().toLowerCase();
+  }
+}
+
+function mdToPortableText(md, affiliateMap = new Map()) {
   if (!md || !md.trim()) return [];
   const tokens = marked.lexer(md);
   const blocks = [];
-  const makeBlock = (text, style = "normal", listItem = null) => {
+
+  const blockFromInline = (inlineTokens, style = "normal", listItem = null, fallbackText = "") => {
+    const { children, markDefs } =
+      Array.isArray(inlineTokens) && inlineTokens.length > 0
+        ? inlineTokensToChildren(inlineTokens, affiliateMap)
+        : {
+            children: [
+              { _type: "span", _key: randomKey(), text: fallbackText || "", marks: [] },
+            ],
+            markDefs: [],
+          };
     const out = {
       _type: "block",
       _key: randomKey(),
       style,
-      children: [{ _type: "span", _key: randomKey(), text: text || "", marks: [] }],
-      markDefs: [],
+      children,
+      markDefs,
     };
     if (listItem) {
       out.listItem = listItem;
@@ -794,32 +918,276 @@ function mdToPortableText(md) {
   for (const token of tokens) {
     switch (token.type) {
       case "heading":
-        blocks.push(makeBlock(token.text, `h${Math.min(token.depth, 3)}`));
+        blocks.push(blockFromInline(token.tokens, `h${Math.min(token.depth, 3)}`, null, token.text));
         break;
       case "paragraph":
-        blocks.push(makeBlock(token.text));
+        blocks.push(blockFromInline(token.tokens, "normal", null, token.text));
         break;
       case "blockquote":
-        blocks.push(makeBlock(token.text || token.raw, "blockquote"));
+        blocks.push(blockFromInline(token.tokens, "blockquote", null, token.text || token.raw));
         break;
       case "list":
         for (const item of token.items) {
-          blocks.push(makeBlock(item.text, "normal", token.ordered ? "number" : "bullet"));
+          // marked nests list-item content under item.tokens; the
+          // inline tokens for the item's text live in item.tokens[0]
+          // (a "text" or "paragraph" token) when the item is simple.
+          let inlineTokens = null;
+          if (Array.isArray(item.tokens) && item.tokens.length > 0) {
+            const first = item.tokens[0];
+            if (first?.type === "text" && Array.isArray(first.tokens)) {
+              inlineTokens = first.tokens;
+            } else if (first?.type === "paragraph" && Array.isArray(first.tokens)) {
+              inlineTokens = first.tokens;
+            }
+          }
+          blocks.push(
+            blockFromInline(
+              inlineTokens,
+              "normal",
+              token.ordered ? "number" : "bullet",
+              item.text,
+            ),
+          );
         }
         break;
       case "space":
       case "hr":
         break;
       default:
-        if (token.text || token.raw) blocks.push(makeBlock(token.text || token.raw));
+        if (token.text || token.raw) {
+          blocks.push(blockFromInline(token.tokens, "normal", null, token.text || token.raw));
+        }
     }
   }
   return blocks;
 }
 
+/* ────────── affiliate yaml + Sanity affiliateLink upsert ────────── */
+
+/**
+ * Repository root from the script's location. Used to find the
+ * shared content/affiliates-global.yaml file regardless of which
+ * folder the user is publishing.
+ */
+const REPO_ROOT = path.resolve(SCRIPT_DIR, "..");
+const GLOBAL_AFFILIATES_PATH = path.join(REPO_ROOT, "content", "affiliates-global.yaml");
+
+/**
+ * Load and validate one affiliate entry. Errors loudly on shape mistakes
+ * — the user should fix them in the yaml, not silently skip.
+ */
+function validateAffiliateEntry(entry, source) {
+  const required = ["slug", "url", "program", "category"];
+  for (const k of required) {
+    if (!entry?.[k]) {
+      exit(
+        `Affiliate entry missing "${k}" in ${source}:\n  ${JSON.stringify(entry, null, 2)}`,
+      );
+    }
+  }
+  const slug = String(entry.slug).trim().toLowerCase();
+  if (!/^[a-z0-9][a-z0-9-]{0,95}$/.test(slug)) {
+    exit(
+      `Affiliate slug "${entry.slug}" in ${source} is invalid. ` +
+        `Use lowercase letters, digits, and hyphens only (max 96 chars).`,
+    );
+  }
+  return {
+    slug,
+    label: entry.label || slug,
+    category: entry.category,
+    url: entry.url,
+    program: entry.program,
+    linkText: entry.linkText || null,
+    notes: entry.notes || null,
+    regions: Array.isArray(entry.regions)
+      ? entry.regions
+          .filter((r) => r && r.region && r.url && r.program)
+          .map((r) => ({
+            region: String(r.region).toLowerCase(),
+            url: r.url,
+            program: r.program,
+          }))
+      : [],
+  };
+}
+
+/**
+ * Read content/affiliates-global.yaml. Returns a Map<slug, entry> with
+ * scope: "global" stamped on each. Empty map if the file doesn't exist
+ * (the build should still publish — affiliates are optional).
+ */
+async function loadGlobalAffiliates() {
+  if (!(await fileExists(GLOBAL_AFFILIATES_PATH))) {
+    return new Map();
+  }
+  const raw = await fs.readFile(GLOBAL_AFFILIATES_PATH, "utf8");
+  const parsed = yaml.load(raw);
+  if (!parsed) return new Map();
+  const list = Array.isArray(parsed) ? parsed : Array.isArray(parsed?.links) ? parsed.links : [];
+  const map = new Map();
+  for (const raw of list) {
+    const entry = validateAffiliateEntry(raw, "content/affiliates-global.yaml");
+    if (map.has(entry.slug)) {
+      exit(
+        `Duplicate affiliate slug "${entry.slug}" in content/affiliates-global.yaml. ` +
+          `Each slug must be unique.`,
+      );
+    }
+    map.set(entry.slug, { ...entry, scope: "global" });
+  }
+  return map;
+}
+
+/**
+ * Read <folder>/affiliates.yaml. Two top-level keys:
+ *   references: [<global slug>, ...]    — links inherited from globals
+ *   links:      [...affiliateEntry]     — guide-specific definitions
+ *
+ * Returns { references: string[], guideLinks: Map<slug, entry> }.
+ */
+async function loadGuideAffiliates() {
+  const candidates = ["affiliates.yaml", "affiliates.yml"];
+  let filePath = null;
+  for (const name of candidates) {
+    const p = path.join(folder, name);
+    if (await fileExists(p)) {
+      filePath = p;
+      break;
+    }
+  }
+  if (!filePath) {
+    return { references: [], guideLinks: new Map(), source: null };
+  }
+  const raw = await fs.readFile(filePath, "utf8");
+  const parsed = yaml.load(raw) || {};
+  const references = Array.isArray(parsed.references)
+    ? parsed.references.map((s) => String(s).trim().toLowerCase()).filter(Boolean)
+    : [];
+  const linkList = Array.isArray(parsed.links) ? parsed.links : [];
+  const guideLinks = new Map();
+  for (const raw of linkList) {
+    const entry = validateAffiliateEntry(raw, path.basename(filePath));
+    if (guideLinks.has(entry.slug)) {
+      exit(`Duplicate affiliate slug "${entry.slug}" in ${path.basename(filePath)}.`);
+    }
+    guideLinks.set(entry.slug, { ...entry, scope: "guide" });
+  }
+  return { references, guideLinks, source: path.basename(filePath) };
+}
+
+/**
+ * Resolve which affiliate entries this guide actually uses (for upsert
+ * + story.affiliateLinks references). Combines:
+ *   - guide-specific links (always)
+ *   - referenced globals (from `references:`)
+ *
+ * Validates that every reference resolves to a global entry — bad
+ * references are a publish-time error.
+ */
+function resolveGuideAffiliateUsage(globals, guideAffiliates) {
+  const used = new Map();
+  for (const [slug, entry] of guideAffiliates.guideLinks) {
+    used.set(slug, entry);
+  }
+  for (const ref of guideAffiliates.references) {
+    const entry = globals.get(ref);
+    if (!entry) {
+      exit(
+        `Affiliate reference "${ref}" in affiliates.yaml is not defined ` +
+          `in content/affiliates-global.yaml. Add it to globals or remove the reference.`,
+      );
+    }
+    if (!used.has(ref)) used.set(ref, entry);
+  }
+  return used;
+}
+
+/**
+ * Convert a resolved affiliate entry to a Sanity affiliateLink doc.
+ */
+function buildAffiliateDoc(entry) {
+  return {
+    _id: sanitizeId(`affiliateLink-${entry.slug}`),
+    _type: "affiliateLink",
+    label: entry.label,
+    slug: { _type: "slug", current: entry.slug },
+    scope: entry.scope || "global",
+    category: entry.category,
+    url: entry.url,
+    program: entry.program,
+    regions: entry.regions.length
+      ? entry.regions.map((r) => ({
+          _type: "regionalAffiliate",
+          _key: randomKey(),
+          region: r.region,
+          url: r.url,
+          program: r.program,
+        }))
+      : undefined,
+    linkText: entry.linkText || undefined,
+    notes: entry.notes || undefined,
+  };
+}
+
+/**
+ * Build a Map<canonicalUrl, { isAffiliate, program, category }> for
+ * markdown-link affiliate matching during mdToPortableText. Includes
+ * both the default URL and any regional URLs so affiliate links
+ * pasted in body markdown match regardless of which retailer's URL
+ * the author used.
+ */
+function buildAffiliateUrlMap(usedAffiliates) {
+  const map = new Map();
+  for (const entry of usedAffiliates.values()) {
+    const meta = (program, category) => ({ isAffiliate: true, program, category });
+    map.set(canonicaliseUrl(entry.url), meta(entry.program, entry.category));
+    for (const r of entry.regions) {
+      map.set(canonicaliseUrl(r.url), meta(r.program, entry.category));
+    }
+  }
+  return map;
+}
+
+/**
+ * Write a markdown cheat sheet listing every affiliate link this guide
+ * uses, with the /go/<slug> URL the PDF author should hyperlink in the
+ * PDF. Regenerated on every publish — overwriting is intentional.
+ */
+async function writePdfCheatSheet(usedAffiliates, guideSlug) {
+  if (usedAffiliates.size === 0) return null;
+  const cheatPath = path.join(folder, "pdf-affiliate-links.md");
+  const origin = process.env.NEXT_PUBLIC_SITE_URL || "https://testedroutes.com";
+  const lines = [];
+  lines.push(`# PDF affiliate links — ${guideSlug}`);
+  lines.push("");
+  lines.push(
+    "Use these short URLs in the PDF. Each /go/<slug> 302-redirects to the",
+  );
+  lines.push(
+    "tagged affiliate URL at click time, with country-aware retailer/region",
+  );
+  lines.push("routing. Don't paste the raw destination URL into the PDF —");
+  lines.push("if you do, you bypass tracking and any future env-var rotation.");
+  lines.push("");
+  lines.push("| Suggested PDF link text | URL to paste in PDF |");
+  lines.push("|---|---|");
+  const sorted = [...usedAffiliates.values()].sort((a, b) =>
+    a.slug.localeCompare(b.slug),
+  );
+  for (const entry of sorted) {
+    const text = entry.linkText || entry.label;
+    const url = `${origin}/go/${entry.slug}`;
+    lines.push(`| ${text} | ${url} |`);
+  }
+  lines.push("");
+  await fs.writeFile(cheatPath, lines.join("\n"), "utf8");
+  return cheatPath;
+}
+
 /* ────────── field mapping (fm → Sanity doc) ────────── */
 
-async function buildStoryDoc(fm, body, heroName, galleryNames, pdfName) {
+async function buildStoryDoc(fm, body, heroName, galleryNames, pdfName, affiliateContext = null) {
   const title = fm.title.trim();
   const slug = (fm.slug && fm.slug.trim()) || slugify(title);
 
@@ -888,7 +1256,16 @@ async function buildStoryDoc(fm, body, heroName, galleryNames, pdfName) {
   const journeyCatRef = fm.journeyCategory ? categoryRef(fm.journeyCategory, "journey") : undefined;
   const activityCatRef = fm.activityCategory ? categoryRef(fm.activityCategory, "activity") : undefined;
 
-  const bodyBlocks = mdToPortableText(body);
+  const affiliateUrlMap = affiliateContext?.urlMap || new Map();
+  const bodyBlocks = mdToPortableText(body, affiliateUrlMap);
+
+  const affiliateRefs = affiliateContext?.usedAffiliates
+    ? [...affiliateContext.usedAffiliates.values()].map((e) => ({
+        _type: "reference",
+        _key: randomKey(),
+        _ref: sanitizeId(`affiliateLink-${e.slug}`),
+      }))
+    : undefined;
 
   const gp = (c) =>
     c && typeof c.lat === "number" && typeof c.lng === "number"
@@ -1017,6 +1394,7 @@ async function buildStoryDoc(fm, body, heroName, galleryNames, pdfName) {
     adrenalineLevel: fm.differentiation?.adrenaline,
 
     guide: guideField,
+    affiliateLinks: affiliateRefs && affiliateRefs.length ? affiliateRefs : undefined,
     whyThisTrip: fm.sales?.whyThisTrip,
     whoThisIsFor: fm.sales?.whoThisIsFor,
     whatYouGet: fm.sales?.whatYouGet,
@@ -1103,7 +1481,26 @@ async function main() {
     : null;
   if (existing) console.log(`  ⚠ Existing story found — will overwrite (${existing._id})\n`);
 
-  const doc = await buildStoryDoc(fm, body, heroName, gallery, pdf);
+  /* Affiliate ingestion: load global yaml + per-guide yaml, resolve
+     used set, build URL map for body link tagging, prepare upsert
+     batch. Done before buildStoryDoc so it can attach references. */
+  const globals = await loadGlobalAffiliates();
+  const guideAffiliates = await loadGuideAffiliates();
+  const usedAffiliates = resolveGuideAffiliateUsage(globals, guideAffiliates);
+  const affiliateUrlMap = buildAffiliateUrlMap(usedAffiliates);
+  const affiliateContext = { usedAffiliates, urlMap: affiliateUrlMap };
+
+  if (usedAffiliates.size > 0) {
+    console.log(
+      `  affiliates: ${usedAffiliates.size} used` +
+        ` (${[...usedAffiliates.values()].filter((e) => e.scope === "global").length} global` +
+        ` + ${[...usedAffiliates.values()].filter((e) => e.scope === "guide").length} guide-specific)\n`,
+    );
+  } else if (guideAffiliates.source) {
+    console.log(`  affiliates: ${guideAffiliates.source} found but contains no usable entries\n`);
+  }
+
+  const doc = await buildStoryDoc(fm, body, heroName, gallery, pdf, affiliateContext);
 
   console.log(
     `  refs to create/reuse:\n` +
@@ -1125,7 +1522,26 @@ async function main() {
     await refTx.commit();
   }
 
+  // Upsert (createOrReplace) every affiliateLink doc this guide uses,
+  // before we createOrReplace the story (so the references are valid).
+  // Idempotent by slug-derived _id — safe to re-run.
+  if (usedAffiliates.size > 0) {
+    const affTx = client.transaction();
+    for (const entry of usedAffiliates.values()) {
+      affTx.createOrReplace(buildAffiliateDoc(entry));
+    }
+    await affTx.commit();
+    if (VERBOSE) console.log(`  ✓ Upserted ${usedAffiliates.size} affiliateLink doc(s)`);
+  }
+
   await client.createOrReplace(doc);
+
+  // PDF cheat sheet: regenerate per publish so the PDF author always
+  // has a current /go/<slug> list to copy from.
+  const cheatPath = await writePdfCheatSheet(usedAffiliates, slug);
+  if (cheatPath) {
+    console.log(`  ✓ PDF cheat sheet: ${path.relative(folder, cheatPath) || path.basename(cheatPath)}`);
+  }
 
   const guideUrl =
     fm.guide?.hasGuide && (fm.guide?.pageSlug || slug)

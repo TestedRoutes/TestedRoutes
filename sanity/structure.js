@@ -51,6 +51,40 @@ export const structure = (S) =>
         .child(S.documentTypeList("category").title("Categories")),
       S.divider(),
       S.listItem()
+        .title("Affiliate links")
+        .schemaType("affiliateLink")
+        .child(
+          S.list()
+            .title("Affiliate links")
+            .items([
+              S.listItem()
+                .title("Global (shared)")
+                .child(
+                  S.documentList()
+                    .title("Global affiliate links")
+                    .filter('_type == "affiliateLink" && scope == "global"')
+                    .defaultOrdering([{ field: "slug.current", direction: "asc" }]),
+                ),
+              S.listItem()
+                .title("Guide-specific")
+                .child(
+                  S.documentList()
+                    .title("Guide-specific affiliate links")
+                    .filter('_type == "affiliateLink" && scope == "guide"')
+                    .defaultOrdering([{ field: "slug.current", direction: "asc" }]),
+                ),
+              S.listItem()
+                .title("All by category")
+                .child(
+                  S.documentList()
+                    .title("All affiliate links")
+                    .filter('_type == "affiliateLink"')
+                    .defaultOrdering([{ field: "category", direction: "asc" }]),
+                ),
+            ]),
+        ),
+      S.divider(),
+      S.listItem()
         .title("Authors")
         .schemaType("author")
         .child(S.documentTypeList("author").title("Authors")),

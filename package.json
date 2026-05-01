@@ -10,6 +10,7 @@
     "sanity:dev": "sanity dev",
     "sanity:deploy": "sanity deploy",
     "publish": "node --env-file=.env.local scripts/publish-to-sanity.mjs",
+    "patch:affiliates": "node --env-file=.env.local scripts/patch-affiliates.mjs",
     "setup:pricing": "node --env-file=.env.local scripts/setup-pricing-tiers.mjs",
     "sync:polar": "node --env-file=.env.local scripts/sync-polar-products.mjs",
     "sweep:em-dashes": "node --env-file=.env.local scripts/sweep-sanity-em-dashes.mjs"

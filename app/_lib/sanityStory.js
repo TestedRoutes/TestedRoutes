@@ -10,6 +10,7 @@
 import { client } from "../../sanity/lib/client";
 import { urlFor } from "../../sanity/lib/image";
 import { portableTextToMarkdown } from "./portableTextToMarkdown";
+import { tagAffiliateLinksInBlocks } from "./affiliatePrograms";
 
 const STORY_PROJECTION = /* groq */ `
 {
@@ -68,6 +69,18 @@ const STORY_PROJECTION = /* groq */ `
   whyThisTrip, whoThisIsFor, whatYouGet, difficultyAtAGlance, notSuitableSales,
   faq[]{ question, answer },
   testimonials[]{ quote, author, location },
+  "affiliateLinks": affiliateLinks[]->{
+    _id,
+    label,
+    "slug": slug.current,
+    scope,
+    category,
+    url,
+    program,
+    regions[]{ region, url, program },
+    linkText,
+    notes,
+  },
   "similarStories": similarStories[]->{
     _id,
     title,
@@ -295,7 +308,12 @@ export function shapeStory(doc) {
     .map((i) => imageUrl(i, 1600))
     .filter(Boolean);
   const metadata = buildLegacyMetadata(doc);
-  const storyContent = portableTextToMarkdown(doc.body);
+  // Inject affiliate tracking IDs into link markDefs once, here, so every
+  // downstream consumer (markdown renderer, GuideBody PortableText,
+  // affiliateLinks extractor) sees tagged URLs without re-implementing the
+  // env-var lookup.
+  const taggedBody = tagAffiliateLinksInBlocks(doc.body);
+  const storyContent = portableTextToMarkdown(taggedBody);
 
   return {
     id: doc._id,
@@ -350,7 +368,11 @@ export function shapeGuide(doc, currency = "EUR") {
     .map((i) => imageUrl(i, 1600))
     .filter(Boolean);
   const metadata = buildLegacyMetadata(doc);
-  const storyContent = portableTextToMarkdown(doc.body);
+  // Tag once, here, so bodyBlocks + storyContent + every consumer of
+  // them (GuideBody, BuyBox essentialBookings, /links page) all see the
+  // same env-var-injected tracking IDs.
+  const taggedBody = tagAffiliateLinksInBlocks(doc.body);
+  const storyContent = portableTextToMarkdown(taggedBody);
 
   const pageSlug = doc.guide?.pageSlug || doc.slug;
   const category =
@@ -383,7 +405,7 @@ export function shapeGuide(doc, currency = "EUR") {
     purchases: doc.guide?.purchasesCount || 0,
     metadata,
     storyContent,
-    bodyBlocks: Array.isArray(doc.body) ? doc.body : [],
+    bodyBlocks: Array.isArray(taggedBody) ? taggedBody : [],
     coordinates: doc.coordinates || null,
     startingPoint: doc.startingPoint || null,
     routeStops: Array.isArray(doc.routeStops) ? doc.routeStops : null,
@@ -396,6 +418,7 @@ export function shapeGuide(doc, currency = "EUR") {
     heroName: doc.heroImage?.alt || null,
     guidePdfUrl: doc.guide?.pdfUrl || null,
     polarProductId: doc.guide?.polarProductId || null,
+    affiliateLinks: Array.isArray(doc.affiliateLinks) ? doc.affiliateLinks : [],
   };
 }
 

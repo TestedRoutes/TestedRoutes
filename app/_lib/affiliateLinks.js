@@ -14,7 +14,12 @@ function flattenSpans(block) {
 }
 
 /**
- * @returns {Array<{href: string, text: string, isAffiliate: boolean, category: string|null, blockKey: string|null}>}
+ * Walks a Portable Text body and returns every link annotation as a
+ * flat list. Hrefs are returned as-is — affiliate tracking IDs are
+ * already injected upstream in shapeGuide/shapeStory via
+ * tagAffiliateLinksInBlocks, so callers can use the href directly.
+ *
+ * @returns {Array<{href: string, text: string, isAffiliate: boolean, category: string|null, program: string|null, blockKey: string|null}>}
  */
 export function extractLinks(blocks) {
   if (!Array.isArray(blocks)) return [];
@@ -39,6 +44,7 @@ export function extractLinks(blocks) {
           text: span.text || link.href,
           isAffiliate: !!link.isAffiliate,
           category: link.affiliateCategory || null,
+          program: link.affiliateProgram || null,
           blockKey: block._key || null,
         });
       }

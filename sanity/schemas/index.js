@@ -1,3 +1,4 @@
+import affiliateLink from "./documents/affiliateLink";
 import author from "./documents/author";
 import category from "./documents/category";
 import collection from "./documents/collection";
@@ -7,6 +8,7 @@ import story from "./documents/story";
 
 import guide from "./objects/guide";
 import primaryStat from "./objects/primaryStat";
+import regionalAffiliate from "./objects/regionalAffiliate";
 import startingPoint from "./objects/startingPoint";
 import estimatedCost from "./objects/estimatedCost";
 import costBreakdown from "./objects/costBreakdown";
@@ -29,6 +31,7 @@ export const schemaTypes = [
   collection,
   category,
   pricingTier,
+  affiliateLink,
 
   // objects
   guide,
@@ -40,6 +43,7 @@ export const schemaTypes = [
   routeStop,
   socialLink,
   priceEntry,
+  regionalAffiliate,
 
   // portable text blocks
   galleryGrid,

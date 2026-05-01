@@ -1,0 +1,127 @@
+# Global affiliate links — shared across guides.
+#
+# This file is the source of truth for affiliate links that appear in
+# multiple guides (insurance, currency cards, eSIM, VPN, transport
+# passes). Per-guide affiliates (specific hotels, tours, gear items)
+# live in each guide folder's own affiliates.yaml.
+#
+# How this file is consumed:
+#
+#   The publish script (npm run publish -- <guide-folder>) reads this
+#   file plus the guide's own affiliates.yaml. References listed in the
+#   guide yaml's `references:` section pull entries from here. Each
+#   used entry is upserted to the affiliateLink Sanity collection by
+#   slug. The /go/<slug> redirector resolves at click time, applies
+#   tracking from env vars on Vercel, and routes by visitor country.
+#
+# Authoring notes:
+#
+#   - URLs below are CURRENT homepages. Replace each with the affiliate
+#     deeplink generated through the network's UI once each program is
+#     approved. Until then, links render normally — no commission, but
+#     no breakage.
+#   - For meta-platform-wrapped programs (Awin / Impact / CJ / AvantLink),
+#     paste the deeplink the platform gives you. It already carries
+#     your tracking — don't strip query params.
+#   - For simple-param programs (Booking, Amazon, Agoda, GYG, Kiwi),
+#     paste the raw URL with no tracking. The renderer appends the
+#     tracking ID from env vars.
+#   - Slugs are the path under /go/. Once published they live in PDFs
+#     and shared links — treat as immutable.
+
+links:
+  # ─── Money: cards & FX ─────────────────────────────────────────────
+  - slug: revolut
+    label: Revolut
+    category: essentials
+    url: https://www.revolut.com/
+    program: revolut
+    linkText: Revolut card
+
+  - slug: wise
+    label: Wise
+    category: essentials
+    url: https://wise.com/
+    program: wise
+    linkText: Wise card
+
+  # ─── Connectivity: eSIM ────────────────────────────────────────────
+  - slug: saily-esim
+    label: Saily eSIM
+    category: essentials
+    url: https://saily.com/
+    program: saily
+    linkText: Saily eSIM
+
+  # ─── Apps ──────────────────────────────────────────────────────────
+  - slug: nordvpn
+    label: NordVPN
+    category: essentials
+    url: https://nordvpn.com/
+    program: nordvpn
+    linkText: NordVPN
+
+  - slug: alltrails-pro
+    label: AllTrails Pro
+    category: essentials
+    url: https://www.alltrails.com/plus
+    program: alltrails
+    linkText: AllTrails Pro
+
+  - slug: komoot
+    label: Komoot
+    category: essentials
+    url: https://www.komoot.com/
+    program: komoot
+    linkText: Komoot
+
+  # ─── Ground transport ──────────────────────────────────────────────
+  - slug: trainline
+    label: Trainline (UK / EU rail)
+    category: transport
+    url: https://www.thetrainline.com/
+    program: trainline
+    linkText: Book on Trainline
+
+  - slug: flixbus
+    label: Flixbus
+    category: transport
+    url: https://www.flixbus.com/
+    program: flixbus
+    linkText: Book on Flixbus
+
+  - slug: swiss-travel-pass
+    label: Swiss Travel Pass (RailEurope)
+    category: transport
+    url: https://www.raileurope.com/en/swiss-travel-pass
+    program: raileurope
+    linkText: Swiss Travel Pass
+
+  - slug: swiss-travel-pass-acprail
+    label: Swiss Travel Pass (ACPRail)
+    category: transport
+    url: https://www.acprail.com/rail-passes/switzerland/swiss-travel-pass
+    program: acprail
+    linkText: Swiss Travel Pass (ACPRail)
+    notes: Alternative seller for Swiss Travel Pass — verify ACPRail's affiliate channel before relying on this for commission.
+
+  - slug: eurail
+    label: Eurail / Interrail
+    category: transport
+    url: https://www.eurail.com/
+    program: eurail
+    linkText: Book a Eurail pass
+    notes: Defer until founder has actually used a Eurail pass — brand-consistency rule.
+
+  # ─── Airport / city transfers ──────────────────────────────────────
+  - slug: welcome-pickups
+    label: Welcome Pickups (airport transfers)
+    category: transport
+    url: https://www.welcomepickups.com/
+    program: welcomepickups
+    linkText: Book a Welcome Pickups transfer
+    notes: |
+      Default global slug; for guide-specific city transfers (e.g. Rome
+      Fiumicino → city centre at a fixed price) author a guide-specific
+      entry like rome-fco-transfer with the city-scoped Welcome Pickups
+      URL and reference it from the guide's affiliates.yaml.

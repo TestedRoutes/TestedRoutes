@@ -223,6 +223,30 @@ export default {
                     },
                     hidden: ({ parent }) => !parent?.isAffiliate,
                   },
+                  {
+                    // Mirrors PROGRAM_CONFIG in app/_lib/affiliatePrograms.js.
+                    // Keep these two lists in sync. Pick the program here so
+                    // the renderer knows which env-var-backed tracking ID to
+                    // append (Booking aid=, Amazon tag=, etc.). "Other" =
+                    // pre-baked URL (CJ / Impact / Awin / direct deeplink) —
+                    // pass-through, no append.
+                    name: "affiliateProgram",
+                    type: "string",
+                    title: "Affiliate program",
+                    description:
+                      "Which network this link goes through. Drives which tracking ID gets appended at render time. Paste the raw destination URL above — the tag/aid/partner_id is added automatically from env vars on Vercel.",
+                    options: {
+                      list: [
+                        { title: "Booking.com", value: "booking" },
+                        { title: "GetYourGuide", value: "gyg" },
+                        { title: "Amazon (.com)", value: "amazon" },
+                        { title: "SafetyWing", value: "safetywing" },
+                        { title: "Other (pre-baked URL)", value: "other" },
+                      ],
+                      layout: "dropdown",
+                    },
+                    hidden: ({ parent }) => !parent?.isAffiliate,
+                  },
                 ],
               },
             ],
@@ -797,6 +821,20 @@ export default {
       type: "text",
       rows: 2,
       group: "relationships",
+    },
+
+    /* Affiliate links attached to this guide. References to affiliateLink
+       docs — populated by the publish script from the guide folder's
+       affiliates.yaml (guide-specific + referenced global slugs). Used
+       to render the Get-the-links-free page and the PDF cheat sheet. */
+    {
+      name: "affiliateLinks",
+      title: "Affiliate links",
+      type: "array",
+      group: "commerce",
+      of: [{ type: "reference", to: [{ type: "affiliateLink" }] }],
+      description:
+        "Set by the publish script from the guide folder's affiliates.yaml — don't hand-edit unless you know what you're doing. The order here is the order shown on the public links page.",
     },
 
     /* ──────────────── INTERNAL (admin only) ──────────────── */

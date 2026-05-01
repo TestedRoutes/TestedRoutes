@@ -1,0 +1,90 @@
+# Triftbrücke from Zurich — affiliate links for this guide.
+#
+# Per-guide affiliate file. Two top-level sections:
+#
+#   references: — slugs from content/affiliates-global.yaml that this
+#                  guide reuses (currency cards, eSIM, VPN, etc).
+#   links:      — guide-specific affiliate entries that exist only for
+#                  this trip (specific hotel, specific tour ticket,
+#                  guide-curated gear kit, etc).
+#
+# After publish:
+#   - Each link below is upserted into Sanity as an affiliateLink doc.
+#   - The story doc gets affiliateLinks references pointing at all of them
+#     plus the global ones in `references:`.
+#   - /go/<slug> resolves at click time, applies tracking + region swap.
+#   - pdf-affiliate-links.md is regenerated next to story.md with the
+#     /go/ URLs ready to paste into the PDF.
+
+references:
+  - revolut             # FX card — global
+  - saily-esim          # eSIM — Switzerland is well-covered
+  - swiss-travel-pass   # Free travel on most Swiss public transport
+  - alltrails-pro       # Offline Trift route map for the hike
+  - welcome-pickups     # Generic transfer fallback (rare for this trip)
+
+links:
+  # ─── Essential bookings (open at checkout) ─────────────────────────
+  - slug: triftbrucke-hotel-innertkirchen
+    label: Hotel Hof und Post (Innertkirchen)
+    category: essential_booking
+    url: https://www.booking.com/searchresults.html?ss=Innertkirchen+Switzerland&group_adults=2&no_rooms=1
+    program: booking
+    linkText: Stay overnight in Innertkirchen
+    notes: |
+      Innertkirchen is the closest village to the Trift cable-car base
+      station. Pre-booking matters in summer weekends — beds are limited
+      and the train back to Zurich can be missed if you start the hike
+      from Meiringen instead.
+
+  - slug: triftbrucke-cable-car
+    label: Trift cable car (Triftbahn) ticket
+    category: tour
+    url: https://www.grimselwelt.ch/en/mountain-railway/trift-cable-car/
+    program: other
+    linkText: Reserve the Triftbahn cable car
+    notes: |
+      Operated by Grimselwelt. Reservation required in summer; first
+      cabin is at 09:00. Round-trip ticket. Not on GYG/Viator at the
+      time of writing — link goes direct to the operator (no commission,
+      brand-defensive).
+
+  # ─── Transport ─────────────────────────────────────────────────────
+  - slug: triftbrucke-zurich-train
+    label: Zurich → Meiringen train (SBB via Trainline)
+    category: transport
+    url: https://www.thetrainline.com/book/results?origin=Zurich&destination=Meiringen
+    program: trainline
+    linkText: Book the train from Zurich to Meiringen
+    notes: |
+      Zurich HB → Lucerne → Meiringen, ~2h 10min. Trainline carries SBB
+      tickets; if you have a Swiss Travel Pass it's already covered (no
+      extra ticket needed) — surface that note in the body text.
+
+  # ─── Gear: curated day-hike kit (region-routed) ────────────────────
+  - slug: triftbrucke-day-hike-kit
+    label: Triftbrücke day-hike gear kit
+    category: gear
+    url: https://www.amazon.com/hz/wishlist/ls/REPLACE_WITH_AMAZON_LIST_ID
+    program: amazon
+    regions:
+      - region: us
+        url: https://www.backcountry.com/lists/REPLACE_WITH_BC_LIST_ID
+        program: backcountry
+      - region: eu
+        url: https://www.bergfreunde.eu/lists/REPLACE_WITH_BF_LIST_ID
+        program: bergfreunde
+    linkText: See the full Triftbrücke gear kit
+    notes: |
+      Day-hike kit (boots, trekking poles, 25–30L pack, soft shell,
+      windbreaker, headlamp, water filter, snacks). Build the actual
+      lists once AvantLink / Awin / Amazon Associates approvals land —
+      the placeholders above keep the slug usable; the fallback Amazon
+      link is .com (regional storefront swap happens at /go/ click time
+      based on visitor country).
+
+  # NOTE: gear is intentionally a SINGLE link per guide — the curated
+  # kit / shopping cart on Backcountry / Bergfreunde / Amazon. Individual
+  # items (boots, poles, etc.) live inside that retailer-side list, not
+  # as separate affiliate slugs here. One link per guide reduces clutter
+  # and gives readers one place to shop the whole kit.
