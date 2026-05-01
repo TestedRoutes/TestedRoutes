@@ -42,29 +42,9 @@ const CATEGORY_ORDER = [
 const CATEGORY_INDEX = new Map(CATEGORY_ORDER.map((c, i) => [c.value, { ...c, sort: i }]));
 
 /**
- * Take a compact first-paragraph excerpt from a multi-line notes field
- * for the "Why" cell. Sentence-boundary detection is unreliable
- * ("e.g." trips a naive period-split), so we just take the first
- * paragraph (up to first blank line) and clip at a word boundary if
- * it's longer than 200 chars. Authors who want to control the excerpt
- * should put the headline first and follow with a blank line.
- */
-function shortNotes(notes) {
-  if (!notes) return "";
-  const firstPara = String(notes).trim().split(/\n\s*\n/)[0];
-  const text = firstPara.replace(/\s+/g, " ").trim();
-  if (text.length <= 200) return text;
-  const cut = text.slice(0, 200);
-  const lastSpace = cut.lastIndexOf(" ");
-  const trimmed = lastSpace > 120 ? cut.slice(0, lastSpace) : cut;
-  return trimmed.trimEnd() + "…";
-}
-
-/**
  * Flatten the guide's affiliateLinks references into a single array of
- * row-shaped objects, sorted by CATEGORY_ORDER. Each row carries
- * everything the table cell needs: category label/value, brand label
- * (resolved from PROGRAM_CONFIG), and the /go/ short URL.
+ * row-shaped objects, sorted by CATEGORY_ORDER then alphabetically by
+ * label. Each row carries everything the 4-column table needs.
  */
 function flattenAffiliateRows(refs) {
   if (!Array.isArray(refs) || refs.length === 0) return [];
@@ -78,17 +58,15 @@ function flattenAffiliateRows(refs) {
       sort: 999,
     };
     const program = r.program || "other";
-    const programLabel = PROGRAM_CONFIG[program]?.label || program;
+    const programLabel =
+      program === "other" ? "Direct" : PROGRAM_CONFIG[program]?.label || program;
     rows.push({
       slug: r.slug,
       href: `/go/${r.slug}`,
       label: r.label || r.slug,
       linkText: r.linkText || null,
-      notes: shortNotes(r.notes),
-      categoryValue: catEntry.value,
       categoryLabel: catEntry.label,
       categorySort: catEntry.sort,
-      programKey: program,
       programLabel,
     });
   }
@@ -101,9 +79,8 @@ function flattenAffiliateRows(refs) {
 
 /**
  * Body-extracted fallback for older guides that haven't been migrated
- * to the affiliateLinks reference workflow. Maps the body-link shape
- * onto the same row-shape flattenAffiliateRows produces, so the same
- * renderer handles both.
+ * to the affiliateLinks reference workflow. Maps body-link shape onto
+ * the same 4-column row shape.
  */
 function rowsFromBodyExtraction(blocks) {
   const groups = groupAffiliateLinks(blocks);
@@ -120,29 +97,14 @@ function rowsFromBodyExtraction(blocks) {
         href: l.href,
         label: l.text || l.href,
         linkText: null,
-        notes: "",
-        categoryValue: catEntry.value,
         categoryLabel: catEntry.label,
         categorySort: catEntry.sort,
-        programKey: "other",
-        programLabel: "External",
+        programLabel: "Direct",
       });
     }
   }
   rows.sort((a, b) => a.categorySort - b.categorySort);
   return rows;
-}
-
-/**
- * Small chip used for the category column. Quiet visual style — the
- * label and CTA are the row's protagonists, not the badge.
- */
-function CategoryBadge({ label }) {
-  return (
-    <span className="inline-flex shrink-0 items-center rounded-full bg-slate-100 px-2.5 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-slate-600">
-      {label}
-    </span>
-  );
 }
 
 export default async function GuideLinksPage({ params }) {
@@ -214,42 +176,48 @@ export default async function GuideLinksPage({ params }) {
         </p>
       ) : (
         <div className="mt-8 overflow-hidden rounded-2xl border border-slate-200 bg-white">
-          {/* Header row — desktop only; on mobile each row stacks. */}
-          <div className="hidden border-b border-slate-200 bg-slate-50 px-5 py-3 text-[11px] font-semibold uppercase tracking-wider text-slate-500 md:grid md:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)_auto] md:gap-6">
-            <div>Item</div>
-            <div>Why we picked it</div>
+          {/* Header — desktop only; on mobile each row stacks. */}
+          <div className="hidden border-b border-slate-200 bg-slate-50 px-5 py-3 text-[11px] font-semibold uppercase tracking-wider text-slate-500 md:grid md:grid-cols-[140px_140px_minmax(0,1fr)_auto] md:gap-6">
+            <div>Type</div>
+            <div>Provider</div>
+            <div>Description</div>
             <div className="w-32" />
           </div>
           <div className="divide-y divide-slate-100">
             {rows.map((r) => (
               <div
                 key={r.href}
-                className="grid grid-cols-1 gap-3 px-5 py-5 md:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)_auto] md:items-start md:gap-6"
+                className="grid grid-cols-1 gap-2 px-5 py-4 md:grid-cols-[140px_140px_minmax(0,1fr)_auto] md:items-center md:gap-6"
               >
-                {/* Column 1 — category badge + brand + title + linkText */}
+                {/* Mobile-only column labels keep stacked rows readable. */}
+                <div>
+                  <p className="text-[10px] font-semibold uppercase tracking-wider text-slate-400 md:hidden">
+                    Type
+                  </p>
+                  <p className="text-xs font-medium uppercase tracking-wide text-slate-600">
+                    {r.categoryLabel}
+                  </p>
+                </div>
+                <div>
+                  <p className="text-[10px] font-semibold uppercase tracking-wider text-slate-400 md:hidden">
+                    Provider
+                  </p>
+                  <p className="text-sm text-slate-700">{r.programLabel}</p>
+                </div>
                 <div className="min-w-0">
-                  <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
-                    <CategoryBadge label={r.categoryLabel} />
-                    {r.programKey && r.programKey !== "other" ? (
-                      <span className="text-[11px] font-medium uppercase tracking-wide text-slate-400">
-                        via {r.programLabel}
-                      </span>
-                    ) : null}
-                  </div>
-                  <p className="mt-2 font-['Georgia',serif] text-base font-semibold text-[#1a1816]">
+                  <p className="text-[10px] font-semibold uppercase tracking-wider text-slate-400 md:hidden">
+                    Description
+                  </p>
+                  <p className="text-sm font-medium text-slate-900">
                     {r.label}
                   </p>
                   {r.linkText && r.linkText !== r.label ? (
-                    <p className="mt-0.5 text-xs italic text-slate-500">{r.linkText}</p>
+                    <p className="mt-0.5 text-xs italic text-slate-500">
+                      {r.linkText}
+                    </p>
                   ) : null}
                 </div>
-                {/* Column 2 — why we picked it (notes excerpt). Empty when
-                    no note authored — better silent than scolding. */}
-                <div className="text-sm leading-relaxed text-slate-600">
-                  {r.notes || ""}
-                </div>
-                {/* Column 3 — CTA */}
-                <div className="md:self-center">
+                <div>
                   <a
                     href={r.href}
                     target="_blank"
