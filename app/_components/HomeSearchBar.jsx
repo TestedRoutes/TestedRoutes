@@ -4,39 +4,11 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
-const SEARCH_SUGGESTIONS = [
-  { label: "Switzerland – Country", href: "/destinations/switzerland" },
-  { label: "Zurich – Starting point in Switzerland", href: "/destinations/switzerland?start=zurich" },
-  { label: "Triftbrücke from Zurich – Guide", href: "/guides/trift-bridge-from-zurich" },
-  { label: "Stoos Ridge from Zurich – Guide", href: "/guides/stoos-ridge-from-zurich" },
-  { label: "Appenzell & Ebenalp from Zurich – Guide", href: "/guides/appenzell-ebenalp-from-zurich" },
-  { label: "Mount Rigi from Zurich – Guide", href: "/guides/mount-rigi-from-zurich" },
-  { label: "Säntis from Zurich – Guide", href: "/guides/santis-from-zurich" },
-  { label: "Flims & Caumasee from Zurich – Guide", href: "/guides/flims-caumasee-from-zurich" },
-  { label: "Day trips from Zurich – Guide collection", href: "/destinations/switzerland?length=daytrip&start=zurich" },
-];
-
-const GUIDE_MATCHES = {
-  trift: "/guides/trift-bridge-from-zurich",
-  stoos: "/guides/stoos-ridge-from-zurich",
-  appenzell: "/guides/appenzell-ebenalp-from-zurich",
-  ebenalp: "/guides/appenzell-ebenalp-from-zurich",
-  rigi: "/guides/mount-rigi-from-zurich",
-  säntis: "/guides/santis-from-zurich",
-  santis: "/guides/santis-from-zurich",
-  flims: "/guides/flims-caumasee-from-zurich",
-  caumasee: "/guides/flims-caumasee-from-zurich",
-};
-
 const DESTINATION_TERMS = ["switzerland", "swiss", "zurich", "geneva", "lucerne", "interlaken"];
 
 function resolveDestinationSearch(query) {
   const normalized = query.toLowerCase().trim();
   if (!normalized) return null;
-
-  const directGuide = Object.keys(GUIDE_MATCHES).find((term) => normalized.includes(term));
-  if (directGuide) return GUIDE_MATCHES[directGuide];
-
   if (!DESTINATION_TERMS.some((term) => normalized.includes(term))) return null;
 
   let length = null;
@@ -59,14 +31,25 @@ function resolveDestinationSearch(query) {
   return `/destinations/switzerland${qs ? `?${qs}` : ""}`;
 }
 
-export default function HomeSearchBar() {
+function matchGuides(guides, query) {
+  const needle = query.toLowerCase().trim();
+  if (!needle) return [];
+  return guides.filter((g) => {
+    const haystack = `${g.title} ${g.slug} ${g.category || ""}`.toLowerCase();
+    return haystack.includes(needle);
+  });
+}
+
+export default function HomeSearchBar({ guides = [] }) {
   const router = useRouter();
   const [query, setQuery] = useState("");
-  const suggestions = query
-    ? SEARCH_SUGGESTIONS.filter((s) => s.label.toLowerCase().includes(query.toLowerCase()))
-    : [];
+  const matches = query ? matchGuides(guides, query).slice(0, 8) : [];
 
   const handleSubmit = () => {
+    if (matches.length > 0) {
+      router.push(matches[0].href);
+      return;
+    }
     const url = resolveDestinationSearch(query);
     if (url) router.push(url);
   };
@@ -94,15 +77,18 @@ export default function HomeSearchBar() {
           Search Guides
         </button>
       </div>
-      {suggestions.length > 0 && (
+      {matches.length > 0 && (
         <div className="mt-2 overflow-hidden rounded-2xl bg-white shadow-sm ring-1 ring-slate-200">
-          {suggestions.map((item) => (
+          {matches.map((item) => (
             <Link
-              key={item.label}
+              key={item.slug}
               href={item.href}
               className="block px-4 py-3 text-xs text-slate-600 hover:bg-slate-50"
             >
-              {item.label}
+              <span className="font-semibold text-slate-900">{item.title}</span>
+              {item.category ? (
+                <span className="ml-2 text-slate-500">– {item.category}</span>
+              ) : null}
             </Link>
           ))}
         </div>

@@ -2,6 +2,7 @@ import Link from "next/link";
 import HomeSearchBar from "../_components/HomeSearchBar";
 import HomeGuideCard from "../_components/HomeGuideCard";
 import { HOME_GUIDES } from "../_lib/homeGuides";
+import { loadGuides } from "../_lib/loadGuides";
 
 const DESTINATION_RAIL = [
   { label: "Switzerland", href: "/destinations/switzerland" },
@@ -15,20 +16,28 @@ const DESTINATION_RAIL = [
   { label: "Everest Preparation", href: "/guides" },
 ];
 
-export default function HomePage() {
+export default async function HomePage() {
+  const allGuides = await loadGuides();
+  const searchableGuides = allGuides.map((g) => ({
+    title: g.title,
+    slug: g.slug,
+    category: g.category,
+    href: g.href,
+  }));
+
   return (
     <main className="mx-auto flex max-w-6xl flex-col gap-10 px-6 pb-16 pt-8">
       <section className="space-y-3">
-        <div className="space-y-1">
+        <div className="space-y-1 text-center">
           <h1 className="text-2xl font-semibold leading-tight md:text-3xl">
-            Travel more. Waste less time planning
+            Plan less. Travel more.
           </h1>
           <p className="text-sm leading-snug text-slate-600">
             Premium travel guides built from 15 years independent travel across 140 countries.
             AI has not been there – I have!
           </p>
         </div>
-        <HomeSearchBar />
+        <HomeSearchBar guides={searchableGuides} />
         <div className="flex gap-3 overflow-x-auto pb-2">
           {DESTINATION_RAIL.map((item) => (
             <Link
