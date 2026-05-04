@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useMemo, useState } from "react";
+import CategoryStrip from "./CategoryStrip";
 
 function matchesSearch(card, query) {
   if (!query) return true;
@@ -19,17 +20,8 @@ function matchesSearch(card, query) {
   return haystack.includes(needle);
 }
 
-function sortCards(cards, key) {
-  const copy = [...cards];
-  switch (key) {
-    case "oldest":
-      return copy.sort((a, b) => (a.dateMillis || 0) - (b.dateMillis || 0));
-    case "alpha":
-      return copy.sort((a, b) => a.title.localeCompare(b.title));
-    case "recent":
-    default:
-      return copy.sort((a, b) => (b.dateMillis || 0) - (a.dateMillis || 0));
-  }
+function sortRecentFirst(cards) {
+  return [...cards].sort((a, b) => (b.dateMillis || 0) - (a.dateMillis || 0));
 }
 
 function StoryCard({ card }) {
@@ -105,86 +97,47 @@ function StoryCard({ card }) {
   return <div className={shellStatic}>{inner}</div>;
 }
 
-const CATEGORY_CHIPS = [
-  "Switzerland",
-  "New Zealand",
-  "Expeditions",
-  "Mountains",
-  "Extreme Experiences",
-  "Route Ideas",
-];
-
-export default function InspireBrowse({ cards }) {
+export default function InspireBrowse({ cards, categoryItems = [] }) {
   const [search, setSearch] = useState("");
-  const [sortKey, setSortKey] = useState("recent");
 
   const filtered = useMemo(() => {
     const matched = cards.filter((c) => matchesSearch(c, search));
-    return sortCards(matched, sortKey);
-  }, [cards, search, sortKey]);
+    return sortRecentFirst(matched);
+  }, [cards, search]);
 
   return (
     <>
-      <div className="flex w-full min-w-0 flex-col gap-3">
-        <div className="mx-auto w-full max-w-2xl">
-          <label htmlFor="inspire-search" className="sr-only">
-            Search journeys
-          </label>
-          <div className="flex w-full items-center gap-2 rounded-full bg-white p-1.5 shadow-sm ring-1 ring-slate-200">
-            <input
-              id="inspire-search"
-              type="search"
-              placeholder="Search journeys…"
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              className="min-w-0 flex-1 bg-transparent px-5 py-2.5 text-sm text-slate-700 outline-none placeholder:text-slate-400"
-            />
-            <button
-              type="button"
-              onClick={() => document.getElementById("inspire-search")?.blur()}
-              className="shrink-0 rounded-full bg-slate-900 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-slate-800"
-            >
-              Search
-            </button>
-          </div>
-        </div>
-
-        <div className="flex flex-wrap items-center gap-2">
-          <div className="ml-auto flex items-center gap-2.5">
-            <p className="text-sm font-medium tabular-nums text-slate-500">
-              {filtered.length} {filtered.length === 1 ? "story" : "stories"}
-            </p>
-            <label htmlFor="inspire-sort" className="text-xs font-semibold text-slate-600">
-              Sort
-            </label>
-            <select
-              id="inspire-sort"
-              value={sortKey}
-              onChange={(e) => setSortKey(e.target.value)}
-              className="rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs font-medium text-slate-800 focus:border-slate-300 focus:outline-none focus:ring-2 focus:ring-slate-200"
-            >
-              <option value="recent">Most recent</option>
-              <option value="oldest">Oldest</option>
-              <option value="alpha">Alphabetical</option>
-            </select>
-          </div>
+      <div className="mx-auto w-full max-w-2xl">
+        <label htmlFor="inspire-search" className="sr-only">
+          Search journeys
+        </label>
+        <div className="flex w-full items-center gap-2 rounded-full bg-white p-1.5 shadow-sm ring-1 ring-slate-200">
+          <input
+            id="inspire-search"
+            type="search"
+            placeholder="Search journeys…"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            className="min-w-0 flex-1 bg-transparent px-5 py-2.5 text-sm text-slate-700 outline-none placeholder:text-slate-400"
+          />
+          <button
+            type="button"
+            onClick={() => document.getElementById("inspire-search")?.blur()}
+            className="shrink-0 rounded-full bg-slate-900 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-slate-800"
+          >
+            Search
+          </button>
         </div>
       </div>
 
-      <section className="flex w-full min-w-0 gap-2 overflow-x-auto pb-1 sm:flex-wrap sm:overflow-visible sm:pb-0">
-        {CATEGORY_CHIPS.map((label) => (
-          <span
-            key={label}
-            className="shrink-0 rounded-full border border-slate-200 bg-white px-4 py-2 text-xs font-semibold leading-snug tracking-wide text-slate-600"
-          >
-            {label}
-          </span>
-        ))}
-      </section>
+      {categoryItems.length > 0 ? <CategoryStrip items={categoryItems} /> : null}
 
       <div className="flex w-full min-w-0 flex-col gap-1 sm:flex-row sm:items-end sm:justify-between sm:gap-4">
         <p className="text-xl font-semibold tracking-tight text-slate-900 sm:text-2xl">
           Journeys I've actually done
+        </p>
+        <p className="text-sm font-medium tabular-nums text-slate-500">
+          {filtered.length} {filtered.length === 1 ? "story" : "stories"}
         </p>
       </div>
 

@@ -56,6 +56,24 @@ const EXTREME_EXPERIENCES = [
   { label: "Remote border crossings – West Africa", file: "Makoko Nigeria 2025.jpg" },
 ];
 
+// Placeholder images — to be replaced with category-specific photos later.
+const CATEGORY_PILLS = [
+  { label: "Hiking", file: "Toubkal 2025.jpg" },
+  { label: "Mountaineering", file: "7_Summits_Denali 2022.jpg" },
+  { label: "Skiing", file: "Summits Alaska 2019 v2.jpg" },
+  { label: "Diving", file: "Sharks Fiji 2025.jpg" },
+  { label: "Rafting", file: "Rafting Zambia 2019.jpg" },
+  { label: "Kayaking", file: "Milford Sound - NZ 2025.jpg" },
+  { label: "Via Ferrata", file: "Ice climbing Italy 2019.jpg" },
+  { label: "Bungee", file: "Victoria falls 2019.jpg" },
+  { label: "Seven Summits", file: "7_Summits_Kilimanjaro 2016.jpg" },
+  { label: "Africa Rally", file: "Africa Rally - Guinea 2024.jpg" },
+  { label: "Safari", file: "Africa rally - Desert 2023.jpg" },
+  { label: "Roadtrips", file: "Mongol rally.jpg" },
+  { label: "Switzerland", file: "Matterhorn 2020.jpg" },
+  { label: "Iceland", file: "Mt Cook - NZ 2026.jpg" },
+];
+
 function aboutAsset(filename) {
   return "/About%20me/" + encodeURIComponent(filename);
 }
@@ -112,13 +130,20 @@ export default async function InspirePage() {
       <div className="mx-auto flex w-full min-w-0 max-w-6xl flex-col gap-8 px-4 sm:gap-10 sm:px-6">
         <div className="space-y-1 text-center">
           <h1 className="text-2xl font-semibold leading-tight md:text-3xl">
-            Real journeys. Real lessons.
+            Real journeys. Real lessons
           </h1>
           <p className="text-sm leading-snug text-slate-600">
-            Stories to spark your next trip.
+            Stories to spark your next trip
           </p>
         </div>
-        <InspireBrowse cards={cards} />
+
+        <InspireBrowse
+          cards={cards}
+          categoryItems={CATEGORY_PILLS.map((item) => ({
+            label: item.label,
+            src: aboutAsset(item.file),
+          }))}
+        />
 
         <section className="grid w-full min-w-0 gap-4 rounded-[28px] bg-white p-6 shadow-sm ring-1 ring-slate-200 md:grid-cols-4">
           {[
