@@ -28,14 +28,10 @@ export default async function HomePage() {
   return (
     <main className="mx-auto flex max-w-6xl flex-col gap-10 px-6 pb-16 pt-8">
       <section className="space-y-3">
-        <div className="space-y-1 text-center">
+        <div className="text-center">
           <h1 className="text-2xl font-semibold leading-tight md:text-3xl">
-            Plan less. Travel more.
+            Travel guides built from real trips
           </h1>
-          <p className="text-sm leading-snug text-slate-600">
-            Premium travel guides built from 15 years independent travel across 140 countries.
-            AI has not been there – I have!
-          </p>
         </div>
         <HomeSearchBar guides={searchableGuides} />
         <div className="flex gap-3 overflow-x-auto pb-2">

@@ -126,23 +126,23 @@ export default function InspireBrowse({ cards }) {
   return (
     <>
       <div className="flex w-full min-w-0 flex-col gap-3">
-        <div className="mx-auto w-full max-w-2xl rounded-[28px] bg-white p-4 shadow-sm ring-1 ring-slate-200">
+        <div className="mx-auto w-full max-w-2xl">
           <label htmlFor="inspire-search" className="sr-only">
             Search journeys
           </label>
-          <div className="flex flex-col gap-3 md:flex-row md:items-center">
+          <div className="flex w-full items-center gap-2 rounded-full bg-white p-1.5 shadow-sm ring-1 ring-slate-200">
             <input
               id="inspire-search"
               type="search"
               placeholder="Search journeys…"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="min-h-[48px] flex-1 rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-base text-slate-900 placeholder:text-slate-400 focus:border-slate-300 focus:outline-none focus:ring-2 focus:ring-slate-200 sm:min-h-0 sm:text-sm"
+              className="min-w-0 flex-1 bg-transparent px-5 py-2.5 text-sm text-slate-700 outline-none placeholder:text-slate-400"
             />
             <button
               type="button"
               onClick={() => document.getElementById("inspire-search")?.blur()}
-              className="shrink-0 rounded-xl bg-slate-900 px-6 py-3 text-sm font-semibold text-white"
+              className="shrink-0 rounded-full bg-slate-900 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-slate-800"
             >
               Search
             </button>

@@ -20,6 +20,7 @@ export const HOME_GUIDES = [
       `${STORY_BASE}20201018_130613.jpg`,
     ],
   },
+  { category: "Day Trip", title: "Simplon Pass from Zurich", duration: "1 day", meta: "PDF guide", price: "€9.99", coming_soon: true },
   { category: "Day Trip", title: "Stoos Ridge from Zurich", duration: "1 day", meta: "PDF guide", price: "€9.99", coming_soon: true },
   { category: "Day Trip", title: "Appenzell & Ebenalp from Zurich", duration: "1 day", meta: "PDF guide", price: "€12.99", coming_soon: true },
   { category: "Day Trip", title: "Mount Rigi from Zurich", duration: "1 day", meta: "PDF guide", price: "€9.99", coming_soon: true },

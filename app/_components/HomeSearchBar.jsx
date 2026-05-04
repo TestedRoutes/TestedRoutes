@@ -56,22 +56,19 @@ export default function HomeSearchBar({ guides = [] }) {
 
   return (
     <div className="mx-auto w-full max-w-2xl">
-      <div className="flex w-full flex-col gap-3 rounded-2xl bg-white p-4 shadow-sm ring-1 ring-slate-200 md:flex-row md:items-center">
-        <div className="flex flex-1 items-center gap-3 rounded-xl bg-slate-50 px-4 py-2.5 text-sm text-slate-500">
-          <span className="h-2 w-2 rounded-full bg-slate-900" />
-          <input
-            value={query}
-            onChange={(e) => setQuery(e.target.value)}
-            onKeyDown={(e) => {
-              if (e.key === "Enter") handleSubmit();
-            }}
-            placeholder="Search destinations or guides"
-            className="w-full bg-transparent text-sm text-slate-600 outline-none"
-          />
-        </div>
+      <div className="flex w-full items-center gap-2 rounded-full bg-white p-1.5 shadow-sm ring-1 ring-slate-200">
+        <input
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+          onKeyDown={(e) => {
+            if (e.key === "Enter") handleSubmit();
+          }}
+          placeholder="Search destinations or guides"
+          className="min-w-0 flex-1 bg-transparent px-5 py-2.5 text-sm text-slate-700 outline-none placeholder:text-slate-400"
+        />
         <button
           type="button"
-          className="rounded-xl bg-slate-900 px-6 py-3 text-sm font-semibold text-white"
+          className="shrink-0 rounded-full bg-slate-900 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-slate-800"
           onClick={handleSubmit}
         >
           Search Guides
