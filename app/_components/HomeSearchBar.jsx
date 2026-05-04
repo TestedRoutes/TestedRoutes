@@ -4,6 +4,10 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
+// Supports either uncontrolled (own state) or controlled (parent owns query
+// via `query` + `onQueryChange`). The controlled mode lets neighbour widgets
+// like CategoryStrip drive the search.
+
 const DESTINATION_TERMS = ["switzerland", "swiss", "zurich", "geneva", "lucerne", "interlaken"];
 
 function resolveDestinationSearch(query) {
@@ -40,9 +44,12 @@ function matchGuides(guides, query) {
   });
 }
 
-export default function HomeSearchBar({ guides = [] }) {
+export default function HomeSearchBar({ guides = [], query: controlledQuery, onQueryChange }) {
   const router = useRouter();
-  const [query, setQuery] = useState("");
+  const isControlled = controlledQuery !== undefined && typeof onQueryChange === "function";
+  const [internalQuery, setInternalQuery] = useState("");
+  const query = isControlled ? controlledQuery : internalQuery;
+  const setQuery = isControlled ? onQueryChange : setInternalQuery;
   const matches = query ? matchGuides(guides, query).slice(0, 8) : [];
 
   const handleSubmit = () => {

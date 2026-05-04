@@ -2,7 +2,8 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 
-export default function CategoryStrip({ items }) {
+export default function CategoryStrip({ items, onItemClick }) {
+  const interactive = typeof onItemClick === "function";
   const scrollRef = useRef(null);
   const [canPrev, setCanPrev] = useState(false);
   const [canNext, setCanNext] = useState(false);
@@ -44,24 +45,44 @@ export default function CategoryStrip({ items }) {
         className="-mx-4 overflow-x-auto scroll-smooth px-4 pb-1 [-ms-overflow-style:none] [scrollbar-width:none] sm:mx-0 sm:px-0 [&::-webkit-scrollbar]:hidden"
       >
         <div className="grid grid-flow-col grid-rows-2 gap-3 [grid-auto-columns:240px] sm:gap-4 sm:[grid-auto-columns:260px]">
-          {items.map((item) => (
-            <div
-              key={item.label}
-              className="flex items-stretch overflow-hidden rounded-2xl bg-white shadow-sm ring-1 ring-slate-200"
-            >
-              <img
-                src={item.src}
-                alt=""
-                className="h-16 w-20 shrink-0 object-cover"
-                loading="lazy"
-              />
-              <div className="flex flex-1 items-center px-4">
-                <span className="text-sm font-semibold leading-snug text-slate-800">
-                  {item.label}
-                </span>
+          {items.map((item) => {
+            const innerContent = (
+              <>
+                <img
+                  src={item.src}
+                  alt=""
+                  className="h-16 w-20 shrink-0 object-cover"
+                  loading="lazy"
+                />
+                <div className="flex flex-1 items-center px-4">
+                  <span className="text-sm font-semibold leading-snug text-slate-800">
+                    {item.label}
+                  </span>
+                </div>
+              </>
+            );
+
+            if (interactive) {
+              return (
+                <button
+                  key={item.label}
+                  type="button"
+                  onClick={() => onItemClick(item.label)}
+                  className="flex items-stretch overflow-hidden rounded-2xl bg-white text-left shadow-sm ring-1 ring-slate-200 transition hover:-translate-y-0.5 hover:shadow-md hover:ring-slate-300/90"
+                >
+                  {innerContent}
+                </button>
+              );
+            }
+            return (
+              <div
+                key={item.label}
+                className="flex items-stretch overflow-hidden rounded-2xl bg-white shadow-sm ring-1 ring-slate-200"
+              >
+                {innerContent}
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
 

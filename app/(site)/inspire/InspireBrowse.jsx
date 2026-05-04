@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useMemo, useState } from "react";
-import CategoryStrip from "./CategoryStrip";
+import CategoryStrip from "../../_components/CategoryStrip";
 
 function matchesSearch(card, query) {
   if (!query) return true;
@@ -130,7 +130,9 @@ export default function InspireBrowse({ cards, categoryItems = [] }) {
         </div>
       </div>
 
-      {categoryItems.length > 0 ? <CategoryStrip items={categoryItems} /> : null}
+      {categoryItems.length > 0 ? (
+        <CategoryStrip items={categoryItems} onItemClick={(label) => setSearch(label)} />
+      ) : null}
 
       <div className="flex w-full min-w-0 flex-col gap-1 sm:flex-row sm:items-end sm:justify-between sm:gap-4">
         <p className="text-xl font-semibold tracking-tight text-slate-900 sm:text-2xl">

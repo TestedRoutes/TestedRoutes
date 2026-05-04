@@ -10,6 +10,7 @@ import {
   inspireStoryHasGuide,
 } from "../../_lib/inspireStoryDisplay";
 import InspireBrowse from "./InspireBrowse";
+import { aboutAsset, getCategoryItems } from "../../_lib/categoryPills";
 
 export const metadata = {
   title: "Inspire · TestedRoutes",
@@ -55,28 +56,6 @@ const EXTREME_EXPERIENCES = [
   { label: "Summit pushes above 6,000 m", file: "Summits Alaska 2019 v2.jpg" },
   { label: "Remote border crossings – West Africa", file: "Makoko Nigeria 2025.jpg" },
 ];
-
-// Placeholder images — to be replaced with category-specific photos later.
-const CATEGORY_PILLS = [
-  { label: "Hiking", file: "Toubkal 2025.jpg" },
-  { label: "Mountaineering", file: "7_Summits_Denali 2022.jpg" },
-  { label: "Skiing", file: "Summits Alaska 2019 v2.jpg" },
-  { label: "Diving", file: "Sharks Fiji 2025.jpg" },
-  { label: "Rafting", file: "Rafting Zambia 2019.jpg" },
-  { label: "Kayaking", file: "Milford Sound - NZ 2025.jpg" },
-  { label: "Via Ferrata", file: "Ice climbing Italy 2019.jpg" },
-  { label: "Bungee", file: "Victoria falls 2019.jpg" },
-  { label: "Seven Summits", file: "7_Summits_Kilimanjaro 2016.jpg" },
-  { label: "Africa Rally", file: "Africa Rally - Guinea 2024.jpg" },
-  { label: "Safari", file: "Africa rally - Desert 2023.jpg" },
-  { label: "Roadtrips", file: "Mongol rally.jpg" },
-  { label: "Switzerland", file: "Matterhorn 2020.jpg" },
-  { label: "Iceland", file: "Mt Cook - NZ 2026.jpg" },
-];
-
-function aboutAsset(filename) {
-  return "/About%20me/" + encodeURIComponent(filename);
-}
 
 // Rewrite old .html paths to clean Next.js routes.
 // Returns a clean URL or null if the story has no destination yet.
@@ -137,13 +116,7 @@ export default async function InspirePage() {
           </p>
         </div>
 
-        <InspireBrowse
-          cards={cards}
-          categoryItems={CATEGORY_PILLS.map((item) => ({
-            label: item.label,
-            src: aboutAsset(item.file),
-          }))}
-        />
+        <InspireBrowse cards={cards} categoryItems={getCategoryItems()} />
 
         <section className="grid w-full min-w-0 gap-4 rounded-[28px] bg-white p-6 shadow-sm ring-1 ring-slate-200 md:grid-cols-4">
           {[

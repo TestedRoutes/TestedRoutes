@@ -1,20 +1,9 @@
 import Link from "next/link";
-import HomeSearchBar from "../_components/HomeSearchBar";
+import HomeBrowse from "../_components/HomeBrowse";
 import HomeGuideCard from "../_components/HomeGuideCard";
 import { HOME_GUIDES } from "../_lib/homeGuides";
 import { loadGuides } from "../_lib/loadGuides";
-
-const DESTINATION_RAIL = [
-  { label: "Switzerland", href: "/destinations/switzerland" },
-  { label: "Day Trips", href: "/destinations/switzerland?length=daytrip" },
-  { label: "Road Trips", href: "/guides" },
-  { label: "Adventure", href: "/guides" },
-  { label: "Expedition Routes", href: "/guides" },
-  { label: "Rally Guides", href: "/guides" },
-  { label: "Bungee", href: "/guides" },
-  { label: "Hiking", href: "/guides" },
-  { label: "Everest Preparation", href: "/guides" },
-];
+import { getCategoryItems } from "../_lib/categoryPills";
 
 export default async function HomePage() {
   const allGuides = await loadGuides();
@@ -33,18 +22,7 @@ export default async function HomePage() {
             Travel guides built from real trips
           </h1>
         </div>
-        <HomeSearchBar guides={searchableGuides} />
-        <div className="flex gap-3 overflow-x-auto pb-2">
-          {DESTINATION_RAIL.map((item) => (
-            <Link
-              key={item.label}
-              href={item.href}
-              className="whitespace-nowrap rounded-full border border-slate-200 bg-white px-4 py-2 text-xs font-semibold text-slate-600 transition hover:border-slate-300 hover:text-slate-900"
-            >
-              {item.label}
-            </Link>
-          ))}
-        </div>
+        <HomeBrowse guides={searchableGuides} categoryItems={getCategoryItems()} />
       </section>
 
       <section className="space-y-6">
