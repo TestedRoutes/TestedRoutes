@@ -21,8 +21,8 @@ export default async function HomePage() {
           <h1 className="font-['Georgia',serif] text-3xl font-semibold leading-[1.1] text-brand-blue md:text-4xl lg:text-5xl">
             Travel guides built from real trips
           </h1>
-          <p className="text-sm text-slate-600 md:text-base">
-            Skip the research. Take the trip.
+          <p className="text-lg text-slate-600 md:text-xl">
+            Skip the research. Take the trip
           </p>
         </div>
         <HomeBrowse guides={searchableGuides} categoryItems={getCategoryItems()} />
