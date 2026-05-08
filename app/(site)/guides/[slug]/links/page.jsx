@@ -250,20 +250,16 @@ export default async function GuideLinksPage({ params }) {
       <aside
         role="note"
         aria-label="Affiliate disclosure"
-        className="mt-5 max-w-3xl rounded-2xl border border-amber-200 bg-amber-50 px-5 py-4 text-xs leading-relaxed text-amber-900"
+        className="mt-5 max-w-3xl rounded-2xl border border-amber-200 bg-amber-50 px-5 py-3 text-xs leading-relaxed text-amber-900"
       >
-        <p className="font-semibold">Affiliate disclosure</p>
-        <p className="mt-1 text-amber-900/80">
-          Some of the links on this page are <strong>affiliate links</strong>.
-          If you click one and complete a purchase on the destination site, we
-          may earn a commission at <strong>no extra cost to you</strong>. The
-          price you pay is exactly the same as if you went to that site
-          directly. Affiliate income is how we keep guide prices low and stay
-          independent of any single tour operator.
-        </p>
-        <p className="mt-2 text-amber-900/80">
-          As an Amazon Associate, TestedRoutes earns from qualifying purchases.
-        </p>
+        <strong>Affiliate disclosure.</strong> Some links on this page are
+        affiliate links. When you buy through them, we may earn a small
+        commission at no extra cost to you. As an Amazon Associate,
+        TestedRoutes earns from qualifying purchases.{" "}
+        <Link href="/affiliate-disclosure" className="underline">
+          More on how this works
+        </Link>
+        .
       </aside>
 
       {isEmpty ? (

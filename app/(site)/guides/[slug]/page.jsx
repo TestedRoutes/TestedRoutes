@@ -575,10 +575,10 @@ export default async function GuideDetailPage({ params }) {
               className="rounded-2xl border border-amber-200 bg-amber-50 px-5 py-3 text-xs leading-relaxed text-amber-900"
             >
               <strong>Affiliate disclosure.</strong> Some links below are
-              affiliate links – if you click and buy on the destination site,
-              we may earn a commission at no extra cost to you. As an Amazon
-              Associate, TestedRoutes earns from qualifying purchases.{" "}
-              <Link href="/privacy" className="underline">
+              affiliate links. When you buy through them, we may earn a small
+              commission at no extra cost to you. As an Amazon Associate,
+              TestedRoutes earns from qualifying purchases.{" "}
+              <Link href="/affiliate-disclosure" className="underline">
                 More on how this works
               </Link>
               .
