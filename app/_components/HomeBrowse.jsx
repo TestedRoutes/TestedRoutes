@@ -10,9 +10,9 @@ export default function HomeBrowse({ guides, categoryItems }) {
   const [query, setQuery] = useState("");
 
   return (
-    <>
+    <div className="space-y-12">
       <HomeSearchBar guides={guides} query={query} onQueryChange={setQuery} />
       <CategoryStrip items={categoryItems} onItemClick={(label) => setQuery(label)} />
-    </>
+    </div>
   );
 }

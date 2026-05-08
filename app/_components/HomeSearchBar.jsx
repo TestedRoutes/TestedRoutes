@@ -63,7 +63,7 @@ export default function HomeSearchBar({ guides = [], query: controlledQuery, onQ
 
   return (
     <div className="mx-auto w-full max-w-3xl">
-      <div className="flex w-full items-center gap-2 rounded-full bg-white p-2 shadow-md ring-1 ring-slate-200">
+      <div className="flex w-full items-center gap-2 rounded-full bg-white p-1.5 shadow-md ring-1 ring-slate-200">
         <input
           value={query}
           onChange={(e) => setQuery(e.target.value)}
@@ -71,7 +71,7 @@ export default function HomeSearchBar({ guides = [], query: controlledQuery, onQ
             if (e.key === "Enter") handleSubmit();
           }}
           placeholder="Where to next?"
-          className="min-w-0 flex-1 bg-transparent px-6 py-3.5 text-base text-slate-700 outline-none placeholder:text-slate-400"
+          className="min-w-0 flex-1 bg-transparent px-5 py-2.5 text-sm text-slate-700 outline-none placeholder:text-slate-400"
         />
         <button
           type="button"
