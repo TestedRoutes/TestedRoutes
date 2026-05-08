@@ -554,6 +554,7 @@ export default async function GuideDetailPage({ params }) {
 
           {showLocation ? (
             <LocationSection
+              key={slug}
               start={location.start}
               destinations={location.destinations}
               finish={location.finish}
