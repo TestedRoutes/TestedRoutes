@@ -16,7 +16,7 @@ export default async function HomePage() {
 
   return (
     <main className="mx-auto flex max-w-7xl flex-col gap-12 px-6 pb-16 pt-12 md:pt-16">
-      <section className="space-y-8">
+      <section className="space-y-10">
         <div className="space-y-2 text-center">
           <h1 className="font-['Georgia',serif] text-3xl font-semibold leading-[1.1] text-brand-blue md:text-4xl lg:text-5xl">
             Travel guides built from real trips
