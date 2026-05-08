@@ -70,7 +70,7 @@ export default function HomeSearchBar({ guides = [], query: controlledQuery, onQ
           onKeyDown={(e) => {
             if (e.key === "Enter") handleSubmit();
           }}
-          placeholder="Search destinations or guides"
+          placeholder="Where to next?"
           className="min-w-0 flex-1 bg-transparent px-6 py-3.5 text-base text-slate-700 outline-none placeholder:text-slate-400"
         />
         <button
