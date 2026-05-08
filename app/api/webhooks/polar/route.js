@@ -76,9 +76,13 @@ async function bumpPurchaseCount(story) {
 /**
  * Upsert a Beehiiv subscription, attach buyer tags.
  *
- * Beehiiv's POST /subscriptions is idempotent on email when
- * reactivate_existing=true. We pass `tags` so the same call adds the
- * `customer` + `bought-{slug}` tags whether the email is new or existing.
+ * Two-step flow because POST /subscriptions silently ignores a `tags`
+ * field in the body — tags must go through the dedicated endpoint:
+ *   1. POST /subscriptions — idempotent on email (reactivate_existing=true);
+ *      response includes the subscription id.
+ *   2. POST /subscriptions/{id}/tags — adds `customer` + `bought-{slug}`.
+ *      Beehiiv auto-creates the tag on the publication if it doesn't
+ *      exist yet.
  *
  * Best-effort: any error is logged and swallowed so the webhook still
  * acks 200 (a Beehiiv outage shouldn't trigger Polar retries).
@@ -93,23 +97,48 @@ async function tagBuyerInBeehiiv({ email, slug }) {
   const tags = ["customer"];
   if (slug) tags.push(`bought-${slug}`);
 
+  const baseUrl = `https://api.beehiiv.com/v2/publications/${encodeURIComponent(publicationId)}`;
+  const authHeaders = {
+    "Content-Type": "application/json",
+    Authorization: `Bearer ${apiKey}`,
+  };
+
+  let subscriptionId;
+  try {
+    const res = await fetch(`${baseUrl}/subscriptions`, {
+      method: "POST",
+      headers: authHeaders,
+      body: JSON.stringify({
+        email,
+        reactivate_existing: true,
+        send_welcome_email: false,
+        utm_source: "testedroutes.com",
+        utm_medium: "purchase",
+      }),
+    });
+    if (!res.ok) {
+      const text = await res.text().catch(() => "");
+      console.error(`[polar-webhook] Beehiiv subscribe failed ${res.status}: ${text}`);
+      return;
+    }
+    const json = await res.json().catch(() => null);
+    subscriptionId = json?.data?.id;
+    if (!subscriptionId) {
+      console.error("[polar-webhook] Beehiiv subscribe returned no id", json);
+      return;
+    }
+  } catch (err) {
+    console.error("[polar-webhook] Beehiiv subscribe threw:", err);
+    return;
+  }
+
   try {
     const res = await fetch(
-      `https://api.beehiiv.com/v2/publications/${encodeURIComponent(publicationId)}/subscriptions`,
+      `${baseUrl}/subscriptions/${encodeURIComponent(subscriptionId)}/tags`,
       {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${apiKey}`,
-        },
-        body: JSON.stringify({
-          email,
-          reactivate_existing: true,
-          send_welcome_email: false,
-          tags,
-          utm_source: "testedroutes.com",
-          utm_medium: "purchase",
-        }),
+        headers: authHeaders,
+        body: JSON.stringify({ tags }),
       },
     );
     if (!res.ok) {
