@@ -44,7 +44,7 @@ export default function CategoryStrip({ items, onItemClick }) {
         ref={scrollRef}
         className="-mx-4 overflow-x-auto scroll-smooth px-4 pb-1 [-ms-overflow-style:none] [scrollbar-width:none] sm:mx-0 sm:px-0 [&::-webkit-scrollbar]:hidden"
       >
-        <div className="grid grid-flow-col grid-rows-2 gap-3 [grid-auto-columns:200px] sm:gap-4 sm:[grid-auto-columns:220px]">
+        <div className="grid grid-flow-col grid-rows-2 gap-3 [grid-auto-columns:200px] sm:gap-4">
           {items.map((item) => {
             const innerContent = (
               <>
