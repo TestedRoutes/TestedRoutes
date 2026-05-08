@@ -62,8 +62,8 @@ export default function HomeSearchBar({ guides = [], query: controlledQuery, onQ
   };
 
   return (
-    <div className="mx-auto w-full max-w-2xl">
-      <div className="flex w-full items-center gap-2 rounded-full bg-white p-1.5 shadow-sm ring-1 ring-slate-200">
+    <div className="mx-auto w-full max-w-3xl">
+      <div className="flex w-full items-center gap-2 rounded-full bg-white p-2 shadow-md ring-1 ring-slate-200">
         <input
           value={query}
           onChange={(e) => setQuery(e.target.value)}
@@ -71,14 +71,27 @@ export default function HomeSearchBar({ guides = [], query: controlledQuery, onQ
             if (e.key === "Enter") handleSubmit();
           }}
           placeholder="Search destinations or guides"
-          className="min-w-0 flex-1 bg-transparent px-5 py-2.5 text-sm text-slate-700 outline-none placeholder:text-slate-400"
+          className="min-w-0 flex-1 bg-transparent px-6 py-3.5 text-base text-slate-700 outline-none placeholder:text-slate-400"
         />
         <button
           type="button"
-          className="shrink-0 rounded-full bg-slate-900 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-slate-800"
+          aria-label="Search guides"
+          className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-brand-terracotta text-white transition hover:opacity-90"
           onClick={handleSubmit}
         >
-          Search Guides
+          <svg
+            className="h-5 w-5"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2.5"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            aria-hidden="true"
+          >
+            <circle cx="11" cy="11" r="8" />
+            <path d="m21 21-4.35-4.35" />
+          </svg>
         </button>
       </div>
       {matches.length > 0 && (

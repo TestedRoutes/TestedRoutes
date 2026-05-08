@@ -71,7 +71,7 @@ const SECTIONS = [
       },
       {
         q: "What does \"tested\" mean exactly?",
-        a: "It's an honest, best-effort label – not a guarantee that every metre of every published route was personally walked at the moment of publication. \"Tested\" means we've travelled the route, or significant parts of it and assembled the rest from the best available local sources, or have adjusted it after a known on-the-ground change. Full definition in Terms §3.",
+        a: "Best-effort, not a perfect guarantee. Specifically: route tested, major logistics verified, recommendations curated from firsthand experience. We've travelled the route (or significant parts of it, with the remainder assembled from the best available local sources), and we update the guide when something on the ground changes.\n\nWhat we don't guarantee: prices accurate to the day, every restaurant still trading, every booking link functional, every timetable matching exactly. Travel changes faster than guides can. The route, the logistics, and the picks are what we stand behind. Full definition in Terms §3.",
       },
       {
         q: "What if I find something out of date in a guide?",
@@ -142,7 +142,7 @@ function FaqGroup({ heading, items }) {
                 ▾
               </span>
             </summary>
-            <div className="px-5 pb-4 text-sm leading-relaxed text-slate-600">
+            <div className="whitespace-pre-line px-5 pb-4 text-sm leading-relaxed text-slate-600">
               {a}
             </div>
           </details>
@@ -153,8 +153,21 @@ function FaqGroup({ heading, items }) {
 }
 
 export default function FaqPage() {
+  const faqJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: SECTIONS.flatMap((s) => s.items).map(({ q, a }) => ({
+      "@type": "Question",
+      name: q,
+      acceptedAnswer: { "@type": "Answer", text: a },
+    })),
+  };
   return (
     <main className="mx-auto flex max-w-3xl flex-col gap-6 px-6 pb-16 pt-8">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
+      />
       <section className="rounded-[28px] bg-white p-8 shadow-sm ring-1 ring-slate-200">
         <h1 className="text-3xl font-semibold text-slate-900 md:text-4xl">
           Frequently asked questions

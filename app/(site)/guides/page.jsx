@@ -56,11 +56,16 @@ export default async function GuidesPage() {
   return (
     <main className="mx-auto flex max-w-6xl flex-col gap-10 px-6 pb-16 pt-8">
       <section className="space-y-6">
-        <div className="flex items-center justify-between">
-          <h1 className="text-2xl font-semibold">Guides</h1>
-          <span className="text-xs text-slate-500">
-            {guides.length} {guides.length === 1 ? "guide" : "guides"}
-          </span>
+        <div className="space-y-2">
+          <div className="flex items-center justify-between">
+            <h1 className="text-2xl font-semibold text-brand-blue">Guides</h1>
+            <span className="text-xs text-slate-500">
+              {guides.length} {guides.length === 1 ? "guide" : "guides"}
+            </span>
+          </div>
+          <p className="font-['Georgia',serif] text-sm italic text-slate-600">
+            Print it, follow it, the trip works.
+          </p>
         </div>
         {guides.length === 0 ? (
           <p className="text-sm text-slate-500">

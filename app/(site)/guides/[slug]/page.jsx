@@ -404,7 +404,7 @@ function BottomCta({ price, checkoutHref, pdfHref }) {
     ? `Get the Guide – ${price}`
     : "Get the Guide";
   return (
-    <section className="mt-12 rounded-[28px] bg-[#1a1816] p-10 text-center text-white">
+    <section className="mt-12 rounded-[28px] bg-brand-blue p-10 text-center text-white">
       <p className="font-['Georgia',serif] text-3xl font-semibold leading-tight">
         Travel more.
       </p>
@@ -508,8 +508,38 @@ export default async function GuideDetailPage({ params }) {
   const affiliateLinks = getAffiliateLinks(guide.bodyBlocks);
   const hasAffiliateLinks = affiliateLinks.length > 0;
 
+  const canonicalUrl = `https://testedroutes.com/guides/${guide.slug}`;
+  const reviewedDate = maintenance.last_reviewed_date || null;
+  const articleJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    headline: guide.title,
+    description:
+      meta.seo?.meta_description || hero.subtitle || `Tested travel guide: ${guide.title}.`,
+    mainEntityOfPage: { "@type": "WebPage", "@id": canonicalUrl },
+    image: guide.image ? [guide.image] : undefined,
+    author: {
+      "@type": "Person",
+      name: "Paulius Pikelis",
+      url: "https://testedroutes.com/about",
+      // sameAs: fill once IG / YouTube / LinkedIn URLs are confirmed.
+    },
+    publisher: {
+      "@type": "Organization",
+      name: "TestedRoutes",
+      url: "https://testedroutes.com",
+    },
+    ...(reviewedDate
+      ? { datePublished: reviewedDate, dateModified: reviewedDate }
+      : {}),
+  };
+
   return (
     <main className="mx-auto max-w-6xl px-6 pb-16 pt-8">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd) }}
+      />
       <nav
         className="mb-5 flex items-center gap-1.5 text-[12px] text-slate-400"
         aria-label="Breadcrumb"
