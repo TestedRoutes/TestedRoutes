@@ -99,6 +99,15 @@ export default function TermsPage() {
           </li>
         </ul>
         <p className="text-sm leading-relaxed text-slate-600">
+          <strong>What we do not guarantee.</strong> Travel changes faster than
+          any guide can. We do not guarantee that prices are accurate to the
+          day, that every named restaurant or operator is still trading at the
+          time of your trip, that every booking link is still functional, or
+          that every timetable matches exactly. The value of a TestedRoutes
+          guide is the route, the logistics, and the picks – the structure of
+          the trip stands up even if a specific restaurant has changed hands.
+        </p>
+        <p className="text-sm leading-relaxed text-slate-600">
           If you find anything in a guide that is wrong, out of date, or no
           longer matches reality on the ground, please email{" "}
           <a className="underline" href="mailto:hello@testedroutes.com">
