@@ -75,23 +75,10 @@ export default function HomeSearchBar({ guides = [], query: controlledQuery, onQ
         />
         <button
           type="button"
-          aria-label="Search guides"
-          className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-brand-terracotta text-white transition hover:opacity-90"
+          className="shrink-0 rounded-full bg-slate-900 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-slate-800"
           onClick={handleSubmit}
         >
-          <svg
-            className="h-5 w-5"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2.5"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            aria-hidden="true"
-          >
-            <circle cx="11" cy="11" r="8" />
-            <path d="m21 21-4.35-4.35" />
-          </svg>
+          Search Guides
         </button>
       </div>
       {matches.length > 0 && (
