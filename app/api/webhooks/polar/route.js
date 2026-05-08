@@ -157,6 +157,16 @@ export async function POST(request) {
       { status: 503 },
     );
   }
+  // Reject unsigned probes (scanners hitting /api/webhooks/polar) before the
+  // SDK tries to verify, so we don't crash inside Buffer.from(undefined).
+  const headers = request.headers;
+  if (
+    !headers.get("webhook-id") ||
+    !headers.get("webhook-signature") ||
+    !headers.get("webhook-timestamp")
+  ) {
+    return Response.json({ error: "missing webhook signature" }, { status: 401 });
+  }
   try {
     return await polarHandler(request);
   } catch (err) {
