@@ -15,14 +15,14 @@ export default async function HomePage() {
   }));
 
   return (
-    <main className="mx-auto flex max-w-6xl flex-col gap-10 px-6 pb-16 pt-8">
-      <section className="space-y-8 pt-2">
-        <div className="space-y-2 text-center">
-          <h1 className="text-3xl font-semibold leading-tight text-slate-900 md:text-4xl">
-            Skip the research. Take the trip
+    <main className="mx-auto flex max-w-6xl flex-col gap-12 px-6 pb-16 pt-10 md:pt-14">
+      <section className="space-y-10">
+        <div className="space-y-3 text-center">
+          <h1 className="font-['Georgia',serif] text-4xl font-semibold leading-[1.1] text-brand-blue md:text-5xl lg:text-6xl">
+            Travel guides built from real trips
           </h1>
           <p className="text-base text-slate-600 md:text-lg">
-            Travel guides built from real trips
+            Skip the research. Take the trip.
           </p>
         </div>
         <HomeBrowse guides={searchableGuides} categoryItems={getCategoryItems()} />

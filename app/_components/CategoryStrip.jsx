@@ -44,18 +44,18 @@ export default function CategoryStrip({ items, onItemClick }) {
         ref={scrollRef}
         className="-mx-4 overflow-x-auto scroll-smooth px-4 pb-1 [-ms-overflow-style:none] [scrollbar-width:none] sm:mx-0 sm:px-0 [&::-webkit-scrollbar]:hidden"
       >
-        <div className="grid grid-flow-col grid-rows-2 gap-3 [grid-auto-columns:240px] sm:gap-4 sm:[grid-auto-columns:260px]">
+        <div className="grid grid-flow-col grid-rows-2 gap-4 [grid-auto-columns:280px] sm:gap-5 sm:[grid-auto-columns:320px]">
           {items.map((item) => {
             const innerContent = (
               <>
                 <img
                   src={item.src}
                   alt=""
-                  className="h-16 w-20 shrink-0 object-cover"
+                  className="h-20 w-20 shrink-0 object-cover"
                   loading="lazy"
                 />
-                <div className="flex flex-1 items-center px-4">
-                  <span className="text-sm font-semibold leading-snug text-slate-800">
+                <div className="flex flex-1 items-center px-5">
+                  <span className="text-base font-semibold leading-snug text-slate-800">
                     {item.label}
                   </span>
                 </div>
