@@ -16,11 +16,14 @@ export default async function HomePage() {
 
   return (
     <main className="mx-auto flex max-w-6xl flex-col gap-10 px-6 pb-16 pt-8">
-      <section className="space-y-3">
-        <div className="text-center">
-          <h1 className="text-2xl font-semibold leading-tight md:text-3xl">
-            Travel guides built from real trips
+      <section className="space-y-8 pt-2">
+        <div className="space-y-2 text-center">
+          <h1 className="text-3xl font-semibold leading-tight text-slate-900 md:text-4xl">
+            Skip the research. Take the trip
           </h1>
+          <p className="text-base text-slate-600 md:text-lg">
+            Travel guides built from real trips
+          </p>
         </div>
         <HomeBrowse guides={searchableGuides} categoryItems={getCategoryItems()} />
       </section>
