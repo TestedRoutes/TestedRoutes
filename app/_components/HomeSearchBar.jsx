@@ -62,7 +62,7 @@ export default function HomeSearchBar({ guides = [], query: controlledQuery, onQ
   };
 
   return (
-    <div className="mx-auto w-full max-w-3xl">
+    <div className="relative mx-auto w-full max-w-3xl">
       <div className="flex w-full items-center gap-2 rounded-full bg-white p-1.5 shadow-md ring-1 ring-slate-200">
         <input
           value={query}
@@ -82,7 +82,7 @@ export default function HomeSearchBar({ guides = [], query: controlledQuery, onQ
         </button>
       </div>
       {matches.length > 0 && (
-        <div className="mt-2 overflow-hidden rounded-2xl bg-white shadow-sm ring-1 ring-slate-200">
+        <div className="absolute inset-x-0 top-full z-20 mt-2 overflow-hidden rounded-2xl bg-white shadow-lg ring-1 ring-slate-200">
           {matches.map((item) => (
             <Link
               key={item.slug}
