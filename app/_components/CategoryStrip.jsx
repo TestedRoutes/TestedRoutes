@@ -51,7 +51,7 @@ export default function CategoryStrip({ items, onItemClick }) {
                 <img
                   src={item.src}
                   alt=""
-                  className="h-14 w-14 shrink-0 object-cover"
+                  className="h-[52px] w-[52px] shrink-0 object-cover"
                   loading="lazy"
                 />
                 <div className="flex flex-1 items-center px-3">
