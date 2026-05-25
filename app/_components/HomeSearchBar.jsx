@@ -50,12 +50,14 @@ const VARIANT_STYLES = {
     container: "p-2 shadow-md",
     input: "px-6 py-4 text-base",
     button: "px-6 py-4 text-base",
+    buttonLabel: "Search Guides",
   },
   compact: {
-    wrapper: "w-full max-w-xl",
-    container: "p-1 shadow-sm",
-    input: "px-4 py-2 text-sm",
-    button: "px-4 py-2 text-sm",
+    wrapper: "w-full max-w-[260px]",
+    container: "p-0.5 shadow-sm",
+    input: "px-3 py-1.5 text-xs",
+    button: "px-3 py-1.5 text-xs",
+    buttonLabel: "Search",
   },
 };
 
@@ -99,7 +101,7 @@ export default function HomeSearchBar({
           className={`shrink-0 rounded-full bg-slate-900 font-semibold text-white transition hover:bg-slate-800 ${styles.button}`}
           onClick={handleSubmit}
         >
-          Search Guides
+          {styles.buttonLabel}
         </button>
       </div>
       {matches.length > 0 && (
