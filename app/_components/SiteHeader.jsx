@@ -2,8 +2,9 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import CurrencySwitcher from "./CurrencySwitcher";
+import HomeSearchBar from "./HomeSearchBar";
 
 const NAV_LINKS = [
   { slug: "destinations", label: "Destinations", href: "/destinations" },
@@ -38,10 +39,24 @@ function logoLinkClassName(active) {
   return base;
 }
 
-export default function SiteHeader({ currency = "EUR" }) {
+export default function SiteHeader({ currency = "EUR", guides = [] }) {
   const pathname = usePathname();
   const active = getActiveSlug(pathname);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [heroSearchVisible, setHeroSearchVisible] = useState(true);
+
+  useEffect(() => {
+    setHeroSearchVisible(true);
+  }, [pathname]);
+
+  useEffect(() => {
+    const handler = (e) => setHeroSearchVisible(Boolean(e.detail));
+    window.addEventListener("home-hero-search-visible", handler);
+    return () => window.removeEventListener("home-hero-search-visible", handler);
+  }, []);
+
+  const isHome = pathname === "/";
+  const showHeaderSearch = isHome && !heroSearchVisible;
 
   return (
     <header className="sticky top-0 z-50 border-b border-slate-200/60 bg-[#f7f4ef]/95 backdrop-blur-sm">
@@ -64,17 +79,25 @@ export default function SiteHeader({ currency = "EUR" }) {
           </span>
         </Link>
 
+        {showHeaderSearch ? (
+          <div className="hidden flex-1 justify-center px-4 md:flex">
+            <HomeSearchBar guides={guides} variant="compact" />
+          </div>
+        ) : null}
+
         <div className="hidden items-center gap-6 md:flex">
-          {NAV_LINKS.map((link) => (
-            <Link
-              key={link.slug}
-              className={primaryNavLinkClass(active, link.slug)}
-              href={link.href}
-              aria-current={active === link.slug ? "page" : undefined}
-            >
-              {link.label}
-            </Link>
-          ))}
+          {showHeaderSearch ? null : (
+            NAV_LINKS.map((link) => (
+              <Link
+                key={link.slug}
+                className={primaryNavLinkClass(active, link.slug)}
+                href={link.href}
+                aria-current={active === link.slug ? "page" : undefined}
+              >
+                {link.label}
+              </Link>
+            ))
+          )}
           <CurrencySwitcher current={currency} />
         </div>
 
