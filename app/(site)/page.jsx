@@ -1,6 +1,7 @@
 import Link from "next/link";
 import HomeBrowse from "../_components/HomeBrowse";
 import HomeGuideCard from "../_components/HomeGuideCard";
+import HomeGuideRequest from "../_components/HomeGuideRequest";
 import { HOME_GUIDES } from "../_lib/homeGuides";
 import { loadGuides } from "../_lib/loadGuides";
 import { getCategoryItems } from "../_lib/categoryPills";
@@ -42,44 +43,50 @@ export default async function HomePage() {
         </div>
       </section>
 
-      <section className="rounded-[24px] bg-white p-5 shadow-sm ring-1 ring-slate-200">
-        <div className="space-y-2">
-          <p className="text-sm font-semibold text-slate-900">Need help refining your route?</p>
-          <p className="text-xs text-slate-500">Add personal support after purchasing any guide.</p>
-        </div>
-        <div className="mt-4 grid gap-3 text-xs text-slate-600 md:grid-cols-2">
-          <div className="flex items-center justify-between rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3">
-            <span>Personal Trip Session</span>
-            <span className="font-semibold text-slate-900">€99</span>
+      <section className="rounded-[28px] bg-white p-6 shadow-sm ring-1 ring-slate-200 md:grid md:grid-cols-[260px_1fr] md:gap-8">
+        <img
+          src="/About%20me/About%20me2.jpg"
+          alt="Paulius on the road"
+          className="h-44 w-full rounded-2xl object-cover object-center md:h-full md:max-h-[320px]"
+          loading="lazy"
+        />
+        <div className="mt-6 space-y-5 md:mt-0">
+          <div className="space-y-2">
+            <p className="text-xs uppercase tracking-[0.2em] text-slate-500">About me</p>
+            <h2 className="font-['Georgia',serif] text-2xl font-semibold leading-tight text-brand-blue md:text-3xl">
+              Fifteen years on the road.
+            </h2>
+            <p className="text-sm leading-relaxed text-slate-600">
+              Real trips. Real routes. Not desk research, not aggregated reviews.
+            </p>
           </div>
-          <div className="flex items-center justify-between rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3">
-            <span>Trip Setup Assistance</span>
-            <span className="font-semibold text-slate-900">€249</span>
-          </div>
+          <ul className="grid gap-2 text-sm text-slate-700 sm:grid-cols-2">
+            <li className="rounded-2xl border border-slate-200 bg-slate-50 px-4 py-2.5">
+              <span className="font-semibold text-slate-900">140 countries</span> travelled
+            </li>
+            <li className="rounded-2xl border border-slate-200 bg-slate-50 px-4 py-2.5">
+              <span className="font-semibold text-slate-900">500+ trips</span> documented over 15 years
+            </li>
+            <li className="rounded-2xl border border-slate-200 bg-slate-50 px-4 py-2.5">
+              <span className="font-semibold text-slate-900">5 of 7 Summits</span> climbed
+            </li>
+            <li className="rounded-2xl border border-slate-200 bg-slate-50 px-4 py-2.5">
+              <span className="font-semibold text-slate-900">2 Africa Rally</span> expeditions
+            </li>
+            <li className="rounded-2xl border border-slate-200 bg-slate-50 px-4 py-2.5 sm:col-span-2">
+              <span className="font-semibold text-slate-900">100+ bucket-list experiences</span> completed
+            </li>
+          </ul>
+          <Link
+            className="inline-flex text-sm font-medium text-slate-900 underline decoration-slate-300 underline-offset-4 transition hover:text-slate-700 hover:decoration-slate-500"
+            href="/about"
+          >
+            Read the full story →
+          </Link>
         </div>
       </section>
 
-      <section className="rounded-[28px] bg-white p-6 shadow-sm ring-1 ring-slate-200 md:grid md:grid-cols-[220px_1fr] md:gap-8">
-        <div className="h-44 w-full rounded-2xl bg-slate-100" />
-        <div className="mt-6 space-y-4 md:mt-0">
-          <p className="text-xs uppercase tracking-[0.2em] text-slate-500">About Me</p>
-          <div className="grid gap-3 text-sm text-slate-600">
-            <div className="rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3">
-              <span className="font-semibold text-slate-900">140 countries visited</span>
-            </div>
-            <div className="rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3">
-              <span className="font-semibold text-slate-900">
-                15 years planning trips independently for myself, family, and friends
-              </span>
-            </div>
-            <div className="rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3">
-              <span className="font-semibold text-slate-900">
-                Mission: help people travel more and waste less time planning
-              </span>
-            </div>
-          </div>
-        </div>
-      </section>
+      <HomeGuideRequest />
     </main>
   );
 }
