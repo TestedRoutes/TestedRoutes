@@ -53,10 +53,10 @@ const VARIANT_STYLES = {
     buttonLabel: "Search Guides",
   },
   compact: {
-    wrapper: "w-full max-w-[260px]",
-    container: "p-0.5 shadow-sm",
-    input: "px-3 py-1.5 text-xs",
-    button: "px-3 py-1.5 text-xs",
+    wrapper: "w-full",
+    container: "p-1.5 shadow-md",
+    input: "px-5 py-3 text-sm",
+    button: "px-5 py-3 text-sm",
     buttonLabel: "Search",
   },
 };
