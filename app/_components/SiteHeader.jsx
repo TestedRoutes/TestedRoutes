@@ -56,7 +56,13 @@ export default function SiteHeader({ currency = "EUR", guides = [] }) {
   }, []);
 
   const isHome = pathname === "/";
-  const showHeaderSearch = isHome && !heroSearchVisible;
+  const isSection =
+    pathname?.startsWith("/destinations") ||
+    pathname?.startsWith("/guides") ||
+    pathname?.startsWith("/inspire");
+  // On home, wait until the big hero search has scrolled out of view.
+  // On the section landing pages we expose the same search permanently.
+  const showHeaderSearch = (isHome && !heroSearchVisible) || isSection;
 
   return (
     <header className="sticky top-0 z-50 border-b border-slate-200/60 bg-[#f7f4ef]/95 backdrop-blur-sm">
@@ -86,18 +92,16 @@ export default function SiteHeader({ currency = "EUR", guides = [] }) {
         ) : null}
 
         <div className="hidden items-center gap-6 md:flex">
-          {showHeaderSearch ? null : (
-            NAV_LINKS.map((link) => (
-              <Link
-                key={link.slug}
-                className={primaryNavLinkClass(active, link.slug)}
-                href={link.href}
-                aria-current={active === link.slug ? "page" : undefined}
-              >
-                {link.label}
-              </Link>
-            ))
-          )}
+          {NAV_LINKS.map((link) => (
+            <Link
+              key={link.slug}
+              className={primaryNavLinkClass(active, link.slug)}
+              href={link.href}
+              aria-current={active === link.slug ? "page" : undefined}
+            >
+              {link.label}
+            </Link>
+          ))}
           <CurrencySwitcher current={currency} />
         </div>
 
