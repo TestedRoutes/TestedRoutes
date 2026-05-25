@@ -116,7 +116,7 @@ export default async function InspireStoryPage({ params }) {
         <div className="absolute inset-0 bg-gradient-to-t from-slate-900/92 via-slate-900/45 to-slate-900/10" />
 
         <div
-          className="relative mx-auto flex max-w-6xl flex-col justify-end px-4 pb-10 pt-24 sm:px-6 sm:pb-14 md:pt-32"
+          className="relative mx-auto flex max-w-7xl flex-col justify-end px-4 pb-10 pt-24 sm:px-6 sm:pb-14 md:pt-32"
           style={{ minHeight: 440 }}
         >
           <nav
@@ -166,7 +166,7 @@ export default async function InspireStoryPage({ params }) {
         </div>
       </div>
 
-      <main className="mx-auto max-w-6xl px-4 pb-16 pt-8 sm:px-6">
+      <main className="mx-auto max-w-7xl px-4 pb-16 pt-8 sm:px-6">
         <div className="flex flex-col gap-8 md:flex-row">
           <div className="flex min-w-0 flex-1 flex-col gap-6 self-start">
             {/* Mobile quick facts */}

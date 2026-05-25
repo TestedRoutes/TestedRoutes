@@ -35,7 +35,7 @@ const EXTREME_EXPERIENCES = [
 
 export default function AboutMePage() {
   return (
-    <main className="mx-auto flex max-w-6xl flex-col gap-10 px-6 pb-16 pt-8">
+    <main className="mx-auto flex max-w-7xl flex-col gap-10 px-6 pb-16 pt-8">
       <section className="grid gap-6 rounded-[28px] bg-white p-6 shadow-sm ring-1 ring-slate-200 md:grid-cols-[1.1fr_0.9fr]">
         <div className="space-y-4">
           <h1 className="text-3xl font-semibold md:text-4xl">About Me</h1>

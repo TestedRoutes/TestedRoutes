@@ -4,7 +4,7 @@ import CookieSettingsButton from "./CookieSettingsButton";
 
 export default function SiteFooter() {
   return (
-    <footer className="mx-auto max-w-6xl border-t border-slate-200 px-6 py-10">
+    <footer className="mx-auto max-w-7xl border-t border-slate-200 px-6 py-10">
       <div className="flex flex-col gap-8 md:flex-row md:items-start md:justify-between">
         <div className="md:max-w-sm">
           <NewsletterForm variant="footer" source="footer" />

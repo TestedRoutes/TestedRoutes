@@ -88,10 +88,10 @@ export default function SiteHeader({ currency = "EUR", guides = [] }) {
           aria-current={active === "home" ? "page" : undefined}
         >
           <span className="flex flex-col leading-none">
-            <span className="font-serif text-lg font-semibold uppercase tracking-[0.3em] text-slate-900">
+            <span className="font-serif text-sm font-semibold uppercase tracking-[0.18em] text-slate-900">
               TESTEDROUTES
             </span>
-            <span className="mt-1 text-[10px] uppercase tracking-[0.4em] text-slate-500">
+            <span className="mt-0.5 text-[9px] uppercase tracking-[0.28em] text-slate-500">
               by Paulius Pikelis
             </span>
           </span>

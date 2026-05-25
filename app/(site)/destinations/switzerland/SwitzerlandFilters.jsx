@@ -99,7 +99,7 @@ export default function SwitzerlandPage() {
   const showDayTrips = !duration || duration === "daytrip";
 
   return (
-    <main className="mx-auto flex max-w-6xl flex-col gap-10 px-6 pb-16 pt-8">
+    <main className="mx-auto flex max-w-7xl flex-col gap-10 px-6 pb-16 pt-8">
       <section className="space-y-2">
         <p className="text-3xl font-semibold md:text-4xl">Explore Switzerland</p>
         <p className="text-sm text-slate-600">Self-guided travel routes you can follow independently</p>
