@@ -44,13 +44,34 @@ function matchGuides(guides, query) {
   });
 }
 
-export default function HomeSearchBar({ guides = [], query: controlledQuery, onQueryChange }) {
+const VARIANT_STYLES = {
+  hero: {
+    wrapper: "mx-auto w-full max-w-3xl",
+    container: "p-2 shadow-md",
+    input: "px-6 py-4 text-base",
+    button: "px-6 py-4 text-base",
+  },
+  compact: {
+    wrapper: "w-full max-w-xl",
+    container: "p-1 shadow-sm",
+    input: "px-4 py-2 text-sm",
+    button: "px-4 py-2 text-sm",
+  },
+};
+
+export default function HomeSearchBar({
+  guides = [],
+  query: controlledQuery,
+  onQueryChange,
+  variant = "hero",
+}) {
   const router = useRouter();
   const isControlled = controlledQuery !== undefined && typeof onQueryChange === "function";
   const [internalQuery, setInternalQuery] = useState("");
   const query = isControlled ? controlledQuery : internalQuery;
   const setQuery = isControlled ? onQueryChange : setInternalQuery;
   const matches = query ? matchGuides(guides, query).slice(0, 8) : [];
+  const styles = VARIANT_STYLES[variant] || VARIANT_STYLES.hero;
 
   const handleSubmit = () => {
     if (matches.length > 0) {
@@ -62,8 +83,8 @@ export default function HomeSearchBar({ guides = [], query: controlledQuery, onQ
   };
 
   return (
-    <div className="relative mx-auto w-full max-w-3xl">
-      <div className="flex w-full items-center gap-2 rounded-full bg-white p-1.5 shadow-md ring-1 ring-slate-200">
+    <div className={`relative ${styles.wrapper}`}>
+      <div className={`flex w-full items-center gap-2 rounded-full bg-white ring-1 ring-slate-200 ${styles.container}`}>
         <input
           value={query}
           onChange={(e) => setQuery(e.target.value)}
@@ -71,11 +92,11 @@ export default function HomeSearchBar({ guides = [], query: controlledQuery, onQ
             if (e.key === "Enter") handleSubmit();
           }}
           placeholder="Where to next?"
-          className="min-w-0 flex-1 bg-transparent px-5 py-2.5 text-sm text-slate-700 outline-none placeholder:text-slate-400"
+          className={`min-w-0 flex-1 bg-transparent text-slate-700 outline-none placeholder:text-slate-400 ${styles.input}`}
         />
         <button
           type="button"
-          className="shrink-0 rounded-full bg-slate-900 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-slate-800"
+          className={`shrink-0 rounded-full bg-slate-900 font-semibold text-white transition hover:bg-slate-800 ${styles.button}`}
           onClick={handleSubmit}
         >
           Search Guides

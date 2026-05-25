@@ -3,6 +3,7 @@ import SiteHeader from "../_components/SiteHeader";
 import SiteFooter from "../_components/SiteFooter";
 import PostHogProvider from "../_components/PostHogProvider";
 import { getRequestCurrency } from "../_lib/currency";
+import { loadGuides } from "../_lib/loadGuides";
 
 
 const SITE_URL = "https://testedroutes.com";
@@ -42,10 +43,17 @@ export const metadata = {
 
 export default async function SiteLayout({ children }) {
   const currency = await getRequestCurrency();
+  const allGuides = await loadGuides();
+  const searchableGuides = allGuides.map((g) => ({
+    title: g.title,
+    slug: g.slug,
+    category: g.category,
+    href: g.href,
+  }));
   return (
     <PostHogProvider>
       <ConstructionBanner />
-      <SiteHeader currency={currency} />
+      <SiteHeader currency={currency} guides={searchableGuides} />
       {children}
       <SiteFooter />
     </PostHogProvider>
