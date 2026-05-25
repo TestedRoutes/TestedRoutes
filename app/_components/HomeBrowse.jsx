@@ -20,7 +20,7 @@ export default function HomeBrowse({ guides, categoryItems }) {
           new CustomEvent("home-hero-search-visible", { detail: entry.isIntersecting })
         );
       },
-      { threshold: 0, rootMargin: "-56px 0px 0px 0px" }
+      { threshold: 0, rootMargin: "-64px 0px 0px 0px" }
     );
     observer.observe(el);
     return () => {

@@ -44,9 +44,11 @@ export default function SiteHeader({ currency = "EUR", guides = [] }) {
   const active = getActiveSlug(pathname);
   const [menuOpen, setMenuOpen] = useState(false);
   const [heroSearchVisible, setHeroSearchVisible] = useState(true);
+  const [scrolledPast, setScrolledPast] = useState(false);
 
   useEffect(() => {
     setHeroSearchVisible(true);
+    setScrolledPast(false);
   }, [pathname]);
 
   useEffect(() => {
@@ -60,14 +62,24 @@ export default function SiteHeader({ currency = "EUR", guides = [] }) {
     pathname?.startsWith("/destinations") ||
     pathname?.startsWith("/guides") ||
     pathname?.startsWith("/inspire");
-  // On home, wait until the big hero search has scrolled out of view.
-  // On the section landing pages we expose the same search permanently.
-  const showHeaderSearch = (isHome && !heroSearchVisible) || isSection;
+
+  // On section pages (no hero search to observe), reveal the header search
+  // after a short scroll — same UX as home, just threshold-based.
+  useEffect(() => {
+    if (!isSection) return;
+    const handler = () => setScrolledPast(window.scrollY > 120);
+    handler();
+    window.addEventListener("scroll", handler, { passive: true });
+    return () => window.removeEventListener("scroll", handler);
+  }, [isSection]);
+
+  const showHeaderSearch =
+    (isHome && !heroSearchVisible) || (isSection && scrolledPast);
 
   return (
     <header className="sticky top-0 z-50 border-b border-slate-200/60 bg-[#f7f4ef]/95 backdrop-blur-sm">
       <nav
-        className="mx-auto flex h-14 max-w-6xl items-center justify-between gap-6 px-6 text-sm text-slate-900"
+        className="mx-auto flex h-16 max-w-7xl items-center justify-between gap-6 px-6 text-sm text-slate-900"
         aria-label="Primary"
       >
         <Link
@@ -86,8 +98,10 @@ export default function SiteHeader({ currency = "EUR", guides = [] }) {
         </Link>
 
         {showHeaderSearch ? (
-          <div className="hidden flex-1 justify-center px-4 md:flex">
-            <HomeSearchBar guides={guides} variant="compact" />
+          <div className="hidden flex-1 justify-center px-6 md:flex">
+            <div className="w-full max-w-lg">
+              <HomeSearchBar guides={guides} variant="compact" />
+            </div>
           </div>
         ) : null}
 
