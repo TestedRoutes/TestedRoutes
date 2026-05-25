@@ -79,7 +79,7 @@ export default function SiteHeader({ currency = "EUR", guides = [] }) {
   return (
     <header className="sticky top-0 z-50 border-b border-slate-200/60 bg-[#f7f4ef]/95 backdrop-blur-sm">
       <nav
-        className="mx-auto flex h-16 max-w-7xl items-center justify-between gap-6 px-6 text-sm text-slate-900"
+        className="mx-auto flex h-20 max-w-7xl items-center justify-between gap-6 px-6 text-sm text-slate-900"
         aria-label="Primary"
       >
         <Link
@@ -99,7 +99,7 @@ export default function SiteHeader({ currency = "EUR", guides = [] }) {
 
         {showHeaderSearch ? (
           <div className="hidden flex-1 justify-center px-6 md:flex">
-            <div className="w-full max-w-lg">
+            <div className="w-full max-w-xl">
               <HomeSearchBar guides={guides} variant="compact" />
             </div>
           </div>
