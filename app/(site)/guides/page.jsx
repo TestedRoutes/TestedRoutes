@@ -54,7 +54,7 @@ export default async function GuidesPage() {
   const guides = await loadGuides(currency);
 
   return (
-    <main className="mx-auto flex max-w-6xl flex-col gap-10 px-6 pb-16 pt-8">
+    <main className="mx-auto flex max-w-7xl flex-col gap-10 px-6 pb-16 pt-8">
       <section className="space-y-6">
         <div className="space-y-2">
           <div className="flex items-center justify-between">

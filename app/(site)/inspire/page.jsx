@@ -106,7 +106,7 @@ export default async function InspirePage() {
 
   return (
     <main className="w-full pb-16 pt-6 text-slate-900 sm:pt-8">
-      <div className="mx-auto flex w-full min-w-0 max-w-6xl flex-col gap-8 px-4 sm:gap-10 sm:px-6">
+      <div className="mx-auto flex w-full min-w-0 max-w-7xl flex-col gap-8 px-4 sm:gap-10 sm:px-6">
         <div className="space-y-1 text-center">
           <h1 className="text-2xl font-semibold leading-tight md:text-3xl">
             Real journeys. Real lessons

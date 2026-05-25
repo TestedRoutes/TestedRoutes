@@ -535,7 +535,7 @@ export default async function GuideDetailPage({ params }) {
   };
 
   return (
-    <main className="mx-auto max-w-6xl px-6 pb-16 pt-8">
+    <main className="mx-auto max-w-7xl px-6 pb-16 pt-8">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd) }}

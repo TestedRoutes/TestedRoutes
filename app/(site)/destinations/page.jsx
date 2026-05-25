@@ -5,7 +5,7 @@ export const metadata = {
 
 export default function DestinationsPage() {
   return (
-    <main className="mx-auto flex max-w-6xl flex-col gap-10 px-6 pb-16 pt-12">
+    <main className="mx-auto flex max-w-7xl flex-col gap-10 px-6 pb-16 pt-12">
       <p className="text-sm text-slate-500">Under Construction</p>
     </main>
   );
