@@ -47,10 +47,15 @@ function matchGuides(guides, query) {
 const VARIANT_STYLES = {
   hero: {
     wrapper: "mx-auto w-full max-w-3xl",
-    container: "p-2 shadow-md",
-    input: "px-6 py-4 text-base",
-    button: "px-6 py-4 text-base",
-    buttonLabel: "Search Guides",
+    container: "p-1.5 shadow-md md:p-2",
+    input: "px-4 py-3 text-sm md:px-6 md:py-4 md:text-base",
+    button: "px-4 py-3 text-sm md:px-6 md:py-4 md:text-base",
+    buttonLabel: (
+      <>
+        <span className="md:hidden">Search</span>
+        <span className="hidden md:inline">Search Guides</span>
+      </>
+    ),
   },
   compact: {
     wrapper: "w-full",

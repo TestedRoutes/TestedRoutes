@@ -141,7 +141,7 @@ export default function SiteHeader({ currency = "EUR", guides = [] }) {
       </nav>
 
       {menuOpen && (
-        <div className="border-t border-slate-200/60 bg-[#f7f4ef] px-6 pb-4 pt-2 md:hidden">
+        <div className="absolute inset-x-0 top-full border-t border-slate-200/60 bg-[#f7f4ef] px-6 pb-4 pt-2 shadow-lg md:hidden">
           {NAV_LINKS.map((link) => (
             <Link
               key={link.slug}
