@@ -45,6 +45,11 @@ const SITE_ORIGIN = process.env.NEXT_PUBLIC_SITE_URL || "https://testedroutes.co
  * treat them as stable — printed media relies on them not changing.
  */
 const CURATED = {
+  // Seychelles 8-day guide — downloadable Google My Map (beaches, food,
+  // hotels, ferries). External My Maps link, so no UTMs to bake in.
+  "seychelles-map":
+    "https://www.google.com/maps/d/viewer?mid=1EdUP3XbOOmub6TE5IM-6sC7K_SJa-3g",
+
   // "podcast": buildUtmUrl(`${SITE_ORIGIN}/subscribe`, {
   //   source: "shortlink", medium: "podcast", campaign: "podcast-mention-2026",
   // }),
