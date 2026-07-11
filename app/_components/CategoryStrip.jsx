@@ -68,7 +68,7 @@ export default function CategoryStrip({ items, onItemClick }) {
                   key={item.label}
                   type="button"
                   onClick={() => onItemClick(item.label)}
-                  className="flex items-stretch overflow-hidden rounded-2xl bg-white text-left shadow-sm ring-1 ring-slate-200 transition hover:-translate-y-0.5 hover:shadow-md hover:ring-slate-300/90"
+                  className="flex items-stretch overflow-hidden rounded-lg bg-white text-left shadow-sm ring-1 ring-slate-200 transition hover:-translate-y-0.5 hover:shadow-md hover:ring-slate-300/90"
                 >
                   {innerContent}
                 </button>
@@ -77,7 +77,7 @@ export default function CategoryStrip({ items, onItemClick }) {
             return (
               <div
                 key={item.label}
-                className="flex items-stretch overflow-hidden rounded-2xl bg-white shadow-sm ring-1 ring-slate-200"
+                className="flex items-stretch overflow-hidden rounded-lg bg-white shadow-sm ring-1 ring-slate-200"
               >
                 {innerContent}
               </div>
