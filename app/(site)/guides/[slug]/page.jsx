@@ -175,7 +175,7 @@ function LocationSection({ start, destinations, finish, points }) {
   return (
     <section>
       <p className="mb-4 font-serif text-xl font-semibold text-brand-ink">Location</p>
-      <div className="grid gap-5 md:grid-cols-[220px_1fr]">
+      <div className="grid grid-cols-1 gap-5 md:grid-cols-[220px_minmax(0,1fr)]">
         <ol className="relative space-y-5 pl-1">
           {start ? (
             <li className="flex gap-3">
@@ -567,7 +567,7 @@ export default async function GuideDetailPage({ params }) {
         ) : null}
       </div>
 
-      <div className="grid gap-6 md:grid-cols-[1fr_320px] lg:gap-8">
+      <div className="grid grid-cols-1 gap-6 md:grid-cols-[minmax(0,1fr)_320px] lg:gap-8">
         <div className="space-y-10">
           <GuideGallery photos={photos} />
           {hero.primary_stats || maintenance.last_reviewed_date ? (
