@@ -45,7 +45,7 @@ export default function GlobalError({ error, reset }) {
           </p>
           <h1
             style={{
-              fontFamily: "Georgia, serif",
+              fontFamily: "var(--font-serif), Georgia, serif",
               fontSize: 32,
               fontWeight: 600,
               margin: "0 0 1rem 0",
@@ -63,7 +63,7 @@ export default function GlobalError({ error, reset }) {
           >
             Sorry – the site itself failed to load. The team has been notified
             automatically. Please try again in a few minutes, or email{" "}
-            <a href="mailto:hello@testedroutes.com" style={{ color: "#0f6e56" }}>
+            <a href="mailto:hello@testedroutes.com" style={{ color: "#943d21" }}>
               hello@testedroutes.com
             </a>{" "}
             if it persists.

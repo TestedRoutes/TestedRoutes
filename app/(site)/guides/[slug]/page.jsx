@@ -96,7 +96,7 @@ function CheckBulletSection({ title, items }) {
       <ul className="space-y-2 text-sm text-slate-700">
         {items.map((item) => (
           <li key={item} className="flex gap-3">
-            <span aria-hidden className="mt-0.5 shrink-0 text-[#0f6e56]">✓</span>
+            <span aria-hidden className="mt-0.5 shrink-0 text-[#943d21]">✓</span>
             <span>{item}</span>
           </li>
         ))}
@@ -110,15 +110,15 @@ function NotSuitableWarning({ items }) {
   return (
     <section className="rounded-2xl border border-[#e5b59a] bg-[#fdf3ea] p-5">
       <div className="flex gap-3">
-        <span aria-hidden className="mt-0.5 shrink-0 text-[#b04a3a]">⚠</span>
+        <span aria-hidden className="mt-0.5 shrink-0 text-[#943d21]">⚠</span>
         <div className="flex-1">
-          <p className="mb-2 font-serif text-base font-semibold text-[#b04a3a]">
+          <p className="mb-2 font-serif text-base font-semibold text-[#943d21]">
             Not suitable
           </p>
           <ul className="space-y-1 text-sm text-[#5a3a2f]">
             {items.map((item) => (
               <li key={item} className="flex gap-2">
-                <span aria-hidden className="mt-1 shrink-0 text-[#b04a3a]">•</span>
+                <span aria-hidden className="mt-1 shrink-0 text-[#943d21]">•</span>
                 <span>{item}</span>
               </li>
             ))}
@@ -168,8 +168,8 @@ function TimelineDrop({ label, color }) {
 function LocationSection({ start, destinations, finish, points }) {
   const dests = Array.isArray(destinations) ? destinations : [];
   if (!start && dests.length === 0) return null;
-  const startColor = "#0f6e56";
-  const destColor = "#1f2937";
+  const startColor = "#943d21";
+  const destColor = "#1f0d07";
   const lastDestIndex = dests.length - 1;
   const multi = dests.length > 1;
   return (
@@ -257,8 +257,8 @@ function SaveTimeComparison({ price }) {
           <p className="mt-2 text-lg font-semibold text-slate-900">8+ hours</p>
           <p className="mt-1 text-xs text-slate-500">Research · Risk of gaps</p>
         </div>
-        <div className="rounded-2xl border-2 border-[#0f6e56] bg-[#f1faf6] p-5">
-          <p className="text-[11px] font-semibold uppercase tracking-wider text-[#0f6e56]">
+        <div className="rounded-2xl border-2 border-[#943d21] bg-[#e2ded2] p-5">
+          <p className="text-[11px] font-semibold uppercase tracking-wider text-[#943d21]">
             This guide
           </p>
           <p className="mt-2 text-lg font-semibold text-slate-900">{price || "–"}</p>
@@ -334,7 +334,7 @@ function Testimonials({ items }) {
             key={`${author}-${i}`}
             className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm"
           >
-            <span aria-hidden className="font-serif text-3xl leading-none text-[#0f6e56]">
+            <span aria-hidden className="font-serif text-3xl leading-none text-[#943d21]">
               “
             </span>
             <blockquote className="mt-1 text-sm leading-relaxed text-slate-700">
@@ -602,7 +602,7 @@ export default async function GuideDetailPage({ params }) {
             <aside
               role="note"
               aria-label="Affiliate disclosure"
-              className="rounded-2xl border border-amber-200 bg-amber-50 px-5 py-3 text-xs leading-relaxed text-amber-900"
+              className="rounded-2xl border border-[#e5b59a] bg-brand-terracotta-soft px-5 py-3 text-xs leading-relaxed text-[#5a3a2f]"
             >
               <strong>Affiliate disclosure.</strong> Some links below are
               affiliate links. When you buy through them, we may earn a small

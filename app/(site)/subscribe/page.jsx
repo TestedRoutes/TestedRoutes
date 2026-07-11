@@ -57,8 +57,8 @@ export default function SubscribePage() {
       </section>
 
       {LEAD_MAGNET_HREF ? (
-        <section className="rounded-[28px] border border-amber-200 bg-amber-50 p-8 shadow-sm">
-          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-amber-900">
+        <section className="rounded-[28px] border border-[#e5b59a] bg-brand-terracotta-soft p-8 shadow-sm">
+          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#5a3a2f]">
             Free with subscribing
           </p>
           <h2 className="mt-2 font-serif text-2xl font-semibold text-slate-900">

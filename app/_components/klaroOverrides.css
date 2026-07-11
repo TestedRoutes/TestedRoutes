@@ -7,9 +7,9 @@
  *
  *   - white card on slate-200 ring (matches legal-page sections)
  *   - rounded-3xl corners (matches /terms, /privacy section cards)
- *   - Georgia headings (matches guide pages and section titles)
+ *   - Serif headings (matches guide pages and section titles)
  *   - slate-900 primary button (matches "Search Guides", "Get the Guide")
- *   - emerald-700 accent on toggles + links (matches the "S" trail badge)
+ *   - terracotta accent on toggles + links (matches the "S" trail badge)
  *   - subtle drop-shadow with a slate cast (matches site cards)
  *
  * All selectors are scoped under `#klaro` so they only affect the
@@ -163,7 +163,7 @@
 /* Tertiary — manage choices / learn more */
 #klaro .cn-learn-more,
 #klaro .cm-link {
-  color: rgb(15, 110, 86) !important; /* emerald-700 */
+  color: #943d21 !important; /* brand terracotta */
   text-decoration: underline !important;
   text-underline-offset: 2px;
   background: none !important;
@@ -258,7 +258,7 @@
 
 #klaro .cm-list-input:checked + .cm-list-label .slider,
 #klaro .cm-list-input.required + .cm-list-label .slider {
-  background-color: rgb(15, 110, 86) !important; /* emerald-700 */
+  background-color: #943d21 !important; /* brand terracotta */
 }
 
 #klaro .slider:before {

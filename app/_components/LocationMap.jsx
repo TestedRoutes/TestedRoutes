@@ -5,8 +5,8 @@ import { MapContainer, TileLayer, Marker, Polyline, useMap } from "react-leaflet
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 
-const START_COLOR = "#0f6e56";
-const DEST_COLOR = "#1f2937";
+const START_COLOR = "#943d21";
+const DEST_COLOR = "#1f0d07";
 
 // Round badge for start / finish — shows a single letter inside a coloured
 // circle with a white border, like a station marker. Anchored at centre.

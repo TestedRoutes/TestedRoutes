@@ -190,7 +190,7 @@ export default function FaqPage() {
         <FaqGroup key={section.heading} heading={section.heading} items={section.items} />
       ))}
 
-      <section className="rounded-[28px] border border-slate-200 bg-[#f1faf6] p-8">
+      <section className="rounded-[28px] border border-slate-200 bg-[#e2ded2] p-8">
         <h2 className="font-serif text-lg font-semibold text-slate-900">
           Still have a question?
         </h2>

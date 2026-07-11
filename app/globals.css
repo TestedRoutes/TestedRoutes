@@ -7,3 +7,14 @@ body {
   background: #f4f3ef;
   color: #1f0d07;
 }
+
+/* Guide-PDF typography: headings default to the display serif everywhere
+   (legal, about, contact...) without per-page classes; opt out with
+   font-sans for eyebrow-style labels. */
+@layer base {
+  h1,
+  h2,
+  h3 {
+    font-family: theme(fontFamily.serif);
+  }
+}

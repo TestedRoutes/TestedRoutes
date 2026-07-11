@@ -50,9 +50,9 @@ export default function ContactForm() {
 
   if (status === "success") {
     return (
-      <div className="rounded-2xl border border-emerald-200 bg-emerald-50 px-5 py-6 text-sm leading-relaxed text-emerald-900">
+      <div className="rounded-2xl border border-brand-mint bg-[#effbf7] px-5 py-6 text-sm leading-relaxed text-brand-ink">
         <p className="font-semibold">Thanks – we&apos;ve got your message.</p>
-        <p className="mt-1 text-emerald-900/80">
+        <p className="mt-1 text-brand-ink/80">
           We aim to reply within two business days. For privacy / data
           requests, we have up to one month under the GDPR but usually
           respond much sooner.

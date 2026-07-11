@@ -47,7 +47,7 @@ export default async function ThanksPage() {
   return (
     <main className="mx-auto flex max-w-4xl flex-col gap-16 px-6 py-20">
       <section className="flex flex-col items-center gap-6 text-center">
-        <p className="text-xs uppercase tracking-[0.2em] text-emerald-700">Order confirmed</p>
+        <p className="text-xs uppercase tracking-[0.2em] text-brand-terracotta">Order confirmed</p>
         <h1 className="text-3xl font-semibold text-slate-900 sm:text-4xl">
           Check your email
         </h1>

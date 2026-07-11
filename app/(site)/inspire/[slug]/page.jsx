@@ -226,7 +226,7 @@ export default async function InspireStoryPage({ params }) {
 
             {galleryUrls.length ? (
               <section className="rounded-[28px] bg-white p-6 shadow-sm ring-1 ring-slate-200">
-                <h2 className="mb-4 text-xs font-semibold uppercase tracking-[0.2em] text-slate-500">
+                <h2 className="mb-4 font-sans text-xs font-semibold uppercase tracking-[0.2em] text-slate-500">
                   Gallery
                 </h2>
                 <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">

@@ -105,7 +105,7 @@ export default function BuyBox({
       <ul className="mt-4 space-y-2 text-sm text-slate-700">
         {TRUST_ITEMS.map(({ label, rest }) => (
           <li key={label} className="flex gap-2">
-            <span aria-hidden className="mt-0.5 shrink-0 text-[#0f6e56]">✓</span>
+            <span aria-hidden className="mt-0.5 shrink-0 text-[#943d21]">✓</span>
             <span>
               <strong className="font-semibold text-slate-900">{label}</strong>
               <span className="text-slate-500"> · {rest}</span>

@@ -250,7 +250,7 @@ export default async function GuideLinksPage({ params }) {
       <aside
         role="note"
         aria-label="Affiliate disclosure"
-        className="mt-5 max-w-3xl rounded-2xl border border-amber-200 bg-amber-50 px-5 py-3 text-xs leading-relaxed text-amber-900"
+        className="mt-5 max-w-3xl rounded-2xl border border-[#e5b59a] bg-brand-terracotta-soft px-5 py-3 text-xs leading-relaxed text-[#5a3a2f]"
       >
         <strong>Affiliate disclosure.</strong> Some links on this page are
         affiliate links. When you buy through them, we may earn a small
@@ -290,7 +290,7 @@ export default async function GuideLinksPage({ params }) {
         </>
       )}
 
-      <div className="mt-10 max-w-3xl rounded-2xl border border-slate-200 bg-[#f1faf6] p-6">
+      <div className="mt-10 max-w-3xl rounded-2xl border border-slate-200 bg-[#e2ded2] p-6">
         <p className="font-serif text-lg font-semibold text-brand-ink">
           Want the full plan?
         </p>
