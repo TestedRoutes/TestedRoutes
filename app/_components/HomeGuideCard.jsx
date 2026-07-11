@@ -84,7 +84,7 @@ export default function HomeGuideCard({ guide }) {
 
   return (
     <div className={cardClass}>
-      <div className="relative h-44 w-full overflow-hidden">
+      <div className="relative aspect-[4/5] w-full overflow-hidden">
         {guide.coming_soon ? (
           <div className="flex h-full w-full items-center justify-center bg-slate-100">
             <span className="rounded-full bg-slate-200 px-4 py-1.5 text-xs font-semibold uppercase tracking-widest text-slate-500">

@@ -27,7 +27,7 @@ function sortRecentFirst(cards) {
 function StoryCard({ card }) {
   const inner = (
     <>
-      <div className="relative aspect-[5/3] w-full shrink-0 overflow-hidden bg-slate-100 sm:aspect-[16/10]">
+      <div className="relative aspect-[4/5] w-full shrink-0 overflow-hidden bg-slate-100">
         {card.heroPhoto ? (
           <img
             src={card.heroPhoto}

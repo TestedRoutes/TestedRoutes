@@ -11,7 +11,7 @@ export const metadata = {
 function GuideCard({ guide }) {
   return (
     <div className="rounded-3xl bg-white shadow-sm ring-1 ring-slate-200">
-      <div className="h-44 w-full overflow-hidden rounded-t-3xl bg-slate-100">
+      <div className="aspect-[4/5] w-full overflow-hidden rounded-t-3xl bg-slate-100">
         {guide.image ? (
           <img
             src={guide.image}
