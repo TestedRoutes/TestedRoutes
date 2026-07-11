@@ -1,18 +1,32 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { useRef, useState } from "react";
 
 export default function HomeGuideCard({ guide }) {
   const images = guide.images || (guide.image ? [guide.image] : []);
   const [idx, setIdx] = useState(0);
+  const stripRef = useRef(null);
+
+  const scrollToIndex = (i) => {
+    const el = stripRef.current;
+    if (!el || !el.clientWidth) return;
+    const target = (i + images.length) % images.length;
+    el.scrollTo({ left: target * el.clientWidth, behavior: "smooth" });
+  };
   const prev = (e) => {
     e.preventDefault();
-    setIdx((i) => (i - 1 + images.length) % images.length);
+    scrollToIndex(idx - 1);
   };
   const next = (e) => {
     e.preventDefault();
-    setIdx((i) => (i + 1) % images.length);
+    scrollToIndex(idx + 1);
+  };
+  const onScroll = () => {
+    const el = stripRef.current;
+    if (!el || !el.clientWidth) return;
+    const i = Math.round(el.scrollLeft / el.clientWidth);
+    if (i !== idx) setIdx(Math.min(Math.max(i, 0), images.length - 1));
   };
 
   const cardClass = `group overflow-hidden rounded-3xl bg-white shadow-sm ring-1 ring-slate-200 transition${
@@ -30,17 +44,28 @@ export default function HomeGuideCard({ guide }) {
           </div>
         ) : (
           <>
-            <img
-              src={images[idx]}
-              alt={guide.title}
-              className="h-full w-full object-cover transition duration-300 group-hover:scale-105"
-            />
+            <div
+              ref={stripRef}
+              onScroll={onScroll}
+              className="flex h-full w-full snap-x snap-mandatory overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+            >
+              {images.map((src, i) => (
+                <div key={src} className="h-full w-full shrink-0 snap-center overflow-hidden">
+                  <img
+                    src={src}
+                    alt={guide.title}
+                    loading={i === 0 ? undefined : "lazy"}
+                    className="h-full w-full object-cover transition duration-300 group-hover:scale-105"
+                  />
+                </div>
+              ))}
+            </div>
             {images.length > 1 && (
               <>
                 <button
                   onClick={prev}
                   aria-label="Previous photo"
-                  className="absolute left-2 top-1/2 -translate-y-1/2 flex h-7 w-7 items-center justify-center rounded-full bg-white/80 shadow backdrop-blur-sm hover:bg-white"
+                  className="absolute left-2 top-1/2 hidden h-7 w-7 -translate-y-1/2 items-center justify-center rounded-full bg-white/80 shadow backdrop-blur-sm hover:bg-white md:flex"
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -58,7 +83,7 @@ export default function HomeGuideCard({ guide }) {
                 <button
                   onClick={next}
                   aria-label="Next photo"
-                  className="absolute right-2 top-1/2 -translate-y-1/2 flex h-7 w-7 items-center justify-center rounded-full bg-white/80 shadow backdrop-blur-sm hover:bg-white"
+                  className="absolute right-2 top-1/2 hidden h-7 w-7 -translate-y-1/2 items-center justify-center rounded-full bg-white/80 shadow backdrop-blur-sm hover:bg-white md:flex"
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"

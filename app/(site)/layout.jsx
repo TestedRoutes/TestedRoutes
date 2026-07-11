@@ -1,6 +1,7 @@
 import ConstructionBanner from "../_components/ConstructionBanner";
 import SiteHeader from "../_components/SiteHeader";
 import SiteFooter from "../_components/SiteFooter";
+import MobileTabBar from "../_components/MobileTabBar";
 import PostHogProvider from "../_components/PostHogProvider";
 import { getRequestCurrency } from "../_lib/currency";
 import { loadGuides } from "../_lib/loadGuides";
@@ -56,6 +57,7 @@ export default async function SiteLayout({ children }) {
       <SiteHeader currency={currency} guides={searchableGuides} />
       {children}
       <SiteFooter />
+      <MobileTabBar />
     </PostHogProvider>
   );
 }
