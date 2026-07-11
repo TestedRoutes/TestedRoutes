@@ -38,7 +38,7 @@ export default function SubscribePage() {
         <p className="text-xs uppercase tracking-[0.2em] text-slate-500">
           TestedRoutes Newsletter
         </p>
-        <h1 className="mt-3 font-['Georgia',serif] text-3xl font-semibold text-slate-900 md:text-4xl">
+        <h1 className="mt-3 font-serif text-3xl font-semibold text-slate-900 md:text-4xl">
           Field-tested travel routes, in your inbox when they drop
         </h1>
         <p className="mt-4 text-base leading-relaxed text-slate-600">
@@ -61,7 +61,7 @@ export default function SubscribePage() {
           <p className="text-xs font-semibold uppercase tracking-[0.2em] text-amber-900">
             Free with subscribing
           </p>
-          <h2 className="mt-2 font-['Georgia',serif] text-2xl font-semibold text-slate-900">
+          <h2 className="mt-2 font-serif text-2xl font-semibold text-slate-900">
             5 best Switzerland day trips from Zurich – free PDF
           </h2>
           <p className="mt-2 text-sm leading-relaxed text-slate-700">
@@ -79,7 +79,7 @@ export default function SubscribePage() {
         <div className="grid gap-6 sm:grid-cols-2">
           {HIGHLIGHTS.map((h) => (
             <div key={h.title} className="space-y-1">
-              <p className="font-['Georgia',serif] text-base font-semibold text-slate-900">
+              <p className="font-serif text-base font-semibold text-slate-900">
                 {h.title}
               </p>
               <p className="text-sm leading-relaxed text-slate-600">{h.body}</p>

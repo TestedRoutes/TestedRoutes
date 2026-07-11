@@ -41,7 +41,7 @@ export default function BuyBox({
     <a
       href={targetHref}
       onClick={handleBuy}
-      className="block w-full rounded-full bg-slate-900 px-4 py-2.5 text-center text-sm font-semibold text-white transition hover:bg-slate-800"
+      className="block w-full rounded-full bg-brand-terracotta px-4 py-2.5 text-center text-sm font-semibold text-white transition hover:bg-brand-terracotta/90"
     >
       Get the Guide
     </a>

@@ -4,8 +4,8 @@ export default function ConstructionBanner() {
   return (
     <div
       style={{
-        background: "#1a1816",
-        color: "#f7f4ef",
+        background: "#1f0d07",
+        color: "#f4f3ef",
         padding: "10px 16px",
         fontFamily: "sans-serif",
         letterSpacing: "0.03em",

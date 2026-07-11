@@ -45,7 +45,7 @@
 #klaro .cookie-notice .cn-title,
 #klaro .cookie-notice h1,
 #klaro .cookie-notice h2 {
-  font-family: Georgia, "Times New Roman", serif !important;
+  font-family: var(--font-serif), Georgia, "Times New Roman", serif !important;
   color: rgb(15, 23, 42) !important; /* slate-900 */
   font-weight: 600 !important;
   font-size: 1.125rem !important; /* text-lg */
@@ -91,7 +91,7 @@
 #klaro .cookie-modal .cm-modal-title,
 #klaro .cookie-modal h1,
 #klaro .cookie-modal h2 {
-  font-family: Georgia, "Times New Roman", serif !important;
+  font-family: var(--font-serif), Georgia, "Times New Roman", serif !important;
   color: rgb(15, 23, 42) !important;
   font-weight: 600 !important;
   font-size: 1.5rem !important; /* text-2xl */

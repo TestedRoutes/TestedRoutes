@@ -99,7 +99,7 @@ export default async function SitemapPage() {
 function SitemapSection({ heading, children }) {
   return (
     <section className="space-y-4 rounded-[28px] bg-white p-8 shadow-sm ring-1 ring-slate-200">
-      <h2 className="font-['Georgia',serif] text-xl font-semibold text-slate-900">
+      <h2 className="font-serif text-xl font-semibold text-slate-900">
         {heading}
       </h2>
       <ul className="grid gap-1.5 text-sm">{children}</ul>

@@ -71,7 +71,7 @@ export default function MobileTabBar() {
       {/* In-flow spacer so the fixed bar never covers the footer. */}
       <div className="h-16 md:hidden" aria-hidden="true" />
       <nav
-        className="fixed inset-x-0 bottom-0 z-50 border-t border-slate-200/70 bg-[#f7f4ef]/95 pb-[env(safe-area-inset-bottom)] backdrop-blur-sm md:hidden"
+        className="fixed inset-x-0 bottom-0 z-50 border-t border-slate-200/70 bg-brand-cream/95 pb-[env(safe-area-inset-bottom)] backdrop-blur-sm md:hidden"
         aria-label="Primary mobile"
       >
         <div className="mx-auto flex h-16 max-w-md items-stretch justify-around">
@@ -84,11 +84,18 @@ export default function MobileTabBar() {
                 aria-current={isActive ? "page" : undefined}
                 className={`flex flex-1 flex-col items-center justify-center gap-0.5 text-[10px] ${
                   isActive
-                    ? "font-semibold text-slate-900"
+                    ? "font-semibold text-brand-ink"
                     : "font-normal text-slate-500"
                 }`}
               >
-                {tab.icon}
+                {/* Mint pill echoes the guide PDF's "DAY n" circles. */}
+                <span
+                  className={`flex items-center justify-center rounded-full px-3 py-0.5 ${
+                    isActive ? "bg-brand-mint" : ""
+                  }`}
+                >
+                  {tab.icon}
+                </span>
                 <span>{tab.label}</span>
               </Link>
             );

@@ -31,12 +31,12 @@ function truncateAtThirdH2(blocks) {
 const components = {
   block: {
     h2: ({ children }) => (
-      <h2 className="mb-2 mt-6 font-['Georgia',serif] text-lg font-semibold text-[#1a1816]">
+      <h2 className="mb-2 mt-6 font-serif text-lg font-semibold text-brand-ink">
         {children}
       </h2>
     ),
     h3: ({ children }) => (
-      <h3 className="mb-2 mt-5 font-semibold text-[#1a1816]">{children}</h3>
+      <h3 className="mb-2 mt-5 font-semibold text-brand-ink">{children}</h3>
     ),
     blockquote: ({ children }) => (
       <blockquote className="my-4 border-l-2 border-slate-200 pl-4 text-slate-600">
@@ -61,7 +61,7 @@ const components = {
       if (!href) return <>{children}</>;
       const isAffiliate = !!value?.isAffiliate;
       const className = isAffiliate
-        ? "text-slate-900 underline decoration-[#0f6e56] decoration-2 underline-offset-2 hover:decoration-[#1a1816]"
+        ? "text-slate-900 underline decoration-brand-terracotta decoration-2 underline-offset-2 hover:decoration-brand-ink"
         : "text-slate-900 underline decoration-slate-300 underline-offset-2 hover:decoration-slate-500";
       const target = value?.blank === false ? undefined : "_blank";
       const rel = target === "_blank" ? "noopener noreferrer" : undefined;
@@ -72,7 +72,7 @@ const components = {
       );
     },
     strong: ({ children }) => (
-      <strong className="font-semibold text-[#1a1816]">{children}</strong>
+      <strong className="font-semibold text-brand-ink">{children}</strong>
     ),
     em: ({ children }) => <em className="italic">{children}</em>,
   },
@@ -86,7 +86,7 @@ export default function GuideBody({ blocks, checkoutHref, pdfHref, price }) {
 
   return (
     <section>
-      <p className="mb-4 font-['Georgia',serif] text-xl font-semibold text-[#1a1816]">
+      <p className="mb-4 font-serif text-xl font-semibold text-brand-ink">
         My Experience
       </p>
       <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
@@ -99,7 +99,7 @@ export default function GuideBody({ blocks, checkoutHref, pdfHref, price }) {
             />
           ) : null}
           <div className="rounded-b-2xl bg-[#f1faf6] px-6 py-5">
-            <p className="font-['Georgia',serif] text-base font-semibold text-[#1a1816]">
+            <p className="font-serif text-base font-semibold text-brand-ink">
               {truncated
                 ? "Continues in the full guide"
                 : "Want the full plan?"}

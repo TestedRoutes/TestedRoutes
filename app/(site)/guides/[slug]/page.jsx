@@ -92,7 +92,7 @@ function CheckBulletSection({ title, items }) {
   if (!Array.isArray(items) || items.length === 0) return null;
   return (
     <section>
-      <p className="mb-4 font-['Georgia',serif] text-xl font-semibold text-[#1a1816]">{title}</p>
+      <p className="mb-4 font-serif text-xl font-semibold text-brand-ink">{title}</p>
       <ul className="space-y-2 text-sm text-slate-700">
         {items.map((item) => (
           <li key={item} className="flex gap-3">
@@ -112,7 +112,7 @@ function NotSuitableWarning({ items }) {
       <div className="flex gap-3">
         <span aria-hidden className="mt-0.5 shrink-0 text-[#b04a3a]">⚠</span>
         <div className="flex-1">
-          <p className="mb-2 font-['Georgia',serif] text-base font-semibold text-[#b04a3a]">
+          <p className="mb-2 font-serif text-base font-semibold text-[#b04a3a]">
             Not suitable
           </p>
           <ul className="space-y-1 text-sm text-[#5a3a2f]">
@@ -174,7 +174,7 @@ function LocationSection({ start, destinations, finish, points }) {
   const multi = dests.length > 1;
   return (
     <section>
-      <p className="mb-4 font-['Georgia',serif] text-xl font-semibold text-[#1a1816]">Location</p>
+      <p className="mb-4 font-serif text-xl font-semibold text-brand-ink">Location</p>
       <div className="grid gap-5 md:grid-cols-[220px_1fr]">
         <ol className="relative space-y-5 pl-1">
           {start ? (
@@ -239,7 +239,7 @@ function LocationSection({ start, destinations, finish, points }) {
 function SaveTimeComparison({ price }) {
   return (
     <section>
-      <p className="mb-4 font-['Georgia',serif] text-xl font-semibold text-[#1a1816]">
+      <p className="mb-4 font-serif text-xl font-semibold text-brand-ink">
         Save time and money
       </p>
       <div className="grid gap-3 sm:grid-cols-3">
@@ -296,7 +296,7 @@ function FaqAccordion({ items }) {
   const list = Array.isArray(items) && items.length ? items : STANDARD_FAQ;
   return (
     <section>
-      <p className="mb-4 font-['Georgia',serif] text-xl font-semibold text-[#1a1816]">
+      <p className="mb-4 font-serif text-xl font-semibold text-brand-ink">
         Frequently asked questions
       </p>
       <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white divide-y divide-slate-100">
@@ -325,7 +325,7 @@ function Testimonials({ items }) {
   if (!Array.isArray(items) || items.length === 0) return null;
   return (
     <section>
-      <p className="mb-4 font-['Georgia',serif] text-xl font-semibold text-[#1a1816]">
+      <p className="mb-4 font-serif text-xl font-semibold text-brand-ink">
         What readers say
       </p>
       <div className="grid gap-4 md:grid-cols-2">
@@ -334,7 +334,7 @@ function Testimonials({ items }) {
             key={`${author}-${i}`}
             className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm"
           >
-            <span aria-hidden className="font-['Georgia',serif] text-3xl leading-none text-[#0f6e56]">
+            <span aria-hidden className="font-serif text-3xl leading-none text-[#0f6e56]">
               “
             </span>
             <blockquote className="mt-1 text-sm leading-relaxed text-slate-700">
@@ -355,7 +355,7 @@ function RelatedGuides({ items }) {
   if (!Array.isArray(items) || items.length === 0) return null;
   return (
     <section className="mt-12 border-t border-slate-200 pt-10">
-      <p className="mb-5 font-['Georgia',serif] text-2xl font-semibold text-[#1a1816]">
+      <p className="mb-5 font-serif text-2xl font-semibold text-brand-ink">
         You might also like
       </p>
       <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
@@ -381,7 +381,7 @@ function RelatedGuides({ items }) {
                   {g.eyebrow}
                 </p>
               ) : null}
-              <p className="font-['Georgia',serif] text-base font-semibold leading-snug text-slate-900 group-hover:text-slate-700">
+              <p className="font-serif text-base font-semibold leading-snug text-slate-900 group-hover:text-slate-700">
                 {g.title}
               </p>
               <div className="mt-auto flex items-center justify-between pt-2 text-xs text-slate-500">
@@ -404,11 +404,11 @@ function BottomCta({ price, checkoutHref, pdfHref }) {
     ? `Get the Guide – ${price}`
     : "Get the Guide";
   return (
-    <section className="mt-12 rounded-[28px] bg-brand-blue p-10 text-center text-white">
-      <p className="font-['Georgia',serif] text-3xl font-semibold leading-tight">
+    <section className="mt-12 rounded-[28px] bg-brand-terracotta p-10 text-center text-white">
+      <p className="font-serif text-3xl font-semibold leading-tight">
         Travel more.
       </p>
-      <p className="font-['Georgia',serif] text-3xl font-semibold leading-tight">
+      <p className="font-serif text-3xl font-semibold leading-tight">
         Waste less time planning.
       </p>
       <p className="mx-auto mt-4 max-w-xl text-sm leading-relaxed text-white/70">
@@ -572,7 +572,7 @@ export default async function GuideDetailPage({ params }) {
           <GuideGallery photos={photos} />
           {hero.primary_stats || maintenance.last_reviewed_date ? (
             <section>
-              <p className="mb-4 font-['Georgia',serif] text-xl font-semibold text-[#1a1816]">
+              <p className="mb-4 font-serif text-xl font-semibold text-brand-ink">
                 Trip details
               </p>
               <PrimaryStats

@@ -20,8 +20,8 @@ export default function GlobalError({ error, reset }) {
         style={{
           fontFamily:
             "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
-          background: "#f7f4ef",
-          color: "#0f172a",
+          background: "#f4f3ef",
+          color: "#1f0d07",
           margin: 0,
           minHeight: "100vh",
           display: "flex",
@@ -74,7 +74,7 @@ export default function GlobalError({ error, reset }) {
             style={{
               cursor: "pointer",
               borderRadius: 9999,
-              background: "#0f172a",
+              background: "#1f0d07",
               color: "#ffffff",
               border: "none",
               padding: "10px 20px",

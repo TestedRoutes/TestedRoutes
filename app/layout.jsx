@@ -1,11 +1,24 @@
 import "./globals.css";
 import { Analytics } from "@vercel/analytics/next";
+import { Fraunces, DM_Sans } from "next/font/google";
 import CookieConsent from "./_components/CookieConsent";
+
+// Guide-design type pairing: Fraunces for display/serif, DM Sans for body.
+const fraunces = Fraunces({
+  subsets: ["latin"],
+  variable: "--font-serif",
+  display: "swap",
+});
+const dmSans = DM_Sans({
+  subsets: ["latin"],
+  variable: "--font-sans",
+  display: "swap",
+});
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
-      <body className="bg-[#f7f4ef] font-sans text-slate-900">
+    <html lang="en" className={`${fraunces.variable} ${dmSans.variable}`}>
+      <body className="bg-brand-cream font-sans text-brand-ink">
         {children}
         {/* Vercel Web Analytics — cookie-free, GDPR-compliant by design,
             no consent banner needed. Ships ~1.7KB tracker. Acts as a

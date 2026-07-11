@@ -58,12 +58,12 @@ export default async function GuidesPage() {
       <section className="space-y-6">
         <div className="space-y-2">
           <div className="flex items-center justify-between">
-            <h1 className="text-2xl font-semibold text-brand-blue">Guides</h1>
+            <h1 className="text-2xl font-semibold text-brand-ink">Guides</h1>
             <span className="text-xs text-slate-500">
               {guides.length} {guides.length === 1 ? "guide" : "guides"}
             </span>
           </div>
-          <p className="font-['Georgia',serif] text-sm italic text-slate-600">
+          <p className="font-serif text-sm italic text-slate-600">
             Print it, follow it, the trip works.
           </p>
         </div>

@@ -183,7 +183,7 @@ export default function HomeGuideCard({ guide }) {
             </span>
           ) : guide.href ? (
             <Link
-              className="rounded-full bg-slate-900 px-4 py-2 text-xs font-semibold text-white"
+              className="rounded-full bg-brand-terracotta px-4 py-2 text-xs font-semibold text-white transition hover:bg-brand-terracotta/90"
               href={guide.href}
             >
               View Guide
@@ -191,7 +191,7 @@ export default function HomeGuideCard({ guide }) {
           ) : (
             <button
               type="button"
-              className="rounded-full bg-slate-900 px-4 py-2 text-xs font-semibold text-white"
+              className="rounded-full bg-brand-terracotta px-4 py-2 text-xs font-semibold text-white transition hover:bg-brand-terracotta/90"
             >
               View Guide
             </button>

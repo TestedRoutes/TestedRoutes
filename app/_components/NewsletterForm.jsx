@@ -50,10 +50,10 @@ export default function NewsletterForm({ variant = "footer", source, headline, s
     return (
       <form onSubmit={onSubmit} className="flex w-full items-center justify-center gap-2 text-sm">
         {status === "success" ? (
-          <span className="text-[#f7f4ef]">Thanks – check your inbox to confirm.</span>
+          <span className="text-brand-cream">Thanks – check your inbox to confirm.</span>
         ) : (
           <>
-            <span className="hidden text-[#f7f4ef]/80 sm:inline">
+            <span className="hidden text-brand-cream/80 sm:inline">
               {headline || "Launching June 2026 – get notified:"}
             </span>
             <input
@@ -69,7 +69,7 @@ export default function NewsletterForm({ variant = "footer", source, headline, s
             <button
               type="submit"
               disabled={status === "loading"}
-              className="rounded-full bg-[#f7f4ef] px-4 py-1.5 text-xs font-semibold text-[#1a1816] transition hover:bg-white disabled:opacity-50"
+              className="rounded-full bg-brand-cream px-4 py-1.5 text-xs font-semibold text-brand-ink transition hover:bg-white disabled:opacity-50"
             >
               {status === "loading" ? "…" : "Subscribe"}
             </button>
@@ -84,12 +84,12 @@ export default function NewsletterForm({ variant = "footer", source, headline, s
 
   if (variant === "story") {
     return (
-      <section className="rounded-3xl bg-[#1a1816] p-8 text-[#f7f4ef]">
-        <p className="text-xs uppercase tracking-[0.2em] text-[#f7f4ef]/60">TestedRoutes Newsletter</p>
-        <h3 className="mt-2 font-['Georgia',serif] text-2xl font-semibold">
+      <section className="rounded-3xl bg-brand-ink p-8 text-brand-cream">
+        <p className="text-xs uppercase tracking-[0.2em] text-brand-cream/60">TestedRoutes Newsletter</p>
+        <h3 className="mt-2 font-serif text-2xl font-semibold">
           {headline || "Get the next guide first"}
         </h3>
-        <p className="mt-2 text-sm text-[#f7f4ef]/80">
+        <p className="mt-2 text-sm text-brand-cream/80">
           {subhead || "One email when a new field-tested route is published. No spam, unsubscribe anytime."}
         </p>
         {status === "success" ? (
@@ -111,7 +111,7 @@ export default function NewsletterForm({ variant = "footer", source, headline, s
             <button
               type="submit"
               disabled={status === "loading"}
-              className="rounded-full bg-[#f7f4ef] px-5 py-2.5 text-sm font-semibold text-[#1a1816] transition hover:bg-white disabled:opacity-50"
+              className="rounded-full bg-brand-cream px-5 py-2.5 text-sm font-semibold text-brand-ink transition hover:bg-white disabled:opacity-50"
             >
               {status === "loading" ? "Subscribing…" : "Subscribe"}
             </button>
@@ -149,7 +149,7 @@ export default function NewsletterForm({ variant = "footer", source, headline, s
           <button
             type="submit"
             disabled={status === "loading"}
-            className="rounded-full bg-slate-900 px-4 py-2 text-xs font-semibold text-white transition hover:bg-slate-700 disabled:opacity-50"
+            className="rounded-full bg-brand-terracotta px-4 py-2 text-xs font-semibold text-white transition hover:bg-brand-terracotta/90 disabled:opacity-50"
           >
             {status === "loading" ? "…" : "Subscribe"}
           </button>
