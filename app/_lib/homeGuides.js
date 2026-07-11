@@ -1,6 +1,11 @@
 // Hardcoded cards for the homepage "Browse guides" rail.
 // Kept separate from the metadata-driven catalog (/guides) because this rail
 // intentionally shows coming-soon placeholders alongside the real guides.
+//
+// Optional per-guide `video: { url, poster }` — a direct .mp4/.webm file URL
+// (not a YouTube/TikTok page link) becomes the first swipeable slide on the
+// card, muted and looping, playing only while on screen. `poster` falls back
+// to the first image.
 
 const STORY_BASE = "/Content/Stories/2020%2010%2018%20Triftbrucke%20from%20Zurich/";
 

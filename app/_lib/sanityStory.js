@@ -413,6 +413,7 @@ export function shapeGuide(doc, currency = "EUR") {
     routePoints: doc.routePoints || null,
     photos: [heroUrl, ...galleryUrls].filter(Boolean),
     galleryPhotos: galleryUrls,
+    videoUrl: doc.hasVideo ? doc.videoUrl || null : null,
     relatedGuides,
     folderUrl: "",
     heroName: doc.heroImage?.alt || null,

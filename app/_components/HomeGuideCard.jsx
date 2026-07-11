@@ -1,17 +1,66 @@
 "use client";
 
 import Link from "next/link";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+
+// Only direct video files can autoplay inline; page links (YouTube, TikTok)
+// would need an iframe, which is too heavy for a card.
+const PLAYABLE_VIDEO = /\.(mp4|webm|mov)(\?|#|$)/i;
+
+// Muted looping clip that plays only while at least half visible — swiping
+// to another slide or scrolling the card away pauses it. preload="none" +
+// poster keeps the grid light until the clip actually enters the viewport.
+function CardVideo({ src, poster, title }) {
+  const ref = useRef(null);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el || typeof IntersectionObserver === "undefined") return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) el.play().catch(() => {});
+        else el.pause();
+      },
+      { threshold: 0.5 }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
+  return (
+    <video
+      ref={ref}
+      src={src}
+      poster={poster}
+      muted
+      loop
+      playsInline
+      preload="none"
+      aria-label={title}
+      className="h-full w-full object-cover"
+    />
+  );
+}
 
 export default function HomeGuideCard({ guide }) {
   const images = guide.images || (guide.image ? [guide.image] : []);
+  const video = guide.video || (guide.videoUrl ? { url: guide.videoUrl } : null);
+  const playableVideo =
+    video?.url && PLAYABLE_VIDEO.test(video.url) ? video : null;
+  const slides = [
+    ...(playableVideo
+      ? [{ type: "video", src: playableVideo.url, poster: playableVideo.poster || images[0] }]
+      : []),
+    ...images.map((src) => ({ type: "image", src })),
+  ];
+
   const [idx, setIdx] = useState(0);
   const stripRef = useRef(null);
 
   const scrollToIndex = (i) => {
     const el = stripRef.current;
     if (!el || !el.clientWidth) return;
-    const target = (i + images.length) % images.length;
+    const target = (i + slides.length) % slides.length;
     el.scrollTo({ left: target * el.clientWidth, behavior: "smooth" });
   };
   const prev = (e) => {
@@ -26,7 +75,7 @@ export default function HomeGuideCard({ guide }) {
     const el = stripRef.current;
     if (!el || !el.clientWidth) return;
     const i = Math.round(el.scrollLeft / el.clientWidth);
-    if (i !== idx) setIdx(Math.min(Math.max(i, 0), images.length - 1));
+    if (i !== idx) setIdx(Math.min(Math.max(i, 0), slides.length - 1));
   };
 
   const cardClass = `group overflow-hidden rounded-3xl bg-white shadow-sm ring-1 ring-slate-200 transition${
@@ -49,18 +98,25 @@ export default function HomeGuideCard({ guide }) {
               onScroll={onScroll}
               className="flex h-full w-full snap-x snap-mandatory overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
             >
-              {images.map((src, i) => (
-                <div key={src} className="h-full w-full shrink-0 snap-center overflow-hidden">
-                  <img
-                    src={src}
-                    alt={guide.title}
-                    loading={i === 0 ? undefined : "lazy"}
-                    className="h-full w-full object-cover transition duration-300 group-hover:scale-105"
-                  />
+              {slides.map((slide, i) => (
+                <div
+                  key={slide.src}
+                  className="h-full w-full shrink-0 snap-center overflow-hidden"
+                >
+                  {slide.type === "video" ? (
+                    <CardVideo src={slide.src} poster={slide.poster} title={guide.title} />
+                  ) : (
+                    <img
+                      src={slide.src}
+                      alt={guide.title}
+                      loading={i === 0 ? undefined : "lazy"}
+                      className="h-full w-full object-cover transition duration-300 group-hover:scale-105"
+                    />
+                  )}
                 </div>
               ))}
             </div>
-            {images.length > 1 && (
+            {slides.length > 1 && (
               <>
                 <button
                   onClick={prev}
@@ -99,7 +155,7 @@ export default function HomeGuideCard({ guide }) {
                   </svg>
                 </button>
                 <div className="absolute bottom-2 left-1/2 flex -translate-x-1/2 gap-1">
-                  {images.map((_, i) => (
+                  {slides.map((_, i) => (
                     <span
                       key={i}
                       className={`block h-1.5 w-1.5 rounded-full ${i === idx ? "bg-white" : "bg-white/50"}`}
