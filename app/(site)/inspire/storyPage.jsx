@@ -4,6 +4,7 @@ import { marked } from "marked";
 import { loadInspireStories } from "../../_lib/loadInspireStories";
 import { fetchStoryTranslations } from "../../_lib/sanityStory";
 import { loadGuides } from "../../_lib/loadGuides";
+import { getRequestCurrency } from "../../_lib/currency";
 import {
   getInspireFeaturedCardDisplay,
   getInspireStoryHeroAlt,
@@ -95,6 +96,83 @@ function resolveGuideHref(metadata) {
   return guideUrl;
 }
 
+// A story either pins one guide (its own guide reference, or a same-slug
+// guide) or — for shared stories like "Blue Lagoon" that belong to every
+// Iceland guide — offers all guides for its destination country.
+async function resolveGuideTargets(story, lang, currency) {
+  const guides = await loadGuides(currency, lang);
+
+  const direct = resolveGuideHref(story.metadata);
+  if (direct) {
+    return { guideHref: localePath(lang, direct), guideOptions: [] };
+  }
+  const slugMatch = guides.find((g) => g.slug === story.slug);
+  if (slugMatch) {
+    return {
+      guideHref: localePath(lang, slugMatch.href || `/guides/${slugMatch.slug}`),
+      guideOptions: [],
+    };
+  }
+
+  const country = story.metadata?.geography?.country;
+  const matches = country
+    ? guides.filter((g) => g.metadata?.geography?.country === country)
+    : [];
+  if (matches.length === 1) {
+    return { guideHref: localePath(lang, matches[0].href), guideOptions: [] };
+  }
+  if (matches.length > 1) {
+    return {
+      guideHref: null,
+      guideOptions: matches.slice(0, 3).map((g) => ({
+        title: g.title,
+        duration: g.duration || "",
+        price: g.price || "",
+        href: localePath(lang, g.href),
+      })),
+    };
+  }
+  return { guideHref: null, guideOptions: [] };
+}
+
+// Compact list of guide choices, used wherever the single-guide CTA
+// would otherwise sit.
+function GuideOptionRows({ options, dark = false }) {
+  return (
+    <div className="mt-3 flex flex-col gap-2">
+      {options.map((g) => (
+        <Link
+          key={g.href}
+          href={g.href}
+          className={
+            dark
+              ? "flex items-center justify-between gap-3 rounded-xl bg-white/10 px-4 py-2.5 text-left transition hover:bg-white/20"
+              : "flex items-center justify-between gap-3 rounded-xl bg-white px-4 py-2.5 text-left shadow-sm ring-1 ring-slate-200 transition hover:ring-slate-300"
+          }
+        >
+          <span className="min-w-0">
+            <span
+              className={`block truncate text-sm font-semibold ${dark ? "text-white" : "text-slate-900"}`}
+            >
+              {g.title}
+            </span>
+            {g.duration ? (
+              <span className={`block text-xs ${dark ? "text-white/60" : "text-slate-500"}`}>
+                {g.duration}
+              </span>
+            ) : null}
+          </span>
+          <span
+            className={`shrink-0 text-sm font-semibold ${dark ? "text-white" : "text-slate-900"}`}
+          >
+            {g.price || "→"}
+          </span>
+        </Link>
+      ))}
+    </div>
+  );
+}
+
 // hreflang alternates across every published language version of the story.
 async function storyLanguageAlternates(story, lang, slug) {
   const languages = {};
@@ -152,18 +230,13 @@ export default async function StoryPage({ lang, slug }) {
   const t = getDict(lang).story;
   const display = getInspireFeaturedCardDisplay(story) || {};
   const heroAlt = getInspireStoryHeroAlt(story) || story.title;
-  let guideHref = resolveGuideHref(story.metadata);
-  if (!guideHref) {
-    // No guide_url in metadata – fall back to a guide with the same slug
-    // in the same language.
-    const guides = await loadGuides(undefined, lang);
-    const match = guides.find((g) => g.slug === story.slug);
-    if (match) guideHref = match.href || `/guides/${match.slug}`;
-  }
-  // Localized stories link to the guide in the same language.
-  if (guideHref && guideHref.startsWith("/guides/")) {
-    guideHref = localePath(lang, guideHref);
-  }
+  const currency = await getRequestCurrency();
+  const { guideHref, guideOptions } = await resolveGuideTargets(
+    story,
+    lang,
+    currency,
+  );
+  const hasGuideOptions = guideOptions.length > 0;
   const bodyHtml = renderMarkdown(story.storyContent);
   const [bodyFirst, bodySecond] = guideHref
     ? splitHtmlAtMid(bodyHtml)
@@ -290,12 +363,21 @@ export default async function StoryPage({ lang, slug }) {
                   </div>
                 ) : null}
               </dl>
-              <Link
-                href={guideHref || "/guides"}
-                className="mt-4 flex w-full items-center justify-center rounded-full bg-slate-900 py-2.5 text-xs font-semibold text-white transition hover:bg-slate-800"
-              >
-                {guideHref ? t.readFullGuide : t.browseAllGuides}
-              </Link>
+              {hasGuideOptions ? (
+                <>
+                  <p className="mt-4 text-[10px] font-bold uppercase tracking-[0.2em] text-slate-400">
+                    {t.guidesForTrip}
+                  </p>
+                  <GuideOptionRows options={guideOptions} />
+                </>
+              ) : (
+                <Link
+                  href={guideHref || localePath(lang, "/guides")}
+                  className="mt-4 flex w-full items-center justify-center rounded-full bg-slate-900 py-2.5 text-xs font-semibold text-white transition hover:bg-slate-800"
+                >
+                  {guideHref ? t.readFullGuide : t.browseAllGuides}
+                </Link>
+              )}
             </div>
 
             <section className="rounded-[28px] bg-white p-6 shadow-sm ring-1 ring-slate-200 md:p-8">
@@ -325,7 +407,7 @@ export default async function StoryPage({ lang, slug }) {
               )}
             </section>
 
-            {guideHref && bodyHtml ? (
+            {(guideHref || hasGuideOptions) && bodyHtml ? (
               <section className="rounded-[28px] bg-brand-terracotta p-8 text-center text-white">
                 <p className="font-serif text-2xl font-semibold leading-tight">
                   {t.endCtaTitle}
@@ -333,12 +415,18 @@ export default async function StoryPage({ lang, slug }) {
                 <p className="mx-auto mt-3 max-w-md text-sm leading-relaxed text-white/70">
                   {t.endCtaBody}
                 </p>
-                <Link
-                  href={guideHref}
-                  className="mt-5 inline-flex rounded-full bg-white px-6 py-2.5 text-sm font-semibold text-slate-900 transition hover:bg-slate-100"
-                >
-                  {t.readFullGuide}
-                </Link>
+                {guideHref ? (
+                  <Link
+                    href={guideHref}
+                    className="mt-5 inline-flex rounded-full bg-white px-6 py-2.5 text-sm font-semibold text-slate-900 transition hover:bg-slate-100"
+                  >
+                    {t.readFullGuide}
+                  </Link>
+                ) : (
+                  <div className="mx-auto mt-5 w-full max-w-md text-left">
+                    <GuideOptionRows options={guideOptions} dark />
+                  </div>
+                )}
               </section>
             ) : null}
 
@@ -382,6 +470,14 @@ export default async function StoryPage({ lang, slug }) {
                       {t.readFullGuide}
                     </Link>
                   </>
+                ) : hasGuideOptions ? (
+                  <>
+                    <p className="mb-2 text-[10px] font-bold uppercase tracking-[0.2em] text-white/50">
+                      {t.planningTrip}
+                    </p>
+                    <p className="text-base font-semibold leading-snug">{t.guidesForTrip}</p>
+                    <GuideOptionRows options={guideOptions} dark />
+                  </>
                 ) : (
                   <>
                     <p className="mb-2 text-[10px] font-bold uppercase tracking-[0.2em] text-white/50">
@@ -392,7 +488,7 @@ export default async function StoryPage({ lang, slug }) {
                       {t.guidesCardBody}
                     </p>
                     <Link
-                      href="/guides"
+                      href={localePath(lang, "/guides")}
                       className="mt-4 flex w-full items-center justify-center rounded-full bg-white py-2.5 text-xs font-semibold text-slate-900 transition hover:bg-slate-100"
                     >
                       {t.browseAllGuides}

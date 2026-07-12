@@ -141,6 +141,7 @@ const en = {
     endCtaBody:
       "Get the tested guide for this trip – exact route, bookings, costs and timings in one PDF.",
     gallery: "Gallery",
+    guidesForTrip: "Guides for this trip",
   },
   guideList: {
     title: "Guides",
@@ -326,6 +327,7 @@ const de = {
     endCtaBody:
       "Hol dir den getesteten Guide zu dieser Reise – exakte Route, Buchungen, Kosten und Timing in einem PDF.",
     gallery: "Galerie",
+    guidesForTrip: "Guides für diese Reise",
   },
   guideList: {
     title: "Guides",
@@ -511,6 +513,7 @@ const es = {
     endCtaBody:
       "Consigue la guía probada de este viaje – ruta exacta, reservas, costes y tiempos en un solo PDF.",
     gallery: "Galería",
+    guidesForTrip: "Guías para este viaje",
   },
   guideList: {
     title: "Guías",
@@ -696,6 +699,7 @@ const fr = {
     endCtaBody:
       "Procurez-vous le guide testé de ce voyage – itinéraire exact, réservations, budget et horaires dans un seul PDF.",
     gallery: "Galerie",
+    guidesForTrip: "Guides pour ce voyage",
   },
   guideList: {
     title: "Guides",
@@ -880,6 +884,7 @@ const lt = {
     endCtaBody:
       "Įsigykite išbandytą šios kelionės gidą – tikslus maršrutas, rezervacijos, išlaidos ir laikai viename PDF.",
     gallery: "Galerija",
+    guidesForTrip: "Šios kelionės gidai",
   },
   guideList: {
     title: "Gidai",
