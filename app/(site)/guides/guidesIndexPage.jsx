@@ -1,9 +1,21 @@
 import Link from "next/link";
-import { loadGuides } from "../../_lib/loadGuides";
+import { loadGuides, toGuideCard } from "../../_lib/loadGuides";
 import { fetchGuideCount } from "../../_lib/sanityStory";
 import { getRequestCurrency } from "../../_lib/currency";
 import { LOCALES, getDict, localePath } from "../../_lib/i18n";
-import GuideListCard from "./GuideListCard";
+import { aboutAsset } from "../../_lib/categoryPills";
+import GuidesBrowse from "./GuidesBrowse";
+
+const EXTREME_FILES = [
+  "Running with bulls Pamplona 2019.jpg",
+  "Sharks Fiji 2025.jpg",
+  "Nicaragua boarding 2019.jpg",
+  "Paragliding.jpg",
+  "Ice climbing Italy 2019.jpg",
+  "Iron Ore train Mauritania 2023.jpg",
+  "Summits Alaska 2019 v2.jpg",
+  "Makoko Nigeria 2025.jpg",
+];
 
 // hreflang alternates only for locales that actually have guides.
 async function guideLanguageAlternates() {
@@ -35,6 +47,7 @@ export async function buildGuidesIndexMetadata(lang) {
 export default async function GuidesIndexPage({ lang = "en" }) {
   const t = getDict(lang);
   const tl = t.guideList;
+  const ti = t.inspireList;
   const currency = await getRequestCurrency();
   const guides = await loadGuides(currency, lang);
 
@@ -53,29 +66,48 @@ export default async function GuidesIndexPage({ lang = "en" }) {
         {guides.length === 0 ? (
           lang !== "en" ? (
             <div className="mx-auto w-full max-w-xl rounded-3xl border border-dashed border-slate-300/70 bg-white px-6 py-10 text-center shadow-sm ring-1 ring-slate-200/60">
-              <p className="text-base font-semibold text-slate-900">
-                {t.inspireList.emptyTitle}
-              </p>
+              <p className="text-base font-semibold text-slate-900">{ti.emptyTitle}</p>
               <p className="mx-auto mt-2 max-w-md text-sm leading-relaxed text-slate-600">
-                {t.inspireList.emptyBody}
+                {ti.emptyBody}
               </p>
               <Link
                 href="/guides"
                 className="mt-5 inline-flex rounded-full bg-slate-900 px-5 py-2.5 text-xs font-semibold text-white transition hover:bg-slate-800"
               >
-                {t.inspireList.emptyLink}
+                {ti.emptyLink}
               </Link>
             </div>
           ) : (
             <p className="text-sm text-slate-500">No guides found.</p>
           )
         ) : (
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {guides.map((g) => (
-              <GuideListCard key={g.slug} guide={g} t={tl} lang={lang} />
-            ))}
-          </div>
+          <GuidesBrowse guides={guides.map(toGuideCard)} t={t} tl={tl} lang={lang} />
         )}
+      </section>
+
+      <section className="space-y-4">
+        <div>
+          <p className="text-xl font-semibold">{ti.howITestTitle}</p>
+          <p className="mt-2 text-sm text-slate-600">{ti.howITestBody}</p>
+        </div>
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          {ti.extremeLabels.map((label, i) => (
+            <div
+              key={label}
+              className="overflow-hidden rounded-2xl bg-white shadow-sm ring-1 ring-slate-200"
+            >
+              <img
+                src={aboutAsset(EXTREME_FILES[i])}
+                alt={label}
+                className="h-44 w-full object-cover object-[50%_30%]"
+                loading="lazy"
+              />
+              <p className="p-3 text-center text-[11px] font-medium leading-snug text-slate-600">
+                {label}
+              </p>
+            </div>
+          ))}
+        </div>
       </section>
     </main>
   );

@@ -38,7 +38,7 @@ export default function HomeGuideRequest() {
   }
 
   return (
-    <section className="rounded-[28px] bg-brand-ink p-6 text-brand-cream md:p-8">
+    <section className="rounded-[28px] bg-brand-terracotta p-6 text-white md:p-8">
       <div className="grid gap-6 md:grid-cols-[1.1fr_1fr] md:items-center md:gap-10">
         <div className="space-y-2">
           <p className="text-xs uppercase tracking-[0.2em] text-brand-cream/60">
@@ -109,7 +109,7 @@ export default function HomeGuideRequest() {
               <button
                 type="submit"
                 disabled={status === "loading"}
-                className="rounded-full bg-brand-cream px-5 py-2.5 text-sm font-semibold text-brand-ink transition hover:bg-white disabled:opacity-50"
+                className="rounded-full bg-white px-5 py-2.5 text-sm font-semibold text-slate-900 transition hover:bg-slate-100 disabled:opacity-50"
               >
                 {status === "loading" ? "Sending…" : "Send request"}
               </button>

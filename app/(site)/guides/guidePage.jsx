@@ -129,24 +129,18 @@ function CheckBulletSection({ title, items }) {
 function NotSuitableWarning({ items, t }) {
   if (!Array.isArray(items) || items.length === 0) return null;
   return (
-    <section className="rounded-2xl border border-[#e5b59a] bg-[#fdf3ea] p-5">
-      <div className="flex gap-3">
-        <span aria-hidden className="mt-0.5 shrink-0 text-[#943d21]">⚠</span>
-        <div className="flex-1">
-          <p className="mb-2 font-serif text-base font-semibold text-[#943d21]">
-            {t.notSuitable}
-          </p>
-          <ul className="space-y-1 text-sm text-[#5a3a2f]">
-            {items.map((item) => (
-              <li key={item} className="flex gap-2">
-                <span aria-hidden className="mt-1 shrink-0 text-[#943d21]">•</span>
-                <span>{item}</span>
-              </li>
-            ))}
-          </ul>
-        </div>
+    <CollapsibleSection title={`⚠ ${t.notSuitable}`} titleClassName="text-[#943d21]">
+      <div className="rounded-2xl border border-[#e5b59a] bg-[#fdf3ea] p-5">
+        <ul className="space-y-1 text-sm text-[#5a3a2f]">
+          {items.map((item) => (
+            <li key={item} className="flex gap-2">
+              <span aria-hidden className="mt-1 shrink-0 text-[#943d21]">•</span>
+              <span>{item}</span>
+            </li>
+          ))}
+        </ul>
       </div>
-    </section>
+    </CollapsibleSection>
   );
 }
 
@@ -249,41 +243,10 @@ function LocationSection({ start, destinations, finish, points, t }) {
             </li>
           ) : null}
         </ol>
-        <div className="h-[320px] overflow-hidden rounded-xl ring-1 ring-slate-200">
+        {/* isolate caps Leaflet's internal z-indexes (up to 1000) inside this
+            box so the sticky buy bar and header always stay on top. */}
+        <div className="relative z-0 isolate h-[320px] overflow-hidden rounded-xl ring-1 ring-slate-200">
           <LocationMap start={start} destinations={dests} finish={finish} points={points} />
-        </div>
-      </div>
-    </section>
-  );
-}
-
-function SaveTimeComparison({ price, t }) {
-  return (
-    <section>
-      <p className="mb-4 font-serif text-xl font-semibold text-brand-ink">
-        {t.saveTime}
-      </p>
-      <div className="grid gap-3 sm:grid-cols-3">
-        <div className="rounded-2xl border border-slate-200 bg-white p-5">
-          <p className="text-[11px] font-semibold uppercase tracking-wider text-slate-400">
-            {t.guidedTour}
-          </p>
-          <p className="mt-2 text-lg font-semibold text-slate-900">€120–180</p>
-          <p className="mt-1 text-xs text-slate-500">{t.fixedSchedule}</p>
-        </div>
-        <div className="rounded-2xl border border-slate-200 bg-white p-5">
-          <p className="text-[11px] font-semibold uppercase tracking-wider text-slate-400">
-            {t.planYourself}
-          </p>
-          <p className="mt-2 text-lg font-semibold text-slate-900">{t.hoursPlus}</p>
-          <p className="mt-1 text-xs text-slate-500">{t.researchRisk}</p>
-        </div>
-        <div className="rounded-2xl border-2 border-[#943d21] bg-[#e2ded2] p-5">
-          <p className="text-[11px] font-semibold uppercase tracking-wider text-[#943d21]">
-            {t.thisGuide}
-          </p>
-          <p className="mt-2 text-lg font-semibold text-slate-900">{price || "–"}</p>
-          <p className="mt-1 text-xs text-slate-700">{t.thirtyMin}</p>
         </div>
       </div>
     </section>
@@ -683,7 +646,6 @@ export default async function GuidePage({ lang, slug }) {
             t={t}
           />
           <Testimonials items={sales.testimonials} t={t} />
-          <SaveTimeComparison price={guide.price} t={t} />
           <FaqAccordion items={sales.faq} t={t} />
         </div>
 

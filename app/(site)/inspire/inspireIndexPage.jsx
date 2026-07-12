@@ -10,42 +10,10 @@ import {
 } from "../../_lib/inspireStoryDisplay";
 import { LOCALES, getDict, localePath } from "../../_lib/i18n";
 import InspireBrowse from "./InspireBrowse";
-import { aboutAsset, getCategoryItems } from "../../_lib/categoryPills";
+import { getCategoryItems } from "../../_lib/categoryPills";
 
 const EN_DESCRIPTION =
   "Travel stories and journey ideas from 15 years of independent trips across 140 countries – the field work behind every guide.";
-
-// Structure (examples, images, links) is shared; titles/intros come from
-// the dictionary so the arrays stay index-aligned with dict.collections.
-const COLLECTION_STRUCTURE = [
-  {
-    examples: ["Triftbrücke", "Stoos Ridge", "Mount Rigi", "Säntis"],
-    href: "/destinations/switzerland",
-  },
-  {
-    examples: ["Iceland Ring Road", "South Island New Zealand", "Switzerland by train"],
-    href: "/inspire",
-  },
-  {
-    examples: ["Running with the bulls", "Shark diving", "Volcano boarding", "Skydiving & paragliding"],
-    href: "/inspire",
-  },
-  {
-    examples: ["Mongol Rally", "Africa overland route", "Mauritania iron ore train"],
-    href: "/inspire",
-  },
-];
-
-const EXTREME_FILES = [
-  "Running with bulls Pamplona 2019.jpg",
-  "Sharks Fiji 2025.jpg",
-  "Nicaragua boarding 2019.jpg",
-  "Paragliding.jpg",
-  "Ice climbing Italy 2019.jpg",
-  "Iron Ore train Mauritania 2023.jpg",
-  "Summits Alaska 2019 v2.jpg",
-  "Makoko Nigeria 2025.jpg",
-];
 
 // Card click always means "more information": the story page. The story's
 // hero chip, mid-story and end CTAs are the paths to the guide, so browsing
@@ -73,8 +41,16 @@ function buildCardPhotos(story) {
   return photos.slice(0, 5);
 }
 
+function prettyCategory(value) {
+  const raw = String(value || "").trim();
+  if (!raw) return "";
+  const words = raw.replace(/[-_]+/g, " ").toLowerCase();
+  return words.charAt(0).toUpperCase() + words.slice(1);
+}
+
 function buildCard(story, lang) {
   const display = getInspireFeaturedCardDisplay(story) || {};
+  const cls = story.metadata?.classification || {};
   return {
     id: story.id,
     slug: story.slug,
@@ -84,6 +60,7 @@ function buildCard(story, lang) {
     videoUrl: story.videoUrl || null,
     heroAlt: getInspireStoryHeroAlt(story) || story.title,
     geoLabel: display.geoLabel || "",
+    categoryLabel: prettyCategory(cls.journey_category || cls.activity_category),
     categoryDurationLine: display.categoryDurationLine || "",
     difficultyLabel: display.difficultyLabel || "",
     hasGuide: !!(display.hasGuide ?? inspireStoryHasGuide(story)),
@@ -135,11 +112,11 @@ export default async function InspireIndexPage({ lang = "en" }) {
   return (
     <main className="w-full pb-16 pt-6 text-slate-900 sm:pt-8">
       <div className="mx-auto flex w-full min-w-0 max-w-7xl flex-col gap-8 px-4 sm:gap-10 sm:px-6">
-        <div className="space-y-1 text-center">
-          <h1 className="text-2xl font-semibold leading-tight md:text-3xl">
+        <div className="space-y-2 text-center">
+          <h1 className="font-serif text-3xl font-semibold leading-[1.1] text-brand-ink md:text-4xl lg:text-5xl">
             {t.title}
           </h1>
-          <p className="text-sm leading-snug text-slate-600">{t.subtitle}</p>
+          <p className="text-lg text-slate-600 md:text-xl">{t.subtitle}</p>
         </div>
 
         {lang !== "en" && cards.length === 0 ? (
@@ -159,85 +136,14 @@ export default async function InspireIndexPage({ lang = "en" }) {
           <InspireBrowse cards={cards} categoryItems={getCategoryItems()} lang={lang} />
         )}
 
-        <section className="grid w-full min-w-0 gap-4 rounded-[28px] bg-white p-6 shadow-sm ring-1 ring-slate-200 md:grid-cols-4">
-          {t.credibility.map((item) => (
-            <div
-              key={item}
-              className="rounded-2xl bg-slate-50 px-4 py-4 text-xs font-semibold text-slate-700"
-            >
-              {item}
-            </div>
-          ))}
-        </section>
-
-        <section className="space-y-6">
-          <p className="text-xl font-semibold">{t.collectionsHeading}</p>
-          <div className="grid gap-6 md:grid-cols-2">
-            {t.collections.map((collection, i) => (
-              <div
-                key={collection.title}
-                className="rounded-3xl bg-white p-5 shadow-sm ring-1 ring-slate-200"
-              >
-                <div className="h-40 rounded-2xl bg-slate-100" />
-                <div className="mt-4 space-y-2">
-                  <p className="text-lg font-semibold">{collection.title}</p>
-                  <p className="text-sm text-slate-600">{collection.intro}</p>
-                  <div className="flex flex-wrap gap-2 text-xs text-slate-500">
-                    {COLLECTION_STRUCTURE[i].examples.map((example) => (
-                      <span key={example} className="rounded-full bg-slate-100 px-3 py-1">
-                        {example}
-                      </span>
-                    ))}
-                  </div>
-                  <Link
-                    className="mt-3 inline-flex rounded-full border border-slate-200 px-4 py-2 text-xs font-semibold text-slate-700"
-                    href={
-                      COLLECTION_STRUCTURE[i].href === "/inspire"
-                        ? localePath(lang, "/inspire")
-                        : COLLECTION_STRUCTURE[i].href
-                    }
-                  >
-                    {t.viewCollection}
-                  </Link>
-                </div>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        <section className="space-y-4">
+        <section className="flex flex-col items-start gap-4 rounded-[28px] bg-brand-terracotta p-6 text-white md:flex-row md:items-center md:justify-between md:p-8">
           <div>
-            <p className="text-xl font-semibold">{t.howITestTitle}</p>
-            <p className="mt-2 text-sm text-slate-600">{t.howITestBody}</p>
-          </div>
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            {t.extremeLabels.map((label, i) => (
-              <div
-                key={label}
-                className="overflow-hidden rounded-2xl bg-white shadow-sm ring-1 ring-slate-200"
-              >
-                <img
-                  src={aboutAsset(EXTREME_FILES[i])}
-                  alt={label}
-                  className="h-36 w-full object-cover object-center"
-                  loading="lazy"
-                />
-                <p className="p-3 text-center text-[11px] font-medium leading-snug text-slate-600">
-                  {label}
-                </p>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        <section className="flex flex-col items-start gap-4 rounded-[28px] bg-white p-6 shadow-sm ring-1 ring-slate-200 md:flex-row md:items-center md:justify-between">
-          <div>
-            <p className="text-lg font-semibold">{t.ctaTitle}</p>
-            <p className="mt-1 text-sm text-slate-500">{t.ctaBody}</p>
+            <p className="font-serif text-xl font-semibold leading-tight">{t.ctaTitle}</p>
+            <p className="mt-1 text-sm text-white/70">{t.ctaBody}</p>
           </div>
           <Link
-            href="/guides"
-            className="shrink-0 rounded-full bg-slate-900 px-6 py-2.5 text-xs font-semibold text-white transition hover:bg-slate-800"
+            href={localePath(lang, "/guides")}
+            className="shrink-0 rounded-full bg-white px-6 py-2.5 text-xs font-semibold text-slate-900 transition hover:bg-slate-100"
           >
             {t.browseGuides}
           </Link>

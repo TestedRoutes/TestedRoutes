@@ -141,8 +141,18 @@ export function getInspireStoryGeoLabel(metadata) {
   try {
     const m = safeMetadata(metadata);
     const { country, continent } = getInspireStoryGeoFields(m);
-    const parts = [country, continent].filter(Boolean);
-    if (parts.length) return parts.join(" · ");
+    // Lead with the specific place when the story has one (regions[0] or
+    // nearest city): "La Digue – Seychelles – Africa".
+    const geo = m.geography && typeof m.geography === "object" ? m.geography : {};
+    let place = "";
+    if (Array.isArray(geo.regions) && typeof geo.regions[0] === "string") {
+      place = geo.regions[0].trim();
+    } else if (typeof geo.nearest_major_city === "string") {
+      place = geo.nearest_major_city.trim();
+    }
+    if (place && country && place.toLowerCase() === country.toLowerCase()) place = "";
+    const parts = [place, country, continent].filter(Boolean);
+    if (parts.length) return parts.join(" – ");
     return pickFirstString(m, ["region", "geography", "location_label"]);
   } catch {
     return "";

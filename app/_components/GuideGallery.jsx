@@ -82,6 +82,16 @@ export default function GuideGallery({
         <span className="pointer-events-none absolute left-3 top-3 rounded-full bg-slate-900/70 px-2.5 py-1 text-[11px] font-semibold tabular-nums text-white">
           {idx + 1}/{slideCount}
         </span>
+        {slideCount > 1 ? (
+          <div className="pointer-events-none absolute bottom-3 left-1/2 flex -translate-x-1/2 gap-1">
+            {Array.from({ length: slideCount }, (_, i) => (
+              <span
+                key={i}
+                className={`block h-1.5 w-1.5 rounded-full ${i === idx ? "bg-white" : "bg-white/50"}`}
+              />
+            ))}
+          </div>
+        ) : null}
         <button
           type="button"
           onClick={() => setOpen(true)}

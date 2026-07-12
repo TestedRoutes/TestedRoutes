@@ -153,6 +153,8 @@ const en = {
     purchased: "purchased",
     from: "From",
     viewGuide: "View Guide",
+    buyGuide: "Buy Guide",
+    searchPlaceholder: "Search guides…",
     comingSoon: "Coming soon",
     metaDescription:
       "Every guide is a real route, tested in the field. Buy once, follow step by step.",
@@ -342,6 +344,8 @@ const de = {
     purchased: "mal gekauft",
     from: "Ab",
     viewGuide: "Guide ansehen",
+    buyGuide: "Guide kaufen",
+    searchPlaceholder: "Guides durchsuchen…",
     comingSoon: "Bald verfügbar",
     metaDescription:
       "Jeder Guide ist eine echte, im Gelände getestete Route. Einmal kaufen, Schritt für Schritt folgen.",
@@ -531,6 +535,8 @@ const es = {
     purchased: "compradas",
     from: "Desde",
     viewGuide: "Ver guía",
+    buyGuide: "Comprar guía",
+    searchPlaceholder: "Buscar guías…",
     comingSoon: "Próximamente",
     metaDescription:
       "Cada guía es una ruta real, probada sobre el terreno. Compra una vez, síguela paso a paso.",
@@ -720,6 +726,8 @@ const fr = {
     purchased: "achetés",
     from: "À partir de",
     viewGuide: "Voir le guide",
+    buyGuide: "Acheter le guide",
+    searchPlaceholder: "Rechercher un guide…",
     comingSoon: "Bientôt disponible",
     metaDescription:
       "Chaque guide est un itinéraire réel, testé sur le terrain. Achetez une fois, suivez pas à pas.",
@@ -908,6 +916,8 @@ const lt = {
     purchased: "nupirkta",
     from: "Nuo",
     viewGuide: "Žiūrėti gidą",
+    buyGuide: "Pirkti gidą",
+    searchPlaceholder: "Ieškoti gidų…",
     comingSoon: "Netrukus",
     metaDescription:
       "Kiekvienas gidas – tikras, kelionėje išbandytas maršrutas. Nusipirkite kartą, sekite žingsnis po žingsnio.",

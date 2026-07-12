@@ -6,8 +6,8 @@ import CardMediaCarousel, {
 } from "../../_components/CardMediaCarousel";
 import { localePath } from "../../_lib/i18n";
 
-// Whole card is the link ("more information"); buying happens on the guide
-// page where the sticky bar keeps the purchase one tap away.
+// Whole card is the link ("more information"); the Buy button jumps straight
+// to checkout for people who already know they want it.
 export default function GuideListCard({ guide, t, lang = "en" }) {
   const photos =
     Array.isArray(guide.cardPhotos) && guide.cardPhotos.length
@@ -17,6 +17,22 @@ export default function GuideListCard({ guide, t, lang = "en" }) {
         : [];
   const slides = buildMediaSlides({ photos, videoUrl: guide.videoUrl });
   const href = localePath(lang, guide.href);
+
+  const geo = guide.metadata?.geography || {};
+  const cap = (s) =>
+    typeof s === "string" && s ? s.charAt(0).toUpperCase() + s.slice(1) : "";
+  const geoLine = [cap(geo.country), cap(geo.continent)].filter(Boolean).join(" – ");
+  const excerpt =
+    guide.metadata?.seo?.meta_description || guide.metadata?.hero?.subtitle || "";
+
+  const buyHref = guide.polarProductId
+    ? `/api/checkout?products=${encodeURIComponent(guide.polarProductId)}`
+    : guide.guidePdfUrl || null;
+  const onBuy = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (buyHref) window.location.href = buyHref;
+  };
 
   return (
     <Link
@@ -32,19 +48,20 @@ export default function GuideListCard({ guide, t, lang = "en" }) {
           />
         ) : null}
       </div>
-      <div className="space-y-3 p-4">
+      <div className="space-y-2.5 p-4">
         <p className="text-xs uppercase tracking-[0.2em] text-slate-500">{guide.category}</p>
-        <h3 className="text-lg font-semibold text-slate-900">{guide.title}</h3>
+        <h3 className="text-lg font-semibold leading-snug text-slate-900">{guide.title}</h3>
+        {geoLine ? (
+          <p className="text-xs font-medium text-slate-500">{geoLine}</p>
+        ) : null}
+        {excerpt ? (
+          <p className="line-clamp-2 text-xs leading-relaxed text-slate-500">{excerpt}</p>
+        ) : null}
         <p className="text-sm text-slate-600">
           {guide.duration ? `${guide.duration} • ` : ""}
           {t.pdfGuide}
         </p>
-        {guide.purchases ? (
-          <p className="text-xs text-slate-500">
-            {guide.purchases} {t.purchased}
-          </p>
-        ) : null}
-        <div className="flex items-center justify-between pt-2">
+        <div className="flex items-center justify-between gap-2 pt-1.5">
           {guide.price ? (
             <span className="text-sm font-semibold text-slate-900">
               {t.from} {guide.price}
@@ -52,8 +69,19 @@ export default function GuideListCard({ guide, t, lang = "en" }) {
           ) : (
             <span />
           )}
-          <span className="rounded-full bg-slate-900 px-4 py-2 text-xs font-semibold text-white transition group-hover:bg-slate-700">
-            {t.viewGuide}
+          <span className="flex shrink-0 items-center gap-2">
+            <span className="rounded-full border border-slate-300 bg-white px-3.5 py-2 text-xs font-semibold text-slate-700 transition group-hover:border-slate-400">
+              {t.viewGuide}
+            </span>
+            {buyHref ? (
+              <button
+                type="button"
+                onClick={onBuy}
+                className="rounded-full bg-brand-terracotta px-3.5 py-2 text-xs font-semibold text-white transition hover:bg-brand-terracotta/90"
+              >
+                {t.buyGuide}
+              </button>
+            ) : null}
           </span>
         </div>
       </div>

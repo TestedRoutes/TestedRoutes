@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 
-export default function CategoryStrip({ items, onItemClick }) {
+export default function CategoryStrip({ items, onItemClick, activeLabel = "" }) {
   const interactive = typeof onItemClick === "function";
   const scrollRef = useRef(null);
   const [canPrev, setCanPrev] = useState(false);
@@ -63,12 +63,18 @@ export default function CategoryStrip({ items, onItemClick }) {
             );
 
             if (interactive) {
+              const isActive = activeLabel === item.label;
               return (
                 <button
                   key={item.label}
                   type="button"
                   onClick={() => onItemClick(item.label)}
-                  className="flex items-stretch overflow-hidden rounded-lg bg-white text-left shadow-sm ring-1 ring-slate-200 transition hover:-translate-y-0.5 hover:shadow-md hover:ring-slate-300/90"
+                  aria-pressed={isActive}
+                  className={`flex items-stretch overflow-hidden rounded-lg bg-white text-left shadow-sm transition hover:-translate-y-0.5 hover:shadow-md ${
+                    isActive
+                      ? "ring-2 ring-brand-terracotta"
+                      : "ring-1 ring-slate-200 hover:ring-slate-300/90"
+                  }`}
                 >
                   {innerContent}
                 </button>

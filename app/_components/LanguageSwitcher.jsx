@@ -36,10 +36,13 @@ export default function LanguageSwitcher() {
       window.location.assign(pathWithoutLocale(pathname));
       return;
     }
-    // Guides + Inspire are localized — stay in the current section.
+    // Stay where the user is: home, guides and inspire all have localized
+    // routes. Detail pages without a translation fall back to their list.
     const bare = pathWithoutLocale(pathname);
-    const section = bare.startsWith("/guides") ? "/guides" : "/inspire";
-    window.location.assign(localePath(next, section));
+    let target = "/";
+    if (bare.startsWith("/guides")) target = "/guides";
+    else if (bare.startsWith("/inspire")) target = "/inspire";
+    window.location.assign(localePath(next, target));
   }
 
   return (

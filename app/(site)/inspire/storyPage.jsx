@@ -10,7 +10,6 @@ import {
   getInspireStoryGuideUrl,
 } from "../../_lib/inspireStoryDisplay";
 import { getDict, localePath } from "../../_lib/i18n";
-import NewsletterForm from "../../_components/NewsletterForm";
 import GuideGallery from "../../_components/GuideGallery";
 
 export async function findStory(lang, slug) {
@@ -243,16 +242,6 @@ export default async function StoryPage({ lang, slug }) {
 
   const photos = Array.isArray(story.photos) ? story.photos : [];
 
-  const bestSeasonRaw =
-    story.metadata?.timing?.best_seasons ??
-    story.metadata?.timing?.seasons ??
-    story.metadata?.best_seasons;
-  const bestSeasonLabel = Array.isArray(bestSeasonRaw)
-    ? bestSeasonRaw.filter((x) => typeof x === "string" && x).join(", ")
-    : typeof bestSeasonRaw === "string"
-      ? bestSeasonRaw.trim()
-      : "";
-
   const inspireHome = localePath(lang, "/inspire");
   const inspireLabel = getDict(lang).nav.inspire;
 
@@ -272,11 +261,18 @@ export default async function StoryPage({ lang, slug }) {
         </nav>
 
         <div className="mb-4">
-          <h1 className="text-[32px] font-semibold leading-tight text-slate-900">
+          {display.geoLabel ? (
+            <p className="text-[12px] font-semibold uppercase tracking-[0.18em] text-slate-500">
+              {display.geoLabel}
+            </p>
+          ) : null}
+          <h1 className="mt-1 text-[32px] font-semibold leading-tight text-slate-900">
             {story.title}
           </h1>
-          {display.excerpt ? (
-            <p className="mt-1 max-w-2xl text-[15px] text-slate-500">{display.excerpt}</p>
+          {story.metadata?.hero?.subtitle ? (
+            <p className="mt-1 max-w-2xl text-[15px] text-slate-500">
+              {story.metadata.hero.subtitle}
+            </p>
           ) : null}
         </div>
 
@@ -292,55 +288,30 @@ export default async function StoryPage({ lang, slug }) {
 
         <div className="flex flex-col gap-8 md:flex-row">
           <div className="flex min-w-0 flex-1 flex-col gap-6 self-start">
-            {/* Mobile quick facts */}
-            <div className="rounded-[20px] bg-white p-5 shadow-sm ring-1 ring-slate-200 md:hidden">
-              <p className="mb-3 text-[10px] font-bold uppercase tracking-[0.2em] text-slate-400">
-                {t.quickFacts}
-              </p>
-              <dl className="flex flex-col gap-2.5">
-                {display.geoLabel ? (
-                  <div className="flex items-center gap-2">
-                    <span className="text-sm">📍</span>
-                    <dd className="text-sm text-slate-700">{display.geoLabel}</dd>
-                  </div>
-                ) : null}
-                {display.categoryDurationLine ? (
-                  <div className="flex items-center gap-2">
-                    <span className="text-sm">⏱</span>
-                    <dd className="text-sm text-slate-700">{display.categoryDurationLine}</dd>
-                  </div>
-                ) : null}
-                {display.difficultyLabel ? (
-                  <div className="flex items-center gap-2">
-                    <span className="text-sm">💪</span>
-                    <dd className="text-sm text-slate-700">{display.difficultyLabel}</dd>
-                  </div>
-                ) : null}
-                {bestSeasonLabel ? (
-                  <div className="flex items-center gap-2">
-                    <span className="text-sm">🌤</span>
-                    <dd className="text-sm text-slate-700">
-                      {t.bestSeason} {bestSeasonLabel}
-                    </dd>
-                  </div>
-                ) : null}
-              </dl>
-              {hasGuideOptions ? (
-                <>
-                  <p className="mt-4 text-[10px] font-bold uppercase tracking-[0.2em] text-slate-400">
-                    {t.guidesForTrip}
-                  </p>
-                  <GuideOptionRows options={guideOptions} />
-                </>
-              ) : (
-                <Link
-                  href={guideHref || localePath(lang, "/guides")}
-                  className="mt-4 flex w-full items-center justify-center rounded-full bg-slate-900 py-2.5 text-xs font-semibold text-white transition hover:bg-slate-800"
-                >
-                  {guideHref ? t.readFullGuide : t.browseAllGuides}
-                </Link>
-              )}
-            </div>
+            {/* Mobile guide CTA */}
+            {guideHref || hasGuideOptions ? (
+              <div className="rounded-[20px] bg-slate-900 p-5 text-white shadow-lg md:hidden">
+                <p className="mb-2 text-[10px] font-bold uppercase tracking-[0.2em] text-white/50">
+                  {t.planningTrip}
+                </p>
+                {guideHref ? (
+                  <>
+                    <p className="text-base font-semibold leading-snug">{story.title}</p>
+                    <Link
+                      href={guideHref}
+                      className="mt-4 flex w-full items-center justify-center rounded-full bg-white py-2.5 text-xs font-semibold text-slate-900 transition hover:bg-slate-100"
+                    >
+                      {t.readFullGuide}
+                    </Link>
+                  </>
+                ) : (
+                  <>
+                    <p className="text-base font-semibold leading-snug">{t.guidesForTrip}</p>
+                    <GuideOptionRows options={guideOptions} dark />
+                  </>
+                )}
+              </div>
+            ) : null}
 
             <section className="rounded-[28px] bg-white p-6 shadow-sm ring-1 ring-slate-200 md:p-8">
               {bodyHtml ? (
@@ -440,46 +411,8 @@ export default async function StoryPage({ lang, slug }) {
                   </>
                 )}
               </div>
-
-              {/* Quick facts (desktop) */}
-              <div className="rounded-[20px] bg-white p-5 shadow-sm ring-1 ring-slate-200">
-                <p className="mb-3 text-[10px] font-bold uppercase tracking-[0.2em] text-slate-400">
-                  {t.quickFacts}
-                </p>
-                <dl className="flex flex-col gap-2.5">
-                  {display.geoLabel ? (
-                    <div className="flex items-center gap-2">
-                      <span className="text-sm">📍</span>
-                      <dd className="text-sm text-slate-700">{display.geoLabel}</dd>
-                    </div>
-                  ) : null}
-                  {display.categoryDurationLine ? (
-                    <div className="flex items-center gap-2">
-                      <span className="text-sm">⏱</span>
-                      <dd className="text-sm text-slate-700">{display.categoryDurationLine}</dd>
-                    </div>
-                  ) : null}
-                  {display.difficultyLabel ? (
-                    <div className="flex items-center gap-2">
-                      <span className="text-sm">💪</span>
-                      <dd className="text-sm text-slate-700">{display.difficultyLabel}</dd>
-                    </div>
-                  ) : null}
-                  {bestSeasonLabel ? (
-                    <div className="flex items-center gap-2">
-                      <span className="text-sm">🌤</span>
-                      <dd className="text-sm text-slate-700">
-                        {t.bestSeason} {bestSeasonLabel}
-                      </dd>
-                    </div>
-                  ) : null}
-                </dl>
-              </div>
             </div>
           </aside>
-        </div>
-        <div className="mx-auto mt-12 max-w-3xl">
-          <NewsletterForm variant="story" source="story-end" />
         </div>
       </main>
     </>

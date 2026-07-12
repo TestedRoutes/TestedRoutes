@@ -6,7 +6,12 @@ import { useState } from "react";
 // mobile, always expanded with the normal section heading on desktop.
 // Content stays in the DOM either way, so search engines index it at
 // full weight.
-export default function CollapsibleSection({ title, defaultOpen = false, children }) {
+export default function CollapsibleSection({
+  title,
+  titleClassName = "text-brand-ink",
+  defaultOpen = false,
+  children,
+}) {
   const [open, setOpen] = useState(defaultOpen);
   return (
     <section className="border-b border-slate-200 pb-4 md:border-0 md:pb-0">
@@ -16,7 +21,7 @@ export default function CollapsibleSection({ title, defaultOpen = false, childre
         aria-expanded={open}
         className="flex w-full items-center justify-between gap-4 py-1 text-left md:hidden"
       >
-        <span className="font-serif text-xl font-semibold text-brand-ink">{title}</span>
+        <span className={`font-serif text-xl font-semibold ${titleClassName}`}>{title}</span>
         <span
           aria-hidden
           className={`text-slate-400 transition-transform ${open ? "rotate-180" : ""}`}
@@ -24,7 +29,7 @@ export default function CollapsibleSection({ title, defaultOpen = false, childre
           ▾
         </span>
       </button>
-      <p className="mb-4 hidden font-serif text-xl font-semibold text-brand-ink md:block">
+      <p className={`mb-4 hidden font-serif text-xl font-semibold md:block ${titleClassName}`}>
         {title}
       </p>
       <div className={`${open ? "mt-3 block" : "hidden"} md:mt-0 md:block`}>{children}</div>

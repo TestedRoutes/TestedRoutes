@@ -1,19 +1,21 @@
 import Link from "next/link";
 import HomeBrowse from "../_components/HomeBrowse";
-import HomeGuideCard from "../_components/HomeGuideCard";
 import HomeGuideRequest from "../_components/HomeGuideRequest";
-import { HOME_GUIDES } from "../_lib/homeGuides";
-import { loadGuides } from "../_lib/loadGuides";
+import { loadGuides, toGuideCard } from "../_lib/loadGuides";
+import { getRequestCurrency } from "../_lib/currency";
 import { getCategoryItems } from "../_lib/categoryPills";
+import { getDict } from "../_lib/i18n";
 
 export default async function HomePage() {
-  const allGuides = await loadGuides();
+  const currency = await getRequestCurrency();
+  const allGuides = await loadGuides(currency);
   const searchableGuides = allGuides.map((g) => ({
     title: g.title,
     slug: g.slug,
     category: g.category,
     href: g.href,
   }));
+  const guideCards = allGuides.map(toGuideCard);
 
   return (
     <main className="mx-auto flex max-w-7xl flex-col gap-12 px-6 pb-16 pt-12 md:pt-16">
@@ -26,21 +28,12 @@ export default async function HomePage() {
             Skip the research. Take the trip
           </p>
         </div>
-        <HomeBrowse guides={searchableGuides} categoryItems={getCategoryItems()} />
-      </section>
-
-      <section className="space-y-6">
-        <div className="flex items-center justify-between">
-          <h2 className="text-xl font-semibold">Browse guides</h2>
-          <Link href="/guides" className="text-xs font-semibold text-slate-600 hover:text-slate-900">
-            View all
-          </Link>
-        </div>
-        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-          {HOME_GUIDES.map((guide) => (
-            <HomeGuideCard key={guide.title} guide={guide} />
-          ))}
-        </div>
+        <HomeBrowse
+          guides={searchableGuides}
+          categoryItems={getCategoryItems()}
+          cards={guideCards}
+          t={getDict("en").guideList}
+        />
       </section>
 
       <section className="rounded-[28px] bg-white p-6 shadow-sm ring-1 ring-slate-200 md:grid md:grid-cols-[260px_1fr] md:gap-8">

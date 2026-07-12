@@ -6,20 +6,32 @@ import CategoryStrip from "../../_components/CategoryStrip";
 import CardMediaCarousel, { buildMediaSlides } from "../../_components/CardMediaCarousel";
 import { getDict } from "../../_lib/i18n";
 
-function matchesSearch(card, query) {
-  if (!query) return true;
-  const needle = query.toLowerCase().trim();
-  if (!needle) return true;
-  const haystack = [
+function cardHaystack(card) {
+  return [
     card.title,
     card.geoLabel,
+    card.categoryLabel,
     card.categoryDurationLine,
     card.excerpt,
   ]
     .filter(Boolean)
     .join(" ")
     .toLowerCase();
-  return haystack.includes(needle);
+}
+
+function matchesSearch(card, query) {
+  const needle = (query || "").toLowerCase().trim();
+  if (!needle) return true;
+  return cardHaystack(card).includes(needle);
+}
+
+// Loose match for category pills: "Hiking" should catch "hike".
+function matchesCategory(card, label) {
+  if (!label) return true;
+  const needle = label.toLowerCase().trim();
+  const stem = needle.replace(/ing$/, "").replace(/s$/, "");
+  const haystack = cardHaystack(card);
+  return haystack.includes(needle) || (stem.length > 2 && haystack.includes(stem));
 }
 
 function sortRecentFirst(cards) {
@@ -60,25 +72,19 @@ function StoryCard({ card, t }) {
             {card.title}
           </p>
           {card.hasGuide ? (
-            <span className="shrink-0 rounded-full bg-slate-900 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-white">
+            <span className="shrink-0 rounded-full bg-brand-mint px-3 py-1.5 text-xs font-semibold text-slate-900">
               {t.guideBadge}
             </span>
           ) : null}
         </div>
-        {card.categoryDurationLine ? (
-          <p className="text-sm leading-snug text-slate-600">{card.categoryDurationLine}</p>
+        {card.categoryLabel ? (
+          <p className="text-sm leading-snug text-slate-600">{card.categoryLabel}</p>
         ) : null}
         {card.excerpt ? (
           <p className="line-clamp-2 text-xs leading-relaxed text-slate-500">{card.excerpt}</p>
         ) : null}
         <div className="mt-auto flex flex-wrap items-center justify-between gap-2 pt-1">
           <span className="flex min-w-0 flex-wrap items-center gap-2">
-            {card.difficultyLabel ? (
-              <span className="inline-flex items-center gap-1 text-xs leading-snug text-slate-500">
-                <span aria-hidden>🥾</span>
-                {card.difficultyLabel}
-              </span>
-            ) : null}
             {card.familyFriendly ? (
               <span className="inline-flex items-center gap-1 text-xs font-medium text-slate-600">
                 <span aria-hidden>👨‍👩‍👧</span>
@@ -87,7 +93,7 @@ function StoryCard({ card, t }) {
             ) : null}
           </span>
           {card.href ? (
-            <span className="shrink-0 rounded-full bg-slate-900 px-4 py-2 text-xs font-semibold text-white transition group-hover:bg-slate-700">
+            <span className="shrink-0 rounded-full bg-brand-terracotta px-4 py-2 text-xs font-semibold text-white transition group-hover:bg-brand-terracotta/90">
               {t.readStory}
             </span>
           ) : null}
@@ -113,32 +119,35 @@ function StoryCard({ card, t }) {
 
 export default function InspireBrowse({ cards, categoryItems = [], lang = "en" }) {
   const [search, setSearch] = useState("");
+  const [activeCategory, setActiveCategory] = useState("");
   const t = getDict(lang).inspireList;
 
   const filtered = useMemo(() => {
-    const matched = cards.filter((c) => matchesSearch(c, search));
+    const matched = cards.filter(
+      (c) => matchesSearch(c, search) && matchesCategory(c, activeCategory),
+    );
     return sortRecentFirst(matched);
-  }, [cards, search]);
+  }, [cards, search, activeCategory]);
 
   return (
     <>
-      <div className="mx-auto w-full max-w-2xl">
+      <div className="mx-auto w-full max-w-3xl">
         <label htmlFor="inspire-search" className="sr-only">
           Search journeys
         </label>
-        <div className="flex w-full items-center gap-2 rounded-full bg-white p-1.5 shadow-sm ring-1 ring-slate-200">
+        <div className="flex w-full items-center gap-2 rounded-full bg-white p-1.5 shadow-md ring-1 ring-slate-200 md:p-2">
           <input
             id="inspire-search"
             type="search"
             placeholder={t.searchPlaceholder}
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="min-w-0 flex-1 bg-transparent px-5 py-2.5 text-sm text-slate-700 outline-none placeholder:text-slate-400"
+            className="min-w-0 flex-1 bg-transparent px-4 py-3 text-sm text-slate-700 outline-none placeholder:text-slate-400 md:px-6 md:py-4 md:text-base"
           />
           <button
             type="button"
             onClick={() => document.getElementById("inspire-search")?.blur()}
-            className="shrink-0 rounded-full bg-slate-900 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-slate-800"
+            className="shrink-0 rounded-full bg-brand-terracotta px-4 py-3 text-sm font-semibold text-white transition hover:bg-brand-terracotta/90 md:px-6 md:py-4 md:text-base"
           >
             {t.searchButton}
           </button>
@@ -146,7 +155,13 @@ export default function InspireBrowse({ cards, categoryItems = [], lang = "en" }
       </div>
 
       {categoryItems.length > 0 ? (
-        <CategoryStrip items={categoryItems} onItemClick={(label) => setSearch(label)} />
+        <CategoryStrip
+          items={categoryItems}
+          activeLabel={activeCategory}
+          onItemClick={(label) =>
+            setActiveCategory((current) => (current === label ? "" : label))
+          }
+        />
       ) : null}
 
       <div className="flex w-full min-w-0 flex-col gap-1 sm:flex-row sm:items-end sm:justify-between sm:gap-4">

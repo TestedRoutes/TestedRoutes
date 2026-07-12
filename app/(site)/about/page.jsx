@@ -37,7 +37,13 @@ export default function AboutMePage() {
   return (
     <main className="mx-auto flex max-w-7xl flex-col gap-10 px-6 pb-16 pt-8">
       <section className="grid gap-6 rounded-[28px] bg-white p-6 shadow-sm ring-1 ring-slate-200 md:grid-cols-[1.1fr_0.9fr]">
-        <div className="space-y-4">
+        {/* Portrait leads on mobile; desktop keeps text left, photo right. */}
+        <img
+          src={aboutAsset("About me2.jpg")}
+          alt="Portrait of the author on the road"
+          className="h-56 w-full rounded-[18px] object-cover object-[50%_25%] shadow-[0_20px_60px_rgba(0,0,0,0.08)] md:order-2 md:h-full md:min-h-[320px] md:max-h-[420px]"
+        />
+        <div className="space-y-4 md:order-1">
           <h1 className="text-3xl font-semibold md:text-4xl">About Me</h1>
           <p className="text-sm leading-relaxed text-slate-600">
             I do not build guides from desk research or generic itineraries. Every route
@@ -64,12 +70,6 @@ export default function AboutMePage() {
             Explore the guides →
           </Link>
         </div>
-        <img
-          src={aboutAsset("About me2.jpg")}
-          alt="Portrait of the author on the road"
-          className="h-auto max-h-none w-full rounded-[18px] object-cover object-center shadow-[0_20px_60px_rgba(0,0,0,0.08)] md:h-full md:min-h-[320px] md:max-h-[420px]"
-          loading="lazy"
-        />
       </section>
 
       <section className="space-y-4">
@@ -181,7 +181,7 @@ export default function AboutMePage() {
               <img
                 src={aboutAsset(item.file)}
                 alt={item.alt}
-                className="h-36 w-full rounded-2xl object-cover object-center"
+                className="h-44 w-full rounded-2xl object-cover object-[50%_30%]"
                 loading="lazy"
               />
               <p className="mt-2 text-center text-[11px] font-medium leading-snug text-slate-600">{item.label}</p>
@@ -215,7 +215,7 @@ export default function AboutMePage() {
         <h2 className="text-lg font-semibold text-slate-900">Ready to travel more and plan less?</h2>
         <Link
           href="/guides"
-          className="rounded-full bg-slate-900 px-6 py-2 text-xs font-semibold text-white transition hover:bg-slate-800"
+          className="rounded-full bg-brand-terracotta px-6 py-2 text-xs font-semibold text-white transition hover:bg-brand-terracotta/90"
         >
           Browse Guides
         </Link>
