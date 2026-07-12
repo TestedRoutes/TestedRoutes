@@ -4,18 +4,19 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import CurrencySwitcher from "./CurrencySwitcher";
+import LanguageSwitcher from "./LanguageSwitcher";
 import HomeSearchBar from "./HomeSearchBar";
-
-const NAV_LINKS = [
-  { slug: "destinations", label: "Destinations", href: "/destinations" },
-  { slug: "guides", label: "Guides", href: "/guides" },
-  { slug: "inspire", label: "Inspire", href: "/inspire" },
-  { slug: "about", label: "About Me", href: "/about" },
-];
+import {
+  getDict,
+  langFromPathname,
+  localePath,
+  pathWithoutLocale,
+} from "../_lib/i18n";
 
 function getActiveSlug(pathname) {
-  if (!pathname || pathname === "/") return "home";
-  const parts = pathname.split("/").filter(Boolean);
+  const bare = pathWithoutLocale(pathname);
+  if (!bare || bare === "/") return "home";
+  const parts = bare.split("/").filter(Boolean);
   const first = parts[0];
   if (first === "destinations") return "destinations";
   if (first === "guides") return "guides";
@@ -42,7 +43,15 @@ function logoLinkClassName(active) {
 export default function SiteHeader({ currency = "EUR", guides = [] }) {
   const pathname = usePathname();
   const active = getActiveSlug(pathname);
-  const [menuOpen, setMenuOpen] = useState(false);
+  const lang = langFromPathname(pathname);
+  const nav = getDict(lang).nav;
+  // Guides + Inspire have localized routes; other sections stay English.
+  const navLinks = [
+    { slug: "destinations", label: nav.destinations, href: "/destinations" },
+    { slug: "guides", label: nav.guides, href: localePath(lang, "/guides") },
+    { slug: "inspire", label: nav.inspire, href: localePath(lang, "/inspire") },
+    { slug: "about", label: nav.aboutMe, href: "/about" },
+  ];
   const [heroSearchVisible, setHeroSearchVisible] = useState(true);
   const [scrolledPast, setScrolledPast] = useState(false);
 
@@ -57,11 +66,12 @@ export default function SiteHeader({ currency = "EUR", guides = [] }) {
     return () => window.removeEventListener("home-hero-search-visible", handler);
   }, []);
 
-  const isHome = pathname === "/";
+  const barePath = pathWithoutLocale(pathname);
+  const isHome = barePath === "/";
   const isSection =
-    pathname?.startsWith("/destinations") ||
-    pathname?.startsWith("/guides") ||
-    pathname?.startsWith("/inspire");
+    barePath.startsWith("/destinations") ||
+    barePath.startsWith("/guides") ||
+    barePath.startsWith("/inspire");
 
   // On section pages (no hero search to observe), reveal the header search
   // after a short scroll — same UX as home, just threshold-based.
@@ -106,7 +116,7 @@ export default function SiteHeader({ currency = "EUR", guides = [] }) {
         ) : null}
 
         <div className="hidden items-center gap-6 md:flex">
-          {NAV_LINKS.map((link) => (
+          {navLinks.map((link) => (
             <Link
               key={link.slug}
               className={primaryNavLinkClass(active, link.slug)}
@@ -116,53 +126,17 @@ export default function SiteHeader({ currency = "EUR", guides = [] }) {
               {link.label}
             </Link>
           ))}
+          <LanguageSwitcher />
           <CurrencySwitcher current={currency} />
         </div>
 
-        <button
-          className="flex h-9 w-9 items-center justify-center rounded-lg text-slate-600 hover:bg-slate-100 hover:text-slate-900 md:hidden"
-          aria-label={menuOpen ? "Close menu" : "Open menu"}
-          aria-expanded={menuOpen}
-          onClick={() => setMenuOpen((o) => !o)}
-        >
-          {menuOpen ? (
-            <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
-              <line x1="2" y1="2" x2="16" y2="16" />
-              <line x1="16" y1="2" x2="2" y2="16" />
-            </svg>
-          ) : (
-            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
-              <line x1="3" y1="5" x2="17" y2="5" />
-              <line x1="3" y1="10" x2="17" y2="10" />
-              <line x1="3" y1="15" x2="17" y2="15" />
-            </svg>
-          )}
-        </button>
-      </nav>
-
-      {menuOpen && (
-        <div className="absolute inset-x-0 top-full border-t border-slate-200/60 bg-brand-cream px-6 pb-4 pt-2 shadow-lg md:hidden">
-          {NAV_LINKS.map((link) => (
-            <Link
-              key={link.slug}
-              href={link.href}
-              aria-current={active === link.slug ? "page" : undefined}
-              className={
-                "block py-3 text-sm border-b border-slate-100 last:border-0 " +
-                (active === link.slug
-                  ? "font-semibold text-slate-900"
-                  : "font-normal text-slate-600")
-              }
-              onClick={() => setMenuOpen(false)}
-            >
-              {link.label}
-            </Link>
-          ))}
-          <div className="pt-3">
-            <CurrencySwitcher current={currency} />
-          </div>
+        {/* The bottom tab bar covers primary nav on mobile, so the header
+            only carries the language + currency switchers here. */}
+        <div className="flex items-center gap-2 md:hidden">
+          <LanguageSwitcher />
+          <CurrencySwitcher current={currency} />
         </div>
-      )}
+      </nav>
     </header>
   );
 }

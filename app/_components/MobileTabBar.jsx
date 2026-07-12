@@ -2,11 +2,17 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import {
+  getDict,
+  langFromPathname,
+  localePath,
+  pathWithoutLocale,
+} from "../_lib/i18n";
 
 const TABS = [
   {
     slug: "explore",
-    label: "Explore",
+    labelKey: "explore",
     href: "/",
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" className="h-6 w-6">
@@ -17,7 +23,7 @@ const TABS = [
   },
   {
     slug: "guides",
-    label: "Guides",
+    labelKey: "guides",
     href: "/guides",
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" className="h-6 w-6">
@@ -29,7 +35,7 @@ const TABS = [
   },
   {
     slug: "inspire",
-    label: "Inspire",
+    labelKey: "inspire",
     href: "/inspire",
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinejoin="round" className="h-6 w-6">
@@ -40,7 +46,7 @@ const TABS = [
   },
   {
     slug: "about",
-    label: "About",
+    labelKey: "about",
     href: "/about",
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" className="h-6 w-6">
@@ -64,7 +70,16 @@ function activeSlug(pathname) {
 
 export default function MobileTabBar() {
   const pathname = usePathname();
-  const active = activeSlug(pathname);
+  const barePath = pathWithoutLocale(pathname);
+  const active = activeSlug(barePath);
+  const lang = langFromPathname(pathname);
+  const nav = getDict(lang).nav;
+
+  // Guide detail pages swap the tab bar for the sticky buy bar.
+  const parts = barePath.split("/").filter(Boolean);
+  if (parts[0] === "guides" && parts.length === 2 && parts[1] !== "thanks") {
+    return null;
+  }
 
   return (
     <>
@@ -77,10 +92,15 @@ export default function MobileTabBar() {
         <div className="mx-auto flex h-16 max-w-md items-stretch justify-around">
           {TABS.map((tab) => {
             const isActive = active === tab.slug;
+            // Guides + Inspire have localized routes; the rest stay English.
+            const href =
+              tab.slug === "inspire" || tab.slug === "guides"
+                ? localePath(lang, tab.href)
+                : tab.href;
             return (
               <Link
                 key={tab.slug}
-                href={tab.href}
+                href={href}
                 aria-current={isActive ? "page" : undefined}
                 className={`flex flex-1 flex-col items-center justify-center gap-0.5 text-[10px] ${
                   isActive
@@ -96,7 +116,7 @@ export default function MobileTabBar() {
                 >
                   {tab.icon}
                 </span>
-                <span>{tab.label}</span>
+                <span>{nav[tab.labelKey]}</span>
               </Link>
             );
           })}

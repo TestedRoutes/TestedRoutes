@@ -2,12 +2,7 @@
 
 import Link from "next/link";
 import { useState } from "react";
-
-const TRUST_ITEMS = [
-  { label: "Risk-free", rest: "30-day full refund" },
-  { label: "One-time purchase", rest: "No subscription" },
-  { label: "Works offline", rest: "Save to phone" },
-];
+import { getDict } from "../_lib/i18n";
 
 export default function BuyBox({
   price,
@@ -16,7 +11,9 @@ export default function BuyBox({
   linksHref,
   hasAffiliateLinks,
   essentialBookings,
+  t: tProp,
 }) {
+  const t = tProp || getDict("en").guide;
   const bookings = Array.isArray(essentialBookings) ? essentialBookings : [];
   const bookingCount = bookings.length;
   const [openLinks, setOpenLinks] = useState(true);
@@ -43,7 +40,7 @@ export default function BuyBox({
       onClick={handleBuy}
       className="block w-full rounded-full bg-brand-terracotta px-4 py-2.5 text-center text-sm font-semibold text-white transition hover:bg-brand-terracotta/90"
     >
-      Get the Guide
+      {t.getGuide}
     </a>
   ) : (
     <button
@@ -51,19 +48,19 @@ export default function BuyBox({
       disabled
       className="block w-full rounded-full bg-slate-300 px-4 py-2.5 text-center text-sm font-semibold text-white"
     >
-      Coming soon
+      {t.comingSoonBtn}
     </button>
   );
 
   return (
     <aside className="h-fit rounded-2xl bg-white p-6 shadow ring-1 ring-slate-200 md:sticky md:top-6 md:self-start">
       <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-slate-400">
-        PDF Guide
+        {t.pdfGuideLabel}
       </p>
       {price ? (
         <p className="mt-2 text-3xl font-semibold text-slate-900">{price}</p>
       ) : null}
-      <p className="mt-1 text-xs text-slate-500">Instant download</p>
+      <p className="mt-1 text-xs text-slate-500">{t.instantDownload}</p>
       <div className="mt-4 space-y-2">
         {button}
         {hasAffiliateLinks && linksHref ? (
@@ -71,18 +68,18 @@ export default function BuyBox({
             href={linksHref}
             className="block w-full rounded-full border border-slate-300 bg-white px-4 py-2.5 text-center text-sm font-semibold text-slate-900 transition hover:bg-slate-50"
           >
-            Get the links free
+            {t.getLinksFree}
           </Link>
         ) : null}
       </div>
       {targetHref ? (
         <p className="mt-2 text-center text-xs text-slate-500">
-          30-day refunds, no questions asked.{" "}
+          {t.refunds}{" "}
           <Link
             href="/refund-policy"
             className="underline decoration-slate-400 underline-offset-2 hover:text-slate-700"
           >
-            Read the policy
+            {t.readPolicy}
           </Link>
           .
         </p>
@@ -96,14 +93,14 @@ export default function BuyBox({
             className="mt-0.5 h-4 w-4 shrink-0 rounded border-slate-300 text-slate-900 focus:ring-slate-900"
           />
           <span>
-            Also open my{" "}
-            <strong className="font-semibold">{bookingCount}</strong> booking{" "}
-            {bookingCount === 1 ? "link" : "links"} (hotel, transport)
+            {bookingCount === 1
+              ? t.openBookingsOne
+              : t.openBookingsMany.replace("{count}", String(bookingCount))}
           </span>
         </label>
       ) : null}
       <ul className="mt-4 space-y-2 text-sm text-slate-700">
-        {TRUST_ITEMS.map(({ label, rest }) => (
+        {t.trust.map(({ label, rest }) => (
           <li key={label} className="flex gap-2">
             <span aria-hidden className="mt-0.5 shrink-0 text-[#943d21]">✓</span>
             <span>

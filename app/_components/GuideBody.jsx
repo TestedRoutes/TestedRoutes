@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { PortableText } from "@portabletext/react";
+import { getDict } from "../_lib/i18n";
 
 /**
  * Renders the Sanity body field on the public guide page as a "preview":
@@ -78,16 +79,17 @@ const components = {
   },
 };
 
-export default function GuideBody({ blocks, checkoutHref, pdfHref, price }) {
+export default function GuideBody({ blocks, checkoutHref, pdfHref, price, t: tProp }) {
+  const t = tProp || getDict("en").guide;
   if (!Array.isArray(blocks) || blocks.length === 0) return null;
   const { preview, truncated } = truncateAtThirdH2(blocks);
   const ctaHref = checkoutHref || pdfHref || null;
-  const buttonLabel = price ? `Get the full guide – ${price}` : "Get the full guide";
+  const buttonLabel = price ? `${t.getFullGuide} – ${price}` : t.getFullGuide;
 
   return (
     <section>
       <p className="mb-4 font-serif text-xl font-semibold text-brand-ink">
-        My Experience
+        {t.myExperience}
       </p>
       <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
         <PortableText value={preview} components={components} />
@@ -100,14 +102,10 @@ export default function GuideBody({ blocks, checkoutHref, pdfHref, price }) {
           ) : null}
           <div className="rounded-b-2xl bg-[#e2ded2] px-6 py-5">
             <p className="font-serif text-base font-semibold text-brand-ink">
-              {truncated
-                ? "Continues in the full guide"
-                : "Want the full plan?"}
+              {truncated ? t.continuesInFull : t.wantFullPlan}
             </p>
             <p className="mt-1 text-xs leading-relaxed text-slate-600">
-              The PDF includes the day-by-day plan, transport timings, booking
-              links, weather rules, and route variants. Instant download after
-              purchase.
+              {t.pdfIncludes}
             </p>
             {ctaHref ? (
               <Link
