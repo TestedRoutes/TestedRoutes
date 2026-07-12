@@ -3,6 +3,8 @@
 import Link from "next/link";
 import { useMemo, useState } from "react";
 import CategoryStrip from "../../_components/CategoryStrip";
+import CardMediaCarousel, { buildMediaSlides } from "../../_components/CardMediaCarousel";
+import { getDict } from "../../_lib/i18n";
 
 function matchesSearch(card, query) {
   if (!query) return true;
@@ -24,17 +26,22 @@ function sortRecentFirst(cards) {
   return [...cards].sort((a, b) => (b.dateMillis || 0) - (a.dateMillis || 0));
 }
 
-function StoryCard({ card }) {
+function StoryCard({ card, t }) {
+  const photos =
+    Array.isArray(card.photos) && card.photos.length
+      ? card.photos
+      : card.heroPhoto
+        ? [card.heroPhoto]
+        : [];
+  const slides = buildMediaSlides({ photos, videoUrl: card.videoUrl });
   const inner = (
     <>
       <div className="relative aspect-[4/5] w-full shrink-0 overflow-hidden bg-slate-100">
-        {card.heroPhoto ? (
-          <img
-            src={card.heroPhoto}
+        {slides.length ? (
+          <CardMediaCarousel
+            slides={slides}
             alt={card.heroAlt || card.title}
-            className="h-full w-full object-cover object-center transition duration-500 ease-out group-hover:scale-[1.03]"
-            loading="lazy"
-            decoding="async"
+            imgClassName="object-center transition duration-500 ease-out group-hover:scale-[1.03]"
           />
         ) : (
           <div className="flex h-full min-h-[9.5rem] w-full items-center justify-center bg-slate-100 text-[11px] font-medium text-slate-400">
@@ -54,7 +61,7 @@ function StoryCard({ card }) {
           </p>
           {card.hasGuide ? (
             <span className="shrink-0 rounded-full bg-slate-900 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-white">
-              Guide
+              {t.guideBadge}
             </span>
           ) : null}
         </div>
@@ -74,7 +81,7 @@ function StoryCard({ card }) {
           {card.familyFriendly ? (
             <span className="inline-flex items-center gap-1 text-xs font-medium text-slate-600">
               <span aria-hidden>👨‍👩‍👧</span>
-              Family
+              {t.familyBadge}
             </span>
           ) : null}
         </div>
@@ -97,8 +104,9 @@ function StoryCard({ card }) {
   return <div className={shellStatic}>{inner}</div>;
 }
 
-export default function InspireBrowse({ cards, categoryItems = [] }) {
+export default function InspireBrowse({ cards, categoryItems = [], lang = "en" }) {
   const [search, setSearch] = useState("");
+  const t = getDict(lang).inspireList;
 
   const filtered = useMemo(() => {
     const matched = cards.filter((c) => matchesSearch(c, search));
@@ -115,7 +123,7 @@ export default function InspireBrowse({ cards, categoryItems = [] }) {
           <input
             id="inspire-search"
             type="search"
-            placeholder="Search journeys…"
+            placeholder={t.searchPlaceholder}
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             className="min-w-0 flex-1 bg-transparent px-5 py-2.5 text-sm text-slate-700 outline-none placeholder:text-slate-400"
@@ -125,7 +133,7 @@ export default function InspireBrowse({ cards, categoryItems = [] }) {
             onClick={() => document.getElementById("inspire-search")?.blur()}
             className="shrink-0 rounded-full bg-slate-900 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-slate-800"
           >
-            Search
+            {t.searchButton}
           </button>
         </div>
       </div>
@@ -136,10 +144,10 @@ export default function InspireBrowse({ cards, categoryItems = [] }) {
 
       <div className="flex w-full min-w-0 flex-col gap-1 sm:flex-row sm:items-end sm:justify-between sm:gap-4">
         <p className="text-xl font-semibold tracking-tight text-slate-900 sm:text-2xl">
-          Journeys I've actually done
+          {t.heading}
         </p>
         <p className="text-sm font-medium tabular-nums text-slate-500">
-          {filtered.length} {filtered.length === 1 ? "story" : "stories"}
+          {filtered.length} {filtered.length === 1 ? t.story : t.stories}
         </p>
       </div>
 
@@ -147,23 +155,23 @@ export default function InspireBrowse({ cards, categoryItems = [] }) {
         {filtered.length === 0 ? (
           <div className="rounded-3xl border border-dashed border-slate-300/70 bg-gradient-to-b from-white to-slate-50/95 px-5 py-9 text-center shadow-sm ring-1 ring-slate-200/60 sm:px-8 sm:py-11">
             <p className="text-[15px] font-semibold tracking-tight text-slate-900 sm:text-base">
-              No matching journeys
+              {t.noMatchTitle}
             </p>
             <p className="mx-auto mt-2 max-w-md text-sm leading-relaxed text-slate-600">
-              Try a shorter phrase or clear the search.
+              {t.noMatchBody}
             </p>
             <button
               type="button"
               onClick={() => setSearch("")}
               className="mt-5 rounded-full bg-slate-900 px-5 py-2 text-xs font-semibold text-white transition hover:bg-slate-800"
             >
-              Clear search
+              {t.clearSearch}
             </button>
           </div>
         ) : (
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5 lg:grid-cols-3 lg:gap-6">
             {filtered.map((card) => (
-              <StoryCard key={card.id} card={card} />
+              <StoryCard key={card.id} card={card} t={t} />
             ))}
           </div>
         )}
