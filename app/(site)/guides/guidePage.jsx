@@ -529,12 +529,78 @@ export default async function GuidePage({ lang, slug }) {
       : {}),
   };
 
+  // FAQ, breadcrumb and product markup: machine-readable answers and the
+  // offer itself, for search rich results and LLM extraction (GEO).
+  const faqItems = Array.isArray(sales.faq) && sales.faq.length ? sales.faq : t.faq;
+  const faqJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: faqItems
+      .filter((f) => f?.question && f?.answer)
+      .map((f) => ({
+        "@type": "Question",
+        name: f.question,
+        acceptedAnswer: { "@type": "Answer", text: f.answer },
+      })),
+  };
+  const breadcrumbJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      {
+        "@type": "ListItem",
+        position: 1,
+        name: dict.nav.guides,
+        item: `https://testedroutes.com${localePath(lang, "/guides")}`,
+      },
+      { "@type": "ListItem", position: 2, name: guide.title, item: canonicalUrl },
+    ],
+  };
+  const priceEntry = Array.isArray(guide.prices)
+    ? guide.prices.find((p) => p?.currency === "EUR") || guide.prices[0]
+    : null;
+  const productJsonLd =
+    priceEntry && Number.isFinite(Number(priceEntry.amount))
+      ? {
+          "@context": "https://schema.org",
+          "@type": "Product",
+          name: guide.title,
+          description:
+            meta.seo?.meta_description || hero.subtitle || `${t.metaDescPrefix} ${guide.title}.`,
+          image: guide.image ? [guide.image] : undefined,
+          brand: { "@type": "Brand", name: "TestedRoutes" },
+          offers: {
+            "@type": "Offer",
+            price: Number(priceEntry.amount),
+            priceCurrency: priceEntry.currency || "EUR",
+            availability: "https://schema.org/InStock",
+            url: canonicalUrl,
+          },
+        }
+      : null;
+
   return (
     <main className="mx-auto max-w-7xl px-6 pb-16 pt-8">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd) }}
       />
+      {faqJsonLd.mainEntity.length ? (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
+        />
+      ) : null}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+      />
+      {productJsonLd ? (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(productJsonLd) }}
+        />
+      ) : null}
       <nav
         className="mb-5 flex items-center gap-1.5 text-[12px] text-slate-400"
         aria-label="Breadcrumb"
@@ -614,11 +680,6 @@ export default async function GuidePage({ lang, slug }) {
             checkoutHref={checkoutHref}
             pdfHref={pdfHref}
             price={guide.price}
-            storyHref={
-              guide.metadataSlug
-                ? localePath(lang, `/inspire/${guide.metadataSlug}`)
-                : null
-            }
             t={t}
           />
           <Testimonials items={sales.testimonials} t={t} />

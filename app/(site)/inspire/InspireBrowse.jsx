@@ -71,17 +71,24 @@ function StoryCard({ card, t }) {
         {card.excerpt ? (
           <p className="line-clamp-2 text-xs leading-relaxed text-slate-500">{card.excerpt}</p>
         ) : null}
-        <div className="mt-auto flex flex-wrap items-center gap-2">
-          {card.difficultyLabel ? (
-            <span className="inline-flex items-center gap-1 text-xs leading-snug text-slate-500">
-              <span aria-hidden>🥾</span>
-              {card.difficultyLabel}
-            </span>
-          ) : null}
-          {card.familyFriendly ? (
-            <span className="inline-flex items-center gap-1 text-xs font-medium text-slate-600">
-              <span aria-hidden>👨‍👩‍👧</span>
-              {t.familyBadge}
+        <div className="mt-auto flex flex-wrap items-center justify-between gap-2 pt-1">
+          <span className="flex min-w-0 flex-wrap items-center gap-2">
+            {card.difficultyLabel ? (
+              <span className="inline-flex items-center gap-1 text-xs leading-snug text-slate-500">
+                <span aria-hidden>🥾</span>
+                {card.difficultyLabel}
+              </span>
+            ) : null}
+            {card.familyFriendly ? (
+              <span className="inline-flex items-center gap-1 text-xs font-medium text-slate-600">
+                <span aria-hidden>👨‍👩‍👧</span>
+                {t.familyBadge}
+              </span>
+            ) : null}
+          </span>
+          {card.href ? (
+            <span className="shrink-0 rounded-full bg-slate-900 px-4 py-2 text-xs font-semibold text-white transition group-hover:bg-slate-700">
+              {t.readStory}
             </span>
           ) : null}
         </div>

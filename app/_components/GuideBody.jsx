@@ -84,14 +84,9 @@ const components = {
   },
 };
 
-export default function GuideBody({
-  blocks,
-  checkoutHref,
-  pdfHref,
-  price,
-  storyHref,
-  t: tProp,
-}) {
+// Deliberately no link out to the Inspire story here: the guide page is the
+// purchase surface, and the story→guide funnel only runs one way.
+export default function GuideBody({ blocks, checkoutHref, pdfHref, price, t: tProp }) {
   const t = tProp || getDict("en").guide;
   if (!Array.isArray(blocks) || blocks.length === 0) return null;
   const { preview, truncated } = truncateForPreview(blocks);
@@ -116,24 +111,14 @@ export default function GuideBody({
             <p className="mt-1 text-xs leading-relaxed text-slate-600">
               {t.pdfIncludes}
             </p>
-            <div className="mt-3 flex flex-wrap items-center gap-3">
-              {ctaHref ? (
-                <Link
-                  href={ctaHref}
-                  className="inline-flex rounded-full bg-slate-900 px-4 py-2 text-xs font-semibold text-white transition hover:bg-slate-800"
-                >
-                  {buttonLabel}
-                </Link>
-              ) : null}
-              {storyHref ? (
-                <Link
-                  href={storyHref}
-                  className="text-xs font-semibold text-slate-700 underline decoration-slate-400 underline-offset-2 transition hover:text-slate-900"
-                >
-                  {t.readFullStory}
-                </Link>
-              ) : null}
-            </div>
+            {ctaHref ? (
+              <Link
+                href={ctaHref}
+                className="mt-3 inline-flex rounded-full bg-slate-900 px-4 py-2 text-xs font-semibold text-white transition hover:bg-slate-800"
+              >
+                {buttonLabel}
+              </Link>
+            ) : null}
           </div>
         </div>
       </div>

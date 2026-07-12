@@ -7,11 +7,11 @@ import { loadGuides } from "../../_lib/loadGuides";
 import { getRequestCurrency } from "../../_lib/currency";
 import {
   getInspireFeaturedCardDisplay,
-  getInspireStoryHeroAlt,
   getInspireStoryGuideUrl,
 } from "../../_lib/inspireStoryDisplay";
 import { getDict, localePath } from "../../_lib/i18n";
 import NewsletterForm from "../../_components/NewsletterForm";
+import GuideGallery from "../../_components/GuideGallery";
 
 export async function findStory(lang, slug) {
   const stories = await loadInspireStories(lang);
@@ -229,7 +229,6 @@ export default async function StoryPage({ lang, slug }) {
 
   const t = getDict(lang).story;
   const display = getInspireFeaturedCardDisplay(story) || {};
-  const heroAlt = getInspireStoryHeroAlt(story) || story.title;
   const currency = await getRequestCurrency();
   const { guideHref, guideOptions } = await resolveGuideTargets(
     story,
@@ -242,13 +241,7 @@ export default async function StoryPage({ lang, slug }) {
     ? splitHtmlAtMid(bodyHtml)
     : [bodyHtml, ""];
 
-  const heroPhoto = story.heroPhoto;
-  const galleryUrls =
-    Array.isArray(story.photos) && heroPhoto && story.photos[0] === heroPhoto
-      ? story.photos.slice(1)
-      : Array.isArray(story.photos)
-        ? story.photos.slice()
-        : [];
+  const photos = Array.isArray(story.photos) ? story.photos : [];
 
   const bestSeasonRaw =
     story.metadata?.timing?.best_seasons ??
@@ -265,69 +258,38 @@ export default async function StoryPage({ lang, slug }) {
 
   return (
     <>
-      <div className="relative w-full overflow-hidden bg-slate-800" style={{ minHeight: 440 }}>
-        {heroPhoto ? (
-          <img
-            src={heroPhoto}
-            alt={heroAlt}
-            className="absolute inset-0 h-full w-full object-cover"
-            style={{ minHeight: 440 }}
-          />
-        ) : null}
-        <div className="absolute inset-0 bg-gradient-to-t from-slate-900/92 via-slate-900/45 to-slate-900/10" />
-
-        <div
-          className="relative mx-auto flex max-w-7xl flex-col justify-end px-4 pb-10 pt-24 sm:px-6 sm:pb-14 md:pt-32"
-          style={{ minHeight: 440 }}
+      <main className="mx-auto max-w-7xl px-4 pb-16 pt-8 sm:px-6">
+        {/* Guide-style header: breadcrumb + title above the media, never on it. */}
+        <nav
+          className="mb-5 flex items-center gap-1.5 text-[12px] text-slate-400"
+          aria-label="Breadcrumb"
         >
-          <nav
-            className="mb-4 flex items-center gap-2 text-xs font-medium text-white/60"
-            aria-label="Breadcrumb"
-          >
-            <Link href={inspireHome} className="transition hover:text-white">
-              {inspireLabel}
-            </Link>
-          </nav>
+          <Link href={inspireHome} className="hover:text-slate-600">
+            {inspireLabel}
+          </Link>
+          <span>›</span>
+          <span className="text-slate-600">{story.title}</span>
+        </nav>
 
-          <h1 className="max-w-3xl text-3xl font-bold leading-tight text-white sm:text-4xl md:text-5xl">
+        <div className="mb-4">
+          <h1 className="text-[32px] font-semibold leading-tight text-slate-900">
             {story.title}
           </h1>
-
           {display.excerpt ? (
-            <p className="mt-3 max-w-2xl text-sm leading-relaxed text-white/70 sm:text-base">
-              {display.excerpt}
-            </p>
+            <p className="mt-1 max-w-2xl text-[15px] text-slate-500">{display.excerpt}</p>
           ) : null}
-
-          <div className="mt-5 flex flex-wrap items-center gap-2.5">
-            {display.geoLabel ? (
-              <span className="rounded-full bg-white/15 px-3 py-1.5 text-xs font-medium text-white backdrop-blur-sm">
-                📍 {display.geoLabel}
-              </span>
-            ) : null}
-            {display.categoryDurationLine ? (
-              <span className="rounded-full bg-white/15 px-3 py-1.5 text-xs font-medium text-white backdrop-blur-sm">
-                ⏱ {display.categoryDurationLine}
-              </span>
-            ) : null}
-            {display.difficultyLabel ? (
-              <span className="rounded-full bg-white/15 px-3 py-1.5 text-xs font-medium text-white backdrop-blur-sm">
-                💪 {display.difficultyLabel}
-              </span>
-            ) : null}
-            {guideHref ? (
-              <Link
-                href={guideHref}
-                className="rounded-full bg-white px-3 py-1.5 text-xs font-semibold text-slate-900 transition hover:bg-slate-100"
-              >
-                📖 {t.fullGuideChip}
-              </Link>
-            ) : null}
-          </div>
         </div>
-      </div>
 
-      <main className="mx-auto max-w-7xl px-4 pb-16 pt-8 sm:px-6">
+        {photos.length ? (
+          <div className="mb-8">
+            <GuideGallery
+              photos={photos}
+              videoUrl={story.videoUrl}
+              viewAllLabel={getDict(lang).guide.viewAllPhotos}
+            />
+          </div>
+        ) : null}
+
         <div className="flex flex-col gap-8 md:flex-row">
           <div className="flex min-w-0 flex-1 flex-col gap-6 self-start">
             {/* Mobile quick facts */}
@@ -430,24 +392,6 @@ export default async function StoryPage({ lang, slug }) {
               </section>
             ) : null}
 
-            {galleryUrls.length ? (
-              <section className="rounded-[28px] bg-white p-6 shadow-sm ring-1 ring-slate-200">
-                <h2 className="mb-4 font-sans text-xs font-semibold uppercase tracking-[0.2em] text-slate-500">
-                  {t.gallery}
-                </h2>
-                <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                  {galleryUrls.map((url, i) => (
-                    <img
-                      key={`${i}-${url}`}
-                      src={url}
-                      alt={heroAlt}
-                      className="aspect-[4/3] w-full rounded-2xl object-cover"
-                      loading="lazy"
-                    />
-                  ))}
-                </div>
-              </section>
-            ) : null}
           </div>
 
           {/* Desktop sidebar */}

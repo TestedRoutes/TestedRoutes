@@ -9,16 +9,25 @@ import { useEffect, useRef, useState } from "react";
  * view-all overlay. Clicking any tile or "View all" opens a lightbox
  * grid (the "all photos" view).
  */
-export default function GuideGallery({ photos, viewAllLabel = "View all {count} photos" }) {
+const PLAYABLE_VIDEO = /\.(mp4|webm|mov)(\?|#|$)/i;
+
+export default function GuideGallery({
+  photos,
+  videoUrl = null,
+  viewAllLabel = "View all {count} photos",
+}) {
   const [open, setOpen] = useState(false);
   const [idx, setIdx] = useState(0);
   const stripRef = useRef(null);
+
+  const video = videoUrl && PLAYABLE_VIDEO.test(videoUrl) ? videoUrl : null;
+  const slideCount = (photos?.length || 0) + (video ? 1 : 0);
 
   const onStripScroll = () => {
     const el = stripRef.current;
     if (!el || !el.clientWidth) return;
     const i = Math.round(el.scrollLeft / el.clientWidth);
-    if (i !== idx) setIdx(Math.max(0, Math.min(i, (photos?.length || 1) - 1)));
+    if (i !== idx) setIdx(Math.max(0, Math.min(i, slideCount - 1)));
   };
 
   useEffect(() => {
@@ -48,6 +57,17 @@ export default function GuideGallery({ photos, viewAllLabel = "View all {count} 
           onScroll={onStripScroll}
           className="flex h-64 snap-x snap-mandatory overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
         >
+          {video ? (
+            <video
+              src={video}
+              poster={main}
+              muted
+              loop
+              playsInline
+              autoPlay
+              className="h-full w-full shrink-0 snap-center object-cover"
+            />
+          ) : null}
           {photos.map((p, i) => (
             <img
               key={p}
@@ -55,12 +75,12 @@ export default function GuideGallery({ photos, viewAllLabel = "View all {count} 
               alt=""
               onClick={() => setOpen(true)}
               className="h-full w-full shrink-0 cursor-pointer snap-center object-cover"
-              loading={i === 0 ? "eager" : "lazy"}
+              loading={i === 0 && !video ? "eager" : "lazy"}
             />
           ))}
         </div>
         <span className="pointer-events-none absolute left-3 top-3 rounded-full bg-slate-900/70 px-2.5 py-1 text-[11px] font-semibold tabular-nums text-white">
-          {idx + 1}/{total}
+          {idx + 1}/{slideCount}
         </span>
         <button
           type="button"
@@ -88,7 +108,19 @@ export default function GuideGallery({ photos, viewAllLabel = "View all {count} 
           style={{ gridRow: "1 / 3" }}
           aria-label="Open photo 1 of gallery"
         >
-          <img src={main} alt="" className="h-full w-full object-cover" loading="eager" />
+          {video ? (
+            <video
+              src={video}
+              poster={main}
+              muted
+              loop
+              playsInline
+              autoPlay
+              className="h-full w-full object-cover"
+            />
+          ) : (
+            <img src={main} alt="" className="h-full w-full object-cover" loading="eager" />
+          )}
         </button>
         {rest.map((p, i) => (
           <button

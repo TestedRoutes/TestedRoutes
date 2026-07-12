@@ -123,6 +123,7 @@ const en = {
     emptyBody:
       "These stories already exist in English – translations are on the way.",
     emptyLink: "Read in English →",
+    readStory: "Read the story",
   },
   story: {
     quickFacts: "Quick Facts",
@@ -311,6 +312,7 @@ const de = {
     emptyBody:
       "Diese Geschichten gibt es bereits auf Englisch – Übersetzungen sind unterwegs.",
     emptyLink: "Auf Englisch lesen →",
+    readStory: "Geschichte lesen",
   },
   story: {
     quickFacts: "Auf einen Blick",
@@ -499,6 +501,7 @@ const es = {
     emptyBody:
       "Estas historias ya existen en inglés – las traducciones están en camino.",
     emptyLink: "Leer en inglés →",
+    readStory: "Leer la historia",
   },
   story: {
     quickFacts: "Datos clave",
@@ -687,6 +690,7 @@ const fr = {
     emptyBody:
       "Ces histoires existent déjà en anglais – les traductions arrivent.",
     emptyLink: "Lire en anglais →",
+    readStory: "Lire l'histoire",
   },
   story: {
     quickFacts: "L'essentiel",
@@ -874,6 +878,7 @@ const lt = {
     emptyTitle: "Vertimai jau pakeliui",
     emptyBody: "Šios istorijos jau yra anglų kalba – vertimai netrukus.",
     emptyLink: "Skaityti angliškai →",
+    readStory: "Skaityti istoriją",
   },
   story: {
     quickFacts: "Trumpai",

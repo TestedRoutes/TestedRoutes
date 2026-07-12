@@ -111,7 +111,9 @@ const STORY_PROJECTION = /* groq */ `
 function imageUrl(image, width = 1600) {
   if (!image?.asset) return null;
   try {
-    return urlFor(image).width(width).fit("max").auto("format").url();
+    // auto("format") negotiates webp/avif; explicit quality lifts the CDN
+    // default (~75), which read as visibly soft on retina phones.
+    return urlFor(image).width(width).fit("max").auto("format").quality(85).url();
   } catch {
     return null;
   }
@@ -308,10 +310,11 @@ export function shapeStory(doc) {
     .map((i) => imageUrl(i, 1600))
     .filter(Boolean);
   // Card-width variants — the Sanity CDN derives them on the fly, so cards
-  // never download the full 1600px detail-page renditions.
+  // never download the full 1600px detail-page renditions. 1080px covers
+  // a ~500px card at 2x device pixel ratio.
   const cardPhotos = [
-    imageUrl(doc.heroImage, 800),
-    ...(doc.galleryImages || []).map((i) => imageUrl(i, 800)),
+    imageUrl(doc.heroImage, 1080),
+    ...(doc.galleryImages || []).map((i) => imageUrl(i, 1080)),
   ].filter(Boolean);
   const metadata = buildLegacyMetadata(doc);
   // Inject affiliate tracking IDs into link markDefs once, here, so every
@@ -376,8 +379,8 @@ export function shapeGuide(doc, currency = "EUR") {
     .map((i) => imageUrl(i, 1600))
     .filter(Boolean);
   const cardPhotos = [
-    imageUrl(doc.heroImage, 800),
-    ...(doc.galleryImages || []).map((i) => imageUrl(i, 800)),
+    imageUrl(doc.heroImage, 1080),
+    ...(doc.galleryImages || []).map((i) => imageUrl(i, 1080)),
   ].filter(Boolean);
   const metadata = buildLegacyMetadata(doc);
   // Tag once, here, so bodyBlocks + storyContent + every consumer of
