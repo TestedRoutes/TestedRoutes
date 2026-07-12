@@ -80,6 +80,8 @@ export default {
         list: [
           { title: "English", value: "en" },
           { title: "German", value: "de" },
+          { title: "Spanish", value: "es" },
+          { title: "French", value: "fr" },
           { title: "Lithuanian", value: "lt" },
         ],
       },

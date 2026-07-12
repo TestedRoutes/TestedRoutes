@@ -307,6 +307,12 @@ export function shapeStory(doc) {
   const galleryUrls = (doc.galleryImages || [])
     .map((i) => imageUrl(i, 1600))
     .filter(Boolean);
+  // Card-width variants — the Sanity CDN derives them on the fly, so cards
+  // never download the full 1600px detail-page renditions.
+  const cardPhotos = [
+    imageUrl(doc.heroImage, 800),
+    ...(doc.galleryImages || []).map((i) => imageUrl(i, 800)),
+  ].filter(Boolean);
   const metadata = buildLegacyMetadata(doc);
   // Inject affiliate tracking IDs into link markDefs once, here, so every
   // downstream consumer (markdown renderer, GuideBody PortableText,
@@ -325,7 +331,9 @@ export function shapeStory(doc) {
     storyContent,
     heroPhoto: heroUrl,
     photos: [heroUrl, ...galleryUrls].filter(Boolean),
+    cardPhotos,
     galleryPhotos: galleryUrls,
+    videoUrl: doc.hasVideo ? doc.videoUrl || null : null,
     heroName: doc.heroImage?.alt || null,
     folderUrl: "",
   };
@@ -367,6 +375,10 @@ export function shapeGuide(doc, currency = "EUR") {
   const galleryUrls = (doc.galleryImages || [])
     .map((i) => imageUrl(i, 1600))
     .filter(Boolean);
+  const cardPhotos = [
+    imageUrl(doc.heroImage, 800),
+    ...(doc.galleryImages || []).map((i) => imageUrl(i, 800)),
+  ].filter(Boolean);
   const metadata = buildLegacyMetadata(doc);
   // Tag once, here, so bodyBlocks + storyContent + every consumer of
   // them (GuideBody, BuyBox essentialBookings, /links page) all see the
@@ -412,6 +424,7 @@ export function shapeGuide(doc, currency = "EUR") {
     finishPoint: doc.finishPoint || null,
     routePoints: doc.routePoints || null,
     photos: [heroUrl, ...galleryUrls].filter(Boolean),
+    cardPhotos,
     galleryPhotos: galleryUrls,
     videoUrl: doc.hasVideo ? doc.videoUrl || null : null,
     relatedGuides,
@@ -432,12 +445,52 @@ function formatPrice(amount, currency) {
   return `${symbol}${rounded}`;
 }
 
-export async function fetchAllStories() {
-  return client.fetch(`*[_type == "story" && status == "published"] | order(publishedDate desc) ${STORY_PROJECTION}`);
+// Docs created before the language field existed have it unset — treat
+// those as English so they never vanish from the EN site.
+const LANG_FILTER = `(language == $lang || (!defined(language) && $lang == "en"))`;
+
+export async function fetchAllStories(lang = "en") {
+  return client.fetch(
+    `*[_type == "story" && status == "published" && ${LANG_FILTER}] | order(publishedDate desc) ${STORY_PROJECTION}`,
+    { lang },
+  );
 }
 
-export async function fetchAllGuideStories() {
+// Guides are English-only for now; the language filter keeps future
+// translated story docs from leaking duplicates into the guide list.
+export async function fetchAllGuideStories(lang = "en") {
   return client.fetch(
-    `*[_type == "story" && status == "published" && guide.hasGuide == true] | order(publishedDate desc) ${STORY_PROJECTION}`,
+    `*[_type == "story" && status == "published" && guide.hasGuide == true && ${LANG_FILTER}] | order(publishedDate desc) ${STORY_PROJECTION}`,
+    { lang },
   );
+}
+
+export async function fetchStoryCount(lang = "en") {
+  return client.fetch(
+    `count(*[_type == "story" && status == "published" && ${LANG_FILTER}])`,
+    { lang },
+  );
+}
+
+export async function fetchGuideCount(lang = "en") {
+  return client.fetch(
+    `count(*[_type == "story" && status == "published" && guide.hasGuide == true && ${LANG_FILTER}])`,
+    { lang },
+  );
+}
+
+// All published language versions of one story (linked via storyId).
+// Used to build hreflang alternates and the language switcher targets.
+export async function fetchStoryTranslations(storyId) {
+  if (!storyId) return [];
+  const docs = await client.fetch(
+    `*[_type == "story" && status == "published" && storyId == $storyId]{ "slug": slug.current, language, "hasGuide": guide.hasGuide, "guideSlug": guide.pageSlug }`,
+    { storyId },
+  );
+  return (docs || []).map((d) => ({
+    slug: d.slug,
+    language: d.language || "en",
+    hasGuide: !!d.hasGuide,
+    guideSlug: d.guideSlug || d.slug,
+  }));
 }
