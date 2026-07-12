@@ -93,11 +93,17 @@ export default function LocationMap({ start, destinations, finish, points, zoom 
     return null;
   }
 
+  // On touch devices a one-finger drag inside the map pans the map and
+  // traps the page scroll. Disable dragging there — pinch zoom and the
+  // +/- buttons still work, and the page scrolls straight past the map.
+  const touchDevice = L.Browser.mobile;
+
   return (
     <MapContainer
       center={[center.lat, center.lng]}
       zoom={zoom}
       scrollWheelZoom={false}
+      dragging={!touchDevice}
       style={{ height: "100%", width: "100%", minHeight: 320, borderRadius: 12 }}
     >
       <TileLayer

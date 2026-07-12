@@ -10,6 +10,7 @@ import {
 import { DATE_LOCALES, getDict, localePath } from "../../_lib/i18n";
 import LocationMap from "../../_components/LocationMapClient";
 import GuideGallery from "../../_components/GuideGallery";
+import CollapsibleSection from "../../_components/CollapsibleSection";
 import GuideBody from "../../_components/GuideBody";
 import BuyBox from "../../_components/BuyBox";
 import StickyBuyBar from "../../_components/StickyBuyBar";
@@ -88,7 +89,7 @@ function PrimaryStats({ stats, lastReviewedDate, lang, t }) {
         {(stats || []).map((stat) => (
           <div
             key={stat.label}
-            className="grid grid-cols-[160px_1fr] gap-4 px-5 py-3 md:grid-cols-[200px_1fr]"
+            className="grid grid-cols-[104px_1fr] gap-4 px-5 py-3 md:grid-cols-[200px_1fr]"
           >
             <p className="self-center text-[11px] font-semibold uppercase tracking-wider text-slate-400">
               {stat.label}
@@ -97,7 +98,7 @@ function PrimaryStats({ stats, lastReviewedDate, lang, t }) {
           </div>
         ))}
         {reviewLabel ? (
-          <div className="grid grid-cols-[160px_1fr] gap-4 px-5 py-3 md:grid-cols-[200px_1fr]">
+          <div className="grid grid-cols-[104px_1fr] gap-4 px-5 py-3 md:grid-cols-[200px_1fr]">
             <p className="self-center text-[11px] font-semibold uppercase tracking-wider text-slate-400">
               {t.lastReviewed}
             </p>
@@ -112,8 +113,7 @@ function PrimaryStats({ stats, lastReviewedDate, lang, t }) {
 function CheckBulletSection({ title, items }) {
   if (!Array.isArray(items) || items.length === 0) return null;
   return (
-    <section>
-      <p className="mb-4 font-serif text-xl font-semibold text-brand-ink">{title}</p>
+    <CollapsibleSection title={title}>
       <ul className="space-y-2 text-sm text-slate-700">
         {items.map((item) => (
           <li key={item} className="flex gap-3">
@@ -122,7 +122,7 @@ function CheckBulletSection({ title, items }) {
           </li>
         ))}
       </ul>
-    </section>
+    </CollapsibleSection>
   );
 }
 
@@ -564,7 +564,7 @@ export default async function GuidePage({ lang, slug }) {
 
       <div className="grid grid-cols-1 gap-6 md:grid-cols-[minmax(0,1fr)_320px] lg:gap-8">
         <div className="space-y-10">
-          <GuideGallery photos={photos} />
+          <GuideGallery photos={photos} viewAllLabel={t.viewAllPhotos} />
           {hero.primary_stats || maintenance.last_reviewed_date ? (
             <section>
               <p className="mb-4 font-serif text-xl font-semibold text-brand-ink">
@@ -614,6 +614,11 @@ export default async function GuidePage({ lang, slug }) {
             checkoutHref={checkoutHref}
             pdfHref={pdfHref}
             price={guide.price}
+            storyHref={
+              guide.metadataSlug
+                ? localePath(lang, `/inspire/${guide.metadataSlug}`)
+                : null
+            }
             t={t}
           />
           <Testimonials items={sales.testimonials} t={t} />

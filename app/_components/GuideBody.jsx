@@ -3,15 +3,16 @@
 import Link from "next/link";
 import { PortableText } from "@portabletext/react";
 import { getDict } from "../_lib/i18n";
+import CollapsibleSection from "./CollapsibleSection";
 
 /**
  * Renders the Sanity body field on the public guide page as a "preview":
- * shows everything up to (but not including) the third H2 block, then a
- * gate prompting purchase. If the body has fewer than 3 H2s, the whole
- * thing renders without truncation but the prompt still shows so buyers
- * know there is more in the PDF.
+ * a short excerpt (up to the third H2, capped at 6 blocks either way),
+ * then a gate prompting purchase. Keeping the on-page excerpt short means
+ * the guide page and its Inspire story stay distinct documents for search
+ * engines — the full narrative lives on the story page, linked below.
  */
-function truncateAtThirdH2(blocks) {
+function truncateForPreview(blocks) {
   if (!Array.isArray(blocks)) return { preview: [], truncated: false };
   const preview = [];
   let h2Count = 0;
@@ -23,6 +24,10 @@ function truncateAtThirdH2(blocks) {
         truncated = true;
         break;
       }
+    }
+    if (preview.length >= 6) {
+      truncated = true;
+      break;
     }
     preview.push(block);
   }
@@ -79,18 +84,22 @@ const components = {
   },
 };
 
-export default function GuideBody({ blocks, checkoutHref, pdfHref, price, t: tProp }) {
+export default function GuideBody({
+  blocks,
+  checkoutHref,
+  pdfHref,
+  price,
+  storyHref,
+  t: tProp,
+}) {
   const t = tProp || getDict("en").guide;
   if (!Array.isArray(blocks) || blocks.length === 0) return null;
-  const { preview, truncated } = truncateAtThirdH2(blocks);
+  const { preview, truncated } = truncateForPreview(blocks);
   const ctaHref = checkoutHref || pdfHref || null;
   const buttonLabel = price ? `${t.getFullGuide} – ${price}` : t.getFullGuide;
 
   return (
-    <section>
-      <p className="mb-4 font-serif text-xl font-semibold text-brand-ink">
-        {t.myExperience}
-      </p>
+    <CollapsibleSection title={t.myExperience}>
       <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
         <PortableText value={preview} components={components} />
         <div className="relative mt-6 -mx-6 -mb-6">
@@ -107,17 +116,27 @@ export default function GuideBody({ blocks, checkoutHref, pdfHref, price, t: tPr
             <p className="mt-1 text-xs leading-relaxed text-slate-600">
               {t.pdfIncludes}
             </p>
-            {ctaHref ? (
-              <Link
-                href={ctaHref}
-                className="mt-3 inline-flex rounded-full bg-slate-900 px-4 py-2 text-xs font-semibold text-white transition hover:bg-slate-800"
-              >
-                {buttonLabel}
-              </Link>
-            ) : null}
+            <div className="mt-3 flex flex-wrap items-center gap-3">
+              {ctaHref ? (
+                <Link
+                  href={ctaHref}
+                  className="inline-flex rounded-full bg-slate-900 px-4 py-2 text-xs font-semibold text-white transition hover:bg-slate-800"
+                >
+                  {buttonLabel}
+                </Link>
+              ) : null}
+              {storyHref ? (
+                <Link
+                  href={storyHref}
+                  className="text-xs font-semibold text-slate-700 underline decoration-slate-400 underline-offset-2 transition hover:text-slate-900"
+                >
+                  {t.readFullStory}
+                </Link>
+              ) : null}
+            </div>
           </div>
         </div>
       </div>
-    </section>
+    </CollapsibleSection>
   );
 }

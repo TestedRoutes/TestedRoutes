@@ -1,16 +1,25 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 /**
  * Mosaic gallery: 1 big hero on the left, 4 smaller tiles on the right
  * (2x2). The bottom-right tile carries the "View all" overlay. Mobile
- * collapses to a horizontal swipe row. Clicking any tile or "View all"
- * opens a lightbox grid; clicking a tile inside the lightbox doesn't do
- * anything special (the lightbox is the "all photos" view).
+ * collapses to a full-width swipe carousel with a photo counter and a
+ * view-all overlay. Clicking any tile or "View all" opens a lightbox
+ * grid (the "all photos" view).
  */
-export default function GuideGallery({ photos }) {
+export default function GuideGallery({ photos, viewAllLabel = "View all {count} photos" }) {
   const [open, setOpen] = useState(false);
+  const [idx, setIdx] = useState(0);
+  const stripRef = useRef(null);
+
+  const onStripScroll = () => {
+    const el = stripRef.current;
+    if (!el || !el.clientWidth) return;
+    const i = Math.round(el.scrollLeft / el.clientWidth);
+    if (i !== idx) setIdx(Math.max(0, Math.min(i, (photos?.length || 1) - 1)));
+  };
 
   useEffect(() => {
     if (!open) return;
@@ -32,26 +41,33 @@ export default function GuideGallery({ photos }) {
 
   return (
     <>
-      {/* Mobile: horizontal swipe row */}
-      <div className="md:hidden">
-        <div className="flex snap-x snap-mandatory gap-2 overflow-x-auto rounded-xl pb-1">
-          {photos.slice(0, 5).map((p, i) => (
+      {/* Mobile: full-width swipe carousel with counter + view-all overlay */}
+      <div className="relative overflow-hidden rounded-xl md:hidden">
+        <div
+          ref={stripRef}
+          onScroll={onStripScroll}
+          className="flex h-64 snap-x snap-mandatory overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+        >
+          {photos.map((p, i) => (
             <img
               key={p}
               src={p}
               alt=""
               onClick={() => setOpen(true)}
-              className="h-52 w-[80vw] shrink-0 cursor-pointer snap-start rounded-xl object-cover"
+              className="h-full w-full shrink-0 cursor-pointer snap-center object-cover"
               loading={i === 0 ? "eager" : "lazy"}
             />
           ))}
         </div>
+        <span className="pointer-events-none absolute left-3 top-3 rounded-full bg-slate-900/70 px-2.5 py-1 text-[11px] font-semibold tabular-nums text-white">
+          {idx + 1}/{total}
+        </span>
         <button
           type="button"
           onClick={() => setOpen(true)}
-          className="mt-2 inline-flex items-center gap-1 rounded-full bg-white/95 px-3 py-1.5 text-xs font-semibold text-slate-900 shadow ring-1 ring-slate-200"
+          className="absolute bottom-3 right-3 inline-flex items-center gap-1 rounded-full bg-white/95 px-3 py-1.5 text-xs font-semibold text-slate-900 shadow ring-1 ring-slate-200"
         >
-          View all {total} photos
+          {viewAllLabel.replace("{count}", String(total))}
         </button>
       </div>
 

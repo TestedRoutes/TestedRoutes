@@ -158,6 +158,8 @@ const en = {
   },
   guide: {
     metaDescPrefix: "Self-guided travel guide:",
+    viewAllPhotos: "View all {count} photos",
+    readFullStory: "Read the full story →",
     tripDetails: "Trip details",
     lastReviewed: "Last reviewed",
     location: "Location",
@@ -344,6 +346,8 @@ const de = {
   },
   guide: {
     metaDescPrefix: "Reiseguide zum Selbstplanen:",
+    viewAllPhotos: "Alle {count} Fotos ansehen",
+    readFullStory: "Zur ganzen Geschichte →",
     tripDetails: "Reisedetails",
     lastReviewed: "Zuletzt überprüft",
     location: "Lage & Route",
@@ -530,6 +534,8 @@ const es = {
   },
   guide: {
     metaDescPrefix: "Guía de viaje por libre:",
+    viewAllPhotos: "Ver las {count} fotos",
+    readFullStory: "Leer la historia completa →",
     tripDetails: "Detalles del viaje",
     lastReviewed: "Última revisión",
     location: "Ubicación",
@@ -716,6 +722,8 @@ const fr = {
   },
   guide: {
     metaDescPrefix: "Guide de voyage en autonomie :",
+    viewAllPhotos: "Voir les {count} photos",
+    readFullStory: "Lire l'histoire complète →",
     tripDetails: "Détails du voyage",
     lastReviewed: "Dernière vérification",
     location: "Localisation",
@@ -901,6 +909,8 @@ const lt = {
   },
   guide: {
     metaDescPrefix: "Savarankiškos kelionės gidas:",
+    viewAllPhotos: "Žiūrėti visas nuotraukas ({count})",
+    readFullStory: "Skaityti visą istoriją →",
     tripDetails: "Kelionės detalės",
     lastReviewed: "Paskutinė peržiūra",
     location: "Vieta",
