@@ -113,7 +113,10 @@ export default function HomeBrowse({ guides, categoryItems, cards = [], t }) {
                 onCountry={setCountryFilter}
                 labels={t}
               />
-              <Link href="/guides" className="text-xs font-semibold text-slate-600 hover:text-slate-900">
+              <Link
+                href="/guides"
+                className="rounded-full border border-slate-200 bg-white px-4 py-2 text-xs font-semibold text-slate-700 transition hover:border-slate-300"
+              >
                 View all
               </Link>
             </div>

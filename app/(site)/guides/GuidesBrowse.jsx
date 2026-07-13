@@ -66,7 +66,10 @@ export default function GuidesBrowse({ guides, t, tl, lang = "en" }) {
           </button>
         </div>
       </div>
-      <div className="flex justify-center">
+      <div className="flex flex-wrap items-center justify-between gap-3">
+        <p className="text-sm font-medium tabular-nums text-slate-500">
+          {filtered.length} {filtered.length === 1 ? tl.guide : tl.guides}
+        </p>
         <CardFilters
           types={types}
           countries={countries}

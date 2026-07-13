@@ -41,7 +41,7 @@ export default function AboutMePage() {
         <img
           src={aboutAsset("About me2.jpg")}
           alt="Portrait of the author on the road"
-          className="h-56 w-full rounded-[18px] object-cover object-[50%_25%] shadow-[0_20px_60px_rgba(0,0,0,0.08)] md:order-2 md:h-full md:min-h-[320px] md:max-h-[420px]"
+          className="h-56 w-full rounded-[18px] object-cover object-center shadow-[0_20px_60px_rgba(0,0,0,0.08)] md:order-2 md:h-full md:min-h-[320px] md:max-h-[420px]"
         />
         <div className="space-y-4 md:order-1">
           <h1 className="text-3xl font-semibold md:text-4xl">About Me</h1>
@@ -143,7 +143,7 @@ export default function AboutMePage() {
               <img
                 src={aboutAsset(item.file)}
                 alt={item.alt}
-                className="aspect-[4/3] w-full rounded-2xl object-cover object-[50%_30%]"
+                className="aspect-[4/3] w-full rounded-2xl object-cover object-center"
                 loading="lazy"
               />
               <p className="mt-3 text-sm font-semibold text-slate-900">{item.title}</p>
@@ -160,7 +160,7 @@ export default function AboutMePage() {
               <img
                 src={aboutAsset(item.file)}
                 alt={item.alt}
-                className="aspect-[4/3] w-full rounded-2xl object-cover object-[50%_30%]"
+                className="aspect-[4/3] w-full rounded-2xl object-cover object-center"
                 loading="lazy"
               />
               <p className="mt-3 text-sm font-semibold text-slate-900">{item.caption}</p>
@@ -181,7 +181,7 @@ export default function AboutMePage() {
               <img
                 src={aboutAsset(item.file)}
                 alt={item.alt}
-                className="aspect-[4/3] w-full rounded-2xl object-cover object-[50%_25%]"
+                className="aspect-[4/3] w-full rounded-2xl object-cover object-center"
                 loading="lazy"
               />
               <p className="mt-2 text-center text-[11px] font-medium leading-snug text-slate-600">{item.label}</p>

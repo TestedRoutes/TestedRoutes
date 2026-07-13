@@ -52,16 +52,13 @@ export default async function GuidesIndexPage({ lang = "en" }) {
   const guides = await loadGuides(currency, lang);
 
   return (
-    <main className="mx-auto flex max-w-7xl flex-col gap-10 px-6 pb-16 pt-8">
-      <section className="space-y-6">
+    <main className="mx-auto flex max-w-7xl flex-col gap-10 px-6 pb-16 pt-12 md:pt-16">
+      <section className="space-y-10">
         <div className="space-y-2 text-center">
           <h1 className="font-serif text-3xl font-semibold leading-[1.1] text-brand-ink md:text-4xl lg:text-5xl">
             {tl.heading}
           </h1>
           <p className="text-lg text-slate-600 md:text-xl">{tl.tagline}</p>
-          <p className="text-xs text-slate-500">
-            {guides.length} {guides.length === 1 ? tl.guide : tl.guides}
-          </p>
         </div>
         {guides.length === 0 ? (
           lang !== "en" ? (
@@ -99,7 +96,7 @@ export default async function GuidesIndexPage({ lang = "en" }) {
               <img
                 src={aboutAsset(EXTREME_FILES[i])}
                 alt={label}
-                className="aspect-[4/3] w-full object-cover object-[50%_25%]"
+                className="aspect-[4/3] w-full object-cover object-center"
                 loading="lazy"
               />
               <p className="p-3 text-center text-[11px] font-medium leading-snug text-slate-600">
