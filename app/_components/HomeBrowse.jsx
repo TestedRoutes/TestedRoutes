@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useEffect, useMemo, useRef, useState } from "react";
 import HomeSearchBar from "./HomeSearchBar";
 import CategoryStrip from "./CategoryStrip";
+import CardFilters from "./CardFilters";
 import GuideListCard from "../(site)/guides/GuideListCard";
 
 // Loose category matching: "Hiking" should catch "Day trip hike".
@@ -30,7 +31,19 @@ function matchesCategory(card, label) {
 export default function HomeBrowse({ guides, categoryItems, cards = [], t }) {
   const [query, setQuery] = useState("");
   const [activeCategory, setActiveCategory] = useState("");
+  const [typeFilter, setTypeFilter] = useState("");
+  const [countryFilter, setCountryFilter] = useState("");
   const heroRef = useRef(null);
+
+  const types = useMemo(
+    () => [...new Set(cards.map((c) => c.category).filter(Boolean))].sort(),
+    [cards],
+  );
+  const countries = useMemo(
+    () =>
+      [...new Set(cards.map((c) => c.metadata?.geography?.country).filter(Boolean))].sort(),
+    [cards],
+  );
 
   useEffect(() => {
     const el = heroRef.current;
@@ -51,8 +64,14 @@ export default function HomeBrowse({ guides, categoryItems, cards = [], t }) {
   }, []);
 
   const filtered = useMemo(
-    () => cards.filter((c) => matchesCategory(c, activeCategory)),
-    [cards, activeCategory],
+    () =>
+      cards.filter(
+        (c) =>
+          matchesCategory(c, activeCategory) &&
+          (!typeFilter || c.category === typeFilter) &&
+          (!countryFilter || c.metadata?.geography?.country === countryFilter),
+      ),
+    [cards, activeCategory, typeFilter, countryFilter],
   );
 
   return (
@@ -75,7 +94,7 @@ export default function HomeBrowse({ guides, categoryItems, cards = [], t }) {
 
       {cards.length ? (
         <section className="space-y-6">
-          <div className="flex items-center justify-between">
+          <div className="flex flex-wrap items-center justify-between gap-3">
             <h2 className="text-xl font-semibold">
               Browse guides
               {activeCategory ? (
@@ -84,9 +103,20 @@ export default function HomeBrowse({ guides, categoryItems, cards = [], t }) {
                 </span>
               ) : null}
             </h2>
-            <Link href="/guides" className="text-xs font-semibold text-slate-600 hover:text-slate-900">
-              View all
-            </Link>
+            <div className="flex flex-wrap items-center gap-3">
+              <CardFilters
+                types={types}
+                countries={countries}
+                type={typeFilter}
+                country={countryFilter}
+                onType={setTypeFilter}
+                onCountry={setCountryFilter}
+                labels={t}
+              />
+              <Link href="/guides" className="text-xs font-semibold text-slate-600 hover:text-slate-900">
+                View all
+              </Link>
+            </div>
           </div>
           {filtered.length ? (
             <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">

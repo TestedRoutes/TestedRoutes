@@ -34,6 +34,17 @@ const TABS = [
     ),
   },
   {
+    slug: "destinations",
+    labelKey: "destinations",
+    href: "/destinations",
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" className="h-6 w-6">
+        <path d="M12 21s-6.5-5.8-6.5-10.2A6.5 6.5 0 0 1 12 4.3a6.5 6.5 0 0 1 6.5 6.5C18.5 15.2 12 21 12 21z" />
+        <circle cx="12" cy="10.6" r="2.3" />
+      </svg>
+    ),
+  },
+  {
     slug: "inspire",
     labelKey: "inspire",
     href: "/inspire",
@@ -63,8 +74,7 @@ function activeSlug(pathname) {
   if (first === "guides") return "guides";
   if (first === "inspire") return "inspire";
   if (first === "about") return "about";
-  // Destinations reads as part of browsing/exploring.
-  if (first === "destinations") return "explore";
+  if (first === "destinations") return "destinations";
   return null;
 }
 

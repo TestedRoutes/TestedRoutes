@@ -14,7 +14,7 @@ const PLAYABLE_VIDEO = /\.(mp4|webm|mov)(\?|#|$)/i;
 export default function GuideGallery({
   photos,
   videoUrl = null,
-  viewAllLabel = "View all {count} photos",
+  viewAllLabel = "View all",
 }) {
   const [open, setOpen] = useState(false);
   const [idx, setIdx] = useState(0);
@@ -97,7 +97,7 @@ export default function GuideGallery({
           onClick={() => setOpen(true)}
           className="absolute bottom-3 right-3 inline-flex items-center gap-1 rounded-full bg-white/95 px-3 py-1.5 text-xs font-semibold text-slate-900 shadow ring-1 ring-slate-200"
         >
-          {viewAllLabel.replace("{count}", String(total))}
+          {viewAllLabel}
         </button>
       </div>
 

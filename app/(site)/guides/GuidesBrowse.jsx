@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from "react";
 import GuideListCard from "./GuideListCard";
+import CardFilters from "../../_components/CardFilters";
 
 function matchesSearch(guide, query) {
   const needle = query.toLowerCase().trim();
@@ -22,9 +23,28 @@ function matchesSearch(guide, query) {
 
 export default function GuidesBrowse({ guides, t, tl, lang = "en" }) {
   const [search, setSearch] = useState("");
+  const [typeFilter, setTypeFilter] = useState("");
+  const [countryFilter, setCountryFilter] = useState("");
+
+  const types = useMemo(
+    () => [...new Set(guides.map((g) => g.category).filter(Boolean))].sort(),
+    [guides],
+  );
+  const countries = useMemo(
+    () =>
+      [...new Set(guides.map((g) => g.metadata?.geography?.country).filter(Boolean))].sort(),
+    [guides],
+  );
+
   const filtered = useMemo(
-    () => guides.filter((g) => matchesSearch(g, search)),
-    [guides, search],
+    () =>
+      guides.filter(
+        (g) =>
+          matchesSearch(g, search) &&
+          (!typeFilter || g.category === typeFilter) &&
+          (!countryFilter || g.metadata?.geography?.country === countryFilter),
+      ),
+    [guides, search, typeFilter, countryFilter],
   );
 
   return (
@@ -45,6 +65,17 @@ export default function GuidesBrowse({ guides, t, tl, lang = "en" }) {
             {t.inspireList.searchButton}
           </button>
         </div>
+      </div>
+      <div className="flex justify-center">
+        <CardFilters
+          types={types}
+          countries={countries}
+          type={typeFilter}
+          country={countryFilter}
+          onType={setTypeFilter}
+          onCountry={setCountryFilter}
+          labels={tl}
+        />
       </div>
       <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {filtered.map((g) => (

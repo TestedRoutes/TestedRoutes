@@ -14,17 +14,17 @@ export default function CollapsibleSection({
 }) {
   const [open, setOpen] = useState(defaultOpen);
   return (
-    <section className="border-b border-slate-200 pb-4 md:border-0 md:pb-0">
+    <section className="border-b border-slate-200 md:border-0">
       <button
         type="button"
         onClick={() => setOpen((o) => !o)}
         aria-expanded={open}
-        className="flex w-full items-center justify-between gap-4 py-1 text-left md:hidden"
+        className="flex w-full items-center justify-between gap-4 py-3 text-left md:hidden"
       >
         <span className={`font-serif text-xl font-semibold ${titleClassName}`}>{title}</span>
         <span
           aria-hidden
-          className={`text-slate-400 transition-transform ${open ? "rotate-180" : ""}`}
+          className={`text-lg text-slate-400 transition-transform ${open ? "rotate-180" : ""}`}
         >
           ▾
         </span>
@@ -32,7 +32,9 @@ export default function CollapsibleSection({
       <p className={`mb-4 hidden font-serif text-xl font-semibold md:block ${titleClassName}`}>
         {title}
       </p>
-      <div className={`${open ? "mt-3 block" : "hidden"} md:mt-0 md:block`}>{children}</div>
+      <div className={`${open ? "mb-4 mt-1 block" : "hidden"} md:mb-0 md:mt-0 md:block`}>
+        {children}
+      </div>
     </section>
   );
 }

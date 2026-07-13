@@ -14,6 +14,7 @@ import CollapsibleSection from "../../_components/CollapsibleSection";
 import GuideBody from "../../_components/GuideBody";
 import BuyBox from "../../_components/BuyBox";
 import StickyBuyBar from "../../_components/StickyBuyBar";
+import Byline from "../../_components/Byline";
 
 // hreflang alternates across every published language version of the guide.
 async function guideLanguageAlternates(guide, lang, slug) {
@@ -363,7 +364,7 @@ function BottomCta({ price, checkoutHref, pdfHref, t }) {
   const href = checkoutHref || pdfHref;
   const buttonLabel = price ? `${t.getGuide} – ${price}` : t.getGuide;
   return (
-    <section className="mt-12 rounded-[28px] bg-brand-terracotta p-10 text-center text-white">
+    <section className="mt-8 rounded-[28px] bg-brand-terracotta p-10 text-center text-white md:mt-12">
       <p className="font-serif text-3xl font-semibold leading-tight">
         {t.bottomLine1}
       </p>
@@ -543,7 +544,7 @@ export default async function GuidePage({ lang, slug }) {
       : null;
 
   return (
-    <main className="mx-auto max-w-7xl px-6 pb-16 pt-8">
+    <main className="mx-auto max-w-7xl px-6 pb-8 pt-8 md:pb-16">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd) }}
@@ -589,10 +590,11 @@ export default async function GuidePage({ lang, slug }) {
         {hero.subtitle ? (
           <p className="mt-1 text-[15px] text-slate-500">{hero.subtitle}</p>
         ) : null}
+        <Byline lang={lang} />
       </div>
 
       <div className="grid grid-cols-1 gap-6 md:grid-cols-[minmax(0,1fr)_320px] lg:gap-8">
-        <div className="space-y-10">
+        <div className="space-y-6 md:space-y-10">
           <GuideGallery photos={photos} viewAllLabel={t.viewAllPhotos} />
           {hero.primary_stats || maintenance.last_reviewed_date ? (
             <section>

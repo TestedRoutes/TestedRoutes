@@ -60,6 +60,7 @@ function buildCard(story, lang) {
     videoUrl: story.videoUrl || null,
     heroAlt: getInspireStoryHeroAlt(story) || story.title,
     geoLabel: display.geoLabel || "",
+    country: story.metadata?.geography?.country || "",
     categoryLabel: prettyCategory(cls.journey_category || cls.activity_category),
     categoryDurationLine: display.categoryDurationLine || "",
     difficultyLabel: display.difficultyLabel || "",

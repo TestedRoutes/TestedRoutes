@@ -181,7 +181,7 @@ export default function AboutMePage() {
               <img
                 src={aboutAsset(item.file)}
                 alt={item.alt}
-                className="h-44 w-full rounded-2xl object-cover object-[50%_30%]"
+                className="aspect-[4/3] w-full rounded-2xl object-cover object-[50%_25%]"
                 loading="lazy"
               />
               <p className="mt-2 text-center text-[11px] font-medium leading-snug text-slate-600">{item.label}</p>

@@ -54,14 +54,14 @@ export default async function GuidesIndexPage({ lang = "en" }) {
   return (
     <main className="mx-auto flex max-w-7xl flex-col gap-10 px-6 pb-16 pt-8">
       <section className="space-y-6">
-        <div className="space-y-2">
-          <div className="flex items-center justify-between">
-            <h1 className="text-2xl font-semibold text-brand-ink">{tl.title}</h1>
-            <span className="text-xs text-slate-500">
-              {guides.length} {guides.length === 1 ? tl.guide : tl.guides}
-            </span>
-          </div>
-          <p className="font-serif text-sm italic text-slate-600">{tl.tagline}</p>
+        <div className="space-y-2 text-center">
+          <h1 className="font-serif text-3xl font-semibold leading-[1.1] text-brand-ink md:text-4xl lg:text-5xl">
+            {tl.heading}
+          </h1>
+          <p className="text-lg text-slate-600 md:text-xl">{tl.tagline}</p>
+          <p className="text-xs text-slate-500">
+            {guides.length} {guides.length === 1 ? tl.guide : tl.guides}
+          </p>
         </div>
         {guides.length === 0 ? (
           lang !== "en" ? (
@@ -90,7 +90,7 @@ export default async function GuidesIndexPage({ lang = "en" }) {
           <p className="text-xl font-semibold">{ti.howITestTitle}</p>
           <p className="mt-2 text-sm text-slate-600">{ti.howITestBody}</p>
         </div>
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="grid grid-cols-2 gap-4 lg:grid-cols-4">
           {ti.extremeLabels.map((label, i) => (
             <div
               key={label}
@@ -99,7 +99,7 @@ export default async function GuidesIndexPage({ lang = "en" }) {
               <img
                 src={aboutAsset(EXTREME_FILES[i])}
                 alt={label}
-                className="h-44 w-full object-cover object-[50%_30%]"
+                className="aspect-[4/3] w-full object-cover object-[50%_25%]"
                 loading="lazy"
               />
               <p className="p-3 text-center text-[11px] font-medium leading-snug text-slate-600">

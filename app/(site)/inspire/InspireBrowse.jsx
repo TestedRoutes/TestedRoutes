@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useMemo, useState } from "react";
 import CategoryStrip from "../../_components/CategoryStrip";
 import CardMediaCarousel, { buildMediaSlides } from "../../_components/CardMediaCarousel";
+import CardFilters from "../../_components/CardFilters";
 import { getDict } from "../../_lib/i18n";
 
 function cardHaystack(card) {
@@ -77,21 +78,10 @@ function StoryCard({ card, t }) {
             </span>
           ) : null}
         </div>
-        {card.categoryLabel ? (
-          <p className="text-sm leading-snug text-slate-600">{card.categoryLabel}</p>
-        ) : null}
         {card.excerpt ? (
           <p className="line-clamp-2 text-xs leading-relaxed text-slate-500">{card.excerpt}</p>
         ) : null}
-        <div className="mt-auto flex flex-wrap items-center justify-between gap-2 pt-1">
-          <span className="flex min-w-0 flex-wrap items-center gap-2">
-            {card.familyFriendly ? (
-              <span className="inline-flex items-center gap-1 text-xs font-medium text-slate-600">
-                <span aria-hidden>👨‍👩‍👧</span>
-                {t.familyBadge}
-              </span>
-            ) : null}
-          </span>
+        <div className="mt-auto flex items-center justify-end pt-1">
           {card.href ? (
             <span className="shrink-0 rounded-full bg-brand-terracotta px-4 py-2 text-xs font-semibold text-white transition group-hover:bg-brand-terracotta/90">
               {t.readStory}
@@ -120,14 +110,30 @@ function StoryCard({ card, t }) {
 export default function InspireBrowse({ cards, categoryItems = [], lang = "en" }) {
   const [search, setSearch] = useState("");
   const [activeCategory, setActiveCategory] = useState("");
-  const t = getDict(lang).inspireList;
+  const [typeFilter, setTypeFilter] = useState("");
+  const [countryFilter, setCountryFilter] = useState("");
+  const dict = getDict(lang);
+  const t = dict.inspireList;
+
+  const types = useMemo(
+    () => [...new Set(cards.map((c) => c.categoryLabel).filter(Boolean))].sort(),
+    [cards],
+  );
+  const countries = useMemo(
+    () => [...new Set(cards.map((c) => c.country).filter(Boolean))].sort(),
+    [cards],
+  );
 
   const filtered = useMemo(() => {
     const matched = cards.filter(
-      (c) => matchesSearch(c, search) && matchesCategory(c, activeCategory),
+      (c) =>
+        matchesSearch(c, search) &&
+        matchesCategory(c, activeCategory) &&
+        (!typeFilter || c.categoryLabel === typeFilter) &&
+        (!countryFilter || c.country === countryFilter),
     );
     return sortRecentFirst(matched);
-  }, [cards, search, activeCategory]);
+  }, [cards, search, activeCategory, typeFilter, countryFilter]);
 
   return (
     <>
@@ -164,13 +170,24 @@ export default function InspireBrowse({ cards, categoryItems = [], lang = "en" }
         />
       ) : null}
 
-      <div className="flex w-full min-w-0 flex-col gap-1 sm:flex-row sm:items-end sm:justify-between sm:gap-4">
+      <div className="flex w-full min-w-0 flex-col gap-3 sm:flex-row sm:items-end sm:justify-between sm:gap-4">
         <p className="text-xl font-semibold tracking-tight text-slate-900 sm:text-2xl">
           {t.heading}
         </p>
-        <p className="text-sm font-medium tabular-nums text-slate-500">
-          {filtered.length} {filtered.length === 1 ? t.story : t.stories}
-        </p>
+        <div className="flex flex-wrap items-center gap-3">
+          <CardFilters
+            types={types}
+            countries={countries}
+            type={typeFilter}
+            country={countryFilter}
+            onType={setTypeFilter}
+            onCountry={setCountryFilter}
+            labels={dict.guideList}
+          />
+          <p className="text-sm font-medium tabular-nums text-slate-500">
+            {filtered.length} {filtered.length === 1 ? t.story : t.stories}
+          </p>
+        </div>
       </div>
 
       <section className="w-full min-w-0">

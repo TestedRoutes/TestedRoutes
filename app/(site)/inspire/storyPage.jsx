@@ -11,6 +11,7 @@ import {
 } from "../../_lib/inspireStoryDisplay";
 import { getDict, localePath } from "../../_lib/i18n";
 import GuideGallery from "../../_components/GuideGallery";
+import Byline from "../../_components/Byline";
 
 export async function findStory(lang, slug) {
   const stories = await loadInspireStories(lang);
@@ -274,6 +275,7 @@ export default async function StoryPage({ lang, slug }) {
               {story.metadata.hero.subtitle}
             </p>
           ) : null}
+          <Byline lang={lang} />
         </div>
 
         {photos.length ? (

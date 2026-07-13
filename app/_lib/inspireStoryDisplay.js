@@ -152,7 +152,7 @@ export function getInspireStoryGeoLabel(metadata) {
     }
     if (place && country && place.toLowerCase() === country.toLowerCase()) place = "";
     const parts = [place, country, continent].filter(Boolean);
-    if (parts.length) return parts.join(" – ");
+    if (parts.length) return parts.join(" · ");
     return pickFirstString(m, ["region", "geography", "location_label"]);
   } catch {
     return "";

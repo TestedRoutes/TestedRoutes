@@ -21,7 +21,10 @@ export default function GuideListCard({ guide, t, lang = "en" }) {
   const geo = guide.metadata?.geography || {};
   const cap = (s) =>
     typeof s === "string" && s ? s.charAt(0).toUpperCase() + s.slice(1) : "";
-  const geoLine = [cap(geo.country), cap(geo.continent)].filter(Boolean).join(" – ");
+  // One compact context line: "Weekend · Switzerland · Europe".
+  const contextLine = [cap(guide.category), cap(geo.country), cap(geo.continent)]
+    .filter(Boolean)
+    .join(" · ");
   const excerpt =
     guide.metadata?.seo?.meta_description || guide.metadata?.hero?.subtitle || "";
 
@@ -49,18 +52,11 @@ export default function GuideListCard({ guide, t, lang = "en" }) {
         ) : null}
       </div>
       <div className="space-y-2.5 p-4">
-        <p className="text-xs uppercase tracking-[0.2em] text-slate-500">{guide.category}</p>
+        <p className="text-xs uppercase tracking-[0.14em] text-slate-500">{contextLine}</p>
         <h3 className="text-lg font-semibold leading-snug text-slate-900">{guide.title}</h3>
-        {geoLine ? (
-          <p className="text-xs font-medium text-slate-500">{geoLine}</p>
-        ) : null}
         {excerpt ? (
           <p className="line-clamp-2 text-xs leading-relaxed text-slate-500">{excerpt}</p>
         ) : null}
-        <p className="text-sm text-slate-600">
-          {guide.duration ? `${guide.duration} • ` : ""}
-          {t.pdfGuide}
-        </p>
         <div className="flex items-center justify-between gap-2 pt-1.5">
           {guide.price ? (
             <span className="text-sm font-semibold text-slate-900">
