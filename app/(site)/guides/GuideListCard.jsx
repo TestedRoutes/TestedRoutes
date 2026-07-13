@@ -73,8 +73,8 @@ export default function GuideListCard({ guide, t, lang = "en" }) {
         </p>
         <div className="mt-auto flex items-center justify-between gap-2 pt-1.5">
           {guide.price ? (
-            <span className="whitespace-nowrap text-sm font-semibold text-slate-900">
-              {t.from} {guide.price}
+            <span className="whitespace-nowrap text-base font-semibold text-slate-900">
+              {guide.price}
             </span>
           ) : (
             <span />
