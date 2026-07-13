@@ -6,14 +6,17 @@ import { useEffect, useRef, useState } from "react";
 // would need an iframe, which is too heavy for a card.
 export const PLAYABLE_VIDEO = /\.(mp4|webm|mov)(\?|#|$)/i;
 
-// Video first (when playable), then photos — the shared slide recipe for
-// guide and inspire cards.
-export function buildMediaSlides({ photos = [], videoUrl = null }) {
+// Shared slide recipe for cards and galleries. The video keeps its authored
+// position in the sequence (videoSlot is 1-based, from the source filename
+// like {ID}_3-detail.mp4); without a slot it leads.
+export function buildMediaSlides({ photos = [], videoUrl = null, videoSlot = null }) {
+  const slides = photos.map((src) => ({ type: "image", src }));
   const playable = videoUrl && PLAYABLE_VIDEO.test(videoUrl);
-  return [
-    ...(playable ? [{ type: "video", src: videoUrl, poster: photos[0] }] : []),
-    ...photos.map((src) => ({ type: "image", src })),
-  ];
+  if (playable) {
+    const idx = Math.max(0, Math.min(slides.length, (Number(videoSlot) || 1) - 1));
+    slides.splice(idx, 0, { type: "video", src: videoUrl, poster: photos[0] });
+  }
+  return slides;
 }
 
 // Muted looping clip that plays only while at least half visible — swiping

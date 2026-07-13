@@ -35,7 +35,7 @@ from pathlib import Path
 
 import openpyxl
 import yaml
-from PIL import Image
+from PIL import Image, ImageOps
 
 # Windows consoles default to cp1252, which can't print ✓ etc.
 sys.stdout.reconfigure(encoding="utf-8", errors="replace")
@@ -160,7 +160,7 @@ def extract_docx(docx_path, plan_title):
     return meta, "\n\n".join(body).strip()
 
 
-def convert_images(folder, story_id):
+def convert_images(folder, story_id, force=False):
     gen = folder / "generated"
     gen.mkdir(exist_ok=True)
     out = []
@@ -169,14 +169,29 @@ def convert_images(folder, story_id):
         if p.suffix.lower() not in (".jpg", ".jpeg", ".png", ".webp"):
             continue
         dst = gen / (p.stem + ".jpg")
-        if not dst.exists() or dst.stat().st_mtime < p.stat().st_mtime:
+        if force or not dst.exists() or dst.stat().st_mtime < p.stat().st_mtime:
             img = Image.open(p)
+            # Apply the EXIF orientation tag BEFORE stripping metadata,
+            # otherwise phone photos shot in portrait come out rotated.
+            img = ImageOps.exif_transpose(img)
             img = img.convert("RGB")
             if img.width > 2560:
                 img = img.resize((2560, round(img.height * 2560 / img.width)), Image.LANCZOS)
             img.save(dst, "JPEG", quality=85, optimize=True)
         out.append(dst.name)
     return out
+
+
+def video_slot(folder):
+    """Slot number of the source video ({ID}_3-detail.mp4 -> 3), or None."""
+    vids = [
+        p for p in sorted((folder / "photos").glob("*"))
+        if p.suffix.lower() in (".mp4", ".mov", ".webm")
+    ]
+    if not vids:
+        return None
+    m = re.search(r"_(\d+)[-.]", vids[0].name)
+    return int(m.group(1)) if m else None
 
 
 def cut_teaser(folder, story_id, ffmpeg):
@@ -327,12 +342,16 @@ def main():
     ap.add_argument("--dry-run", action="store_true")
     ap.add_argument("--only", action="append", default=[])
     ap.add_argument("--limit", type=int, default=0)
+    ap.add_argument("--force-media", action="store_true")
+    ap.add_argument("--republish", action="store_true",
+                    help="also process rows already marked Published")
     args = ap.parse_args()
 
     load_env_local()
     ffmpeg = find_ffmpeg()
 
-    rows = [r for r in read_plan(args.plan) if r["status"].lower() == "to be published"]
+    wanted = {"to be published"} | ({"published"} if args.republish else set())
+    rows = [r for r in read_plan(args.plan) if r["status"].lower() in wanted]
     if args.only:
         rows = [r for r in rows if r["id"] in args.only]
     if args.limit:
@@ -367,17 +386,27 @@ def main():
             gen.mkdir(exist_ok=True)
             (gen / f"{sid}_story_en.md").write_text(body + "\n", encoding="utf-8")
 
-            photos = convert_images(folder, sid)
+            photos = convert_images(folder, sid, force=args.force_media)
             teaser = cut_teaser(folder, sid, ffmpeg)
+            slot = video_slot(folder) if teaser else None
             print(f"    media: {len(photos)} photos{', teaser' if teaser else ''}")
 
             meta_path = folder / f"{sid}_meta_en.yaml"
             if meta_path.exists():
                 meta = yaml.safe_load(meta_path.read_text(encoding="utf-8"))
+                # backfill the video slot into older meta files
+                if slot and meta.get("video_slot") != slot:
+                    meta["video_slot"] = slot
+                    meta_path.write_text(
+                        yaml.safe_dump(meta, sort_keys=False, allow_unicode=True, width=100),
+                        encoding="utf-8",
+                    )
                 print("    meta: existing file kept")
             else:
                 ai = claude_meta(row, docx_meta, body, photos)
                 meta = build_meta(row, docx_meta, ai, sid)
+                if slot:
+                    meta["video_slot"] = slot
                 meta_path.write_text(
                     yaml.safe_dump(meta, sort_keys=False, allow_unicode=True, width=100),
                     encoding="utf-8",

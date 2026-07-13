@@ -15,7 +15,11 @@ export default function GuideListCard({ guide, t, lang = "en" }) {
       : guide.image
         ? [guide.image]
         : [];
-  const slides = buildMediaSlides({ photos, videoUrl: guide.videoUrl });
+  const slides = buildMediaSlides({
+    photos,
+    videoUrl: guide.videoUrl,
+    videoSlot: guide.videoSlot,
+  });
   const href = localePath(lang, guide.href);
 
   const geo = guide.metadata?.geography || {};

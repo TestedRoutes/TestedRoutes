@@ -308,6 +308,13 @@ export default {
       group: "content",
       hidden: ({ parent }) => !parent?.hasVideo,
     },
+    {
+      name: "videoSlot",
+      title: "Video slot (position in the photo sequence, 1-based)",
+      type: "number",
+      group: "content",
+      hidden: ({ parent }) => !parent?.hasVideo,
+    },
 
     /* ──────────────── LOCATION ──────────────── */
     {

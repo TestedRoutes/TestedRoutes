@@ -58,6 +58,7 @@ function buildCard(story, lang) {
     heroPhoto: story.heroPhoto,
     photos: buildCardPhotos(story),
     videoUrl: story.videoUrl || null,
+    videoSlot: story.videoSlot || null,
     heroAlt: getInspireStoryHeroAlt(story) || story.title,
     geoLabel: display.geoLabel || "",
     country: story.metadata?.geography?.country || "",

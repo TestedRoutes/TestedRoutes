@@ -1,0 +1,15 @@
+# Install order (run from scripts/photo-cull/):
+#
+#   py -3.12 -m venv .venv
+#   .venv/Scripts/python -m pip install --upgrade pip
+#   .venv/Scripts/pip install torch torchvision --index-url https://download.pytorch.org/whl/cpu
+#   .venv/Scripts/pip install -r requirements.txt
+#
+# PyTorch is installed separately to use the CPU-only wheel (~700MB instead of ~2GB
+# for the default CUDA build). The CLI runs fine on CPU for typical trip volumes.
+
+pyiqa>=0.1.10
+opencv-python>=4.8
+imagehash>=4.3
+Pillow>=10.0
+numpy>=1.24

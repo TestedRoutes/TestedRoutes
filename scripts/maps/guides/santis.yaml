@@ -1,0 +1,22 @@
+title: "Wasserauen → Säntis"
+output: "../output/santis.png"
+
+# Route resolution — pick one (or omit for straight-line interpolation):
+#   gpx: ../gpx/santis.gpx        # most accurate; from SchweizMobil etc.
+#   routing: brouter-mountain     # free, OSM hiking-mountain profile
+#   routing: brouter-hiking       # free, OSM general hiking profile
+#   routing: foot-hiking          # OpenRouteService (needs ORS_API_KEY env)
+routing: brouter-mountain
+
+# `arrive_by` marks how you reach a waypoint. Default is `walk`.
+# Transport segments (cable-car, funicular, bus, train, …) are NOT routed
+# through BRouter and are excluded from the elevation profile.
+#
+# Coordinates decoded from Google Plus Codes.
+waypoints:
+  - {name: Wasserauen,         lat: 47.286687, lon: 9.428562}                          # 7CPH+MC
+  - {name: Ebenalp gondola,    lat: 47.284688, lon: 9.411563, arrive_by: cable-car}    # 7CM6+VJ
+  - {name: Aescher,            lat: 47.283437, lon: 9.414312}                          # 7CM7+9P
+  - {name: Schäfler,           lat: 47.276063, lon: 9.391312}                          # 79GR+CG
+  - {name: Mesmer,             lat: 47.259438, lon: 9.373188}                          # 795F+Q7
+  - {name: Säntis,             lat: 47.249437, lon: 9.343187}                          # 68XV+Q7

@@ -23,6 +23,7 @@ export function toGuideCard(g) {
     image: g.image,
     cardPhotos: g.cardPhotos,
     videoUrl: g.videoUrl,
+    videoSlot: g.videoSlot,
     href: g.href,
     polarProductId: g.polarProductId,
     guidePdfUrl: g.guidePdfUrl,

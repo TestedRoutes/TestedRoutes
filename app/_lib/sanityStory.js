@@ -30,6 +30,7 @@ const STORY_PROJECTION = /* groq */ `
   galleryImages,
   hasVideo,
   videoUrl,
+  videoSlot,
   "destination": destination->{ name, country, countryCode, continent },
   regions,
   nearestCity,
@@ -337,6 +338,7 @@ export function shapeStory(doc) {
     cardPhotos,
     galleryPhotos: galleryUrls,
     videoUrl: doc.hasVideo ? doc.videoUrl || null : null,
+    videoSlot: doc.videoSlot || null,
     heroName: doc.heroImage?.alt || null,
     folderUrl: "",
   };
@@ -430,6 +432,7 @@ export function shapeGuide(doc, currency = "EUR") {
     cardPhotos,
     galleryPhotos: galleryUrls,
     videoUrl: doc.hasVideo ? doc.videoUrl || null : null,
+    videoSlot: doc.videoSlot || null,
     relatedGuides,
     folderUrl: "",
     heroName: doc.heroImage?.alt || null,

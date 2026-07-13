@@ -46,7 +46,11 @@ function StoryCard({ card, t }) {
       : card.heroPhoto
         ? [card.heroPhoto]
         : [];
-  const slides = buildMediaSlides({ photos, videoUrl: card.videoUrl });
+  const slides = buildMediaSlides({
+    photos,
+    videoUrl: card.videoUrl,
+    videoSlot: card.videoSlot,
+  });
   const inner = (
     <>
       <div className="relative aspect-[3/4] w-full shrink-0 overflow-hidden bg-slate-100">

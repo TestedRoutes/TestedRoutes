@@ -1233,7 +1233,13 @@ async function buildStoryDoc(fm, body, heroName, galleryNames, pdfName, affiliat
   let videoFields = {};
   if (teaserName) {
     const asset = await uploadAsset(path.join(folder, teaserName), "file");
-    if (asset.url) videoFields = { hasVideo: true, videoUrl: asset.url };
+    if (asset.url) {
+      videoFields = {
+        hasVideo: true,
+        videoUrl: asset.url,
+        videoSlot: Number(fm.video_slot) || undefined,
+      };
+    }
   }
 
   /* fm.difficulty is an object in the legacy shape but a plain enum string

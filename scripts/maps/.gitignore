@@ -1,0 +1,4 @@
+.tile_cache/
+.route_cache/
+.elev_cache/
+output/*.png

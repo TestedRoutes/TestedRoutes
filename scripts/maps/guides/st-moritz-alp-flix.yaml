@@ -1,0 +1,25 @@
+title: "St. Moritz → Alp Flix"
+output: "../output/St Moritz - Alp Flix/st-moritz-alp-flix.png"
+
+# Combined map uses both GPX files concatenated.
+gpx:
+  - "../output/St Moritz - Alp Flix/hiking-in-switzerland-6-1.gpx"
+  - "../output/St Moritz - Alp Flix/hiking-in-switzerland-6-2.gpx"
+
+# Stages 1 & 2 of the Alpenpässe-Weg, funicular up from St. Moritz.
+# Coordinates for waypoints 2/3/4 taken directly from GPX endpoints.
+waypoints:
+  - {name: St. Moritz Dorf,     lat: 46.498200, lon: 9.839000}
+  - {name: Corviglia,           lat: 46.508389, lon: 9.818686, arrive_by: funicular}
+  - {name: Jenatschhütte,       lat: 46.529561, lon: 9.724140}
+  - {name: Berghaus Piz Platta, lat: 46.521729, lon: 9.655286}
+
+# Per-stage profiles. make_profile.py renders one PNG per entry.
+# Each entry can override gpx/title/output; other fields inherit.
+profiles:
+  - title: "Stage 1: St. Moritz → Jenatschhütte"
+    gpx: "../output/St Moritz - Alp Flix/hiking-in-switzerland-6-1.gpx"
+    output: "../output/St Moritz - Alp Flix/st-moritz-alp-flix-stage1-profile.png"
+  - title: "Stage 2: Jenatschhütte → Alp Flix"
+    gpx: "../output/St Moritz - Alp Flix/hiking-in-switzerland-6-2.gpx"
+    output: "../output/St Moritz - Alp Flix/st-moritz-alp-flix-stage2-profile.png"
