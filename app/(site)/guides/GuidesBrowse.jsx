@@ -120,7 +120,7 @@ export default function GuidesBrowse({
             {filtered.length} {filtered.length === 1 ? tl.guide : tl.guides}
           </p>
         </CardFilters>
-        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {filtered.map((g) => (
             <GuideListCard key={g.slug} guide={g} t={tl} lang={lang} />
           ))}

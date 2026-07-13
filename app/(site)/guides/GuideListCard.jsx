@@ -42,7 +42,7 @@ export default function GuideListCard({ guide, t, lang = "en" }) {
       href={href}
       className="group block overflow-hidden rounded-3xl bg-white shadow-sm ring-1 ring-slate-200 transition hover:-translate-y-1 hover:shadow-md"
     >
-      <div className="relative aspect-[4/5] w-full overflow-hidden bg-slate-100">
+      <div className="relative aspect-[3/4] w-full overflow-hidden bg-slate-100">
         {slides.length ? (
           <CardMediaCarousel
             slides={slides}

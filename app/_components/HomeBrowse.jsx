@@ -119,7 +119,7 @@ export default function HomeBrowse({ guides, categoryItems, cards = [], t }) {
             </Link>
           </CardFilters>
           {filtered.length ? (
-            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
               {filtered.map((card) => (
                 <GuideListCard key={card.slug} guide={card} t={t} />
               ))}

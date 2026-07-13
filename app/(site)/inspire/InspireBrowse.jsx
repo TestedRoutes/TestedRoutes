@@ -49,7 +49,7 @@ function StoryCard({ card, t }) {
   const slides = buildMediaSlides({ photos, videoUrl: card.videoUrl });
   const inner = (
     <>
-      <div className="relative aspect-[4/5] w-full shrink-0 overflow-hidden bg-slate-100">
+      <div className="relative aspect-[3/4] w-full shrink-0 overflow-hidden bg-slate-100">
         {slides.length ? (
           <CardMediaCarousel
             slides={slides}
@@ -202,7 +202,7 @@ export default function InspireBrowse({ cards, categoryItems = [], lang = "en" }
             </button>
           </div>
         ) : (
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5 lg:grid-cols-3 lg:gap-6">
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5 lg:grid-cols-4 lg:gap-6">
             {filtered.map((card) => (
               <StoryCard key={card.id} card={card} t={t} />
             ))}
