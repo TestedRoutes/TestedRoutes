@@ -171,23 +171,20 @@ export default function InspireBrowse({ cards, categoryItems = [], lang = "en" }
       ) : null}
 
       <section className="w-full min-w-0 space-y-6">
-        <div className="flex flex-wrap items-center justify-between gap-3">
-          <h2 className="text-xl font-semibold">{t.heading}</h2>
-          <div className="flex flex-wrap items-center gap-3">
-            <CardFilters
-              types={types}
-              countries={countries}
-              type={typeFilter}
-              country={countryFilter}
-              onType={setTypeFilter}
-              onCountry={setCountryFilter}
-              labels={dict.guideList}
-            />
-            <p className="text-sm font-medium tabular-nums text-slate-500">
-              {filtered.length} {filtered.length === 1 ? t.story : t.stories}
-            </p>
-          </div>
-        </div>
+        <h2 className="text-xl font-semibold">{t.heading}</h2>
+        <CardFilters
+          types={types}
+          countries={countries}
+          type={typeFilter}
+          country={countryFilter}
+          onType={setTypeFilter}
+          onCountry={setCountryFilter}
+          labels={dict.guideList}
+        >
+          <p className="text-xs font-medium tabular-nums text-slate-500">
+            {filtered.length} {filtered.length === 1 ? t.story : t.stories}
+          </p>
+        </CardFilters>
         {filtered.length === 0 ? (
           <div className="rounded-3xl border border-dashed border-slate-300/70 bg-gradient-to-b from-white to-slate-50/95 px-5 py-9 text-center shadow-sm ring-1 ring-slate-200/60 sm:px-8 sm:py-11">
             <p className="text-[15px] font-semibold tracking-tight text-slate-900 sm:text-base">

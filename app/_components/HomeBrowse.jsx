@@ -94,33 +94,30 @@ export default function HomeBrowse({ guides, categoryItems, cards = [], t }) {
 
       {cards.length ? (
         <section className="space-y-6">
-          <div className="flex flex-wrap items-center justify-between gap-3">
-            <h2 className="text-xl font-semibold">
-              Browse guides
-              {activeCategory ? (
-                <span className="ml-2 text-sm font-normal text-slate-500">
-                  · {activeCategory}
-                </span>
-              ) : null}
-            </h2>
-            <div className="flex flex-wrap items-center gap-3">
-              <CardFilters
-                types={types}
-                countries={countries}
-                type={typeFilter}
-                country={countryFilter}
-                onType={setTypeFilter}
-                onCountry={setCountryFilter}
-                labels={t}
-              />
-              <Link
-                href="/guides"
-                className="inline-flex h-9 items-center rounded-full border border-slate-200 bg-white px-4 text-xs font-semibold text-slate-700 transition hover:border-slate-300"
-              >
-                View all
-              </Link>
-            </div>
-          </div>
+          <h2 className="text-xl font-semibold">
+            Browse guides
+            {activeCategory ? (
+              <span className="ml-2 text-sm font-normal text-slate-500">
+                · {activeCategory}
+              </span>
+            ) : null}
+          </h2>
+          <CardFilters
+            types={types}
+            countries={countries}
+            type={typeFilter}
+            country={countryFilter}
+            onType={setTypeFilter}
+            onCountry={setCountryFilter}
+            labels={t}
+          >
+            <Link
+              href="/guides"
+              className="inline-flex h-9 items-center rounded-full border border-slate-200 bg-white px-3 text-xs font-semibold text-slate-700 transition hover:border-slate-300"
+            >
+              View all
+            </Link>
+          </CardFilters>
           {filtered.length ? (
             <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
               {filtered.map((card) => (

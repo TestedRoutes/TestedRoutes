@@ -99,30 +99,27 @@ export default function GuidesBrowse({
       ) : null}
 
       <section className="space-y-6">
-        <div className="flex flex-wrap items-center justify-between gap-3">
-          <h2 className="text-xl font-semibold">
-            {tl.browseHeading}
-            {activeCategory ? (
-              <span className="ml-2 text-sm font-normal text-slate-500">
-                · {activeCategory}
-              </span>
-            ) : null}
-          </h2>
-          <div className="flex flex-wrap items-center gap-3">
-            <CardFilters
-              types={types}
-              countries={countries}
-              type={typeFilter}
-              country={countryFilter}
-              onType={setTypeFilter}
-              onCountry={setCountryFilter}
-              labels={tl}
-            />
-            <p className="text-sm font-medium tabular-nums text-slate-500">
-              {filtered.length} {filtered.length === 1 ? tl.guide : tl.guides}
-            </p>
-          </div>
-        </div>
+        <h2 className="text-xl font-semibold">
+          {tl.browseHeading}
+          {activeCategory ? (
+            <span className="ml-2 text-sm font-normal text-slate-500">
+              · {activeCategory}
+            </span>
+          ) : null}
+        </h2>
+        <CardFilters
+          types={types}
+          countries={countries}
+          type={typeFilter}
+          country={countryFilter}
+          onType={setTypeFilter}
+          onCountry={setCountryFilter}
+          labels={tl}
+        >
+          <p className="text-xs font-medium tabular-nums text-slate-500">
+            {filtered.length} {filtered.length === 1 ? tl.guide : tl.guides}
+          </p>
+        </CardFilters>
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {filtered.map((g) => (
             <GuideListCard key={g.slug} guide={g} t={tl} lang={lang} />
