@@ -456,8 +456,10 @@ function formatPrice(amount, currency) {
 const LANG_FILTER = `(language == $lang || (!defined(language) && $lang == "en"))`;
 
 export async function fetchAllStories(lang = "en") {
+  // Guide-bearing docs live in the Guides section only; Inspire lists
+  // dedicated story docs (a destination can have both without duplication).
   return client.fetch(
-    `*[_type == "story" && status == "published" && ${LANG_FILTER}] | order(publishedDate desc) ${STORY_PROJECTION}`,
+    `*[_type == "story" && status == "published" && guide.hasGuide != true && ${LANG_FILTER}] | order(publishedDate desc) ${STORY_PROJECTION}`,
     { lang },
   );
 }
@@ -473,7 +475,7 @@ export async function fetchAllGuideStories(lang = "en") {
 
 export async function fetchStoryCount(lang = "en") {
   return client.fetch(
-    `count(*[_type == "story" && status == "published" && ${LANG_FILTER}])`,
+    `count(*[_type == "story" && status == "published" && guide.hasGuide != true && ${LANG_FILTER}])`,
     { lang },
   );
 }

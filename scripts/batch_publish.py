@@ -71,8 +71,17 @@ MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", 
 DOCX_META_KEYS = {
     "id", "slug", "title", "type", "region", "country", "angle", "guide_wave",
     "links_to_guide", "status", "target_query", "meta_description", "series",
-    "source", "pics", "notes",
+    "source", "pics", "notes", "source_file", "route_file", "longform_file",
+    "photos_file", "resolved", "last_reviewed",
 }
+
+# Template noise inside story docx files that must never reach the body:
+# a literal FRONTMATTER heading and pipe-separated tag lines like
+# "Inspire | List | Brand".
+NOISE_LINE = re.compile(
+    r"^(frontmatter|inspire(\s*\|\s*[\w &+-]+)+|[\w &+-]+(\s*\|\s*[\w &+-]+){1,3})$",
+    re.I,
+)
 
 CLAUDE_MODEL = os.environ.get("CLAUDE_MODEL", "claude-sonnet-4-6")
 
@@ -149,13 +158,18 @@ def extract_docx(docx_path, plan_title):
     meta = {}
     body = []
     for p in paras:
-        km = re.match(r"^([a-z_]+):\s*(.*)$", p)
-        if km and km.group(1) in DOCX_META_KEYS:
-            meta[km.group(1)] = km.group(2).strip()
-            continue
-        # skip a leading repeat of the title (any heading/plain form)
-        if not body and plan_title and p.strip().lower() == plan_title.strip().lower():
-            continue
+        # Header region (before the first real paragraph): consume meta
+        # keys and drop template noise. Once the body starts, everything
+        # is story text.
+        if not body:
+            km = re.match(r"^([a-z_]+):\s*(.*)$", p)
+            if km and km.group(1) in DOCX_META_KEYS:
+                meta[km.group(1)] = km.group(2).strip()
+                continue
+            if NOISE_LINE.match(p.strip()):
+                continue
+            if plan_title and p.strip().lower() == plan_title.strip().lower():
+                continue
         body.append(p)
     return meta, "\n\n".join(body).strip()
 
@@ -350,10 +364,14 @@ def main():
     load_env_local()
     ffmpeg = find_ffmpeg()
 
-    wanted = {"to be published"} | ({"published"} if args.republish else set())
-    rows = [r for r in read_plan(args.plan) if r["status"].lower() in wanted]
+    all_rows = read_plan(args.plan)
     if args.only:
-        rows = [r for r in rows if r["id"] in args.only]
+        # Explicit IDs override the status filter (used for targeted
+        # publishes the user requested directly).
+        rows = [r for r in all_rows if r["id"] in args.only]
+    else:
+        wanted = {"to be published"} | ({"published"} if args.republish else set())
+        rows = [r for r in all_rows if r["status"].lower() in wanted]
     if args.limit:
         rows = rows[: args.limit]
     print(f"stories to publish: {len(rows)}  (dry-run={args.dry_run})")
