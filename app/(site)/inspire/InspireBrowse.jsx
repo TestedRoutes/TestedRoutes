@@ -62,14 +62,13 @@ function StoryCard({ card, t }) {
           </div>
         )}
       </div>
+      {/* Fixed-height text zones so rows line up across the grid. */}
       <div className="flex flex-1 flex-col gap-2.5 p-5 sm:gap-3">
-        {card.geoLabel ? (
-          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-slate-500">
-            {card.geoLabel}
-          </p>
-        ) : null}
-        <div className="flex flex-wrap items-start justify-between gap-2">
-          <p className="min-w-0 flex-1 text-lg font-semibold leading-snug tracking-tight text-slate-900">
+        <p className="truncate text-[11px] font-medium uppercase tracking-[0.18em] text-slate-500">
+          {card.geoLabel || " "}
+        </p>
+        <div className="flex min-h-[3.5rem] flex-nowrap items-start justify-between gap-2">
+          <p className="line-clamp-2 min-w-0 flex-1 text-lg font-semibold leading-snug tracking-tight text-slate-900">
             {card.title}
           </p>
           {card.hasGuide ? (
@@ -78,9 +77,9 @@ function StoryCard({ card, t }) {
             </span>
           ) : null}
         </div>
-        {card.excerpt ? (
-          <p className="line-clamp-2 text-xs leading-relaxed text-slate-500">{card.excerpt}</p>
-        ) : null}
+        <p className="line-clamp-2 min-h-[2.5rem] text-xs leading-relaxed text-slate-500">
+          {card.excerpt}
+        </p>
         <div className="mt-auto flex items-center justify-end pt-1">
           {card.href ? (
             <span className="shrink-0 rounded-full bg-brand-terracotta px-4 py-2 text-xs font-semibold text-white transition group-hover:bg-brand-terracotta/90">
