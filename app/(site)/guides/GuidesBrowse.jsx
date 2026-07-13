@@ -3,12 +3,11 @@
 import { useMemo, useState } from "react";
 import GuideListCard from "./GuideListCard";
 import CardFilters from "../../_components/CardFilters";
+import CategoryStrip from "../../_components/CategoryStrip";
 
-function matchesSearch(guide, query) {
-  const needle = query.toLowerCase().trim();
-  if (!needle) return true;
+function guideHaystack(guide) {
   const geo = guide.metadata?.geography || {};
-  const haystack = [
+  return [
     guide.title,
     guide.category,
     geo.country,
@@ -18,11 +17,32 @@ function matchesSearch(guide, query) {
     .filter(Boolean)
     .join(" ")
     .toLowerCase();
-  return haystack.includes(needle);
 }
 
-export default function GuidesBrowse({ guides, t, tl, lang = "en" }) {
+function matchesSearch(guide, query) {
+  const needle = (query || "").toLowerCase().trim();
+  if (!needle) return true;
+  return guideHaystack(guide).includes(needle);
+}
+
+// Loose category matching: "Hiking" should catch "hike".
+function matchesCategory(guide, label) {
+  if (!label) return true;
+  const needle = label.toLowerCase().trim();
+  const stem = needle.replace(/ing$/, "").replace(/s$/, "");
+  const haystack = guideHaystack(guide);
+  return haystack.includes(needle) || (stem.length > 2 && haystack.includes(stem));
+}
+
+export default function GuidesBrowse({
+  guides,
+  categoryItems = [],
+  t,
+  tl,
+  lang = "en",
+}) {
   const [search, setSearch] = useState("");
+  const [activeCategory, setActiveCategory] = useState("");
   const [typeFilter, setTypeFilter] = useState("");
   const [countryFilter, setCountryFilter] = useState("");
 
@@ -41,14 +61,15 @@ export default function GuidesBrowse({ guides, t, tl, lang = "en" }) {
       guides.filter(
         (g) =>
           matchesSearch(g, search) &&
+          matchesCategory(g, activeCategory) &&
           (!typeFilter || g.category === typeFilter) &&
           (!countryFilter || g.metadata?.geography?.country === countryFilter),
       ),
-    [guides, search, typeFilter, countryFilter],
+    [guides, search, activeCategory, typeFilter, countryFilter],
   );
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-10">
       <div className="mx-auto w-full max-w-3xl">
         <div className="flex w-full items-center gap-2 rounded-full bg-white p-1.5 shadow-md ring-1 ring-slate-200 md:p-2">
           <input
@@ -66,28 +87,51 @@ export default function GuidesBrowse({ guides, t, tl, lang = "en" }) {
           </button>
         </div>
       </div>
-      <div className="flex flex-wrap items-center justify-between gap-3">
-        <p className="text-sm font-medium tabular-nums text-slate-500">
-          {filtered.length} {filtered.length === 1 ? tl.guide : tl.guides}
-        </p>
-        <CardFilters
-          types={types}
-          countries={countries}
-          type={typeFilter}
-          country={countryFilter}
-          onType={setTypeFilter}
-          onCountry={setCountryFilter}
-          labels={tl}
+
+      {categoryItems.length ? (
+        <CategoryStrip
+          items={categoryItems}
+          activeLabel={activeCategory}
+          onItemClick={(label) =>
+            setActiveCategory((current) => (current === label ? "" : label))
+          }
         />
-      </div>
-      <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-        {filtered.map((g) => (
-          <GuideListCard key={g.slug} guide={g} t={tl} lang={lang} />
-        ))}
-      </div>
-      {filtered.length === 0 ? (
-        <p className="text-center text-sm text-slate-500">{t.inspireList.noMatchTitle}</p>
       ) : null}
+
+      <section className="space-y-6">
+        <div className="flex flex-wrap items-center justify-between gap-3">
+          <h2 className="text-xl font-semibold">
+            {tl.browseHeading}
+            {activeCategory ? (
+              <span className="ml-2 text-sm font-normal text-slate-500">
+                · {activeCategory}
+              </span>
+            ) : null}
+          </h2>
+          <div className="flex flex-wrap items-center gap-3">
+            <CardFilters
+              types={types}
+              countries={countries}
+              type={typeFilter}
+              country={countryFilter}
+              onType={setTypeFilter}
+              onCountry={setCountryFilter}
+              labels={tl}
+            />
+            <p className="text-sm font-medium tabular-nums text-slate-500">
+              {filtered.length} {filtered.length === 1 ? tl.guide : tl.guides}
+            </p>
+          </div>
+        </div>
+        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          {filtered.map((g) => (
+            <GuideListCard key={g.slug} guide={g} t={tl} lang={lang} />
+          ))}
+        </div>
+        {filtered.length === 0 ? (
+          <p className="text-center text-sm text-slate-500">{t.inspireList.noMatchTitle}</p>
+        ) : null}
+      </section>
     </div>
   );
 }

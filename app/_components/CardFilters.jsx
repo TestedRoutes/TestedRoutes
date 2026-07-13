@@ -12,8 +12,10 @@ export default function CardFilters({
   labels,
 }) {
   if (!types.length && !countries.length) return null;
+  // Fixed height + width so both boxes match each other (and the View all
+  // pill) on every page.
   const selectClass =
-    "cursor-pointer rounded-full border border-slate-200 bg-white px-4 py-2 text-xs font-semibold text-slate-700 transition hover:border-slate-300 focus:border-slate-400 focus:outline-none";
+    "h-9 w-36 cursor-pointer truncate rounded-full border border-slate-200 bg-white px-4 text-xs font-semibold text-slate-700 transition hover:border-slate-300 focus:border-slate-400 focus:outline-none";
   return (
     <div className="flex flex-wrap items-center gap-2">
       {types.length ? (

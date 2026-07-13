@@ -3,7 +3,7 @@ import { loadGuides, toGuideCard } from "../../_lib/loadGuides";
 import { fetchGuideCount } from "../../_lib/sanityStory";
 import { getRequestCurrency } from "../../_lib/currency";
 import { LOCALES, getDict, localePath } from "../../_lib/i18n";
-import { aboutAsset } from "../../_lib/categoryPills";
+import { aboutAsset, getCategoryItems } from "../../_lib/categoryPills";
 import GuidesBrowse from "./GuidesBrowse";
 
 const EXTREME_FILES = [
@@ -78,7 +78,13 @@ export default async function GuidesIndexPage({ lang = "en" }) {
             <p className="text-sm text-slate-500">No guides found.</p>
           )
         ) : (
-          <GuidesBrowse guides={guides.map(toGuideCard)} t={t} tl={tl} lang={lang} />
+          <GuidesBrowse
+            guides={guides.map(toGuideCard)}
+            categoryItems={getCategoryItems()}
+            t={t}
+            tl={tl}
+            lang={lang}
+          />
         )}
       </section>
 

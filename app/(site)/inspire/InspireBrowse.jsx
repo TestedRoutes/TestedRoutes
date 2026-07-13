@@ -136,7 +136,7 @@ export default function InspireBrowse({ cards, categoryItems = [], lang = "en" }
   }, [cards, search, activeCategory, typeFilter, countryFilter]);
 
   return (
-    <>
+    <div className="space-y-10">
       <div className="mx-auto w-full max-w-3xl">
         <label htmlFor="inspire-search" className="sr-only">
           Search journeys
@@ -170,27 +170,24 @@ export default function InspireBrowse({ cards, categoryItems = [], lang = "en" }
         />
       ) : null}
 
-      <div className="flex w-full min-w-0 flex-col gap-3 sm:flex-row sm:items-end sm:justify-between sm:gap-4">
-        <p className="text-xl font-semibold tracking-tight text-slate-900 sm:text-2xl">
-          {t.heading}
-        </p>
-        <div className="flex flex-wrap items-center gap-3">
-          <CardFilters
-            types={types}
-            countries={countries}
-            type={typeFilter}
-            country={countryFilter}
-            onType={setTypeFilter}
-            onCountry={setCountryFilter}
-            labels={dict.guideList}
-          />
-          <p className="text-sm font-medium tabular-nums text-slate-500">
-            {filtered.length} {filtered.length === 1 ? t.story : t.stories}
-          </p>
+      <section className="w-full min-w-0 space-y-6">
+        <div className="flex flex-wrap items-center justify-between gap-3">
+          <h2 className="text-xl font-semibold">{t.heading}</h2>
+          <div className="flex flex-wrap items-center gap-3">
+            <CardFilters
+              types={types}
+              countries={countries}
+              type={typeFilter}
+              country={countryFilter}
+              onType={setTypeFilter}
+              onCountry={setCountryFilter}
+              labels={dict.guideList}
+            />
+            <p className="text-sm font-medium tabular-nums text-slate-500">
+              {filtered.length} {filtered.length === 1 ? t.story : t.stories}
+            </p>
+          </div>
         </div>
-      </div>
-
-      <section className="w-full min-w-0">
         {filtered.length === 0 ? (
           <div className="rounded-3xl border border-dashed border-slate-300/70 bg-gradient-to-b from-white to-slate-50/95 px-5 py-9 text-center shadow-sm ring-1 ring-slate-200/60 sm:px-8 sm:py-11">
             <p className="text-[15px] font-semibold tracking-tight text-slate-900 sm:text-base">
@@ -215,6 +212,6 @@ export default function InspireBrowse({ cards, categoryItems = [], lang = "en" }
           </div>
         )}
       </section>
-    </>
+    </div>
   );
 }

@@ -112,7 +112,7 @@ export default async function InspireIndexPage({ lang = "en" }) {
 
   return (
     <main className="w-full pb-16 pt-12 text-slate-900 md:pt-16">
-      <div className="mx-auto flex w-full min-w-0 max-w-7xl flex-col gap-10 px-4 sm:px-6">
+      <div className="mx-auto flex w-full min-w-0 max-w-7xl flex-col gap-10 px-6">
         <div className="space-y-2 text-center">
           <h1 className="font-serif text-3xl font-semibold leading-[1.1] text-brand-ink md:text-4xl lg:text-5xl">
             {t.title}
