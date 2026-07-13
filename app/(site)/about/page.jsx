@@ -130,7 +130,7 @@ export default function AboutMePage() {
         <img
           src={aboutAsset("Why these guides work.jpg")}
           alt="Why these guides work better in real life"
-          className="h-44 w-full rounded-2xl object-cover object-center shadow-sm ring-1 ring-slate-200"
+          className="aspect-[4/3] w-full rounded-2xl object-cover object-center shadow-sm ring-1 ring-slate-200"
           loading="lazy"
         />
       </section>
@@ -143,7 +143,7 @@ export default function AboutMePage() {
               <img
                 src={aboutAsset(item.file)}
                 alt={item.alt}
-                className="h-44 w-full rounded-2xl object-cover object-center"
+                className="aspect-[4/3] w-full rounded-2xl object-cover object-[50%_30%]"
                 loading="lazy"
               />
               <p className="mt-3 text-sm font-semibold text-slate-900">{item.title}</p>
@@ -160,7 +160,7 @@ export default function AboutMePage() {
               <img
                 src={aboutAsset(item.file)}
                 alt={item.alt}
-                className="h-44 w-full rounded-2xl object-cover object-center"
+                className="aspect-[4/3] w-full rounded-2xl object-cover object-[50%_30%]"
                 loading="lazy"
               />
               <p className="mt-3 text-sm font-semibold text-slate-900">{item.caption}</p>
@@ -206,7 +206,7 @@ export default function AboutMePage() {
         <img
           src={aboutAsset("Why I do this.jpg")}
           alt="Why I do this – turning travel experience into practical guides"
-          className="h-44 w-full rounded-2xl object-cover object-center shadow-sm ring-1 ring-slate-200"
+          className="aspect-[4/3] w-full rounded-2xl object-cover object-center shadow-sm ring-1 ring-slate-200"
           loading="lazy"
         />
       </section>

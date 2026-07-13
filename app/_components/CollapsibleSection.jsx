@@ -19,12 +19,12 @@ export default function CollapsibleSection({
         type="button"
         onClick={() => setOpen((o) => !o)}
         aria-expanded={open}
-        className="flex w-full items-center justify-between gap-4 py-3 text-left md:hidden"
+        className="flex w-full items-center justify-between gap-4 py-3.5 text-left md:hidden"
       >
         <span className={`font-serif text-xl font-semibold ${titleClassName}`}>{title}</span>
         <span
           aria-hidden
-          className={`text-lg text-slate-400 transition-transform ${open ? "rotate-180" : ""}`}
+          className={`text-2xl leading-none text-slate-400 transition-transform ${open ? "rotate-180" : ""}`}
         >
           ▾
         </span>

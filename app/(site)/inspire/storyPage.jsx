@@ -27,6 +27,18 @@ function renderMarkdown(md) {
   }
 }
 
+// Story markdown often opens with the story title (as a heading, bold line
+// or plain line) — the page already renders the title as its h1, so drop
+// the duplicate first line when it matches.
+function stripLeadingTitle(md, title) {
+  if (typeof md !== "string" || !title) return md;
+  const m = md.match(/^\s*(?:#{1,3}\s+)?(?:\*\*)?(.+?)(?:\*\*)?\s*(?:\n+|$)/);
+  if (m && m[1].trim().toLowerCase() === title.trim().toLowerCase()) {
+    return md.slice(m[0].length);
+  }
+  return md;
+}
+
 const PROSE_CLASS =
   "inspire-story-prose max-w-none text-slate-800 [&_a]:font-medium [&_a]:text-slate-900 [&_a]:underline [&_blockquote]:my-4 [&_blockquote]:border-l-2 [&_blockquote]:border-slate-200 [&_blockquote]:pl-4 [&_blockquote]:text-slate-600 [&_h1]:mb-3 [&_h1]:mt-8 [&_h1]:text-2xl [&_h1]:font-semibold [&_h1]:text-slate-900 [&_h2]:mb-2 [&_h2]:mt-6 [&_h2]:text-xl [&_h2]:font-semibold [&_h2]:text-slate-900 [&_h3]:mb-2 [&_h3]:mt-5 [&_h3]:text-lg [&_h3]:font-semibold [&_li]:my-1 [&_ol]:my-4 [&_ol]:list-decimal [&_ol]:pl-6 [&_p]:my-4 [&_p]:leading-relaxed [&_ul]:my-4 [&_ul]:list-disc [&_ul]:pl-6";
 
@@ -65,14 +77,13 @@ function splitHtmlAtMid(html) {
   return [html.slice(0, best), html.slice(best)];
 }
 
-function MidStoryGuideCta({ title, guideHref, t }) {
+function MidStoryGuideCta({ guideHref, t }) {
   return (
-    <aside className="my-8 rounded-[20px] bg-slate-900 p-6 text-white shadow-lg">
+    <aside className="my-8 rounded-[20px] bg-brand-ink p-6 text-white shadow-lg">
       <p className="mb-2 text-[10px] font-bold uppercase tracking-[0.2em] text-white/50">
         {t.planningTrip}
       </p>
-      <p className="text-base font-semibold leading-snug">{title}</p>
-      <p className="mt-2 text-xs leading-relaxed text-white/60">{t.planningBody}</p>
+      <p className="text-sm leading-relaxed text-white/80">{t.planningBody}</p>
       <Link
         href={guideHref}
         className="mt-4 inline-flex items-center justify-center rounded-full bg-white px-6 py-2.5 text-xs font-semibold text-slate-900 transition hover:bg-slate-100"
@@ -236,7 +247,7 @@ export default async function StoryPage({ lang, slug }) {
     currency,
   );
   const hasGuideOptions = guideOptions.length > 0;
-  const bodyHtml = renderMarkdown(story.storyContent);
+  const bodyHtml = renderMarkdown(stripLeadingTitle(story.storyContent, story.title));
   const [bodyFirst, bodySecond] = guideHref
     ? splitHtmlAtMid(bodyHtml)
     : [bodyHtml, ""];
@@ -292,13 +303,13 @@ export default async function StoryPage({ lang, slug }) {
           <div className="flex min-w-0 flex-1 flex-col gap-6 self-start">
             {/* Mobile guide CTA */}
             {guideHref || hasGuideOptions ? (
-              <div className="rounded-[20px] bg-slate-900 p-5 text-white shadow-lg md:hidden">
+              <div className="rounded-[20px] bg-brand-ink p-5 text-white shadow-lg md:hidden">
                 <p className="mb-2 text-[10px] font-bold uppercase tracking-[0.2em] text-white/50">
                   {t.planningTrip}
                 </p>
                 {guideHref ? (
                   <>
-                    <p className="text-base font-semibold leading-snug">{story.title}</p>
+                    <p className="text-sm leading-relaxed text-white/80">{t.planningBody}</p>
                     <Link
                       href={guideHref}
                       className="mt-4 flex w-full items-center justify-center rounded-full bg-white py-2.5 text-xs font-semibold text-slate-900 transition hover:bg-slate-100"
@@ -324,7 +335,7 @@ export default async function StoryPage({ lang, slug }) {
                   />
                   {guideHref && bodySecond ? (
                     <>
-                      <MidStoryGuideCta title={story.title} guideHref={guideHref} t={t} />
+                      <MidStoryGuideCta guideHref={guideHref} t={t} />
                       <div
                         className={PROSE_CLASS}
                         dangerouslySetInnerHTML={{ __html: bodySecond }}
@@ -370,14 +381,13 @@ export default async function StoryPage({ lang, slug }) {
           {/* Desktop sidebar */}
           <aside className="hidden w-72 shrink-0 md:block">
             <div className="sticky top-[88px] flex flex-col gap-4">
-              <div className="rounded-[20px] bg-slate-900 p-6 text-white shadow-lg">
+              <div className="rounded-[20px] bg-brand-ink p-6 text-white shadow-lg">
                 {guideHref ? (
                   <>
                     <p className="mb-2 text-[10px] font-bold uppercase tracking-[0.2em] text-white/50">
                       {t.planningTrip}
                     </p>
-                    <p className="text-base font-semibold leading-snug">{story.title}</p>
-                    <p className="mt-2 text-xs leading-relaxed text-white/60">
+                    <p className="text-xs leading-relaxed text-white/70">
                       {t.planningBody}
                     </p>
                     <Link

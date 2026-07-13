@@ -594,7 +594,7 @@ export default async function GuidePage({ lang, slug }) {
       </div>
 
       <div className="grid grid-cols-1 gap-6 md:grid-cols-[minmax(0,1fr)_320px] lg:gap-8">
-        <div className="space-y-6 md:space-y-10">
+        <div className="space-y-4 md:space-y-10">
           <GuideGallery photos={photos} viewAllLabel={t.viewAllPhotos} />
           {hero.primary_stats || maintenance.last_reviewed_date ? (
             <section>
@@ -621,7 +621,7 @@ export default async function GuidePage({ lang, slug }) {
             />
           ) : null}
 
-          <div className="grid gap-8 md:grid-cols-2">
+          <div className="grid gap-4 md:grid-cols-2 md:gap-8">
             <CheckBulletSection title={t.whyThisTrip} items={sales.why_this_trip} />
             <CheckBulletSection title={t.whoThisIsFor} items={sales.who_this_is_for} />
           </div>
