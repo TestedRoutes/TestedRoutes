@@ -54,7 +54,7 @@ export default function NewsletterForm({ variant = "footer", source, headline, s
         ) : (
           <>
             <span className="hidden text-brand-cream/80 sm:inline">
-              {headline || "Launching June 2026 – get notified:"}
+              {headline || "Launching August 2026 – get notified:"}
             </span>
             <input
               type="email"
