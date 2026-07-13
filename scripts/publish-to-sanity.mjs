@@ -526,9 +526,11 @@ async function generateMetadataWithClaude({ storyBody, pdfPath, photoFilenames, 
 async function readStoryInput() {
   const entries = await fs.readdir(folder, { withFileTypes: true });
   const files = entries.filter((e) => e.isFile()).map((e) => e.name);
+  const baseName = path.basename(folder);
 
-  /* 1. Metadata source */
-  const metaYaml = files.find((f) => /^metadata\.ya?ml$/i.test(f));
+  /* 1. Metadata source — new convention first: {ID}_meta_en.yaml */
+  const metaEn = files.find((f) => f.toLowerCase() === `${baseName}_meta_en.yaml`.toLowerCase());
+  const metaYaml = metaEn || files.find((f) => /^metadata\.ya?ml$/i.test(f));
   const metaJson = files.find((f) => /^metadata\.json$/i.test(f));
   const metaLegacy = files.find((f) => /meta.*\.(txt|json)$/i.test(f) && !/^metadata\./i.test(f));
 
@@ -555,7 +557,9 @@ async function readStoryInput() {
     metadataSource = `${metaLegacy} (auto-translated from legacy format)`;
   }
 
-  /* 2. Body source */
+  /* 2. Body source — new convention first: generated/{ID}_story_en.md */
+  const genStoryPath = path.join(folder, "generated", `${baseName}_story_en.md`);
+  const hasGenStory = await fileExists(genStoryPath);
   const storyMdPath = files.find((f) => /^story\.md$/i.test(f));
   const inspireMd = files.find((f) => /inspire.*\.md$/i.test(f));
   const storyMd = files.find((f) => /story.*\.md$/i.test(f) && !/^story\.md$/i.test(f));
@@ -564,7 +568,9 @@ async function readStoryInput() {
 
   let body = "";
   let bodySource = null;
-  const bodyFile = storyMdPath || inspireMd || storyMd || inspireTxt || storyTxt;
+  const bodyFile = hasGenStory
+    ? path.join("generated", `${baseName}_story_en.md`)
+    : storyMdPath || inspireMd || storyMd || inspireTxt || storyTxt;
 
   if (bodyFile) {
     const raw = await fs.readFile(path.join(folder, bodyFile), "utf8");
@@ -659,6 +665,37 @@ function validateFrontmatter(fm) {
 async function findAssets() {
   const entries = await fs.readdir(folder, { withFileTypes: true });
   const files = entries.filter((e) => e.isFile()).map((e) => e.name);
+  const baseName = path.basename(folder);
+
+  /* New convention: web renditions live in generated/, named
+     {ID}_{n}-{slot}.jpg, with an optional {ID}_teaser.mp4. When present,
+     they take priority over root-level images. */
+  let genPhotos = [];
+  let teaser = null;
+  try {
+    const gen = await fs.readdir(path.join(folder, "generated"));
+    genPhotos = gen
+      .filter((n) => /\.(jpe?g|png|webp)$/i.test(n) && n.startsWith(baseName))
+      .sort((a, b) => a.localeCompare(b, undefined, { numeric: true }));
+    teaser = gen.find((n) => n === `${baseName}_teaser.mp4`) || null;
+  } catch { /* no generated/ dir */ }
+
+  if (genPhotos.length) {
+    const heroName =
+      genPhotos.find((n) => /_1-|hero/i.test(n)) || genPhotos[0];
+    const gallery = genPhotos
+      .filter((n) => n !== heroName)
+      .map((n) => path.join("generated", n));
+    const pdfs = files.filter((n) => /\.pdf$/i.test(n)).filter((n) => !/^\./.test(n));
+    const pdf = pdfs.find((n) => /^guide\b/i.test(n)) || pdfs[0] || null;
+    return {
+      heroName: path.join("generated", heroName),
+      gallery,
+      pdf,
+      ignored: [],
+      teaser: teaser ? path.join("generated", teaser) : null,
+    };
+  }
 
   const photos = files
     .filter((n) => /\.(jpe?g|png|webp)$/i.test(n))
@@ -679,7 +716,7 @@ async function findAssets() {
   /* Source files to explicitly ignore (warn if big ones found) */
   const ignored = files.filter((n) => /\.(pptx?|docx?|xlsx?|psd|ai|sketch|fig|key|pages|numbers)$/i.test(n));
 
-  return { heroName, gallery, pdf, ignored };
+  return { heroName, gallery, pdf, ignored, teaser: null };
 }
 
 function altFromFilename(name) {
@@ -1187,9 +1224,23 @@ async function writePdfCheatSheet(usedAffiliates, guideSlug) {
 
 /* ────────── field mapping (fm → Sanity doc) ────────── */
 
-async function buildStoryDoc(fm, body, heroName, galleryNames, pdfName, affiliateContext = null) {
+async function buildStoryDoc(fm, body, heroName, galleryNames, pdfName, affiliateContext = null, teaserName = null) {
   const title = fm.title.trim();
   const slug = (fm.slug && fm.slug.trim()) || slugify(title);
+
+  /* Card teaser video (generated/{ID}_teaser.mp4) — uploading it here keeps
+     the folder the single source of truth: republish always restores it. */
+  let videoFields = {};
+  if (teaserName) {
+    const asset = await uploadAsset(path.join(folder, teaserName), "file");
+    if (asset.url) videoFields = { hasVideo: true, videoUrl: asset.url };
+  }
+
+  /* fm.difficulty is an object in the legacy shape but a plain enum string
+     ("Easy" … "Expert") in the new flat meta files. */
+  const diffObj = fm.difficulty && typeof fm.difficulty === "object" ? fm.difficulty : {};
+  const overallLevel =
+    typeof fm.difficulty === "string" ? fm.difficulty : diffObj.overallLevel;
 
   let heroImage;
   if (heroName) {
@@ -1253,8 +1304,13 @@ async function buildStoryDoc(fm, body, heroName, galleryNames, pdfName, affiliat
   const allColRefs = Array.isArray(fm.allCollections)
     ? fm.allCollections.map(collectionRef).filter(Boolean)
     : [];
-  const journeyCatRef = fm.journeyCategory ? categoryRef(fm.journeyCategory, "journey") : undefined;
-  const activityCatRef = fm.activityCategory ? categoryRef(fm.activityCategory, "activity") : undefined;
+  /* New flat fields: trip_length → journey category, activity[] → tags +
+     first entry as the activity category. */
+  const journeyValue = fm.journeyCategory || fm.trip_length;
+  const journeyCatRef = journeyValue ? categoryRef(journeyValue, "journey") : undefined;
+  const activityValue =
+    fm.activityCategory || (Array.isArray(fm.activity) && fm.activity[0]) || undefined;
+  const activityCatRef = activityValue ? categoryRef(activityValue, "activity") : undefined;
 
   const affiliateUrlMap = affiliateContext?.urlMap || new Map();
   const bodyBlocks = mdToPortableText(body, affiliateUrlMap);
@@ -1310,7 +1366,7 @@ async function buildStoryDoc(fm, body, heroName, galleryNames, pdfName, affiliat
     galleryImages: galleryImages.length ? galleryImages : undefined,
 
     destination: destRef ? { _type: "reference", _ref: destRef } : undefined,
-    regions: fm.regions,
+    regions: fm.place ? [fm.place] : fm.regions,
     nearestCity: fm.nearestCity,
     nearestCityDistanceKm: fm.nearestCityDistanceKm,
     coordinates: gp(fm.coordinates),
@@ -1323,14 +1379,14 @@ async function buildStoryDoc(fm, body, heroName, galleryNames, pdfName, affiliat
         }
       : undefined,
 
-    overallLevel: fm.difficulty?.overallLevel,
-    physicalFitnessRequired: fm.difficulty?.physicalFitnessRequired,
-    technicalSkillRequired: fm.difficulty?.technicalSkillRequired,
-    elevationGainM: fm.difficulty?.elevationGainM,
-    maxAltitudeM: fm.difficulty?.maxAltitudeM,
-    totalDistanceKm: fm.difficulty?.totalDistanceKm,
-    difficultyFactors: fm.difficulty?.factors,
-    notSuitableIf: fm.difficulty?.notSuitableIf,
+    overallLevel,
+    physicalFitnessRequired: diffObj.physicalFitnessRequired,
+    technicalSkillRequired: diffObj.technicalSkillRequired,
+    elevationGainM: diffObj.elevationGainM,
+    maxAltitudeM: diffObj.maxAltitudeM,
+    totalDistanceKm: diffObj.totalDistanceKm,
+    difficultyFactors: diffObj.factors,
+    notSuitableIf: diffObj.notSuitableIf,
 
     familyFriendly: fm.suitability?.familyFriendly,
     minAgeRecommended: fm.suitability?.minAgeRecommended,
@@ -1344,7 +1400,7 @@ async function buildStoryDoc(fm, body, heroName, galleryNames, pdfName, affiliat
     durationDays: fm.timing?.durationDays,
     durationHours: fm.timing?.durationHours,
     durationDisplay: fm.timing?.durationDisplay,
-    bestMonths: fm.timing?.bestMonths,
+    bestMonths: Array.isArray(fm.months) ? fm.months : fm.timing?.bestMonths,
     bestSeasons: fm.timing?.bestSeasons,
     avoidMonths: fm.timing?.avoidMonths,
     timeOfDay: fm.timing?.timeOfDay,
@@ -1407,9 +1463,10 @@ async function buildStoryDoc(fm, body, heroName, galleryNames, pdfName, affiliat
       : undefined,
     journeyCategory: journeyCatRef ? { _type: "reference", _ref: journeyCatRef } : undefined,
     activityCategory: activityCatRef ? { _type: "reference", _ref: activityCatRef } : undefined,
-    activityTags: fm.activityTags,
+    activityTags: Array.isArray(fm.activity) ? fm.activity : fm.activityTags,
     journeyStyle: fm.journeyStyle,
     highlights: fm.highlights,
+    ...videoFields,
 
     metaTitle: fm.seo?.metaTitle,
     metaDescription: fm.seo?.metaDescription,
@@ -1453,7 +1510,7 @@ async function main() {
 
   validateFrontmatter(fm);
 
-  const { heroName, gallery, pdf, ignored } = await findAssets();
+  const { heroName, gallery, pdf, ignored, teaser } = await findAssets();
 
   const slug = (fm.slug && fm.slug.trim()) || slugify(fm.title);
 
@@ -1500,7 +1557,7 @@ async function main() {
     console.log(`  affiliates: ${guideAffiliates.source} found but contains no usable entries\n`);
   }
 
-  const doc = await buildStoryDoc(fm, body, heroName, gallery, pdf, affiliateContext);
+  const doc = await buildStoryDoc(fm, body, heroName, gallery, pdf, affiliateContext, teaser);
 
   console.log(
     `  refs to create/reuse:\n` +
