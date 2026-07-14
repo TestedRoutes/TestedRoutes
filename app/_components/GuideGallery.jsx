@@ -75,7 +75,7 @@ export default function GuideGallery({
     reordered.unshift(photo);
     return reordered;
   })();
-  const total = photos.length;
+  const total = slides.length;
   const label = `${viewAllLabel} (${total})`;
 
   const onStripScroll = () => {
@@ -189,16 +189,31 @@ export default function GuideGallery({
             >
               ×
             </button>
-            <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
-              {photos.map((p) => (
-                <img
-                  key={p}
-                  src={p}
-                  alt=""
-                  className="aspect-[4/3] w-full rounded-xl object-cover"
-                  loading="lazy"
-                />
-              ))}
+            {/* One-by-one feed at natural aspect ratios — nothing cropped,
+                videos in their authored spots. */}
+            <div className="flex flex-col gap-4">
+              {slides.map((slide) =>
+                slide.type === "video" ? (
+                  <video
+                    key={slide.src}
+                    src={slide.src}
+                    poster={slide.poster}
+                    muted
+                    loop
+                    playsInline
+                    autoPlay
+                    className="w-full rounded-xl"
+                  />
+                ) : (
+                  <img
+                    key={slide.src}
+                    src={slide.src}
+                    alt=""
+                    className="w-full rounded-xl"
+                    loading="lazy"
+                  />
+                )
+              )}
             </div>
           </div>
         </div>
