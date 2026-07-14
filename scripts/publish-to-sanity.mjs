@@ -668,15 +668,36 @@ async function findAssets() {
   const baseName = path.basename(folder);
 
   /* New convention: web renditions live in generated/, named
-     {ID}_{n}-{slot}.jpg, with an optional {ID}_teaser.mp4. When present,
-     they take priority over root-level images. */
+     {ID}_{n}-{slot}.jpg, plus one 7s clip per source video keeping the same
+     _{n}- slot in its name ({ID}_3-detail.mp4). A legacy single
+     {ID}_teaser.mp4 is still honoured when no per-slot clips exist. When
+     present, generated/ takes priority over root-level images. */
   let genPhotos = [];
+  let genClips = [];
   let teaser = null;
   try {
     const gen = await fs.readdir(path.join(folder, "generated"));
     genPhotos = gen
       .filter((n) => /\.(jpe?g|png|webp)$/i.test(n) && n.startsWith(baseName))
       .sort((a, b) => a.localeCompare(b, undefined, { numeric: true }));
+    genClips = gen
+      .filter(
+        (n) =>
+          /\.mp4$/i.test(n) &&
+          n.startsWith(baseName) &&
+          n !== `${baseName}_teaser.mp4`,
+      )
+      .sort((a, b) => a.localeCompare(b, undefined, { numeric: true }))
+      .map((n) => {
+        // Slot sits right after the story-ID prefix ({ID}_3-detail.mp4).
+        // Match against the stripped remainder — IDs like 2022_7-summits-...
+        // contain digits that would fool a whole-name search.
+        const m = n.slice(baseName.length + 1).match(/^(\d+)[-.]/);
+        return {
+          name: path.join("generated", n),
+          slot: m ? Number(m[1]) : null,
+        };
+      });
     teaser = gen.find((n) => n === `${baseName}_teaser.mp4`) || null;
   } catch { /* no generated/ dir */ }
 
@@ -694,6 +715,7 @@ async function findAssets() {
       pdf,
       ignored: [],
       teaser: teaser ? path.join("generated", teaser) : null,
+      videoClips: genClips,
     };
   }
 
@@ -716,7 +738,7 @@ async function findAssets() {
   /* Source files to explicitly ignore (warn if big ones found) */
   const ignored = files.filter((n) => /\.(pptx?|docx?|xlsx?|psd|ai|sketch|fig|key|pages|numbers)$/i.test(n));
 
-  return { heroName, gallery, pdf, ignored, teaser: null };
+  return { heroName, gallery, pdf, ignored, teaser: null, videoClips: [] };
 }
 
 function altFromFilename(name) {
@@ -1224,14 +1246,36 @@ async function writePdfCheatSheet(usedAffiliates, guideSlug) {
 
 /* ────────── field mapping (fm → Sanity doc) ────────── */
 
-async function buildStoryDoc(fm, body, heroName, galleryNames, pdfName, affiliateContext = null, teaserName = null) {
+async function buildStoryDoc(fm, body, heroName, galleryNames, pdfName, affiliateContext = null, teaserName = null, videoClips = []) {
   const title = fm.title.trim();
   const slug = (fm.slug && fm.slug.trim()) || slugify(title);
 
-  /* Card teaser video (generated/{ID}_teaser.mp4) — uploading it here keeps
-     the folder the single source of truth: republish always restores it. */
+  /* Video clips (generated/{ID}_{n}-*.mp4, one per source video) — uploading
+     them here keeps the folder the single source of truth: republish always
+     restores them. videoUrl/videoSlot mirror the first clip for older
+     consumers; videos[] carries the full authored sequence. A legacy single
+     {ID}_teaser.mp4 is used only when no per-slot clips exist. */
   let videoFields = {};
-  if (teaserName) {
+  const videoEntries = [];
+  for (const clip of videoClips) {
+    const asset = await uploadAsset(path.join(folder, clip.name), "file");
+    if (asset.url) {
+      videoEntries.push({
+        _type: "storyVideo",
+        _key: randomKey(),
+        url: asset.url,
+        slot: clip.slot || undefined,
+      });
+    }
+  }
+  if (videoEntries.length) {
+    videoFields = {
+      hasVideo: true,
+      videoUrl: videoEntries[0].url,
+      videoSlot: videoEntries[0].slot || Number(fm.video_slot) || undefined,
+      videos: videoEntries,
+    };
+  } else if (teaserName) {
     const asset = await uploadAsset(path.join(folder, teaserName), "file");
     if (asset.url) {
       videoFields = {
@@ -1516,7 +1560,7 @@ async function main() {
 
   validateFrontmatter(fm);
 
-  const { heroName, gallery, pdf, ignored, teaser } = await findAssets();
+  const { heroName, gallery, pdf, ignored, teaser, videoClips } = await findAssets();
 
   const slug = (fm.slug && fm.slug.trim()) || slugify(fm.title);
 
@@ -1531,6 +1575,7 @@ async function main() {
       `  slug:     ${slug}\n` +
       `  hero:     ${heroName || "(none)"}\n` +
       `  gallery:  ${gallery.length} photos\n` +
+      `  videos:   ${videoClips.length ? videoClips.map((v) => `${path.basename(v.name)} (slot ${v.slot ?? "?"})`).join(", ") : teaser ? "legacy teaser" : "(none)"}\n` +
       `  pdf:      ${pdf || "(none)"}\n` +
       `  guide?    ${willBeGuide ? "YES" : "no"}\n`,
   );
@@ -1563,7 +1608,7 @@ async function main() {
     console.log(`  affiliates: ${guideAffiliates.source} found but contains no usable entries\n`);
   }
 
-  const doc = await buildStoryDoc(fm, body, heroName, gallery, pdf, affiliateContext, teaser);
+  const doc = await buildStoryDoc(fm, body, heroName, gallery, pdf, affiliateContext, teaser, videoClips);
 
   console.log(
     `  refs to create/reuse:\n` +

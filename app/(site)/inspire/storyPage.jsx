@@ -295,6 +295,7 @@ export default async function StoryPage({ lang, slug }) {
               photos={photos}
               videoUrl={story.videoUrl}
               videoSlot={story.videoSlot}
+              videos={story.videos}
               viewAllLabel={getDict(lang).guide.viewAllPhotos}
             />
           </div>

@@ -24,6 +24,7 @@ export function toGuideCard(g) {
     cardPhotos: g.cardPhotos,
     videoUrl: g.videoUrl,
     videoSlot: g.videoSlot,
+    videos: Array.isArray(g.videos) ? g.videos : [],
     href: g.href,
     polarProductId: g.polarProductId,
     guidePdfUrl: g.guidePdfUrl,

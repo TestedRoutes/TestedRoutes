@@ -4,6 +4,9 @@ import { useEffect, useRef, useState } from "react";
 import { buildMediaSlides } from "./CardMediaCarousel";
 
 function SlideMedia({ slide, alt, eager = false, className = "" }) {
+  // object-center: every frame crops from the middle of the media, so the
+  // same photo/clip serves the portrait mobile frame and the landscape
+  // desktop tiles without separate renditions.
   if (slide.type === "video") {
     return (
       <video
@@ -13,7 +16,7 @@ function SlideMedia({ slide, alt, eager = false, className = "" }) {
         loop
         playsInline
         autoPlay
-        className={`h-full w-full object-cover ${className}`}
+        className={`h-full w-full object-cover object-center ${className}`}
       />
     );
   }
@@ -22,7 +25,7 @@ function SlideMedia({ slide, alt, eager = false, className = "" }) {
       src={slide.src}
       alt={alt}
       loading={eager ? "eager" : "lazy"}
-      className={`h-full w-full object-cover ${className}`}
+      className={`h-full w-full object-cover object-center ${className}`}
     />
   );
 }
@@ -37,6 +40,7 @@ export default function GuideGallery({
   photos,
   videoUrl = null,
   videoSlot = null,
+  videos = null,
   viewAllLabel = "View all",
 }) {
   const [open, setOpen] = useState(false);
@@ -58,7 +62,19 @@ export default function GuideGallery({
 
   if (!photos?.length) return null;
 
-  const slides = buildMediaSlides({ photos, videoUrl, videoSlot });
+  const slides = buildMediaSlides({ photos, videoUrl, videoSlot, videos });
+  // Desktop mosaic anchors on a photo: a 720p clip cropped to fill the big
+  // tile reads as blurry mush, so a leading video swaps back to a small tile
+  // and the first photo takes the big one. Mobile keeps the authored order.
+  const desktopSlides = (() => {
+    if (slides[0]?.type !== "video") return slides;
+    const i = slides.findIndex((s) => s.type === "image");
+    if (i < 1) return slides;
+    const reordered = slides.slice();
+    const [photo] = reordered.splice(i, 1);
+    reordered.unshift(photo);
+    return reordered;
+  })();
   const total = photos.length;
   const label = `${viewAllLabel} (${total})`;
 
@@ -73,10 +89,13 @@ export default function GuideGallery({
     <>
       {/* Mobile: full-width swipe carousel */}
       <div className="relative overflow-hidden rounded-xl md:hidden">
+        {/* Portrait frame: vertical photos/clips fill it naturally and
+            landscape ones center-crop, mirroring how the desktop mosaic
+            treats verticals. */}
         <div
           ref={stripRef}
           onScroll={onStripScroll}
-          className="flex h-64 snap-x snap-mandatory overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+          className="flex aspect-[3/4] w-full snap-x snap-mandatory overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
         >
           {slides.map((slide, i) => (
             <div
@@ -111,11 +130,13 @@ export default function GuideGallery({
       </div>
 
       {/* Desktop: 1 large + 2x2 mosaic, sequence order preserved */}
+      {/* 5 tiles: 1 large + 4 small, the small ones always equal.
+          minmax(0,1fr) stops oversized media from stretching a track. */}
       <div
         className="relative hidden overflow-hidden rounded-xl md:grid"
         style={{
-          gridTemplateColumns: "1.6fr 1fr 1fr",
-          gridTemplateRows: "1fr 1fr",
+          gridTemplateColumns: "1.6fr minmax(0, 1fr) minmax(0, 1fr)",
+          gridTemplateRows: "minmax(0, 1fr) minmax(0, 1fr)",
           gap: 4,
           height: 420,
         }}
@@ -127,9 +148,9 @@ export default function GuideGallery({
           style={{ gridRow: "1 / 3" }}
           aria-label="Open gallery"
         >
-          <SlideMedia slide={slides[0]} alt="" eager />
+          <SlideMedia slide={desktopSlides[0]} alt="" eager />
         </button>
-        {slides.slice(1, 5).map((slide) => (
+        {desktopSlides.slice(1, 5).map((slide) => (
           <button
             key={`${slide.type}-${slide.src}`}
             type="button"

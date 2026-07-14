@@ -6,16 +6,27 @@ import { useEffect, useRef, useState } from "react";
 // would need an iframe, which is too heavy for a card.
 export const PLAYABLE_VIDEO = /\.(mp4|webm|mov)(\?|#|$)/i;
 
-// Shared slide recipe for cards and galleries. The video keeps its authored
-// position in the sequence (videoSlot is 1-based, from the source filename
-// like {ID}_3-detail.mp4); without a slot it leads.
-export function buildMediaSlides({ photos = [], videoUrl = null, videoSlot = null }) {
+// Shared slide recipe for cards and galleries. Each video keeps its authored
+// position in the sequence (slot is 1-based, from the source filename like
+// {ID}_3-detail.mp4); without a slot it leads. `videos` is [{ url, slot }];
+// legacy single videoUrl/videoSlot still works as a fallback.
+export function buildMediaSlides({ photos = [], videoUrl = null, videoSlot = null, videos = null }) {
   const slides = photos.map((src) => ({ type: "image", src }));
-  const playable = videoUrl && PLAYABLE_VIDEO.test(videoUrl);
-  if (playable) {
-    const idx = Math.max(0, Math.min(slides.length, (Number(videoSlot) || 1) - 1));
-    slides.splice(idx, 0, { type: "video", src: videoUrl, poster: photos[0] });
-  }
+  const clips =
+    Array.isArray(videos) && videos.length
+      ? videos
+      : videoUrl
+        ? [{ url: videoUrl, slot: videoSlot }]
+        : [];
+  clips
+    .filter((v) => v?.url && PLAYABLE_VIDEO.test(v.url))
+    .sort((a, b) => (Number(a.slot) || 1) - (Number(b.slot) || 1))
+    .forEach((v) => {
+      // Slots are positions in the full media sequence, so inserting in
+      // ascending order lands each clip at its authored index.
+      const idx = Math.max(0, Math.min(slides.length, (Number(v.slot) || 1) - 1));
+      slides.splice(idx, 0, { type: "video", src: v.url, poster: photos[0] });
+    });
   return slides;
 }
 

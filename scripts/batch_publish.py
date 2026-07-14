@@ -7,7 +7,9 @@ Reads the Content Plan masterfile, and for every row whose Status is
   1. locates content/inspire/{country}/{ID}/
   2. extracts {ID}_story*.docx -> generated/{ID}_story_en.md
   3. converts photos/ masters -> generated/{ID}_*.jpg (<=2560px, q85)
-  4. cuts the first video -> generated/{ID}_teaser.mp4 (7s, 720p, muted)
+  4. cuts every video -> generated/{stem}.mp4 (7s, 720p, muted), keeping the
+     _{n}- slot in the name; stale renditions of renamed/removed masters are
+     cleaned from generated/ so reordering is a pure rename + re-run
   5. drafts {ID}_meta_en.yaml (plan fields + Claude-proposed fields)
   6. runs scripts/publish-to-sanity.mjs on the folder
   7. writes the ledger + review CSV, and sets the row's Status to
@@ -134,7 +136,17 @@ def read_plan(plan_path):
 
 
 def find_story_folder(story_id):
-    hits = glob.glob(str(INSPIRE / "*" / story_id))
+    """Story folders live at inspire/{country}/{ID} or, once published and
+    filed away, inspire/published/{country}/{ID} — search both depths."""
+    hits = sorted(
+        h
+        for pattern in (INSPIRE / "*" / story_id, INSPIRE / "*" / "*" / story_id)
+        for h in glob.glob(str(pattern))
+        if Path(h).is_dir()
+    )
+    if len(hits) > 1:
+        print(f"    ! {story_id} found in {len(hits)} places (using first): "
+              + ", ".join(str(Path(h).parent.relative_to(INSPIRE)) for h in hits))
     return Path(hits[0]) if hits else None
 
 
@@ -145,8 +157,12 @@ def extract_docx(docx_path, plan_title):
     paras = []
     for pm in re.finditer(r"<w:p[ >].*?</w:p>", xml, re.S):
         block = pm.group(0)
+        # <w:t(?:\s...)?> — the attribute part must start with whitespace so
+        # self-closing <w:t/> (empty runs) and <w:tab/>/<w:tc> don't match;
+        # a loose [^>]* here swallowed raw XML between empty runs and real
+        # text into the story body.
         text = "".join(
-            m.group(1) for m in re.finditer(r"<w:t[^>]*>(.*?)</w:t>", block, re.S)
+            m.group(1) for m in re.finditer(r"<w:t(?:\s[^>]*)?>(.*?)</w:t>", block, re.S)
         )
         text = (
             text.replace("&amp;", "&").replace("&lt;", "<").replace("&gt;", ">")
@@ -196,39 +212,74 @@ def convert_images(folder, story_id, force=False):
     return out
 
 
-def video_slot(folder):
-    """Slot number of the source video ({ID}_3-detail.mp4 -> 3), or None."""
-    vids = [
-        p for p in sorted((folder / "photos").glob("*"))
-        if p.suffix.lower() in (".mp4", ".mov", ".webm")
-    ]
-    if not vids:
-        return None
-    m = re.search(r"_(\d+)[-.]", vids[0].name)
+def slot_of(name, story_id=None):
+    """Slot number from a sequenced filename ({ID}_3-detail.mp4 -> 3), or None.
+    The story-ID prefix is stripped first — IDs like 2022_7-summits-... would
+    otherwise match their own digits."""
+    if story_id and name.startswith(f"{story_id}_"):
+        m = re.match(r"(\d+)[-.]", name[len(story_id) + 1:])
+    else:
+        m = re.search(r"_(\d+)[-.]", name)
     return int(m.group(1)) if m else None
 
 
-def cut_teaser(folder, story_id, ffmpeg):
-    vids = [
+def source_videos(folder):
+    return [
         p for p in sorted((folder / "photos").glob("*"))
         if p.suffix.lower() in (".mp4", ".mov", ".webm")
     ]
-    if not vids:
-        return None
-    dst = folder / "generated" / f"{story_id}_teaser.mp4"
-    if dst.exists() and dst.stat().st_mtime >= vids[0].stat().st_mtime:
-        return dst.name
-    cmd = [
-        ffmpeg, "-y", "-v", "error", "-ss", "0.5", "-t", "7", "-i", str(vids[0]),
-        "-vf", "scale=-2:720,fps=24", "-c:v", "libx264", "-preset", "slow",
-        "-crf", "27", "-pix_fmt", "yuv420p", "-an", "-movflags", "+faststart",
-        str(dst),
-    ]
-    r = subprocess.run(cmd, capture_output=True, text=True)
-    if r.returncode != 0:
-        print(f"    ! teaser failed: {r.stderr.strip()[:200]}")
-        return None
-    return dst.name
+
+
+def clip_start(name):
+    """Cut-start seconds encoded in the video filename label: both
+    "..._1-from 5 sec.MOV" and "..._3-From sec 5.MP4" mean start at 5s.
+    Default 0.5s when no "from" marker is present."""
+    m = re.search(r"from\s*(?:sec\w*\s*)?(\d+(?:\.\d+)?)", name, re.IGNORECASE)
+    return float(m.group(1)) if m else 0.5
+
+
+def cut_clips(folder, story_id, ffmpeg, force=False):
+    """7s muted 720p clip per source video, named after its master so the
+    _{n}- slot number survives into generated/. Returns [(name, slot), ...]
+    in authored order."""
+    clips = []
+    for vid in source_videos(folder):
+        dst = folder / "generated" / (vid.stem + ".mp4")
+        if force or not dst.exists() or dst.stat().st_mtime < vid.stat().st_mtime:
+            cmd = [
+                ffmpeg, "-y", "-v", "error", "-ss", str(clip_start(vid.stem)), "-t", "7", "-i", str(vid),
+                "-vf", "scale=-2:720,fps=24", "-c:v", "libx264", "-preset", "slow",
+                "-crf", "27", "-pix_fmt", "yuv420p", "-an", "-movflags", "+faststart",
+                str(dst),
+            ]
+            r = subprocess.run(cmd, capture_output=True, text=True)
+            if r.returncode != 0:
+                print(f"    ! clip failed ({vid.name}): {r.stderr.strip()[:200]}")
+                continue
+        clips.append((dst.name, slot_of(vid.name, story_id)))
+    return clips
+
+
+def clean_orphan_renditions(folder, story_id):
+    """Remove generated/ media whose master no longer exists in photos/, so
+    renaming (reorder), replacing, or deleting a master is a pure re-run.
+    Also retires the legacy single {ID}_teaser.mp4 (superseded by per-video
+    clips). Non-media outputs (story markdown, meta) are never touched."""
+    photos_dir = folder / "photos"
+    gen = folder / "generated"
+    if not photos_dir.is_dir() or not gen.is_dir():
+        return []
+    expected = {p.stem for p in photos_dir.iterdir() if p.is_file()}
+    removed = []
+    for f in gen.iterdir():
+        if not f.is_file() or f.suffix.lower() not in (".jpg", ".mp4"):
+            continue
+        if not f.name.startswith(f"{story_id}_"):
+            continue
+        if f.stem not in expected:
+            f.unlink()
+            removed.append(f.name)
+    return removed
 
 
 def claude_meta(row, docx_meta, body, photo_names):
@@ -405,9 +456,12 @@ def main():
             (gen / f"{sid}_story_en.md").write_text(body + "\n", encoding="utf-8")
 
             photos = convert_images(folder, sid, force=args.force_media)
-            teaser = cut_teaser(folder, sid, ffmpeg)
-            slot = video_slot(folder) if teaser else None
-            print(f"    media: {len(photos)} photos{', teaser' if teaser else ''}")
+            clips = cut_clips(folder, sid, ffmpeg, force=args.force_media)
+            removed = clean_orphan_renditions(folder, sid)
+            slot = clips[0][1] if clips else None
+            clip_note = f", {len(clips)} video clips" if clips else ""
+            orphan_note = f", {len(removed)} stale renditions removed" if removed else ""
+            print(f"    media: {len(photos)} photos{clip_note}{orphan_note}")
 
             meta_path = folder / f"{sid}_meta_en.yaml"
             if meta_path.exists():

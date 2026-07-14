@@ -31,6 +31,7 @@ const STORY_PROJECTION = /* groq */ `
   hasVideo,
   videoUrl,
   videoSlot,
+  videos[]{ url, slot },
   "destination": destination->{ name, country, countryCode, continent },
   regions,
   nearestCity,
@@ -339,9 +340,22 @@ export function shapeStory(doc) {
     galleryPhotos: galleryUrls,
     videoUrl: doc.hasVideo ? doc.videoUrl || null : null,
     videoSlot: doc.videoSlot || null,
+    videos: shapeVideos(doc),
     heroName: doc.heroImage?.alt || null,
     folderUrl: "",
   };
+}
+
+// [{ url, slot }] in authored order; empty when the story has no video.
+// Falls back to the legacy single videoUrl/videoSlot pair for docs
+// published before videos[] existed.
+function shapeVideos(doc) {
+  if (!doc.hasVideo) return [];
+  const list = Array.isArray(doc.videos)
+    ? doc.videos.filter((v) => v?.url).map((v) => ({ url: v.url, slot: v.slot || null }))
+    : [];
+  if (list.length) return list;
+  return doc.videoUrl ? [{ url: doc.videoUrl, slot: doc.videoSlot || null }] : [];
 }
 
 export function resolveGuidePrices(guide) {
@@ -433,6 +447,7 @@ export function shapeGuide(doc, currency = "EUR") {
     galleryPhotos: galleryUrls,
     videoUrl: doc.hasVideo ? doc.videoUrl || null : null,
     videoSlot: doc.videoSlot || null,
+    videos: shapeVideos(doc),
     relatedGuides,
     folderUrl: "",
     heroName: doc.heroImage?.alt || null,

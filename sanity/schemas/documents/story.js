@@ -315,6 +315,35 @@ export default {
       group: "content",
       hidden: ({ parent }) => !parent?.hasVideo,
     },
+    {
+      name: "videos",
+      title: "Videos (each placed at its slot in the media sequence)",
+      description:
+        "All video clips for the galleries/cards, in authored order. videoUrl/videoSlot above mirror the first entry for older consumers.",
+      type: "array",
+      group: "content",
+      hidden: ({ parent }) => !parent?.hasVideo,
+      of: [
+        {
+          type: "object",
+          name: "storyVideo",
+          fields: [
+            { name: "url", title: "Video URL", type: "url", validation: (Rule) => Rule.required() },
+            {
+              name: "slot",
+              title: "Slot (1-based position in the photo sequence)",
+              type: "number",
+            },
+          ],
+          preview: {
+            select: { url: "url", slot: "slot" },
+            prepare({ url, slot }) {
+              return { title: `Slot ${slot ?? "?"}`, subtitle: url };
+            },
+          },
+        },
+      ],
+    },
 
     /* ──────────────── LOCATION ──────────────── */
     {

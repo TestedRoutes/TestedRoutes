@@ -59,6 +59,7 @@ function buildCard(story, lang) {
     photos: buildCardPhotos(story),
     videoUrl: story.videoUrl || null,
     videoSlot: story.videoSlot || null,
+    videos: Array.isArray(story.videos) ? story.videos : [],
     heroAlt: getInspireStoryHeroAlt(story) || story.title,
     geoLabel: display.geoLabel || "",
     country: story.metadata?.geography?.country || "",

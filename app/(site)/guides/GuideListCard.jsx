@@ -19,6 +19,7 @@ export default function GuideListCard({ guide, t, lang = "en" }) {
     photos,
     videoUrl: guide.videoUrl,
     videoSlot: guide.videoSlot,
+    videos: guide.videos,
   });
   const href = localePath(lang, guide.href);
 
@@ -91,7 +92,7 @@ export default function GuideListCard({ guide, t, lang = "en" }) {
               <button
                 type="button"
                 onClick={onBuy}
-                className="whitespace-nowrap rounded-full bg-brand-terracotta px-3 py-2 text-xs font-semibold text-white transition hover:bg-brand-terracotta/90"
+                className="whitespace-nowrap rounded-full bg-brand-flame px-3 py-2 text-xs font-semibold text-white transition hover:bg-brand-flame/90"
               >
                 {t.buyGuide}
               </button>

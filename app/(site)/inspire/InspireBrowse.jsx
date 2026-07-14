@@ -50,6 +50,7 @@ function StoryCard({ card, t }) {
     photos,
     videoUrl: card.videoUrl,
     videoSlot: card.videoSlot,
+    videos: card.videos,
   });
   const inner = (
     <>
@@ -86,7 +87,7 @@ function StoryCard({ card, t }) {
         </p>
         <div className="mt-auto flex items-center justify-end pt-1">
           {card.href ? (
-            <span className="shrink-0 rounded-full bg-brand-terracotta px-4 py-2 text-xs font-semibold text-white transition group-hover:bg-brand-terracotta/90">
+            <span className="shrink-0 rounded-full bg-brand-flame px-4 py-2 text-xs font-semibold text-white transition group-hover:bg-brand-flame/90">
               {t.readStory}
             </span>
           ) : null}
@@ -156,7 +157,7 @@ export default function InspireBrowse({ cards, categoryItems = [], lang = "en" }
           <button
             type="button"
             onClick={() => document.getElementById("inspire-search")?.blur()}
-            className="shrink-0 rounded-full bg-brand-terracotta px-4 py-3 text-sm font-semibold text-white transition hover:bg-brand-terracotta/90 md:px-6 md:py-4 md:text-base"
+            className="shrink-0 rounded-full bg-brand-flame px-4 py-3 text-sm font-semibold text-white transition hover:bg-brand-flame/90 md:px-6 md:py-4 md:text-base"
           >
             {t.searchButton}
           </button>
