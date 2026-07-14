@@ -3,7 +3,10 @@ import { Analytics } from "@vercel/analytics/next";
 import { Fraunces, DM_Sans } from "next/font/google";
 import CookieConsent from "./_components/CookieConsent";
 
-// Guide-design type pairing: Fraunces for display/serif, DM Sans for body.
+// Designer spec pairs Capraia (headings) with DM Sans (body). Capraia is a
+// commercial font with no files in the repo yet — Fraunces stands in as the
+// serif. Once the licensed .woff2 files arrive, drop them in app/_fonts/ and
+// swap Fraunces for next/font/local pointing at them (keep --font-serif).
 const fraunces = Fraunces({
   subsets: ["latin"],
   variable: "--font-serif",

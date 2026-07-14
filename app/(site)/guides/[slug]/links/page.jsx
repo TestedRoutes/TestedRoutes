@@ -290,7 +290,7 @@ export default async function GuideLinksPage({ params }) {
         </>
       )}
 
-      <div className="mt-10 max-w-3xl rounded-2xl border border-slate-200 bg-[#e2ded2] p-6">
+      <div className="mt-10 max-w-3xl rounded-2xl border border-slate-200 bg-brand-bone p-6">
         <p className="font-serif text-lg font-semibold text-brand-ink">
           Want the full plan?
         </p>

@@ -104,7 +104,7 @@ export default function GuideBody({ blocks, checkoutHref, pdfHref, price, t: tPr
               className="pointer-events-none absolute inset-x-0 bottom-full h-16 bg-gradient-to-t from-white to-transparent"
             />
           ) : null}
-          <div className="rounded-b-2xl bg-[#e2ded2] px-6 py-5">
+          <div className="rounded-b-2xl bg-brand-bone px-6 py-5">
             <p className="font-serif text-base font-semibold text-brand-ink">
               {truncated ? t.continuesInFull : t.wantFullPlan}
             </p>

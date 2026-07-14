@@ -22,7 +22,7 @@ export default function StickyBuyBar({ price, checkoutHref, pdfHref, t: tProp })
           </div>
           <Link
             href={href}
-            className="rounded-full bg-brand-terracotta px-6 py-2.5 text-sm font-semibold text-white transition hover:bg-brand-terracotta/90"
+            className="rounded-full bg-brand-flame px-6 py-2.5 text-sm font-semibold text-white transition hover:bg-brand-flame/90"
           >
             {t.getGuide}
           </Link>

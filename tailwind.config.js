@@ -12,29 +12,34 @@ export default {
         sans: ["var(--font-sans)", "ui-sans-serif", "system-ui", "sans-serif"],
       },
       colors: {
-        // Palette sampled from the designer's guide PDF (Figma export,
-        // 2026-07): terracotta headers #943d21, ink text #1f0d07, cream
-        // page #f4f3ef, mint badges #8aebd4, beige info cards #e2ded2.
+        // Designer palette sheet (2026-07): Brandy #943d21, Parchment
+        // #f4f3ef, Coffee Bean #1f0d07, Bone #dcdacd, Icy Blue #abddfe,
+        // Taupe Grey #5f524d, Tiger Flame #fe6730 (CTA, white text).
         brand: {
-          cream: "#f4f3ef",
-          ink: "#1f0d07",
-          terracotta: "#943d21",
+          cream: "#f4f3ef", // Parchment
+          ink: "#1f0d07", // Coffee Bean
+          terracotta: "#943d21", // Brandy
           "terracotta-soft": "#fdf3ea",
+          bone: "#dcdacd",
+          icy: "#abddfe",
+          taupe: "#5f524d",
+          flame: "#fe6730", // CTA only
+          // Not on the designer sheet; still used for badges pending
+          // designer confirmation.
           mint: "#8aebd4",
-          sand: "#e2ded2",
         },
         // The site was built on Tailwind's cool-gray `slate` scale. Rather
         // than touch every class, the scale itself is remapped to warm
-        // browns anchored to the guide palette (900 = brand ink, 200 ≈ the
-        // PDF's beige card). `slate-*` here is warm, not blue-gray.
+        // browns anchored to the palette sheet (900 = Coffee Bean, 600 =
+        // Taupe Grey, 200 = Bone). `slate-*` here is warm, not blue-gray.
         slate: {
           50: "#f7f5f1",
           100: "#eeeae3",
-          200: "#e2ded2",
+          200: "#dcdacd",
           300: "#c9c1b2",
           400: "#a3988a",
           500: "#7f7264",
-          600: "#665a4d",
+          600: "#5f524d",
           700: "#4d4136",
           800: "#352920",
           900: "#1f0d07",
