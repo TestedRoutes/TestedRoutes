@@ -1,5 +1,14 @@
 # TestedRoutes
 
+## Brand assets
+
+The designer's final identity package (master pptx, logos in EPS/PDF/PNG/SVG,
+element library, `TR-fonts and colors.docx` with the font stack + palette)
+lives outside the repo at
+`Desktop\TR - Documents\3. Design\Tested Routes Identity Files\`.
+Treat it as read-only; copy assets into `public/` when the site needs them.
+Palette tokens are wired in `tailwind.config.js`, fonts in `app/layout.jsx`.
+
 ## Environment variables
 
 Set these in Vercel (Production + Preview) and in `.env.local` for development.

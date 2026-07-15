@@ -1,5 +1,9 @@
 node_modules/
 .claude/
+
+# Python bytecode caches (scripts/*.py tooling)
+__pycache__/
+*.pyc
 /site-config.js
 .next/
 out/
