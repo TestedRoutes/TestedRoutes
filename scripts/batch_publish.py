@@ -215,11 +215,12 @@ def convert_images(folder, story_id, force=False):
 def slot_of(name, story_id=None):
     """Slot number from a sequenced filename ({ID}_3-detail.mp4 -> 3), or None.
     The story-ID prefix is stripped first — IDs like 2022_7-summits-... would
-    otherwise match their own digits."""
+    otherwise match their own digits. The delimiter after the digits may carry
+    whitespace ("{ID}_1 - from 14 sec.mp4", "{ID}_5 from sec 5.mp4")."""
     if story_id and name.startswith(f"{story_id}_"):
-        m = re.match(r"(\d+)[-.]", name[len(story_id) + 1:])
+        m = re.match(r"(\d+)\s*[-.\s]", name[len(story_id) + 1:])
     else:
-        m = re.search(r"_(\d+)[-.]", name)
+        m = re.search(r"_(\d+)\s*[-.\s]", name)
     return int(m.group(1)) if m else None
 
 
@@ -269,13 +270,23 @@ def clean_orphan_renditions(folder, story_id):
     gen = folder / "generated"
     if not photos_dir.is_dir() or not gen.is_dir():
         return []
-    expected = {p.stem for p in photos_dir.iterdir() if p.is_file()}
+    # Track masters per output type: a generated .jpg is only valid while an
+    # IMAGE master shares its stem, a generated .mp4 only while a VIDEO master
+    # does. Stem-only matching kept stale .jpg renditions alive after a master
+    # changed type (photo replaced by a video with the same slot).
+    video_exts = (".mp4", ".mov", ".webm")
+    expected_img, expected_vid = set(), set()
+    for p in photos_dir.iterdir():
+        if not p.is_file():
+            continue
+        (expected_vid if p.suffix.lower() in video_exts else expected_img).add(p.stem)
     removed = []
     for f in gen.iterdir():
         if not f.is_file() or f.suffix.lower() not in (".jpg", ".mp4"):
             continue
         if not f.name.startswith(f"{story_id}_"):
             continue
+        expected = expected_vid if f.suffix.lower() == ".mp4" else expected_img
         if f.stem not in expected:
             f.unlink()
             removed.append(f.name)

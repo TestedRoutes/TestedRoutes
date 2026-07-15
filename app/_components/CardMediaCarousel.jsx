@@ -109,7 +109,7 @@ export default function CardMediaCarousel({
       >
         {slides.map((slide, i) => (
           <div
-            key={slide.src}
+            key={`${i}-${slide.src}`}
             className="h-full w-full shrink-0 snap-center overflow-hidden"
           >
             {slide.type === "video" ? (

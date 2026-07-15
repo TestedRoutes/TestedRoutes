@@ -691,8 +691,9 @@ async function findAssets() {
       .map((n) => {
         // Slot sits right after the story-ID prefix ({ID}_3-detail.mp4).
         // Match against the stripped remainder — IDs like 2022_7-summits-...
-        // contain digits that would fool a whole-name search.
-        const m = n.slice(baseName.length + 1).match(/^(\d+)[-.]/);
+        // contain digits that would fool a whole-name search. Whitespace may
+        // pad the delimiter ("{ID}_1 - from 14 sec.mp4").
+        const m = n.slice(baseName.length + 1).match(/^(\d+)\s*[-.\s]/);
         return {
           name: path.join("generated", n),
           slot: m ? Number(m[1]) : null,
@@ -703,7 +704,7 @@ async function findAssets() {
 
   if (genPhotos.length) {
     const heroName =
-      genPhotos.find((n) => /_1-|hero/i.test(n)) || genPhotos[0];
+      genPhotos.find((n) => /_1\s*-|hero/i.test(n)) || genPhotos[0];
     const gallery = genPhotos
       .filter((n) => n !== heroName)
       .map((n) => path.join("generated", n));
@@ -1303,8 +1304,15 @@ async function buildStoryDoc(fm, body, heroName, galleryNames, pdfName, affiliat
   }
 
   const galleryImages = [];
+  // Sanity dedupes uploads by content hash, so two differently-named files
+  // with identical pixels resolve to ONE asset — without this guard the
+  // gallery can list the same asset twice, or repeat the hero (both break
+  // the card carousel's keying). Skip refs we've already used.
+  const usedRefs = new Set(heroImage?.asset?._ref ? [heroImage.asset._ref] : []);
   for (const name of galleryNames) {
     const asset = await uploadAsset(path.join(folder, name), "image");
+    if (usedRefs.has(asset._id)) continue;
+    usedRefs.add(asset._id);
     galleryImages.push({
       _type: "image",
       _key: randomKey(),

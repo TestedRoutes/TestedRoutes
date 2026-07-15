@@ -192,10 +192,10 @@ export default function GuideGallery({
             {/* One-by-one feed at natural aspect ratios — nothing cropped,
                 videos in their authored spots. */}
             <div className="flex flex-col gap-4">
-              {slides.map((slide) =>
+              {slides.map((slide, i) =>
                 slide.type === "video" ? (
                   <video
-                    key={slide.src}
+                    key={`${i}-${slide.src}`}
                     src={slide.src}
                     poster={slide.poster}
                     muted
@@ -206,7 +206,7 @@ export default function GuideGallery({
                   />
                 ) : (
                   <img
-                    key={slide.src}
+                    key={`${i}-${slide.src}`}
                     src={slide.src}
                     alt=""
                     className="w-full rounded-xl"
