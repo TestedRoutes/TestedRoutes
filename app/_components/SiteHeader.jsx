@@ -90,7 +90,7 @@ export default function SiteHeader({ currency = "EUR", guides = [] }) {
   return (
     <header className="sticky top-0 z-50 border-b border-slate-200/60 bg-brand-cream/95 backdrop-blur-sm">
       <nav
-        className="mx-auto flex h-20 max-w-7xl items-center justify-between gap-6 px-6 text-sm text-slate-900"
+        className="mx-auto flex h-20 max-w-7xl items-center justify-between gap-3 px-4 text-sm text-slate-900 md:gap-6 md:px-6"
         aria-label="Primary"
       >
         <Link
@@ -102,7 +102,7 @@ export default function SiteHeader({ currency = "EUR", guides = [] }) {
           <img
             src={logoHorizontal.src}
             alt="TestedRoutes"
-            className="h-7 w-auto"
+            className="h-4 w-auto md:h-7"
           />
         </Link>
 
