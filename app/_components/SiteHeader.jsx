@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
+import logoHorizontal from "../../content/brand/TR-logo-horizontal.svg";
 import CurrencySwitcher from "./CurrencySwitcher";
 import LanguageSwitcher from "./LanguageSwitcher";
 import HomeSearchBar from "./HomeSearchBar";
@@ -97,14 +98,12 @@ export default function SiteHeader({ currency = "EUR", guides = [] }) {
           href="/"
           aria-current={active === "home" ? "page" : undefined}
         >
-          <span className="flex flex-col leading-none">
-            <span className="font-serif text-sm font-semibold uppercase tracking-[0.18em] text-slate-900">
-              TESTEDROUTES
-            </span>
-            <span className="mt-0.5 text-[9px] uppercase tracking-[0.28em] text-slate-500">
-              by Paulius Pikelis
-            </span>
-          </span>
+          {/* SVG logo needs no next/image optimization; plain img keeps it crisp. */}
+          <img
+            src={logoHorizontal.src}
+            alt="TestedRoutes"
+            className="h-7 w-auto"
+          />
         </Link>
 
         {showHeaderSearch ? (
