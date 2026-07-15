@@ -1,7 +1,7 @@
 /**
  * Minimal Portable Text → markdown converter.
  *
- * Supports the block types produced by scripts/import-to-sanity.mjs:
+ * Supports the block types produced by scripts/publish-to-sanity.mjs:
  * - paragraphs, h1-h3, blockquote
  * - bullet / numbered lists (single-level)
  *
