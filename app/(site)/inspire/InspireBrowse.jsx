@@ -77,7 +77,7 @@ function StoryCard({ card, t }) {
             {card.title}
           </p>
           {card.hasGuide ? (
-            <span className="shrink-0 rounded-full bg-brand-mint px-3 py-1.5 text-xs font-semibold text-slate-900">
+            <span className="shrink-0 rounded-full bg-brand-icy px-3 py-1.5 text-xs font-semibold text-slate-900">
               {t.guideBadge}
             </span>
           ) : null}

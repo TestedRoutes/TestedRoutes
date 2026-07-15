@@ -118,10 +118,10 @@ export default function MobileTabBar() {
                     : "font-normal text-slate-500"
                 }`}
               >
-                {/* Mint pill echoes the guide PDF's "DAY n" circles. */}
+                {/* Icy Blue pill echoes the guide PDF's "DAY n" circles. */}
                 <span
                   className={`flex items-center justify-center rounded-full px-3 py-0.5 ${
-                    isActive ? "bg-brand-mint" : ""
+                    isActive ? "bg-brand-icy" : ""
                   }`}
                 >
                   {tab.icon}

@@ -24,9 +24,6 @@ export default {
           icy: "#abddfe",
           taupe: "#5f524d",
           flame: "#fe6730", // CTA only
-          // Not on the designer sheet; still used for badges pending
-          // designer confirmation.
-          mint: "#8aebd4",
         },
         // The site was built on Tailwind's cool-gray `slate` scale. Rather
         // than touch every class, the scale itself is remapped to warm

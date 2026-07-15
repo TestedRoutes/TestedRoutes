@@ -3,10 +3,10 @@ import { Analytics } from "@vercel/analytics/next";
 import { Fraunces, DM_Sans } from "next/font/google";
 import CookieConsent from "./_components/CookieConsent";
 
-// Designer spec pairs Capraia (headings) with DM Sans (body). Capraia is a
-// commercial font with no files in the repo yet — Fraunces stands in as the
-// serif. Once the licensed .woff2 files arrive, drop them in app/_fonts/ and
-// swap Fraunces for next/font/local pointing at them (keep --font-serif).
+// Brand typography (TR-fonts and colors.docx, 2026-07): Fraunces headings +
+// DM Sans body. Capraia was dropped for cost — revisiting it is a Q2 2027
+// decision; if it ever lands, swap Fraunces for next/font/local (keep
+// --font-serif).
 const fraunces = Fraunces({
   subsets: ["latin"],
   variable: "--font-serif",
