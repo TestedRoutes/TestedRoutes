@@ -1,9 +1,11 @@
 import Link from "next/link";
+import Image from "next/image";
 import HomeBrowse from "../_components/HomeBrowse";
 import HomeGuideRequest from "../_components/HomeGuideRequest";
 import { loadGuides, toGuideCard } from "../_lib/loadGuides";
 import { getRequestCurrency } from "../_lib/currency";
 import { getCategoryItems } from "../_lib/categoryPills";
+import { PORTRAIT } from "../_lib/aboutImages";
 import { getDict } from "../_lib/i18n";
 
 export default async function HomePage() {
@@ -37,11 +39,11 @@ export default async function HomePage() {
       </section>
 
       <section className="rounded-[28px] bg-white p-6 shadow-sm ring-1 ring-slate-200 md:grid md:grid-cols-[260px_1fr] md:gap-8">
-        <img
-          src="/About%20me/About%20me2.jpg"
+        <Image
+          src={PORTRAIT}
           alt="Paulius on the road"
+          sizes="(min-width: 768px) 260px, 100vw"
           className="h-44 w-full rounded-2xl object-cover object-center md:h-full md:max-h-[320px]"
-          loading="lazy"
         />
         <div className="mt-6 space-y-5 md:mt-0">
           <div className="space-y-2">

@@ -1,14 +1,12 @@
 import Link from "next/link";
+import Image from "next/image";
+import { ABOUT_IMAGES } from "../../_lib/aboutImages";
 
 export const metadata = {
   title: "About Me · TestedRoutes",
   description:
     "Paulius Pikelis – 15+ years of independent travel across 140+ countries. Every route in these guides is personally tested, from day hikes to overland expeditions.",
 };
-
-function aboutAsset(filename) {
-  return "/About%20me/" + encodeURIComponent(filename);
-}
 
 const ROAD_EXPEDITIONS = [
   { title: "Mongol Rally", file: "Mongol rally.jpg", alt: "Convoy vehicles on a long-distance rally stage across open terrain" },
@@ -38,9 +36,11 @@ export default function AboutMePage() {
     <main className="mx-auto flex max-w-7xl flex-col gap-10 px-6 pb-16 pt-8">
       <section className="grid gap-6 rounded-[28px] bg-white p-6 shadow-sm ring-1 ring-slate-200 md:grid-cols-[1.1fr_0.9fr]">
         {/* Portrait leads on mobile; desktop keeps text left, photo right. */}
-        <img
-          src={aboutAsset("About me2.jpg")}
+        <Image
+          src={ABOUT_IMAGES["About me2.jpg"]}
           alt="Portrait of the author on the road"
+          sizes="(min-width: 768px) 45vw, 100vw"
+          priority
           className="h-56 w-full rounded-[18px] object-cover object-center shadow-[0_20px_60px_rgba(0,0,0,0.08)] md:order-2 md:h-full md:min-h-[320px] md:max-h-[420px]"
         />
         <div className="space-y-4 md:order-1">
@@ -97,11 +97,11 @@ export default function AboutMePage() {
             <p className="text-sm text-slate-600">This perspective shapes how each guide is structured.</p>
           </div>
           <div className="overflow-hidden rounded-2xl shadow-sm ring-1 ring-slate-200">
-            <img
-              src={aboutAsset("Countries_visited v2.jpg")}
+            <Image
+              src={ABOUT_IMAGES["Countries_visited v2.jpg"]}
               alt="World map highlighting countries where trips were planned and tested in person"
+              sizes="(min-width: 768px) 45vw, 100vw"
               className="h-full min-h-[11rem] w-full object-cover object-center"
-              loading="lazy"
             />
           </div>
         </div>
@@ -127,11 +127,11 @@ export default function AboutMePage() {
             The result is a route you can follow with confidence, not just inspiration on a page.
           </p>
         </div>
-        <img
-          src={aboutAsset("Why these guides work.jpg")}
+        <Image
+          src={ABOUT_IMAGES["Why these guides work.jpg"]}
           alt="Why these guides work better in real life"
+          sizes="(min-width: 768px) 45vw, 100vw"
           className="aspect-[4/3] w-full rounded-2xl object-cover object-center shadow-sm ring-1 ring-slate-200"
-          loading="lazy"
         />
       </section>
 
@@ -140,11 +140,11 @@ export default function AboutMePage() {
         <div className="grid gap-4 md:grid-cols-3">
           {ROAD_EXPEDITIONS.map((item) => (
             <div key={item.title} className="rounded-2xl bg-white p-4 shadow-sm ring-1 ring-slate-200">
-              <img
-                src={aboutAsset(item.file)}
+              <Image
+                src={ABOUT_IMAGES[item.file]}
                 alt={item.alt}
+                sizes="(min-width: 768px) 33vw, 100vw"
                 className="aspect-[4/3] w-full rounded-2xl object-cover object-center"
-                loading="lazy"
               />
               <p className="mt-3 text-sm font-semibold text-slate-900">{item.title}</p>
             </div>
@@ -157,11 +157,11 @@ export default function AboutMePage() {
         <div className="grid gap-3 md:grid-cols-3">
           {MOUNTAINS.map((item) => (
             <div key={item.caption} className="rounded-2xl bg-white p-4 shadow-sm ring-1 ring-slate-200">
-              <img
-                src={aboutAsset(item.file)}
+              <Image
+                src={ABOUT_IMAGES[item.file]}
                 alt={item.alt}
+                sizes="(min-width: 768px) 33vw, 100vw"
                 className="aspect-[4/3] w-full rounded-2xl object-cover object-center"
-                loading="lazy"
               />
               <p className="mt-3 text-sm font-semibold text-slate-900">{item.caption}</p>
             </div>
@@ -178,11 +178,11 @@ export default function AboutMePage() {
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {EXTREME_EXPERIENCES.map((item) => (
             <div key={item.label} className="rounded-2xl bg-white p-4 shadow-sm ring-1 ring-slate-200">
-              <img
-                src={aboutAsset(item.file)}
+              <Image
+                src={ABOUT_IMAGES[item.file]}
                 alt={item.alt}
+                sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
                 className="aspect-[4/3] w-full rounded-2xl object-cover object-center"
-                loading="lazy"
               />
               <p className="mt-2 text-center text-[11px] font-medium leading-snug text-slate-600">{item.label}</p>
             </div>
@@ -203,11 +203,11 @@ export default function AboutMePage() {
             So you spend less time planning and more time exploring.
           </p>
         </div>
-        <img
-          src={aboutAsset("Why I do this.jpg")}
+        <Image
+          src={ABOUT_IMAGES["Why I do this.jpg"]}
           alt="Why I do this – turning travel experience into practical guides"
+          sizes="(min-width: 768px) 45vw, 100vw"
           className="aspect-[4/3] w-full rounded-2xl object-cover object-center shadow-sm ring-1 ring-slate-200"
-          loading="lazy"
         />
       </section>
 

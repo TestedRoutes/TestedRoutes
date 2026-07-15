@@ -1,29 +1,43 @@
-// Shared category pill data + asset helper used on Home and Inspire pages.
-// Placeholder images — to be replaced with category-specific photos later.
-const CATEGORY_PILLS = [
-  { label: "Hiking", file: "Toubkal 2025.jpg" },
-  { label: "Mountaineering", file: "7_Summits_Denali 2022.jpg" },
-  { label: "Skiing", file: "Summits Alaska 2019 v2.jpg" },
-  { label: "Diving", file: "Sharks Fiji 2025.jpg" },
-  { label: "Rafting", file: "Rafting Zambia 2019.jpg" },
-  { label: "Kayaking", file: "Milford Sound - NZ 2025.jpg" },
-  { label: "Via Ferrata", file: "Ice climbing Italy 2019.jpg" },
-  { label: "Bungee", file: "Victoria falls 2019.jpg" },
-  { label: "Seven Summits", file: "7_Summits_Kilimanjaro 2016.jpg" },
-  { label: "Africa Rally", file: "Africa Rally - Guinea 2024.jpg" },
-  { label: "Safari", file: "Africa rally - Desert 2023.jpg" },
-  { label: "Roadtrips", file: "Mongol rally.jpg" },
-  { label: "Switzerland", file: "Matterhorn 2020.jpg" },
-  { label: "Iceland", file: "Mt Cook - NZ 2026.jpg" },
-];
+// Shared category pill data used on Home, Guides and Inspire pages.
+// Thumbnails live in content/category-pills/ — 640px web-sized copies
+// generated from the content/about originals; regenerate there if a
+// pill photo changes. Placeholder images — to be replaced with
+// category-specific photos later.
+import toubkal from "../../content/category-pills/Toubkal 2025.jpg";
+import denali from "../../content/category-pills/7_Summits_Denali 2022.jpg";
+import summitsAlaska from "../../content/category-pills/Summits Alaska 2019 v2.jpg";
+import sharksFiji from "../../content/category-pills/Sharks Fiji 2025.jpg";
+import raftingZambia from "../../content/category-pills/Rafting Zambia 2019.jpg";
+import milfordSound from "../../content/category-pills/Milford Sound - NZ 2025.jpg";
+import iceClimbing from "../../content/category-pills/Ice climbing Italy 2019.jpg";
+import victoriaFalls from "../../content/category-pills/Victoria falls 2019.jpg";
+import kilimanjaro from "../../content/category-pills/7_Summits_Kilimanjaro 2016.jpg";
+import africaRallyGuinea from "../../content/category-pills/Africa Rally - Guinea 2024.jpg";
+import africaRallyDesert from "../../content/category-pills/Africa rally - Desert 2023.jpg";
+import mongolRally from "../../content/category-pills/Mongol rally.jpg";
+import matterhorn from "../../content/category-pills/Matterhorn 2020.jpg";
+import mtCook from "../../content/category-pills/Mt Cook - NZ 2026.jpg";
 
-export function aboutAsset(filename) {
-  return "/About%20me/" + encodeURIComponent(filename);
-}
+const CATEGORY_PILLS = [
+  { label: "Hiking", image: toubkal },
+  { label: "Mountaineering", image: denali },
+  { label: "Skiing", image: summitsAlaska },
+  { label: "Diving", image: sharksFiji },
+  { label: "Rafting", image: raftingZambia },
+  { label: "Kayaking", image: milfordSound },
+  { label: "Via Ferrata", image: iceClimbing },
+  { label: "Bungee", image: victoriaFalls },
+  { label: "Seven Summits", image: kilimanjaro },
+  { label: "Africa Rally", image: africaRallyGuinea },
+  { label: "Safari", image: africaRallyDesert },
+  { label: "Roadtrips", image: mongolRally },
+  { label: "Switzerland", image: matterhorn },
+  { label: "Iceland", image: mtCook },
+];
 
 export function getCategoryItems() {
   return CATEGORY_PILLS.map((item) => ({
     label: item.label,
-    src: aboutAsset(item.file),
+    src: item.image.src,
   }));
 }

@@ -3,7 +3,9 @@ import { loadGuides, toGuideCard } from "../../_lib/loadGuides";
 import { fetchGuideCount } from "../../_lib/sanityStory";
 import { getRequestCurrency } from "../../_lib/currency";
 import { LOCALES, getDict, localePath } from "../../_lib/i18n";
-import { aboutAsset, getCategoryItems } from "../../_lib/categoryPills";
+import Image from "next/image";
+import { getCategoryItems } from "../../_lib/categoryPills";
+import { ABOUT_IMAGES } from "../../_lib/aboutImages";
 import GuidesBrowse from "./GuidesBrowse";
 
 const EXTREME_FILES = [
@@ -99,11 +101,11 @@ export default async function GuidesIndexPage({ lang = "en" }) {
               key={label}
               className="overflow-hidden rounded-2xl bg-white shadow-sm ring-1 ring-slate-200"
             >
-              <img
-                src={aboutAsset(EXTREME_FILES[i])}
+              <Image
+                src={ABOUT_IMAGES[EXTREME_FILES[i]]}
                 alt={label}
+                sizes="(min-width: 1024px) 25vw, 50vw"
                 className="aspect-[4/3] w-full object-cover object-center"
-                loading="lazy"
               />
               <p className="p-3 text-center text-[11px] font-medium leading-snug text-slate-600">
                 {label}
