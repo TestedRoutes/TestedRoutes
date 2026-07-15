@@ -11,7 +11,7 @@ export const metadata = {
 const ROAD_EXPEDITIONS = [
   { title: "Mongol Rally", file: "Mongol rally.jpg", alt: "Convoy vehicles on a long-distance rally stage across open terrain" },
   { title: "Africa Rally", file: "Africa rally - Desert 2023.jpg", alt: "Desert driving during the Africa Rally" },
-  { title: "Australia Rally", file: "Australia.JPG", alt: "Remote dirt route and wide landscape during a long-distance rally stage" },
+  { title: "Australia Rally", file: "Australia 2.JPG", alt: "Remote dirt route and wide landscape during a long-distance rally stage" },
 ];
 
 const MOUNTAINS = [
