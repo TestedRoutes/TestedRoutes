@@ -8,7 +8,7 @@ import { loadGuides } from "../_lib/loadGuides";
 
 
 const SITE_URL = "https://testedroutes.com";
-const DEFAULT_OG = "/images/triftbrucke-hero.jpg";
+const DEFAULT_OG = "/images/og-default.jpg";
 const DEFAULT_DESCRIPTION =
   "Premium travel guides built from 15 years of independent travel across 140 countries – every route personally tested by Paulius Pikelis.";
 

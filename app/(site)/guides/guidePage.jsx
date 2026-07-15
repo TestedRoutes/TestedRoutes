@@ -47,7 +47,7 @@ export async function buildGuideMetadata(lang, slug) {
     seo.meta_description ||
     guide.metadata?.hero?.subtitle ||
     `${t.metaDescPrefix} ${guide.title}.`;
-  const image = guide.image || "/images/triftbrucke-hero.jpg";
+  const image = guide.image || "/images/og-default.jpg";
   const canonical = localePath(lang, `/guides/${guide.slug}`);
   const languages = await guideLanguageAlternates(guide, lang, slug);
 

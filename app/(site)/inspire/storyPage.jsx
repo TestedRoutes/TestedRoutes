@@ -210,7 +210,7 @@ export async function buildStoryMetadata(lang, slug) {
   const title = `${seo.meta_title || story.title} · TestedRoutes`;
   const description =
     seo.meta_description || story.metadata?.hero?.subtitle || story.title;
-  const image = story.heroPhoto || "/images/triftbrucke-hero.jpg";
+  const image = story.heroPhoto || "/images/og-default.jpg";
   const canonical = localePath(lang, `/inspire/${story.slug}`);
   const languages = await storyLanguageAlternates(story, lang, slug);
 
