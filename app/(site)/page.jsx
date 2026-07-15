@@ -66,7 +66,7 @@ export default async function HomePage() {
               <span className="font-semibold text-slate-900">5 of 7 Summits</span> climbed
             </li>
             <li className="rounded-2xl border border-slate-200 bg-slate-50 px-4 py-2.5">
-              <span className="font-semibold text-slate-900">2 Africa Rally</span> expeditions
+              <span className="font-semibold text-slate-900">4 Africa Rally</span> expeditions
             </li>
             <li className="rounded-2xl border border-slate-200 bg-slate-50 px-4 py-2.5 sm:col-span-2">
               <span className="font-semibold text-slate-900">100+ bucket-list experiences</span> completed
