@@ -125,10 +125,12 @@ const klaroConfig = {
       default: true,
     },
 
-    // Anonymous, cookie-free site analytics. PostHog is configured for
-    // in-memory storage today, so we technically don't *need* consent —
-    // but listing it here lets buyers see and toggle it cleanly if we
-    // ever switch to cookie-mode persistence.
+    // Anonymous, cookie-free site analytics. PostHog is initialised HERE,
+    // on consent, and nowhere else — before this callback runs with
+    // consent=true the SDK makes zero requests (no config, no autocapture,
+    // no replay). Klaro invokes the callback on banner accept AND on every
+    // load with stored consent, so returning visitors re-init seamlessly;
+    // a mid-session revoke flips capturing off without a reload.
     {
       name: "posthog",
       title: "PostHog (anonymous analytics)",
@@ -137,7 +139,36 @@ const klaroConfig = {
       required: false,
       default: false,
       description:
-        "Anonymous, cookie-free site analytics. Currently uses in-memory storage only.",
+        "Anonymous, cookie-free site analytics. Runs only after you accept analytics.",
+      callback: (consent) => {
+        if (typeof window === "undefined") return;
+        if (!process.env.NEXT_PUBLIC_POSTHOG_KEY) return;
+        import("posthog-js").then(({ default: posthog }) => {
+          if (consent) {
+            if (!posthog.__loaded) {
+              posthog.init(process.env.NEXT_PUBLIC_POSTHOG_KEY, {
+                api_host: process.env.NEXT_PUBLIC_POSTHOG_HOST,
+                capture_pageview: false,
+                persistence: "memory",
+                person_profiles: "identified_only",
+              });
+            }
+            // Normalise any stale stored opt-out; null suppresses the
+            // "$opt_in" noise event this would otherwise send per load.
+            posthog.opt_in_capturing({ captureEventName: null });
+            // Send the landing pageview the tracker had to hold while
+            // consent was still unknown (see PostHogProvider.jsx).
+            if (window.__trPendingPageview) {
+              posthog.capture("$pageview", {
+                $current_url: window.__trPendingPageview,
+              });
+              window.__trPendingPageview = null;
+            }
+          } else if (posthog.__loaded) {
+            posthog.opt_out_capturing();
+          }
+        });
+      },
     },
 
     // ── Marketing platforms — none active yet ──
