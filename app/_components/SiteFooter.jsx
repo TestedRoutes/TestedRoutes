@@ -30,9 +30,6 @@ export default function SiteFooter() {
             <Link href="/refund-policy" className="transition hover:text-slate-700">
               Refunds
             </Link>
-            <Link href="/accessibility" className="transition hover:text-slate-700">
-              Accessibility
-            </Link>
             <Link href="/security" className="transition hover:text-slate-700">
               Security
             </Link>

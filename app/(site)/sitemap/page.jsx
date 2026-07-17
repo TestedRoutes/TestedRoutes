@@ -88,7 +88,6 @@ export default async function SitemapPage() {
         <SitemapItem href="/terms" label="Terms of service" />
         <SitemapItem href="/privacy" label="Privacy policy" />
         <SitemapItem href="/refund-policy" label="Refund policy" />
-        <SitemapItem href="/accessibility" label="Accessibility statement" />
         <SitemapItem href="/security" label="Security" />
         <SitemapItem href="/affiliate-disclosure" label="Affiliate disclosure" />
       </SitemapSection>

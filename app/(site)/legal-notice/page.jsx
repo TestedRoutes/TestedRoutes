@@ -3,10 +3,10 @@ import Link from "next/link";
 export const metadata = {
   title: "Legal Notice · TestedRoutes",
   description:
-    "Legal entity details, registration, and dispute-resolution information for testedroutes.com.",
+    "Legal entity details, registration, and payment-processor information for testedroutes.com.",
 };
 
-const LAST_UPDATED = "30 April 2026";
+const LAST_UPDATED = "16 July 2026";
 
 export default function LegalNoticePage() {
   return (
@@ -23,30 +23,47 @@ export default function LegalNoticePage() {
       <section className="space-y-3 rounded-[28px] bg-white p-8 shadow-sm ring-1 ring-slate-200">
         <h2 className="text-lg font-semibold text-slate-900">1. Operator</h2>
         <dl className="grid grid-cols-1 gap-x-6 gap-y-3 text-sm leading-relaxed text-slate-600 sm:grid-cols-[160px_1fr]">
-          <dt className="font-semibold text-slate-900">Legal entity</dt>
+          <dt className="font-semibold text-slate-900">Company</dt>
           <dd>
-            <strong>MB TestedRoutes</strong> – mažoji bendrija (small private
-            company) registered in the Republic of Lithuania.
+            <strong>MB &bdquo;Tested routes&ldquo;</strong>, operating as
+            TestedRoutes
           </dd>
 
-          <dt className="font-semibold text-slate-900">Registered address</dt>
-          <dd>
-            [Registered address – to be completed on registration]
-          </dd>
+          <dt className="font-semibold text-slate-900">Legal form</dt>
+          <dd>Small partnership (mažoji bendrija), Republic of Lithuania</dd>
 
           <dt className="font-semibold text-slate-900">Company code</dt>
-          <dd>[Company code – to be completed on registration]</dd>
+          <dd>308073804</dd>
 
-          <dt className="font-semibold text-slate-900">VAT number</dt>
-          <dd>[VAT number – to be completed on registration]</dd>
+          <dt className="font-semibold text-slate-900">Registered office</dt>
+          <dd>
+            Kėdainių r. sav., Vilainių sen., Vilainių k., Melioratorių g. 10,
+            LT-58103, Lithuania
+          </dd>
 
-          <dt className="font-semibold text-slate-900">Management</dt>
-          <dd>Paulius Pikelis, founder and director</dd>
+          <dt className="font-semibold text-slate-900">Register</dt>
+          <dd>
+            Register of Legal Entities of the Republic of Lithuania (VĮ
+            Registrų centras)
+          </dd>
 
-          <dt className="font-semibold text-slate-900">Contact email</dt>
+          <dt className="font-semibold text-slate-900">Director</dt>
+          <dd>Šarūnas Pikelis</dd>
+
+          <dt className="font-semibold text-slate-900">VAT</dt>
+          <dd>
+            Registered Lithuanian VAT payer with effect from 1 August 2026;
+            the VAT identification number will be published here once issued.
+          </dd>
+
+          <dt className="font-semibold text-slate-900">Contact</dt>
           <dd>
             <a className="underline" href="mailto:hello@testedroutes.com">
               hello@testedroutes.com
+            </a>{" "}
+            | legal notices:{" "}
+            <a className="underline" href="mailto:legal@testedroutes.com">
+              legal@testedroutes.com
             </a>
           </dd>
         </dl>
@@ -55,73 +72,26 @@ export default function LegalNoticePage() {
       <section className="space-y-3 rounded-[28px] bg-white p-8 shadow-sm ring-1 ring-slate-200">
         <h2 className="text-lg font-semibold text-slate-900">2. Payment processor</h2>
         <p className="text-sm leading-relaxed text-slate-600">
-          Payments on testedroutes.com are processed by{" "}
-          <strong>Polar Software Inc.</strong> as our Merchant of Record. Polar
-          appears as the seller on your invoice, handles payment processing and
-          customer billing, and is responsible for collecting and remitting any
-          applicable sales taxes (including EU VAT). See our{" "}
+          Payments on testedroutes.com are processed by Polar Software Inc. as
+          our Merchant of Record: Polar appears as the seller on your invoice
+          and handles billing and applicable sales taxes (including EU VAT).
+          Full payment terms:{" "}
           <Link className="underline" href="/terms">
             Terms of Service
-          </Link>{" "}
-          for the full payment terms.
-        </p>
-      </section>
-
-      <section className="space-y-3 rounded-[28px] bg-white p-8 shadow-sm ring-1 ring-slate-200">
-        <h2 className="text-lg font-semibold text-slate-900">3. Online dispute resolution</h2>
-        <p className="text-sm leading-relaxed text-slate-600">
-          The European Commission provides an Online Dispute Resolution (ODR)
-          platform for consumer disputes:{" "}
-          <a
-            className="underline"
-            href="https://ec.europa.eu/consumers/odr"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            ec.europa.eu/consumers/odr
-          </a>
-          .
-        </p>
-        <p className="text-sm leading-relaxed text-slate-600">
-          We are not currently obliged, nor have we agreed, to participate in
-          dispute resolution proceedings before a consumer arbitration board.
-          We will, however, always try to resolve any dispute informally first –
-          please email{" "}
-          <a className="underline" href="mailto:hello@testedroutes.com">
-            hello@testedroutes.com
-          </a>{" "}
-          and give us a chance to make it right.
-        </p>
-      </section>
-
-      <section className="space-y-3 rounded-[28px] bg-white p-8 shadow-sm ring-1 ring-slate-200">
-        <h2 className="text-lg font-semibold text-slate-900">4. Editorial responsibility</h2>
-        <p className="text-sm leading-relaxed text-slate-600">
-          Responsible for the editorial content of testedroutes.com (per § 18
-          (2) MStV / Article 14 of the Lithuanian Law on Provision of
-          Information to the Public, where applicable):
-        </p>
-        <p className="text-sm leading-relaxed text-slate-600">
-          Paulius Pikelis, c/o MB TestedRoutes, [Registered address].
-        </p>
-      </section>
-
-      <section className="space-y-3 rounded-[28px] bg-white p-8 shadow-sm ring-1 ring-slate-200">
-        <h2 className="text-lg font-semibold text-slate-900">5. Accessibility, security, privacy</h2>
-        <p className="text-sm leading-relaxed text-slate-600">
-          See also our{" "}
-          <Link className="underline" href="/accessibility">
-            Accessibility Statement
-          </Link>
-          ,{" "}
-          <Link className="underline" href="/security">
-            Security &amp; Vulnerability Disclosure Policy
-          </Link>
-          , and{" "}
-          <Link className="underline" href="/privacy">
-            Privacy Policy
           </Link>
           .
+        </p>
+      </section>
+
+      <section className="space-y-3 rounded-[28px] bg-white p-8 shadow-sm ring-1 ring-slate-200">
+        <h2 className="text-lg font-semibold text-slate-900">3. Editorial responsibility</h2>
+        <p className="text-sm leading-relaxed text-slate-600">
+          Responsible for the editorial content of testedroutes.com:
+        </p>
+        <p className="text-sm leading-relaxed text-slate-600">
+          Paulius Pikelis, c/o MB &bdquo;Tested routes&ldquo;, Kėdainių r.
+          sav., Vilainių sen., Vilainių k., Melioratorių g. 10, LT-58103,
+          Lithuania.
         </p>
       </section>
     </main>

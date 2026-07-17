@@ -6,7 +6,7 @@ export const metadata = {
     "30-day no-questions-asked refunds on every TestedRoutes guide. How to request a refund and how long it takes.",
 };
 
-const LAST_UPDATED = "30 April 2026";
+const LAST_UPDATED = "16 July 2026";
 
 export default function RefundPolicyPage() {
   return (
@@ -24,8 +24,8 @@ export default function RefundPolicyPage() {
         <h2 className="text-lg font-semibold text-slate-900">1. The 30-day window</h2>
         <p className="text-sm leading-relaxed text-slate-600">
           You can request a full refund within 30 days of your purchase, for any
-          reason. You don't need to justify the request. The 30 days run from the
-          date of the order confirmation email sent by our payment processor.
+          reason. The 30 days run from the date of the order confirmation email
+          sent by our payment processor.
         </p>
       </section>
 
@@ -43,11 +43,11 @@ export default function RefundPolicyPage() {
             <span className="mt-0.5 shrink-0 text-slate-400">•</span>the email address you used at checkout, and
           </li>
           <li className="flex gap-2">
-            <span className="mt-0.5 shrink-0 text-slate-400">•</span>the order ID from your order confirmation email (or the guide name if you can't find the order ID).
+            <span className="mt-0.5 shrink-0 text-slate-400">•</span>the order ID from your order confirmation email.
           </li>
         </ul>
         <p className="text-sm leading-relaxed text-slate-600">
-          We aim to respond within two business days.
+          We aim to respond within five business days.
         </p>
       </section>
 
@@ -86,6 +86,14 @@ export default function RefundPolicyPage() {
           unusable – please get in touch anyway. We'd rather make it right than
           leave it.
         </p>
+        <p className="text-sm leading-relaxed text-slate-600">
+          <strong>Fair use.</strong> Where we detect a pattern of repeated
+          purchase-and-refund across multiple guides that indicates the policy
+          is being used to obtain guides without payment, we may, at our
+          reasonable discretion, decline further refunds. If your bank has
+          already reversed a payment through a chargeback, no separate refund
+          is owed for the same transaction.
+        </p>
       </section>
 
       <section className="space-y-3 rounded-[28px] bg-white p-8 shadow-sm ring-1 ring-slate-200">
@@ -121,10 +129,6 @@ export default function RefundPolicyPage() {
           Refund requests:{" "}
           <a className="underline" href="mailto:refunds@testedroutes.com">
             refunds@testedroutes.com
-          </a>
-          . General questions:{" "}
-          <a className="underline" href="mailto:hello@testedroutes.com">
-            hello@testedroutes.com
           </a>
           . Full terms in our{" "}
           <Link className="underline" href="/terms">

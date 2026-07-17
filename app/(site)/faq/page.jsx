@@ -37,7 +37,7 @@ const SECTIONS = [
     items: [
       {
         q: "What's your refund policy?",
-        a: "30 days, no questions asked. Email refunds@testedroutes.com with the email you used at checkout and the order ID, and we'll refund you to the original payment method. We aim to reply within two business days.",
+        a: "30 days, no questions asked. Email refunds@testedroutes.com with the email you used at checkout and the order ID, and we'll refund you to the original payment method. We aim to respond within five business days.",
       },
       {
         q: "Can I get a refund if I've already downloaded the guide?",
@@ -101,7 +101,7 @@ const SECTIONS = [
       },
       {
         q: "Are the site and guides accessible?",
-        a: "We aim for WCAG 2.1 AA on the website. Our PDFs are designed for clear reading but don't yet meet PDF/UA standards – tagged-PDF support is on the 2026 roadmap. See our Accessibility Statement for the full status and how to send feedback.",
+        a: "We aim for WCAG 2.1 AA on the website. Our PDFs are designed for clear reading but don't yet meet PDF/UA standards – tagged-PDF support is on the roadmap. If you hit an accessibility barrier, email hello@testedroutes.com and we'll help.",
       },
     ],
   },

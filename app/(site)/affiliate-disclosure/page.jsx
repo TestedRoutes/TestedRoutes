@@ -6,7 +6,7 @@ export const metadata = {
     "How affiliate links work on testedroutes.com, why we use them, and which programs we participate in.",
 };
 
-const LAST_UPDATED = "8 May 2026";
+const LAST_UPDATED = "16 July 2026";
 
 export default function AffiliateDisclosurePage() {
   return (
@@ -33,7 +33,8 @@ export default function AffiliateDisclosurePage() {
           example, booking a hotel on Booking.com, a tour on GetYourGuide, or
           buying gear on Amazon – we may earn a commission. The price you pay
           is exactly the same as if you went to that site directly. There is
-          never an extra cost to you.
+          never an extra cost to you. Not every link on the site is an
+          affiliate link.
         </p>
       </section>
 

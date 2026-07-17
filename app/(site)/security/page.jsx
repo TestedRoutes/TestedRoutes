@@ -4,7 +4,7 @@ export const metadata = {
     "How to report a security issue with testedroutes.com. We treat reports promptly and won't take legal action against good-faith research.",
 };
 
-const LAST_UPDATED = "30 April 2026";
+const LAST_UPDATED = "16 July 2026";
 
 export default function SecurityPage() {
   return (
@@ -30,8 +30,8 @@ export default function SecurityPage() {
           </a>{" "}
           with a description of the issue and step-by-step reproduction
           instructions. Where possible, include affected URLs, screenshots, and
-          any relevant payload or request data. We will acknowledge your report
-          within two business days.
+          any relevant payload or request data. We aim to acknowledge your
+          report within five business days.
         </p>
       </section>
 
@@ -76,11 +76,11 @@ export default function SecurityPage() {
       <section className="space-y-3 rounded-[28px] bg-white p-8 shadow-sm ring-1 ring-slate-200">
         <h2 className="text-lg font-semibold text-slate-900">4. Rewards</h2>
         <p className="text-sm leading-relaxed text-slate-600">
-          We do not run a paid bug-bounty programme by default. For genuinely
-          serious findings (e.g. authentication bypass, data exposure, payment
-          manipulation) we may, at our discretion, offer a reward or recognition
-          for responsible disclosure. We will discuss any reward on a
-          case-by-case basis.
+          We do not run a paid bug-bounty programme, and no reward is
+          guaranteed. For genuinely serious findings (e.g. authentication
+          bypass, data exposure, payment manipulation) we may, at our sole
+          discretion, offer a reward or recognition for responsible
+          disclosure, decided case by case.
         </p>
       </section>
 
