@@ -27,7 +27,7 @@ export default function RootLayout({ children }) {
             https://classic.avantlink.com verification instructions. */}
         <script
           type="text/javascript"
-          src="http://classic.avantlink.com/affiliate_app_confirm.php?mode=js&authResponse=ee226dc3b041a69412e250717f8be15fce3e91d9"
+          src="https://classic.avantlink.com/affiliate_app_confirm.php?mode=js&authResponse=ee226dc3b041a69412e250717f8be15fce3e91d9"
         ></script>
       </head>
       <body className="bg-brand-cream font-sans text-brand-ink">
