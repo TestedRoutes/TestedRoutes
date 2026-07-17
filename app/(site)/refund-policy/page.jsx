@@ -6,7 +6,7 @@ export const metadata = {
     "30-day no-questions-asked refunds on every TestedRoutes guide. How to request a refund and how long it takes.",
 };
 
-const LAST_UPDATED = "16 July 2026";
+const LAST_UPDATED = "17 July 2026";
 
 export default function RefundPolicyPage() {
   return (
@@ -104,8 +104,8 @@ export default function RefundPolicyPage() {
           of withdrawal for distance purchases under the EU Consumer Rights
           Directive (Article 16(m)) or its UK equivalent. Because our guides
           are digital content delivered immediately on payment, you waive
-          that 14-day right at checkout when you request immediate delivery
-          – see{" "}
+          that 14-day right when you place your order and request immediate
+          delivery – see{" "}
           <Link className="underline" href="/terms">
             Terms of Service section&nbsp;3
           </Link>
