@@ -24,7 +24,10 @@
  *   BEEHIIV_API_KEY          (optional) Beehiiv API key — if unset, tagging is skipped
  *   BEEHIIV_PUBLICATION_ID   (optional) Beehiiv publication id, e.g. pub_…
  */
-import { Webhooks } from "@polar-sh/nextjs";
+import {
+  validateEvent,
+  WebhookVerificationError,
+} from "@polar-sh/sdk/webhooks";
 import { revalidatePath } from "next/cache";
 import { writeClient } from "../../../../sanity/lib/writeClient";
 
@@ -150,37 +153,32 @@ async function tagBuyerInBeehiiv({ email, slug }) {
   }
 }
 
-const polarHandler = WEBHOOK_SECRET
-  ? Webhooks({
-      webhookSecret: WEBHOOK_SECRET,
-      onOrderPaid: async (payload) => {
-        const productId =
-          payload?.data?.product_id ||
-          payload?.data?.productId ||
-          payload?.data?.product?.id;
-        if (!productId) {
-          console.warn("[polar-webhook] order.paid payload had no product id", payload?.data);
-          return;
-        }
-        const story = await fetchStoryByProductId(productId);
-        if (!story) {
-          console.warn(`[polar-webhook] no story found for product ${productId}`);
-          return;
-        }
-        await bumpPurchaseCount(story);
+async function handleOrderPaid(payload) {
+  const productId =
+    payload?.data?.product_id ||
+    payload?.data?.productId ||
+    payload?.data?.product?.id;
+  if (!productId) {
+    console.warn("[polar-webhook] order.paid payload had no product id", payload?.data);
+    return;
+  }
+  const story = await fetchStoryByProductId(productId);
+  if (!story) {
+    console.warn(`[polar-webhook] no story found for product ${productId}`);
+    return;
+  }
+  await bumpPurchaseCount(story);
 
-        const email = extractBuyerEmail(payload);
-        if (email) {
-          await tagBuyerInBeehiiv({ email, slug: story.slug });
-        } else {
-          console.warn("[polar-webhook] no buyer email in order.paid payload; skipping Beehiiv tag");
-        }
-      },
-    })
-  : null;
+  const email = extractBuyerEmail(payload);
+  if (email) {
+    await tagBuyerInBeehiiv({ email, slug: story.slug });
+  } else {
+    console.warn("[polar-webhook] no buyer email in order.paid payload; skipping Beehiiv tag");
+  }
+}
 
 export async function POST(request) {
-  if (!polarHandler) {
+  if (!WEBHOOK_SECRET) {
     return Response.json(
       { error: "POLAR_WEBHOOK_SECRET not configured in deployed environment" },
       { status: 503 },
@@ -196,8 +194,42 @@ export async function POST(request) {
   ) {
     return Response.json({ error: "missing webhook signature" }, { status: 401 });
   }
+
+  // validateEvent needs the raw body exactly as sent, so read text, not json.
+  const body = await request.text();
+  let event;
   try {
-    return await polarHandler(request);
+    event = validateEvent(
+      body,
+      {
+        "webhook-id": headers.get("webhook-id"),
+        "webhook-timestamp": headers.get("webhook-timestamp"),
+        "webhook-signature": headers.get("webhook-signature"),
+      },
+      WEBHOOK_SECRET,
+    );
+  } catch (err) {
+    if (err instanceof WebhookVerificationError) {
+      return Response.json({ error: "invalid webhook signature" }, { status: 403 });
+    }
+    console.error("[polar-webhook] signature validation threw:", err);
+    return Response.json({ error: "webhook validation error" }, { status: 500 });
+  }
+
+  try {
+    switch (event.type) {
+      case "order.paid":
+        await handleOrderPaid(event);
+        break;
+      case "customer.state_changed":
+        // TODO: no customer accounts on the site today. When subscriptions
+        // launch, sync entitlement state (active benefits) from
+        // event.data here.
+        break;
+      default:
+        break;
+    }
+    return Response.json({ received: true });
   } catch (err) {
     console.error("[polar-webhook] handler threw:", err);
     return Response.json(
