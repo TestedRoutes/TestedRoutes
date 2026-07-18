@@ -246,17 +246,29 @@ def clip_start(name):
 
 
 def cut_clips(folder, story_id, ffmpeg, force=False):
-    """7s muted 720p clip per source video, named after its master so the
-    _{n}- slot number survives into generated/. Returns [(name, slot), ...]
-    in authored order."""
+    """7s muted clip per source video, named after its master so the _{n}-
+    slot number survives into generated/. Returns [(name, slot), ...] in
+    authored order.
+
+    Encoded so the SHORTER side is 1080 (never upscaled): landscape -> 1920x1080,
+    portrait -> 1080x1920. Scaling only the long side to 720 left portrait clips
+    ~405px wide, which looked soft filling a phone frame. CRF 23 + a 5 Mbps cap
+    keeps them sharp but light; +faststart puts the moov atom first so playback
+    can start before the whole file downloads (smooth on mobile)."""
+    scale = (
+        "scale='if(gt(iw,ih),-2,min(1080,iw))':"
+        "'if(gt(iw,ih),min(1080,ih),-2)',fps=30"
+    )
     clips = []
     for vid in source_videos(folder):
         dst = folder / "generated" / (vid.stem + ".mp4")
         if force or not dst.exists() or dst.stat().st_mtime < vid.stat().st_mtime:
             cmd = [
                 ffmpeg, "-y", "-v", "error", "-ss", str(clip_start(vid.stem)), "-t", "7", "-i", str(vid),
-                "-vf", "scale=-2:720,fps=24", "-c:v", "libx264", "-preset", "slow",
-                "-crf", "27", "-pix_fmt", "yuv420p", "-an", "-movflags", "+faststart",
+                "-vf", scale, "-c:v", "libx264", "-preset", "slow",
+                "-crf", "23", "-profile:v", "high", "-level", "4.1",
+                "-maxrate", "5M", "-bufsize", "10M",
+                "-pix_fmt", "yuv420p", "-an", "-movflags", "+faststart",
                 str(dst),
             ]
             r = subprocess.run(cmd, capture_output=True, text=True)

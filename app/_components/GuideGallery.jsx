@@ -3,19 +3,50 @@
 import { useEffect, useRef, useState } from "react";
 import { buildMediaSlides } from "./CardMediaCarousel";
 
+// Muted looping clip that downloads and plays only while at least half
+// visible — off-screen carousel slides and mosaic tiles stay paused with
+// nothing fetched. Without this every clip on the page autoplays at once,
+// which janks scrolling on mobile (a story can carry 3+ clips).
+function GalleryVideo({ src, poster, className = "" }) {
+  const ref = useRef(null);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el || typeof IntersectionObserver === "undefined") return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) el.play().catch(() => {});
+        else el.pause();
+      },
+      { threshold: 0.5 }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
+  return (
+    <video
+      ref={ref}
+      src={src}
+      poster={poster}
+      muted
+      loop
+      playsInline
+      preload="none"
+      className={className}
+    />
+  );
+}
+
 function SlideMedia({ slide, alt, eager = false, className = "" }) {
   // object-center: every frame crops from the middle of the media, so the
   // same photo/clip serves the portrait mobile frame and the landscape
   // desktop tiles without separate renditions.
   if (slide.type === "video") {
     return (
-      <video
+      <GalleryVideo
         src={slide.src}
         poster={slide.poster}
-        muted
-        loop
-        playsInline
-        autoPlay
         className={`h-full w-full object-cover object-center ${className}`}
       />
     );
@@ -194,14 +225,10 @@ export default function GuideGallery({
             <div className="flex flex-col gap-4">
               {slides.map((slide, i) =>
                 slide.type === "video" ? (
-                  <video
+                  <GalleryVideo
                     key={`${i}-${slide.src}`}
                     src={slide.src}
                     poster={slide.poster}
-                    muted
-                    loop
-                    playsInline
-                    autoPlay
                     className="w-full rounded-xl"
                   />
                 ) : (
