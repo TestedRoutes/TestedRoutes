@@ -39,6 +39,12 @@ import openpyxl
 import yaml
 from PIL import Image, ImageOps
 
+try:
+    import pillow_heif
+    pillow_heif.register_heif_opener()
+except ImportError:
+    pass
+
 # Windows consoles default to cp1252, which can't print ✓ etc.
 sys.stdout.reconfigure(encoding="utf-8", errors="replace")
 sys.stderr.reconfigure(encoding="utf-8", errors="replace")
@@ -196,7 +202,7 @@ def convert_images(folder, story_id, force=False):
     out = []
     photos = sorted((folder / "photos").glob("*"))
     for p in photos:
-        if p.suffix.lower() not in (".jpg", ".jpeg", ".png", ".webp"):
+        if p.suffix.lower() not in (".jpg", ".jpeg", ".png", ".webp", ".heic", ".heif"):
             continue
         dst = gen / (p.stem + ".jpg")
         if force or not dst.exists() or dst.stat().st_mtime < p.stat().st_mtime:
