@@ -21,15 +21,6 @@ const dmSans = DM_Sans({
 export default function RootLayout({ children }) {
   return (
     <html lang="en" className={`${fraunces.variable} ${dmSans.variable}`}>
-      <head>
-        {/* TEMPORARY: AvantLink site-ownership verification (application
-            1625133, 2026-07-17). Remove once verified — see
-            https://classic.avantlink.com verification instructions. */}
-        <script
-          type="text/javascript"
-          src="https://classic.avantlink.com/affiliate_app_confirm.php?mode=js&authResponse=ee226dc3b041a69412e250717f8be15fce3e91d9"
-        ></script>
-      </head>
       <body className="bg-brand-cream font-sans text-brand-ink">
         {children}
         {/* Vercel Web Analytics — cookie-free, GDPR-compliant by design,
