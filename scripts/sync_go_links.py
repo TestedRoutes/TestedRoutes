@@ -93,9 +93,14 @@ def sanity(path, token, project, dataset, method="GET", body=None):
 
 
 def slug_from(shortlink):
-    """testedroutes.com/go/sey-x -> sey-x  (tolerates scheme + trailing /)"""
+    """testedroutes.com/go/sey-x -> sey-x  (tolerates scheme + trailing /)
+
+    Returns None for deliberate placeholders. This check must happen BEFORE
+    any path splitting: "N/A" contains a slash, so splitting first yields the
+    bogus slug "a".
+    """
     s = str(shortlink or "").strip().rstrip("/")
-    if not s:
+    if not s or s.upper().replace(" ", "") in ("N/A", "NA", "NONE", "-", "TBC"):
         return None
     s = re.sub(r"^https?://", "", s, flags=re.I)
     i = s.lower().find(REDIRECT_HOST)
