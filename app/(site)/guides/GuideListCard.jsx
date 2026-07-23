@@ -5,6 +5,7 @@ import CardMediaCarousel, {
   buildMediaSlides,
 } from "../../_components/CardMediaCarousel";
 import { localePath } from "../../_lib/i18n";
+import { tripCategoryChipClass } from "../../_lib/tripCategory";
 
 // Whole card is the link ("more information"); the Buy button jumps straight
 // to checkout for people who already know they want it.
@@ -34,8 +35,10 @@ export default function GuideListCard({ guide, t, lang = "en" }) {
           .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
           .join(" ")
       : "";
-  // One compact context line: "Weekend · Switzerland · Europe".
-  const contextLine = [pretty(guide.category), pretty(geo.country), pretty(geo.continent)]
+  // Category gets its styleguide tier color as a chip; the rest of the
+  // context stays a plain line: "Switzerland · Europe".
+  const categoryLabel = pretty(guide.category);
+  const contextLine = [pretty(geo.country), pretty(geo.continent)]
     .filter(Boolean)
     .join(" · ");
   const excerpt =
@@ -53,7 +56,7 @@ export default function GuideListCard({ guide, t, lang = "en" }) {
   return (
     <Link
       href={href}
-      className="group flex h-full flex-col overflow-hidden rounded-3xl bg-white shadow-sm ring-1 ring-slate-200 transition hover:-translate-y-1 hover:shadow-md"
+      className="group flex h-full flex-col overflow-hidden rounded-3xl bg-white shadow-card ring-1 ring-brand-line transition hover:-translate-y-1 hover:shadow-card-hover"
     >
       <div className="relative aspect-[3/4] w-full shrink-0 overflow-hidden bg-slate-100">
         {slides.length ? (
@@ -67,10 +70,17 @@ export default function GuideListCard({ guide, t, lang = "en" }) {
       {/* Fixed-height text zones so every card's rows line up across the
           grid regardless of how long each guide's copy is. */}
       <div className="flex flex-1 flex-col gap-2.5 p-4">
-        <p className="truncate text-xs uppercase tracking-[0.14em] text-slate-500">
-          {contextLine}
+        <p className="flex min-w-0 items-center gap-2 text-xs uppercase tracking-[0.14em] text-slate-500">
+          {categoryLabel ? (
+            <span
+              className={`shrink-0 rounded-full px-2.5 py-0.5 text-[11px] font-semibold normal-case tracking-normal text-brand-ink ${tripCategoryChipClass(guide.category)}`}
+            >
+              {categoryLabel}
+            </span>
+          ) : null}
+          <span className="truncate">{contextLine}</span>
         </p>
-        <h3 className="line-clamp-2 min-h-[3.5rem] text-lg font-semibold leading-snug text-slate-900">
+        <h3 className="line-clamp-2 min-h-[3.5rem] text-lg font-normal leading-snug text-slate-900">
           {guide.title}
         </h3>
         <p className="line-clamp-2 min-h-[2.5rem] text-xs leading-relaxed text-slate-500">

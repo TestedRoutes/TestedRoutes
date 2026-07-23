@@ -38,7 +38,7 @@ export default function SubscribePage() {
         <p className="text-xs uppercase tracking-[0.2em] text-slate-500">
           TestedRoutes Newsletter
         </p>
-        <h1 className="mt-3 font-serif text-3xl font-semibold text-slate-900 md:text-4xl">
+        <h1 className="mt-3 font-serif text-3xl font-light text-slate-900 md:text-4xl">
           Field-tested travel routes, in your inbox when they drop
         </h1>
         <p className="mt-4 text-base leading-relaxed text-slate-600">
@@ -61,7 +61,7 @@ export default function SubscribePage() {
           <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#5a3a2f]">
             Free with subscribing
           </p>
-          <h2 className="mt-2 font-serif text-2xl font-semibold text-slate-900">
+          <h2 className="mt-2 font-serif text-2xl font-light text-slate-900">
             5 best Switzerland day trips from Zurich – free PDF
           </h2>
           <p className="mt-2 text-sm leading-relaxed text-slate-700">
@@ -73,13 +73,13 @@ export default function SubscribePage() {
       ) : null}
 
       <section className="space-y-6 rounded-[28px] bg-white p-8 shadow-sm ring-1 ring-slate-200">
-        <h2 className="text-xl font-semibold text-slate-900">
+        <h2 className="text-xl font-normal text-slate-900">
           What you&apos;re signing up for
         </h2>
         <div className="grid gap-6 sm:grid-cols-2">
           {HIGHLIGHTS.map((h) => (
             <div key={h.title} className="space-y-1">
-              <p className="font-serif text-base font-semibold text-slate-900">
+              <p className="font-serif text-base font-medium text-slate-900">
                 {h.title}
               </p>
               <p className="text-sm leading-relaxed text-slate-600">{h.body}</p>
@@ -89,7 +89,7 @@ export default function SubscribePage() {
       </section>
 
       <section className="space-y-2 rounded-[28px] bg-white p-8 shadow-sm ring-1 ring-slate-200">
-        <h2 className="text-lg font-semibold text-slate-900">The fine print</h2>
+        <h2 className="text-lg font-normal text-slate-900">The fine print</h2>
         <p className="text-sm leading-relaxed text-slate-600">
           We use Beehiiv to send the newsletter. Your email is stored with
           them as our processor. You can unsubscribe at any time using the

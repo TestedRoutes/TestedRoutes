@@ -50,7 +50,7 @@ export default function PrivacyPage() {
   return (
     <main className="mx-auto flex max-w-3xl flex-col gap-6 px-6 pb-16 pt-8">
       <section className="rounded-[28px] bg-white p-8 shadow-sm ring-1 ring-slate-200">
-        <h1 className="text-3xl font-semibold text-slate-900 md:text-4xl">Privacy Policy</h1>
+        <h1 className="text-3xl font-light text-slate-900 md:text-4xl">Privacy Policy</h1>
         <p className="mt-2 text-xs text-slate-500">Last updated: {LAST_UPDATED}</p>
         <p className="mt-4 text-sm leading-relaxed text-slate-600">
           We collect as little personal data as we can while still running the
@@ -63,7 +63,7 @@ export default function PrivacyPage() {
       </section>
 
       <section className="space-y-3 rounded-[28px] bg-white p-8 shadow-sm ring-1 ring-slate-200">
-        <h2 className="text-lg font-semibold text-slate-900">
+        <h2 className="text-lg font-normal text-slate-900">
           1. Who is responsible for your data
         </h2>
         <p className="text-sm leading-relaxed text-slate-600">
@@ -83,11 +83,11 @@ export default function PrivacyPage() {
       </section>
 
       <section className="space-y-4 rounded-[28px] bg-white p-8 shadow-sm ring-1 ring-slate-200">
-        <h2 className="text-lg font-semibold text-slate-900">
+        <h2 className="text-lg font-normal text-slate-900">
           2. What we collect, and why
         </h2>
 
-        <h3 className="text-sm font-semibold text-slate-900">Newsletter signup</h3>
+        <h3 className="text-sm font-medium text-slate-900">Newsletter signup</h3>
         <p className="text-sm leading-relaxed text-slate-600">
           When you subscribe to our newsletter we collect your email address
           and, optionally, your preferred language and the part of the site
@@ -97,7 +97,7 @@ export default function PrivacyPage() {
           at any time.
         </p>
 
-        <h3 className="text-sm font-semibold text-slate-900">Purchases</h3>
+        <h3 className="text-sm font-medium text-slate-900">Purchases</h3>
         <p className="text-sm leading-relaxed text-slate-600">
           When you buy a guide, the transaction is processed by Polar Software
           Inc. as our Merchant of Record. At checkout Polar collects your
@@ -136,7 +136,7 @@ export default function PrivacyPage() {
           the digital guide (Art. 6(1)(b) GDPR).
         </p>
 
-        <h3 className="text-sm font-semibold text-slate-900">Analytics</h3>
+        <h3 className="text-sm font-medium text-slate-900">Analytics</h3>
         <p className="text-sm leading-relaxed text-slate-600">
           We use PostHog for product analytics and session replay: which pages
           and guides are viewed, which buttons are clicked, and anonymised
@@ -150,7 +150,7 @@ export default function PrivacyPage() {
           recordings.
         </p>
 
-        <h3 className="text-sm font-semibold text-slate-900">Error tracking</h3>
+        <h3 className="text-sm font-medium text-slate-900">Error tracking</h3>
         <p className="text-sm leading-relaxed text-slate-600">
           We use Sentry to capture technical errors so we can fix bugs. Sentry
           is configured to not capture personal information, IP addresses, or
@@ -158,7 +158,7 @@ export default function PrivacyPage() {
           and functional (Art. 6(1)(f) GDPR).
         </p>
 
-        <h3 className="text-sm font-semibold text-slate-900">
+        <h3 className="text-sm font-medium text-slate-900">
           Strictly necessary cookies
         </h3>
         <p className="text-sm leading-relaxed text-slate-600">
@@ -200,7 +200,7 @@ export default function PrivacyPage() {
           with lifetimes, are listed in the consent banner settings.
         </p>
 
-        <h3 className="text-sm font-semibold text-slate-900">Affiliate links</h3>
+        <h3 className="text-sm font-medium text-slate-900">Affiliate links</h3>
         <p className="text-sm leading-relaxed text-slate-600">
           Some of the links in our guides and on the &ldquo;Get the links
           free&rdquo; pages are affiliate links: when you click and complete a
@@ -222,7 +222,7 @@ export default function PrivacyPage() {
           gated behind your consent.
         </p>
 
-        <h3 className="text-sm font-semibold text-slate-900">
+        <h3 className="text-sm font-medium text-slate-900">
           Marketing and advertising
         </h3>
         <p className="text-sm leading-relaxed text-slate-600">
@@ -282,7 +282,7 @@ export default function PrivacyPage() {
       </section>
 
       <section className="space-y-3 rounded-[28px] bg-white p-8 shadow-sm ring-1 ring-slate-200">
-        <h2 className="text-lg font-semibold text-slate-900">
+        <h2 className="text-lg font-normal text-slate-900">
           3. Who we share your data with
         </h2>
         <p className="text-sm leading-relaxed text-slate-600">
@@ -354,7 +354,7 @@ export default function PrivacyPage() {
       </section>
 
       <section className="space-y-3 rounded-[28px] bg-white p-8 shadow-sm ring-1 ring-slate-200">
-        <h2 className="text-lg font-semibold text-slate-900">
+        <h2 className="text-lg font-normal text-slate-900">
           4. How long we keep your data
         </h2>
         <ul className="space-y-1 text-sm leading-relaxed text-slate-600">
@@ -394,7 +394,7 @@ export default function PrivacyPage() {
       </section>
 
       <section className="space-y-3 rounded-[28px] bg-white p-8 shadow-sm ring-1 ring-slate-200">
-        <h2 className="text-lg font-semibold text-slate-900">5. Your rights</h2>
+        <h2 className="text-lg font-normal text-slate-900">5. Your rights</h2>
         <p className="text-sm leading-relaxed text-slate-600">
           Under the GDPR you have the right to: access the personal data we
           hold about you, ask us to correct it if it&apos;s wrong, ask us to
@@ -430,7 +430,7 @@ export default function PrivacyPage() {
       </section>
 
       <section className="space-y-3 rounded-[28px] bg-white p-8 shadow-sm ring-1 ring-slate-200">
-        <h2 className="text-lg font-semibold text-slate-900">6. Children</h2>
+        <h2 className="text-lg font-normal text-slate-900">6. Children</h2>
         <p className="text-sm leading-relaxed text-slate-600">
           The site is not directed at children under 16, and we do not
           knowingly collect data from them.
@@ -438,7 +438,7 @@ export default function PrivacyPage() {
       </section>
 
       <section className="space-y-3 rounded-[28px] bg-white p-8 shadow-sm ring-1 ring-slate-200">
-        <h2 className="text-lg font-semibold text-slate-900">
+        <h2 className="text-lg font-normal text-slate-900">
           7. Changes to this policy
         </h2>
         <p className="text-sm leading-relaxed text-slate-600">
@@ -450,7 +450,7 @@ export default function PrivacyPage() {
       </section>
 
       <section className="space-y-3 rounded-[28px] bg-white p-8 shadow-sm ring-1 ring-slate-200">
-        <h2 className="text-lg font-semibold text-slate-900">8. Contact</h2>
+        <h2 className="text-lg font-normal text-slate-900">8. Contact</h2>
         <p className="text-sm leading-relaxed text-slate-600">
           Privacy questions:{" "}
           <a className="underline" href="mailto:hello@testedroutes.com">

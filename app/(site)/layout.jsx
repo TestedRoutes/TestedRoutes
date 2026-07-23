@@ -1,4 +1,3 @@
-import ConstructionBanner from "../_components/ConstructionBanner";
 import SiteHeader from "../_components/SiteHeader";
 import SiteFooter from "../_components/SiteFooter";
 import MobileTabBar from "../_components/MobileTabBar";
@@ -53,7 +52,6 @@ export default async function SiteLayout({ children }) {
   }));
   return (
     <PostHogProvider>
-      <ConstructionBanner />
       <SiteHeader currency={currency} guides={searchableGuides} />
       {children}
       <SiteFooter />

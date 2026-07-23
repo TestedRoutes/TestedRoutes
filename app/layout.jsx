@@ -11,6 +11,9 @@ const fraunces = Fraunces({
   subsets: ["latin"],
   variable: "--font-serif",
   display: "swap",
+  // Load the optical-size axis so headings can pin the 72pt display cut
+  // ("Fraunces 72pt Light" in the styleguide) - see globals.css @layer base.
+  axes: ["opsz"],
 });
 const dmSans = DM_Sans({
   subsets: ["latin"],

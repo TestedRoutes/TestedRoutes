@@ -175,7 +175,7 @@ export default function InspireBrowse({ cards, categoryItems = [], lang = "en" }
       ) : null}
 
       <section className="w-full min-w-0 space-y-6">
-        <h2 className="text-xl font-semibold">{t.heading}</h2>
+        <h2 className="text-xl font-normal">{t.heading}</h2>
         <CardFilters
           types={types}
           countries={countries}

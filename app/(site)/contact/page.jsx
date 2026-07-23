@@ -11,7 +11,7 @@ export default function ContactPage() {
   return (
     <main className="mx-auto flex max-w-3xl flex-col gap-6 px-6 pb-16 pt-8">
       <section className="rounded-[28px] bg-white p-8 shadow-sm ring-1 ring-slate-200">
-        <h1 className="text-3xl font-semibold text-slate-900 md:text-4xl">Contact</h1>
+        <h1 className="text-3xl font-light text-slate-900 md:text-4xl">Contact</h1>
         <p className="mt-4 text-sm leading-relaxed text-slate-600">
           We&apos;re a small team and we read everything that comes in. Most
           messages get a real human reply within two business days.
@@ -31,7 +31,7 @@ export default function ContactPage() {
       </section>
 
       <section className="space-y-3 rounded-[28px] bg-white p-8 shadow-sm ring-1 ring-slate-200">
-        <h2 className="text-lg font-semibold text-slate-900">Prefer email?</h2>
+        <h2 className="text-lg font-normal text-slate-900">Prefer email?</h2>
         <p className="text-sm leading-relaxed text-slate-600">
           You can also reach the right inbox directly:
         </p>
@@ -95,7 +95,7 @@ export default function ContactPage() {
       </section>
 
       <section className="space-y-3 rounded-[28px] bg-white p-8 shadow-sm ring-1 ring-slate-200">
-        <h2 className="text-lg font-semibold text-slate-900">
+        <h2 className="text-lg font-normal text-slate-900">
           Privacy &amp; data requests
         </h2>
         <p className="text-sm leading-relaxed text-slate-600">

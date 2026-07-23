@@ -12,7 +12,7 @@ export default function AffiliateDisclosurePage() {
   return (
     <main className="mx-auto flex max-w-3xl flex-col gap-6 px-6 pb-16 pt-8">
       <section className="rounded-[28px] bg-white p-8 shadow-sm ring-1 ring-slate-200">
-        <h1 className="text-3xl font-semibold text-slate-900 md:text-4xl">
+        <h1 className="text-3xl font-light text-slate-900 md:text-4xl">
           Affiliate Disclosure
         </h1>
         <p className="mt-2 text-xs text-slate-500">Last updated: {LAST_UPDATED}</p>
@@ -24,7 +24,7 @@ export default function AffiliateDisclosurePage() {
       </section>
 
       <section className="space-y-3 rounded-[28px] bg-white p-8 shadow-sm ring-1 ring-slate-200">
-        <h2 className="text-lg font-semibold text-slate-900">
+        <h2 className="text-lg font-normal text-slate-900">
           1. How affiliate links work
         </h2>
         <p className="text-sm leading-relaxed text-slate-600">
@@ -39,7 +39,7 @@ export default function AffiliateDisclosurePage() {
       </section>
 
       <section className="space-y-3 rounded-[28px] bg-white p-8 shadow-sm ring-1 ring-slate-200">
-        <h2 className="text-lg font-semibold text-slate-900">2. Independence</h2>
+        <h2 className="text-lg font-normal text-slate-900">2. Independence</h2>
         <p className="text-sm leading-relaxed text-slate-600">
           Affiliate income is how we keep guide prices low and stay independent
           of any single tour operator, hotel, or platform. We pick what to
@@ -50,7 +50,7 @@ export default function AffiliateDisclosurePage() {
       </section>
 
       <section className="space-y-3 rounded-[28px] bg-white p-8 shadow-sm ring-1 ring-slate-200">
-        <h2 className="text-lg font-semibold text-slate-900">
+        <h2 className="text-lg font-normal text-slate-900">
           3. Amazon Associates
         </h2>
         <p className="text-sm leading-relaxed text-slate-600">
@@ -63,7 +63,7 @@ export default function AffiliateDisclosurePage() {
       </section>
 
       <section className="space-y-3 rounded-[28px] bg-white p-8 shadow-sm ring-1 ring-slate-200">
-        <h2 className="text-lg font-semibold text-slate-900">
+        <h2 className="text-lg font-normal text-slate-900">
           4. Programs we participate in
         </h2>
         <p className="text-sm leading-relaxed text-slate-600">
@@ -76,7 +76,7 @@ export default function AffiliateDisclosurePage() {
       </section>
 
       <section className="space-y-3 rounded-[28px] bg-white p-8 shadow-sm ring-1 ring-slate-200">
-        <h2 className="text-lg font-semibold text-slate-900">
+        <h2 className="text-lg font-normal text-slate-900">
           5. Where you will see this disclosure
         </h2>
         <ul className="space-y-1 text-sm leading-relaxed text-slate-600">
@@ -96,7 +96,7 @@ export default function AffiliateDisclosurePage() {
       </section>
 
       <section className="space-y-3 rounded-[28px] bg-white p-8 shadow-sm ring-1 ring-slate-200">
-        <h2 className="text-lg font-semibold text-slate-900">6. Questions</h2>
+        <h2 className="text-lg font-normal text-slate-900">6. Questions</h2>
         <p className="text-sm leading-relaxed text-slate-600">
           Email{" "}
           <a className="underline" href="mailto:hello@testedroutes.com">

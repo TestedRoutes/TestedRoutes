@@ -99,7 +99,7 @@ export default function GuidesBrowse({
       ) : null}
 
       <section className="space-y-6">
-        <h2 className="text-xl font-semibold">
+        <h2 className="text-xl font-normal">
           {tl.browseHeading}
           {activeCategory ? (
             <span className="ml-2 text-sm font-normal text-slate-500">

@@ -12,7 +12,7 @@ export default function RefundPolicyPage() {
   return (
     <main className="mx-auto flex max-w-3xl flex-col gap-6 px-6 pb-16 pt-8">
       <section className="rounded-[28px] bg-white p-8 shadow-sm ring-1 ring-slate-200">
-        <h1 className="text-3xl font-semibold text-slate-900 md:text-4xl">Refund Policy</h1>
+        <h1 className="text-3xl font-light text-slate-900 md:text-4xl">Refund Policy</h1>
         <p className="mt-2 text-xs text-slate-500">Last updated: {LAST_UPDATED}</p>
         <p className="mt-4 text-sm leading-relaxed text-slate-600">
           We want you to feel confident buying a guide. Every TestedRoutes guide
@@ -21,7 +21,7 @@ export default function RefundPolicyPage() {
       </section>
 
       <section className="space-y-3 rounded-[28px] bg-white p-8 shadow-sm ring-1 ring-slate-200">
-        <h2 className="text-lg font-semibold text-slate-900">1. The 30-day window</h2>
+        <h2 className="text-lg font-normal text-slate-900">1. The 30-day window</h2>
         <p className="text-sm leading-relaxed text-slate-600">
           You can request a full refund within 30 days of your purchase, for any
           reason. The 30 days run from the date of the order confirmation email
@@ -30,7 +30,7 @@ export default function RefundPolicyPage() {
       </section>
 
       <section className="space-y-3 rounded-[28px] bg-white p-8 shadow-sm ring-1 ring-slate-200">
-        <h2 className="text-lg font-semibold text-slate-900">2. How to request a refund</h2>
+        <h2 className="text-lg font-normal text-slate-900">2. How to request a refund</h2>
         <p className="text-sm leading-relaxed text-slate-600">
           Email{" "}
           <a className="underline" href="mailto:refunds@testedroutes.com">
@@ -52,7 +52,7 @@ export default function RefundPolicyPage() {
       </section>
 
       <section className="space-y-3 rounded-[28px] bg-white p-8 shadow-sm ring-1 ring-slate-200">
-        <h2 className="text-lg font-semibold text-slate-900">3. How the refund is processed</h2>
+        <h2 className="text-lg font-normal text-slate-900">3. How the refund is processed</h2>
         <p className="text-sm leading-relaxed text-slate-600">
           Refunds are issued by our payment processor,{" "}
           <a
@@ -70,7 +70,7 @@ export default function RefundPolicyPage() {
       </section>
 
       <section className="space-y-3 rounded-[28px] bg-white p-8 shadow-sm ring-1 ring-slate-200">
-        <h2 className="text-lg font-semibold text-slate-900">4. After a refund</h2>
+        <h2 className="text-lg font-normal text-slate-900">4. After a refund</h2>
         <p className="text-sm leading-relaxed text-slate-600">
           Once a refund is issued we ask that you stop using the guide and delete
           any copies you've saved. We may revoke any active access link associated
@@ -79,7 +79,7 @@ export default function RefundPolicyPage() {
       </section>
 
       <section className="space-y-3 rounded-[28px] bg-white p-8 shadow-sm ring-1 ring-slate-200">
-        <h2 className="text-lg font-semibold text-slate-900">5. Beyond 30 days</h2>
+        <h2 className="text-lg font-normal text-slate-900">5. Beyond 30 days</h2>
         <p className="text-sm leading-relaxed text-slate-600">
           We can't promise refunds outside the 30-day window, but if you have a
           genuine issue with a guide – something inaccurate, broken, or
@@ -97,7 +97,7 @@ export default function RefundPolicyPage() {
       </section>
 
       <section className="space-y-3 rounded-[28px] bg-white p-8 shadow-sm ring-1 ring-slate-200">
-        <h2 className="text-lg font-semibold text-slate-900">6. Your statutory rights</h2>
+        <h2 className="text-lg font-normal text-slate-900">6. Your statutory rights</h2>
         <p className="text-sm leading-relaxed text-slate-600">
           If you are a consumer in the European Union, the European Economic
           Area, or the United Kingdom, you would normally have a 14-day right
@@ -124,7 +124,7 @@ export default function RefundPolicyPage() {
       </section>
 
       <section className="space-y-3 rounded-[28px] bg-white p-8 shadow-sm ring-1 ring-slate-200">
-        <h2 className="text-lg font-semibold text-slate-900">7. Contact</h2>
+        <h2 className="text-lg font-normal text-slate-900">7. Contact</h2>
         <p className="text-sm leading-relaxed text-slate-600">
           Refund requests:{" "}
           <a className="underline" href="mailto:refunds@testedroutes.com">

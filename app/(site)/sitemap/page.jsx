@@ -32,7 +32,7 @@ export default async function SitemapPage() {
   return (
     <main className="mx-auto flex max-w-4xl flex-col gap-6 px-6 pb-16 pt-8">
       <section className="rounded-[28px] bg-white p-8 shadow-sm ring-1 ring-slate-200">
-        <h1 className="text-3xl font-semibold text-slate-900 md:text-4xl">
+        <h1 className="text-3xl font-light text-slate-900 md:text-4xl">
           Sitemap
         </h1>
         <p className="mt-4 text-sm leading-relaxed text-slate-600">
@@ -98,7 +98,7 @@ export default async function SitemapPage() {
 function SitemapSection({ heading, children }) {
   return (
     <section className="space-y-4 rounded-[28px] bg-white p-8 shadow-sm ring-1 ring-slate-200">
-      <h2 className="font-serif text-xl font-semibold text-slate-900">
+      <h2 className="font-serif text-xl font-normal text-slate-900">
         {heading}
       </h2>
       <ul className="grid gap-1.5 text-sm">{children}</ul>

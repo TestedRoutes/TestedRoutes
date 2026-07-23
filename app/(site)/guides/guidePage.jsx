@@ -190,7 +190,7 @@ function LocationSection({ start, destinations, finish, points, t }) {
   const multi = dests.length > 1;
   return (
     <section>
-      <p className="mb-4 font-serif text-xl font-semibold text-brand-ink">{t.location}</p>
+      <p className="mb-4 font-serif text-xl font-normal text-brand-ink">{t.location}</p>
       <div className="grid grid-cols-1 gap-5 md:grid-cols-[220px_minmax(0,1fr)]">
         <ol className="relative space-y-5 pl-1">
           {start ? (
@@ -258,7 +258,7 @@ function FaqAccordion({ items, t }) {
   const list = Array.isArray(items) && items.length ? items : t.faq;
   return (
     <section>
-      <p className="mb-4 font-serif text-xl font-semibold text-brand-ink">
+      <p className="mb-4 font-serif text-xl font-normal text-brand-ink">
         {t.faqTitle}
       </p>
       <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white divide-y divide-slate-100">
@@ -287,7 +287,7 @@ function Testimonials({ items, t }) {
   if (!Array.isArray(items) || items.length === 0) return null;
   return (
     <section>
-      <p className="mb-4 font-serif text-xl font-semibold text-brand-ink">
+      <p className="mb-4 font-serif text-xl font-normal text-brand-ink">
         {t.readersSay}
       </p>
       <div className="grid gap-4 md:grid-cols-2">
@@ -317,7 +317,7 @@ function RelatedGuides({ items, t, lang }) {
   if (!Array.isArray(items) || items.length === 0) return null;
   return (
     <section className="mt-12 border-t border-slate-200 pt-10">
-      <p className="mb-5 font-serif text-2xl font-semibold text-brand-ink">
+      <p className="mb-5 font-serif text-2xl font-light text-brand-ink">
         {t.youMightAlsoLike}
       </p>
       <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
@@ -343,7 +343,7 @@ function RelatedGuides({ items, t, lang }) {
                   {g.eyebrow}
                 </p>
               ) : null}
-              <p className="font-serif text-base font-semibold leading-snug text-slate-900 group-hover:text-slate-700">
+              <p className="font-serif text-base font-medium leading-snug text-slate-900 group-hover:text-slate-700">
                 {g.title}
               </p>
               <div className="mt-auto flex items-center justify-between pt-2 text-xs text-slate-500">
@@ -365,10 +365,10 @@ function BottomCta({ price, checkoutHref, pdfHref, t }) {
   const buttonLabel = price ? `${t.getGuide} – ${price}` : t.getGuide;
   return (
     <section className="mt-8 rounded-[28px] bg-brand-terracotta p-10 text-center text-white md:mt-12">
-      <p className="font-serif text-3xl font-semibold leading-tight">
+      <p className="font-serif text-3xl font-light leading-tight">
         {t.bottomLine1}
       </p>
-      <p className="font-serif text-3xl font-semibold leading-tight">
+      <p className="font-serif text-3xl font-light leading-tight">
         {t.bottomLine2}
       </p>
       <p className="mx-auto mt-4 max-w-xl text-sm leading-relaxed text-white/70">
@@ -584,7 +584,7 @@ export default async function GuidePage({ lang, slug }) {
         {hero.eyebrow ? (
           <p className="text-[12px] uppercase tracking-[0.1em] text-slate-500">{hero.eyebrow}</p>
         ) : null}
-        <h1 className="mt-1 text-[32px] font-semibold leading-tight text-slate-900">
+        <h1 className="mt-1 text-[32px] font-medium leading-tight text-slate-900">
           {guide.title}
         </h1>
         {hero.subtitle ? (
@@ -598,7 +598,7 @@ export default async function GuidePage({ lang, slug }) {
           <GuideGallery photos={photos} viewAllLabel={t.viewAllPhotos} />
           {hero.primary_stats || maintenance.last_reviewed_date ? (
             <section>
-              <p className="mb-4 font-serif text-xl font-semibold text-brand-ink">
+              <p className="mb-4 font-serif text-xl font-normal text-brand-ink">
                 {t.tripDetails}
               </p>
               <PrimaryStats

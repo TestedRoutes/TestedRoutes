@@ -11,14 +11,14 @@ const LAST_UPDATED = "16 July 2026";
 function Section({ title, children }) {
   return (
     <section className="space-y-3 rounded-[28px] bg-white p-8 shadow-sm ring-1 ring-slate-200">
-      <h2 className="text-lg font-semibold text-slate-900">{title}</h2>
+      <h2 className="text-lg font-normal text-slate-900">{title}</h2>
       {children}
     </section>
   );
 }
 
 function H3({ children }) {
-  return <h3 className="text-sm font-semibold text-slate-900">{children}</h3>;
+  return <h3 className="text-sm font-medium text-slate-900">{children}</h3>;
 }
 
 function P({ children }) {
@@ -42,7 +42,7 @@ export default function TermsPage() {
   return (
     <main className="mx-auto flex max-w-3xl flex-col gap-6 px-6 pb-16 pt-8">
       <section className="rounded-[28px] bg-white p-8 shadow-sm ring-1 ring-slate-200">
-        <h1 className="text-3xl font-semibold text-slate-900 md:text-4xl">Terms of Service</h1>
+        <h1 className="text-3xl font-light text-slate-900 md:text-4xl">Terms of Service</h1>
         <p className="mt-2 text-xs text-slate-500">Last updated: {LAST_UPDATED}</p>
         <p className="mt-4 text-sm leading-relaxed text-slate-600">
           These terms apply when you visit testedroutes.com and when you

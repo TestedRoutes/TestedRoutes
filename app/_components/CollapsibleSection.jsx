@@ -21,7 +21,7 @@ export default function CollapsibleSection({
         aria-expanded={open}
         className="flex w-full items-center justify-between gap-4 py-3.5 text-left md:hidden"
       >
-        <span className={`font-serif text-xl font-semibold ${titleClassName}`}>{title}</span>
+        <span className={`font-serif text-xl font-normal ${titleClassName}`}>{title}</span>
         <span
           aria-hidden
           className={`text-2xl leading-none text-slate-400 transition-transform ${open ? "rotate-180" : ""}`}
@@ -29,7 +29,7 @@ export default function CollapsibleSection({
           ▾
         </span>
       </button>
-      <p className={`mb-4 hidden font-serif text-xl font-semibold md:block ${titleClassName}`}>
+      <p className={`mb-4 hidden font-serif text-xl font-normal md:block ${titleClassName}`}>
         {title}
       </p>
       <div className={`${open ? "mb-4 mt-1 block" : "hidden"} md:mb-0 md:mt-0 md:block`}>

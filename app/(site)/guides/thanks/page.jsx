@@ -27,7 +27,7 @@ function GuideCard({ guide }) {
       </div>
       <div className="space-y-2 p-4 text-left">
         <p className="text-xs uppercase tracking-[0.2em] text-slate-500">{guide.category}</p>
-        <h3 className="text-base font-semibold text-slate-900">{guide.title}</h3>
+        <h3 className="text-base font-medium text-slate-900">{guide.title}</h3>
         <p className="text-sm text-slate-600">
           {guide.duration ? `${guide.duration} • ` : ""}PDF guide
         </p>
@@ -48,7 +48,7 @@ export default async function ThanksPage() {
     <main className="mx-auto flex max-w-4xl flex-col gap-16 px-6 py-20">
       <section className="flex flex-col items-center gap-6 text-center">
         <p className="text-xs uppercase tracking-[0.2em] text-brand-terracotta">Order confirmed</p>
-        <h1 className="text-3xl font-semibold text-slate-900 sm:text-4xl">
+        <h1 className="text-3xl font-light text-slate-900 sm:text-4xl">
           Check your email
         </h1>
         <p className="max-w-xl text-base text-slate-600">
@@ -71,7 +71,7 @@ export default async function ThanksPage() {
       {moreGuides.length > 0 ? (
         <section className="space-y-6">
           <div className="flex items-end justify-between gap-4">
-            <h2 className="text-xl font-semibold text-slate-900">More guides to explore</h2>
+            <h2 className="text-xl font-normal text-slate-900">More guides to explore</h2>
             <Link
               className="text-sm font-medium text-slate-600 underline hover:text-slate-900"
               href="/guides"

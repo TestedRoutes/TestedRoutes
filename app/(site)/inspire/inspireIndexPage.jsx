@@ -116,7 +116,7 @@ export default async function InspireIndexPage({ lang = "en" }) {
     <main className="w-full pb-16 pt-12 text-slate-900 md:pt-16">
       <div className="mx-auto flex w-full min-w-0 max-w-7xl flex-col gap-10 px-6">
         <div className="space-y-2 text-center">
-          <h1 className="font-serif text-3xl font-semibold leading-[1.1] text-brand-ink md:text-4xl lg:text-5xl">
+          <h1 className="font-serif text-3xl font-light leading-[1.1] text-brand-ink md:text-4xl lg:text-5xl">
             {t.title}
           </h1>
           <p className="text-lg text-slate-600 md:text-xl">{t.subtitle}</p>
@@ -141,7 +141,7 @@ export default async function InspireIndexPage({ lang = "en" }) {
 
         <section className="flex flex-col items-start gap-4 rounded-[28px] bg-brand-terracotta p-6 text-white md:flex-row md:items-center md:justify-between md:p-8">
           <div>
-            <p className="font-serif text-xl font-semibold leading-tight">{t.ctaTitle}</p>
+            <p className="font-serif text-xl font-normal leading-tight">{t.ctaTitle}</p>
             <p className="mt-1 text-sm text-white/70">{t.ctaBody}</p>
           </div>
           <Link

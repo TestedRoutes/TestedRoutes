@@ -37,12 +37,12 @@ function truncateForPreview(blocks) {
 const components = {
   block: {
     h2: ({ children }) => (
-      <h2 className="mb-2 mt-6 font-serif text-lg font-semibold text-brand-ink">
+      <h2 className="mb-2 mt-6 font-serif text-lg font-normal text-brand-ink">
         {children}
       </h2>
     ),
     h3: ({ children }) => (
-      <h3 className="mb-2 mt-5 font-semibold text-brand-ink">{children}</h3>
+      <h3 className="mb-2 mt-5 font-medium text-brand-ink">{children}</h3>
     ),
     blockquote: ({ children }) => (
       <blockquote className="my-4 border-l-2 border-slate-200 pl-4 text-slate-600">
@@ -105,7 +105,7 @@ export default function GuideBody({ blocks, checkoutHref, pdfHref, price, t: tPr
             />
           ) : null}
           <div className="rounded-b-2xl bg-brand-bone px-6 py-5">
-            <p className="font-serif text-base font-semibold text-brand-ink">
+            <p className="font-serif text-base font-medium text-brand-ink">
               {truncated ? t.continuesInFull : t.wantFullPlan}
             </p>
             <p className="mt-1 text-xs leading-relaxed text-slate-600">

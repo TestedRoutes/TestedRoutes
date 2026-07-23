@@ -91,7 +91,7 @@ export default function HomeSearchBar({
 
   return (
     <div className={`relative ${styles.wrapper}`}>
-      <div className={`flex w-full items-center gap-2 rounded-full bg-white ring-1 ring-slate-200 ${styles.container}`}>
+      <div className={`flex w-full items-center gap-2 rounded-full bg-white shadow-card ring-1 ring-brand-line ${styles.container}`}>
         <input
           value={query}
           onChange={(e) => setQuery(e.target.value)}
@@ -110,7 +110,7 @@ export default function HomeSearchBar({
         </button>
       </div>
       {matches.length > 0 && (
-        <div className="absolute inset-x-0 top-full z-20 mt-2 overflow-hidden rounded-2xl bg-white shadow-lg ring-1 ring-slate-200">
+        <div className="absolute inset-x-0 top-full z-20 mt-2 overflow-hidden rounded-2xl bg-white shadow-card-hover ring-1 ring-brand-line">
           {matches.map((item) => (
             <Link
               key={item.slug}

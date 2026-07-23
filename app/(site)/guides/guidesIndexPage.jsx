@@ -57,7 +57,7 @@ export default async function GuidesIndexPage({ lang = "en" }) {
     <main className="mx-auto flex max-w-7xl flex-col gap-10 px-6 pb-16 pt-12 md:pt-16">
       <section className="space-y-10">
         <div className="space-y-2 text-center">
-          <h1 className="font-serif text-3xl font-semibold leading-[1.1] text-brand-ink md:text-4xl lg:text-5xl">
+          <h1 className="font-serif text-3xl font-light leading-[1.1] text-brand-ink md:text-4xl lg:text-5xl">
             {tl.heading}
           </h1>
           <p className="text-lg text-slate-600 md:text-xl">{tl.tagline}</p>

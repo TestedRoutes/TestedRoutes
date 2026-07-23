@@ -192,7 +192,7 @@ function LinkTable({ rows }) {
 function SectionHeading({ title, hint }) {
   return (
     <div className="mb-3 mt-10">
-      <p className="font-serif text-xl font-semibold text-brand-ink">
+      <p className="font-serif text-xl font-normal text-brand-ink">
         {title}
       </p>
       {hint ? (
@@ -234,7 +234,7 @@ export default async function GuideLinksPage({ params }) {
         <span className="text-slate-600">Links</span>
       </nav>
 
-      <h1 className="text-3xl font-semibold leading-tight text-slate-900 md:text-4xl">
+      <h1 className="text-3xl font-light leading-tight text-slate-900 md:text-4xl">
         {guide.title} – booking links
       </h1>
       <p className="mt-3 max-w-3xl text-sm leading-relaxed text-slate-600">
@@ -291,7 +291,7 @@ export default async function GuideLinksPage({ params }) {
       )}
 
       <div className="mt-10 max-w-3xl rounded-2xl border border-slate-200 bg-brand-bone p-6">
-        <p className="font-serif text-lg font-semibold text-brand-ink">
+        <p className="font-serif text-lg font-normal text-brand-ink">
           Want the full plan?
         </p>
         <p className="mt-1 text-sm leading-relaxed text-slate-600">

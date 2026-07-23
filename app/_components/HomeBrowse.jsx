@@ -94,7 +94,7 @@ export default function HomeBrowse({ guides, categoryItems, cards = [], t }) {
 
       {cards.length ? (
         <section className="space-y-6">
-          <h2 className="text-xl font-semibold">
+          <h2 className="text-xl font-normal">
             Browse guides
             {activeCategory ? (
               <span className="ml-2 text-sm font-normal text-slate-500">

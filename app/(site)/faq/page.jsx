@@ -127,7 +127,7 @@ const SECTIONS = [
 function FaqGroup({ heading, items }) {
   return (
     <section className="space-y-4 rounded-[28px] bg-white p-8 shadow-sm ring-1 ring-slate-200">
-      <h2 className="font-serif text-xl font-semibold text-slate-900">
+      <h2 className="font-serif text-xl font-normal text-slate-900">
         {heading}
       </h2>
       <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white divide-y divide-slate-100">
@@ -169,7 +169,7 @@ export default function FaqPage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
       />
       <section className="rounded-[28px] bg-white p-8 shadow-sm ring-1 ring-slate-200">
-        <h1 className="text-3xl font-semibold text-slate-900 md:text-4xl">
+        <h1 className="text-3xl font-light text-slate-900 md:text-4xl">
           Frequently asked questions
         </h1>
         <p className="mt-4 text-sm leading-relaxed text-slate-600">
@@ -191,7 +191,7 @@ export default function FaqPage() {
       ))}
 
       <section className="rounded-[28px] border border-slate-200 bg-brand-bone p-8">
-        <h2 className="font-serif text-lg font-semibold text-slate-900">
+        <h2 className="font-serif text-lg font-normal text-slate-900">
           Still have a question?
         </h2>
         <p className="mt-2 text-sm leading-relaxed text-slate-600">

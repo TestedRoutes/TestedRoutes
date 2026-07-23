@@ -44,7 +44,7 @@ export default function AboutMePage() {
           className="h-56 w-full rounded-[18px] object-cover object-center shadow-[0_20px_60px_rgba(0,0,0,0.08)] md:order-2 md:h-full md:min-h-[320px] md:max-h-[420px]"
         />
         <div className="space-y-4 md:order-1">
-          <h1 className="text-3xl font-semibold md:text-4xl">About Me</h1>
+          <h1 className="text-3xl font-light md:text-4xl">About Me</h1>
           <p className="text-sm leading-relaxed text-slate-600">
             I do not build guides from desk research or generic itineraries. Every route
             here comes from trips I have planned and tested myself across more than 140
@@ -82,7 +82,7 @@ export default function AboutMePage() {
         </div>
         <div className="grid gap-6 rounded-[28px] bg-white p-6 shadow-sm ring-1 ring-slate-200 md:grid-cols-[1.1fr_0.9fr] md:items-start">
           <div className="space-y-3">
-            <h2 className="text-lg font-semibold text-slate-900">
+            <h2 className="text-lg font-normal text-slate-900">
               This map shows where I have planned trips myself.
             </h2>
             <p className="text-sm text-slate-600">
@@ -109,7 +109,7 @@ export default function AboutMePage() {
 
       <section className="grid gap-6 rounded-[28px] bg-white p-6 shadow-sm ring-1 ring-slate-200 md:grid-cols-[1.1fr_0.9fr]">
         <div className="space-y-3">
-          <h2 className="text-lg font-semibold text-slate-900">Why these guides work better in real life</h2>
+          <h2 className="text-lg font-normal text-slate-900">Why these guides work better in real life</h2>
           <p className="text-sm text-slate-600">
             These guides are built the way real trips actually happen, not as lists of
             attractions, but as clear routes you can follow step by step.
@@ -136,7 +136,7 @@ export default function AboutMePage() {
       </section>
 
       <section className="space-y-4">
-        <h2 className="text-lg font-semibold text-slate-900">Road expeditions I've completed myself</h2>
+        <h2 className="text-lg font-normal text-slate-900">Road expeditions I've completed myself</h2>
         <div className="grid gap-4 md:grid-cols-3">
           {ROAD_EXPEDITIONS.map((item) => (
             <div key={item.title} className="rounded-2xl bg-white p-4 shadow-sm ring-1 ring-slate-200">
@@ -153,7 +153,7 @@ export default function AboutMePage() {
       </section>
 
       <section className="space-y-4">
-        <h2 className="text-lg font-semibold text-slate-900">Mountains climbed</h2>
+        <h2 className="text-lg font-normal text-slate-900">Mountains climbed</h2>
         <div className="grid gap-3 md:grid-cols-3">
           {MOUNTAINS.map((item) => (
             <div key={item.caption} className="rounded-2xl bg-white p-4 shadow-sm ring-1 ring-slate-200">
@@ -170,7 +170,7 @@ export default function AboutMePage() {
       </section>
 
       <section className="space-y-4">
-        <h2 className="text-lg font-semibold text-slate-900">How I test the routes behind my guides</h2>
+        <h2 className="text-lg font-normal text-slate-900">How I test the routes behind my guides</h2>
         <p className="text-sm text-slate-600">
           I don't design itineraries from a desk. I test destinations in the field - often
           through unusual, high-adventure, or logistically difficult experiences.
@@ -192,7 +192,7 @@ export default function AboutMePage() {
 
       <section className="grid gap-6 rounded-[28px] bg-white p-6 shadow-sm ring-1 ring-slate-200 md:grid-cols-[1.1fr_0.9fr]">
         <div className="space-y-3">
-          <h2 className="text-lg font-semibold text-slate-900">Why I do this</h2>
+          <h2 className="text-lg font-normal text-slate-900">Why I do this</h2>
           <p className="text-sm text-slate-600">
             Independent travel should feel exciting, not overwhelming.
           </p>
@@ -212,7 +212,7 @@ export default function AboutMePage() {
       </section>
 
       <section className="flex flex-col items-start gap-4 rounded-[28px] bg-white p-6 shadow-sm ring-1 ring-slate-200 md:flex-row md:items-center md:justify-between">
-        <h2 className="text-lg font-semibold text-slate-900">Ready to travel more and plan less?</h2>
+        <h2 className="text-lg font-normal text-slate-900">Ready to travel more and plan less?</h2>
         <Link
           href="/guides"
           className="rounded-full bg-brand-flame px-6 py-2 text-xs font-semibold text-white transition hover:bg-brand-flame/90"

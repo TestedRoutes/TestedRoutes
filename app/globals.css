@@ -16,5 +16,11 @@ body {
   h2,
   h3 {
     font-family: theme(fontFamily.serif);
+    /* Styleguide (2026-07): headings are "Fraunces 72pt Light". Weight 300 =
+       Light (utility classes on smaller headings override it); pinning the
+       optical-size axis to 72 gives the high-contrast display cut at every
+       heading size instead of the browser auto-picking a lower one. */
+    font-weight: 300;
+    font-variation-settings: "opsz" 72;
   }
 }

@@ -12,7 +12,7 @@ export default function LegalNoticePage() {
   return (
     <main className="mx-auto flex max-w-3xl flex-col gap-6 px-6 pb-16 pt-8">
       <section className="rounded-[28px] bg-white p-8 shadow-sm ring-1 ring-slate-200">
-        <h1 className="text-3xl font-semibold text-slate-900 md:text-4xl">Legal Notice</h1>
+        <h1 className="text-3xl font-light text-slate-900 md:text-4xl">Legal Notice</h1>
         <p className="mt-2 text-xs text-slate-500">Last updated: {LAST_UPDATED}</p>
         <p className="mt-4 text-sm leading-relaxed text-slate-600">
           Information about the operator of testedroutes.com, as required by EU
@@ -21,7 +21,7 @@ export default function LegalNoticePage() {
       </section>
 
       <section className="space-y-3 rounded-[28px] bg-white p-8 shadow-sm ring-1 ring-slate-200">
-        <h2 className="text-lg font-semibold text-slate-900">1. Operator</h2>
+        <h2 className="text-lg font-normal text-slate-900">1. Operator</h2>
         <dl className="grid grid-cols-1 gap-x-6 gap-y-3 text-sm leading-relaxed text-slate-600 sm:grid-cols-[160px_1fr]">
           <dt className="font-semibold text-slate-900">Company</dt>
           <dd>
@@ -70,7 +70,7 @@ export default function LegalNoticePage() {
       </section>
 
       <section className="space-y-3 rounded-[28px] bg-white p-8 shadow-sm ring-1 ring-slate-200">
-        <h2 className="text-lg font-semibold text-slate-900">2. Payment processor</h2>
+        <h2 className="text-lg font-normal text-slate-900">2. Payment processor</h2>
         <p className="text-sm leading-relaxed text-slate-600">
           Payments on testedroutes.com are processed by Polar Software Inc. as
           our Merchant of Record: Polar appears as the seller on your invoice
@@ -84,7 +84,7 @@ export default function LegalNoticePage() {
       </section>
 
       <section className="space-y-3 rounded-[28px] bg-white p-8 shadow-sm ring-1 ring-slate-200">
-        <h2 className="text-lg font-semibold text-slate-900">3. Editorial responsibility</h2>
+        <h2 className="text-lg font-normal text-slate-900">3. Editorial responsibility</h2>
         <p className="text-sm leading-relaxed text-slate-600">
           Responsible for the editorial content of testedroutes.com:
         </p>

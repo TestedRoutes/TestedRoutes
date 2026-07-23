@@ -70,10 +70,10 @@ export default function CategoryStrip({ items, onItemClick, activeLabel = "" }) 
                   type="button"
                   onClick={() => onItemClick(item.label)}
                   aria-pressed={isActive}
-                  className={`flex items-stretch overflow-hidden rounded-lg bg-white text-left shadow-sm transition hover:-translate-y-0.5 hover:shadow-md ${
+                  className={`flex items-stretch overflow-hidden rounded-xl bg-white text-left shadow-card transition hover:-translate-y-0.5 hover:shadow-card-hover ${
                     isActive
                       ? "ring-2 ring-brand-terracotta"
-                      : "ring-1 ring-slate-200 hover:ring-slate-300/90"
+                      : "ring-1 ring-brand-line"
                   }`}
                 >
                   {innerContent}
@@ -83,7 +83,7 @@ export default function CategoryStrip({ items, onItemClick, activeLabel = "" }) 
             return (
               <div
                 key={item.label}
-                className="flex items-stretch overflow-hidden rounded-lg bg-white shadow-sm ring-1 ring-slate-200"
+                className="flex items-stretch overflow-hidden rounded-xl bg-white shadow-card ring-1 ring-brand-line"
               >
                 {innerContent}
               </div>
@@ -97,7 +97,7 @@ export default function CategoryStrip({ items, onItemClick, activeLabel = "" }) 
           type="button"
           onClick={() => scroll("prev")}
           aria-label="Scroll categories left"
-          className="absolute -left-3 top-1/2 hidden h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full bg-white text-slate-700 shadow-md ring-1 ring-slate-200 transition hover:bg-slate-50 sm:flex"
+          className="absolute -left-3 top-1/2 hidden h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full bg-white text-slate-700 shadow-card ring-1 ring-brand-line transition hover:bg-slate-50 sm:flex"
         >
           <svg
             className="h-5 w-5"
@@ -118,7 +118,7 @@ export default function CategoryStrip({ items, onItemClick, activeLabel = "" }) 
           type="button"
           onClick={() => scroll("next")}
           aria-label="Scroll categories right"
-          className="absolute -right-3 top-1/2 hidden h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full bg-white text-slate-700 shadow-md ring-1 ring-slate-200 transition hover:bg-slate-50 sm:flex"
+          className="absolute -right-3 top-1/2 hidden h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full bg-white text-slate-700 shadow-card ring-1 ring-brand-line transition hover:bg-slate-50 sm:flex"
         >
           <svg
             className="h-5 w-5"
