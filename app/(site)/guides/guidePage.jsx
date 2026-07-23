@@ -584,7 +584,7 @@ export default async function GuidePage({ lang, slug }) {
         {hero.eyebrow ? (
           <p className="text-[12px] uppercase tracking-[0.1em] text-slate-500">{hero.eyebrow}</p>
         ) : null}
-        <h1 className="mt-1 text-[32px] font-medium leading-tight text-slate-900">
+        <h1 className="mt-1 font-medium leading-tight text-slate-900 text-xl md:text-4xl lg:text-5xl">
           {guide.title}
         </h1>
         {hero.subtitle ? (

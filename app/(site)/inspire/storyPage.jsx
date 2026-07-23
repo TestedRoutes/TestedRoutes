@@ -278,7 +278,7 @@ export default async function StoryPage({ lang, slug }) {
               {display.geoLabel}
             </p>
           ) : null}
-          <h1 className="mt-1 text-[32px] font-medium leading-tight text-slate-900">
+          <h1 className="mt-1 font-medium leading-tight text-slate-900 text-xl md:text-4xl lg:text-5xl">
             {story.title}
           </h1>
           {story.metadata?.hero?.subtitle ? (

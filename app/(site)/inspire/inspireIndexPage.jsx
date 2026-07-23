@@ -116,10 +116,10 @@ export default async function InspireIndexPage({ lang = "en" }) {
     <main className="w-full pb-16 pt-12 text-slate-900 md:pt-16">
       <div className="mx-auto flex w-full min-w-0 max-w-7xl flex-col gap-10 px-6">
         <div className="space-y-2 text-center">
-          <h1 className="font-serif text-3xl font-light leading-[1.1] text-brand-ink md:text-4xl lg:text-5xl">
+          <h1 className="font-serif font-light leading-[1.1] text-brand-ink text-xl md:text-4xl lg:text-5xl">
             {t.title}
           </h1>
-          <p className="text-lg text-slate-600 md:text-xl">{t.subtitle}</p>
+          <p className="font-serif text-lg font-light text-slate-600 md:text-xl">{t.subtitle}</p>
         </div>
 
         {lang !== "en" && cards.length === 0 ? (

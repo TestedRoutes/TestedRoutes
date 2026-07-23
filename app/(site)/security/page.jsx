@@ -10,7 +10,7 @@ export default function SecurityPage() {
   return (
     <main className="mx-auto flex max-w-3xl flex-col gap-6 px-6 pb-16 pt-8">
       <section className="rounded-[28px] bg-white p-8 shadow-sm ring-1 ring-slate-200">
-        <h1 className="text-3xl font-light text-slate-900 md:text-4xl">
+        <h1 className="font-light text-slate-900 text-xl md:text-4xl lg:text-5xl">
           Security &amp; Vulnerability Disclosure
         </h1>
         <p className="mt-2 text-xs text-slate-500">Last updated: {LAST_UPDATED}</p>
