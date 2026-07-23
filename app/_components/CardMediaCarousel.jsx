@@ -31,14 +31,25 @@ export function buildMediaSlides({ photos = [], videoUrl = null, videoSlot = nul
 }
 
 // Muted looping clip that plays only while at least half visible — swiping
-// to another slide or scrolling the card away pauses it. preload="none" +
-// poster keeps the grid light until the clip actually enters the viewport.
-function CardVideo({ src, poster, title }) {
+// to another slide or scrolling the card away pauses it. No poster: the
+// photo-to-first-frame swap reads as a jump, so the clip stays invisible
+// (container bg shows) until it has frames, then fades in.
+function CardVideo({ src, title }) {
   const ref = useRef(null);
+  const [ready, setReady] = useState(false);
 
   useEffect(() => {
     const el = ref.current;
-    if (!el || typeof IntersectionObserver === "undefined") return;
+    if (!el) return;
+    // Media events race hydration; poll readyState until frames exist.
+    const poll = setInterval(() => {
+      if (el.readyState >= 2) {
+        setReady(true);
+        clearInterval(poll);
+      }
+    }, 250);
+    if (typeof IntersectionObserver === "undefined")
+      return () => clearInterval(poll);
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) el.play().catch(() => {});
@@ -47,20 +58,24 @@ function CardVideo({ src, poster, title }) {
       { threshold: 0.5 }
     );
     observer.observe(el);
-    return () => observer.disconnect();
+    return () => {
+      clearInterval(poll);
+      observer.disconnect();
+    };
   }, []);
 
   return (
     <video
       ref={ref}
       src={src}
-      poster={poster}
       muted
       loop
       playsInline
-      preload="none"
+      preload="metadata"
       aria-label={title}
-      className="h-full w-full object-cover"
+      className={`h-full w-full object-cover transition-opacity duration-500 ${
+        ready ? "opacity-100" : "opacity-0"
+      }`}
     />
   );
 }

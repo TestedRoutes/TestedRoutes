@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
-import logoVertical from "../../content/brand/TR-logo-vertical-tagline.svg";
+import logoVertical from "../../content/brand/TR-logo-vertical.svg";
 import CurrencySwitcher from "./CurrencySwitcher";
 import LanguageSwitcher from "./LanguageSwitcher";
 import HomeSearchBar from "./HomeSearchBar";
@@ -27,10 +27,13 @@ function getActiveSlug(pathname) {
 }
 
 function primaryNavLinkClass(active, slug) {
+  // Pill-on-hover: links carry their own padding so the highlight has a
+  // shape; 5% Coffee Bean reads as a soft warm gray on Parchment.
+  const base = "rounded-full px-3 py-1.5 transition-colors";
   if (active === slug) {
-    return "font-semibold text-slate-900 underline decoration-slate-800/35 decoration-1 underline-offset-[6px]";
+    return `${base} font-semibold text-slate-900 underline decoration-slate-800/35 decoration-1 underline-offset-[6px]`;
   }
-  return "font-normal text-slate-600 hover:text-slate-900";
+  return `${base} font-normal text-slate-600 hover:bg-brand-ink/5 hover:text-slate-900`;
 }
 
 function logoLinkClassName(active) {
@@ -101,8 +104,8 @@ export default function SiteHeader({ currency = "EUR", guides = [] }) {
           {/* SVG logo needs no next/image optimization; plain img keeps it crisp. */}
           <img
             src={logoVertical.src}
-            alt="TestedRoutes by Paulius Pikelis"
-            className="h-12 w-auto md:h-16"
+            alt="TestedRoutes"
+            className="h-10 w-auto md:h-12"
           />
         </Link>
 
@@ -114,7 +117,7 @@ export default function SiteHeader({ currency = "EUR", guides = [] }) {
           </div>
         ) : null}
 
-        <div className="hidden items-center gap-6 md:flex">
+        <div className="hidden items-center gap-3 md:flex">
           {navLinks.map((link) => (
             <Link
               key={link.slug}

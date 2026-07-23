@@ -7,33 +7,59 @@ import { buildMediaSlides } from "./CardMediaCarousel";
 // visible — off-screen carousel slides and mosaic tiles stay paused with
 // nothing fetched. Without this every clip on the page autoplays at once,
 // which janks scrolling on mobile (a story can carry 3+ clips).
-function GalleryVideo({ src, poster, className = "" }) {
+function GalleryVideo({ src, className = "" }) {
   const ref = useRef(null);
+  // No poster: a photo that swaps to the clip's first frame reads as a
+  // visual "jump". The video stays invisible (container bg shows) until it
+  // actually has frames, then fades in. preload="metadata" keeps layout
+  // height stable in the natural-aspect feed without downloading the clip.
+  const [ready, setReady] = useState(false);
 
   useEffect(() => {
     const el = ref.current;
-    if (!el || typeof IntersectionObserver === "undefined") return;
+    if (!el) return;
+    // Media events race hydration in every direction, so don't rely on
+    // them alone: poll readyState until the first frame exists.
+    const poll = setInterval(() => {
+      if (el.readyState >= 2) {
+        setReady(true);
+        clearInterval(poll);
+      }
+    }, 250);
+    if (typeof IntersectionObserver === "undefined")
+      return () => clearInterval(poll);
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting) el.play().catch(() => {});
-        else el.pause();
+        if (entry.isIntersecting) {
+          if (el.readyState >= 2) setReady(true);
+          el.play().catch(() => {});
+        } else {
+          el.pause();
+        }
       },
       { threshold: 0.5 }
     );
     observer.observe(el);
-    return () => observer.disconnect();
+    return () => {
+      clearInterval(poll);
+      observer.disconnect();
+    };
   }, []);
 
   return (
     <video
       ref={ref}
       src={src}
-      poster={poster}
       muted
       loop
       playsInline
-      preload="none"
-      className={className}
+      preload="metadata"
+      onLoadedData={() => setReady(true)}
+      onCanPlay={() => setReady(true)}
+      onPlaying={() => setReady(true)}
+      className={`${className} transition-opacity duration-500 ${
+        ready ? "opacity-100" : "opacity-0"
+      }`}
     />
   );
 }
@@ -46,7 +72,6 @@ function SlideMedia({ slide, alt, eager = false, className = "" }) {
     return (
       <GalleryVideo
         src={slide.src}
-        poster={slide.poster}
         className={`h-full w-full object-cover object-center ${className}`}
       />
     );
@@ -228,7 +253,6 @@ export default function GuideGallery({
                   <GalleryVideo
                     key={`${i}-${slide.src}`}
                     src={slide.src}
-                    poster={slide.poster}
                     className="w-full rounded-xl"
                   />
                 ) : (
