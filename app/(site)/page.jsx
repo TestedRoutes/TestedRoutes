@@ -26,7 +26,7 @@ export default async function HomePage() {
           <h1 className="font-serif font-bold md:font-light leading-[1.1] text-brand-ink text-xl md:text-4xl lg:text-5xl">
             Travel guides built from real trips
           </h1>
-          <p className="font-serif text-lg font-light text-slate-600 md:text-xl">
+          <p className="font-serif text-sm font-light italic text-slate-600 md:text-xl">
             Skip the research. Take the trip
           </p>
         </div>
