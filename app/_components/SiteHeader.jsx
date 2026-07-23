@@ -105,7 +105,7 @@ export default function SiteHeader({ currency = "EUR", guides = [] }) {
           <img
             src={logoVertical.src}
             alt="TestedRoutes"
-            className="h-6 w-auto md:h-12"
+            className="h-[19px] w-auto md:h-[38px]"
           />
         </Link>
 
