@@ -55,7 +55,7 @@ const en = {
     destinations: "Destinations",
     guides: "Guides",
     inspire: "Inspire",
-    aboutMe: "About Me",
+    aboutMe: "About me",
     explore: "Explore",
     about: "About",
   },

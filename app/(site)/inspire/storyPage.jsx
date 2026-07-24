@@ -79,7 +79,7 @@ function splitHtmlAtMid(html) {
 
 function MidStoryGuideCta({ guideHref, t }) {
   return (
-    <aside className="my-8 rounded-[20px] bg-brand-ink p-6 text-white shadow-lg">
+    <aside className="my-8 rounded-[20px] bg-brand-terracotta p-6 text-white shadow-lg">
       <p className="mb-2 text-[10px] font-bold uppercase tracking-[0.2em] text-white/50">
         {t.planningTrip}
       </p>
@@ -305,7 +305,7 @@ export default async function StoryPage({ lang, slug }) {
           <div className="flex min-w-0 flex-1 flex-col gap-6 self-start">
             {/* Mobile guide CTA */}
             {guideHref || hasGuideOptions ? (
-              <div className="rounded-[20px] bg-brand-ink p-5 text-white shadow-lg md:hidden">
+              <div className="rounded-[20px] bg-brand-terracotta p-5 text-white shadow-lg md:hidden">
                 <p className="mb-2 text-[10px] font-bold uppercase tracking-[0.2em] text-white/50">
                   {t.planningTrip}
                 </p>
@@ -383,7 +383,7 @@ export default async function StoryPage({ lang, slug }) {
           {/* Desktop sidebar */}
           <aside className="hidden w-72 shrink-0 md:block">
             <div className="sticky top-[88px] flex flex-col gap-4">
-              <div className="rounded-[20px] bg-brand-ink p-6 text-white shadow-lg">
+              <div className="rounded-[20px] bg-brand-terracotta p-6 text-white shadow-lg">
                 {guideHref ? (
                   <>
                     <p className="mb-2 text-[10px] font-bold uppercase tracking-[0.2em] text-white/50">
