@@ -7,8 +7,8 @@ import countriesVisited from "../../content/about/Countries_visited v2.jpg";
 import whyTheseGuidesWork from "../../content/about/Why these guides work.jpg";
 import whyIDoThis from "../../content/about/Why I do this.jpg";
 import mongolRally from "../../content/about/Mongol rally.jpg";
-import africaRallyDesert from "../../content/about/Africa rally - Desert 2023.jpg";
-import australia from "../../content/about/Australia 2.JPG";
+import africaRally1 from "../../content/about/Africa Rally_1.jpg";
+import australia from "../../content/about/Australia 2-edited.JPG";
 import aconcagua from "../../content/about/7_Summits_Aconcagua 2017.jpg";
 import denali from "../../content/about/7_Summits_Denali 2022.jpg";
 import kilimanjaro from "../../content/about/7_Summits_Kilimanjaro 2016.jpg";
@@ -27,8 +27,8 @@ export const ABOUT_IMAGES = {
   "Why these guides work.jpg": whyTheseGuidesWork,
   "Why I do this.jpg": whyIDoThis,
   "Mongol rally.jpg": mongolRally,
-  "Africa rally - Desert 2023.jpg": africaRallyDesert,
-  "Australia 2.JPG": australia,
+  "Africa Rally_1.jpg": africaRally1,
+  "Australia 2-edited.JPG": australia,
   "7_Summits_Aconcagua 2017.jpg": aconcagua,
   "7_Summits_Denali 2022.jpg": denali,
   "7_Summits_Kilimanjaro 2016.jpg": kilimanjaro,

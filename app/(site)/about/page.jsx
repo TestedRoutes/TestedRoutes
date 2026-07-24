@@ -10,8 +10,8 @@ export const metadata = {
 
 const ROAD_EXPEDITIONS = [
   { title: "Mongol Rally", file: "Mongol rally.jpg", alt: "Convoy vehicles on a long-distance rally stage across open terrain" },
-  { title: "Africa Rally", file: "Africa rally - Desert 2023.jpg", alt: "Desert driving during the Africa Rally" },
-  { title: "Australia Rally", file: "Australia 2.JPG", alt: "Remote dirt route and wide landscape during a long-distance rally stage" },
+  { title: "Africa Rally", file: "Africa Rally_1.jpg", alt: "During the Africa Rally" },
+  { title: "Australia Roadtrip", file: "Australia 2-edited.JPG", alt: "Remote dirt route and wide landscape during a long-distance road trip" },
 ];
 
 const MOUNTAINS = [
@@ -55,12 +55,12 @@ export default function AboutMePage() {
             After more than 15 years of independent trip planning, I know where travel
             plans usually fail:
           </p>
-          <ul className="space-y-1 text-sm leading-relaxed text-slate-600">
+          <ul className="!mt-1 space-y-1 text-sm leading-relaxed text-slate-600">
             <li className="flex gap-2"><span className="mt-0.5 shrink-0 text-slate-400">•</span>connections that do not work</li>
             <li className="flex gap-2"><span className="mt-0.5 shrink-0 text-slate-400">•</span>unrealistic travel timings</li>
             <li className="flex gap-2"><span className="mt-0.5 shrink-0 text-slate-400">•</span>routes that look simple on paper but break once the journey starts</li>
           </ul>
-          <p className="text-sm leading-relaxed text-slate-600">
+          <p className="!mt-1 text-sm leading-relaxed text-slate-600">
             These guides are designed to help you avoid exactly that.
           </p>
           <Link
@@ -88,13 +88,13 @@ export default function AboutMePage() {
             <p className="text-sm text-slate-600">
               Traveling across regions changes how you think about routes. Over time, you learn:
             </p>
-            <ul className="space-y-1 text-sm text-slate-600">
+            <ul className="!mt-1 space-y-1 text-sm text-slate-600">
               <li className="flex gap-2"><span className="mt-0.5 shrink-0 text-slate-400">•</span>which border crossings slow trips down</li>
               <li className="flex gap-2"><span className="mt-0.5 shrink-0 text-slate-400">•</span>which connections save hours</li>
               <li className="flex gap-2"><span className="mt-0.5 shrink-0 text-slate-400">•</span>how to combine destinations into routes that flow naturally</li>
               <li className="flex gap-2"><span className="mt-0.5 shrink-0 text-slate-400">•</span>how to turn ideas on a map into journeys that actually work</li>
             </ul>
-            <p className="text-sm text-slate-600">This perspective shapes how each guide is structured.</p>
+            <p className="!mt-1 text-sm text-slate-600">This perspective shapes how each guide is structured.</p>
           </div>
           <div className="overflow-hidden rounded-2xl shadow-sm ring-1 ring-slate-200">
             <Image
@@ -117,13 +117,13 @@ export default function AboutMePage() {
           <p className="text-sm text-slate-600">
             Each guide focuses on what travellers usually struggle with most:
           </p>
-          <ul className="space-y-1 text-sm text-slate-600">
+          <ul className="!mt-1 space-y-1 text-sm text-slate-600">
             <li className="flex gap-2"><span className="mt-0.5 shrink-0 text-slate-400">•</span>how to get there</li>
             <li className="flex gap-2"><span className="mt-0.5 shrink-0 text-slate-400">•</span>how long things actually take</li>
             <li className="flex gap-2"><span className="mt-0.5 shrink-0 text-slate-400">•</span>what is worth skipping</li>
             <li className="flex gap-2"><span className="mt-0.5 shrink-0 text-slate-400">•</span>how to combine stops efficiently in one day</li>
           </ul>
-          <p className="text-sm text-slate-600">
+          <p className="!mt-1 text-sm text-slate-600">
             The result is a route you can follow with confidence, not just inspiration on a page.
           </p>
         </div>
