@@ -103,6 +103,28 @@ function pickPrices(guide) {
   return guide?.pricingTier?.prices ?? [];
 }
 
+// Buyer-facing downloadables label, within Polar's 42-char server limit.
+// Trims at a word boundary so a long title never becomes mid-word garbage.
+function benefitDescription(title) {
+  const suffix = " – guide PDF";
+  const room = 42 - suffix.length;
+  let name = (title || "guide").trim();
+  // Titles are "Place in N days: the marketing subtitle" — the part before
+  // the colon is the product name and usually fits on its own.
+  if (name.length > room && name.includes(":")) {
+    const head = name.split(":")[0].trim();
+    if (head.length >= 8) name = head;
+  }
+  if (name.length > room) {
+    const cut = name.slice(0, room);
+    const lastSpace = cut.lastIndexOf(" ");
+    name = lastSpace > 10 ? cut.slice(0, lastSpace) : cut;
+  }
+  // Never end on a dangling article or punctuation.
+  name = name.replace(/[\s:,–-]+$/, "").replace(/\s+(the|a|an|and|of|in|to)$/i, "");
+  return `${name}${suffix}`;
+}
+
 function describeReason(guide) {
   if (!guide.pdfUrl) return "missing PDF (guide.pdf)";
   const prices = pickPrices(guide);
@@ -202,8 +224,10 @@ async function syncCreate({ guide }) {
   if (VERBOSE) console.log(`    + creating downloadables benefit`);
   const benefit = await polar.benefits.create({
     type: "downloadables",
-    // Polar caps benefit descriptions at 42 chars (validated server-side).
-    description: `${guide.slug} PDF`.slice(0, 42),
+    // Buyer-facing label in the Polar portal. Polar caps it at 42 chars
+    // (validated server-side), so long titles are trimmed at a word
+    // boundary rather than falling back to the raw slug.
+    description: benefitDescription(guide.title),
     properties: { files: [fileId] },
   });
 

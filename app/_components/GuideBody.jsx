@@ -49,16 +49,18 @@ const components = {
         {children}
       </blockquote>
     ),
+    // 3pt AFTER each paragraph, nothing before — founder's paragraph-spacing
+    // spec (2026-07). Applies to guide bodies and story bodies alike.
     normal: ({ children }) => (
-      <p className="my-3 text-sm leading-relaxed text-slate-700">{children}</p>
+      <p className="mb-[3pt] mt-0 text-sm leading-relaxed text-slate-700">{children}</p>
     ),
   },
   list: {
     bullet: ({ children }) => (
-      <ul className="my-3 list-disc space-y-1 pl-6 text-sm text-slate-700">{children}</ul>
+      <ul className="mb-[3pt] mt-0 list-disc space-y-[3pt] pl-6 text-sm text-slate-700">{children}</ul>
     ),
     number: ({ children }) => (
-      <ol className="my-3 list-decimal space-y-1 pl-6 text-sm text-slate-700">{children}</ol>
+      <ol className="mb-[3pt] mt-0 list-decimal space-y-[3pt] pl-6 text-sm text-slate-700">{children}</ol>
     ),
   },
   marks: {
@@ -86,9 +88,14 @@ const components = {
 
 // Deliberately no link out to the Inspire story here: the guide page is the
 // purchase surface, and the story→guide funnel only runs one way.
-export default function GuideBody({ blocks, checkoutHref, pdfHref, price, t: tProp }) {
+export default function GuideBody({ blocks, checkoutHref, pdfHref, price, t: tProp, bare }) {
   const t = tProp || getDict("en").guide;
   if (!Array.isArray(blocks) || blocks.length === 0) return null;
+
+  // `bare`: the sales layout supplies its own heading and CTAs, and its body
+  // is written short on purpose — render the prose alone, untruncated.
+  if (bare) return <PortableText value={blocks} components={components} />;
+
   const { preview, truncated } = truncateForPreview(blocks);
   const ctaHref = checkoutHref || pdfHref || null;
   const buttonLabel = price ? `${t.getFullGuide} – ${price}` : t.getFullGuide;
