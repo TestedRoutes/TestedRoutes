@@ -14,6 +14,7 @@ export default async function sitemap() {
     { url: "/about", changeFrequency: "monthly", priority: 0.7 },
     { url: "/destinations", changeFrequency: "weekly", priority: 0.6 },
     { url: "/destinations/switzerland", changeFrequency: "weekly", priority: 0.8 },
+    { url: "/destinations/seychelles", changeFrequency: "weekly", priority: 0.8 },
     { url: "/guides", changeFrequency: "weekly", priority: 0.9 },
     { url: "/inspire", changeFrequency: "weekly", priority: 0.8 },
   ];

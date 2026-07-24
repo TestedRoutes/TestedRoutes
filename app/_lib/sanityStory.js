@@ -32,7 +32,7 @@ const STORY_PROJECTION = /* groq */ `
   videoUrl,
   videoSlot,
   videos[]{ url, slot },
-  "destination": destination->{ name, country, countryCode, continent },
+  "destination": destination->{ name, country, countryCode, continent, "slug": slug.current },
   regions,
   nearestCity,
   nearestCityDistanceKm,
@@ -156,6 +156,7 @@ function buildLegacyMetadata(doc) {
 
     geography: {
       country: doc.destination?.country || doc.destination?.name,
+      destination_slug: doc.destination?.slug,
       country_code: doc.destination?.countryCode,
       continent: doc.destination?.continent,
       regions: doc.regions,

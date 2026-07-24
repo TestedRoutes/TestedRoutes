@@ -202,7 +202,8 @@ async function syncCreate({ guide }) {
   if (VERBOSE) console.log(`    + creating downloadables benefit`);
   const benefit = await polar.benefits.create({
     type: "downloadables",
-    description: `${guide.title} — guide PDF`.slice(0, 200),
+    // Polar caps benefit descriptions at 42 chars (validated server-side).
+    description: `${guide.slug} PDF`.slice(0, 42),
     properties: { files: [fileId] },
   });
 

@@ -572,10 +572,17 @@ export default async function GuidePage({ lang, slug }) {
         <Link href={localePath(lang, "/guides")} className="hover:text-slate-600">
           {dict.nav.guides}
         </Link>
-        <span>›</span>
-        <Link href="/destinations/switzerland" className="hover:text-slate-600">
-          Switzerland
-        </Link>
+        {meta.geography?.destination_slug ? (
+          <>
+            <span>›</span>
+            <Link
+              href={`/destinations/${meta.geography.destination_slug}`}
+              className="hover:text-slate-600"
+            >
+              {meta.geography.country}
+            </Link>
+          </>
+        ) : null}
         <span>›</span>
         <span className="text-slate-600">{guide.title}</span>
       </nav>

@@ -20,6 +20,11 @@ dist/
 # Story drafts authored locally before publishing to Sanity
 drafts/
 
+# Country-first content production archive (photos, PDFs, master workbooks).
+# Read locally by scripts/batch_publish.py and scripts/content_status.py;
+# far too large for git and published to Sanity, never deployed from the repo.
+content/countries/
+
 # Per-folder artifacts written by `npm run publish -- --generate-metadata`.
 # These can land in tracked story folders (e.g. public/Content/Stories/...)
 # so ignore them globally rather than relying on folder location.
