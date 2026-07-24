@@ -141,23 +141,23 @@ export default function InspireBrowse({ cards, categoryItems = [], lang = "en" }
 
   return (
     <div className="space-y-10">
-      <div className="mx-auto w-full max-w-3xl">
+      <div className="mx-auto w-full max-w-2xl">
         <label htmlFor="inspire-search" className="sr-only">
           Search journeys
         </label>
-        <div className="flex w-full items-center gap-2 rounded-full bg-white p-1.5 shadow-md ring-1 ring-slate-200 md:p-2">
+        <div className="flex w-full items-center gap-2 rounded-full bg-white p-1.5 shadow-md ring-1 ring-slate-200 ">
           <input
             id="inspire-search"
             type="search"
             placeholder={t.searchPlaceholder}
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="min-w-0 flex-1 bg-transparent px-4 py-3 text-sm text-slate-700 outline-none placeholder:text-slate-400 md:px-6 md:py-4 md:text-base"
+            className="min-w-0 flex-1 bg-transparent px-4 py-3 text-sm text-slate-700 outline-none placeholder:text-slate-400 md:px-5 md:text-base"
           />
           <button
             type="button"
             onClick={() => document.getElementById("inspire-search")?.blur()}
-            className="shrink-0 rounded-full bg-brand-terracotta px-4 py-3 text-sm font-normal tracking-[0.05em] text-white transition hover:bg-brand-terracotta/90 md:px-6 md:py-4 md:text-base"
+            className="shrink-0 rounded-full bg-brand-terracotta px-4 py-3 text-sm font-normal tracking-[0.05em] text-white transition hover:bg-brand-terracotta/90 md:px-6 md:text-base"
           >
             {t.searchButton}
           </button>

@@ -4,7 +4,9 @@
 
 html,
 body {
-  background: #f4f3ef;
+  /* Warm canvas (founder 2026-07-24): peach #fdf3ea instead of the
+     near-neutral Parchment #f4f3ef, which read cool on screen. */
+  background: #fdf3ea;
   color: #1f0d07;
 }
 

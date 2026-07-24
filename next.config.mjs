@@ -2,6 +2,11 @@ import { withSentryConfig } from "@sentry/nextjs";
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   trailingSlash: false,
+  // Emit browser source maps so Sentry can upload them (fixes the 23
+  // "could not determine a source map reference" build warnings and makes
+  // client stack traces readable). Sentry deletes the .map files after
+  // upload (see sourcemaps option below), so none deploy publicly.
+  productionBrowserSourceMaps: true,
   // react-leaflet@4 trips "Map container is already initialized" under React 18
   // Strict Mode's double-mount in dev. Strict Mode has no effect on production
   // builds, so this only changes dev behaviour.
@@ -35,6 +40,12 @@ export default withSentryConfig(nextConfig, {
   // Note: Check that the configured route will not match with your Next.js middleware, otherwise reporting of client-
   // side errors will fail.
   tunnelRoute: "/monitoring",
+
+  sourcemaps: {
+    // Upload to Sentry, then strip the .map files from the deploy output so
+    // source code is never publicly downloadable.
+    deleteSourcemapsAfterUpload: true,
+  },
 
   webpack: {
     // Enables automatic instrumentation of Vercel Cron Monitors. (Does not yet work with App Router route handlers.)
