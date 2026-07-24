@@ -274,7 +274,7 @@ export default async function StoryPage({ lang, slug }) {
 
         <div className="mb-4">
           {display.geoLabel ? (
-            <p className="text-base font-semibold uppercase tracking-[0.18em] text-slate-500">
+            <p className="text-xs font-normal uppercase tracking-[0.2em] text-slate-500">
               {display.geoLabel}
             </p>
           ) : null}

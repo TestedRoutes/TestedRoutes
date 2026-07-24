@@ -23,11 +23,11 @@ export default async function HomePage() {
     <main className="mx-auto flex max-w-7xl flex-col gap-12 px-6 pb-16 pt-12 md:pt-16">
       <section className="space-y-10">
         <div className="space-y-2 text-center">
-          <h1 className="font-serif font-bold leading-[1.1] text-brand-ink text-2xl md:text-[40px]">
+          <h1 className="font-serif font-normal leading-[1.1] text-brand-ink text-2xl md:text-[26px] lg:text-5xl">
             <span className="md:hidden">Guides built from real trips</span>
             <span className="hidden md:inline">Travel guides built from real trips</span>
           </h1>
-          <p className="font-serif text-sm font-light text-slate-600 md:text-lg">
+          <p className="font-serif text-sm font-light text-slate-600 md:text-[32px]">
             Skip the research. Take the trip
           </p>
         </div>

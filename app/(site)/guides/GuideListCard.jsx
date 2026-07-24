@@ -80,7 +80,7 @@ export default function GuideListCard({ guide, t, lang = "en" }) {
           ) : null}
           <span className="truncate">{contextLine}</span>
         </p>
-        <h3 className="line-clamp-2 min-h-[3.5rem] text-lg font-light leading-snug text-slate-900">
+        <h3 className="line-clamp-2 min-h-[3.5rem] text-lg font-normal leading-snug text-slate-900">
           {guide.title}
         </h3>
         <p className="line-clamp-2 min-h-[2.5rem] text-xs leading-relaxed text-slate-500">

@@ -93,7 +93,7 @@ export default function SiteHeader({ currency = "EUR", guides = [] }) {
   return (
     // Glassy over the sky-to-sand gradient: a solid cream bar clashed with
     // the blue zone at the top of the wash.
-    <header className="sticky top-0 z-50 border-b border-slate-200/40 bg-brand-parchment/95 backdrop-blur-md">
+    <header className="sticky top-0 z-50 border-b border-slate-200/40 bg-brand-parchment">
       <nav
         className="mx-auto flex h-16 md:h-20 max-w-7xl items-center justify-between gap-3 px-4 text-sm text-slate-900 md:gap-6 md:px-6"
         aria-label="Primary"

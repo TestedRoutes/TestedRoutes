@@ -44,8 +44,8 @@ export default function AboutMePage() {
           className="h-56 w-full rounded-[18px] object-cover object-center shadow-[0_20px_60px_rgba(0,0,0,0.08)] md:order-2 md:h-full md:min-h-[320px] md:max-h-[420px]"
         />
         <div className="space-y-4 md:order-1">
-          <h1 className="font-bold md:font-light text-2xl md:text-4xl lg:text-5xl">About me</h1>
-          <p className="text-sm leading-relaxed text-slate-600">
+          <h1 className="font-bold md:font-medium text-2xl md:text-4xl lg:text-[40px]">About me</h1>
+          <p className="font-serif font-supersoft text-lg leading-relaxed text-slate-500">
             I do not build guides from desk research or generic itineraries. Every route
             here comes from trips I have planned and tested myself across more than 140
             countries, from day hikes in Switzerland to overland travel through West
