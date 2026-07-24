@@ -27,7 +27,7 @@ export default async function HomePage() {
             <span className="md:hidden">Guides built from real trips</span>
             <span className="hidden md:inline">Travel guides built from real trips</span>
           </h1>
-          <p className="font-serif text-sm font-light text-slate-600 md:text-[32px]">
+          <p className="font-serif text-sm font-light text-slate-600 md:text-2xl">
             Skip the research. Take the trip
           </p>
         </div>
