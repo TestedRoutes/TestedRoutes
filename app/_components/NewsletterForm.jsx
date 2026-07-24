@@ -86,7 +86,7 @@ export default function NewsletterForm({ variant = "footer", source, headline, s
     return (
       <section className="rounded-3xl bg-brand-ink p-8 text-brand-cream">
         <p className="text-xs uppercase tracking-[0.2em] text-brand-cream/60">TestedRoutes Newsletter</p>
-        <h3 className="mt-2 font-serif text-2xl font-light">
+        <h3 className="mt-2 font-serif text-xl md:text-2xl font-light">
           {headline || "Get the next guide first"}
         </h3>
         <p className="mt-2 text-sm text-brand-cream/80">

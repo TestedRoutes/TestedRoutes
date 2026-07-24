@@ -278,7 +278,7 @@ export default async function StoryPage({ lang, slug }) {
               {display.geoLabel}
             </p>
           ) : null}
-          <h1 className="mt-1 font-medium leading-tight text-slate-900 text-xl md:text-4xl lg:text-5xl">
+          <h1 className="mt-1 font-bold md:font-medium leading-tight text-slate-900 text-2xl md:text-4xl lg:text-5xl">
             {story.title}
           </h1>
           {story.metadata?.hero?.subtitle ? (
@@ -357,7 +357,7 @@ export default async function StoryPage({ lang, slug }) {
 
             {(guideHref || hasGuideOptions) && bodyHtml ? (
               <section className="rounded-[28px] bg-brand-terracotta p-8 text-center text-white">
-                <p className="font-serif text-2xl font-light leading-tight">
+                <p className="font-serif text-xl md:text-2xl font-light leading-tight">
                   {t.endCtaTitle}
                 </p>
                 <p className="mx-auto mt-3 max-w-md text-sm leading-relaxed text-white/70">

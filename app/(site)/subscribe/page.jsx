@@ -38,7 +38,7 @@ export default function SubscribePage() {
         <p className="text-xs uppercase tracking-[0.2em] text-slate-500">
           TestedRoutes Newsletter
         </p>
-        <h1 className="mt-3 font-serif font-light text-slate-900 text-xl md:text-4xl lg:text-5xl">
+        <h1 className="mt-3 font-serif font-bold md:font-light text-slate-900 text-2xl md:text-4xl lg:text-5xl">
           Field-tested travel routes, in your inbox when they drop
         </h1>
         <p className="mt-4 text-base leading-relaxed text-slate-600">
@@ -61,7 +61,7 @@ export default function SubscribePage() {
           <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#5a3a2f]">
             Free with subscribing
           </p>
-          <h2 className="mt-2 font-serif text-2xl font-light text-slate-900">
+          <h2 className="mt-2 font-serif text-xl md:text-2xl font-light text-slate-900">
             5 best Switzerland day trips from Zurich – free PDF
           </h2>
           <p className="mt-2 text-sm leading-relaxed text-slate-700">

@@ -10,7 +10,7 @@ export default function NewsletterConfirmedPage() {
   return (
     <main className="mx-auto flex max-w-2xl flex-col items-center gap-6 px-6 py-20 text-center">
       <p className="text-xs uppercase tracking-[0.2em] text-slate-500">Subscription confirmed</p>
-      <h1 className="font-light text-slate-900 text-xl md:text-4xl lg:text-5xl">You&apos;re in. Welcome aboard.</h1>
+      <h1 className="font-bold md:font-light text-slate-900 text-2xl md:text-4xl lg:text-5xl">You&apos;re in. Welcome aboard.</h1>
       <p className="text-base text-slate-600">
         You&apos;ll get an email when the next field-tested route is published. Until then, feel
         free to wander.

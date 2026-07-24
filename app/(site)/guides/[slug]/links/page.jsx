@@ -234,7 +234,7 @@ export default async function GuideLinksPage({ params }) {
         <span className="text-slate-600">Links</span>
       </nav>
 
-      <h1 className="font-light leading-tight text-slate-900 text-xl md:text-4xl lg:text-5xl">
+      <h1 className="font-bold md:font-light leading-tight text-slate-900 text-2xl md:text-4xl lg:text-5xl">
         {guide.title} – booking links
       </h1>
       <p className="mt-3 max-w-3xl text-sm leading-relaxed text-slate-600">

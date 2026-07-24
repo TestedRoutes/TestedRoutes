@@ -317,7 +317,7 @@ function RelatedGuides({ items, t, lang }) {
   if (!Array.isArray(items) || items.length === 0) return null;
   return (
     <section className="mt-12 border-t border-slate-200 pt-10">
-      <p className="mb-5 font-serif text-2xl font-light text-brand-ink">
+      <p className="mb-5 font-serif text-xl md:text-2xl font-light text-brand-ink">
         {t.youMightAlsoLike}
       </p>
       <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
@@ -584,7 +584,7 @@ export default async function GuidePage({ lang, slug }) {
         {hero.eyebrow ? (
           <p className="text-[12px] uppercase tracking-[0.1em] text-slate-500">{hero.eyebrow}</p>
         ) : null}
-        <h1 className="mt-1 font-medium leading-tight text-slate-900 text-xl md:text-4xl lg:text-5xl">
+        <h1 className="mt-1 font-bold md:font-medium leading-tight text-slate-900 text-2xl md:text-4xl lg:text-5xl">
           {guide.title}
         </h1>
         {hero.subtitle ? (

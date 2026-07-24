@@ -12,7 +12,7 @@ export default function LegalNoticePage() {
   return (
     <main className="mx-auto flex max-w-3xl flex-col gap-6 px-6 pb-16 pt-8">
       <section className="rounded-[28px] bg-white p-8 shadow-sm ring-1 ring-slate-200">
-        <h1 className="font-light text-slate-900 text-xl md:text-4xl lg:text-5xl">Legal Notice</h1>
+        <h1 className="font-bold md:font-light text-slate-900 text-2xl md:text-4xl lg:text-5xl">Legal Notice</h1>
         <p className="mt-2 text-xs text-slate-500">Last updated: {LAST_UPDATED}</p>
         <p className="mt-4 text-sm leading-relaxed text-slate-600">
           Information about the operator of testedroutes.com, as required by EU

@@ -169,7 +169,7 @@ export default function FaqPage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
       />
       <section className="rounded-[28px] bg-white p-8 shadow-sm ring-1 ring-slate-200">
-        <h1 className="font-light text-slate-900 text-xl md:text-4xl lg:text-5xl">
+        <h1 className="font-bold md:font-light text-slate-900 text-2xl md:text-4xl lg:text-5xl">
           Frequently asked questions
         </h1>
         <p className="mt-4 text-sm leading-relaxed text-slate-600">

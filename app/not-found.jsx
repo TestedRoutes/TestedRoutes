@@ -11,7 +11,7 @@ export default function NotFound() {
   return (
     <main className="mx-auto flex max-w-2xl flex-col items-center gap-6 px-6 py-24 text-center">
       <p className="text-xs uppercase tracking-[0.2em] text-slate-500">404</p>
-      <h1 className="font-serif font-light text-slate-900 text-xl md:text-4xl lg:text-5xl">
+      <h1 className="font-serif font-bold md:font-light text-slate-900 text-2xl md:text-4xl lg:text-5xl">
         We couldn&apos;t find that page
       </h1>
       <p className="max-w-md text-base text-slate-600">

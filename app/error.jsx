@@ -23,7 +23,7 @@ export default function Error({ error, reset }) {
       <p className="text-xs uppercase tracking-[0.2em] text-slate-500">
         Something broke
       </p>
-      <h1 className="font-serif font-light text-slate-900 text-xl md:text-4xl lg:text-5xl">
+      <h1 className="font-serif font-bold md:font-light text-slate-900 text-2xl md:text-4xl lg:text-5xl">
         Sorry – we hit an error
       </h1>
       <p className="max-w-md text-base text-slate-600">
