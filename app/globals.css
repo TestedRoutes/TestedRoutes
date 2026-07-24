@@ -8,14 +8,14 @@ body {
 }
 
 body {
-  /* Canvas wash (founder 2026-07-25): Parchment at the top fading into
-     Bone over the first screen, then solid Bone. Both are palette
-     backgrounds - a warm, tone-on-tone gradient. */
-  background-color: #dcdacd;
+  /* Canvas wash (founder 2026-07-25): Bone at the top fading into
+     Parchment over the first screen, then solid Parchment. Both are
+     palette backgrounds - a warm, tone-on-tone gradient. */
+  background-color: #f4f3ef;
   background-image: linear-gradient(
     180deg,
-    #f4f3ef 0%,
-    #dcdacd 100%
+    #dcdacd 0%,
+    #f4f3ef 100%
   );
   background-repeat: no-repeat;
   background-size: 100% 100vh;
@@ -24,6 +24,13 @@ body {
 /* Guide-PDF typography: headings default to the display serif everywhere
    (legal, about, contact...) without per-page classes; opt out with
    font-sans for eyebrow-style labels. */
+@layer utilities {
+  /* Fraunces 72pt SuperSoft cut for serif text outside h1-h3. */
+  .font-supersoft {
+    font-variation-settings: "opsz" 72, "SOFT" 100;
+  }
+}
+
 @layer base {
   h1,
   h2,

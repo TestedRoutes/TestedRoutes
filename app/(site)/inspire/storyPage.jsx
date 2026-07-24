@@ -274,15 +274,15 @@ export default async function StoryPage({ lang, slug }) {
 
         <div className="mb-4">
           {display.geoLabel ? (
-            <p className="text-[12px] font-semibold uppercase tracking-[0.18em] text-slate-500">
+            <p className="text-base font-semibold uppercase tracking-[0.18em] text-slate-500">
               {display.geoLabel}
             </p>
           ) : null}
-          <h1 className="mt-1 font-bold md:font-medium leading-tight text-slate-900 text-2xl md:text-4xl lg:text-5xl">
+          <h1 className="mt-1 font-bold md:font-medium leading-tight text-slate-900 text-2xl md:text-4xl lg:text-[40px]">
             {story.title}
           </h1>
           {story.metadata?.hero?.subtitle ? (
-            <p className="mt-1 max-w-2xl text-[15px] text-slate-500">
+            <p className="mt-1 max-w-2xl font-serif font-supersoft text-lg text-slate-500">
               {story.metadata.hero.subtitle}
             </p>
           ) : null}

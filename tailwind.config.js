@@ -24,9 +24,9 @@ export default {
         // #f4f3ef, Coffee Bean #1f0d07, Bone #dcdacd, Icy Blue #abddfe,
         // Taupe Grey #5f524d, Tiger Flame #fe6730 (CTA, white text).
         brand: {
-          // Canvas = Bone per the palette card "Background (Main color)"
-          // (founder 2026-07-25; superseded the peach experiment).
-          cream: "#dcdacd",
+          // Canvas gradient lands on Parchment (Bone at top), so the
+          // token backing tab bars + fallbacks is Parchment again.
+          cream: "#f4f3ef",
           parchment: "#f4f3ef",
           ink: "#1f0d07", // Coffee Bean
           terracotta: "#943d21", // Brandy
