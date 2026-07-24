@@ -29,7 +29,7 @@ function getActiveSlug(pathname) {
 function primaryNavLinkClass(active, slug) {
   // Pill-on-hover: links carry their own padding so the highlight has a
   // shape; 5% Coffee Bean reads as a soft warm gray on Parchment.
-  const base = "rounded-full px-3 py-1.5 transition-colors";
+  const base = "rounded-full px-3 py-1.5 tracking-[0.05em] transition-colors";
   if (active === slug) {
     return `${base} font-semibold text-slate-900 underline decoration-slate-800/35 decoration-1 underline-offset-[6px]`;
   }
