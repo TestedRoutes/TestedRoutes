@@ -21,6 +21,10 @@ body {
        optical-size axis to 72 gives the high-contrast display cut at every
        heading size instead of the browser auto-picking a lower one. */
     font-weight: 300;
-    font-variation-settings: "opsz" 72;
+    font-variation-settings: "opsz" 72, "SOFT" 100;
+  }
+  /* TR-font-system.pdf: h4 / bolded sentence = DM Sans Bold. */
+  h4 {
+    font-weight: 700;
   }
 }

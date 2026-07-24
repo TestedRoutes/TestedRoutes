@@ -23,7 +23,7 @@ export default function NewsletterConfirmedPage() {
           Read the stories
         </Link>
         <Link
-          className="rounded-full border border-slate-300 px-5 py-2.5 text-sm font-semibold text-slate-700 transition hover:border-slate-400 hover:text-slate-900"
+          className="rounded-full border border-slate-300 px-5 py-2.5 text-sm font-normal tracking-[0.05em] text-slate-700 transition hover:border-slate-400 hover:text-slate-900"
           href="/guides"
         >
           Browse guides

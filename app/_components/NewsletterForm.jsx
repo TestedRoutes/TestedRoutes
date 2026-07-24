@@ -69,7 +69,7 @@ export default function NewsletterForm({ variant = "footer", source, headline, s
             <button
               type="submit"
               disabled={status === "loading"}
-              className="rounded-full bg-brand-cream px-4 py-1.5 text-xs font-semibold text-brand-ink transition hover:bg-white disabled:opacity-50"
+              className="rounded-full bg-brand-cream px-4 py-1.5 text-xs font-normal tracking-[0.05em] text-brand-ink transition hover:bg-white disabled:opacity-50"
             >
               {status === "loading" ? "…" : "Subscribe"}
             </button>
@@ -111,7 +111,7 @@ export default function NewsletterForm({ variant = "footer", source, headline, s
             <button
               type="submit"
               disabled={status === "loading"}
-              className="rounded-full bg-brand-cream px-5 py-2.5 text-sm font-semibold text-brand-ink transition hover:bg-white disabled:opacity-50"
+              className="rounded-full bg-brand-cream px-5 py-2.5 text-sm font-normal tracking-[0.05em] text-brand-ink transition hover:bg-white disabled:opacity-50"
             >
               {status === "loading" ? "Subscribing…" : "Subscribe"}
             </button>
@@ -149,7 +149,7 @@ export default function NewsletterForm({ variant = "footer", source, headline, s
           <button
             type="submit"
             disabled={status === "loading"}
-            className="rounded-full bg-brand-terracotta px-4 py-2 text-xs font-semibold text-white transition hover:bg-brand-terracotta/90 disabled:opacity-50"
+            className="rounded-full bg-brand-terracotta px-4 py-2 text-xs font-normal tracking-[0.05em] text-white transition hover:bg-brand-terracotta/90 disabled:opacity-50"
           >
             {status === "loading" ? "…" : "Subscribe"}
           </button>

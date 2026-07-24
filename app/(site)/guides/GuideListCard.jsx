@@ -95,14 +95,14 @@ export default function GuideListCard({ guide, t, lang = "en" }) {
             <span />
           )}
           <span className="flex shrink-0 items-center gap-2">
-            <span className="whitespace-nowrap rounded-full border border-slate-300 bg-white px-3 py-2 text-xs font-semibold text-slate-700 transition group-hover:border-slate-400">
+            <span className="whitespace-nowrap rounded-full border border-slate-300 bg-white px-3 py-2 text-xs font-normal tracking-[0.05em] text-slate-700 transition group-hover:border-slate-400">
               {t.viewGuide}
             </span>
             {buyHref ? (
               <button
                 type="button"
                 onClick={onBuy}
-                className="whitespace-nowrap rounded-full bg-brand-terracotta px-3 py-2 text-xs font-semibold text-white transition hover:bg-brand-terracotta/90"
+                className="whitespace-nowrap rounded-full bg-brand-terracotta px-3 py-2 text-xs font-normal tracking-[0.05em] text-white transition hover:bg-brand-terracotta/90"
               >
                 {t.buyGuide}
               </button>

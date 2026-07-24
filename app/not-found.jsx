@@ -29,7 +29,7 @@ export default function NotFound() {
         </Link>
         <Link
           href="/"
-          className="rounded-full border border-slate-300 bg-white px-5 py-2.5 text-sm font-semibold text-slate-900 transition hover:bg-slate-50"
+          className="rounded-full border border-slate-300 bg-white px-5 py-2.5 text-sm font-normal tracking-[0.05em] text-slate-900 transition hover:bg-slate-50"
         >
           Back to home
         </Link>

@@ -4,7 +4,7 @@ TestedRoutes - batch publisher for Inspire stories.
 
 Reads the Content Plan masterfile, and for every row whose Status is
 "To be published":
-  1. locates content/inspire/{country}/{ID}/
+  1. locates content/countries/{country}/inspire/{ID}/
   2. extracts {ID}_story*.docx -> generated/{ID}_story_en.md
   3. converts photos/ masters -> generated/{ID}_*.jpg (<=2560px, q85)
   4. cuts every video -> generated/{stem}.mp4 (7s, 720p, muted), keeping the
@@ -50,7 +50,9 @@ sys.stdout.reconfigure(encoding="utf-8", errors="replace")
 sys.stderr.reconfigure(encoding="utf-8", errors="replace")
 
 REPO = Path(__file__).resolve().parents[1]
-INSPIRE = REPO / "content" / "inspire"
+# Country-first tree (2026-07): content/countries/{country}/inspire/{ID}.
+# The two-depth glob in find_story_folder handles this layout natively.
+INSPIRE = REPO / "content" / "countries"
 LEDGER_PATH = INSPIRE / "publish-ledger.json"
 REVIEW_DIR = INSPIRE / "_review"
 
@@ -142,8 +144,8 @@ def read_plan(plan_path):
 
 
 def find_story_folder(story_id):
-    """Story folders live at inspire/{country}/{ID} or, once published and
-    filed away, inspire/published/{country}/{ID} — search both depths."""
+    """Story folders live at countries/{country}/inspire/{ID} (the current
+    layout) or countries/{group}/{ID} — search both depths."""
     hits = sorted(
         h
         for pattern in (INSPIRE / "*" / story_id, INSPIRE / "*" / "*" / story_id)

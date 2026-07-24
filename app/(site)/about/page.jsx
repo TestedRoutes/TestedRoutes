@@ -215,7 +215,7 @@ export default function AboutMePage() {
         <h2 className="text-lg font-normal text-slate-900">Ready to travel more and plan less?</h2>
         <Link
           href="/guides"
-          className="rounded-full bg-brand-terracotta px-6 py-2 text-xs font-semibold text-white transition hover:bg-brand-terracotta/90"
+          className="rounded-full bg-brand-terracotta px-6 py-2 text-xs font-normal tracking-[0.05em] text-white transition hover:bg-brand-terracotta/90"
         >
           Browse Guides
         </Link>

@@ -38,7 +38,7 @@ export default function BuyBox({
     <a
       href={targetHref}
       onClick={handleBuy}
-      className="block w-full rounded-full bg-brand-terracotta px-4 py-2.5 text-center text-sm font-semibold text-white transition hover:bg-brand-terracotta/90"
+      className="block w-full rounded-full bg-brand-terracotta px-4 py-2.5 text-center text-sm font-normal tracking-[0.05em] text-white transition hover:bg-brand-terracotta/90"
     >
       {t.getGuide}
     </a>
@@ -66,7 +66,7 @@ export default function BuyBox({
         {hasAffiliateLinks && linksHref ? (
           <Link
             href={linksHref}
-            className="block w-full rounded-full border border-slate-300 bg-white px-4 py-2.5 text-center text-sm font-semibold text-slate-900 transition hover:bg-slate-50"
+            className="block w-full rounded-full border border-slate-300 bg-white px-4 py-2.5 text-center text-sm font-normal tracking-[0.05em] text-slate-900 transition hover:bg-slate-50"
           >
             {t.getLinksFree}
           </Link>

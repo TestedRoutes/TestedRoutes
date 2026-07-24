@@ -103,7 +103,7 @@ export default function HomeSearchBar({
         />
         <button
           type="button"
-          className={`shrink-0 rounded-full bg-brand-terracotta font-semibold text-white transition hover:bg-brand-terracotta/90 ${styles.button}`}
+          className={`shrink-0 rounded-full bg-brand-terracotta font-normal tracking-[0.05em] text-white transition hover:bg-brand-terracotta/90 ${styles.button}`}
           onClick={handleSubmit}
         >
           {styles.buttonLabel}
