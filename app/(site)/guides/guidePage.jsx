@@ -369,9 +369,12 @@ export default async function GuidePage({ lang, slug }) {
     </>
   );
 
-  // Sales layout (guide-page-build-spec) for SKUs carrying the per-SKU
-  // sales assets; older guides keep the classic layout until theirs exist.
-  if (guide.salesPage?.carousel?.length >= 2 && guide.salesPage?.coverUrl) {
+  // Sales layout (guide-page-build-spec) — PARKED 2026-07-24 at the founder's
+  // request; every guide renders the classic layout below. The component and
+  // its Sanity fields are intact, so flipping this back to true re-enables it
+  // for any doc carrying a cover + carousel.
+  const SALES_LAYOUT_ENABLED = false;
+  if (SALES_LAYOUT_ENABLED && guide.salesPage?.carousel?.length >= 2 && guide.salesPage?.coverUrl) {
     return (
       <GuideSalesPage
         guide={guide}
