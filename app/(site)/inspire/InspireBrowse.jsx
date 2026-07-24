@@ -157,7 +157,7 @@ export default function InspireBrowse({ cards, categoryItems = [], lang = "en" }
           <button
             type="button"
             onClick={() => document.getElementById("inspire-search")?.blur()}
-            className="shrink-0 rounded-full bg-brand-terracotta px-4 py-3 text-sm font-normal tracking-[0.05em] text-white transition hover:bg-brand-terracotta/90 md:px-6 md:text-base"
+            className="shrink-0 rounded-full bg-brand-flame px-4 py-3 text-sm font-normal tracking-[0.05em] text-white transition hover:bg-brand-flame/90 md:px-6 md:text-base"
           >
             {t.searchButton}
           </button>
