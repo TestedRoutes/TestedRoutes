@@ -57,10 +57,10 @@ export default async function GuidesIndexPage({ lang = "en" }) {
     <main className="mx-auto flex max-w-7xl flex-col gap-10 px-6 pb-16 pt-12 md:pt-16">
       <section className="space-y-10">
         <div className="space-y-2 text-center">
-          <h1 className="font-serif font-bold md:font-light leading-[1.1] text-brand-ink text-2xl md:text-4xl lg:text-5xl">
+          <h1 className="font-serif font-normal leading-[1.1] text-brand-ink text-2xl md:text-[26px] lg:text-5xl">
             {tl.heading}
           </h1>
-          <p className="font-serif text-sm font-light text-slate-600 md:text-xl">{tl.tagline}</p>
+          <p className="font-serif text-sm font-light text-slate-600 md:text-2xl">{tl.tagline}</p>
         </div>
         {guides.length === 0 ? (
           lang !== "en" ? (

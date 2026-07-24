@@ -96,7 +96,7 @@ export default function MobileTabBar() {
       {/* In-flow spacer so the fixed bar never covers the footer. */}
       <div className="h-16 md:hidden" aria-hidden="true" />
       <nav
-        className="fixed inset-x-0 bottom-0 z-50 border-t border-slate-200/70 bg-brand-cream/95 pb-[env(safe-area-inset-bottom)] backdrop-blur-sm md:hidden"
+        className="fixed inset-x-0 bottom-0 z-50 border-t border-slate-200/70 bg-brand-bone/95 pb-[env(safe-area-inset-bottom)] backdrop-blur-sm md:hidden"
         aria-label="Primary mobile"
       >
         <div className="mx-auto flex h-16 max-w-md items-stretch justify-around">

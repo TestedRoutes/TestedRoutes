@@ -31,7 +31,7 @@ function primaryNavLinkClass(active, slug) {
   // shape; 5% Coffee Bean reads as a soft warm gray on Parchment.
   const base = "rounded-full px-3 py-1.5 tracking-[0.05em] transition-colors";
   if (active === slug) {
-    return `${base} font-semibold text-slate-900 underline decoration-slate-800/35 decoration-1 underline-offset-[6px]`;
+    return `${base} font-normal text-slate-900 underline decoration-slate-800/35 decoration-1 underline-offset-[6px]`;
   }
   return `${base} font-normal text-slate-600 hover:bg-brand-ink/5 hover:text-slate-900`;
 }
@@ -107,7 +107,7 @@ export default function SiteHeader({ currency = "EUR", guides = [] }) {
           <img
             src={logoVertical.src}
             alt="TestedRoutes"
-            className="h-[19px] w-auto md:h-[38px]"
+            className="h-[21px] w-auto md:h-[34px]"
           />
         </Link>
 

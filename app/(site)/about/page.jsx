@@ -44,8 +44,8 @@ export default function AboutMePage() {
           className="h-56 w-full rounded-[18px] object-cover object-center shadow-[0_20px_60px_rgba(0,0,0,0.08)] md:order-2 md:h-full md:min-h-[320px] md:max-h-[420px]"
         />
         <div className="space-y-4 md:order-1">
-          <h1 className="font-bold md:font-medium text-2xl md:text-4xl lg:text-[40px]">About me</h1>
-          <p className="font-serif font-supersoft text-lg leading-relaxed text-slate-500">
+          <h1 className="font-normal text-2xl md:text-4xl lg:text-[40px]">About me</h1>
+          <p className="text-sm leading-relaxed text-slate-600">
             I do not build guides from desk research or generic itineraries. Every route
             here comes from trips I have planned and tested myself across more than 140
             countries, from day hikes in Switzerland to overland travel through West
@@ -82,7 +82,7 @@ export default function AboutMePage() {
         </div>
         <div className="grid gap-6 rounded-[28px] bg-white p-6 shadow-sm ring-1 ring-slate-200 md:grid-cols-[1.1fr_0.9fr] md:items-start">
           <div className="space-y-3">
-            <h2 className="text-lg font-normal text-slate-900">
+            <h2 className="text-2xl font-light text-slate-900">
               This map shows where I have planned trips myself.
             </h2>
             <p className="text-sm text-slate-600">
@@ -109,7 +109,7 @@ export default function AboutMePage() {
 
       <section className="grid gap-6 rounded-[28px] bg-white p-6 shadow-sm ring-1 ring-slate-200 md:grid-cols-[1.1fr_0.9fr]">
         <div className="space-y-3">
-          <h2 className="text-lg font-normal text-slate-900">Why these guides work better in real life</h2>
+          <h2 className="text-2xl font-light text-slate-900">Why these guides work better in real life</h2>
           <p className="text-sm text-slate-600">
             These guides are built the way real trips actually happen, not as lists of
             attractions, but as clear routes you can follow step by step.
@@ -136,7 +136,7 @@ export default function AboutMePage() {
       </section>
 
       <section className="space-y-4">
-        <h2 className="text-lg font-normal text-slate-900">Road expeditions I've completed myself</h2>
+        <h2 className="text-2xl font-light text-slate-900">Road expeditions I've completed myself</h2>
         <div className="grid gap-4 md:grid-cols-3">
           {ROAD_EXPEDITIONS.map((item) => (
             <div key={item.title} className="rounded-2xl bg-white p-4 shadow-sm ring-1 ring-slate-200">
@@ -153,7 +153,7 @@ export default function AboutMePage() {
       </section>
 
       <section className="space-y-4">
-        <h2 className="text-lg font-normal text-slate-900">Mountains climbed</h2>
+        <h2 className="text-2xl font-light text-slate-900">Mountains climbed</h2>
         <div className="grid gap-3 md:grid-cols-3">
           {MOUNTAINS.map((item) => (
             <div key={item.caption} className="rounded-2xl bg-white p-4 shadow-sm ring-1 ring-slate-200">
@@ -184,7 +184,7 @@ export default function AboutMePage() {
                 sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
                 className="aspect-[4/3] w-full rounded-2xl object-cover object-center"
               />
-              <p className="mt-2 text-center text-[11px] font-medium leading-snug text-slate-600">{item.label}</p>
+              <p className="mt-2 text-center text-sm font-semibold leading-snug text-slate-600">{item.label}</p>
             </div>
           ))}
         </div>
@@ -192,7 +192,7 @@ export default function AboutMePage() {
 
       <section className="grid gap-6 rounded-[28px] bg-white p-6 shadow-sm ring-1 ring-slate-200 md:grid-cols-[1.1fr_0.9fr]">
         <div className="space-y-3">
-          <h2 className="text-lg font-normal text-slate-900">Why I do this</h2>
+          <h2 className="text-2xl font-light text-slate-900">Why I do this</h2>
           <p className="text-sm text-slate-600">
             Independent travel should feel exciting, not overwhelming.
           </p>
@@ -212,7 +212,7 @@ export default function AboutMePage() {
       </section>
 
       <section className="flex flex-col items-start gap-4 rounded-[28px] bg-white p-6 shadow-sm ring-1 ring-slate-200 md:flex-row md:items-center md:justify-between">
-        <h2 className="text-lg font-normal text-slate-900">Ready to travel more and plan less?</h2>
+        <h2 className="text-2xl font-light text-slate-900">Ready to travel more and plan less?</h2>
         <Link
           href="/guides"
           className="rounded-full bg-brand-terracotta px-6 py-2 text-xs font-normal tracking-[0.05em] text-white transition hover:bg-brand-terracotta/90"
