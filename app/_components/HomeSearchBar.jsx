@@ -100,7 +100,7 @@ export default function HomeSearchBar({
             if (e.key === "Enter") handleSubmit();
           }}
           placeholder="Where to next?"
-          className={`min-w-0 flex-1 bg-transparent text-slate-700 outline-none placeholder:text-slate-400 ${styles.input}`}
+          className={`min-w-0 flex-1 bg-transparent text-brand-ink outline-none placeholder:text-slate-400 ${styles.input}`}
         />
         <button
           type="button"

@@ -11,12 +11,12 @@ body {
   /* Sky-to-sand wash (founder 2026-07-24): soft Icy-Blue-derived sky at the
      top fading into the warm peach canvas over the first screen, then solid
      peach. One gradient, page-level, so cards float on it like the poster. */
-  background-color: #fdf3ea;
+  background-color: #dcdacd;
   background-image: linear-gradient(
     180deg,
     #d9eaf6 0%,
-    #eef1ee 45%,
-    #fdf3ea 100%
+    #e2e7e3 45%,
+    #dcdacd 100%
   );
   background-repeat: no-repeat;
   background-size: 100% 100vh;

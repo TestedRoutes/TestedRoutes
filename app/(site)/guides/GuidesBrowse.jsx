@@ -77,7 +77,7 @@ export default function GuidesBrowse({
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder={tl.searchPlaceholder}
-            className="min-w-0 flex-1 bg-transparent px-4 py-3 text-sm text-slate-700 outline-none placeholder:text-slate-400 md:px-5 md:text-base"
+            className="min-w-0 flex-1 bg-transparent px-4 py-3 text-sm text-brand-ink outline-none placeholder:text-slate-400 md:px-5 md:text-base"
           />
           <button
             type="button"
