@@ -46,10 +46,11 @@ function matchGuides(guides, query) {
 
 const VARIANT_STYLES = {
   hero: {
-    wrapper: "mx-auto w-full max-w-3xl",
-    container: "p-1.5 shadow-md md:p-2",
-    input: "px-4 py-3 text-sm md:px-6 md:py-4 md:text-base",
-    button: "px-4 py-3 text-sm md:px-6 md:py-4 md:text-base",
+    // Sized against the 57hours reference: ~640px bar, ~60px tall on desktop.
+    wrapper: "mx-auto w-full max-w-2xl",
+    container: "p-1.5 shadow-md",
+    input: "px-4 py-3 text-sm md:px-5 md:text-base",
+    button: "px-4 py-3 text-sm md:px-6 md:text-base",
     buttonLabel: (
       <>
         <span className="md:hidden">Search</span>
