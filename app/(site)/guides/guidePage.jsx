@@ -15,6 +15,7 @@ import GuideBody from "../../_components/GuideBody";
 import BuyBox from "../../_components/BuyBox";
 import StickyBuyBar from "../../_components/StickyBuyBar";
 import Byline from "../../_components/Byline";
+import GuideSalesPage from "./guideSalesPage";
 
 // hreflang alternates across every published language version of the guide.
 async function guideLanguageAlternates(guide, lang, slug) {
@@ -543,8 +544,8 @@ export default async function GuidePage({ lang, slug }) {
         }
       : null;
 
-  return (
-    <main className="mx-auto max-w-7xl px-6 pb-8 pt-8 md:pb-16">
+  const jsonLdBlocks = (
+    <>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd) }}
@@ -565,6 +566,28 @@ export default async function GuidePage({ lang, slug }) {
           dangerouslySetInnerHTML={{ __html: JSON.stringify(productJsonLd) }}
         />
       ) : null}
+    </>
+  );
+
+  // Sales layout (guide-page-build-spec) for SKUs carrying the per-SKU
+  // sales assets; older guides keep the classic layout until theirs exist.
+  if (guide.salesPage?.carousel?.length >= 2 && guide.salesPage?.coverUrl) {
+    return (
+      <GuideSalesPage
+        guide={guide}
+        lang={lang}
+        t={t}
+        dict={dict}
+        checkoutHref={checkoutHref}
+        pdfHref={pdfHref}
+        jsonLdBlocks={jsonLdBlocks}
+      />
+    );
+  }
+
+  return (
+    <main className="mx-auto max-w-7xl px-6 pb-8 pt-8 md:pb-16">
+      {jsonLdBlocks}
       <nav
         className="mb-5 flex items-center gap-1.5 text-[12px] text-slate-400"
         aria-label="Breadcrumb"

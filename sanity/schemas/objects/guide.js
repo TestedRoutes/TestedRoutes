@@ -81,6 +81,92 @@ export default {
       hidden: ({ parent }) => !parent?.hasGuide,
     },
     {
+      name: "cover",
+      title: "Cover artwork",
+      type: "image",
+      description:
+        "The guide cover, used as the sales-page lead image. Export of page 1 of the PDF.",
+      options: { hotspot: true },
+      fields: [{ name: "alt", title: "Alt text", type: "string" }],
+      hidden: ({ parent }) => !parent?.hasGuide,
+    },
+    {
+      name: "pages",
+      title: "Page count",
+      type: "number",
+      description: "Number of pages in the PDF, shown in the hero format facts.",
+      hidden: ({ parent }) => !parent?.hasGuide,
+    },
+    {
+      name: "dayStrip",
+      title: "Day strip",
+      type: "string",
+      description:
+        'Plain-text route summary rendered in the hero, e.g. "Day 1 Mahé · Days 2–3 Praslin · …". Must be real text so crawlers can read it.',
+      hidden: ({ parent }) => !parent?.hasGuide,
+    },
+    {
+      name: "proofLine",
+      title: "Proof line",
+      type: "string",
+      description: 'First-person proof sentence, e.g. "I flew here with my own plan."',
+      hidden: ({ parent }) => !parent?.hasGuide,
+    },
+    {
+      name: "proofPhoto",
+      title: "Proof photo",
+      type: "image",
+      description: "Small circular inset next to the proof line — the author on the trip.",
+      fields: [{ name: "alt", title: "Alt text", type: "string" }],
+      hidden: ({ parent }) => !parent?.hasGuide,
+    },
+    {
+      name: "carousel",
+      title: "Sales carousel",
+      type: "array",
+      description:
+        "Slides shown on the guide sales page. Images render at display resolution only (max 1200px exports). The map slide must have QR codes and /go/ links removed before export. Filling this switches the guide page to the sales layout.",
+      of: [
+        {
+          type: "object",
+          name: "carouselSlide",
+          fields: [
+            { name: "image", title: "Image", type: "image" },
+            {
+              name: "video",
+              title: "Video clip",
+              type: "file",
+              options: { accept: "video/mp4" },
+              description: "7s muted mp4. When set, plays instead of the image.",
+            },
+            { name: "caption", title: "Caption", type: "string" },
+            { name: "alt", title: "Alt text", type: "string" },
+          ],
+          preview: { select: { title: "caption", media: "image" } },
+        },
+      ],
+      hidden: ({ parent }) => !parent?.hasGuide,
+    },
+    {
+      name: "sample",
+      title: "Free sample day",
+      type: "object",
+      description:
+        "One full day page given away free. Never the day carrying the guide's signature tested move.",
+      fields: [
+        { name: "label", title: "Label", type: "string" },
+        { name: "body", title: "Body copy", type: "text", rows: 3 },
+        { name: "image", title: "Page image (full readable resolution)", type: "image" },
+        {
+          name: "pdfPath",
+          title: "Sample PDF path",
+          type: "string",
+          description: "Site-relative crawlable path, e.g. /samples/seychelles-day-04.pdf.",
+        },
+      ],
+      hidden: ({ parent }) => !parent?.hasGuide,
+    },
+    {
       name: "pageSlug",
       title: "Guide page slug",
       type: "string",

@@ -66,7 +66,14 @@ const STORY_PROJECTION = /* groq */ `
     purchasesCount,
     customPrices,
     "pricingTier": pricingTier->{ name, "slug": slug.current, prices, displayOrder },
-    "pdfUrl": pdf.asset->url
+    "pdfUrl": pdf.asset->url,
+    cover,
+    pages,
+    dayStrip,
+    proofLine,
+    proofPhoto,
+    carousel[]{ caption, alt, image, "videoUrl": video.asset->url },
+    sample{ label, body, image, pdfPath }
   },
   whyThisTrip, whoThisIsFor, whatYouGet, difficultyAtAGlance, notSuitableSales,
   faq[]{ question, answer },
@@ -423,6 +430,48 @@ export function shapeGuide(doc, currency = "EUR") {
         .slice(0, 4)
     : [];
 
+  // Sales-page block data (guide-page-build-spec). Present only when the
+  // guide doc carries the new per-SKU fields; the page falls back to the
+  // classic layout otherwise.
+  const g = doc.guide || {};
+  const sales = {
+    coverUrl: imageUrl(g.cover, 1600),
+    coverAlt: g.cover?.alt || null,
+    pages: g.pages || null,
+    dayStrip: g.dayStrip || null,
+    proofLine: g.proofLine || null,
+    proofPhotoUrl: imageUrl(g.proofPhoto, 320),
+    proofPhotoAlt: g.proofPhoto?.alt || null,
+    carousel: Array.isArray(g.carousel)
+      ? g.carousel
+          .map((s) => ({
+            imageUrl: imageUrl(s.image, 1200),
+            videoUrl: s.videoUrl || null,
+            caption: s.caption || "",
+            alt: s.alt || s.caption || "",
+          }))
+          .filter((s) => s.imageUrl || s.videoUrl)
+      : [],
+    sample: g.sample
+      ? {
+          label: g.sample.label || null,
+          body: g.sample.body || null,
+          imageUrl: imageUrl(g.sample.image, 1600),
+          pdfPath: g.sample.pdfPath || null,
+        }
+      : null,
+  };
+  const relatedStories = Array.isArray(doc.similarStories)
+    ? doc.similarStories
+        .filter((r) => r && !r.guide?.hasGuide && r.slug)
+        .map((r) => ({
+          title: r.title,
+          slug: r.slug,
+          href: `/inspire/${r.slug}`,
+          image: imageUrl(r.heroImage, 800),
+        }))
+    : [];
+
   return {
     slug: pageSlug,
     folder: doc._id,
@@ -450,6 +499,8 @@ export function shapeGuide(doc, currency = "EUR") {
     videoSlot: doc.videoSlot || null,
     videos: shapeVideos(doc),
     relatedGuides,
+    relatedStories,
+    salesPage: sales,
     folderUrl: "",
     heroName: doc.heroImage?.alt || null,
     guidePdfUrl: doc.guide?.pdfUrl || null,
