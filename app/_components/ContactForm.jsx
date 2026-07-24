@@ -50,7 +50,7 @@ export default function ContactForm() {
 
   if (status === "success") {
     return (
-      <div className="rounded-2xl border border-brand-icy bg-[#eef7fe] px-5 py-6 text-sm leading-relaxed text-brand-ink">
+      <div className="rounded-2xl border border-brand-bone bg-brand-terracotta-soft px-5 py-6 text-sm leading-relaxed text-brand-ink">
         <p className="font-semibold">Thanks – we&apos;ve got your message.</p>
         <p className="mt-1 text-brand-ink/80">
           We aim to reply within two business days. For privacy / data

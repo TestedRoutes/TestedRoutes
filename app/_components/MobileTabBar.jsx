@@ -121,7 +121,7 @@ export default function MobileTabBar() {
                 {/* Icy Blue pill echoes the guide PDF's "DAY n" circles. */}
                 <span
                   className={`flex items-center justify-center rounded-full px-3 py-0.5 ${
-                    isActive ? "bg-brand-icy" : ""
+                    isActive ? "bg-brand-terracotta-soft" : ""
                   }`}
                 >
                   {tab.icon}
