@@ -94,7 +94,7 @@ export default function HomeBrowse({ guides, categoryItems, cards = [], t }) {
 
       {cards.length ? (
         <section className="space-y-6">
-          <h2 className="text-xl font-normal">
+          <h2 className="text-lg font-normal">
             Browse guides
             {activeCategory ? (
               <span className="ml-2 text-sm font-normal text-slate-500">
@@ -113,7 +113,7 @@ export default function HomeBrowse({ guides, categoryItems, cards = [], t }) {
           >
             <Link
               href="/guides"
-              className="inline-flex h-9 items-center rounded-full border border-slate-200 bg-white px-3 text-xs font-normal tracking-[0.05em] text-slate-700 transition hover:border-slate-300"
+              className="inline-flex h-9 items-center rounded-full border border-slate-200 bg-white px-3 text-xs font-semibold text-slate-700 transition hover:border-slate-300"
             >
               View all
             </Link>

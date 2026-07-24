@@ -73,14 +73,14 @@ export default function GuideListCard({ guide, t, lang = "en" }) {
         <p className="flex min-w-0 items-center gap-2 text-xs uppercase tracking-[0.14em] text-slate-500">
           {categoryLabel ? (
             <span
-              className={`shrink-0 rounded-full px-2.5 py-0.5 text-[11px] font-semibold normal-case tracking-normal text-brand-ink ${tripCategoryChipClass(guide.category)}`}
+              className={`shrink-0 rounded-full px-2.5 py-0.5 text-xs font-semibold normal-case tracking-normal text-brand-ink ${tripCategoryChipClass(guide.category)}`}
             >
               {categoryLabel}
             </span>
           ) : null}
           <span className="truncate">{contextLine}</span>
         </p>
-        <h3 className="line-clamp-2 min-h-[3.5rem] text-lg font-normal leading-snug text-slate-900">
+        <h3 className="line-clamp-2 min-h-[3.5rem] text-lg font-light leading-snug text-slate-900">
           {guide.title}
         </h3>
         <p className="line-clamp-2 min-h-[2.5rem] text-xs leading-relaxed text-slate-500">

@@ -44,7 +44,7 @@ export default function HomeGuideRequest() {
           <p className="text-xs uppercase tracking-[0.2em] text-brand-cream/60">
             Looking for somewhere else?
           </p>
-          <h2 className="font-serif text-xl font-light leading-tight md:text-3xl">
+          <h2 className="font-serif text-xl font-light leading-tight md:text-[32px]">
             Tell me where.
           </h2>
           <p className="text-sm leading-relaxed text-brand-cream/80">

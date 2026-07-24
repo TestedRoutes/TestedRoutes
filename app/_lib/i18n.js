@@ -146,7 +146,7 @@ const en = {
   },
   guideList: {
     title: "Guides",
-    tagline: "Print it, follow it, the trip works.",
+    tagline: "Print it, follow it, the trip works",
     heading: "Field-tested travel guides",
     browseHeading: "Browse guides",
     filterType: "Trip type",
