@@ -2,7 +2,7 @@ import Link from "next/link";
 import Byline from "../../_components/Byline";
 import StickyBuyBar from "../../_components/StickyBuyBar";
 import GuideBody from "../../_components/GuideBody";
-import GuideSalesCarousel from "./GuideSalesCarousel";
+import GuideCarousel from "./GuideCarousel";
 import { PrimaryStats, LocationSection, buildLocation } from "./GuideTripSections";
 import { localePath } from "../../_lib/i18n";
 
@@ -148,7 +148,7 @@ export default function GuideSalesPage({
 
       {/* Block 2 — Carousel */}
       <section className="mt-12">
-        <GuideSalesCarousel slides={sp.carousel} />
+        <GuideCarousel slides={sp.carousel} />
       </section>
 
       {/* Trip details + route map — kept from the classic layout: buyers

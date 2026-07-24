@@ -9,6 +9,7 @@ import {
 } from "../../_lib/affiliateLinks";
 import { getDict, localePath } from "../../_lib/i18n";
 import GuideGallery from "../../_components/GuideGallery";
+import GuideCarousel from "./GuideCarousel";
 import CollapsibleSection from "../../_components/CollapsibleSection";
 import GuideBody from "../../_components/GuideBody";
 import BuyBox from "../../_components/BuyBox";
@@ -256,6 +257,7 @@ export default async function GuidePage({ lang, slug }) {
   const maintenance = meta.maintenance || {};
 
   const photos = [guide.image, ...(guide.galleryPhotos || [])].filter(Boolean);
+  const carouselSlides = guide.salesPage?.carousel || [];
   const checkoutHref = guide.polarProductId
     ? `/api/checkout?products=${encodeURIComponent(guide.polarProductId)}`
     : null;
@@ -428,7 +430,14 @@ export default async function GuidePage({ lang, slug }) {
 
       <div className="grid grid-cols-1 gap-6 md:grid-cols-[minmax(0,1fr)_320px] lg:gap-8">
         <div className="space-y-4 md:space-y-10">
-          <GuideGallery photos={photos} viewAllLabel={t.viewAllPhotos} />
+          {/* Guides with an authored carousel show that and nothing else —
+              it is the page's only image surface, by design. Guides without
+              one fall back to the photo gallery. */}
+          {carouselSlides.length >= 2 ? (
+            <GuideCarousel slides={carouselSlides} />
+          ) : (
+            <GuideGallery photos={photos} viewAllLabel={t.viewAllPhotos} />
+          )}
           {hero.primary_stats || maintenance.last_reviewed_date ? (
             <section>
               <p className="mb-4 font-serif text-xl font-normal text-brand-ink">

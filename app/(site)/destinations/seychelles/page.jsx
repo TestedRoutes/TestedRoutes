@@ -4,12 +4,12 @@ import { client } from "../../../../sanity/lib/client";
 import { urlFor } from "../../../../sanity/lib/image";
 import Byline from "../../../_components/Byline";
 
-import beauVallonFromAbove from "../../../../content/destinations/seychelles/beau-vallon-from-above.jpg";
-import graniteBouldersBeach from "../../../../content/destinations/seychelles/granite-boulders-beach.jpg";
+import sourceDargentFromWater from "../../../../content/destinations/seychelles/source-dargent-from-water.jpg";
+import anseLazioRocks from "../../../../content/destinations/seychelles/anse-lazio-rocks.jpg";
 import curieuseTortoises from "../../../../content/destinations/seychelles/curieuse-tortoises.jpg";
 import anseMajorTrail from "../../../../content/destinations/seychelles/anse-major-trail.jpg";
-import mahePalmBeach from "../../../../content/destinations/seychelles/mahe-palm-beach.jpg";
-import beauVallonSunset from "../../../../content/destinations/seychelles/beau-vallon-sunset.jpg";
+import sourceDargentSunset from "../../../../content/destinations/seychelles/source-dargent-sunset.jpg";
+import beauVallon from "../../../../content/destinations/seychelles/beau-vallon.jpg";
 
 export const metadata = {
   title: "Seychelles: what to actually do, and how long you need · TestedRoutes",
@@ -42,19 +42,19 @@ const ISLANDS = [
   {
     name: "Mahé",
     image: anseMajorTrail,
-    alt: "Coastal trail above a cove on Mahé, Seychelles",
+    alt: "Forested ridges and granite slabs in the interior of Mahé, Seychelles",
     body: "The main island and the only one with an international airport. Mountainous, green, and much bigger than people expect, with a road over the interior that climbs through cloud forest into viewpoints over the whole inner island chain. Good for the first and last days: a coastal trail to a cove with no road access, a proper capital with a spice market, and beaches that are quieter than the famous names elsewhere. Rent a car here. You will want it.",
   },
   {
     name: "Praslin",
-    image: graniteBouldersBeach,
-    alt: "Granite boulders and clear water on a Praslin beach, Seychelles",
+    image: anseLazioRocks,
+    alt: "Granite boulders and palms at the end of Anse Lazio, Praslin, Seychelles",
     body: "Half an hour by fast ferry from Mahé, and the reason most people come is the forest. Vallée de Mai is UNESCO-listed and the only place the coco de mer palm grows wild, producing the largest seed in the plant kingdom. It is also home to the endemic black parrot. The beaches on Praslin are the postcard ones: one of them regularly ranks among the best in the world, another is reached only through a resort with a reservation made days in advance.",
   },
   {
     name: "La Digue",
-    image: mahePalmBeach,
-    alt: "A leaning palm over sand and shallow water, Seychelles",
+    image: sourceDargentSunset,
+    alt: "Sunset behind the granite boulders at Anse Source d'Argent, La Digue, Seychelles",
     body: "The smallest of the three main islands, fifteen minutes from Praslin, and the one everybody remembers. It runs on bicycles. There are almost no cars, so the whole island moves at bike speed, and bike speed turns out to be exactly right. Anse Source d'Argent is here, the pink granite boulders you have seen a hundred times without knowing the name. So is the wild eastern side, where the surf comes in hard, the crowds thin out, and the beaches get emptier the further you walk.",
   },
   {
@@ -199,8 +199,8 @@ export default async function SeychellesDestinationPage() {
 
       <div className="relative mb-12 overflow-hidden rounded-[28px]">
         <Image
-          src={beauVallonFromAbove}
-          alt="Beau Vallon bay and the green hills of Mahé, Seychelles"
+          src={sourceDargentFromWater}
+          alt="The granite boulders of Anse Source d'Argent seen from the water, La Digue, Seychelles"
           priority
           className="h-[320px] w-full object-cover md:h-[460px]"
           sizes="(max-width: 1280px) 100vw, 1232px"
@@ -420,8 +420,8 @@ export default async function SeychellesDestinationPage() {
 
         <div className="relative overflow-hidden rounded-[28px]">
           <Image
-            src={beauVallonSunset}
-            alt="Sunset over Beau Vallon beach with anchored sailboats, Seychelles"
+            src={beauVallon}
+            alt="Beau Vallon beach and the green ridge behind it, Mahé, Seychelles"
             className="h-[420px] w-full object-cover"
             sizes="(max-width: 768px) 100vw, 768px"
           />
