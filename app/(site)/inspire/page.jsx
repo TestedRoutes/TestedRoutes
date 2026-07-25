@@ -4,6 +4,7 @@ export async function generateMetadata() {
   return buildInspireIndexMetadata("en");
 }
 
-export default function InspirePage() {
-  return <InspireIndexPage lang="en" />;
+export default async function InspirePage({ searchParams }) {
+  const { continent = "" } = (await searchParams) || {};
+  return <InspireIndexPage lang="en" continent={continent} />;
 }

@@ -10,6 +10,8 @@ export default {
         // Wired to next/font variables set on <html> in app/layout.jsx.
         serif: ["var(--font-serif)", "ui-serif", "Georgia", "serif"],
         sans: ["var(--font-sans)", "ui-sans-serif", "system-ui", "sans-serif"],
+        // Mynerve — quotes and small details in the brand type system.
+        script: ["var(--font-script)", "ui-rounded", "cursive"],
       },
       boxShadow: {
         // Card treatment (2026-07 style pass): soft diffuse lift, tinted with

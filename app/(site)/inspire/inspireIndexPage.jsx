@@ -9,6 +9,7 @@ import {
   inspireStoryHasGuide,
 } from "../../_lib/inspireStoryDisplay";
 import { LOCALES, getDict, localePath } from "../../_lib/i18n";
+import { continentSlug, prettyGeo } from "../../_lib/continents";
 import InspireBrowse from "./InspireBrowse";
 import { getCategoryItems } from "../../_lib/categoryPills";
 
@@ -63,6 +64,7 @@ function buildCard(story, lang) {
     heroAlt: getInspireStoryHeroAlt(story) || story.title,
     geoLabel: display.geoLabel || "",
     country: story.metadata?.geography?.country || "",
+    continentSlug: continentSlug(story.metadata?.geography?.continent),
     categoryLabel: prettyCategory(cls.journey_category || cls.activity_category),
     categoryDurationLine: display.categoryDurationLine || "",
     difficultyLabel: display.difficultyLabel || "",
@@ -107,10 +109,16 @@ export async function buildInspireIndexMetadata(lang) {
   };
 }
 
-export default async function InspireIndexPage({ lang = "en" }) {
+export default async function InspireIndexPage({ lang = "en", continent = "" }) {
   const t = getDict(lang).inspireList;
   const stories = await loadInspireStories(lang);
   const cards = stories.map((s) => buildCard(s, lang));
+  // Home links in per continent ("See all in Africa"); ignore a slug that
+  // no story matches so a stale link still shows the full index.
+  const wantedContinent = continentSlug(continent);
+  const activeContinent = cards.some((c) => c.continentSlug === wantedContinent)
+    ? wantedContinent
+    : "";
 
   return (
     // Flat Parchment here instead of the site's Bone-to-Parchment wash: the
@@ -138,7 +146,13 @@ export default async function InspireIndexPage({ lang = "en" }) {
             </Link>
           </div>
         ) : (
-          <InspireBrowse cards={cards} categoryItems={getCategoryItems()} lang={lang} />
+          <InspireBrowse
+            cards={cards}
+            categoryItems={getCategoryItems()}
+            lang={lang}
+            initialContinent={activeContinent}
+            initialContinentLabel={prettyGeo(activeContinent)}
+          />
         )}
 
         <section className="flex flex-col items-start gap-4 rounded-[28px] bg-brand-terracotta p-6 text-white md:flex-row md:items-center md:justify-between md:p-8">

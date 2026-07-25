@@ -1,6 +1,6 @@
 import "./globals.css";
 import { Analytics } from "@vercel/analytics/next";
-import { Fraunces, DM_Sans } from "next/font/google";
+import { Fraunces, DM_Sans, Mynerve } from "next/font/google";
 import CookieConsent from "./_components/CookieConsent";
 
 // Brand typography (TR-fonts and colors.docx, 2026-07): Fraunces headings +
@@ -20,10 +20,21 @@ const dmSans = DM_Sans({
   variable: "--font-sans",
   display: "swap",
 });
+// "quotes / small details" in the brand type system (TR-font-system.pdf).
+// Mynerve ships a single regular weight.
+const mynerve = Mynerve({
+  subsets: ["latin"],
+  weight: "400",
+  variable: "--font-script",
+  display: "swap",
+});
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" className={`${fraunces.variable} ${dmSans.variable}`}>
+    <html
+      lang="en"
+      className={`${fraunces.variable} ${dmSans.variable} ${mynerve.variable}`}
+    >
       <body className="bg-brand-cream font-sans text-brand-ink">
         {children}
         {/* Vercel Web Analytics — cookie-free, GDPR-compliant by design,

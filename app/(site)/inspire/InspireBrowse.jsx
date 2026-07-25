@@ -111,11 +111,18 @@ function StoryCard({ card, t }) {
   return <div className={shellStatic}>{inner}</div>;
 }
 
-export default function InspireBrowse({ cards, categoryItems = [], lang = "en" }) {
+export default function InspireBrowse({
+  cards,
+  categoryItems = [],
+  lang = "en",
+  initialContinent = "",
+  initialContinentLabel = "",
+}) {
   const [search, setSearch] = useState("");
   const [activeCategory, setActiveCategory] = useState("");
   const [typeFilter, setTypeFilter] = useState("");
   const [countryFilter, setCountryFilter] = useState("");
+  const [continentFilter, setContinentFilter] = useState(initialContinent);
   const dict = getDict(lang);
   const t = dict.inspireList;
 
@@ -134,10 +141,11 @@ export default function InspireBrowse({ cards, categoryItems = [], lang = "en" }
         matchesSearch(c, search) &&
         matchesCategory(c, activeCategory) &&
         (!typeFilter || c.categoryLabel === typeFilter) &&
-        (!countryFilter || c.country === countryFilter),
+        (!countryFilter || c.country === countryFilter) &&
+        (!continentFilter || c.continentSlug === continentFilter),
     );
     return sortRecentFirst(matched);
-  }, [cards, search, activeCategory, typeFilter, countryFilter]);
+  }, [cards, search, activeCategory, typeFilter, countryFilter, continentFilter]);
 
   return (
     <div className="space-y-10">
@@ -175,7 +183,22 @@ export default function InspireBrowse({ cards, categoryItems = [], lang = "en" }
       ) : null}
 
       <section className="w-full min-w-0 space-y-6">
-        <h2 className="text-xl font-normal">{t.heading}</h2>
+        <div className="flex flex-wrap items-center gap-3">
+          <h2 className="text-xl font-normal">{t.heading}</h2>
+          {continentFilter ? (
+            <button
+              type="button"
+              onClick={() => setContinentFilter("")}
+              className="inline-flex items-center gap-2 rounded-full bg-brand-terracotta-soft px-3.5 py-1.5 text-xs font-semibold text-slate-900 transition hover:bg-brand-terracotta-soft/70"
+            >
+              {initialContinentLabel || continentFilter}
+              <span aria-hidden="true" className="text-slate-500">
+                ✕
+              </span>
+              <span className="sr-only">Clear continent filter</span>
+            </button>
+          ) : null}
+        </div>
         <CardFilters
           types={types}
           countries={countries}

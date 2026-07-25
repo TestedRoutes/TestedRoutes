@@ -2,8 +2,6 @@
 
 import Link from "next/link";
 import { useEffect, useMemo, useRef, useState } from "react";
-import HomeSearchBar from "./HomeSearchBar";
-import CategoryStrip from "./CategoryStrip";
 import CardFilters from "./CardFilters";
 import GuideListCard from "../(site)/guides/GuideListCard";
 
@@ -26,14 +24,30 @@ function matchesCategory(card, label) {
   return haystack.includes(needle) || (stem.length > 2 && haystack.includes(stem));
 }
 
-// Owns the hero search + category pills + guide grid. Pills apply a filter
-// to the grid without touching the search input.
-export default function HomeBrowse({ guides, categoryItems, cards = [], t }) {
-  const [query, setQuery] = useState("");
+// Owns the guide grid. The search lives in the photo hero above and the
+// activity tiles in the "Choose your adventure" band below (HomeCategoryTiles),
+// which drives this grid's category filter over a window event.
+export default function HomeBrowse({ cards = [], t }) {
   const [activeCategory, setActiveCategory] = useState("");
   const [typeFilter, setTypeFilter] = useState("");
   const [countryFilter, setCountryFilter] = useState("");
-  const heroRef = useRef(null);
+  const gridRef = useRef(null);
+
+  useEffect(() => {
+    const handler = (e) => {
+      const label = e.detail || "";
+      setActiveCategory(label);
+      // The tiles sit below the grid, so bring the results back into view.
+      if (label) gridRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+    };
+    window.addEventListener("home-category-select", handler);
+    return () => window.removeEventListener("home-category-select", handler);
+  }, []);
+
+  const clearCategory = () => {
+    setActiveCategory("");
+    window.dispatchEvent(new CustomEvent("home-category-cleared", { detail: "" }));
+  };
 
   const types = useMemo(
     () => [...new Set(cards.map((c) => c.category).filter(Boolean))].sort(),
@@ -44,24 +58,6 @@ export default function HomeBrowse({ guides, categoryItems, cards = [], t }) {
       [...new Set(cards.map((c) => c.metadata?.geography?.country).filter(Boolean))].sort(),
     [cards],
   );
-
-  useEffect(() => {
-    const el = heroRef.current;
-    if (!el || typeof IntersectionObserver === "undefined") return;
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        window.dispatchEvent(
-          new CustomEvent("home-hero-search-visible", { detail: entry.isIntersecting })
-        );
-      },
-      { threshold: 0, rootMargin: "-80px 0px 0px 0px" }
-    );
-    observer.observe(el);
-    return () => {
-      observer.disconnect();
-      window.dispatchEvent(new CustomEvent("home-hero-search-visible", { detail: true }));
-    };
-  }, []);
 
   const filtered = useMemo(
     () =>
@@ -76,32 +72,21 @@ export default function HomeBrowse({ guides, categoryItems, cards = [], t }) {
 
   return (
     <div className="space-y-10">
-      <div ref={heroRef}>
-        <HomeSearchBar
-          guides={guides}
-          query={query}
-          onQueryChange={setQuery}
-          variant="hero"
-        />
-      </div>
-      <CategoryStrip
-        items={categoryItems}
-        activeLabel={activeCategory}
-        onItemClick={(label) =>
-          setActiveCategory((current) => (current === label ? "" : label))
-        }
-      />
-
       {cards.length ? (
-        <section className="space-y-6">
-          <h2 className="text-lg font-normal">
-            Browse guides
-            {activeCategory ? (
-              <span className="ml-2 text-sm font-normal text-slate-500">
-                · {activeCategory}
+        <section ref={gridRef} className="scroll-mt-24 space-y-6">
+          {activeCategory ? (
+            <button
+              type="button"
+              onClick={clearCategory}
+              className="inline-flex items-center gap-2 rounded-full bg-brand-terracotta-soft px-3.5 py-1.5 text-xs font-semibold text-slate-900 transition hover:bg-brand-terracotta-soft/70"
+            >
+              {activeCategory}
+              <span aria-hidden="true" className="text-slate-500">
+                ✕
               </span>
-            ) : null}
-          </h2>
+              <span className="sr-only">Clear category filter</span>
+            </button>
+          ) : null}
           <CardFilters
             types={types}
             countries={countries}
@@ -129,7 +114,7 @@ export default function HomeBrowse({ guides, categoryItems, cards = [], t }) {
               No guides match this category yet.{" "}
               <button
                 type="button"
-                onClick={() => setActiveCategory("")}
+                onClick={clearCategory}
                 className="font-semibold text-slate-700 underline underline-offset-2"
               >
                 Clear filter
