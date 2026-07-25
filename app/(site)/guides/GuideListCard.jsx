@@ -58,10 +58,11 @@ export default function GuideListCard({ guide, t, lang = "en" }) {
       href={href}
       className="group flex h-full flex-col overflow-hidden rounded-3xl bg-white shadow-card ring-1 ring-brand-line transition hover:-translate-y-1 hover:shadow-card-hover"
     >
-      {/* Square on phones so photo + title + excerpt + price clear the tab bar
-          even with the browser URL bar showing; 3:4 from sm up where grid
-          columns keep cards short anyway. */}
-      <div className="relative aspect-square w-full shrink-0 overflow-hidden bg-slate-100 sm:aspect-[3/4]">
+      {/* 6:5 on phones: sized so the worst case — two-line title plus two-line
+          excerpt — still clears the tab bar with the browser URL bar showing,
+          and holds on short phones too. 3:4 from sm up, where grid columns
+          keep cards short anyway. */}
+      <div className="relative aspect-[6/5] w-full shrink-0 overflow-hidden bg-slate-100 sm:aspect-[3/4]">
         {slides.length ? (
           <CardMediaCarousel
             slides={slides}
