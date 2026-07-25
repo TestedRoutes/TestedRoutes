@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 
-import seychellesHero from "../../../content/destinations/seychelles/source-dargent-from-water.jpg";
+import seychellesHero from "../../../content/countries/seychelles/destination/generated/web/source-dargent-from-water.jpg";
 
 export const metadata = {
   title: "Destinations · TestedRoutes",

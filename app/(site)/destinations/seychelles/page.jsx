@@ -8,26 +8,26 @@ import BuyBox from "../../../_components/BuyBox";
 import PhotoCarousel from "../../../_components/PhotoCarousel";
 
 /* Fixed page slots: hero, one card per island, mid-page banner. */
-import sourceDargentFromWater from "../../../../content/destinations/seychelles/source-dargent-from-water.jpg";
-import maheHikeView from "../../../../content/destinations/seychelles/mahe-hike-view.jpg";
-import anseGeorgetteSunset from "../../../../content/destinations/seychelles/anse-georgette-sunset.jpg";
-import sourceDargentSunrise from "../../../../content/destinations/seychelles/source-dargent-sunrise.jpg";
-import curieuseTortoises from "../../../../content/destinations/seychelles/curieuse-tortoises.jpg";
-import rafflesPool from "../../../../content/destinations/seychelles/raffles-pool.jpg";
+import sourceDargentFromWater from "../../../../content/countries/seychelles/destination/generated/web/source-dargent-from-water.jpg";
+import maheHikeView from "../../../../content/countries/seychelles/destination/generated/web/mahe-hike-view.jpg";
+import anseGeorgetteSunset from "../../../../content/countries/seychelles/destination/generated/web/anse-georgette-sunset.jpg";
+import sourceDargentSunrise from "../../../../content/countries/seychelles/destination/generated/web/source-dargent-sunrise.jpg";
+import curieuseTortoises from "../../../../content/countries/seychelles/destination/generated/web/curieuse-tortoises.jpg";
+import rafflesPool from "../../../../content/countries/seychelles/destination/generated/web/raffles-pool.jpg";
 
 /* Carousel — the rest of the trip, in island order. */
-import beauVallon from "../../../../content/destinations/seychelles/beau-vallon.jpg";
-import gardenHillPool from "../../../../content/destinations/seychelles/garden-hill-pool.jpg";
-import anseMajorTrail from "../../../../content/destinations/seychelles/anse-major-trail.jpg";
-import anseLazioRocks from "../../../../content/destinations/seychelles/anse-lazio-rocks.jpg";
-import anseGeorgetteDay from "../../../../content/destinations/seychelles/anse-georgette-day.jpg";
-import anseGeorgetteHandstand from "../../../../content/destinations/seychelles/anse-georgette-handstand.jpg";
-import rafflesTortoises from "../../../../content/destinations/seychelles/raffles-tortoises.jpg";
-import stPierreIsland from "../../../../content/destinations/seychelles/st-pierre-island.jpg";
-import sourceDargentSunset from "../../../../content/destinations/seychelles/source-dargent-sunset.jpg";
-import ansePierrot from "../../../../content/destinations/seychelles/anse-pierrot.jpg";
-import sourceDargentKayak from "../../../../content/destinations/seychelles/source-dargent-kayak.jpg";
-import batCurry from "../../../../content/destinations/seychelles/bat-curry.jpg";
+import beauVallon from "../../../../content/countries/seychelles/destination/generated/web/beau-vallon.jpg";
+import gardenHillPool from "../../../../content/countries/seychelles/destination/generated/web/garden-hill-pool.jpg";
+import anseMajorTrail from "../../../../content/countries/seychelles/destination/generated/web/anse-major-trail.jpg";
+import anseLazioRocks from "../../../../content/countries/seychelles/destination/generated/web/anse-lazio-rocks.jpg";
+import anseGeorgetteDay from "../../../../content/countries/seychelles/destination/generated/web/anse-georgette-day.jpg";
+import anseGeorgetteHandstand from "../../../../content/countries/seychelles/destination/generated/web/anse-georgette-handstand.jpg";
+import rafflesTortoises from "../../../../content/countries/seychelles/destination/generated/web/raffles-tortoises.jpg";
+import stPierreIsland from "../../../../content/countries/seychelles/destination/generated/web/st-pierre-island.jpg";
+import sourceDargentSunset from "../../../../content/countries/seychelles/destination/generated/web/source-dargent-sunset.jpg";
+import ansePierrot from "../../../../content/countries/seychelles/destination/generated/web/anse-pierrot.jpg";
+import sourceDargentKayak from "../../../../content/countries/seychelles/destination/generated/web/source-dargent-kayak.jpg";
+import batCurry from "../../../../content/countries/seychelles/destination/generated/web/bat-curry.jpg";
 
 export const metadata = {
   title: "Seychelles: what to actually do, and how long you need · TestedRoutes",

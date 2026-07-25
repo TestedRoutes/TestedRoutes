@@ -23,7 +23,15 @@ drafts/
 # Country-first content production archive (photos, PDFs, master workbooks).
 # Read locally by scripts/batch_publish.py and scripts/content_status.py;
 # far too large for git and published to Sanity, never deployed from the repo.
-content/countries/
+#
+# Exception: destination/generated/web/ holds the web-sized derivatives that the
+# destination pages import directly, so those must be committed. Ignoring files
+# rather than the directory itself (plus re-including every directory) is what
+# lets the negation below reach into the tree at all — git will not descend into
+# an excluded directory.
+content/countries/**
+!content/countries/**/
+!content/countries/*/destination/generated/web/**
 
 # Per-folder artifacts written by `npm run publish -- --generate-metadata`.
 # These can land in tracked story folders (e.g. public/Content/Stories/...)
