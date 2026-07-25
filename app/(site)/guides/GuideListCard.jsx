@@ -58,7 +58,9 @@ export default function GuideListCard({ guide, t, lang = "en" }) {
       href={href}
       className="group flex h-full flex-col overflow-hidden rounded-3xl bg-white shadow-card ring-1 ring-brand-line transition hover:-translate-y-1 hover:shadow-card-hover"
     >
-      <div className="relative aspect-[3/4] w-full shrink-0 overflow-hidden bg-slate-100">
+      {/* 4:5 on phones so photo + title + excerpt + price fit one viewport;
+          3:4 from sm up where grid columns keep cards short anyway. */}
+      <div className="relative aspect-[4/5] w-full shrink-0 overflow-hidden bg-slate-100 sm:aspect-[3/4]">
         {slides.length ? (
           <CardMediaCarousel
             slides={slides}
