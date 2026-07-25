@@ -28,14 +28,29 @@ function badgeIcon(label, color, size = 30) {
   });
 }
 
-// Drop pin for the destination — teardrop shape with a label inside the head.
-// Anchored at the tip of the drop so the pin points at the actual lat/lng.
-function dropPinIcon(label, color) {
+// Drop pin for the destination — teardrop shape carrying the TR emblem
+// (public/brand/tr-emblem-white.svg). Multi-stop routes get a small ordinal
+// bubble so the map still matches the numbered timeline list. Anchored at
+// the tip of the drop so the pin points at the actual lat/lng.
+function dropPinIcon(label, color, { showNumber = true } = {}) {
+  const bubble =
+    showNumber && label
+      ? `<div style="
+          position:absolute;top:-4px;right:-6px;min-width:16px;height:16px;
+          border-radius:9999px;background:${START_COLOR};border:2px solid #ffffff;
+          display:flex;align-items:center;justify-content:center;
+          color:#ffffff;font-size:9px;font-weight:700;padding:0 2px;
+          font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
+        ">${label}</div>`
+      : "";
   const html = `
-    <svg width="38" height="50" viewBox="0 0 36 48" xmlns="http://www.w3.org/2000/svg" style="filter:drop-shadow(0 2px 4px rgba(0,0,0,0.4))">
-      <path d="M18 0C8.06 0 0 8.06 0 18c0 12.5 18 30 18 30s18-17.5 18-30C36 8.06 27.94 0 18 0z" fill="${color}"/>
-      <text x="18" y="22" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,sans-serif" font-size="11" font-weight="700" fill="#ffffff">${label}</text>
-    </svg>
+    <div style="position:relative;width:38px;height:50px">
+      <svg width="38" height="50" viewBox="0 0 36 48" xmlns="http://www.w3.org/2000/svg" style="filter:drop-shadow(0 2px 4px rgba(0,0,0,0.4))">
+        <path d="M18 0C8.06 0 0 8.06 0 18c0 12.5 18 30 18 30s18-17.5 18-30C36 8.06 27.94 0 18 0z" fill="${color}"/>
+        <image href="/brand/tr-emblem-white.svg" x="8" y="8" width="20" height="20"/>
+      </svg>
+      ${bubble}
+    </div>
   `;
   return L.divIcon({
     className: "tr-map-pin",
@@ -60,8 +75,14 @@ export default function LocationMap({ start, destinations, finish, points, zoom 
   dests.forEach((d, i) => {
     // Preserve "TR" branding when the legacy single-destination fallback is
     // active; use ordinal numbers when the new routeStops array drives it.
-    const label = d.legacy ? "TR" : String(i + 1);
-    markers.push({ ...d, icon: dropPinIcon(label, DEST_COLOR) });
+    // Single-destination guides need no ordinal — the emblem alone reads
+    // as the destination pin; multi-stop routes keep numbers to match the
+    // timeline list.
+    const multi = dests.length > 1;
+    markers.push({
+      ...d,
+      icon: dropPinIcon(String(i + 1), DEST_COLOR, { showNumber: multi && !d.legacy }),
+    });
   });
   if (finish) {
     // If the finish is coincident with the start (round trip), nudge it a few

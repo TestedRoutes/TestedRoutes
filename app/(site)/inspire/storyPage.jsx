@@ -40,7 +40,10 @@ function stripLeadingTitle(md, title) {
 }
 
 const PROSE_CLASS =
-  "inspire-story-prose max-w-none text-slate-800 [&_a]:font-medium [&_a]:text-slate-900 [&_a]:underline [&_blockquote]:my-4 [&_blockquote]:border-l-2 [&_blockquote]:border-slate-200 [&_blockquote]:pl-4 [&_blockquote]:text-slate-600 [&_h1]:mb-3 [&_h1]:mt-8 [&_h1]:text-2xl [&_h1]:font-semibold [&_h1]:text-slate-900 [&_h2]:mb-2 [&_h2]:mt-6 [&_h2]:text-xl [&_h2]:font-semibold [&_h2]:text-slate-900 [&_h3]:mb-2 [&_h3]:mt-5 [&_h3]:text-lg [&_h3]:font-semibold [&_li]:my-1 [&_ol]:my-4 [&_ol]:list-decimal [&_ol]:pl-6 [&_p]:my-4 [&_p]:leading-relaxed [&_ul]:my-4 [&_ul]:list-disc [&_ul]:pl-6";
+  // Paragraphs, lists and list items carry 3pt AFTER and nothing before —
+  // founder's paragraph-spacing spec (2026-07). Headings keep their larger
+  // top margins so sections still read as sections.
+  "inspire-story-prose max-w-none text-slate-800 [&_a]:font-medium [&_a]:text-slate-900 [&_a]:underline [&_blockquote]:mb-[3pt] [&_blockquote]:mt-0 [&_blockquote]:border-l-2 [&_blockquote]:border-slate-200 [&_blockquote]:pl-4 [&_blockquote]:text-slate-600 [&_h1]:mb-[3pt] [&_h1]:mt-8 [&_h1]:text-2xl [&_h1]:font-semibold [&_h1]:text-slate-900 [&_h2]:mb-[3pt] [&_h2]:mt-6 [&_h2]:text-xl [&_h2]:font-semibold [&_h2]:text-slate-900 [&_h3]:mb-[3pt] [&_h3]:mt-5 [&_h3]:text-lg [&_h3]:font-semibold [&_li]:mb-[3pt] [&_li]:mt-0 [&_ol]:mb-[3pt] [&_ol]:mt-0 [&_ol]:list-decimal [&_ol]:pl-6 [&_p]:mb-[3pt] [&_p]:mt-0 [&_p]:leading-relaxed [&_ul]:mb-[3pt] [&_ul]:mt-0 [&_ul]:list-disc [&_ul]:pl-6";
 
 // Split rendered story HTML near the middle so a guide CTA can sit between
 // the two halves. Prefers an <h2> boundary; most stories are plain prose,

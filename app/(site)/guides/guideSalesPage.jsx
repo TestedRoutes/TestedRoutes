@@ -1,7 +1,9 @@
 import Link from "next/link";
 import Byline from "../../_components/Byline";
 import StickyBuyBar from "../../_components/StickyBuyBar";
-import GuideSalesCarousel from "./GuideSalesCarousel";
+import GuideBody from "../../_components/GuideBody";
+import GuideCarousel from "./GuideCarousel";
+import { PrimaryStats, LocationSection, buildLocation } from "./GuideTripSections";
 import { localePath } from "../../_lib/i18n";
 
 /**
@@ -64,6 +66,8 @@ export default function GuideSalesPage({
   const sp = guide.salesPage || {};
   const href = checkoutHref || pdfHref;
   const ctaLabel = guide.price ? `Get the guide – ${guide.price}` : "Get the guide";
+  const location = buildLocation(guide);
+  const showLocation = !!(location.start || location.destinations?.length);
   const reviewed = formatReviewDate(meta.maintenance?.last_reviewed_date);
   const destSlug = meta.geography?.destination_slug;
   const destName = meta.geography?.country;
@@ -144,14 +148,41 @@ export default function GuideSalesPage({
 
       {/* Block 2 — Carousel */}
       <section className="mt-12">
-        <GuideSalesCarousel slides={sp.carousel} />
+        <GuideCarousel slides={sp.carousel} />
       </section>
+
+      {/* Trip details + route map — kept from the classic layout: buyers
+          want the facts and the geography before the sales blocks. */}
+      {hero.primary_stats || meta.maintenance?.last_reviewed_date ? (
+        <section className="mt-14">
+          <SectionHeading>{t.tripDetails}</SectionHeading>
+          <PrimaryStats
+            stats={hero.primary_stats}
+            lastReviewedDate={meta.maintenance?.last_reviewed_date}
+            lang={lang}
+            t={t}
+          />
+        </section>
+      ) : null}
+
+      {showLocation ? (
+        <section className="mt-14">
+          <LocationSection
+            start={location.start}
+            destinations={location.destinations}
+            finish={location.finish}
+            points={location.points}
+            t={t}
+          />
+        </section>
+      ) : null}
 
       {/* Block 3 — Who this is for */}
       <section className="mt-14">
         <SectionHeading>Who this is for.</SectionHeading>
         <div className="grid gap-6 md:grid-cols-2">
-          <ul className="space-y-2.5 rounded-2xl border border-brand-line bg-white p-6 text-sm text-slate-700">
+          {/* 3pt after each item — founder's paragraph-spacing spec (2026-07). */}
+          <ul className="space-y-[3pt] rounded-2xl border border-brand-line bg-white p-6 text-sm text-slate-700">
             {(sales.who_this_is_for || []).map((item) => (
               <li key={item} className="flex gap-3">
                 <span aria-hidden className="mt-0.5 shrink-0 text-brand-terracotta">✓</span>
@@ -159,7 +190,7 @@ export default function GuideSalesPage({
               </li>
             ))}
           </ul>
-          <ul className="space-y-2.5 rounded-2xl border border-brand-line bg-white p-6 text-sm text-slate-700">
+          <ul className="space-y-[3pt] rounded-2xl border border-brand-line bg-white p-6 text-sm text-slate-700">
             {(sales.not_suitable || []).map((item) => (
               <li key={item} className="flex gap-3">
                 <span aria-hidden className="mt-0.5 shrink-0 text-slate-400">✕</span>
@@ -177,7 +208,7 @@ export default function GuideSalesPage({
         >
           What is inside the guide.
         </SectionHeading>
-        <ul className="columns-1 gap-8 space-y-2 text-[15px] leading-relaxed text-slate-700 md:columns-2">
+        <ul className="columns-1 gap-8 space-y-[3pt] text-[15px] leading-relaxed text-slate-700 md:columns-2">
           {(sales.what_you_get || []).map((item) => (
             <li key={item} className="break-inside-avoid">
               {item}
@@ -220,6 +251,18 @@ export default function GuideSalesPage({
               </a>
             </p>
           ) : null}
+        </section>
+      ) : null}
+
+      {/* My experience — the trip in the founder's own words, sourced from
+          the inspire stories. Deliberately experiential: no visit date, no
+          guide internals (those stay behind the paywall). */}
+      {guide.bodyBlocks?.length ? (
+        <section className="mt-14">
+          <SectionHeading>{t.myExperience || "My experience"}</SectionHeading>
+          <div className="max-w-3xl text-[15px]">
+            <GuideBody blocks={guide.bodyBlocks} t={t} bare />
+          </div>
         </section>
       ) : null}
 

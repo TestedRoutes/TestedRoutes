@@ -98,6 +98,14 @@ export default {
       hidden: ({ parent }) => !parent?.hasGuide,
     },
     {
+      name: "cardLine",
+      title: "Browse-grid line",
+      type: "string",
+      description:
+        'Context line under the category chip on the Guides grid, e.g. "Seychelles · 4 islands". Leave blank to fall back to country · continent.',
+      hidden: ({ parent }) => !parent?.hasGuide,
+    },
+    {
       name: "dayStrip",
       title: "Day strip",
       type: "string",

@@ -10,9 +10,13 @@ import { tripCategoryChipClass } from "../../_lib/tripCategory";
 // Whole card is the link ("more information"); the Buy button jumps straight
 // to checkout for people who already know they want it.
 export default function GuideListCard({ guide, t, lang = "en" }) {
+  // Cards show the guide's full authored sequence, same pictures and same
+  // order as its own page. There is no cap: an earlier slice(0, 5) dropped
+  // the tail and clamped a late video slot forward, so clips landed in the
+  // wrong place. Slides past the first load lazily, so length is cheap.
   const photos =
     Array.isArray(guide.cardPhotos) && guide.cardPhotos.length
-      ? guide.cardPhotos.slice(0, 5)
+      ? guide.cardPhotos
       : guide.image
         ? [guide.image]
         : [];
@@ -38,9 +42,11 @@ export default function GuideListCard({ guide, t, lang = "en" }) {
   // Category gets its styleguide tier color as a chip; the rest of the
   // context stays a plain line: "Switzerland · Europe".
   const categoryLabel = pretty(guide.category);
-  const contextLine = [pretty(geo.country), pretty(geo.continent)]
-    .filter(Boolean)
-    .join(" · ");
+  // An authored card line ("Seychelles · 4 islands") says more to a buyer
+  // than the continent does; fall back to country · continent without one.
+  const contextLine =
+    guide.cardLine ||
+    [pretty(geo.country), pretty(geo.continent)].filter(Boolean).join(" · ");
   const excerpt =
     guide.metadata?.seo?.meta_description || guide.metadata?.hero?.subtitle || "";
 

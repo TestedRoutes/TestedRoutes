@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 
-import seychellesHero from "../../../content/destinations/seychelles/granite-boulders-beach.jpg";
+import seychellesHero from "../../../content/destinations/seychelles/source-dargent-from-water.jpg";
 
 export const metadata = {
   title: "Destinations · TestedRoutes",
@@ -14,9 +14,9 @@ const DESTINATIONS = [
     href: "/destinations/seychelles",
     region: "East & Southern Africa",
     blurb:
-      "Four islands in eight days: what is worth your time, when to go, what it costs, and the tested route between them.",
+      "Four islands in seven days: what is worth your time, when to go, what it costs, and the tested route between them.",
     image: seychellesHero,
-    alt: "Granite boulders and clear water on a Seychelles beach",
+    alt: "Granite boulders at Anse Source d'Argent seen from the water, Seychelles",
   },
   {
     name: "Switzerland",

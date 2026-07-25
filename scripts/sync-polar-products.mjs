@@ -103,6 +103,40 @@ function pickPrices(guide) {
   return guide?.pricingTier?.prices ?? [];
 }
 
+// Buyer-facing downloadables label, within Polar's 42-char server limit.
+// Trims at a word boundary so a long title never becomes mid-word garbage.
+function benefitDescription(title) {
+  const full = (title || "guide").trim();
+  // Prefer the whole title when it fits — "Seychelles – guide PDF" tells a
+  // buyer far less than "Seychelles: four islands in 7 days PDF".
+  if (`${full} PDF`.length <= 42) return `${full} PDF`;
+  if (full.length <= 42) return full;
+
+  const suffix = " – guide PDF";
+  const room = 42 - suffix.length;
+  let name = full;
+  // Titles are "Place in N days: the marketing subtitle" — the part before
+  // the colon is the product name and usually fits on its own.
+  if (name.length > room && name.includes(":")) {
+    const head = name.split(":")[0].trim();
+    if (head.length >= 8) name = head;
+  }
+  if (name.length > room) {
+    const cut = name.slice(0, room);
+    const lastSpace = cut.lastIndexOf(" ");
+    name = lastSpace > 10 ? cut.slice(0, lastSpace) : cut;
+  }
+  // Never end on a dangling article or punctuation.
+  name = name.replace(/[\s:,–-]+$/, "").replace(/\s+(the|a|an|and|of|in|to)$/i, "");
+  return `${name}${suffix}`;
+}
+
+// Filename the buyer sees on the downloaded file. Follows the public guide
+// URL rather than the internal story slug, which can differ after a retitle.
+function downloadFilename(guide) {
+  return `${guide.pageSlug || guide.slug}.pdf`;
+}
+
 function describeReason(guide) {
   if (!guide.pdfUrl) return "missing PDF (guide.pdf)";
   const prices = pickPrices(guide);
@@ -196,14 +230,16 @@ async function syncCreate({ guide }) {
   // 1. Upload PDF
   if (VERBOSE) console.log(`    ↑ uploading PDF for ${guide.slug}`);
   const pdfBytes = await downloadPdf(guide.pdfUrl);
-  const fileId = await uploadPdfToPolar(`${guide.slug}.pdf`, pdfBytes);
+  const fileId = await uploadPdfToPolar(downloadFilename(guide), pdfBytes);
 
   // 2. Create File Downloads benefit
   if (VERBOSE) console.log(`    + creating downloadables benefit`);
   const benefit = await polar.benefits.create({
     type: "downloadables",
-    // Polar caps benefit descriptions at 42 chars (validated server-side).
-    description: `${guide.slug} PDF`.slice(0, 42),
+    // Buyer-facing label in the Polar portal. Polar caps it at 42 chars
+    // (validated server-side), so long titles are trimmed at a word
+    // boundary rather than falling back to the raw slug.
+    description: benefitDescription(guide.title),
     properties: { files: [fileId] },
   });
 
@@ -245,16 +281,76 @@ async function syncCreate({ guide }) {
 }
 
 async function syncUpdate({ guide, existing }) {
-  // For now: keep name + description in sync. Price/PDF replacement requires
-  // archive-and-recreate flows that we'll add behind flags later.
+  // Name + description, then the PDF itself. Price changes still need an
+  // archive-and-recreate flow and are not handled here.
   const description = guide.subtitle || `Tested route: ${guide.title}.`;
   if (existing.name !== guide.title || existing.description !== description) {
+    if (VERBOSE) console.log(`    ~ updating name/description`);
     await polar.products.update({
       id: existing.id,
       productUpdate: { name: guide.title, description },
     });
   }
+  await syncBenefitPdf({ guide, existing });
   return existing.id;
+}
+
+/**
+ * Replace the downloadable when the guide PDF has changed.
+ *
+ * A revised guide must reach buyers, and Polar keeps the file on the
+ * benefit rather than the product — so the benefit's file list is what has
+ * to move. Compares the live PDF's SHA-256 against the file already
+ * attached and only re-uploads on a real difference, because every upload
+ * creates a new stored file.
+ */
+async function syncBenefitPdf({ guide, existing }) {
+  const benefit = (existing.benefits || []).find((b) => b.type === "downloadables");
+  if (!benefit) {
+    console.log(`    ! no downloadables benefit on ${guide.slug} — leaving alone`);
+    return;
+  }
+
+  const pdfBytes = await downloadPdf(guide.pdfUrl);
+  const digest = crypto.createHash("sha256").update(pdfBytes).digest("base64");
+
+  let files = benefit.properties?.files || [];
+  let replaced = false;
+  const wantName = downloadFilename(guide);
+  // Both the bytes and the filename are buyer-visible, so either drifting
+  // means the attached file is stale.
+  let matches = false;
+  for (const fileId of files) {
+    try {
+      const f = await polar.files.list({ ids: [fileId] }).then((r) => r.result?.items?.[0]);
+      if (f?.checksumSha256Base64 === digest && f?.name === wantName) matches = true;
+    } catch {
+      // Unreadable file record: treat as a mismatch and re-upload rather
+      // than leaving buyers on a file we cannot verify.
+    }
+  }
+
+  if (!matches) {
+    if (VERBOSE) console.log(`    ↑ uploading ${wantName}`);
+    files = [await uploadPdfToPolar(wantName, pdfBytes)];
+    replaced = true;
+  } else if (VERBOSE) {
+    console.log(`    = PDF unchanged`);
+  }
+
+  // The label is buyer-facing and tracks the guide title, so keep it in
+  // step even when the file itself did not move.
+  const description = benefitDescription(guide.title);
+  if (!replaced && benefit.description === description) return;
+
+  await polar.benefits.update({
+    id: benefit.id,
+    // The SDK names this `requestBody` (a discriminated union on `type`),
+    // not `benefitUpdate` as the products calls do. `properties` is always
+    // sent so an update never clears the attached files.
+    requestBody: { type: "downloadables", description, properties: { files } },
+  });
+  console.log(`    ✓ ${replaced ? `downloadable replaced (${files[0]})` : "benefit label updated"}`);
 }
 
 /* ────────── main ────────── */
@@ -272,6 +368,7 @@ async function main() {
     _id,
     title,
     "slug": slug.current,
+    "pageSlug": guide.pageSlug,
     subtitle,
     "polarProductId": guide.polarProductId,
     "pdfUrl": guide.pdf.asset->url,

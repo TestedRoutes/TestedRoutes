@@ -51,8 +51,8 @@ export default function SiteHeader({ currency = "EUR", guides = [] }) {
   const nav = getDict(lang).nav;
   // Guides + Inspire have localized routes; other sections stay English.
   const navLinks = [
-    { slug: "destinations", label: nav.destinations, href: "/destinations" },
     { slug: "guides", label: nav.guides, href: localePath(lang, "/guides") },
+    { slug: "destinations", label: nav.destinations, href: "/destinations" },
     { slug: "inspire", label: nav.inspire, href: localePath(lang, "/inspire") },
     { slug: "about", label: nav.aboutMe, href: "/about" },
   ];

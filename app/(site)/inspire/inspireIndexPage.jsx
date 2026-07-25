@@ -113,7 +113,9 @@ export default async function InspireIndexPage({ lang = "en" }) {
   const cards = stories.map((s) => buildCard(s, lang));
 
   return (
-    <main className="w-full pb-16 pt-12 text-slate-900 md:pt-16">
+    // Flat Parchment here instead of the site's Bone-to-Parchment wash: the
+    // card grid reads cleaner against one tone than against a gradient.
+    <main className="min-h-screen w-full bg-brand-parchment pb-16 pt-12 text-slate-900 md:pt-16">
       <div className="mx-auto flex w-full min-w-0 max-w-7xl flex-col gap-10 px-6">
         <div className="space-y-2 text-center">
           <h1 className="font-serif font-normal leading-[1.1] text-brand-ink text-2xl md:text-[26px] lg:text-5xl">
