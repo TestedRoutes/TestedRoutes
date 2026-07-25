@@ -34,7 +34,7 @@ export function buildMediaSlides({ photos = [], videoUrl = null, videoSlot = nul
 // to another slide or scrolling the card away pauses it. No poster: the
 // photo-to-first-frame swap reads as a jump, so the clip stays invisible
 // (container bg shows) until it has frames, then fades in.
-function CardVideo({ src, title }) {
+function CardVideo({ src, title, className = "h-full w-full object-cover" }) {
   const ref = useRef(null);
   const [ready, setReady] = useState(false);
 
@@ -73,7 +73,7 @@ function CardVideo({ src, title }) {
       playsInline
       preload="metadata"
       aria-label={title}
-      className={`h-full w-full object-cover transition-opacity duration-500 ${
+      className={`${className} transition-opacity duration-500 ${
         ready ? "opacity-100" : "opacity-0"
       }`}
     />
@@ -83,12 +83,22 @@ function CardVideo({ src, title }) {
 // Swipeable media strip for cards: touch swipe via scroll-snap, hover arrows
 // on desktop, dot indicators. Expects an absolutely-positioned/fixed-aspect
 // parent. slides: [{ type: "image" | "video", src, poster? }].
+//
+// Fit is per slide, because one guide carousel holds two kinds of media.
+// Photos and clips were framed for the card and fill it edge to edge, crop
+// and all. Page exports out of the guide are a different thing: cropping one
+// to the frame cuts off the page a buyer is trying to read, so those show
+// whole on the neutral track, sized by height — the same treatment the guide
+// page carousel gives them. A slide opts in with fit: "contain"; `fit` sets
+// the default for slides that don't carry one.
 export default function CardMediaCarousel({
   slides,
   alt,
   imgClassName = "",
   eagerFirstSlide = false,
+  fit = "cover",
 }) {
+  const isContain = (slide) => (slide.fit || fit) === "contain";
   const [idx, setIdx] = useState(0);
   const stripRef = useRef(null);
 
@@ -122,24 +132,39 @@ export default function CardMediaCarousel({
         onScroll={onScroll}
         className="flex h-full w-full snap-x snap-mandatory overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
       >
-        {slides.map((slide, i) => (
-          <div
-            key={`${i}-${slide.src}`}
-            className="h-full w-full shrink-0 snap-center overflow-hidden"
-          >
-            {slide.type === "video" ? (
-              <CardVideo src={slide.src} poster={slide.poster} title={alt} />
-            ) : (
-              <img
-                src={slide.src}
-                alt={alt}
-                loading={i === 0 && eagerFirstSlide ? undefined : "lazy"}
-                decoding="async"
-                className={`h-full w-full object-cover ${imgClassName}`}
-              />
-            )}
-          </div>
-        ))}
+        {slides.map((slide, i) => {
+          const contain = isContain(slide);
+          const mediaClass = contain
+            ? "h-full w-auto max-w-full rounded-lg object-contain"
+            : "h-full w-full object-cover";
+          return (
+            <div
+              key={`${i}-${slide.src}`}
+              className={`h-full w-full shrink-0 snap-center overflow-hidden ${
+                contain ? "flex items-center justify-center px-2 py-2" : ""
+              }`}
+            >
+              {slide.type === "video" ? (
+                <CardVideo
+                  src={slide.src}
+                  poster={slide.poster}
+                  title={alt}
+                  className={mediaClass}
+                />
+              ) : (
+                <img
+                  src={slide.src}
+                  alt={alt}
+                  loading={i === 0 && eagerFirstSlide ? undefined : "lazy"}
+                  decoding="async"
+                  // Hover zoom only where the frame is filled: scaling a
+                  // contained page pushes its edges into the overflow clip.
+                  className={`${mediaClass} ${contain ? "" : imgClassName}`}
+                />
+              )}
+            </div>
+          );
+        })}
       </div>
       {slides.length > 1 && (
         <>
@@ -183,7 +208,17 @@ export default function CardMediaCarousel({
             {slides.map((_, i) => (
               <span
                 key={i}
-                className={`block h-1.5 w-1.5 rounded-full ${i === idx ? "bg-white" : "bg-white/50"}`}
+                // White reads on a photo but vanishes on the neutral track a
+                // contained page sits on, so the dots follow the active slide.
+                className={`block h-1.5 w-1.5 rounded-full ${
+                  isContain(slides[idx] || {})
+                    ? i === idx
+                      ? "bg-slate-600"
+                      : "bg-slate-300"
+                    : i === idx
+                      ? "bg-white"
+                      : "bg-white/50"
+                }`}
               />
             ))}
           </div>
