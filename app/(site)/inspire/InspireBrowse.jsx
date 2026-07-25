@@ -54,7 +54,10 @@ function StoryCard({ card, t }) {
   });
   const inner = (
     <>
-      <div className="relative aspect-[3/4] w-full shrink-0 overflow-hidden bg-slate-100">
+      {/* Square on phones so the photo, title, excerpt and Read story button
+          fit one screen above the tab bar; 3:4 from sm up, where the grid
+          columns keep cards short anyway. Matches the guide cards. */}
+      <div className="relative aspect-square w-full shrink-0 overflow-hidden bg-slate-100 sm:aspect-[3/4]">
         {slides.length ? (
           <CardMediaCarousel
             slides={slides}
@@ -67,12 +70,14 @@ function StoryCard({ card, t }) {
           </div>
         )}
       </div>
-      {/* Fixed-height text zones so rows line up across the grid. */}
+      {/* Fixed-height text zones so rows line up across the grid — from sm up
+          only, since phones show one card per row with nothing to line up
+          against and the reserved space costs a two-line title its room. */}
       <div className="flex flex-1 flex-col gap-2.5 p-5 sm:gap-3">
         <p className="truncate text-[11px] font-medium uppercase tracking-[0.18em] text-slate-500">
           {card.geoLabel || " "}
         </p>
-        <div className="flex min-h-[3.5rem] flex-nowrap items-start justify-between gap-2">
+        <div className="flex flex-nowrap items-start justify-between gap-2 sm:min-h-[3.5rem]">
           <p className="line-clamp-2 min-w-0 flex-1 text-lg font-semibold leading-snug tracking-tight text-slate-900">
             {card.title}
           </p>
@@ -82,7 +87,7 @@ function StoryCard({ card, t }) {
             </span>
           ) : null}
         </div>
-        <p className="line-clamp-2 min-h-[2.5rem] text-xs leading-relaxed text-slate-500">
+        <p className="line-clamp-2 text-xs leading-relaxed text-slate-500 sm:min-h-[2.5rem]">
           {card.excerpt}
         </p>
         <div className="mt-auto flex items-center justify-end pt-1">

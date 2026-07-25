@@ -467,14 +467,23 @@ export function shapeGuide(doc, currency = "EUR") {
   // the same order on the home page, the Guides grid and its own page.
   // Videos carry a 1-based slot = their position in the full sequence, which
   // is how buildMediaSlides re-interleaves them on the card.
+  // Page exports are shown whole on a card; photos and clips fill the frame.
+  // The caption is the authoring signal for "this is a page from inside the
+  // guide" — set-guide-carousel.mjs gives one to the page exports and leaves
+  // the trip media uncaptioned, on the grounds that the photos speak for
+  // themselves. Caption a photo and it will letterbox on cards.
   const authoredPhotos = [];
+  const authoredPagePhotos = [];
   const authoredVideos = [];
   for (const [i, s] of (Array.isArray(g.carousel) ? g.carousel : []).entries()) {
     if (s?.videoUrl) {
       authoredVideos.push({ url: s.videoUrl, slot: i + 1 });
     } else {
       const url = imageUrl(s?.image, 1080);
-      if (url) authoredPhotos.push(url);
+      if (url) {
+        authoredPhotos.push(url);
+        if (s?.caption) authoredPagePhotos.push(url);
+      }
     }
   }
 
@@ -511,6 +520,7 @@ export function shapeGuide(doc, currency = "EUR") {
     routePoints: doc.routePoints || null,
     photos: [heroUrl, ...galleryUrls].filter(Boolean),
     cardPhotos: authoredPhotos.length ? authoredPhotos : cardPhotos,
+    cardPagePhotos: authoredPagePhotos,
     galleryPhotos: galleryUrls,
     videoUrl: doc.hasVideo ? doc.videoUrl || null : null,
     videoSlot: doc.videoSlot || null,

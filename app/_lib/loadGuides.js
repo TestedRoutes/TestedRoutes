@@ -22,6 +22,8 @@ export function toGuideCard(g) {
     price: g.price,
     image: g.image,
     cardPhotos: g.cardPhotos,
+    // Subset of cardPhotos that are page exports — shown whole, not cropped.
+    cardPagePhotos: Array.isArray(g.cardPagePhotos) ? g.cardPagePhotos : [],
     videoUrl: g.videoUrl,
     videoSlot: g.videoSlot,
     videos: Array.isArray(g.videos) ? g.videos : [],
