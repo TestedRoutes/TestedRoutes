@@ -58,9 +58,10 @@ export default function GuideListCard({ guide, t, lang = "en" }) {
       href={href}
       className="group flex h-full flex-col overflow-hidden rounded-3xl bg-white shadow-card ring-1 ring-brand-line transition hover:-translate-y-1 hover:shadow-card-hover"
     >
-      {/* 4:5 on phones so photo + title + excerpt + price fit one viewport;
-          3:4 from sm up where grid columns keep cards short anyway. */}
-      <div className="relative aspect-[4/5] w-full shrink-0 overflow-hidden bg-slate-100 sm:aspect-[3/4]">
+      {/* Square on phones so photo + title + excerpt + price clear the tab bar
+          even with the browser URL bar showing; 3:4 from sm up where grid
+          columns keep cards short anyway. */}
+      <div className="relative aspect-square w-full shrink-0 overflow-hidden bg-slate-100 sm:aspect-[3/4]">
         {slides.length ? (
           <CardMediaCarousel
             slides={slides}
@@ -70,7 +71,8 @@ export default function GuideListCard({ guide, t, lang = "en" }) {
         ) : null}
       </div>
       {/* Fixed-height text zones so every card's rows line up across the
-          grid regardless of how long each guide's copy is. */}
+          grid regardless of how long each guide's copy is — from sm up only,
+          since phones show one card per row with nothing to line up against. */}
       <div className="flex flex-1 flex-col gap-2.5 p-4">
         <p className="flex min-w-0 items-center gap-2 text-xs uppercase tracking-[0.14em] text-slate-500">
           {categoryLabel ? (
@@ -82,10 +84,10 @@ export default function GuideListCard({ guide, t, lang = "en" }) {
           ) : null}
           <span className="truncate">{contextLine}</span>
         </p>
-        <h3 className="line-clamp-2 min-h-[3.5rem] text-lg font-normal leading-snug text-slate-900">
+        <h3 className="line-clamp-2 text-lg font-normal leading-snug text-slate-900 sm:min-h-[3.5rem]">
           {guide.title}
         </h3>
-        <p className="line-clamp-2 min-h-[2.5rem] text-xs leading-relaxed text-slate-500">
+        <p className="line-clamp-2 text-xs leading-relaxed text-slate-500 sm:min-h-[2.5rem]">
           {excerpt}
         </p>
         <div className="mt-auto flex items-center justify-between gap-2 pt-1.5">
