@@ -69,6 +69,7 @@ const STORY_PROJECTION = /* groq */ `
     "pdfUrl": pdf.asset->url,
     cover,
     pages,
+    cardLine,
     dayStrip,
     proofLine,
     proofPhoto,
@@ -438,6 +439,7 @@ export function shapeGuide(doc, currency = "EUR") {
     coverUrl: imageUrl(g.cover, 1600),
     coverAlt: g.cover?.alt || null,
     pages: g.pages || null,
+    cardLine: g.cardLine || null,
     dayStrip: g.dayStrip || null,
     proofLine: g.proofLine || null,
     proofPhotoUrl: imageUrl(g.proofPhoto, 320),
@@ -461,6 +463,21 @@ export function shapeGuide(doc, currency = "EUR") {
         }
       : null,
   };
+  // Cards reuse the authored carousel so a guide shows the same pictures in
+  // the same order on the home page, the Guides grid and its own page.
+  // Videos carry a 1-based slot = their position in the full sequence, which
+  // is how buildMediaSlides re-interleaves them on the card.
+  const authoredPhotos = [];
+  const authoredVideos = [];
+  for (const [i, s] of (Array.isArray(g.carousel) ? g.carousel : []).entries()) {
+    if (s?.videoUrl) {
+      authoredVideos.push({ url: s.videoUrl, slot: i + 1 });
+    } else {
+      const url = imageUrl(s?.image, 1080);
+      if (url) authoredPhotos.push(url);
+    }
+  }
+
   const relatedStories = Array.isArray(doc.similarStories)
     ? doc.similarStories
         .filter((r) => r && !r.guide?.hasGuide && r.slug)
@@ -493,11 +510,11 @@ export function shapeGuide(doc, currency = "EUR") {
     finishPoint: doc.finishPoint || null,
     routePoints: doc.routePoints || null,
     photos: [heroUrl, ...galleryUrls].filter(Boolean),
-    cardPhotos,
+    cardPhotos: authoredPhotos.length ? authoredPhotos : cardPhotos,
     galleryPhotos: galleryUrls,
     videoUrl: doc.hasVideo ? doc.videoUrl || null : null,
     videoSlot: doc.videoSlot || null,
-    videos: shapeVideos(doc),
+    videos: authoredVideos.length ? authoredVideos : shapeVideos(doc),
     relatedGuides,
     relatedStories,
     salesPage: sales,

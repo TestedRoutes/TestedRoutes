@@ -60,7 +60,7 @@ export default function AboutMePage() {
             <li className="flex gap-2"><span className="mt-0.5 shrink-0 text-slate-400">•</span>unrealistic travel timings</li>
             <li className="flex gap-2"><span className="mt-0.5 shrink-0 text-slate-400">•</span>routes that look simple on paper but break once the journey starts</li>
           </ul>
-          <p className="!mt-1 text-sm leading-relaxed text-slate-600">
+          <p className="!mt-2 text-sm leading-relaxed text-slate-600">
             These guides are designed to help you avoid exactly that.
           </p>
           <Link
@@ -94,7 +94,7 @@ export default function AboutMePage() {
               <li className="flex gap-2"><span className="mt-0.5 shrink-0 text-slate-400">•</span>how to combine destinations into routes that flow naturally</li>
               <li className="flex gap-2"><span className="mt-0.5 shrink-0 text-slate-400">•</span>how to turn ideas on a map into journeys that actually work</li>
             </ul>
-            <p className="!mt-1 text-sm text-slate-600">This perspective shapes how each guide is structured.</p>
+            <p className="!mt-2 text-sm text-slate-600">This perspective shapes how each guide is structured.</p>
           </div>
           <div className="overflow-hidden rounded-2xl shadow-sm ring-1 ring-slate-200">
             <Image
@@ -123,7 +123,7 @@ export default function AboutMePage() {
             <li className="flex gap-2"><span className="mt-0.5 shrink-0 text-slate-400">•</span>what is worth skipping</li>
             <li className="flex gap-2"><span className="mt-0.5 shrink-0 text-slate-400">•</span>how to combine stops efficiently in one day</li>
           </ul>
-          <p className="!mt-1 text-sm text-slate-600">
+          <p className="!mt-2 text-sm text-slate-600">
             The result is a route you can follow with confidence, not just inspiration on a page.
           </p>
         </div>

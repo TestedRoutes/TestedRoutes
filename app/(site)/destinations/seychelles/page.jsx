@@ -4,24 +4,42 @@ import { client } from "../../../../sanity/lib/client";
 import { urlFor } from "../../../../sanity/lib/image";
 import Byline from "../../../_components/Byline";
 
+import BuyBox from "../../../_components/BuyBox";
+import PhotoCarousel from "../../../_components/PhotoCarousel";
+
+/* Fixed page slots: hero, one card per island, mid-page banner. */
 import sourceDargentFromWater from "../../../../content/destinations/seychelles/source-dargent-from-water.jpg";
-import anseLazioRocks from "../../../../content/destinations/seychelles/anse-lazio-rocks.jpg";
+import maheHikeView from "../../../../content/destinations/seychelles/mahe-hike-view.jpg";
+import anseGeorgetteSunset from "../../../../content/destinations/seychelles/anse-georgette-sunset.jpg";
+import sourceDargentSunrise from "../../../../content/destinations/seychelles/source-dargent-sunrise.jpg";
 import curieuseTortoises from "../../../../content/destinations/seychelles/curieuse-tortoises.jpg";
-import anseMajorTrail from "../../../../content/destinations/seychelles/anse-major-trail.jpg";
-import sourceDargentSunset from "../../../../content/destinations/seychelles/source-dargent-sunset.jpg";
+import rafflesPool from "../../../../content/destinations/seychelles/raffles-pool.jpg";
+
+/* Carousel — the rest of the trip, in island order. */
 import beauVallon from "../../../../content/destinations/seychelles/beau-vallon.jpg";
+import gardenHillPool from "../../../../content/destinations/seychelles/garden-hill-pool.jpg";
+import anseMajorTrail from "../../../../content/destinations/seychelles/anse-major-trail.jpg";
+import anseLazioRocks from "../../../../content/destinations/seychelles/anse-lazio-rocks.jpg";
+import anseGeorgetteDay from "../../../../content/destinations/seychelles/anse-georgette-day.jpg";
+import anseGeorgetteHandstand from "../../../../content/destinations/seychelles/anse-georgette-handstand.jpg";
+import rafflesTortoises from "../../../../content/destinations/seychelles/raffles-tortoises.jpg";
+import stPierreIsland from "../../../../content/destinations/seychelles/st-pierre-island.jpg";
+import sourceDargentSunset from "../../../../content/destinations/seychelles/source-dargent-sunset.jpg";
+import ansePierrot from "../../../../content/destinations/seychelles/anse-pierrot.jpg";
+import sourceDargentKayak from "../../../../content/destinations/seychelles/source-dargent-kayak.jpg";
+import batCurry from "../../../../content/destinations/seychelles/bat-curry.jpg";
 
 export const metadata = {
   title: "Seychelles: what to actually do, and how long you need · TestedRoutes",
   description:
-    "I spent eight days across four Seychelles islands. What is worth your time, how many days you need, when to go, what it costs, and the things I would do differently.",
+    "I spent a week across four Seychelles islands. What is worth your time, how many days you need, when to go, what it costs, and the things I would do differently.",
   alternates: { canonical: "/destinations/seychelles" },
   openGraph: {
     type: "article",
     url: "/destinations/seychelles",
     title: "Seychelles: what to actually do, and how long you need",
     description:
-      "Eight days across four Seychelles islands: what is worth your time, how long to stay, when to go, what it costs.",
+      "Seven days across four Seychelles islands: what is worth your time, how long to stay, when to go, what it costs.",
   },
 };
 
@@ -34,27 +52,27 @@ const WHEN_TO_GO = [
 
 const HOW_LONG = [
   ["Five days, four nights", "One island, probably Mahé or Praslin, plus one boat day. You will see good beaches and miss the country."],
-  ["Eight days, seven nights", "The sweet spot, and what I would recommend to almost anyone. Enough for three islands plus a boat day to Curieuse, with each island given long enough to become itself rather than a stop."],
+  ["Seven days, seven nights", "The sweet spot, and what I would recommend to almost anyone. Enough for three islands plus a boat day to Curieuse, with each island given long enough to become itself rather than a stop."],
   ["Ten to twelve days", "Add the bird islands, or simply slow down further and spend more time doing nothing, which Seychelles rewards."],
 ];
 
 const ISLANDS = [
   {
     name: "Mahé",
-    image: anseMajorTrail,
-    alt: "Forested ridges and granite slabs in the interior of Mahé, Seychelles",
+    image: maheHikeView,
+    alt: "Green ridges dropping to a sheltered cove on the coast of Mahé, Seychelles",
     body: "The main island and the only one with an international airport. Mountainous, green, and much bigger than people expect, with a road over the interior that climbs through cloud forest into viewpoints over the whole inner island chain. Good for the first and last days: a coastal trail to a cove with no road access, a proper capital with a spice market, and beaches that are quieter than the famous names elsewhere. Rent a car here. You will want it.",
   },
   {
     name: "Praslin",
-    image: anseLazioRocks,
-    alt: "Granite boulders and palms at the end of Anse Lazio, Praslin, Seychelles",
+    image: anseGeorgetteSunset,
+    alt: "Sunset over the water and granite boulders at Anse Georgette, Praslin, Seychelles",
     body: "Half an hour by fast ferry from Mahé, and the reason most people come is the forest. Vallée de Mai is UNESCO-listed and the only place the coco de mer palm grows wild, producing the largest seed in the plant kingdom. It is also home to the endemic black parrot. The beaches on Praslin are the postcard ones: one of them regularly ranks among the best in the world, another is reached only through a resort with a reservation made days in advance.",
   },
   {
     name: "La Digue",
-    image: sourceDargentSunset,
-    alt: "Sunset behind the granite boulders at Anse Source d'Argent, La Digue, Seychelles",
+    image: sourceDargentSunrise,
+    alt: "Granite boulders and a palm above the sand at Anse Source d'Argent, La Digue, Seychelles",
     body: "The smallest of the three main islands, fifteen minutes from Praslin, and the one everybody remembers. It runs on bicycles. There are almost no cars, so the whole island moves at bike speed, and bike speed turns out to be exactly right. Anse Source d'Argent is here, the pink granite boulders you have seen a hundred times without knowing the name. So is the wild eastern side, where the surf comes in hard, the crowds thin out, and the beaches get emptier the further you walk.",
   },
   {
@@ -63,6 +81,22 @@ const ISLANDS = [
     alt: "Free-roaming giant Aldabra tortoises on Curieuse Island, Seychelles",
     body: "A day trip by boat, not a base. A national park island off Praslin with free-roaming giant Aldabra tortoises, some over a hundred years old, walking around loose on the beach where you land. Mangrove boardwalk across to the far shore, small reef sharks in the shallows, and a barbecue lunch under the trees. It is the one day of the trip where the wildlife, not the beach, is the point.",
   },
+];
+
+/* Trip photos in island order: Mahé, Praslin, the boat day, La Digue. */
+const CAROUSEL = [
+  { image: beauVallon, alt: "Beau Vallon beach and the green ridge behind it, Mahé, Seychelles", caption: "Beau Vallon, Mahé" },
+  { image: gardenHillPool, alt: "Infinity pool looking out over Beau Vallon bay and the mountains of Mahé, Seychelles", caption: "Above Beau Vallon, Mahé" },
+  { image: anseMajorTrail, alt: "Forested ridges and granite slabs on the Anse Major trail, Mahé, Seychelles", caption: "The Anse Major trail, Mahé" },
+  { image: anseLazioRocks, alt: "Granite boulders and overhanging palms at the end of Anse Lazio, Praslin, Seychelles", caption: "Anse Lazio, Praslin" },
+  { image: anseGeorgetteDay, alt: "Standing on a rock in the shallows under a high sun at Anse Georgette, Praslin, Seychelles", caption: "Anse Georgette, Praslin" },
+  { image: anseGeorgetteHandstand, alt: "A handstand on the sand at sunset beside a Seychelles flag, Anse Georgette, Praslin", caption: "Anse Georgette at sunset" },
+  { image: rafflesTortoises, alt: "Two giant Aldabra tortoises feeding on leaves in the shade, Praslin, Seychelles", caption: "Giant tortoises, Praslin" },
+  { image: stPierreIsland, alt: "The granite islet of St. Pierre with a boat moored in turquoise water, Seychelles", caption: "St. Pierre, off Praslin" },
+  { image: sourceDargentSunset, alt: "Sunset over the sea from the granite shore of Anse Source d'Argent, La Digue, Seychelles", caption: "Source d'Argent at sunset" },
+  { image: sourceDargentKayak, alt: "Holding a coconut from a kayak in front of the granite boulders of Source d'Argent, La Digue", caption: "Kayaking Source d'Argent" },
+  { image: ansePierrot, alt: "Sitting on granite boulders on the wild coast at Anse Pierrot, La Digue, Seychelles", caption: "Anse Pierrot, La Digue" },
+  { image: batCurry, alt: "A plate of fruit bat curry at an outdoor table, Seychelles", caption: "Fruit bat curry, found at last" },
 ];
 
 const COSTS = [
@@ -75,7 +109,7 @@ const TIPS = [
   ["Set the alarm for Source d'Argent.", "By mid-morning the most photographed beach on earth is full of day-trippers who came over specifically for it. Get there before sunrise and you get four empty coves and the granite turning from grey to gold to pink while you stand in it. We did it two mornings in a row. The first visitors did not appear until nine."],
   ["Stay late on Source d'Argent.", "Crowds disappear once the sun starts setting in. You will experience dramatic colors. No worries, you can exit L'Union Estate any time."],
   ["Book ferries before hotels.", "Ferry availability, not room availability, is what actually constrains a Seychelles itinerary in season. Lock the crossings first and build the nights around them."],
-  ["The best food is not in the restaurants.", "The standout meal of eight days was a local takeaway counter with thousands of reviews, five minutes by bike, eaten at a shaded table. Fruit bat curry is a real Creole dish and worth chasing, though it took me two days of asking to find a place that had it on."],
+  ["The best food is not in the restaurants.", "The standout meal of the week was a local takeaway counter with thousands of reviews, five minutes by bike, eaten at a shaded table. Fruit bat curry is a real Creole dish and worth chasing, though it took me two days of asking to find a place that had it on."],
   ["Rent the bike for your whole stay on La Digue, not by the day.", "The island rewards riding it before dawn and after dark, and the daily rate makes you calculate rather than just go."],
   ["Walk past the first wild beach.", "On the eastern side of La Digue, each cove is emptier than the last. Most people stop at the first one they reach. Twenty minutes more on foot buys you a beach to yourself, but the currents there are serious, so swim only where locals are swimming."],
   ["Cover up between eleven and three.", "Reef-safe SPF, a long-sleeve rash guard, and water you carry with you. Several of the best beaches have no shop at all."],
@@ -83,7 +117,7 @@ const TIPS = [
 
 const FAQ = [
   ["Is Seychelles worth the money?", "Yes, if you treat the splurges as optional. The costly parts are hotels and restaurant food. The beaches, which are the reason to come, are free or close to it, and simple guesthouses and takeaway counters are genuinely good rather than a compromise. Do it that way and it is expensive in the way a special trip should be, not in the way that ruins one."],
-  ["How many days do you need in Seychelles?", "Eight days and seven nights is the number I would give anyone. It covers three islands plus a boat day without rushing. Five days works for one island and one excursion. Under four, you are paying long-haul airfare to sit on a single beach."],
+  ["How many days do you need in Seychelles?", "Seven days and seven nights is the number I would give anyone. It covers three islands plus a boat day without rushing. Five days works for one island and one excursion. Under four, you are paying long-haul airfare to sit on a single beach."],
   ["Which island should I stay on?", "All three, in sequence. If you can only pick one, La Digue for atmosphere, Praslin for the balance of beaches and forest, Mahé for variety and convenience. Splitting your nights is the whole point of coming here."],
   ["Do you need to rent a car?", "On Mahé and Praslin, yes: it is cheaper than taxis and the good beaches are spread out. On La Digue, no. Bicycles are the transport and there is essentially nowhere to drive."],
   ["Are the ferries rough?", "They can be. The Mahé to Praslin crossing takes about an hour and is exposed. If you are prone to seasickness, get some pills from home or sit outside, low and toward the back, and look at the horizon. The Praslin to La Digue hop is short enough not to matter."],
@@ -138,7 +172,7 @@ export default async function SeychellesDestinationPage() {
         "@type": "Article",
         headline: "Seychelles: what to actually do, and how long you need",
         description:
-          "Eight days across four Seychelles islands: what is worth your time, how long to stay, when to go, what it costs.",
+          "Seven days across four Seychelles islands: what is worth your time, how long to stay, when to go, what it costs.",
         datePublished: "2026-07-24",
         dateModified: "2026-07-24",
         author: {
@@ -191,32 +225,37 @@ export default async function SeychellesDestinationPage() {
           Seychelles
         </h1>
         <p className="mt-2 max-w-2xl text-[15px] text-slate-500">
-          What to actually do, and how long you need – from eight days across
+          What to actually do, and how long you need – from seven days across
           Mahé, Praslin, Curieuse and La Digue.
         </p>
         <Byline lang="en" />
       </header>
 
+      {/* Content left, guide buy box right — same shape as the guide page, so
+          the hero and the body share one column edge instead of the hero
+          spanning full width above a narrower, centred body. */}
+      <div className="grid grid-cols-1 gap-6 md:grid-cols-[minmax(0,1fr)_320px] lg:gap-8">
+        <div className="min-w-0">
       <div className="relative mb-12 overflow-hidden rounded-[28px]">
         <Image
           src={sourceDargentFromWater}
           alt="The granite boulders of Anse Source d'Argent seen from the water, La Digue, Seychelles"
           priority
           className="h-[320px] w-full object-cover md:h-[460px]"
-          sizes="(max-width: 1280px) 100vw, 1232px"
+          sizes="(max-width: 768px) 100vw, 830px"
         />
       </div>
 
-      <div className="mx-auto max-w-3xl space-y-14">
+      <div className="space-y-14">
         <section className="space-y-4">
           <SectionHeading>
             Is Seychelles worth it, and what do you actually do there
           </SectionHeading>
           <p className="text-[15px] leading-relaxed text-slate-700">
             Yes, with one condition: treat it as an island-hopping country, not
-            a single resort. I spent eight days across four islands, Mahé,
+            a single resort. I spent a week across four islands, Mahé,
             Praslin, La Digue and a boat day to Curieuse, and the trip only
-            worked because it moved. Most people book a week on one island, see
+            worked because it moved. Most people book 7 days on one island, see
             three beaches, and come home saying it was beautiful but expensive.
             It is beautiful. The expense is mostly optional.
           </p>
@@ -287,7 +326,7 @@ export default async function SeychellesDestinationPage() {
             </div>
           </div>
           <p className="text-[15px] leading-relaxed text-slate-700">
-            Eight days, seven nights sounds like a race across four islands. It
+            Seven days, seven nights sounds like a race across four islands. It
             is not, because the hops are short and the islands are small. We
             came home feeling like we had been somewhere, not like we had run a
             relay.
@@ -301,7 +340,7 @@ export default async function SeychellesDestinationPage() {
               >
                 {guide.title}
               </Link>{" "}
-              covers the eight-day version day by day, with the ferry timings,
+              covers the seven-day version day by day, with the ferry timings,
               the booking deadlines and the hotel picks per island.
             </p>
           ) : null}
@@ -328,6 +367,11 @@ export default async function SeychellesDestinationPage() {
               </article>
             ))}
           </div>
+        </section>
+
+        <section className="space-y-4">
+          <SectionHeading>From the trip</SectionHeading>
+          <PhotoCarousel slides={CAROUSEL} />
         </section>
 
         <section className="space-y-4">
@@ -420,8 +464,8 @@ export default async function SeychellesDestinationPage() {
 
         <div className="relative overflow-hidden rounded-[28px]">
           <Image
-            src={beauVallon}
-            alt="Beau Vallon beach and the green ridge behind it, Mahé, Seychelles"
+            src={rafflesPool}
+            alt="Sitting with a coconut beside an infinity pool above the sea, Praslin, Seychelles"
             className="h-[420px] w-full object-cover"
             sizes="(max-width: 768px) 100vw, 768px"
           />
@@ -464,7 +508,7 @@ export default async function SeychellesDestinationPage() {
                   {guide.title}
                 </p>
                 <p className="text-[14px] leading-relaxed text-slate-700">
-                  Eight days, four islands, day by day. Ferry timings and
+                  Seven days, four islands, day by day. Ferry timings and
                   booking deadlines, hotel picks at three price levels per
                   island, restaurant list, full cost breakdown at lean, core and
                   splurge, packing list, and the companion Google map with every
@@ -513,6 +557,15 @@ export default async function SeychellesDestinationPage() {
               ))}
             </div>
           </section>
+        ) : null}
+      </div>
+        </div>
+
+        {guide ? (
+          <BuyBox
+            price={guidePrice ? `€${guidePrice.amount}` : null}
+            pdfHref={`/guides/${guide.slug}`}
+          />
         ) : null}
       </div>
     </main>

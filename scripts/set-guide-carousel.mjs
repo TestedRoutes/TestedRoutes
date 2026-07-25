@@ -49,7 +49,7 @@ const MAX_EDGE = 1600;
 // trip photos speak for themselves.
 const ALT = {
   "1. cover.jpg": {
-    alt: "Cover of the Seychelles eight-day island route guide",
+    alt: "Cover of the Seychelles seven-day island route guide",
     caption: "The guide",
   },
   "2. snapshot.jpg": {

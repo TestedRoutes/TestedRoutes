@@ -54,7 +54,7 @@ async function main() {
   await client
     .patch("story-seychelles-1-week")
     .set({
-      "guide.cover": { ...cover, alt: "Cover of the Seychelles eight-day island route guide" },
+      "guide.cover": { ...cover, alt: "Cover of the Seychelles seven-day island route guide" },
       "guide.pages": 25,
       "guide.dayStrip":
         "Day 1 Mahé · Days 2–3 Praslin · Day 4 Curieuse · Days 5–6 La Digue · Days 7–8 Mahé",

@@ -14,7 +14,7 @@ const DESTINATIONS = [
     href: "/destinations/seychelles",
     region: "East & Southern Africa",
     blurb:
-      "Four islands in eight days: what is worth your time, when to go, what it costs, and the tested route between them.",
+      "Four islands in seven days: what is worth your time, when to go, what it costs, and the tested route between them.",
     image: seychellesHero,
     alt: "Granite boulders at Anse Source d'Argent seen from the water, Seychelles",
   },
