@@ -20,12 +20,16 @@ export default function GuideListCard({ guide, t, lang = "en" }) {
       : guide.image
         ? [guide.image]
         : [];
+  // Pages out of the guide show whole; photos and clips fill the card.
+  const pageExports = new Set(guide.cardPagePhotos || []);
   const slides = buildMediaSlides({
     photos,
     videoUrl: guide.videoUrl,
     videoSlot: guide.videoSlot,
     videos: guide.videos,
-  });
+  }).map((s) =>
+    s.type === "image" && pageExports.has(s.src) ? { ...s, fit: "contain" } : s,
+  );
   const href = localePath(lang, guide.href);
 
   const geo = guide.metadata?.geography || {};
@@ -72,7 +76,7 @@ export default function GuideListCard({ guide, t, lang = "en" }) {
           <CardMediaCarousel
             slides={slides}
             alt={guide.title}
-            fit="contain"
+            imgClassName="transition duration-300 group-hover:scale-105"
           />
         ) : null}
       </div>
