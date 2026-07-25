@@ -72,7 +72,7 @@ export default function GuideListCard({ guide, t, lang = "en" }) {
           <CardMediaCarousel
             slides={slides}
             alt={guide.title}
-            imgClassName="transition duration-300 group-hover:scale-105"
+            fit="contain"
           />
         ) : null}
       </div>

@@ -34,7 +34,7 @@ export function buildMediaSlides({ photos = [], videoUrl = null, videoSlot = nul
 // to another slide or scrolling the card away pauses it. No poster: the
 // photo-to-first-frame swap reads as a jump, so the clip stays invisible
 // (container bg shows) until it has frames, then fades in.
-function CardVideo({ src, title }) {
+function CardVideo({ src, title, className = "h-full w-full object-cover" }) {
   const ref = useRef(null);
   const [ready, setReady] = useState(false);
 
@@ -73,7 +73,7 @@ function CardVideo({ src, title }) {
       playsInline
       preload="metadata"
       aria-label={title}
-      className={`h-full w-full object-cover transition-opacity duration-500 ${
+      className={`${className} transition-opacity duration-500 ${
         ready ? "opacity-100" : "opacity-0"
       }`}
     />
@@ -83,12 +83,23 @@ function CardVideo({ src, title }) {
 // Swipeable media strip for cards: touch swipe via scroll-snap, hover arrows
 // on desktop, dot indicators. Expects an absolutely-positioned/fixed-aspect
 // parent. slides: [{ type: "image" | "video", src, poster? }].
+//
+// fit="cover" fills the frame and crops — right for photo cards, where the
+// picture is the whole point. fit="contain" shows each slide whole on a
+// neutral track, the same treatment the guide page carousel uses: guide
+// slides mix A4 page exports, 3:4 photos and 9:16 clips, and cropping a
+// page export to the frame cuts off the thing a buyer is trying to read.
 export default function CardMediaCarousel({
   slides,
   alt,
   imgClassName = "",
   eagerFirstSlide = false,
+  fit = "cover",
 }) {
+  const contain = fit === "contain";
+  const mediaClass = contain
+    ? "h-full w-auto max-w-full rounded-lg object-contain"
+    : "h-full w-full object-cover";
   const [idx, setIdx] = useState(0);
   const stripRef = useRef(null);
 
@@ -125,17 +136,24 @@ export default function CardMediaCarousel({
         {slides.map((slide, i) => (
           <div
             key={`${i}-${slide.src}`}
-            className="h-full w-full shrink-0 snap-center overflow-hidden"
+            className={`h-full w-full shrink-0 snap-center overflow-hidden ${
+              contain ? "flex items-center justify-center px-2 py-2" : ""
+            }`}
           >
             {slide.type === "video" ? (
-              <CardVideo src={slide.src} poster={slide.poster} title={alt} />
+              <CardVideo
+                src={slide.src}
+                poster={slide.poster}
+                title={alt}
+                className={mediaClass}
+              />
             ) : (
               <img
                 src={slide.src}
                 alt={alt}
                 loading={i === 0 && eagerFirstSlide ? undefined : "lazy"}
                 decoding="async"
-                className={`h-full w-full object-cover ${imgClassName}`}
+                className={`${mediaClass} ${imgClassName}`}
               />
             )}
           </div>
@@ -183,7 +201,16 @@ export default function CardMediaCarousel({
             {slides.map((_, i) => (
               <span
                 key={i}
-                className={`block h-1.5 w-1.5 rounded-full ${i === idx ? "bg-white" : "bg-white/50"}`}
+                className={`block h-1.5 w-1.5 rounded-full ${
+                  contain
+                    ? // Dots sit on the neutral track, not on a photo.
+                      i === idx
+                      ? "bg-slate-600"
+                      : "bg-slate-300"
+                    : i === idx
+                      ? "bg-white"
+                      : "bg-white/50"
+                }`}
               />
             ))}
           </div>
