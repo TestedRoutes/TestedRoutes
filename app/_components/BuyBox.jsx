@@ -53,7 +53,9 @@ export default function BuyBox({
   );
 
   return (
-    <aside className="h-fit rounded-2xl bg-white p-6 shadow ring-1 ring-slate-200 md:sticky md:top-6 md:self-start">
+    // Sticks below the header (md:h-20) rather than under it, matching the
+    // 88px offset the Inspire story sidebar already uses.
+    <aside className="h-fit rounded-2xl bg-white p-6 shadow ring-1 ring-slate-200 md:sticky md:top-[88px] md:self-start">
       <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-slate-400">
         {t.pdfGuideLabel}
       </p>
