@@ -65,14 +65,8 @@ export default function BuyBox({
       <p className="mt-1 text-xs text-slate-500">{t.instantDownload}</p>
       <div className="mt-4 space-y-2">
         {button}
-        {hasAffiliateLinks && linksHref ? (
-          <Link
-            href={linksHref}
-            className="block w-full rounded-full border border-slate-300 bg-white px-4 py-2.5 text-center text-sm font-normal tracking-[0.05em] text-slate-900 transition hover:bg-slate-50"
-          >
-            {t.getLinksFree}
-          </Link>
-        ) : null}
+        {/* "Get the links free" removed 2026-07-27 (founder: revisit later).
+            linksHref/hasAffiliateLinks props stay wired for the return. */}
       </div>
       {targetHref ? (
         <p className="mt-2 text-center text-xs text-slate-500">
