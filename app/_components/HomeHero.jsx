@@ -44,7 +44,7 @@ export default function HomeHero({ guides = [] }) {
         fill
         priority
         placeholder="blur"
-        quality={90}
+        quality={80}
         sizes="100vw"
         className="-z-10 object-cover object-[50%_62%] md:object-center"
       />
