@@ -16,17 +16,19 @@ const client = createClient({
   token: process.env.SANITY_API_WRITE_TOKEN,
 });
 
-const doc = await client.fetch(
-  `*[_type == "story" && slug.current == $slug && defined(guide)][0]{_id, title, "note": guide.statusNote}`,
+const docs = await client.fetch(
+  `*[_type == "story" && slug.current == $slug && defined(guide)]{_id, title, "note": guide.statusNote}`,
   { slug },
 );
-if (!doc) {
+if (!docs.length) {
   console.error(`no guide story found for slug ${slug}`);
   process.exit(1);
 }
-console.log(`patching ${doc._id} (${doc.title}): statusNote ${JSON.stringify(doc.note)} -> ${JSON.stringify(note || null)}`);
-
-const p = client.patch(doc._id);
-const res = note ? await p.set({ "guide.statusNote": note }).commit()
-                 : await p.unset(["guide.statusNote"]).commit();
-console.log("done, rev", res._rev);
+// Patch published + draft so a later Studio publish doesn't revert the note.
+for (const doc of docs) {
+  console.log(`patching ${doc._id}: statusNote ${JSON.stringify(doc.note)} -> ${JSON.stringify(note || null)}`);
+  const p = client.patch(doc._id);
+  const res = note ? await p.set({ "guide.statusNote": note }).commit()
+                   : await p.unset(["guide.statusNote"]).commit();
+  console.log("  done, rev", res._rev);
+}
