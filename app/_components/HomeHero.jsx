@@ -3,7 +3,8 @@
 import Image from "next/image";
 import { useEffect, useRef } from "react";
 import HomeSearchBar from "./HomeSearchBar";
-import heroImage from "../../content/about/Why-original.jpg";
+// Filename casing matters: Vercel builds on a case-sensitive filesystem.
+import heroImage from "../../content/about/New_Hero.jpg";
 
 // Full-bleed photo hero: headline sits bottom-left over a scrim, with the
 // guide search under it. The observer is what tells SiteHeader when the
