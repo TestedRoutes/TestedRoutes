@@ -50,6 +50,22 @@ const CURATED = {
   "seychelles-map":
     "https://www.google.com/maps/d/viewer?mid=1EdUP3XbOOmub6TE5IM-6sC7K_SJa-3g",
 
+  // Triftbrücke day-trip guide — QR targets, mirrors the guide's meta.yaml
+  // reservations. Printed in the PDF: treat every slug as frozen.
+  "trift-gondola": "https://www.grimselwelt.ch/en/railways/triftbahn/",
+  "trift-parking":
+    "https://www.google.com/maps/search/?api=1&query=46.721194%2C8.318272",
+  "trift-picnic":
+    "https://www.google.com/maps/search/?api=1&query=47.37785%2C8.53991",
+  "trift-dinner": "https://www.hotelterrasse.ch/",
+  "trift-windegg": "https://www.windegghuette.ch/reservation",
+  "trift-sbb-saver": "https://www.sbb.ch/en/offers/saver-day-pass",
+  "trift-meteoswiss": "https://www.meteoswiss.admin.ch/",
+  "trift-sbb-app": "https://www.sbb.ch/en/",
+  "trift-schweizmobil": "https://schweizmobil.ch/en/",
+  "trift-map":
+    "https://www.google.com/maps/d/viewer?mid=1aDbc_78_MSJ8geLTnmdW7FRQn_F4QBM",
+
   // "podcast": buildUtmUrl(`${SITE_ORIGIN}/subscribe`, {
   //   source: "shortlink", medium: "podcast", campaign: "podcast-mention-2026",
   // }),

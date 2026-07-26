@@ -34,7 +34,7 @@ if hasattr(sys.stdout, "reconfigure"):
 
 
 # -- Brand --
-ACCENT = "#B83A2B"
+ACCENT = "#943D21"  # Brandy (styleguide V3)
 BG = "#FAF7F2"
 TEXT = "#1A1A1A"
 SUBTLE = "#7A7468"
@@ -269,10 +269,25 @@ def render_profile(config, config_path, output_path):
                           facecolor=ACCENT, edgecolor="white", linewidth=1.5),
             )
 
-    # Title
+    # Title: brand serif on a plain white plate, matching the map plates.
     if title:
-        ax.set_title(title, fontsize=15, fontweight="bold",
-                     color=TEXT, loc="left", pad=18)
+        import os
+        from matplotlib.font_manager import FontProperties
+        user_fonts = os.path.expandvars(r"%LOCALAPPDATA%\Microsoft\Windows\Fonts")
+        serif = None
+        for p in (user_fonts + r"\Fraunces_72pt_SuperSoft-Light.ttf",
+                  user_fonts + r"\Fraunces_72pt-Light.ttf",
+                  "C:/Windows/Fonts/georgia.ttf"):
+            if os.path.exists(p):
+                # size must live on the FontProperties: set_title's fontsize
+                # is ignored when fontproperties is supplied.
+                serif = FontProperties(fname=p, size=26)
+                break
+        title = title.replace(" → ", " – ").replace("→", "–")
+        ax.set_title(title, fontsize=26, fontproperties=serif,
+                     color="#1F0D07", loc="left", pad=18,
+                     bbox=dict(facecolor="white", edgecolor="none",
+                               boxstyle="square,pad=0.55"))
 
     # Stats line — ascent/descent are only trustworthy when the route follows
     # the actual trail (GPX or routed). Straight-line mode picks up phantom
@@ -292,7 +307,7 @@ def render_profile(config, config_path, output_path):
             f"▽ {min_e:.0f} m"
         )
     ax.text(0.5, -0.22, stats, transform=ax.transAxes,
-            ha="center", fontsize=12, color=TEXT, fontweight="bold")
+            ha="center", fontsize=16, color=TEXT, fontweight="bold")
 
     # Legend row: pair marker numbers with names
     if walking_waypoints:
@@ -300,8 +315,8 @@ def render_profile(config, config_path, output_path):
             f"({idx}) {w['name']}"
             for idx, w in zip(walking_indices, walking_waypoints)
         )
-        ax.text(0.5, -0.34, legend, transform=ax.transAxes,
-                ha="center", fontsize=10, color=TEXT)
+        ax.text(0.5, -0.35, legend, transform=ax.transAxes,
+                ha="center", fontsize=13, color=TEXT)
 
     # Disclaimer + attribution
     disclaimer = (
@@ -339,6 +354,11 @@ def render_profile(config, config_path, output_path):
 
     plt.tight_layout()
     plt.savefig(output_path, facecolor=BG, dpi=100, bbox_inches="tight")
+    # Re-stamp DPI metadata so PowerPoint places the image at 18.8 cm wide.
+    from PIL import Image as _Image
+    with _Image.open(output_path) as _img:
+        _w = _img.width
+        _img.save(output_path, dpi=(_w / (18.8 / 2.54),) * 2)
     print(f"  Saved: {output_path}")
 
 

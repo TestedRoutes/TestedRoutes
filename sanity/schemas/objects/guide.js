@@ -106,6 +106,14 @@ export default {
       hidden: ({ parent }) => !parent?.hasGuide,
     },
     {
+      name: "statusNote",
+      title: "Status note",
+      type: "string",
+      description:
+        'Availability warning shown as an amber chip on the card and a banner on the guide page, e.g. "Closed in 2026". Leave blank when everything runs.',
+      hidden: ({ parent }) => !parent?.hasGuide,
+    },
+    {
       name: "dayStrip",
       title: "Day strip",
       type: "string",

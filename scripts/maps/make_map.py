@@ -16,6 +16,7 @@ Reproducibility:
 """
 
 import math
+import os
 import sys
 import time
 from pathlib import Path
@@ -33,7 +34,9 @@ if hasattr(sys.stdout, "reconfigure"):
 
 
 # -- Brand --
-ACCENT = "#B83A2B"
+# Brandy (styleguide V3) for route + waypoints; titles set in the Fraunces
+# 72pt SuperSoft cut on a plain white plate, matching the deck's map labels.
+ACCENT = "#943D21"
 BG = "#FAF7F2"
 TEXT = "#1A1A1A"
 SUBTLE = "#7A7468"
@@ -142,22 +145,40 @@ def find_font(size, bold=False):
     return ImageFont.load_default()
 
 
+def find_serif_font(size):
+    """Brand display serif for titles: Fraunces SuperSoft, Georgia fallback.
+    Fraunces is installed per-user, so look under LOCALAPPDATA first."""
+    user_fonts = os.path.expandvars(r"%LOCALAPPDATA%\Microsoft\Windows\Fonts")
+    candidates = [
+        user_fonts + r"\Fraunces_72pt_SuperSoft-Light.ttf",
+        user_fonts + r"\Fraunces_72pt-Light.ttf",
+        "C:/Windows/Fonts/Fraunces_72pt_SuperSoft-Light.ttf",
+        "C:/Windows/Fonts/georgia.ttf",
+    ]
+    for path in candidates:
+        try:
+            return ImageFont.truetype(path, size)
+        except (OSError, IOError):
+            continue
+    return find_font(size, bold=True)
+
+
 def _draw_legend(draw, waypoints, position="top-right"):
     """Top-right side legend pairing marker numbers with waypoint names."""
     title_text = "WAYPOINTS"
-    title_font = find_font(15, bold=True)
-    item_font = find_font(15, bold=False)
-    num_font = find_font(13, bold=True)
+    title_font = find_font(20, bold=True)
+    item_font = find_font(20, bold=False)
+    num_font = find_font(16, bold=True)
 
     title_bb = draw.textbbox((0, 0), title_text, font=title_font)
     title_w = title_bb[2] - title_bb[0]
     title_h = title_bb[3] - title_bb[1]
 
-    num_r = 11
-    gap_after_num = 10
-    line_spacing = 8
-    pad_x = 16
-    pad_y = 14
+    num_r = 14
+    gap_after_num = 12
+    line_spacing = 10
+    pad_x = 20
+    pad_y = 16
 
     # Measure name column width
     item_h = 0
@@ -256,7 +277,11 @@ def render_map(config, config_path, output_path):
     bbox_points = [(w["lat"], w["lon"]) for w in waypoints]
     for s in segments:
         bbox_points.extend(s["coords"])
-    zoom, bbox = best_zoom(bbox_points)
+    # Optional per-guide framing overrides: `padding:` loosens/tightens the
+    # auto-fit margin (default 0.20), `zoom:` pins the level outright.
+    zoom, bbox = best_zoom(bbox_points, padding=float(config.get("padding", 0.20)))
+    if config.get("zoom"):
+        zoom = int(config["zoom"])
     print(f"  Zoom: {zoom}")
 
     # Center the canvas on the bbox center
@@ -363,17 +388,20 @@ def render_map(config, config_path, output_path):
     # Side legend (top-right) — numbered list of waypoints
     _draw_legend(draw, snapped_waypoints)
 
-    # Title plate (top-left)
+    # Title plate (top-left): plain white plate, brand serif, no border —
+    # the format the deck uses for map labels.
     if title:
-        title_font = find_font(36, bold=True)
+        # Fraunces has no arrow glyph; the plate convention uses en dashes.
+        title = title.replace(" → ", " – ").replace("→", "–")
+        title_font = find_serif_font(40)
         bb = draw.textbbox((0, 0), title, font=title_font)
         tw, th = bb[2] - bb[0], bb[3] - bb[1]
-        pad_x, pad_y = 24, 14
+        pad_x, pad_y = 28, 16
         plate_w = tw + pad_x * 2
         plate_h = th + pad_y * 2
-        draw.rectangle([20, 20, 20 + plate_w, 20 + plate_h],
-                       fill=WHITE, outline=ACCENT, width=3)
-        draw.text((20 + pad_x, 20 + pad_y - 4), title, fill=TEXT, font=title_font)
+        draw.rectangle([20, 20, 20 + plate_w, 20 + plate_h], fill=WHITE)
+        draw.text((20 + pad_x - bb[0], 20 + pad_y - bb[1]), title,
+                  fill="#1F0D07", font=title_font)
 
     # Disclaimer + attribution (stacked bottom-right)
     disclaimer = "Schematic – not for navigation" if is_authoritative else DISCLAIMER
@@ -424,7 +452,9 @@ def render_map(config, config_path, output_path):
                   line, fill=SUBTLE, font=attr_font)
         cur_y += h + line_gap
 
-    canvas.save(output_path, "PNG", optimize=True)
+    # DPI metadata sized so PowerPoint places the image at 18.8 cm wide.
+    place_dpi = OUT_W / (18.8 / 2.54)
+    canvas.save(output_path, "PNG", optimize=True, dpi=(place_dpi, place_dpi))
     print(f"  Saved: {output_path}")
 
 

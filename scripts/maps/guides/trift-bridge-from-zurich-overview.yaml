@@ -1,0 +1,13 @@
+title: "Zürich → Triftbahn Talstation"
+output: "../../../content/countries/switzerland/guides/trift-bridge-from-zurich/generated/trift-overview-map.png"
+padding: 0.06
+
+# Slide 3 left box: the approach, not the hike. All transport segments,
+# so every leg renders as a dashed line (Plan B rail chain; Plan A road
+# follows the same corridor via Luzern).
+waypoints:
+  - {name: Zürich HB, lat: 47.378177, lon: 8.540192}
+  - {name: Luzern, lat: 47.050168, lon: 8.310229, arrive_by: train}
+  - {name: Meiringen, lat: 46.726711, lon: 8.187096, arrive_by: train}
+  - {name: Innertkirchen Grimseltor, lat: 46.705449, lon: 8.229066, arrive_by: train}
+  - {name: Triftbahn Talstation, lat: 46.721194, lon: 8.318272, arrive_by: bus}

@@ -1,0 +1,20 @@
+title: "Triftbahn → Triftbrücke → Windegghütte"
+output: "../../../content/countries/switzerland/guides/trift-bridge-from-zurich/generated/trift-trail-map.png"
+
+# Founder's own GPX of the loop: Underi Trift → Triftbrücke → Windegghütte → back.
+gpx: "../../../content/countries/switzerland/guides/trift-bridge-from-zurich/final/triftbruckewindegghuttesac.gpx"
+
+# Talstation from OSM (Talstation Triftbahn, Nessental). Bridge = midpoint of
+# the surveyed OSM bridge way 39388289 (the planned-route GPX turns around at
+# the west anchor, so track-derived points sit ~160 m short). Hut = the track's
+# southern turnaround at hut elevation (1,885 m), matching SAC's 1,886 m.
+waypoints:
+  - {name: Triftbahn Talstation, lat: 46.721194, lon: 8.318272}
+  - {name: Underi Trift, lat: 46.704236, lon: 8.335689, arrive_by: cable-car}
+  - {name: Triftbrücke, lat: 46.694405, lon: 8.357385}
+  - {name: Windegghütte, lat: 46.693270, lon: 8.351990}
+
+profiles:
+  - title: "Underi Trift → Triftbrücke → Windegghütte → Underi Trift"
+    gpx: "../../../content/countries/switzerland/guides/trift-bridge-from-zurich/final/triftbruckewindegghuttesac.gpx"
+    output: "../../../content/countries/switzerland/guides/trift-bridge-from-zurich/generated/trift-elevation-profile.png"

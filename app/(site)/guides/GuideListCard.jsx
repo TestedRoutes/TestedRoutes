@@ -97,6 +97,11 @@ export default function GuideListCard({ guide, t, lang = "en" }) {
         <h3 className="line-clamp-2 text-lg font-normal leading-snug text-slate-900 sm:min-h-[3.5rem]">
           {guide.title}
         </h3>
+        {guide.statusNote ? (
+          <p className="w-fit rounded-full bg-amber-100 px-2.5 py-0.5 text-xs font-semibold text-amber-900">
+            {guide.statusNote}
+          </p>
+        ) : null}
         <p className="line-clamp-2 text-xs leading-relaxed text-slate-500 sm:min-h-[2.5rem]">
           {excerpt}
         </p>

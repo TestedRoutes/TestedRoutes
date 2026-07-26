@@ -31,6 +31,7 @@ export function toGuideCard(g) {
     polarProductId: g.polarProductId,
     guidePdfUrl: g.guidePdfUrl,
     cardLine: g.salesPage?.cardLine || null,
+    statusNote: g.salesPage?.statusNote || null,
     metadata: {
       geography: {
         country: g.metadata?.geography?.country || null,
