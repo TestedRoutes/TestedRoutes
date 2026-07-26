@@ -189,7 +189,7 @@ const en = {
     continuesInFull: "Continues in the full guide",
     wantFullPlan: "Want the full plan?",
     pdfIncludes:
-      "The PDF includes the day-by-day plan, transport timings, booking links, weather rules, and route variants. Instant download after purchase.",
+      "The PDF includes the day-by-day plan, transport timings, booking links, and weather rules. Instant download after purchase.",
     getFullGuide: "Get the full guide",
     readersSay: "What readers say",
     saveTime: "Save time and money",
@@ -387,7 +387,7 @@ const de = {
     continuesInFull: "Geht im kompletten Guide weiter",
     wantFullPlan: "Den kompletten Plan?",
     pdfIncludes:
-      "Das PDF enthält den Tag-für-Tag-Plan, Transportzeiten, Buchungslinks, Wetterregeln und Routenvarianten. Sofort-Download nach dem Kauf.",
+      "Das PDF enthält den Tag-für-Tag-Plan, Transportzeiten, Buchungslinks und Wetterregeln. Sofort-Download nach dem Kauf.",
     getFullGuide: "Kompletten Guide holen",
     readersSay: "Was Leser sagen",
     saveTime: "Zeit und Geld sparen",
@@ -585,7 +585,7 @@ const es = {
     continuesInFull: "Continúa en la guía completa",
     wantFullPlan: "¿Quieres el plan completo?",
     pdfIncludes:
-      "El PDF incluye el plan día a día, horarios de transporte, enlaces de reserva, reglas según el tiempo y variantes de ruta. Descarga instantánea tras la compra.",
+      "El PDF incluye el plan día a día, horarios de transporte, enlaces de reserva y reglas según el tiempo. Descarga instantánea tras la compra.",
     getFullGuide: "Consigue la guía completa",
     readersSay: "Qué dicen los lectores",
     saveTime: "Ahorra tiempo y dinero",
@@ -783,7 +783,7 @@ const fr = {
     continuesInFull: "La suite dans le guide complet",
     wantFullPlan: "Envie du plan complet ?",
     pdfIncludes:
-      "Le PDF inclut le plan jour par jour, les horaires de transport, les liens de réservation, les règles météo et les variantes d'itinéraire. Téléchargement immédiat après l'achat.",
+      "Le PDF inclut le plan jour par jour, les horaires de transport, les liens de réservation et les règles météo. Téléchargement immédiat après l'achat.",
     getFullGuide: "Obtenir le guide complet",
     readersSay: "Ce que disent les lecteurs",
     saveTime: "Gagnez du temps et de l'argent",
@@ -980,7 +980,7 @@ const lt = {
     continuesInFull: "Tęsinys pilname gide",
     wantFullPlan: "Norite viso plano?",
     pdfIncludes:
-      "PDF gide – planas kiekvienai dienai, transporto laikai, rezervacijų nuorodos, oro taisyklės ir maršruto variantai. Atsisiuntimas iškart po pirkimo.",
+      "PDF gide – planas kiekvienai dienai, transporto laikai, rezervacijų nuorodos ir oro taisyklės. Atsisiuntimas iškart po pirkimo.",
     getFullGuide: "Gauti pilną gidą",
     readersSay: "Ką sako skaitytojai",
     saveTime: "Taupykite laiką ir pinigus",
