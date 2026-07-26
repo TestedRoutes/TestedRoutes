@@ -15,19 +15,6 @@ import { getCategoryItems } from "../_lib/categoryPills";
 import { PORTRAIT } from "../_lib/aboutImages";
 import { getDict } from "../_lib/i18n";
 
-// TEMPORARY: the grid is four columns and only three guides are published,
-// so the Triftbrücke card is repeated to fill the row. Neither Triftbrücke
-// card offers a Buy button — GuideListCard keys the button off these two
-// fields — so the duplicate cannot take money. Remove all of this once a
-// fourth guide ships.
-function prepareHomeCards(cards) {
-  const noBuy = cards.map((c) =>
-    c.slug?.includes("trift") ? { ...c, polarProductId: null, guidePdfUrl: null } : c,
-  );
-  const trift = noBuy.find((c) => c.slug?.includes("trift"));
-  return trift ? [...noBuy, { ...trift, slug: `${trift.slug}-filler` }] : noBuy;
-}
-
 // Continent → country index for the two geography sections. Only stories
 // that carry both a continent and a country and have a page of their own
 // make it in; each country contributes its most recent story.
@@ -83,7 +70,7 @@ export default async function HomePage() {
     category: g.category,
     href: g.href,
   }));
-  const guideCards = prepareHomeCards(allGuides.map(toGuideCard));
+  const guideCards = allGuides.map(toGuideCard);
   const continents = buildContinentIndex(stories);
 
   return (
