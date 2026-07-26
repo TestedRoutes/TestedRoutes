@@ -121,7 +121,7 @@ export default function GuideBody({ blocks, checkoutHref, pdfHref, price, t: tPr
             {ctaHref ? (
               <Link
                 href={ctaHref}
-                className="mt-3 inline-flex rounded-full bg-slate-900 px-4 py-2 text-xs font-semibold text-white transition hover:bg-slate-800"
+                className="mt-3 inline-flex rounded-full bg-brand-terracotta px-4 py-2 text-xs font-normal tracking-[0.05em] text-white transition hover:bg-brand-terracotta/90"
               >
                 {buttonLabel}
               </Link>
