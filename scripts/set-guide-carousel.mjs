@@ -70,6 +70,22 @@ const ALT = {
   "8.jpg": { alt: "The granite islet of St. Pierre in turquoise water off Praslin" },
   "9.mp4": { alt: "Clear water off the islands, filmed on the route" },
   "10.jpg": { alt: "Granite boulders and a leaning palm on Anse Source d'Argent, La Digue" },
+
+  // Triftbrücke day trip
+  "1. clip.mp4": { alt: "Crossing the Triftbrücke, filmed on the route" },
+  "2. cover.jpg": {
+    alt: "Cover of the Triftbrücke day-trip guide",
+    caption: "The guide",
+  },
+  "3. snapshot.jpg": {
+    alt: "Route snapshot page: effort, difficulty, season and what to expect",
+    caption: "Route snapshot",
+  },
+  "4. bridge.jpg": { alt: "The 170 m Triftbrücke spanning the Trift gorge" },
+  "5. clip.mp4": { alt: "On the trail above the Trift gorge, filmed on the route" },
+  "6. triftsee.jpg": { alt: "Turquoise Triftsee below the gorge cliffs" },
+  "7. forest-trail.jpg": { alt: "Mossy forest trail on the lower ascent" },
+  "8. ascent.jpg": { alt: "The rocky trail climbing toward snowy peaks above the Trift valley" },
 };
 
 const client = createClient({
