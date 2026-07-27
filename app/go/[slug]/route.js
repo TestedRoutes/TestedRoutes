@@ -66,6 +66,21 @@ const CURATED = {
   "trift-map":
     "https://www.google.com/maps/d/viewer?mid=1aDbc_78_MSJ8geLTnmdW7FRQn_F4QBM",
 
+  // Simplon–Saas Fee weekend-hike guide — QR targets printed in the PDF:
+  // treat every slug as frozen.
+  "ssf-hotel": "https://www.alpenblick-gspon.ch/",
+  "ssf-sbb": "https://www.sbb.ch/en/offers/saver-day-pass",
+  "ssf-mob": "https://schweizmobil.ch/en/",
+  "ssf-bristol": "https://www.hotel-bristol-saas-fee.ch/en/",
+  "ssf-blackrock": "https://maps.app.goo.gl/FLUdPqwg6hmUexA38",
+  "ssf-killerhof": "https://maps.app.goo.gl/5xFsTgcM2RcT3XA19",
+  "ssf-gondola": "https://staldenried.ch/lssg/",
+  "ssf-parkrail": "https://www.sbb.ch/en/offers/car-parking",
+  "ssf-car": "https://www.sixt.ch/",
+  "ssf-meteo": "https://www.meteoswiss.admin.ch/",
+  "ssf-map":
+    "https://www.google.com/maps/d/viewer?mid=10U8OPYSeOVbggFoz9Fatkp1oYQbqCqc",
+
   // "podcast": buildUtmUrl(`${SITE_ORIGIN}/subscribe`, {
   //   source: "shortlink", medium: "podcast", campaign: "podcast-mention-2026",
   // }),
