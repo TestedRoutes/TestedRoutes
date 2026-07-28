@@ -400,6 +400,15 @@ export default {
       description:
         'Where the route ends. Leave empty for a round trip (the page will reuse the starting point as the finish).',
     },
+    {
+      name: "trackLine",
+      title: "Track line (simplified GPX)",
+      type: "text",
+      group: "location",
+      rows: 3,
+      description:
+        'The actual trail as JSON [[lat,lng],…], simplified to a few hundred points. When set, the location map draws this line instead of connecting routePoints. Generate with a Douglas-Peucker pass over the trip GPX.',
+    },
 
     /* ──────────────── DETAILS (difficulty, suitability, timing, logistics, budget, differentiation) ──────────────── */
     /* Difficulty */

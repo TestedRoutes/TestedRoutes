@@ -56,7 +56,7 @@ const STORY_PROJECTION = /* groq */ `
   budgetLevel, estimatedCost, costBreakdown, moneySavingTips,
   uniqueSellingPoints, whatMakesThisSpecial, bestForCrowdType,
   crowdLevel, scenicRating, adrenalineLevel,
-  lastReviewedDate, routePoints,
+  lastReviewedDate, routePoints, trackLine,
   guide {
     hasGuide,
     status,
@@ -520,6 +520,7 @@ export function shapeGuide(doc, currency = "EUR") {
     routeStops: Array.isArray(doc.routeStops) ? doc.routeStops : null,
     finishPoint: doc.finishPoint || null,
     routePoints: doc.routePoints || null,
+    trackLine: doc.trackLine || null,
     photos: [heroUrl, ...galleryUrls].filter(Boolean),
     cardPhotos: authoredPhotos.length ? authoredPhotos : cardPhotos,
     cardPagePhotos: authoredPagePhotos,

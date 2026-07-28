@@ -1,7 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
-import { MapContainer, TileLayer, Marker, Polyline, useMap } from "react-leaflet";
+import { MapContainer, TileLayer, Marker, Polyline } from "react-leaflet";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 
@@ -98,31 +97,30 @@ export default function LocationMap({ start, destinations, finish, points, zoom 
   const center = markers[0];
   const polyline = points && points.length > 1 ? points : null;
 
-  function FitBounds() {
-    const map = useMap();
-    useEffect(() => {
-      if (!map) return;
-      if (markers.length > 1) {
-        const bounds = L.latLngBounds(markers.map((m) => [m.lat, m.lng]));
-        // Generous padding so all markers sit comfortably inside the viewport
-        // and so the user sees enough surrounding context.
-        map.fitBounds(bounds, { padding: [70, 70], maxZoom: 9 });
-      } else {
-        map.setView([center.lat, center.lng], zoom);
-      }
-    }, [map]);
-    return null;
-  }
+  // Fit the view declaratively at construction time: the route line (when
+  // present) drives the bounds, otherwise the markers do. Passing bounds to
+  // MapContainer is more reliable than calling fitBounds from an effect,
+  // which could fire before the container had its size.
+  const boundsSource = polyline && polyline.length > 1 ? [...markers, ...polyline] : markers;
+  const bounds =
+    markers.length > 1 ? L.latLngBounds(boundsSource.map((m) => [m.lat, m.lng])) : null;
+  // Generous padding so everything sits comfortably inside the viewport. The
+  // maxZoom cap only bites on compact routes (a weekend hike); multi-island
+  // trips fit below it.
+  const boundsOptions = { padding: [60, 60], maxZoom: 11 };
 
   // On touch devices a one-finger drag inside the map pans the map and
   // traps the page scroll. Disable dragging there — pinch zoom and the
   // +/- buttons still work, and the page scrolls straight past the map.
   const touchDevice = L.Browser.mobile;
 
+  const viewProps = bounds
+    ? { bounds, boundsOptions }
+    : { center: [center.lat, center.lng], zoom };
+
   return (
     <MapContainer
-      center={[center.lat, center.lng]}
-      zoom={zoom}
+      {...viewProps}
       scrollWheelZoom={false}
       dragging={!touchDevice}
       style={{ height: "100%", width: "100%", minHeight: 320, borderRadius: 12 }}
@@ -131,7 +129,6 @@ export default function LocationMap({ start, destinations, finish, points, zoom 
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
-      <FitBounds />
       {markers.map((m, i) => (
         <Marker
           key={`${m.lat}-${m.lng}-${i}`}
