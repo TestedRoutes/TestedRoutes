@@ -193,10 +193,27 @@ export function buildLocation(guide) {
         ? { ...start }
         : null;
 
-  const points = Array.isArray(guide.routePoints)
-    ? guide.routePoints
-        .map((p) => p?.coordinates && { lat: p.coordinates.lat, lng: p.coordinates.lng })
-        .filter(Boolean)
-    : null;
+  // Route line: prefer the simplified GPX track (the actual trail); fall
+  // back to connecting the coarse routePoints for guides without one.
+  let points = null;
+  if (typeof guide.trackLine === "string" && guide.trackLine.length > 0) {
+    try {
+      const parsed = JSON.parse(guide.trackLine);
+      if (Array.isArray(parsed)) {
+        points = parsed
+          .filter((p) => Array.isArray(p) && p.length >= 2)
+          .map(([lat, lng]) => ({ lat, lng }));
+      }
+    } catch {
+      points = null;
+    }
+  }
+  if (!points || points.length < 2) {
+    points = Array.isArray(guide.routePoints)
+      ? guide.routePoints
+          .map((p) => p?.coordinates && { lat: p.coordinates.lat, lng: p.coordinates.lng })
+          .filter(Boolean)
+      : null;
+  }
   return { start, destinations, finish, points };
 }
