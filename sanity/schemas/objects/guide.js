@@ -91,6 +91,22 @@ export default {
       hidden: ({ parent }) => !parent?.hasGuide,
     },
     {
+      name: "cardImage",
+      title: "Card image (4:5)",
+      type: "image",
+      description:
+        "Dedicated browse-card image. Cards render it full-bleed at a fixed 4:5, cropped to the hotspot, with the title and badge overlaid — so upload the branded crop, not the A4 cover. The cover artwork stays on the guide sales page. Required: a guide cannot go live without one.",
+      options: { hotspot: true },
+      fields: [{ name: "alt", title: "Alt text", type: "string" }],
+      hidden: ({ parent }) => !parent?.hasGuide,
+      validation: (Rule) =>
+        Rule.custom((value, context) => {
+          if (!context?.parent?.hasGuide) return true;
+          if (value?.asset) return true;
+          return "Every guide needs a card image — cards render it at 4:5, cropped to the hotspot. Seed one with scripts/backfill-card-images.mjs or upload a branded crop.";
+        }),
+    },
+    {
       name: "pages",
       title: "Page count",
       type: "number",

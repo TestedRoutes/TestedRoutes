@@ -68,10 +68,12 @@ export default function GuideListCard({ guide, t, lang = "en" }) {
       href={href}
       className="group flex h-full flex-col overflow-hidden rounded-3xl bg-white shadow-card ring-1 ring-brand-line transition hover:-translate-y-1 hover:shadow-card-hover"
     >
-      {/* Square on phones so photo + title + excerpt + price clear the tab bar
-          even with the browser URL bar showing; 3:4 from sm up where grid
-          columns keep cards short anyway. */}
-      <div className="relative aspect-square w-full shrink-0 overflow-hidden bg-slate-100 sm:aspect-[3/4]">
+      {/* One fixed 4:5 frame at every breakpoint (card image spec). The ratio
+          lives here and media covers it, so a wrong-shaped upload gets cropped
+          into the same frame instead of reflowing the card — and the carousel
+          dots, positioned against this container, always sit on its bottom
+          edge. */}
+      <div className="relative aspect-[4/5] w-full shrink-0 overflow-hidden bg-slate-100">
         {slides.length ? (
           <CardMediaCarousel
             slides={slides}
