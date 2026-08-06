@@ -68,7 +68,6 @@ const STORY_PROJECTION = /* groq */ `
     "pricingTier": pricingTier->{ name, "slug": slug.current, prices, displayOrder },
     "pdfUrl": pdf.asset->url,
     cover,
-    cardImage,
     pages,
     cardLine,
     statusNote,
@@ -126,25 +125,6 @@ function imageUrl(image, width = 1600) {
     // auto("format") negotiates webp/avif; explicit quality lifts the CDN
     // default (~75), which read as visibly soft on retina phones.
     return urlFor(image).width(width).fit("max").auto("format").quality(85).url();
-  } catch {
-    return null;
-  }
-}
-
-// Fixed 4:5 rendition for browse cards. Asking the CDN for both width and
-// height makes it crop around the hotspot, so every card ships the exact
-// same frame regardless of what shape was uploaded — the shape is decided
-// here, not by the asset.
-function cardImageUrl(image, width = 1080) {
-  if (!image?.asset) return null;
-  try {
-    return urlFor(image)
-      .width(width)
-      .height(Math.round((width * 5) / 4))
-      .fit("crop")
-      .auto("format")
-      .quality(85)
-      .url();
   } catch {
     return null;
   }
@@ -485,12 +465,11 @@ export function shapeGuide(doc, currency = "EUR") {
         }
       : null,
   };
-  // Card media. With a dedicated cardImage (the card spec), the branded 4:5
-  // crop leads full-bleed and the page exports stay on the sales page, where
-  // reading them is the point; the rest of the trip media follows in
-  // authored order, with each clip's slot recomputed against that shorter
-  // sequence. Without one — guides published before the field existed — the
-  // card falls back to the full authored carousel, page exports shown whole.
+  // Cards reuse the authored carousel so a guide shows the same pictures in
+  // the same order on the home page, the Guides grid and its own page.
+  // Videos carry a 1-based slot = their position in the full sequence, which
+  // is how buildMediaSlides re-interleaves them on the card.
+  // Page exports are shown whole on a card; photos and clips fill the frame.
   // The caption is the authoring signal for "this is a page from inside the
   // guide" — set-guide-carousel.mjs gives one to the page exports and leaves
   // the trip media uncaptioned, on the grounds that the photos speak for
@@ -498,40 +477,16 @@ export function shapeGuide(doc, currency = "EUR") {
   const authoredPhotos = [];
   const authoredPagePhotos = [];
   const authoredVideos = [];
-  const brandedPhotos = [];
-  const brandedVideos = [];
   for (const [i, s] of (Array.isArray(g.carousel) ? g.carousel : []).entries()) {
     if (s?.videoUrl) {
       authoredVideos.push({ url: s.videoUrl, slot: i + 1 });
-      // 1-based position after the lead card image and everything kept so far.
-      brandedVideos.push({
-        url: s.videoUrl,
-        slot: brandedPhotos.length + brandedVideos.length + 2,
-      });
     } else {
       const url = imageUrl(s?.image, 1080);
       if (url) {
         authoredPhotos.push(url);
         if (s?.caption) authoredPagePhotos.push(url);
-        else brandedPhotos.push(url);
       }
     }
-  }
-  const cardImage = cardImageUrl(g.cardImage);
-  const hasAuthoredCarousel = authoredPhotos.length > 0 || authoredVideos.length > 0;
-  const fallbackVideos = shapeVideos(doc);
-  let finalCardPhotos, finalCardPagePhotos, finalCardVideos;
-  if (cardImage) {
-    finalCardPhotos = [cardImage, ...(hasAuthoredCarousel ? brandedPhotos : cardPhotos)];
-    finalCardPagePhotos = [];
-    finalCardVideos = hasAuthoredCarousel
-      ? brandedVideos
-      : // Hero/gallery fallback slots shift down one to make room for the lead.
-        fallbackVideos.map((v) => ({ ...v, slot: (Number(v.slot) || 1) + 1 }));
-  } else {
-    finalCardPhotos = authoredPhotos.length ? authoredPhotos : cardPhotos;
-    finalCardPagePhotos = authoredPagePhotos;
-    finalCardVideos = authoredVideos.length ? authoredVideos : fallbackVideos;
   }
 
   const relatedStories = Array.isArray(doc.similarStories)
@@ -567,14 +522,12 @@ export function shapeGuide(doc, currency = "EUR") {
     routePoints: doc.routePoints || null,
     trackLine: doc.trackLine || null,
     photos: [heroUrl, ...galleryUrls].filter(Boolean),
-    cardImage,
-    cardImageAlt: g.cardImage?.alt || null,
-    cardPhotos: finalCardPhotos,
-    cardPagePhotos: finalCardPagePhotos,
+    cardPhotos: authoredPhotos.length ? authoredPhotos : cardPhotos,
+    cardPagePhotos: authoredPagePhotos,
     galleryPhotos: galleryUrls,
     videoUrl: doc.hasVideo ? doc.videoUrl || null : null,
     videoSlot: doc.videoSlot || null,
-    videos: finalCardVideos,
+    videos: authoredVideos.length ? authoredVideos : shapeVideos(doc),
     relatedGuides,
     relatedStories,
     salesPage: sales,
