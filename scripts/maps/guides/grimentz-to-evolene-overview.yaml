@@ -1,0 +1,23 @@
+title: ""
+output: "../output/Grimentz - Evolene/grimentz-to-evolene-overview.png"
+padding: 0.04
+tiles: osm
+
+# Slide 7 "Getting there & back" country-context map.
+# Transport legs (train/bus) render dashed; the Grimentz -> Evolène walk
+# renders solid from the two stage GPX files.
+gpx:
+  - "../output/Grimentz - Evolene/hiking-in-switzerland-6-24.gpx"
+  - "../output/Grimentz - Evolene/hiking-in-switzerland-6-25.gpx"
+
+waypoints:
+  - {name: Zürich HB, lat: 47.378177, lon: 8.540192}
+  - {name: Sierre, lat: 46.292136, lon: 7.532721, arrive_by: train}
+  - {name: Grimentz, lat: 46.175635, lon: 7.573951, arrive_by: bus}
+  - {name: Evolène, lat: 46.112885, lon: 7.495596}
+  - {name: Sion, lat: 46.227462, lon: 7.359330, arrive_by: bus}
+
+cities:
+  - {name: Bern, lat: 46.948090, lon: 7.447440}
+  - {name: Basel, lat: 47.559600, lon: 7.588600}
+  - {name: Genève, lat: 46.204390, lon: 6.143160, label: right}

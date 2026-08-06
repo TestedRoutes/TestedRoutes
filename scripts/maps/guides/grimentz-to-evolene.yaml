@@ -1,0 +1,36 @@
+title: "Grimentz to Evolène"
+output: "../output/Grimentz - Evolene/grimentz-to-evolene.png"
+
+# Combined map uses both GPX files concatenated.
+gpx:
+  - "../output/Grimentz - Evolene/hiking-in-switzerland-6-24.gpx"
+  - "../output/Grimentz - Evolene/hiking-in-switzerland-6-25.gpx"
+
+# Stages 24 & 25 of the Alpine Passes Trail. Villages from GPX endpoints
+# (stage 24 last == stage 25 first == the hut); named landmarks from
+# Overpass nodes, all verified within 30 m of the track.
+waypoints:
+  - {name: Grimentz,             lat: 46.175635, lon: 7.573951}
+  - {name: Bendolla,             lat: 46.180629, lon: 7.557956}
+  - {name: Pas de Lona,          lat: 46.155751, lon: 7.519966}
+  - {name: Cab. des Becs de Bosson, lat: 46.164065, lon: 7.516415}
+  - {name: Alp L'A Vieille,      lat: 46.154445, lon: 7.495574}
+  - {name: Volovron,             lat: 46.130954, lon: 7.482238}
+  - {name: Evolène,              lat: 46.112885, lon: 7.495596}
+
+# Per-stage profiles. make_profile.py renders one PNG per entry.
+profiles:
+  # GPX is the source of truth for ascent/descent (founder rule, 2026-08-04):
+  # the deck's snapshot and day headers copy these computed footer numbers
+  # verbatim - no rounding. ONE carve-out (founder, 2026-08-05): when the
+  # route's high point is a named landmark, ▲ uses its published elevation -
+  # here the Cabane des Becs de Bosson, 2,985 m, the high point of the whole
+  # trail. Everything shows 2,985; the raw GPX max (2,982) appears nowhere.
+  - title: "Day 1: Grimentz to the hut"
+    gpx: "../output/Grimentz - Evolene/hiking-in-switzerland-6-24.gpx"
+    output: "../output/Grimentz - Evolene/grimentz-to-evolene-stage1-profile.png"
+    stats_max: 2985
+  - title: "Day 2: Hut to Evolène"
+    gpx: "../output/Grimentz - Evolene/hiking-in-switzerland-6-25.gpx"
+    output: "../output/Grimentz - Evolene/grimentz-to-evolene-stage2-profile.png"
+    stats_max: 2985
