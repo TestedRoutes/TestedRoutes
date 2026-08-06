@@ -33,8 +33,12 @@ How the pipeline enforces it:
   → `GuideListCard` → `CardMediaCarousel` (contain vs cover per slide).
 
 If a guide's card looks off-standard, the cause is almost always its assets
-(square/social deck exports instead of A4), not the CSS. Fix: re-export deck
-pages 1–2 in A4 portrait and re-upload via `scripts/set-guide-carousel.mjs`.
+(square/social deck exports instead of A4), not the CSS. Fix:
+`npm run reexport:cards` re-renders slides 1–2 and `cover` straight from
+each guide's sellable PDF (pages 1–2, always A4) — `--dry-run` and
+`--slug` supported. `set-guide-carousel.mjs` refuses non-A4 slides 1–2 at
+upload time (`--allow-shape` overrides), so a square export can't come
+back through the authoring flow either.
 
 ## Content scripts
 
