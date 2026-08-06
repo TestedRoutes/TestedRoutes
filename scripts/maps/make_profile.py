@@ -292,12 +292,18 @@ def render_profile(config, config_path, output_path):
     # Stats line — ascent/descent are only trustworthy when the route follows
     # the actual trail (GPX or routed). Straight-line mode picks up phantom
     # ascent/descent from terrain bumps the trail goes around.
+    # Official stage stats (SchweizMobil) may be supplied per profile entry
+    # (stats_ascent / stats_descent / stats_max) to replace the GPX-derived
+    # sums: the guide's snapshot numbers and the profile footer must match.
+    ascent_d = config.get("stats_ascent", ascent)
+    descent_d = config.get("stats_descent", descent)
+    max_d = config.get("stats_max", max_e)
     if is_authoritative:
         stats = (
             f"→ {total_km:.0f} km     "
-            f"↗ {ascent:.0f} m     "
-            f"↘ {descent:.0f} m     "
-            f"▲ {max_e:.0f} m     "
+            f"↗ {ascent_d:.0f} m     "
+            f"↘ {descent_d:.0f} m     "
+            f"▲ {max_d:.0f} m     "
             f"▽ {min_e:.0f} m"
         )
     else:
