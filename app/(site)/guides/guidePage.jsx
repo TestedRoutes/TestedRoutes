@@ -496,6 +496,32 @@ export default async function GuidePage({ lang, slug }) {
           />
           <Testimonials items={sales.testimonials} t={t} />
           <FaqAccordion items={sales.faq} t={t} />
+          {guide.relatedStories?.length ? (
+            <div>
+              <p className="mb-3 font-serif text-xl text-brand-ink">
+                Read the stories behind this route.
+              </p>
+              <div className="grid gap-3">
+                {guide.relatedStories.slice(0, 3).map((s) => (
+                  <Link
+                    key={s.slug}
+                    href={s.href}
+                    className="flex items-center gap-4 rounded-2xl border border-brand-line bg-white p-3 shadow-card transition hover:-translate-y-0.5 hover:shadow-card-hover"
+                  >
+                    {s.image ? (
+                      <img
+                        src={s.image}
+                        alt={s.title}
+                        className="h-14 w-20 shrink-0 rounded-lg object-cover"
+                        loading="lazy"
+                      />
+                    ) : null}
+                    <p className="text-sm font-medium leading-snug text-slate-900">{s.title}</p>
+                  </Link>
+                ))}
+              </div>
+            </div>
+          ) : null}
         </div>
 
         <BuyBox
