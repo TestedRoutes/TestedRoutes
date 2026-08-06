@@ -484,7 +484,13 @@ export function shapeGuide(doc, currency = "EUR") {
       const url = imageUrl(s?.image, 1080);
       if (url) {
         authoredPhotos.push(url);
-        if (s?.caption) authoredPagePhotos.push(url);
+        // Slides 1-2 are the deck page-1/page-2 exports by convention
+        // (set-guide-carousel.mjs uploads "1. cover" / "2. snapshot" first),
+        // so they always get the inset document treatment — the caption only
+        // marks later page exports like the sample day. Caption-only marking
+        // let uncaptioned covers render full-bleed, which is how the cards
+        // drifted into two styles.
+        if (s?.caption || i < 2) authoredPagePhotos.push(url);
       }
     }
   }
