@@ -1,4 +1,4 @@
-title: "Simplon Pass → Saas Fee"
+title: "Simplon Pass – Saas Fee"
 output: "../output/Simplon Pass - Saas Fee/simplon-pass-saas-fee.png"
 
 # Combined map uses both GPX files concatenated.
@@ -15,9 +15,9 @@ waypoints:
 
 # Per-stage profiles. make_profile.py renders one PNG per entry.
 profiles:
-  - title: "Stage 18: Simplon Pass → Hotel Alpenblick Gspon"
+  - title: "Stage 18: Simplon Pass – Hotel Alpenblick Gspon"
     gpx: "../output/Simplon Pass - Saas Fee/hiking-in-switzerland-6-18.gpx"
     output: "../output/Simplon Pass - Saas Fee/simplon-pass-saas-fee-stage1-profile.png"
-  - title: "Stage 19: Hotel Alpenblick Gspon → Saas Fee"
+  - title: "Stage 19: Hotel Alpenblick Gspon – Saas Fee"
     gpx: "../output/Simplon Pass - Saas Fee/hiking-in-switzerland-6-19.gpx"
     output: "../output/Simplon Pass - Saas Fee/simplon-pass-saas-fee-stage2-profile.png"

@@ -1,0 +1,23 @@
+title: ""
+output: "../output/Saas Fee - Gruben/saas-fee-to-gruben-overview.png"
+padding: 0.04
+tiles: osm
+
+# Slide 7 "Getting there & back" country-context map.
+# Transport legs (train/bus) render dashed; the Saas Fee -> Gruben walk
+# renders solid from the two stage GPX files.
+gpx:
+  - "../output/Saas Fee - Gruben/hiking-in-switzerland-6-20.gpx"
+  - "../output/Saas Fee - Gruben/hiking-in-switzerland-6-21.gpx"
+
+waypoints:
+  - {name: Zürich HB, lat: 47.378177, lon: 8.540192}
+  - {name: Visp, lat: 46.294029, lon: 7.881465, arrive_by: train}
+  - {name: Saas Fee, lat: 46.108813, lon: 7.929233, arrive_by: bus}
+  - {name: Gruben, lat: 46.211536, lon: 7.706014}
+  - {name: Turtmann, lat: 46.297700, lon: 7.709600, arrive_by: bus}
+
+cities:
+  - {name: Bern, lat: 46.948090, lon: 7.447440}
+  - {name: Basel, lat: 47.559600, lon: 7.588600}
+  - {name: Genève, lat: 46.204390, lon: 6.143160, label: right}

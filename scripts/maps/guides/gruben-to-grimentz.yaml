@@ -1,0 +1,27 @@
+title: "Gruben to Grimentz"
+output: "../output/Gruben - Grimentz/gruben-to-grimentz.png"
+
+# Combined map uses both GPX files concatenated.
+gpx:
+  - "../output/Gruben - Grimentz/hiking-in-switzerland-6-22.gpx"
+  - "../output/Gruben - Grimentz/hiking-in-switzerland-6-23.gpx"
+
+# Stages 22 & 23 of the Alpenpässe-Weg. Gruben/Grimentz from the founder-
+# verified master pins; Meidsee (water) + Ayer + Grimentz via Nominatim;
+# Meidpass = OSM guidepost node, matches the GPX max-elevation point.
+waypoints:
+  - {name: Gruben,          lat: 46.211536, lon: 7.706014}
+  - {name: Meidsee,         lat: 46.223559, lon: 7.673718}
+  - {name: Meidpass,        lat: 46.222898, lon: 7.661369}
+  - {name: Hotel Weisshorn, lat: 46.208286, lon: 7.617635}
+  - {name: Ayer,            lat: 46.178766, lon: 7.603268}
+  - {name: Grimentz,        lat: 46.180295, lon: 7.573834}
+
+# Per-stage profiles. make_profile.py renders one PNG per entry.
+profiles:
+  - title: "Day 1: Gruben to Hotel Weisshorn"
+    gpx: "../output/Gruben - Grimentz/hiking-in-switzerland-6-22.gpx"
+    output: "../output/Gruben - Grimentz/gruben-to-grimentz-stage1-profile.png"
+  - title: "Day 2: Hotel Weisshorn to Grimentz"
+    gpx: "../output/Gruben - Grimentz/hiking-in-switzerland-6-23.gpx"
+    output: "../output/Gruben - Grimentz/gruben-to-grimentz-stage2-profile.png"

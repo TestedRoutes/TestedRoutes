@@ -1,0 +1,26 @@
+title: "Saas Fee to Gruben"
+output: "../output/Saas Fee - Gruben/saas-fee-to-gruben.png"
+
+# Combined map uses both GPX files concatenated.
+gpx:
+  - "../output/Saas Fee - Gruben/hiking-in-switzerland-6-20.gpx"
+  - "../output/Saas Fee - Gruben/hiking-in-switzerland-6-21.gpx"
+
+# Stages 20 & 21 of the Alpenpässe-Weg. Coordinates taken from GPX
+# endpoints (stage 20 last == stage 21 first, so Grächen is the junction).
+waypoints:
+  - {name: Saas Fee,      lat: 46.108813, lon: 7.929233}
+  - {name: Grächen,       lat: 46.195115, lon: 7.838606}
+  - {name: St. Niklaus,   lat: 46.179163, lon: 7.807474}
+  - {name: Jungen,        lat: 46.195148, lon: 7.799123}
+  - {name: Augstbordpass, lat: 46.208742, lon: 7.753215}
+  - {name: Gruben,        lat: 46.211536, lon: 7.706014}
+
+# Per-stage profiles. make_profile.py renders one PNG per entry.
+profiles:
+  - title: "Day 1: Saas Fee to Grächen"
+    gpx: "../output/Saas Fee - Gruben/hiking-in-switzerland-6-20.gpx"
+    output: "../output/Saas Fee - Gruben/saas-fee-to-gruben-stage1-profile.png"
+  - title: "Day 2: Grächen to Gruben"
+    gpx: "../output/Saas Fee - Gruben/hiking-in-switzerland-6-21.gpx"
+    output: "../output/Saas Fee - Gruben/saas-fee-to-gruben-stage2-profile.png"

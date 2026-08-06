@@ -47,12 +47,24 @@ WHITE = "#FFFFFF"
 OUT_W = 1600
 OUT_H = 900
 
-# -- Tile source: OpenTopoMap (OSM-based, hiking-friendly) --
-TILE_SUBDOMAINS = ["a", "b", "c"]
-TILE_URL = "https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png"
+# -- Tile source --
+# Default is OpenTopoMap (hiking detail). A guide yaml can set `tiles: osm`
+# for the standard green OSM carto look (used on country-scale overview maps).
+TILE_PROVIDERS = {
+    "opentopo": {
+        "url": "https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png",
+        "subdomains": ["a", "b", "c"],
+        "attribution": "© OpenStreetMap contributors · OpenTopoMap (CC-BY-SA)",
+    },
+    "osm": {
+        "url": "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+        "subdomains": [""],
+        "attribution": "© OpenStreetMap contributors",
+    },
+}
+TILE_PROVIDER = "opentopo"  # overridden per-render from config `tiles:`
 TILE_SIZE = 256
 DISCLAIMER = "Schematic waypoint overview – not for navigation"
-ATTRIBUTION = "© OpenStreetMap contributors · OpenTopoMap (CC-BY-SA)"
 USER_AGENT = "TestedRoutes Map Generator (https://testedroutes.com)"
 
 CACHE_DIR = Path(__file__).parent / ".tile_cache"
@@ -76,11 +88,14 @@ def fetch_tile(z, x, y):
     n = 2 ** z
     if not (0 <= x < n and 0 <= y < n):
         return None
-    cache_path = CACHE_DIR / f"opentopomap-{z}-{x}-{y}.png"
+    provider = TILE_PROVIDERS[TILE_PROVIDER]
+    cache_name = "opentopomap" if TILE_PROVIDER == "opentopo" else TILE_PROVIDER
+    cache_path = CACHE_DIR / f"{cache_name}-{z}-{x}-{y}.png"
     if cache_path.exists():
         return Image.open(cache_path).convert("RGB")
-    subdomain = TILE_SUBDOMAINS[(x + y) % len(TILE_SUBDOMAINS)]
-    url = TILE_URL.format(s=subdomain, z=z, x=x, y=y)
+    subdomains = provider["subdomains"]
+    subdomain = subdomains[(x + y) % len(subdomains)]
+    url = provider["url"].format(s=subdomain, z=z, x=x, y=y)
     try:
         r = requests.get(url, headers={"User-Agent": USER_AGENT}, timeout=20)
         r.raise_for_status()
@@ -258,6 +273,11 @@ def render_map(config, config_path, output_path):
     waypoints = config["waypoints"]
     title = config.get("title", "")
 
+    global TILE_PROVIDER
+    TILE_PROVIDER = (config.get("tiles") or "opentopo").lower()
+    if TILE_PROVIDER not in TILE_PROVIDERS:
+        TILE_PROVIDER = "opentopo"
+
     print(f"Generating map: {title or '(untitled)'}")
     print(f"  Waypoints: {len(waypoints)}")
 
@@ -277,6 +297,7 @@ def render_map(config, config_path, output_path):
     bbox_points = [(w["lat"], w["lon"]) for w in waypoints]
     for s in segments:
         bbox_points.extend(s["coords"])
+    bbox_points.extend((c["lat"], c["lon"]) for c in config.get("cities", []))
     # Optional per-guide framing overrides: `padding:` loosens/tightens the
     # auto-fit margin (default 0.20), `zoom:` pins the level outright.
     zoom, bbox = best_zoom(bbox_points, padding=float(config.get("padding", 0.20)))
@@ -367,6 +388,27 @@ def render_map(config, config_path, output_path):
 
     points = waypoint_points  # markers go on waypoints, regardless of route source
 
+    # Context cities — dark dots with labelled white plates (template style).
+    # Config: `cities: [{name, lat, lon, label: left|right}]`. Not part of the
+    # route; purely for orientation on country-scale overview maps.
+    CITY_COLOR = "#3A3A3A"
+    city_font = find_font(20, bold=True)
+    for c in config.get("cities", []):
+        x, y = project(c["lat"], c["lon"])
+        r = 9
+        draw.ellipse((x - r - 2, y - r - 2, x + r + 2, y + r + 2), fill=WHITE)
+        draw.ellipse((x - r, y - r, x + r, y + r), fill=CITY_COLOR)
+        label = c["name"]
+        bb = draw.textbbox((0, 0), label, font=city_font)
+        tw, th = bb[2] - bb[0], bb[3] - bb[1]
+        if c.get("label", "left") == "right":
+            lx = x + r + 10
+        else:
+            lx = x - r - 10 - tw
+        ly = y - th // 2 - 4
+        draw.rectangle((lx - 6, ly - 2, lx + tw + 6, ly + th + 8), fill=WHITE)
+        draw.text((lx, ly), label, fill=TEXT, font=city_font)
+
     # Markers — small numbered dots, names go in the side legend
     marker_font = find_font(16, bold=True)
     marker_r = 13
@@ -419,7 +461,7 @@ def render_map(config, config_path, output_path):
             attr_lines.append(
                 "Route: Federal Roads Office, Canton, SwitzerlandMobility Foundation"
             )
-    attr_lines.append(ATTRIBUTION)
+    attr_lines.append(TILE_PROVIDERS[TILE_PROVIDER]["attribution"])
 
     attr_font = find_font(13, bold=False)
     disc_font = find_font(14, bold=True)

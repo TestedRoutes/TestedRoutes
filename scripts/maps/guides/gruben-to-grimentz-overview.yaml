@@ -1,0 +1,25 @@
+title: ""
+output: "../output/Gruben - Grimentz/gruben-to-grimentz-overview.png"
+padding: 0.04
+tiles: osm
+
+# Slide 7 "Getting there & back" country-context map.
+# Transport legs (train/bus) render dashed; the Gruben -> Grimentz walk
+# renders solid from the two stage GPX files. Return leg: Grimentz -> Sierre
+# by PostBus, then rail home.
+gpx:
+  - "../output/Gruben - Grimentz/hiking-in-switzerland-6-22.gpx"
+  - "../output/Gruben - Grimentz/hiking-in-switzerland-6-23.gpx"
+
+waypoints:
+  - {name: Zürich HB, lat: 47.378177, lon: 8.540192}
+  - {name: Visp, lat: 46.294029, lon: 7.881465, arrive_by: train}
+  - {name: Turtmann, lat: 46.297700, lon: 7.709600, arrive_by: train}
+  - {name: Gruben, lat: 46.211536, lon: 7.706014, arrive_by: bus}
+  - {name: Grimentz, lat: 46.180295, lon: 7.573834}
+  - {name: Sierre, lat: 46.292136, lon: 7.532721, arrive_by: bus}
+
+cities:
+  - {name: Bern, lat: 46.948090, lon: 7.447440}
+  - {name: Basel, lat: 47.559600, lon: 7.588600}
+  - {name: Genève, lat: 46.204390, lon: 6.143160, label: right}
