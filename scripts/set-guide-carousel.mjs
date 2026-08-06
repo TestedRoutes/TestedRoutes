@@ -147,6 +147,29 @@ if (!entries.length) {
   process.exit(1);
 }
 
+// Card standard gate (see CLAUDE.md): slides 1-2 are the A4 portrait
+// page-1/page-2 renders of the guide, shown whole on the browse card.
+// Catching a square or landscape export here beats discovering it on the
+// live card grid; --allow-shape skips the check when the shape is
+// deliberate.
+const ALLOW_SHAPE = args.includes("--allow-shape");
+for (const [i, f] of entries.slice(0, 2).entries()) {
+  if (!IMAGE_EXT.has(path.extname(f).toLowerCase())) {
+    console.error(`slide ${i + 1} (${f}) is not an image — slides 1-2 must be the page renders`);
+    process.exit(1);
+  }
+  const meta = await sharp(path.join(DIR, f)).metadata();
+  const ratio = meta.height / meta.width;
+  if ((ratio < 1.3 || ratio > 1.52) && !ALLOW_SHAPE) {
+    console.error(
+      `slide ${i + 1} (${f}) is ${meta.width}x${meta.height} (${ratio.toFixed(2)}:1), not A4 portrait (~1.41:1).\n` +
+        "Cards render slides 1-2 whole in the document treatment; export the page in A4, " +
+        "or re-render from the PDF with reexport-card-pages.mjs, or pass --allow-shape.",
+    );
+    process.exit(1);
+  }
+}
+
 console.log(`${entries.length} slide(s) in ${DIR}:`);
 for (const [i, f] of entries.entries()) {
   const meta = (ALT[DOC] || {})[f] || {};

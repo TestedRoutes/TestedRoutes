@@ -85,10 +85,16 @@ export default {
       title: "Cover artwork",
       type: "image",
       description:
-        "The guide cover, used as the sales-page lead image. Export of page 1 of the PDF.",
+        "The guide cover, used as the sales-page lead image. A4 portrait export of page 1 of the PDF — the same shape every guide uses, so the browse cards all read as the same product.",
       options: { hotspot: true },
       fields: [{ name: "alt", title: "Alt text", type: "string" }],
       hidden: ({ parent }) => !parent?.hasGuide,
+      validation: (Rule) =>
+        Rule.custom((value, context) => {
+          if (!context?.parent?.hasGuide) return true;
+          if (value?.asset) return true;
+          return "Guides need the cover artwork — it leads the sales page and sets the card treatment.";
+        }),
     },
     {
       name: "pages",
@@ -141,7 +147,7 @@ export default {
       title: "Sales carousel",
       type: "array",
       description:
-        "Slides shown on the guide sales page. Images render at display resolution only (max 1200px exports). The map slide must have QR codes and /go/ links removed before export. Filling this switches the guide page to the sales layout.",
+        "Slides shown on the guide sales page. Slides 1-2 must be the A4 portrait page-1/page-2 exports of the deck — cards lead with them rendered whole, like the Seychelles card. Images render at display resolution only (max 1200px exports). The map slide must have QR codes and /go/ links removed before export. Filling this switches the guide page to the sales layout.",
       of: [
         {
           type: "object",
@@ -162,6 +168,24 @@ export default {
         },
       ],
       hidden: ({ parent }) => !parent?.hasGuide,
+      validation: (Rule) => [
+        Rule.custom((slides, context) => {
+          if (!context?.parent?.hasGuide) return true;
+          if (!Array.isArray(slides) || !slides.length) return true;
+          if (slides[0]?.image?.asset?._ref) return true;
+          return "Slide 1 must be the deck's page-1 export (an image, not a clip) — cards lead with it.";
+        }),
+        // Sanity asset refs encode the pixel size (image-<id>-<w>x<h>-<ext>),
+        // so the shape can be checked without fetching the asset document.
+        Rule.warning().custom((slides) => {
+          const ref = Array.isArray(slides) ? slides[0]?.image?.asset?._ref : null;
+          const m = typeof ref === "string" ? ref.match(/-(\d+)x(\d+)-/) : null;
+          if (!m) return true;
+          const ratio = Number(m[2]) / Number(m[1]);
+          if (ratio >= 1.3 && ratio <= 1.5) return true;
+          return "Slide 1 is not an A4 portrait export (≈1:1.41), so this card will not match the standard inset-cover look. Re-export the deck's page 1 in A4 and replace the slide.";
+        }),
+      ],
     },
     {
       name: "sample",
