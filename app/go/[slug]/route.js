@@ -66,6 +66,74 @@ const CURATED = {
   "trift-map":
     "https://www.google.com/maps/d/viewer?mid=1aDbc_78_MSJ8geLTnmdW7FRQn_F4QBM",
 
+  // Simplon–Saas Fee weekend-hike guide — QR targets printed in the PDF:
+  // treat every slug as frozen.
+  "ssf-hotel": "https://www.alpenblick-gspon.ch/",
+  "ssf-sbb": "https://www.sbb.ch/en/offers/saver-day-pass",
+  "ssf-mob": "https://schweizmobil.ch/en/",
+  "ssf-bristol": "https://www.hotel-bristol-saas-fee.ch/en/",
+  "ssf-blackrock": "https://maps.app.goo.gl/FLUdPqwg6hmUexA38",
+  "ssf-killerhof": "https://maps.app.goo.gl/5xFsTgcM2RcT3XA19",
+  "ssf-gondola": "https://staldenried.ch/lssg/",
+  "ssf-parkrail": "https://www.sbb.ch/en/offers/car-parking",
+  "ssf-car": "https://www.sixt.ch/",
+  "ssf-meteo": "https://www.meteoswiss.admin.ch/",
+  "ssf-map":
+    "https://www.google.com/maps/d/viewer?mid=10U8OPYSeOVbggFoz9Fatkp1oYQbqCqc",
+
+  // Saas Fee–Gruben weekend-hike guide (Alpine Passes Trail stages 20+21)
+  // — QR targets printed in the PDF: treat every slug as frozen.
+  "sfg-hotel-graechen": "https://www.hotel-walliserhof.ch/",
+  "sfg-hotel-gruben": "https://www.hotelschwarzhorn.ch/",
+  "sfg-hotel-backup": "https://www.hannigalp.ch/",
+  "sfg-sbb": "https://www.sbb.ch/en/offers/saver-day-pass",
+  "sfg-parkrail": "https://www.sbb.ch/en/offers/car-parking",
+  "sfg-jungenbahn": "https://www.jungeralp.ch/jungenbahn",
+  "sfg-hannigalpbahn": "https://graechen.ch/en/Info-service/Lift-Info",
+  // turtmanntal.ch was rebuilt mid-2026; the old /site/gruben-meiden/anreise 404s.
+  "sfg-bus": "https://turtmanntal.ch/infocenter/",
+  "sfg-meteo": "https://www.meteoswiss.admin.ch/",
+  "sfg-mob": "https://schweizmobil.ch/en/",
+  "sfg-map":
+    "https://www.google.com/maps/d/viewer?mid=1qpEaRI_jwTY1bZRdgLCk6c6tBFsRhCI",
+
+  // Gruben–Grimentz weekend-hike guide (Alpine Passes Trail stages 22+23)
+  // — QR targets printed in the PDF: treat every slug as frozen.
+  "ggr-hotel": "https://www.weisshorn.ch/",
+  "ggr-hotel-gruben": "https://www.hotelschwarzhorn.ch/",
+  "ggr-hotel-backup": "https://cabanebellatola.ch/en/",
+  "ggr-hotel-stluc": "https://bellatola.ch/",
+  "ggr-sbb": "https://www.sbb.ch/en/offers/saver-day-pass",
+  "ggr-parkrail": "https://www.sbb.ch/en/offers/car-parking",
+  "ggr-funi": "https://tignousa.ch/en/practical-information/",
+  // turtmanntal.ch was rebuilt mid-2026; the old /site/gruben-meiden/anreise 404s.
+  // InfoCenter page hosts the current-year Bahn+Bus Fahrplan PDF and the phone number.
+  "ggr-bus": "https://turtmanntal.ch/infocenter/",
+  "ggr-meteo": "https://www.meteoswiss.admin.ch/",
+  "ggr-mob": "https://schweizmobil.ch/en/",
+  "ggr-map":
+    "https://www.google.com/maps/d/viewer?mid=1KO8J6IfOVZqT83JReUuIoaO7CN7EqzE",
+
+  // Grimentz–Evolène weekend-hike guide (Alpine Passes Trail stages 24+25)
+  // — QR targets printed in the PDF: treat every slug as frozen.
+  "gev-hut": "https://www.cabanedesbecs.ch/en/pages/18-tarifs-et-reservations",
+  "gev-sbb": "https://www.sbb.ch/en/offers/saver-day-pass",
+  "gev-parkrail": "https://www.sbb.ch/en/offers/car-parking",
+  // Official 2026 line-381 timetable PDF — URL changes each December;
+  // re-point when the new Jahresfahrplan is published.
+  "gev-bus": "https://widgets.oev-info.ch/publikation/jahresfpl/12.381.pdf",
+  "gev-meteo": "https://www.meteoswiss.admin.ch/",
+  "gev-mob": "https://schweizmobil.ch/en/",
+  "gev-gondola":
+    "https://bike-grimentz-zinal.ch/en/activities-in-anniviers/grimentzzinal/ski-lifts",
+  "gev-hotel-backup": "https://hotel-grimentz.ch/en/",
+  "gev-taverne":
+    "https://www.valdherens.ch/en/cafe-restaurant-la-taverne-evolenarde-fp31995",
+  "gev-hotel-evolene":
+    "https://www.valdherens.ch/en/hotel-restaurant-eden-fp45317",
+  "gev-map":
+    "https://www.google.com/maps/d/viewer?mid=1NlXJH6zVRjVrZNJ6ehuEuC5SFQnfGA8",
+
   // "podcast": buildUtmUrl(`${SITE_ORIGIN}/subscribe`, {
   //   source: "shortlink", medium: "podcast", campaign: "podcast-mention-2026",
   // }),

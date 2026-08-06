@@ -48,44 +48,57 @@ const MAX_EDGE = 1600;
 // exports get one so a buyer knows they are seeing inside the product; the
 // trip photos speak for themselves.
 const ALT = {
-  "1. cover.jpg": {
-    alt: "Cover of the Seychelles seven-day island route guide",
-    caption: "The guide",
+  // Keys are scoped per doc id: the same natural filename ("1. cover.jpg")
+  // can exist in every guide folder without captions bleeding across guides.
+  "story-seychelles-1-week": {
+    "1. cover.jpg": { alt: "Cover of the Seychelles seven-day island route guide" },
+    "2. snapshot.jpg": { alt: "Route snapshot page: pace, difficulty, season and what to expect" },
+    "3 route.jpg": { alt: "Route map across Mahé, Praslin, Curieuse and La Digue" },
+    "4. sunset.mp4": { alt: "Sunset over the Indian Ocean, filmed on the route" },
+    "5. sample-day.jpg": { alt: "A day page from the guide, timed from morning to evening" },
+    "6.jpg": { alt: "Sunset through palm fronds on a Seychelles beach" },
+    "7.jpg": { alt: "Dusk on the beach with a catamaran anchored offshore and a crescent moon" },
+    "8.jpg": { alt: "The granite islet of St. Pierre in turquoise water off Praslin" },
+    "9.mp4": { alt: "Clear water off the islands, filmed on the route" },
+    "10.jpg": { alt: "Granite boulders and a leaning palm on Anse Source d'Argent, La Digue" },
   },
-  "2. snapshot.jpg": {
-    alt: "Route snapshot page: pace, difficulty, season and what to expect",
-    caption: "Route snapshot",
+  "story-triftbrucke-from-zurich": {
+    "1. cover.jpg": { alt: "Cover of the Triftbrücke day-trip guide" },
+    "2. snapshot.jpg": { alt: "Route snapshot page: effort, difficulty, season and what to expect" },
+    "3. Clip.mp4": { alt: "Crossing the Triftbrücke, filmed on the route" },
+    "4. bridge.jpg": { alt: "The 170 m Triftbrücke spanning the Trift gorge" },
+    "5. clip.mp4": { alt: "On the trail above the Trift gorge, filmed on the route" },
+    "6. triftsee.jpg": { alt: "Turquoise Triftsee below the gorge cliffs" },
+    "7. forest-trail.jpg": { alt: "Mossy forest trail on the lower ascent" },
+    "8. ascent.jpg": { alt: "The rocky trail climbing toward snowy peaks above the Trift valley" },
   },
-  "3 route.jpg": {
-    alt: "Route map across Mahé, Praslin, Curieuse and La Digue",
-    caption: "The route, mapped",
+  "story-saas-fee-to-gruben": {
+    "1. cover.jpg": { alt: "Cover of the Saas Fee to Gruben weekend-hike guide" },
+    "2. snapshot.jpg": { alt: "Route snapshot page: distance, ascent, difficulty and season at a glance" },
+    "3. ring.jpg": { alt: "The What-a-beautiful-place ring in Saas-Fee at the start of Stage 20" },
+    "4. clip.mp4": { alt: "On the balcony trail high above the Saastal, filmed on the route" },
+    "5.jpg": { alt: "Descending a wire-rope secured rock step on the Day 1 ledges" },
+    "6.jpg": { alt: "The bench above the Mattertal, Weisshorn views ahead on Day 1" },
+    "7. lake.jpg": { alt: "The swimming lake at Grächen at the end of Day 1" },
+    "8. clip.mp4": { alt: "Above the valley on the traverse, filmed on the route" },
+    "9. clip.mp4": { alt: "Fireweed meadows on the descent into the Turtmanntal, filmed on the route" },
+    "10.jpg": { alt: "The signpost cairn on the Augstbordpass at 2,892 m" },
+    "11.jpg": { alt: "Descending the high moraine valley from the Augstbordpass on Day 2" },
+    "12.jpg": { alt: "Grächen on its sun terrace, the overnight stop" },
+    "13.jpg": { alt: "Looking down the valley from the trail above Grächen on Day 2" },
   },
-  "4. sunset.mp4": { alt: "Sunset over the Indian Ocean, filmed on the route" },
-  "5. sample-day.jpg": {
-    alt: "A day page from the guide, timed from morning to evening",
-    caption: "A day, hour by hour",
+  "story-simplon-pass-to-saas-fee": {
+    "1. simplon-guide-cover.png": { alt: "Cover of the Simplon Pass to Saas Fee weekend-hike guide" },
+    "2. simplon-route-snapshot.png": { alt: "Route snapshot page: distance, ascent, difficulty and season at a glance" },
+    "3. simplon-trail-cairn.jpg": { alt: "A hiker passes a stone cairn on the high traverse between Simplon Pass and Gspon" },
+    "4. simplon-hospiz-pond.jpg": { alt: "Simplon Pass at the start: the Hospiz across the meadows, seen from a small pond" },
+    "5. simplon-on-the-trail.mp4": { alt: "On the trail between Simplon Pass and Saas-Fee, filmed on the route" },
+    "6. simplon-saastal-ledge.jpg": { alt: "Above the Saas Valley on Day 2, glaciers across the valley" },
+    "7. simplon-gspon-balcony.jpg": { alt: "The Gspon balcony: a pennant over the drop to the Vispa valley" },
+    "8. simplon-saas-fee-glacier.jpg": { alt: "Saas-Fee under the Fee Glacier at the end of Day 2" },
+    "9. simplon-saas-fee-gorge.jpg": { alt: "The gorge tower at the entrance to Saas-Fee, glaciers above" },
+    "10. simplon-eagle-monument.jpg": { alt: "The stone monument on Simplon Pass, minutes from the Hospiz" },
   },
-  "6.jpg": { alt: "Sunset through palm fronds on a Seychelles beach" },
-  "7.jpg": { alt: "Dusk on the beach with a catamaran anchored offshore and a crescent moon" },
-  "8.jpg": { alt: "The granite islet of St. Pierre in turquoise water off Praslin" },
-  "9.mp4": { alt: "Clear water off the islands, filmed on the route" },
-  "10.jpg": { alt: "Granite boulders and a leaning palm on Anse Source d'Argent, La Digue" },
-
-  // Triftbrücke day trip
-  "1. clip.mp4": { alt: "Crossing the Triftbrücke, filmed on the route" },
-  "2. cover.jpg": {
-    alt: "Cover of the Triftbrücke day-trip guide",
-    caption: "The guide",
-  },
-  "3. snapshot.jpg": {
-    alt: "Route snapshot page: effort, difficulty, season and what to expect",
-    caption: "Route snapshot",
-  },
-  "4. bridge.jpg": { alt: "The 170 m Triftbrücke spanning the Trift gorge" },
-  "5. clip.mp4": { alt: "On the trail above the Trift gorge, filmed on the route" },
-  "6. triftsee.jpg": { alt: "Turquoise Triftsee below the gorge cliffs" },
-  "7. forest-trail.jpg": { alt: "Mossy forest trail on the lower ascent" },
-  "8. ascent.jpg": { alt: "The rocky trail climbing toward snowy peaks above the Trift valley" },
 };
 
 const client = createClient({
@@ -119,7 +132,7 @@ if (!entries.length) {
 
 console.log(`${entries.length} slide(s) in ${DIR}:`);
 for (const [i, f] of entries.entries()) {
-  const meta = ALT[f] || {};
+  const meta = (ALT[DOC] || {})[f] || {};
   console.log(
     `  ${String(i + 1).padStart(2)}. ${f.padEnd(20)} ${VIDEO_EXT.has(path.extname(f).toLowerCase()) ? "video" : "image"}${meta.alt ? "" : "   (no alt text — using guide title)"}`,
   );
@@ -136,7 +149,7 @@ const slides = [];
 for (const file of entries) {
   const src = path.join(DIR, file);
   const ext = path.extname(file).toLowerCase();
-  const meta = ALT[file] || {};
+  const meta = (ALT[DOC] || {})[file] || {};
   const isVideo = VIDEO_EXT.has(ext);
 
   let asset;
