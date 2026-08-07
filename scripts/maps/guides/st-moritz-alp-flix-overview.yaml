@@ -1,0 +1,24 @@
+title: ""
+output: "../output/St Moritz - Alp Flix/st-moritz-alp-flix-overview.png"
+padding: 0.04
+tiles: osm
+
+# Slide "Getting there & back" country-context map.
+# Transport legs (train/bus) render dashed; the Corviglia -> Alp Flix walk
+# renders solid from the two stage GPX files. Exit chain: Bus Alpin down to
+# Sur, PostBus 182 to Tiefencastel, RhB home.
+gpx:
+  - "../output/St Moritz - Alp Flix/hiking-in-switzerland-6-1.gpx"
+  - "../output/St Moritz - Alp Flix/hiking-in-switzerland-6-2.gpx"
+
+waypoints:
+  - {name: Zürich HB, lat: 47.378177, lon: 8.540192}
+  - {name: St. Moritz, lat: 46.498200, lon: 9.839000, arrive_by: train}
+  - {name: Alp Flix, lat: 46.521625, lon: 9.655481}
+  - {name: Sur, lat: 46.521123, lon: 9.631054, arrive_by: bus}
+  - {name: Tiefencastel, lat: 46.664047, lon: 9.572498, arrive_by: bus}
+
+cities:
+  - {name: Bern, lat: 46.948090, lon: 7.447440}
+  - {name: Basel, lat: 47.559600, lon: 7.588600}
+  - {name: Genève, lat: 46.204390, lon: 6.143160, label: right}

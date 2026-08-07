@@ -134,6 +134,64 @@ const CURATED = {
   "gev-map":
     "https://www.google.com/maps/d/viewer?mid=1NlXJH6zVRjVrZNJ6ehuEuC5SFQnfGA8",
 
+  // Switzerland-evergreen QR targets, shared across all guides from the
+  // stages 1-6 builds onward (founder decision 2026-08-07). One QR asset,
+  // one slug, every Swiss deck. Earlier guides (ssf/sfg/ggr/gev) keep
+  // their per-guide slugs — those PDFs are printed and frozen.
+  "ch-sbb": "https://www.sbb.ch/en/offers/saver-day-pass",
+  "ch-parkrail": "https://www.sbb.ch/en/offers/car-parking",
+  "ch-meteo": "https://www.meteoswiss.admin.ch/",
+  "ch-mob": "https://schweizmobil.ch/en/",
+
+  // St. Moritz–Alp Flix weekend-hike guide (Alpine Passes Trail stages 1+2)
+  // — QR targets printed in the PDF: treat every slug as frozen.
+  "sma-hut": "https://www.chamannajenatsch.ch/en/online-reservation/",
+  // Bus Alpin shuttle Sur ⇄ Alp Flix (line 90.188) — season page with times.
+  "sma-bus": "https://busalpin.ch/regionen/alp-flix/sommer/",
+  // Official 2026 line-182 (Julier PostBus) timetable PDF — URL changes each
+  // December; re-point when the new Jahresfahrplan is published.
+  "sma-postbus": "https://widgets.oev-info.ch/publikation/jahresfpl/90.182.pdf",
+  // Corviglia funicular is closed summer 2026: lift access is the Signal
+  // cable car from St. Moritz Bad — tickets page covers fares + times.
+  "sma-lift": "https://www.mountains.ch/en/tickets/",
+  "sma-hotel-backup": "https://www.flix.ch/",
+  "sma-stmoritz": "https://www.stmoritz.com/en/",
+  "sma-map":
+    "https://www.google.com/maps/d/viewer?mid=1vmowovap0e53bU-ZX6PKMkQCUUUvXVA",
+
+  // Alp Flix–Ausserferrera weekend-hike guide (Alpine Passes Trail stages 3+4)
+  // — QR targets printed in the PDF: treat every slug as frozen.
+  // pizmitgel.ch was unreachable at build time (2026-08-07) — the official
+  // Val Surses listing page is the stable target.
+  "afa-hotel": "https://www.valsurses.ch/en/hotel-piz-mitgel",
+  "afa-alp": "https://alp-derr.ch/",
+  // Official 2026 line-552 (Juf–Andeer PostBus) timetable PDF — URL changes
+  // each December; re-point when the new Jahresfahrplan is published.
+  "afa-bus": "https://widgets.oev-info.ch/publikation/jahresfpl/90.552.pdf",
+  // Bus Alpin shuttle Sur ⇄ Alp Flix (line 90.188) — season page with times.
+  "afa-shuttle": "https://busalpin.ch/regionen/alp-flix/sommer/",
+  "afa-hotel-backup": "https://www.valsurses.ch/en/hotel-restaurant-aves",
+  "afa-edelweiss": "https://www.valferrera.com/",
+  "afa-taverna": "https://www.pizzeriataverna.ch/",
+  "afa-map":
+    "https://www.google.com/maps/d/viewer?mid=12Lj_wGJrJ9aL0r-5IGYzxl2PWwyhGHY",
+
+  // Ausserferrera–Turra weekend-hike guide (Alpine Passes Trail stages 5+6)
+  // — QR targets printed in the PDF: treat every slug as frozen.
+  "atu-hotel": "https://www.hotel-bodenhaus.ch/",
+  "atu-turrahus": "https://www.turrahus.ch/",
+  // Official 2026 line-401 (Safiental PostBus) timetable PDF — URL changes
+  // each December; re-point when the new Jahresfahrplan is published.
+  "atu-bus": "https://widgets.oev-info.ch/publikation/jahresfpl/90.401.pdf",
+  // Wanderbus Splügen–Alp Stutz (reservation required) — Beverin park page.
+  "atu-wanderbus": "https://naturpark-beverin.ch/de/wanderbus",
+  // piz-tambo.ch was unreachable at build time (2026-08-07) — regional
+  // accommodation directory is the stable backup-beds target.
+  "atu-hotel-backup": "https://en.viamala.ch/accommodation",
+  "atu-volg": "https://www.volg.ch/standorte-oeffnungszeiten/",
+  "atu-map":
+    "https://www.google.com/maps/d/viewer?mid=1b-S1EZldvz5kJ0849lKsB-niJipJPrk",
+
   // "podcast": buildUtmUrl(`${SITE_ORIGIN}/subscribe`, {
   //   source: "shortlink", medium: "podcast", campaign: "podcast-mention-2026",
   // }),

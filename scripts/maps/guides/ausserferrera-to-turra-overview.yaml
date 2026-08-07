@@ -1,0 +1,23 @@
+title: ""
+output: "../output/Ausserferrera - Turra/ausserferrera-to-turra-overview.png"
+padding: 0.04
+tiles: osm
+
+# Slide "Getting there & back" country-context map.
+# In: train to Chur, PostBus 171 + 552 via Andeer to Ausserferrera.
+# Out: PostBus 401 down the Safiental to Versam-Safien, RhB to Chur.
+gpx:
+  - "../output/Ausserferrera - Turra/hiking-in-switzerland-6-5.gpx"
+  - "../output/Ausserferrera - Turra/hiking-in-switzerland-6-6.gpx"
+
+waypoints:
+  - {name: Zürich HB, lat: 47.378177, lon: 8.540192}
+  - {name: Chur, lat: 46.853556, lon: 9.529646, arrive_by: train}
+  - {name: Ausserferrera, lat: 46.556570, lon: 9.439340, arrive_by: bus}
+  - {name: Turrahus, lat: 46.624660, lon: 9.275965}
+  - {name: Versam-Safien, lat: 46.807292, lon: 9.310341, arrive_by: bus}
+
+cities:
+  - {name: Bern, lat: 46.948090, lon: 7.447440}
+  - {name: Basel, lat: 47.559600, lon: 7.588600}
+  - {name: Genève, lat: 46.204390, lon: 6.143160, label: right}

@@ -1,0 +1,23 @@
+title: ""
+output: "../output/Alp Flix - Ausserferrera/alp-flix-to-ausserferrera-overview.png"
+padding: 0.04
+tiles: osm
+
+# Slide "Getting there & back" country-context map.
+# In: train to Thusis, PostBus to Sur, Bus Alpin shuttle up to the plateau.
+# Out: PostBus 552 Ausserferrera -> Andeer, on to Thusis/Chur by bus+rail.
+gpx:
+  - "../output/Alp Flix - Ausserferrera/hiking-in-switzerland-6-3.gpx"
+  - "../output/Alp Flix - Ausserferrera/hiking-in-switzerland-6-4.gpx"
+
+waypoints:
+  - {name: Zürich HB, lat: 47.378177, lon: 8.540192}
+  - {name: Thusis, lat: 46.698237, lon: 9.440516, arrive_by: train}
+  - {name: Alp Flix, lat: 46.521625, lon: 9.655481, arrive_by: bus}
+  - {name: Ausserferrera, lat: 46.556570, lon: 9.439340}
+  - {name: Andeer, lat: 46.602267, lon: 9.426968, arrive_by: bus}
+
+cities:
+  - {name: Bern, lat: 46.948090, lon: 7.447440}
+  - {name: Basel, lat: 47.559600, lon: 7.588600}
+  - {name: Genève, lat: 46.204390, lon: 6.143160, label: right}

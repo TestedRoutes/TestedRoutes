@@ -247,6 +247,16 @@ def clip_start(name):
     return float(m.group(1)) if m else 0.5
 
 
+def clip_duration(name, start):
+    """Cut length in seconds, capped at 7. "..._1 until sec 6.mp4" means the
+    clip must END at 6s, so the duration is 6 minus the start (founder
+    convention added 2026-08-07 alongside "from sec")."""
+    m = re.search(r"until\s*(?:sec\w*\s*)?(\d+(?:\.\d+)?)", name, re.IGNORECASE)
+    if m:
+        return max(0.5, min(7.0, float(m.group(1)) - start))
+    return 7.0
+
+
 def cut_clips(folder, story_id, ffmpeg, force=False):
     """7s muted clip per source video, named after its master so the _{n}-
     slot number survives into generated/. Returns [(name, slot), ...] in
@@ -266,7 +276,8 @@ def cut_clips(folder, story_id, ffmpeg, force=False):
         dst = folder / "generated" / (vid.stem + ".mp4")
         if force or not dst.exists() or dst.stat().st_mtime < vid.stat().st_mtime:
             cmd = [
-                ffmpeg, "-y", "-v", "error", "-ss", str(clip_start(vid.stem)), "-t", "7", "-i", str(vid),
+                ffmpeg, "-y", "-v", "error", "-ss", str(clip_start(vid.stem)),
+                "-t", str(clip_duration(vid.stem, clip_start(vid.stem))), "-i", str(vid),
                 "-vf", scale, "-c:v", "libx264", "-preset", "slow",
                 "-crf", "23", "-profile:v", "high", "-level", "4.1",
                 "-maxrate", "5M", "-bufsize", "10M",
