@@ -158,10 +158,37 @@ def find_story_folder(story_id):
     return Path(hits[0]) if hits else None
 
 
+def _wtext(fragment):
+    """Joined visible text of a docx XML fragment."""
+    text = "".join(
+        m.group(1) for m in re.finditer(r"<w:t(?:\s[^>]*)?>(.*?)</w:t>", fragment, re.S)
+    )
+    return (
+        text.replace("&amp;", "&").replace("&lt;", "<").replace("&gt;", ">")
+        .replace("&apos;", "'").replace("&quot;", '"').strip()
+    )
+
+
 def extract_docx(docx_path, plan_title):
     """Return (docx_meta: dict, body_markdown: str)."""
     with zipfile.ZipFile(docx_path) as z:
         xml = z.read("word/document.xml").decode("utf-8", errors="ignore")
+
+    # Newer story drafts carry the metadata as a two-column TABLE (key cell,
+    # value cell) instead of "key: value" lines. Harvest those pairs, then
+    # strip every table from the XML so its cells never reach the body -
+    # story bodies are prose, so tables are metadata by construction.
+    meta = {}
+    def harvest_table(tm):
+        for rm in re.finditer(r"<w:tr[ >].*?</w:tr>", tm.group(0), re.S):
+            cells = [_wtext(c.group(0)) for c in re.finditer(r"<w:tc[ >].*?</w:tc>", rm.group(0), re.S)]
+            if len(cells) >= 2:
+                key = re.sub(r"[^a-z_]", "_", cells[0].strip().lower().replace(" ", "_"))
+                if key in DOCX_META_KEYS:
+                    meta[key] = cells[1].strip()
+        return ""
+    xml = re.sub(r"<w:tbl[ >].*?</w:tbl>", harvest_table, xml, flags=re.S)
+
     paras = []
     for pm in re.finditer(r"<w:p[ >].*?</w:p>", xml, re.S):
         block = pm.group(0)
@@ -179,16 +206,29 @@ def extract_docx(docx_path, plan_title):
         if text:
             paras.append(text)
 
-    meta = {}
     body = []
+    key_pending = None  # bare meta key waiting for its value paragraph
     for p in paras:
         # Header region (before the first real paragraph): consume meta
         # keys and drop template noise. Once the body starts, everything
         # is story text.
         if not body:
+            if key_pending:
+                meta[key_pending] = p.strip()
+                key_pending = None
+                continue
             km = re.match(r"^([a-z_]+):\s*(.*)$", p)
             if km and km.group(1) in DOCX_META_KEYS:
                 meta[km.group(1)] = km.group(2).strip()
+                continue
+            # A paragraph that IS a bare meta key (metadata laid out as
+            # alternating key/value paragraphs rather than a table).
+            bare = re.sub(r"[^a-z_]", "_", p.strip().lower().replace(" ", "_"))
+            if bare in DOCX_META_KEYS:
+                key_pending = bare
+                continue
+            # The draft template's document heading.
+            if re.match(r"^testedroutes\s*[-–]\s*inspire story", p.strip(), re.I):
                 continue
             if NOISE_LINE.match(p.strip()):
                 continue
