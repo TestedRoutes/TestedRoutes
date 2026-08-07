@@ -1,0 +1,29 @@
+title: "Ausserferrera to Turra"
+output: "../output/Ausserferrera - Turra/ausserferrera-to-turra.png"
+
+# Combined map uses both GPX files concatenated.
+gpx:
+  - "../output/Ausserferrera - Turra/hiking-in-switzerland-6-5.gpx"
+  - "../output/Ausserferrera - Turra/hiking-in-switzerland-6-6.gpx"
+
+# Stages 5 & 6 of the Alpine Passes Trail. Safierberg coordinate from the
+# GPX high point (2,486 m); named alps verified via Overpass (all <70 m
+# from the track).
+waypoints:
+  - {name: Ausserferrera,  lat: 46.556570, lon: 9.439340}
+  - {name: Alp Nursera,    lat: 46.556587, lon: 9.422202}
+  - {name: Schwarzwaldalp, lat: 46.558316, lon: 9.394832}
+  - {name: Splügen,        lat: 46.554330, lon: 9.322620}
+  - {name: Stutzalp,       lat: 46.567009, lon: 9.303404}
+  - {name: Safierberg,     lat: 46.578345, lon: 9.264791}
+  - {name: Turrahus,       lat: 46.624660, lon: 9.275965}
+
+# Per-stage profiles. GPX is the source of truth for ascent/descent
+# (founder rule, 2026-08-04): deck copy uses these footer numbers verbatim.
+profiles:
+  - title: "Day 1: Ausserferrera to Splügen"
+    gpx: "../output/Ausserferrera - Turra/hiking-in-switzerland-6-5.gpx"
+    output: "../output/Ausserferrera - Turra/ausserferrera-to-turra-stage1-profile.png"
+  - title: "Day 2: Splügen to Turrahus"
+    gpx: "../output/Ausserferrera - Turra/hiking-in-switzerland-6-6.gpx"
+    output: "../output/Ausserferrera - Turra/ausserferrera-to-turra-stage2-profile.png"

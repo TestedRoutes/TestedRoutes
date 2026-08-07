@@ -1,0 +1,31 @@
+title: "Alp Flix to Ausserferrera"
+output: "../output/Alp Flix - Ausserferrera/alp-flix-to-ausserferrera.png"
+
+# Combined map uses both GPX files concatenated.
+gpx:
+  - "../output/Alp Flix - Ausserferrera/hiking-in-switzerland-6-3.gpx"
+  - "../output/Alp Flix - Ausserferrera/hiking-in-switzerland-6-4.gpx"
+
+# Stages 3 & 4 of the Alpine Passes Trail. Pass coordinates extracted from
+# GPX trackpoints; named places verified via Overpass (min-dist to track
+# <70 m except Alp d'Err: the tavern sits 384 m off the trail in Val d'Err
+# - real position kept, Extra-vs-Route evidence for the master).
+waypoints:
+  - {name: Alp Flix, Tigias,   lat: 46.521625, lon: 9.655481}
+  - {name: Furschela da Colm,  lat: 46.555433, lon: 9.659785}
+  - {name: Alp d'Err,          lat: 46.571728, lon: 9.693099}
+  - {name: Savognin,           lat: 46.594800, lon: 9.593810}
+  - {name: Radons,             lat: 46.559869, lon: 9.554419}
+  - {name: Pass da Schmorras,  lat: 46.553847, lon: 9.498854}
+  - {name: Alp Mos,            lat: 46.547533, lon: 9.485279}
+  - {name: Ausserferrera,      lat: 46.556570, lon: 9.439340}
+
+# Per-stage profiles. GPX is the source of truth for ascent/descent
+# (founder rule, 2026-08-04): deck copy uses these footer numbers verbatim.
+profiles:
+  - title: "Day 1: Alp Flix to Savognin"
+    gpx: "../output/Alp Flix - Ausserferrera/hiking-in-switzerland-6-3.gpx"
+    output: "../output/Alp Flix - Ausserferrera/alp-flix-to-ausserferrera-stage1-profile.png"
+  - title: "Day 2: Savognin to Ausserferrera"
+    gpx: "../output/Alp Flix - Ausserferrera/hiking-in-switzerland-6-4.gpx"
+    output: "../output/Alp Flix - Ausserferrera/alp-flix-to-ausserferrera-stage2-profile.png"
