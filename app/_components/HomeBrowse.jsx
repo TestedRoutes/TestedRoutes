@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useEffect, useMemo, useRef, useState } from "react";
 import GuideFilterRow from "./GuideFilterRow";
 import GuideListCard from "../(site)/guides/GuideListCard";
+import { prettyGeo } from "../_lib/continents";
 import {
   buildGuideFilterOptions,
   matchesGuideFilters,
@@ -52,11 +53,32 @@ export default function HomeBrowse({ cards = [], t }) {
   };
 
   const options = useMemo(() => buildGuideFilterOptions(cards), [cards]);
+  // Country tabs (founder mockup 2026-08-08): "All countries" plus one tab
+  // per country with guides, ordered by guide count. The tabs drive the
+  // same state as the Country dropdown below, so the two always agree.
+  const countryTabs = useMemo(() => {
+    const counts = new Map();
+    for (const c of cards) {
+      const country = prettyGeo(c.metadata?.geography?.country);
+      if (!country) continue;
+      counts.set(country, (counts.get(country) || 0) + 1);
+    }
+    return [...counts.entries()]
+      .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]))
+      .map(([country]) => country);
+  }, [cards]);
   const filtered = useMemo(
     () =>
       cards.filter((c) => matchesCategory(c, activeCategory) && matchesGuideFilters(c, filters)),
     [cards, activeCategory, filters],
   );
+
+  const tabClass = (active) =>
+    `-mb-px shrink-0 border-b-2 pb-3 font-sans text-base font-bold transition-colors ${
+      active
+        ? "border-brand-terracotta text-brand-ink"
+        : "border-transparent text-slate-400 hover:text-slate-600"
+    }`;
 
   return (
     <div className="space-y-10">
@@ -75,6 +97,29 @@ export default function HomeBrowse({ cards = [], t }) {
               <span className="sr-only">Clear category filter</span>
             </button>
           ) : null}
+          <div className="border-b border-brand-line">
+            <div className="flex gap-6 overflow-x-auto [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+              <button
+                type="button"
+                onClick={() => setFilter("country", "")}
+                className={tabClass(filters.country === "")}
+              >
+                All countries
+              </button>
+              {countryTabs.map((country) => (
+                <button
+                  key={country}
+                  type="button"
+                  onClick={() =>
+                    setFilter("country", filters.country === country ? "" : country)
+                  }
+                  className={tabClass(filters.country === country)}
+                >
+                  {country}
+                </button>
+              ))}
+            </div>
+          </div>
           <GuideFilterRow options={options} filters={filters} onChange={setFilter} tl={t}>
             <Link
               href="/guides"
