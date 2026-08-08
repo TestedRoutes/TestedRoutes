@@ -1,4 +1,7 @@
 import Link from "next/link";
+import Image from "next/image";
+// Filename casing matters: Vercel builds on a case-sensitive filesystem.
+import inspireHero from "../../../content/about/Inspire-hero.jpg";
 import { loadInspireStories } from "../../_lib/loadInspireStories";
 import { fetchStoryCount } from "../../_lib/sanityStory";
 import {
@@ -11,7 +14,6 @@ import {
 import { LOCALES, getDict, localePath } from "../../_lib/i18n";
 import { continentSlug, prettyGeo } from "../../_lib/continents";
 import InspireBrowse from "./InspireBrowse";
-import { getCategoryItems } from "../../_lib/categoryPills";
 
 const EN_DESCRIPTION =
   "Travel stories and journey ideas from 15 years of independent trips across 140 countries – the field work behind every guide.";
@@ -123,14 +125,34 @@ export default async function InspireIndexPage({ lang = "en", continent = "" }) 
   return (
     // Flat Parchment here instead of the site's Bone-to-Parchment wash: the
     // card grid reads cleaner against one tone than against a gradient.
-    <main className="min-h-screen w-full bg-brand-parchment pb-16 pt-12 text-slate-900 md:pt-16">
-      <div className="mx-auto flex w-full min-w-0 max-w-7xl flex-col gap-10 px-6">
-        <div className="space-y-2 text-center">
-          <h1 className="font-serif font-normal leading-[1.1] text-brand-ink text-2xl md:text-[26px] lg:text-5xl">
+    <main className="min-h-screen w-full bg-brand-parchment pb-16 text-slate-900">
+      {/* Short photo band (founder 2026-08-08: ~200px, deliberately not a
+          full-screen hero) — the Mauritania iron-ore train ride. The crop
+          keeps the riders in frame; the scrim floors the title against the
+          bright sky. */}
+      <section className="relative h-[200px] w-full overflow-hidden md:h-[220px]">
+        <Image
+          src={inspireHero}
+          alt="Riding the iron-ore train through the Sahara, Mauritania"
+          fill
+          priority
+          placeholder="blur"
+          quality={75}
+          sizes="100vw"
+          className="object-cover object-[50%_32%]"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-brand-ink/75 via-brand-ink/25 to-transparent" />
+        <div className="relative mx-auto flex h-full w-full max-w-7xl flex-col justify-end px-6 pb-5">
+          <h1 className="font-serif font-normal leading-[1.1] text-white text-3xl md:text-5xl">
             {t.title}
           </h1>
-          <p className="font-serif text-sm font-light text-slate-600 md:text-2xl">{t.subtitle}</p>
+          <p className="mt-1 font-serif text-sm font-light text-white/85 md:text-2xl">
+            {t.subtitle}
+          </p>
         </div>
+      </section>
+
+      <div className="mx-auto flex w-full min-w-0 max-w-7xl flex-col gap-10 px-6 pt-10 md:pt-12">
 
         {lang !== "en" && cards.length === 0 ? (
           <div className="mx-auto w-full max-w-xl rounded-3xl border border-dashed border-slate-300/70 bg-white px-6 py-10 text-center shadow-sm ring-1 ring-slate-200/60">
@@ -148,7 +170,6 @@ export default async function InspireIndexPage({ lang = "en", continent = "" }) 
         ) : (
           <InspireBrowse
             cards={cards}
-            categoryItems={getCategoryItems()}
             lang={lang}
             initialContinent={activeContinent}
             initialContinentLabel={prettyGeo(activeContinent)}
