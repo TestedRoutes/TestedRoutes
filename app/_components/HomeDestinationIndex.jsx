@@ -18,10 +18,11 @@ export default function HomeDestinationIndex({ continents = [] }) {
           founder 2026-08-08) underneath. A handwriting face needs its own
           case and spacing, so the uppercase + wide tracking come off. */}
       <div className="space-y-3 text-center">
-        <h2 className="font-serif font-light leading-tight text-brand-ink text-3xl md:text-5xl lg:text-[72px]">
+        {/* White on the Taupe band (founder 2026-08-08). */}
+        <h2 className="font-serif font-light leading-tight text-white text-3xl md:text-5xl lg:text-[72px]">
           Browse by destination
         </h2>
-        <p className="font-script text-[32px] leading-tight text-slate-500">
+        <p className="font-script text-[32px] leading-tight text-white/85">
           Have you been here before?
         </p>
       </div>

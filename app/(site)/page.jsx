@@ -75,7 +75,11 @@ export default async function HomePage() {
     <main className="flex w-full flex-col">
       <HomeHero guides={searchableGuides} />
 
-      <section className="mx-auto w-full max-w-7xl px-6 pb-16 pt-16 md:pt-20">
+      {/* pb matches the grid's internal space-y-6, so the break from the
+          Recently-added row into the taupe destination band below reads the
+          same as the break into the Choose-your-adventure band above
+          (founder 2026-08-08). */}
+      <section className="mx-auto w-full max-w-7xl px-6 pb-6 pt-16 md:pt-20">
         <div className="mb-10 space-y-3 text-center">
           {/* Fraunces 72pt Supersoft Light (globals.css) at 54pt = 72px. */}
           <h2 className="font-serif font-light leading-tight text-brand-ink text-3xl md:text-5xl lg:text-[72px]">
@@ -113,9 +117,15 @@ export default async function HomePage() {
         />
       </section>
 
-      <div className="mx-auto flex w-full max-w-7xl flex-col gap-16 px-6 py-16 md:gap-20 md:py-24">
-        <HomeDestinationIndex continents={guideGeo} />
+      {/* Browse-by-destination on a full-width Taupe Grey #5F524D band
+          (founder 2026-08-08), like the Choose-your-adventure band above. */}
+      <section className="w-full bg-brand-taupe py-12 md:py-16">
+        <div className="mx-auto w-full max-w-7xl px-6">
+          <HomeDestinationIndex continents={guideGeo} />
+        </div>
+      </section>
 
+      <div className="mx-auto flex w-full max-w-7xl flex-col gap-16 px-6 py-16 md:gap-20 md:py-24">
         {/* About band (founder mockup 2026-08-08, v2 — replaces the
             scrapbook layout from earlier the same day): a wide on-the-road
             photo with the heading over it, then the intro paragraph and

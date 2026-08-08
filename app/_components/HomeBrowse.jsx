@@ -126,8 +126,8 @@ export default function HomeBrowse({ cards = [], t, interlude = null }) {
               </div>
               {interlude}
               <div className="flex items-baseline justify-between gap-4">
-                {/* DM Sans Regular (founder 2026-08-08). */}
-                <h3 className="font-sans text-xl font-normal text-brand-ink md:text-2xl">
+                {/* DM Sans Bold (founder 2026-08-08). */}
+                <h3 className="font-sans text-xl font-bold text-brand-ink md:text-2xl">
                   Recently added guides
                 </h3>
                 <Link
