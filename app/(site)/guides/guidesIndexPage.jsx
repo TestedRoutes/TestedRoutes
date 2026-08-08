@@ -71,7 +71,10 @@ export default async function GuidesIndexPage({ lang = "en", q = "" }) {
   );
 
   return (
-    <main className="mx-auto flex max-w-7xl flex-col gap-10 px-6 pb-16 pt-12 md:pt-16">
+    // overflow-x-clip: the How-I-test band breaks out to w-screen, which
+    // includes the scrollbar gutter — clipping stops a phantom horizontal
+    // scroll without affecting anything visible.
+    <main className="mx-auto flex max-w-7xl flex-col gap-10 overflow-x-clip px-6 pb-16 pt-12 md:pt-16">
       <section className="space-y-10">
         <div className="space-y-2 text-center">
           <h1 className="font-serif font-normal leading-[1.1] text-brand-ink text-2xl md:text-[26px] lg:text-5xl">

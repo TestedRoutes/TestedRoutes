@@ -3,11 +3,12 @@
 import Image from "next/image";
 
 // "How I test" band — slotted between the first two rows of guide cards and
-// the rest of the grid (founder 2026-08-08), on the #DCDACD palette
-// background (the brand-bone token; tailwind.config.js has the
-// bone/parchment names swapped relative to styleguide V3). Title matches
-// the home "AI has not been there. I have" Mynerve line; body matches the
-// home "Real trips. Real routes." serif style.
+// the rest of the grid, running edge-to-edge on Taupe Grey #5F524D like the
+// home "Choose your adventure" band (founder 2026-08-08). The section sits
+// inside the page's max-w-7xl container, so it breaks out with the
+// left-1/2 / -translate-x-1/2 / w-screen trick; the content re-constrains
+// itself inside. Fonts and sizes are untouched — only the text color flips
+// light so the Mynerve title and serif body survive the dark background.
 //
 // A client component on purpose: guidesIndexPage passes plain data instead
 // of a prebuilt element tree, because JSX that crosses the server→client
@@ -15,12 +16,13 @@ import Image from "next/image";
 // key-warns on every static sibling list inside it.
 export default function HowITestBand({ title, body, items = [] }) {
   return (
-    <section className="space-y-8 rounded-[28px] bg-brand-bone px-6 py-10 md:px-10 md:py-12">
+    <section className="relative left-1/2 w-screen -translate-x-1/2 bg-brand-taupe py-10 md:py-12">
+      <div className="mx-auto max-w-7xl space-y-8 px-6 md:px-10">
       <div className="space-y-3 text-center">
-        <h2 className="font-script text-[32px] font-normal leading-tight text-slate-500">
+        <h2 className="font-script text-[32px] font-normal leading-tight text-white/90">
           {title}
         </h2>
-        <p className="mx-auto max-w-2xl font-serif font-supersoft text-base font-light leading-relaxed text-slate-600">
+        <p className="mx-auto max-w-2xl font-serif font-supersoft text-base font-light leading-relaxed text-white/80">
           {body}
         </p>
       </div>
@@ -53,6 +55,7 @@ export default function HowITestBand({ title, body, items = [] }) {
             </div>
           );
         })}
+      </div>
       </div>
     </section>
   );
