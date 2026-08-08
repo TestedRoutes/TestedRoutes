@@ -2,9 +2,9 @@
 
 import Link from "next/link";
 import { useMemo, useState } from "react";
+import CategoryStrip from "../../_components/CategoryStrip";
 import CardMediaCarousel, { buildMediaSlides } from "../../_components/CardMediaCarousel";
 import CardFilters from "../../_components/CardFilters";
-import InspireHeroBand from "./InspireHeroBand";
 import { getDict } from "../../_lib/i18n";
 
 function cardHaystack(card) {
@@ -24,6 +24,15 @@ function matchesSearch(card, query) {
   const needle = (query || "").toLowerCase().trim();
   if (!needle) return true;
   return cardHaystack(card).includes(needle);
+}
+
+// Loose match for category pills: "Hiking" should catch "hike".
+function matchesCategory(card, label) {
+  if (!label) return true;
+  const needle = label.toLowerCase().trim();
+  const stem = needle.replace(/ing$/, "").replace(/s$/, "");
+  const haystack = cardHaystack(card);
+  return haystack.includes(needle) || (stem.length > 2 && haystack.includes(stem));
 }
 
 function sortRecentFirst(cards) {
@@ -109,12 +118,13 @@ function StoryCard({ card, t }) {
 
 export default function InspireBrowse({
   cards,
+  categoryItems = [],
   lang = "en",
   initialContinent = "",
   initialContinentLabel = "",
-  hero,
 }) {
   const [search, setSearch] = useState("");
+  const [activeCategory, setActiveCategory] = useState("");
   const [typeFilter, setTypeFilter] = useState("");
   const [countryFilter, setCountryFilter] = useState("");
   const [continentFilter, setContinentFilter] = useState(initialContinent);
@@ -134,18 +144,17 @@ export default function InspireBrowse({
     const matched = cards.filter(
       (c) =>
         matchesSearch(c, search) &&
+        matchesCategory(c, activeCategory) &&
         (!typeFilter || c.categoryLabel === typeFilter) &&
         (!countryFilter || c.country === countryFilter) &&
         (!continentFilter || c.continentSlug === continentFilter),
     );
     return sortRecentFirst(matched);
-  }, [cards, search, typeFilter, countryFilter, continentFilter]);
+  }, [cards, search, activeCategory, typeFilter, countryFilter, continentFilter]);
 
   return (
-    <div>
-      {/* Search lives inside the hero photo, left-aligned (founder
-          2026-08-08) — same white pill, just no centering. */}
-      <InspireHeroBand {...hero}>
+    <div className="space-y-10">
+      <div className="mx-auto w-full max-w-2xl">
         <label htmlFor="inspire-search" className="sr-only">
           Search journeys
         </label>
@@ -166,9 +175,19 @@ export default function InspireBrowse({
             {t.searchButton}
           </button>
         </div>
-      </InspireHeroBand>
+      </div>
 
-      <section className="mx-auto mt-10 w-full min-w-0 max-w-7xl space-y-6 px-6 md:mt-12">
+      {categoryItems.length > 0 ? (
+        <CategoryStrip
+          items={categoryItems}
+          activeLabel={activeCategory}
+          onItemClick={(label) =>
+            setActiveCategory((current) => (current === label ? "" : label))
+          }
+        />
+      ) : null}
+
+      <section className="w-full min-w-0 space-y-6">
         <div className="flex flex-wrap items-center gap-3">
           <h2 className="text-xl font-normal">{t.heading}</h2>
           {continentFilter ? (
