@@ -50,10 +50,14 @@ export default function HomeAdventureGrid({ items = [], cards = [] }) {
   return (
     <div className="space-y-10">
       <div className="space-y-3 text-center">
-        <h2 className="font-serif font-light leading-tight text-brand-ink text-3xl md:text-5xl lg:text-[72px]">
+        {/* White on the Taupe band, same scale as the other section heads. */}
+        <h2 className="font-serif font-light leading-tight text-white text-3xl md:text-5xl lg:text-[72px]">
           Choose your adventure
         </h2>
-        <p className="font-serif font-supersoft text-base font-light leading-relaxed text-slate-600 md:text-xl">
+        {/* Mynerve section line at the site-wide flat 32px, matching the
+            "AI has not been there. I have" treatment (founder 2026-08-08);
+            lightened for the dark background. */}
+        <p className="font-script text-[32px] leading-tight text-white/85">
           Every activity here has guides behind it
         </p>
       </div>
@@ -93,7 +97,7 @@ export default function HomeAdventureGrid({ items = [], cards = [] }) {
 
       {alsoOn.length ? (
         <div className="flex flex-wrap items-center justify-center gap-3">
-          <span className="font-sans text-sm text-slate-500">Also on the site:</span>
+          <span className="font-sans text-sm text-white/70">Also on the site:</span>
           {alsoOn.map((item) => (
             <button
               key={item.label}

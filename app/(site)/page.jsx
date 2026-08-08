@@ -99,8 +99,15 @@ export default async function HomePage() {
           cards={guideCards}
           t={getDict("en").guideList}
           interlude={
-            <div key="choose-your-adventure" className="py-6 md:py-10">
-              <HomeAdventureGrid items={getCategoryItems()} cards={guideCards} />
+            // Full-page-width Taupe Grey #5F524D band (founder 2026-08-08),
+            // breaking out of the max-w container like the guides-page bands.
+            <div
+              key="choose-your-adventure"
+              className="relative left-1/2 w-screen -translate-x-1/2 bg-brand-taupe py-12 md:py-16"
+            >
+              <div className="mx-auto w-full max-w-7xl px-6">
+                <HomeAdventureGrid items={getCategoryItems()} cards={guideCards} />
+              </div>
             </div>
           }
         />
