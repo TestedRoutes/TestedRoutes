@@ -1,6 +1,9 @@
 import Link from "next/link";
 // Filename casing matters: Vercel builds on a case-sensitive filesystem.
-import inspireHero from "../../../content/about/Inspire-hero.jpg";
+// The band strip is a 2:1 crop of Inspire-hero.jpg (full wagon, riders to
+// rails) generated with sharp — the band shows it whole, so it must not
+// carry the sky-heavy 4:3 original.
+import inspireHero from "../../../content/about/Inspire-hero-band.jpg";
 import { loadInspireStories } from "../../_lib/loadInspireStories";
 import { fetchStoryCount } from "../../_lib/sanityStory";
 import {
