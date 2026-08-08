@@ -13,12 +13,18 @@ export default function HomeDestinationIndex({ continents = [] }) {
 
   return (
     <section className="space-y-10">
-      {/* Mynerve section line at the site-wide flat 32px (founder
-          2026-08-08). A handwriting face needs its own case and spacing,
-          so the uppercase + wide tracking come off. */}
-      <p className="text-center font-script text-[32px] leading-tight text-slate-500">
-        Have you been here before?
-      </p>
+      {/* Same header pair as the "Discover the latest guides" section:
+          Fraunces display heading with the Mynerve section line (flat 32px,
+          founder 2026-08-08) underneath. A handwriting face needs its own
+          case and spacing, so the uppercase + wide tracking come off. */}
+      <div className="space-y-3 text-center">
+        <h2 className="font-serif font-light leading-tight text-brand-ink text-3xl md:text-5xl lg:text-[72px]">
+          Browse by destination
+        </h2>
+        <p className="font-script text-[32px] leading-tight text-slate-500">
+          Have you been here before?
+        </p>
+      </div>
       <div className="grid gap-6 md:grid-cols-2">
         {continents.map((c) => (
           <div
@@ -42,13 +48,13 @@ export default function HomeDestinationIndex({ continents = [] }) {
                 return (
                   <li
                     key={entry.country}
-                    className="flex items-center gap-5 py-4 first:pt-0 last:pb-0"
+                    className="flex items-start gap-5 py-4 first:pt-0 last:pb-0"
                   >
                     {/* Contour in Coffee Bean; non-scaling-stroke keeps the
                         line weight even though every country's viewBox is a
                         different scale. Countries the map doesn't know keep
                         the slot so rows stay aligned. */}
-                    <span className="flex h-12 w-14 shrink-0 items-center justify-center">
+                    <span className="mt-0.5 flex h-12 w-14 shrink-0 items-center justify-center">
                       {outline ? (
                         <svg
                           viewBox={outline.viewBox}
@@ -85,12 +91,29 @@ export default function HomeDestinationIndex({ continents = [] }) {
                           </span>
                         ) : null}
                       </span>
-                      <Link
-                        href={entry.href}
-                        className="block font-sans text-[15px] leading-snug text-slate-700 underline decoration-transparent underline-offset-4 transition hover:decoration-slate-400"
-                      >
-                        {entry.count} {entry.count === 1 ? "Guide" : "Guides"}
-                      </Link>
+                      {/* Guide titles, same list treatment the section used
+                          for inspire stories (founder 2026-08-08); overflow
+                          past the cap links to the pre-filtered browser. */}
+                      <ul className="space-y-1.5">
+                        {entry.guides.map((g) => (
+                          <li key={g.href}>
+                            <Link
+                              href={g.href}
+                              className="font-sans text-[15px] leading-snug text-slate-700 underline decoration-transparent underline-offset-4 transition hover:decoration-slate-400"
+                            >
+                              {g.title}
+                            </Link>
+                          </li>
+                        ))}
+                      </ul>
+                      {entry.count > entry.guides.length ? (
+                        <Link
+                          href={`/guides?q=${encodeURIComponent(entry.country)}`}
+                          className="inline-block font-sans text-sm font-medium text-brand-terracotta transition hover:text-brand-terracotta/80"
+                        >
+                          All {entry.count} {entry.country} guides →
+                        </Link>
+                      ) : null}
                     </div>
                   </li>
                 );

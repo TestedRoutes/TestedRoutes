@@ -2,55 +2,12 @@
 
 import { useMemo, useState } from "react";
 import GuideListCard from "./GuideListCard";
-import { prettyGeo } from "../../_lib/continents";
-
-function guideHaystack(guide) {
-  const geo = guide.metadata?.geography || {};
-  // Geography goes in twice: raw snake_case and the display form, so both
-  // "new_zealand" and a typed "New Zealand" (or a ?q= link) match.
-  return [
-    guide.title,
-    guide.category,
-    geo.country,
-    geo.continent,
-    prettyGeo(geo.country),
-    prettyGeo(geo.continent),
-    guide.metadata?.seo?.meta_description,
-  ]
-    .filter(Boolean)
-    .join(" ")
-    .toLowerCase();
-}
-
-function matchesSearch(guide, query) {
-  const needle = (query || "").toLowerCase().trim();
-  if (!needle) return true;
-  return guideHaystack(guide).includes(needle);
-}
-
-// Duration displays are sentences ("2 days, ~10 h walking total"), so the
-// Length dropdown groups on just the leading count + unit — six two-day
-// hikes collapse into one "2 days" option.
-function lengthKey(duration) {
-  const m = String(duration || "").match(/^\s*(\d+)\s*(days?|weeks?|nights?|hours?)/i);
-  return m ? `${m[1]} ${m[2].toLowerCase()}` : String(duration || "").trim();
-}
-
-// Fixed calendar order for the Season dropdown; anything unknown sorts last.
-const SEASON_ORDER = ["spring", "summer", "autumn", "fall", "winter", "year_round"];
-function seasonRank(s) {
-  const i = SEASON_ORDER.indexOf(String(s).toLowerCase());
-  return i === -1 ? SEASON_ORDER.length : i;
-}
-
-// "2 days" before "7 days" before "2 weeks" is really a numeric sort with an
-// alphabetical tie-break — plain localeCompare would put "10 days" first.
-function byLeadingNumber(a, b) {
-  const na = parseFloat(a);
-  const nb = parseFloat(b);
-  if (Number.isFinite(na) && Number.isFinite(nb) && na !== nb) return na - nb;
-  return a.localeCompare(b);
-}
+import GuideFilterRow from "../../_components/GuideFilterRow";
+import {
+  buildGuideFilterOptions,
+  matchesGuideFilters,
+  matchesGuideSearch,
+} from "../../_lib/guideFilters";
 
 // Line icons for the trust trio, drawn in Brandy: mountain / clock / pin.
 const TRUST_ICONS = [
@@ -59,91 +16,42 @@ const TRUST_ICONS = [
   <path key="pin" d="M12 21 C12 21 5 14.5 5 9.5 A7 7 0 0 1 19 9.5 C19 14.5 12 21 12 21 Z M12 12 a2.5 2.5 0 1 0 0-5 a2.5 2.5 0 0 0 0 5 Z" />,
 ];
 
+// Two desktop rows of the lg 4-column grid — where the interlude band cuts
+// into the card list (founder 2026-08-08).
+const INTERLUDE_AFTER = 8;
+
 export default function GuidesBrowse({
   guides,
   t,
   tl,
   lang = "en",
   initialSearch = "",
+  interlude = null,
 }) {
   const [search, setSearch] = useState(initialSearch);
-  const [countryFilter, setCountryFilter] = useState("");
-  const [lengthFilter, setLengthFilter] = useState("");
-  const [activityFilter, setActivityFilter] = useState("");
-  const [seasonFilter, setSeasonFilter] = useState("");
+  const [filters, setFilters] = useState({
+    country: "",
+    length: "",
+    activity: "",
+    season: "",
+  });
+  const setFilter = (key, value) => setFilters((f) => ({ ...f, [key]: value }));
 
-  const countries = useMemo(
-    () =>
-      [
-        ...new Set(
-          guides.map((g) => prettyGeo(g.metadata?.geography?.country)).filter(Boolean),
-        ),
-      ].sort(),
-    [guides],
-  );
-  const lengths = useMemo(
-    () =>
-      [...new Set(guides.map((g) => lengthKey(g.duration)).filter(Boolean))].sort(
-        byLeadingNumber,
-      ),
-    [guides],
-  );
-  const activities = useMemo(
-    () =>
-      [
-        ...new Set(
-          guides
-            .map((g) => prettyGeo(g.metadata?.classification?.activity_category))
-            .filter(Boolean),
-        ),
-      ].sort(),
-    [guides],
-  );
-  const seasons = useMemo(
-    () =>
-      [
-        ...new Set(
-          guides
-            .flatMap((g) => g.metadata?.timing?.best_seasons || [])
-            .map((s) => String(s).toLowerCase())
-            .filter(Boolean),
-        ),
-      ].sort((a, b) => seasonRank(a) - seasonRank(b)),
-    [guides],
-  );
-
+  const options = useMemo(() => buildGuideFilterOptions(guides), [guides]);
   const filtered = useMemo(
-    () =>
-      guides.filter(
-        (g) =>
-          matchesSearch(g, search) &&
-          (!countryFilter || prettyGeo(g.metadata?.geography?.country) === countryFilter) &&
-          (!lengthFilter || lengthKey(g.duration) === lengthFilter) &&
-          (!activityFilter ||
-            prettyGeo(g.metadata?.classification?.activity_category) === activityFilter) &&
-          (!seasonFilter ||
-            (g.metadata?.timing?.best_seasons || [])
-              .map((s) => String(s).toLowerCase())
-              .includes(seasonFilter)),
-      ),
-    [guides, search, countryFilter, lengthFilter, activityFilter, seasonFilter],
+    () => guides.filter((g) => matchesGuideSearch(g, search) && matchesGuideFilters(g, filters)),
+    [guides, search, filters],
   );
 
-  const selectClass =
-    "h-9 min-w-0 flex-1 cursor-pointer truncate rounded-full border border-slate-200 bg-white px-3 text-xs font-semibold text-slate-700 transition hover:border-slate-300 focus:border-slate-400 focus:outline-none sm:max-w-40";
-
-  const dropdowns = [
-    { label: tl.filterCountry, value: countryFilter, set: setCountryFilter, options: countries },
-    { label: tl.filterLength, value: lengthFilter, set: setLengthFilter, options: lengths },
-    { label: tl.filterActivity, value: activityFilter, set: setActivityFilter, options: activities },
-    {
-      label: tl.filterSeason,
-      value: seasonFilter,
-      set: setSeasonFilter,
-      options: seasons,
-      display: (v) => prettyGeo(v),
-    },
-  ];
+  const firstRows = filtered.slice(0, INTERLUDE_AFTER);
+  const rest = filtered.slice(INTERLUDE_AFTER);
+  const cardGrid = (cards) => (
+    <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+      {cards.map((g) => (
+        <GuideListCard key={g.slug} guide={g} t={tl} lang={lang} />
+      ))}
+    </div>
+  );
 
   return (
     <div className="space-y-10">
@@ -167,58 +75,48 @@ export default function GuidesBrowse({
 
       {/* Trust trio (founder 2026-08-08): replaces the activity tile strip
           that used to sit after the search — why the guides work, not what
-          they cover. */}
+          they cover. Icon inline before the title, everything centered. */}
       <div className="grid gap-8 sm:grid-cols-3">
         {(tl.trust || []).map((item, i) => (
-          <div key={item.title} className="space-y-2">
-            <svg
-              viewBox="0 0 24 24"
-              aria-hidden="true"
-              className="h-7 w-7 text-brand-terracotta"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="1.75"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              {TRUST_ICONS[i]}
-            </svg>
-            <h3 className="font-serif text-xl font-normal text-brand-ink">{item.title}</h3>
+          <div key={item.title} className="space-y-2 text-center">
+            <h3 className="flex items-center justify-center gap-2.5 font-serif text-xl font-normal text-brand-ink">
+              <svg
+                viewBox="0 0 24 24"
+                aria-hidden="true"
+                className="h-6 w-6 shrink-0 text-brand-terracotta"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="1.75"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                {TRUST_ICONS[i]}
+              </svg>
+              {item.title}
+            </h3>
             <p className="font-sans text-sm leading-relaxed text-slate-600">{item.body}</p>
           </div>
         ))}
       </div>
 
       <section className="space-y-6">
-        <h2 className="text-xl font-normal">{tl.browseHeading}</h2>
-        <div className="flex w-full flex-wrap items-center gap-2">
-          {dropdowns.map((d) =>
-            d.options.length ? (
-              <select
-                key={d.label}
-                value={d.value}
-                onChange={(e) => d.set(e.target.value)}
-                className={selectClass}
-                aria-label={d.label}
-              >
-                <option value="">{`${d.label}: ${tl.filterAll}`}</option>
-                {d.options.map((v) => (
-                  <option key={v} value={v}>
-                    {d.display ? d.display(v) : v}
-                  </option>
-                ))}
-              </select>
-            ) : null,
-          )}
-          <p className="ml-auto shrink-0 text-xs font-medium tabular-nums text-slate-500">
-            {filtered.length} {filtered.length === 1 ? tl.guide : tl.guides}
-          </p>
+        {/* Heading and dropdowns share one row on desktop, vertically
+            centered (founder 2026-08-08); below md the row wraps. */}
+        <div className="flex flex-wrap items-center gap-x-4 gap-y-3">
+          <h2 className="shrink-0 text-xl font-normal">{tl.browseHeading}</h2>
+          <div className="min-w-0 flex-1">
+            <GuideFilterRow options={options} filters={filters} onChange={setFilter} tl={tl}>
+              <p className="text-xs font-medium tabular-nums text-slate-500">
+                {filtered.length} {filtered.length === 1 ? tl.guide : tl.guides}
+              </p>
+            </GuideFilterRow>
+          </div>
         </div>
-        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-          {filtered.map((g) => (
-            <GuideListCard key={g.slug} guide={g} t={tl} lang={lang} />
-          ))}
-        </div>
+
+        {cardGrid(firstRows)}
+        {interlude}
+        {rest.length ? cardGrid(rest) : null}
+
         {filtered.length === 0 ? (
           <p className="text-center text-sm text-slate-500">{t.inspireList.noMatchTitle}</p>
         ) : null}

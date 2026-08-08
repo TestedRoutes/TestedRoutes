@@ -2,35 +2,37 @@
 
 import Link from "next/link";
 import { useEffect, useMemo, useRef, useState } from "react";
-import CardFilters from "./CardFilters";
+import GuideFilterRow from "./GuideFilterRow";
 import GuideListCard from "../(site)/guides/GuideListCard";
+import {
+  buildGuideFilterOptions,
+  matchesGuideFilters,
+  guideSearchHaystack,
+} from "../_lib/guideFilters";
 
 // Loose category matching: "Hiking" should catch "Day trip hike".
 function matchesCategory(card, label) {
   if (!label) return true;
   const needle = label.toLowerCase().trim();
   const stem = needle.replace(/ing$/, "").replace(/s$/, "");
-  const geo = card.metadata?.geography || {};
-  const haystack = [
-    card.title,
-    card.category,
-    geo.country,
-    geo.continent,
-    card.metadata?.seo?.meta_description,
-  ]
-    .filter(Boolean)
-    .join(" ")
-    .toLowerCase();
+  const haystack = guideSearchHaystack(card);
   return haystack.includes(needle) || (stem.length > 2 && haystack.includes(stem));
 }
 
 // Owns the guide grid. The search lives in the photo hero above and the
 // activity tiles in the "Choose your adventure" band below (HomeCategoryTiles),
-// which drives this grid's category filter over a window event.
+// which drives this grid's category filter over a window event. The dropdown
+// row is the same Country/Length/Activity/Season set as /guides (founder
+// 2026-08-08).
 export default function HomeBrowse({ cards = [], t }) {
   const [activeCategory, setActiveCategory] = useState("");
-  const [typeFilter, setTypeFilter] = useState("");
-  const [countryFilter, setCountryFilter] = useState("");
+  const [filters, setFilters] = useState({
+    country: "",
+    length: "",
+    activity: "",
+    season: "",
+  });
+  const setFilter = (key, value) => setFilters((f) => ({ ...f, [key]: value }));
   const gridRef = useRef(null);
 
   useEffect(() => {
@@ -49,25 +51,11 @@ export default function HomeBrowse({ cards = [], t }) {
     window.dispatchEvent(new CustomEvent("home-category-cleared", { detail: "" }));
   };
 
-  const types = useMemo(
-    () => [...new Set(cards.map((c) => c.category).filter(Boolean))].sort(),
-    [cards],
-  );
-  const countries = useMemo(
-    () =>
-      [...new Set(cards.map((c) => c.metadata?.geography?.country).filter(Boolean))].sort(),
-    [cards],
-  );
-
+  const options = useMemo(() => buildGuideFilterOptions(cards), [cards]);
   const filtered = useMemo(
     () =>
-      cards.filter(
-        (c) =>
-          matchesCategory(c, activeCategory) &&
-          (!typeFilter || c.category === typeFilter) &&
-          (!countryFilter || c.metadata?.geography?.country === countryFilter),
-      ),
-    [cards, activeCategory, typeFilter, countryFilter],
+      cards.filter((c) => matchesCategory(c, activeCategory) && matchesGuideFilters(c, filters)),
+    [cards, activeCategory, filters],
   );
 
   return (
@@ -87,22 +75,14 @@ export default function HomeBrowse({ cards = [], t }) {
               <span className="sr-only">Clear category filter</span>
             </button>
           ) : null}
-          <CardFilters
-            types={types}
-            countries={countries}
-            type={typeFilter}
-            country={countryFilter}
-            onType={setTypeFilter}
-            onCountry={setCountryFilter}
-            labels={t}
-          >
+          <GuideFilterRow options={options} filters={filters} onChange={setFilter} tl={t}>
             <Link
               href="/guides"
               className="inline-flex h-9 items-center rounded-full border border-slate-200 bg-white px-3 text-xs font-semibold text-slate-700 transition hover:border-slate-300"
             >
               View all
             </Link>
-          </CardFilters>
+          </GuideFilterRow>
           {filtered.length ? (
             <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
               {filtered.map((card) => (

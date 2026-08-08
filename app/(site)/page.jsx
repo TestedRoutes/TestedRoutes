@@ -60,10 +60,12 @@ function buildContinentIndex(stories, { countriesPerCard = 3 } = {}) {
 
 // Continent → country index of the guide catalogue for the destination
 // cards (founder 2026-08-08: those cards sell guides now, not stories).
-// A country links straight to its guide when there is exactly one, else to
-// the guide browser pre-searched to the country — the search haystack
-// includes geography, so ?q=<country> lands filtered and user-clearable.
-function buildGuideGeoIndex(guides, { countriesPerCard = 4 } = {}) {
+// Each country lists its guides by title — same structure the section had
+// when it listed inspire stories — capped per country; the component links
+// any overflow to the guide browser pre-searched to the country (the
+// search haystack includes geography, so ?q=<country> lands filtered and
+// user-clearable).
+function buildGuideGeoIndex(guides, { countriesPerCard = 4, guidesPerCountry = 3 } = {}) {
   const byContinent = new Map();
 
   for (const g of guides) {
@@ -82,10 +84,12 @@ function buildGuideGeoIndex(guides, { countriesPerCard = 4 } = {}) {
     const entry = continent.countries.get(country) || {
       country,
       count: 0,
-      href: g.href,
+      guides: [],
     };
     entry.count += 1;
-    if (entry.count > 1) entry.href = `/guides?q=${encodeURIComponent(country)}`;
+    if (entry.guides.length < guidesPerCountry) {
+      entry.guides.push({ title: g.title, href: g.href });
+    }
     continent.countries.set(country, entry);
   }
 
@@ -268,10 +272,10 @@ export default async function HomePage() {
 
             <p className="mt-8 text-right font-script text-lg md:text-xl">
               <Link
-                href="/contact"
-                className="text-brand-flame transition hover:text-brand-terracotta"
+                href="/guides"
+                className="text-brand-terracotta transition hover:text-brand-flame"
               >
-                Where to next? Let&apos;s get in touch.
+                Where to next?
               </Link>
             </p>
           </div>

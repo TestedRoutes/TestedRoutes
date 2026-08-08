@@ -6,6 +6,7 @@ import { LOCALES, getDict, localePath } from "../../_lib/i18n";
 import Image from "next/image";
 import { ABOUT_IMAGES } from "../../_lib/aboutImages";
 import GuidesBrowse from "./GuidesBrowse";
+import HowITestBand from "./HowITestBand";
 
 const EXTREME_FILES = [
   "Running with bulls Pamplona 2019.jpg",
@@ -52,6 +53,23 @@ export default async function GuidesIndexPage({ lang = "en", q = "" }) {
   const currency = await getRequestCurrency();
   const guides = await loadGuides(currency, lang);
 
+  // The band renders via HowITestBand (a client component) from plain
+  // data — see the note in that file for why no element tree crosses the
+  // server→client boundary here. The explicit key matters: server-created
+  // elements arrive frozen on the client, so React's reconciler key-checks
+  // them wherever they sit among siblings.
+  const howITest = (
+    <HowITestBand
+      key="how-i-test"
+      title={ti.howITestTitle}
+      body={ti.howITestBody}
+      items={ti.extremeLabels.map((label, i) => ({
+        label,
+        image: ABOUT_IMAGES[EXTREME_FILES[i]],
+      }))}
+    />
+  );
+
   return (
     <main className="mx-auto flex max-w-7xl flex-col gap-10 px-6 pb-16 pt-12 md:pt-16">
       <section className="space-y-10">
@@ -85,53 +103,14 @@ export default async function GuidesIndexPage({ lang = "en", q = "" }) {
             tl={tl}
             lang={lang}
             initialSearch={q}
+            interlude={howITest}
           />
         )}
+        {/* Locales with no guides skip GuidesBrowse, so the band renders
+            here instead of vanishing with the grid. */}
+        {guides.length === 0 ? howITest : null}
       </section>
 
-      <section className="space-y-8">
-        {/* Same treatment as the home "AI has not been there. I have" line:
-            Mynerve regular, centered (founder 2026-08-08); the body matches
-            the home "Real trips. Real routes." serif style. */}
-        <div className="space-y-3 text-center">
-          <h2 className="font-script text-[32px] font-normal leading-tight text-slate-500">
-            {ti.howITestTitle}
-          </h2>
-          <p className="mx-auto max-w-2xl font-serif font-supersoft text-base font-light leading-relaxed text-slate-600">
-            {ti.howITestBody}
-          </p>
-        </div>
-        <div className="grid grid-cols-2 gap-4 lg:grid-cols-4">
-          {ti.extremeLabels.map((label, i) => {
-            // "Activity – Place": the place gets the DM Sans bold Brandy
-            // highlight; labels without an en-dash render whole.
-            const [activity, place] = label.split(/ – (.+)/);
-            return (
-              <div
-                key={label}
-                className="overflow-hidden rounded-2xl bg-white shadow-sm ring-1 ring-slate-200"
-              >
-                <Image
-                  src={ABOUT_IMAGES[EXTREME_FILES[i]]}
-                  alt={label}
-                  sizes="(min-width: 1024px) 25vw, 50vw"
-                  className="aspect-[4/3] w-full object-cover object-center"
-                />
-                <p className="p-3 text-center text-sm font-medium leading-snug text-slate-700">
-                  {place ? (
-                    <>
-                      {activity} –{" "}
-                      <span className="font-bold text-brand-terracotta">{place}</span>
-                    </>
-                  ) : (
-                    label
-                  )}
-                </p>
-              </div>
-            );
-          })}
-        </div>
-      </section>
     </main>
   );
 }
