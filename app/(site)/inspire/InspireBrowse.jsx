@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useMemo, useState } from "react";
 import CardMediaCarousel, { buildMediaSlides } from "../../_components/CardMediaCarousel";
 import CardFilters from "../../_components/CardFilters";
+import InspireHeroBand from "./InspireHeroBand";
 import { getDict } from "../../_lib/i18n";
 
 function cardHaystack(card) {
@@ -111,6 +112,7 @@ export default function InspireBrowse({
   lang = "en",
   initialContinent = "",
   initialContinentLabel = "",
+  hero,
 }) {
   const [search, setSearch] = useState("");
   const [typeFilter, setTypeFilter] = useState("");
@@ -140,8 +142,10 @@ export default function InspireBrowse({
   }, [cards, search, typeFilter, countryFilter, continentFilter]);
 
   return (
-    <div className="space-y-10">
-      <div className="mx-auto w-full max-w-2xl">
+    <div>
+      {/* Search lives inside the hero photo, left-aligned (founder
+          2026-08-08) — same white pill, just no centering. */}
+      <InspireHeroBand {...hero}>
         <label htmlFor="inspire-search" className="sr-only">
           Search journeys
         </label>
@@ -162,9 +166,9 @@ export default function InspireBrowse({
             {t.searchButton}
           </button>
         </div>
-      </div>
+      </InspireHeroBand>
 
-      <section className="w-full min-w-0 space-y-6">
+      <section className="mx-auto mt-10 w-full min-w-0 max-w-7xl space-y-6 px-6 md:mt-12">
         <div className="flex flex-wrap items-center gap-3">
           <h2 className="text-xl font-normal">{t.heading}</h2>
           {continentFilter ? (
