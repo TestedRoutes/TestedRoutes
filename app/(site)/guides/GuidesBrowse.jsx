@@ -274,8 +274,10 @@ export default function GuidesBrowse({
             </p>
           </div>
 
+          {/* The panel is half the page wide from md up (founder
+              2026-08-08), anchored to the pill; full width only on phones. */}
           {panelOpen ? (
-            <div className="absolute inset-x-0 top-full z-20 mt-3 rounded-3xl bg-white p-5 shadow-card-hover ring-1 ring-brand-line md:p-8">
+            <div className="absolute left-0 top-full z-20 mt-3 w-full rounded-3xl bg-white p-5 shadow-card-hover ring-1 ring-brand-line md:w-1/2 md:p-8">
               <div className="flex items-center gap-3 rounded-full bg-slate-50 px-4 ring-1 ring-brand-line">
                 <svg
                   viewBox="0 0 24 24"
@@ -325,7 +327,7 @@ export default function GuidesBrowse({
               <p className="mt-6 font-sans text-[11px] font-medium uppercase tracking-[0.2em] text-slate-400">
                 {scopeLabel} · {countryCounts.length} {tl.countriesWord}
               </p>
-              <ul className="mt-3 grid gap-x-8 gap-y-2.5 sm:grid-cols-2 md:grid-cols-3">
+              <ul className="mt-3 grid gap-x-8 gap-y-2.5 sm:grid-cols-2">
                 {listedCountries.map(([country, count]) => (
                   <li key={country}>
                     <button
