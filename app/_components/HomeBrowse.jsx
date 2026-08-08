@@ -8,24 +8,15 @@ import { prettyGeo } from "../_lib/continents";
 import {
   buildGuideFilterOptions,
   matchesGuideFilters,
-  guideSearchHaystack,
+  matchesGuideCategory,
 } from "../_lib/guideFilters";
 
-// Loose category matching: "Hiking" should catch "Day trip hike".
-function matchesCategory(card, label) {
-  if (!label) return true;
-  const needle = label.toLowerCase().trim();
-  const stem = needle.replace(/ing$/, "").replace(/s$/, "");
-  const haystack = guideSearchHaystack(card);
-  return haystack.includes(needle) || (stem.length > 2 && haystack.includes(stem));
-}
-
 // Owns the guide grid. The search lives in the photo hero above and the
-// activity tiles in the "Choose your adventure" band below (HomeCategoryTiles),
+// activity cards in the "Choose your adventure" section below (HomeAdventureGrid),
 // which drives this grid's category filter over a window event. The dropdown
 // row is the same Country/Length/Activity/Season set as /guides (founder
 // 2026-08-08).
-export default function HomeBrowse({ cards = [], t }) {
+export default function HomeBrowse({ cards = [], t, interlude = null }) {
   const [activeCategory, setActiveCategory] = useState("");
   const [filters, setFilters] = useState({
     country: "",
@@ -69,7 +60,9 @@ export default function HomeBrowse({ cards = [], t }) {
   }, [cards]);
   const filtered = useMemo(
     () =>
-      cards.filter((c) => matchesCategory(c, activeCategory) && matchesGuideFilters(c, filters)),
+      cards.filter(
+        (c) => matchesGuideCategory(c, activeCategory) && matchesGuideFilters(c, filters),
+      ),
     [cards, activeCategory, filters],
   );
 
@@ -120,20 +113,38 @@ export default function HomeBrowse({ cards = [], t }) {
               ))}
             </div>
           </div>
-          <GuideFilterRow options={options} filters={filters} onChange={setFilter} tl={t}>
-            <Link
-              href="/guides"
-              className="inline-flex h-9 items-center rounded-full border border-slate-200 bg-white px-3 text-xs font-semibold text-slate-700 transition hover:border-slate-300"
-            >
-              View all
-            </Link>
-          </GuideFilterRow>
+          <GuideFilterRow options={options} filters={filters} onChange={setFilter} tl={t} />
           {filtered.length ? (
-            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-              {filtered.map((card) => (
-                <GuideListCard key={card.slug} guide={card} t={t} />
-              ))}
-            </div>
+            <>
+              {/* Two rows, then the Choose-your-adventure interlude, then a
+                  one-row "Recently added guides" strip with View all
+                  (founder 2026-08-08). */}
+              <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+                {filtered.slice(0, 8).map((card) => (
+                  <GuideListCard key={card.slug} guide={card} t={t} />
+                ))}
+              </div>
+              {interlude}
+              <div className="flex items-baseline justify-between gap-4">
+                {/* DM Sans Regular (founder 2026-08-08). */}
+                <h3 className="font-sans text-xl font-normal text-brand-ink md:text-2xl">
+                  Recently added guides
+                </h3>
+                <Link
+                  href="/guides"
+                  className="font-sans text-sm font-normal text-slate-900 underline decoration-slate-400 underline-offset-4 transition hover:decoration-slate-700 md:text-base"
+                >
+                  View all
+                </Link>
+              </div>
+              {filtered.slice(8, 12).length ? (
+                <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+                  {filtered.slice(8, 12).map((card) => (
+                    <GuideListCard key={card.slug} guide={card} t={t} />
+                  ))}
+                </div>
+              ) : null}
+            </>
           ) : (
             <p className="text-sm text-slate-500">
               No guides match this category yet.{" "}

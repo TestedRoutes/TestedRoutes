@@ -73,3 +73,13 @@ export function matchesGuideSearch(guide, query) {
   if (!needle) return true;
   return guideSearchHaystack(guide).includes(needle);
 }
+
+// Loose category matching for the home activity cards: "Hiking" should
+// catch "Day trip hike".
+export function matchesGuideCategory(guide, label) {
+  if (!label) return true;
+  const needle = label.toLowerCase().trim();
+  const stem = needle.replace(/ing$/, "").replace(/s$/, "");
+  const haystack = guideSearchHaystack(guide);
+  return haystack.includes(needle) || (stem.length > 2 && haystack.includes(stem));
+}
