@@ -94,7 +94,7 @@ export default async function GuidesIndexPage({ lang = "en", q = "" }) {
             Mynerve regular, centered (founder 2026-08-08); the body matches
             the home "Real trips. Real routes." serif style. */}
         <div className="space-y-3 text-center">
-          <h2 className="font-script text-[24px] font-normal leading-tight text-slate-500 md:text-[32px]">
+          <h2 className="font-script text-[32px] font-normal leading-tight text-slate-500">
             {ti.howITestTitle}
           </h2>
           <p className="mx-auto max-w-2xl font-serif font-supersoft text-base font-light leading-relaxed text-slate-600">

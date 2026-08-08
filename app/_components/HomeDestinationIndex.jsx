@@ -13,9 +13,10 @@ export default function HomeDestinationIndex({ continents = [] }) {
 
   return (
     <section className="space-y-10">
-      {/* Mynerve regular at 32pt. A handwriting face needs its own case and
-          spacing, so the uppercase + wide tracking come off. */}
-      <p className="text-center font-script text-[24pt] leading-tight text-slate-500 md:text-[32pt]">
+      {/* Mynerve section line at the site-wide flat 32px (founder
+          2026-08-08). A handwriting face needs its own case and spacing,
+          so the uppercase + wide tracking come off. */}
+      <p className="text-center font-script text-[32px] leading-tight text-slate-500">
         Have you been here before?
       </p>
       <div className="grid gap-6 md:grid-cols-2">

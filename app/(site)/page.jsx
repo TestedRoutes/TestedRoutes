@@ -129,8 +129,9 @@ export default async function HomePage() {
           </h2>
           {/* Mynerve regular under the heading (founder 2026-08-08). A
               handwriting face needs its own case and spacing, so the
-              uppercase + wide tracking come off. */}
-          <p className="font-script text-[24px] leading-tight text-slate-500 md:text-[32px]">
+              uppercase + wide tracking come off. All Mynerve section lines
+              sit at a flat 32px (founder 2026-08-08). */}
+          <p className="font-script text-[32px] leading-tight text-slate-500">
             AI has not been there. I have
           </p>
         </div>
@@ -152,7 +153,7 @@ export default async function HomePage() {
         <section className="md:grid md:grid-cols-[minmax(0,1fr)_minmax(320px,440px)] md:gap-12 lg:gap-16">
           <div className="space-y-6">
             <div className="space-y-3">
-              <p className="font-script text-lg text-slate-500 md:text-xl">
+              <p className="font-script text-[32px] leading-tight text-slate-500">
                 about me – the person behind the maps
               </p>
               <h2 className="font-serif text-3xl font-light leading-tight text-brand-ink md:text-5xl">
