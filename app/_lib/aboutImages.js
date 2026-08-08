@@ -20,6 +20,7 @@ import iceClimbing from "../../content/about/Ice climbing Italy 2019.jpg";
 import summitsAlaska from "../../content/about/Summits Alaska 2019 v2.jpg";
 import ironOreTrain from "../../content/about/Iron Ore train Mauritania 2023.jpg";
 import makoko from "../../content/about/Makoko Nigeria 2025.jpg";
+import mtCook from "../../content/about/Mt Cook - NZ 2026.jpg";
 
 export const ABOUT_IMAGES = {
   "About me2.jpg": aboutMe2,
@@ -40,6 +41,7 @@ export const ABOUT_IMAGES = {
   "Summits Alaska 2019 v2.jpg": summitsAlaska,
   "Iron Ore train Mauritania 2023.jpg": ironOreTrain,
   "Makoko Nigeria 2025.jpg": makoko,
+  "Mt Cook - NZ 2026.jpg": mtCook,
 };
 
 export const PORTRAIT = aboutMe2;

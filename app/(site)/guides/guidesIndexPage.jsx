@@ -4,9 +4,9 @@ import { fetchGuideCount } from "../../_lib/sanityStory";
 import { getRequestCurrency } from "../../_lib/currency";
 import { LOCALES, getDict, localePath } from "../../_lib/i18n";
 import Image from "next/image";
-import { getCategoryItems } from "../../_lib/categoryPills";
 import { ABOUT_IMAGES } from "../../_lib/aboutImages";
 import GuidesBrowse from "./GuidesBrowse";
+import HowITestBand from "./HowITestBand";
 
 const EXTREME_FILES = [
   "Running with bulls Pamplona 2019.jpg",
@@ -46,17 +46,39 @@ export async function buildGuidesIndexMetadata(lang) {
   };
 }
 
-export default async function GuidesIndexPage({ lang = "en" }) {
+export default async function GuidesIndexPage({ lang = "en", q = "" }) {
   const t = getDict(lang);
   const tl = t.guideList;
   const ti = t.inspireList;
   const currency = await getRequestCurrency();
   const guides = await loadGuides(currency, lang);
 
+  // The band renders via HowITestBand (a client component) from plain
+  // data — see the note in that file for why no element tree crosses the
+  // server→client boundary here. The explicit key matters: server-created
+  // elements arrive frozen on the client, so React's reconciler key-checks
+  // them wherever they sit among siblings.
+  const howITest = (
+    <HowITestBand
+      key="how-i-test"
+      title={ti.howITestTitle}
+      body={ti.howITestBody}
+      items={ti.extremeLabels.map((label, i) => ({
+        label,
+        image: ABOUT_IMAGES[EXTREME_FILES[i]],
+      }))}
+    />
+  );
+
   return (
+    // NB: no overflow clipping here — the Taupe bands break out to
+    // w-screen, and a clip on this max-w-7xl container would cut them back
+    // to content width. The phantom-scroll guard lives on <body> instead
+    // (globals.css).
     <main className="mx-auto flex max-w-7xl flex-col gap-10 px-6 pb-16 pt-12 md:pt-16">
       <section className="space-y-10">
-        <div className="space-y-2 text-center">
+        {/* Left-aligned header + search (founder 2026-08-08). */}
+        <div className="space-y-2">
           <h1 className="font-serif font-normal leading-[1.1] text-brand-ink text-2xl md:text-[26px] lg:text-5xl">
             {tl.heading}
           </h1>
@@ -82,38 +104,18 @@ export default async function GuidesIndexPage({ lang = "en" }) {
         ) : (
           <GuidesBrowse
             guides={guides.map(toGuideCard)}
-            categoryItems={getCategoryItems()}
             t={t}
             tl={tl}
             lang={lang}
+            initialSearch={q}
+            interlude={howITest}
           />
         )}
+        {/* Locales with no guides skip GuidesBrowse, so the band renders
+            here instead of vanishing with the grid. */}
+        {guides.length === 0 ? howITest : null}
       </section>
 
-      <section className="space-y-4">
-        <div>
-          <p className="text-xl font-semibold">{ti.howITestTitle}</p>
-          <p className="mt-2 text-sm text-slate-600">{ti.howITestBody}</p>
-        </div>
-        <div className="grid grid-cols-2 gap-4 lg:grid-cols-4">
-          {ti.extremeLabels.map((label, i) => (
-            <div
-              key={label}
-              className="overflow-hidden rounded-2xl bg-white shadow-sm ring-1 ring-slate-200"
-            >
-              <Image
-                src={ABOUT_IMAGES[EXTREME_FILES[i]]}
-                alt={label}
-                sizes="(min-width: 1024px) 25vw, 50vw"
-                className="aspect-[4/3] w-full object-cover object-center"
-              />
-              <p className="p-3 text-center text-[11px] font-medium leading-snug text-slate-600">
-                {label}
-              </p>
-            </div>
-          ))}
-        </div>
-      </section>
     </main>
   );
 }

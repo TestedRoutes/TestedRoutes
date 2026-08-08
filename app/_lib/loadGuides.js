@@ -37,6 +37,16 @@ export function toGuideCard(g) {
         country: g.metadata?.geography?.country || null,
         continent: g.metadata?.geography?.continent || null,
       },
+      // Feed the guide-browser dropdowns (Activity / Season); Length and
+      // Country ride on the top-level duration + geography fields.
+      classification: {
+        activity_category: g.metadata?.classification?.activity_category || null,
+      },
+      timing: {
+        best_seasons: Array.isArray(g.metadata?.timing?.best_seasons)
+          ? g.metadata.timing.best_seasons
+          : [],
+      },
       seo: { meta_description: g.metadata?.seo?.meta_description || null },
       hero: { subtitle: g.metadata?.hero?.subtitle || null },
     },

@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import { useMemo, useState } from "react";
-import CategoryStrip from "../../_components/CategoryStrip";
 import CardMediaCarousel, { buildMediaSlides } from "../../_components/CardMediaCarousel";
 import CardFilters from "../../_components/CardFilters";
 import { getDict } from "../../_lib/i18n";
@@ -24,15 +23,6 @@ function matchesSearch(card, query) {
   const needle = (query || "").toLowerCase().trim();
   if (!needle) return true;
   return cardHaystack(card).includes(needle);
-}
-
-// Loose match for category pills: "Hiking" should catch "hike".
-function matchesCategory(card, label) {
-  if (!label) return true;
-  const needle = label.toLowerCase().trim();
-  const stem = needle.replace(/ing$/, "").replace(/s$/, "");
-  const haystack = cardHaystack(card);
-  return haystack.includes(needle) || (stem.length > 2 && haystack.includes(stem));
 }
 
 function sortRecentFirst(cards) {
@@ -118,13 +108,11 @@ function StoryCard({ card, t }) {
 
 export default function InspireBrowse({
   cards,
-  categoryItems = [],
   lang = "en",
   initialContinent = "",
   initialContinentLabel = "",
 }) {
   const [search, setSearch] = useState("");
-  const [activeCategory, setActiveCategory] = useState("");
   const [typeFilter, setTypeFilter] = useState("");
   const [countryFilter, setCountryFilter] = useState("");
   const [continentFilter, setContinentFilter] = useState(initialContinent);
@@ -144,13 +132,12 @@ export default function InspireBrowse({
     const matched = cards.filter(
       (c) =>
         matchesSearch(c, search) &&
-        matchesCategory(c, activeCategory) &&
         (!typeFilter || c.categoryLabel === typeFilter) &&
         (!countryFilter || c.country === countryFilter) &&
         (!continentFilter || c.continentSlug === continentFilter),
     );
     return sortRecentFirst(matched);
-  }, [cards, search, activeCategory, typeFilter, countryFilter, continentFilter]);
+  }, [cards, search, typeFilter, countryFilter, continentFilter]);
 
   return (
     <div className="space-y-10">
@@ -177,19 +164,11 @@ export default function InspireBrowse({
         </div>
       </div>
 
-      {categoryItems.length > 0 ? (
-        <CategoryStrip
-          items={categoryItems}
-          activeLabel={activeCategory}
-          onItemClick={(label) =>
-            setActiveCategory((current) => (current === label ? "" : label))
-          }
-        />
-      ) : null}
-
       <section className="w-full min-w-0 space-y-6">
         <div className="flex flex-wrap items-center gap-3">
-          <h2 className="text-xl font-normal">{t.heading}</h2>
+          {/* 20px DM Sans Semibold (founder 2026-08-08) — font-sans opts out
+              of the global serif h2 default. */}
+          <h2 className="font-sans text-xl font-semibold">{t.heading}</h2>
           {continentFilter ? (
             <button
               type="button"

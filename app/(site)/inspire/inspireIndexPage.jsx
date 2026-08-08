@@ -11,7 +11,6 @@ import {
 import { LOCALES, getDict, localePath } from "../../_lib/i18n";
 import { continentSlug, prettyGeo } from "../../_lib/continents";
 import InspireBrowse from "./InspireBrowse";
-import { getCategoryItems } from "../../_lib/categoryPills";
 
 const EN_DESCRIPTION =
   "Travel stories and journey ideas from 15 years of independent trips across 140 countries – the field work behind every guide.";
@@ -148,7 +147,6 @@ export default async function InspireIndexPage({ lang = "en", continent = "" }) 
         ) : (
           <InspireBrowse
             cards={cards}
-            categoryItems={getCategoryItems()}
             lang={lang}
             initialContinent={activeContinent}
             initialContinentLabel={prettyGeo(activeContinent)}

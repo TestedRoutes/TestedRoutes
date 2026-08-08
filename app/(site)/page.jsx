@@ -2,30 +2,31 @@ import Link from "next/link";
 import Image from "next/image";
 import HomeHero from "../_components/HomeHero";
 import HomeBrowse from "../_components/HomeBrowse";
-import HomeCategoryTiles from "../_components/HomeCategoryTiles";
-import HomeContinents from "../_components/HomeContinents";
+import HomeAdventureGrid from "../_components/HomeAdventureGrid";
 import HomeDestinationIndex from "../_components/HomeDestinationIndex";
 import HomeGuideRequest from "../_components/HomeGuideRequest";
 import { loadGuides, toGuideCard } from "../_lib/loadGuides";
-import { loadInspireStories } from "../_lib/loadInspireStories";
-import { getInspireStorySortDateMillis } from "../_lib/inspireStoryDisplay";
 import { continentSlug, prettyGeo } from "../_lib/continents";
 import { getRequestCurrency } from "../_lib/currency";
 import { getCategoryItems } from "../_lib/categoryPills";
-import { PORTRAIT } from "../_lib/aboutImages";
+import { ABOUT_IMAGES } from "../_lib/aboutImages";
 import { getDict } from "../_lib/i18n";
 
-// Continent → country index for the two geography sections. Only stories
-// that carry both a continent and a country and have a page of their own
-// make it in; each country contributes its most recent story.
-function buildContinentIndex(stories, { countriesPerCard = 3 } = {}) {
+// Continent → country index of the guide catalogue for the destination
+// cards (founder 2026-08-08: those cards sell guides now, not stories).
+// Each country lists its guides by title — same structure the section had
+// when it listed inspire stories — capped per country; the component links
+// any overflow to the guide browser pre-searched to the country (the
+// search haystack includes geography, so ?q=<country> lands filtered and
+// user-clearable).
+function buildGuideGeoIndex(guides, { countriesPerCard = 4, guidesPerCountry = 3 } = {}) {
   const byContinent = new Map();
 
-  for (const story of stories) {
-    const geo = story.metadata?.geography || {};
+  for (const g of guides) {
+    const geo = g.metadata?.geography || {};
     const name = prettyGeo(geo.continent);
     const country = prettyGeo(geo.country);
-    if (!name || !country || !story.slug) continue;
+    if (!name || !country || !g.href) continue;
 
     const slug = continentSlug(geo.continent);
     if (!byContinent.has(slug)) {
@@ -34,16 +35,16 @@ function buildContinentIndex(stories, { countriesPerCard = 3 } = {}) {
     const continent = byContinent.get(slug);
     continent.count += 1;
 
-    const date = getInspireStorySortDateMillis(story) || 0;
-    const current = continent.countries.get(country);
-    if (!current || date > current.date) {
-      continent.countries.set(country, {
-        country,
-        title: story.title,
-        href: `/inspire/${story.slug}`,
-        date,
-      });
+    const entry = continent.countries.get(country) || {
+      country,
+      count: 0,
+      guides: [],
+    };
+    entry.count += 1;
+    if (entry.guides.length < guidesPerCountry) {
+      entry.guides.push({ title: g.title, href: g.href });
     }
+    continent.countries.set(country, entry);
   }
 
   return [...byContinent.values()]
@@ -53,17 +54,14 @@ function buildContinentIndex(stories, { countriesPerCard = 3 } = {}) {
       name: c.name,
       count: c.count,
       entries: [...c.countries.values()]
-        .sort((a, b) => b.date - a.date)
+        .sort((a, b) => b.count - a.count || a.country.localeCompare(b.country))
         .slice(0, countriesPerCard),
     }));
 }
 
 export default async function HomePage() {
   const currency = await getRequestCurrency();
-  const [allGuides, stories] = await Promise.all([
-    loadGuides(currency),
-    loadInspireStories("en"),
-  ]);
+  const allGuides = await loadGuides(currency);
   const searchableGuides = allGuides.map((g) => ({
     title: g.title,
     slug: g.slug,
@@ -71,69 +69,117 @@ export default async function HomePage() {
     href: g.href,
   }));
   const guideCards = allGuides.map(toGuideCard);
-  const continents = buildContinentIndex(stories);
+  const guideGeo = buildGuideGeoIndex(allGuides);
 
   return (
     <main className="flex w-full flex-col">
       <HomeHero guides={searchableGuides} />
 
-      <section className="mx-auto w-full max-w-7xl px-6 pb-16 pt-16 md:pt-20">
+      {/* pb matches the grid's internal space-y-6, so the break from the
+          Recently-added row into the taupe destination band below reads the
+          same as the break into the Choose-your-adventure band above
+          (founder 2026-08-08). */}
+      <section className="mx-auto w-full max-w-7xl px-6 pb-6 pt-16 md:pt-20">
         <div className="mb-10 space-y-3 text-center">
-          {/* 18pt = 24px. */}
-          <p className="font-sans text-[24px] uppercase leading-tight tracking-[0.2em] text-slate-500">
-            AI has not been there. I have
-          </p>
           {/* Fraunces 72pt Supersoft Light (globals.css) at 54pt = 72px. */}
           <h2 className="font-serif font-light leading-tight text-brand-ink text-3xl md:text-5xl lg:text-[72px]">
             Discover the latest guides
           </h2>
+          {/* Mynerve regular under the heading (founder 2026-08-08). A
+              handwriting face needs its own case and spacing, so the
+              uppercase + wide tracking come off. All Mynerve section lines
+              sit at a flat 32px (founder 2026-08-08). */}
+          <p className="font-script text-[32px] leading-tight text-slate-500">
+            AI has not been there. I have
+          </p>
         </div>
-        <HomeBrowse cards={guideCards} t={getDict("en").guideList} />
+        {/* "Choose your adventure" v2 (founder mockup 2026-08-08) rides
+            into the grid as an interlude after the first two rows of cards
+            — photo cards on the plain canvas instead of the old taupe pill
+            band, still driving the grid over the same window events. The
+            explicit key matters: server-created elements arrive frozen on
+            the client, so React key-checks them among siblings. */}
+        <HomeBrowse
+          cards={guideCards}
+          t={getDict("en").guideList}
+          interlude={
+            // Full-page-width Taupe Grey #5F524D band (founder 2026-08-08),
+            // breaking out of the max-w container like the guides-page bands.
+            <div
+              key="choose-your-adventure"
+              className="relative left-1/2 w-screen -translate-x-1/2 bg-brand-taupe py-12 md:py-16"
+            >
+              <div className="mx-auto w-full max-w-7xl px-6">
+                <HomeAdventureGrid items={getCategoryItems()} cards={guideCards} />
+              </div>
+            </div>
+          }
+        />
       </section>
 
-      <HomeContinents continents={continents}>
-        <HomeCategoryTiles items={getCategoryItems()} />
-      </HomeContinents>
+      {/* Browse-by-destination on a full-width Taupe Grey #5F524D band
+          (founder 2026-08-08), like the Choose-your-adventure band above. */}
+      <section className="w-full bg-brand-taupe py-12 md:py-16">
+        <div className="mx-auto w-full max-w-7xl px-6">
+          <HomeDestinationIndex continents={guideGeo} />
+        </div>
+      </section>
 
       <div className="mx-auto flex w-full max-w-7xl flex-col gap-16 px-6 py-16 md:gap-20 md:py-24">
-        <HomeDestinationIndex continents={continents} />
-
-        <section className="rounded-[28px] bg-white p-6 shadow-sm ring-1 ring-slate-200 md:grid md:grid-cols-[260px_1fr] md:gap-8">
-          <Image
-            src={PORTRAIT}
-            alt="Paulius on the road"
-            sizes="(min-width: 768px) 260px, 100vw"
-            className="h-44 w-full rounded-2xl object-cover object-center md:h-full md:max-h-[320px]"
-          />
-          <div className="mt-6 space-y-5 md:mt-0">
-            <div className="space-y-2">
-              <p className="text-xs uppercase tracking-[0.2em] text-slate-500">About me</p>
-              <h2 className="font-serif text-xl font-light leading-tight text-brand-ink md:text-[32px]">
-                Fifteen years on the road.
+        {/* About band (founder mockup 2026-08-08, v2 — replaces the
+            scrapbook layout from earlier the same day): a wide on-the-road
+            photo with the heading over it, then the intro paragraph and
+            fact list on the #DCDACD palette background (the brand-bone
+            token; tailwind.config.js has the bone/parchment names swapped
+            relative to styleguide V3). */}
+        <section className="overflow-hidden rounded-[28px] bg-brand-bone">
+          <div className="relative h-[280px] md:h-[360px]">
+            <Image
+              src={ABOUT_IMAGES["Why I do this.jpg"]}
+              alt="Standing on the Edge of the World cliffs outside Riyadh, Saudi Arabia"
+              fill
+              sizes="(min-width: 1280px) 1216px, 100vw"
+              className="object-cover object-[50%_55%]"
+            />
+            {/* Bright desert sky — the heading needs its own floor. */}
+            <div className="absolute inset-0 bg-gradient-to-t from-brand-ink/70 via-brand-ink/20 to-transparent" />
+            <div className="absolute inset-x-0 bottom-0 px-6 pb-6 md:px-10 md:pb-8">
+              <h2 className="font-serif text-3xl font-light leading-tight text-white md:text-5xl">
+                Fifteen years on the road
+                <span className="text-brand-terracotta">.</span>
               </h2>
-              <p className="font-serif font-supersoft text-base font-light leading-relaxed text-slate-600">
-                Real trips. Real routes. Not desk research, not aggregated reviews.
+              <p className="mt-1 font-serif font-supersoft text-lg font-light text-white/90 md:text-2xl">
+                Real trips. Real routes.
               </p>
             </div>
-            <ul className="grid gap-2 text-sm text-slate-700 sm:grid-cols-2">
-              <li className="rounded-2xl border border-slate-200 bg-slate-50 px-4 py-2.5">
-                <span className="font-semibold text-slate-900">140 countries</span> travelled
+          </div>
+
+          <div className="px-6 py-8 md:px-10 md:py-10">
+            <p className="max-w-3xl text-lg leading-relaxed text-slate-700 md:text-[22px]">
+              Every route here comes from trips I have planned and tested
+              myself across more than 140 countries, from day hikes in
+              Switzerland to overland travel through West Africa.
+            </p>
+            <ul className="mt-6 grid max-w-3xl gap-x-10 gap-y-2.5 text-base text-slate-700 sm:grid-cols-2">
+              <li className="flex items-baseline gap-2.5">
+                <span aria-hidden="true" className="text-brand-terracotta">•</span>
+                140 countries and counting
               </li>
-              <li className="rounded-2xl border border-slate-200 bg-slate-50 px-4 py-2.5">
-                <span className="font-semibold text-slate-900">500+ trips</span> documented over 15 years
+              <li className="flex items-baseline gap-2.5">
+                <span aria-hidden="true" className="text-brand-terracotta">•</span>
+                5 of 7 Summits climbed
               </li>
-              <li className="rounded-2xl border border-slate-200 bg-slate-50 px-4 py-2.5">
-                <span className="font-semibold text-slate-900">5 of 7 Summits</span> climbed
+              <li className="flex items-baseline gap-2.5">
+                <span aria-hidden="true" className="text-brand-terracotta">•</span>
+                4× Africa Rally, one blown gearbox
               </li>
-              <li className="rounded-2xl border border-slate-200 bg-slate-50 px-4 py-2.5">
-                <span className="font-semibold text-slate-900">4 Africa Rally</span> expeditions
-              </li>
-              <li className="rounded-2xl border border-slate-200 bg-slate-50 px-4 py-2.5 sm:col-span-2">
-                <span className="font-semibold text-slate-900">100+ bucket-list experiences</span> completed
+              <li className="flex items-baseline gap-2.5">
+                <span aria-hidden="true" className="text-brand-terracotta">•</span>
+                500+ trips in the notebooks
               </li>
             </ul>
             <Link
-              className="inline-flex text-sm font-medium text-slate-900 underline decoration-slate-300 underline-offset-4 transition hover:text-slate-700 hover:decoration-slate-500"
+              className="mt-8 inline-flex border-b-2 border-brand-terracotta pb-0.5 font-sans text-base font-bold text-slate-900 transition hover:text-brand-terracotta"
               href="/about"
             >
               Read the full story →

@@ -14,7 +14,8 @@
     "setup:pricing": "node --env-file=.env.local scripts/setup-pricing-tiers.mjs",
     "sync:polar": "node --env-file=.env.local scripts/sync-polar-products.mjs",
     "sweep:em-dashes": "node --env-file=.env.local scripts/sweep-sanity-em-dashes.mjs",
-    "reexport:cards": "node --env-file=.env.local scripts/reexport-card-pages.mjs"
+    "reexport:cards": "node --env-file=.env.local scripts/reexport-card-pages.mjs",
+    "generate:outlines": "node scripts/generate-country-outlines.mjs"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.91.0",
@@ -39,10 +40,12 @@
     "styled-components": "^6.1.13"
   },
   "devDependencies": {
+    "@svg-maps/world": "^2.0.0",
     "autoprefixer": "^10.5.0",
     "mupdf": "^1.28.0",
     "postcss": "^8.5.10",
     "sharp": "^0.35.3",
+    "svg-path-bounds": "^1.0.2",
     "tailwindcss": "^3.4.19"
   }
 }

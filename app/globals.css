@@ -8,6 +8,12 @@ body {
 }
 
 body {
+  /* Full-bleed bands inside centered containers break out with the
+     w-screen + translate trick (guides page); w-screen includes the
+     scrollbar gutter, so without this the page gets a phantom horizontal
+     scroll. clip (unlike hidden) creates no scroll container, so the
+     sticky header keeps working. */
+  overflow-x: clip;
   /* Canvas wash (founder 2026-07-25): Bone at the top fading into
      Parchment over the first screen, then solid Parchment. Both are
      palette backgrounds - a warm, tone-on-tone gradient. */
