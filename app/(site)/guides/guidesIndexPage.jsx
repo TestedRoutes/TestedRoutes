@@ -71,10 +71,11 @@ export default async function GuidesIndexPage({ lang = "en", q = "" }) {
   );
 
   return (
-    // overflow-x-clip: the How-I-test band breaks out to w-screen, which
-    // includes the scrollbar gutter — clipping stops a phantom horizontal
-    // scroll without affecting anything visible.
-    <main className="mx-auto flex max-w-7xl flex-col gap-10 overflow-x-clip px-6 pb-16 pt-12 md:pt-16">
+    // NB: no overflow clipping here — the Taupe bands break out to
+    // w-screen, and a clip on this max-w-7xl container would cut them back
+    // to content width. The phantom-scroll guard lives on <body> instead
+    // (globals.css).
+    <main className="mx-auto flex max-w-7xl flex-col gap-10 px-6 pb-16 pt-12 md:pt-16">
       <section className="space-y-10">
         {/* Left-aligned header + search (founder 2026-08-08). */}
         <div className="space-y-2">

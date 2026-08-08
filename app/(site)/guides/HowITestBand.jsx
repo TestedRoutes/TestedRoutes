@@ -22,7 +22,8 @@ export default function HowITestBand({ title, body, items = [] }) {
         <h2 className="font-script text-[32px] font-normal leading-tight text-white/90">
           {title}
         </h2>
-        <p className="mx-auto max-w-2xl font-serif font-supersoft text-base font-light leading-relaxed text-white/80">
+        {/* 20px (founder 2026-08-08). */}
+        <p className="mx-auto max-w-2xl font-serif font-supersoft text-xl font-light leading-relaxed text-white/80">
           {body}
         </p>
       </div>
