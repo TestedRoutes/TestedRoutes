@@ -55,7 +55,7 @@ export default function GuidesBrowse({
 
   return (
     <div className="space-y-10">
-      <div className="mx-auto w-full max-w-2xl">
+      <div className="w-full max-w-2xl">
         <div className="flex w-full items-center gap-2 rounded-full bg-white p-1.5 shadow-md ring-1 ring-slate-200 ">
           <input
             type="search"
@@ -100,18 +100,13 @@ export default function GuidesBrowse({
       </div>
 
       <section className="space-y-6">
-        {/* Heading and dropdowns share one row on desktop, vertically
-            centered (founder 2026-08-08); below md the row wraps. */}
-        <div className="flex flex-wrap items-center gap-x-4 gap-y-3">
-          <h2 className="shrink-0 text-xl font-normal">{tl.browseHeading}</h2>
-          <div className="min-w-0 flex-1">
-            <GuideFilterRow options={options} filters={filters} onChange={setFilter} tl={tl}>
-              <p className="text-xs font-medium tabular-nums text-slate-500">
-                {filtered.length} {filtered.length === 1 ? tl.guide : tl.guides}
-              </p>
-            </GuideFilterRow>
-          </div>
-        </div>
+        {/* No heading on the filter row (founder 2026-08-08) — just the
+            dropdowns with the result count on the right. */}
+        <GuideFilterRow options={options} filters={filters} onChange={setFilter} tl={tl}>
+          <p className="text-xs font-medium tabular-nums text-slate-500">
+            {filtered.length} {filtered.length === 1 ? tl.guide : tl.guides}
+          </p>
+        </GuideFilterRow>
 
         {cardGrid(firstRows)}
         {interlude}

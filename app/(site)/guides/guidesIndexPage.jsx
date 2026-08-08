@@ -76,7 +76,8 @@ export default async function GuidesIndexPage({ lang = "en", q = "" }) {
     // scroll without affecting anything visible.
     <main className="mx-auto flex max-w-7xl flex-col gap-10 overflow-x-clip px-6 pb-16 pt-12 md:pt-16">
       <section className="space-y-10">
-        <div className="space-y-2 text-center">
+        {/* Left-aligned header + search (founder 2026-08-08). */}
+        <div className="space-y-2">
           <h1 className="font-serif font-normal leading-[1.1] text-brand-ink text-2xl md:text-[26px] lg:text-5xl">
             {tl.heading}
           </h1>
