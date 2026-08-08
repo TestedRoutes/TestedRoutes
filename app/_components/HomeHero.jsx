@@ -31,13 +31,15 @@ export default function HomeHero({ guides = [] }) {
   }, []);
 
   return (
-    // The negative top margin pulls the photo up behind the sticky header
-    // (h-16 / md:h-20), which goes transparent while the hero is in view.
-    // The band wants the photo's 4:3 ratio but is capped at 78vh, so a wide
-    // window trims the frame top and bottom rather than running past the
-    // fold. Below md a floor height applies instead, because the headline
-    // and search need the room.
-    <section className="relative isolate -mt-16 overflow-hidden md:-mt-20 md:aspect-[4/3] md:max-h-[78vh]">
+    // The photo starts below the sticky header (founder 2026-08-08: the bar
+    // stays solid, nothing runs behind it). Height is header-complement
+    // (100vh minus h-16 / md:h-20) so header + hero exactly fill the first
+    // screen; an explicit height rather than aspect-ratio + max-height,
+    // because Safari resolves that pair by shrinking the box's *width* to
+    // keep the ratio, collapsing the hero to half the viewport. Below md a
+    // floor height applies instead, because the headline and search need
+    // the room.
+    <section className="relative isolate overflow-hidden md:h-[calc(100vh-5rem)]">
       <Image
         src={heroImage}
         alt="Sitting in a woven poncho above the Quilotoa crater lagoon, Ecuador"
@@ -51,7 +53,7 @@ export default function HomeHero({ guides = [] }) {
       {/* Scrim: the photo's sky is bright, so the copy needs its own floor. */}
       <div className="absolute inset-0 -z-10 bg-gradient-to-t from-brand-ink/80 via-brand-ink/25 to-transparent" />
 
-      <div className="mx-auto flex min-h-[560px] max-w-7xl flex-col justify-end px-6 pb-12 pt-28 md:h-full md:min-h-0 md:pb-16">
+      <div className="mx-auto flex min-h-[560px] max-w-7xl flex-col justify-end px-6 pb-12 pt-16 md:h-full md:min-h-0 md:pb-16">
         {/* 18pt = 24px. */}
         <p className="font-sans text-[24px] uppercase leading-tight tracking-[0.2em] text-white/85">
           Skip the research. Take the trip

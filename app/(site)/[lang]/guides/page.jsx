@@ -14,8 +14,9 @@ export async function generateMetadata({ params }) {
   return buildGuidesIndexMetadata(lang);
 }
 
-export default async function LocalizedGuidesPage({ params }) {
+export default async function LocalizedGuidesPage({ params, searchParams }) {
   const { lang } = await params;
   if (!ALT_LOCALES.includes(lang)) notFound();
-  return <GuidesIndexPage lang={lang} />;
+  const { q = "" } = (await searchParams) || {};
+  return <GuidesIndexPage lang={lang} q={q} />;
 }

@@ -26,17 +26,10 @@ function getActiveSlug(pathname) {
   return null;
 }
 
-function primaryNavLinkClass(active, slug, overHero) {
+function primaryNavLinkClass(active, slug) {
   // Pill-on-hover: links carry their own padding so the highlight has a
-  // shape; 5% Coffee Bean reads as a soft warm gray on Parchment. Over the
-  // home hero photo the bar is transparent, so the links invert to white.
+  // shape; 5% Coffee Bean reads as a soft warm gray on Parchment.
   const base = "rounded-full px-3 py-1.5 font-bold tracking-[0.05em] transition-colors";
-  if (overHero) {
-    if (active === slug) {
-      return `${base} text-white underline decoration-white/50 decoration-1 underline-offset-[6px]`;
-    }
-    return `${base} text-white/85 hover:bg-white/15 hover:text-white`;
-  }
   if (active === slug) {
     return `${base} text-slate-900 underline decoration-slate-800/35 decoration-1 underline-offset-[6px]`;
   }
@@ -65,21 +58,11 @@ export default function SiteHeader({ currency = "EUR", guides = [] }) {
   ];
   const [heroSearchVisible, setHeroSearchVisible] = useState(true);
   const [scrolledPast, setScrolledPast] = useState(false);
-  const [atTop, setAtTop] = useState(true);
 
   useEffect(() => {
     setHeroSearchVisible(true);
     setScrolledPast(false);
   }, [pathname]);
-
-  // The transparent-over-photo bar fills in on the first scroll tick rather
-  // than waiting for the hero to leave the viewport.
-  useEffect(() => {
-    const handler = () => setAtTop(window.scrollY <= 4);
-    handler();
-    window.addEventListener("scroll", handler, { passive: true });
-    return () => window.removeEventListener("scroll", handler);
-  }, []);
 
   useEffect(() => {
     const handler = (e) => setHeroSearchVisible(Boolean(e.detail));
@@ -106,21 +89,14 @@ export default function SiteHeader({ currency = "EUR", guides = [] }) {
 
   const showHeaderSearch =
     (isHome && !heroSearchVisible) || (isSection && scrolledPast);
-  // The home hero photo runs up behind the bar, so the bar is transparent
-  // only while the page sits at the very top.
-  const overHero = isHome && heroSearchVisible && atTop;
 
   return (
-    <header
-      className={`sticky top-0 z-50 transition-colors ${
-        overHero
-          ? "border-b border-transparent bg-transparent"
-          // Bone #F4F3EF, the styleguide's main background. NB: the
-          // brand-bone token is #DCDACD - tailwind.config.js has the
-          // bone/parchment names swapped relative to styleguide V3.
-          : "border-b border-slate-200/40 bg-brand-parchment"
-      }`}
-    >
+    // Always the solid Bone bar (founder 2026-08-08: the hero photo no
+    // longer runs behind it, so the transparent-over-photo state is gone).
+    // Bone #F4F3EF, the styleguide's main background. NB: the brand-bone
+    // token is #DCDACD - tailwind.config.js has the bone/parchment names
+    // swapped relative to styleguide V3.
+    <header className="sticky top-0 z-50 border-b border-slate-200/40 bg-brand-parchment">
       <nav
         className="mx-auto flex h-16 md:h-20 max-w-7xl items-center justify-between gap-3 px-4 text-sm text-slate-900 md:gap-6 md:px-6"
         aria-label="Primary"
@@ -131,12 +107,10 @@ export default function SiteHeader({ currency = "EUR", guides = [] }) {
           aria-current={active === "home" ? "page" : undefined}
         >
           {/* SVG logo needs no next/image optimization; plain img keeps it crisp. */}
-          {/* Only a dark logo file exists; brightness-0 + invert paints it
-              white for the transparent-over-photo state. */}
           <img
             src={logoVertical.src}
             alt="TestedRoutes"
-            className={`h-[21px] w-auto md:h-[34px] ${overHero ? "brightness-0 invert" : ""}`}
+            className="h-[21px] w-auto md:h-[34px]"
           />
         </Link>
 
@@ -152,7 +126,7 @@ export default function SiteHeader({ currency = "EUR", guides = [] }) {
           {navLinks.map((link) => (
             <Link
               key={link.slug}
-              className={primaryNavLinkClass(active, link.slug, overHero)}
+              className={primaryNavLinkClass(active, link.slug)}
               href={link.href}
               aria-current={active === link.slug ? "page" : undefined}
             >
