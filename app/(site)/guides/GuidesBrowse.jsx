@@ -10,10 +10,10 @@ import {
 } from "../../_lib/guideFilters";
 
 // Line icons for the trust trio, drawn light on the Taupe band:
-// mountain / clock / pin.
+// mountain / PDF document ("Made for the road") / pin.
 const TRUST_ICONS = [
   <path key="mountain" d="M3 20 L10 6 L14 13 L17 9 L21 20 Z M8.5 9 L10 11 L11.5 9" />,
-  <path key="clock" d="M12 21 a9 9 0 1 1 0-18 a9 9 0 0 1 0 18 Z M12 7 V12 L15.5 14" />,
+  <path key="document" d="M6 2 H14 L19 7 V22 H6 Z M14 2 V7 H19 M9.5 12.5 H15.5 M9.5 16.5 H13.5" />,
   <path key="pin" d="M12 21 C12 21 5 14.5 5 9.5 A7 7 0 0 1 19 9.5 C19 14.5 12 21 12 21 Z M12 12 a2.5 2.5 0 1 0 0-5 a2.5 2.5 0 0 0 0 5 Z" />,
 ];
 
