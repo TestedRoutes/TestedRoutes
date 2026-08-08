@@ -48,11 +48,14 @@ function StoryCard({ card, t }) {
           fit one screen above the tab bar; 3:4 from sm up, where the grid
           columns keep cards short anyway. Matches the guide cards. */}
       <div className="relative aspect-square w-full shrink-0 overflow-hidden bg-slate-100 sm:aspect-[3/4]">
+        {/* videoHoverOnly: on desktop the card clips sit frozen and play
+            on hover; touch devices keep autoplay (founder 2026-08-08). */}
         {slides.length ? (
           <CardMediaCarousel
             slides={slides}
             alt={card.heroAlt || card.title}
             imgClassName="object-center transition duration-500 ease-out group-hover:scale-[1.03]"
+            videoHoverOnly
           />
         ) : (
           <div className="flex h-full min-h-[9.5rem] w-full items-center justify-center bg-slate-100 text-[11px] font-medium text-slate-400">
