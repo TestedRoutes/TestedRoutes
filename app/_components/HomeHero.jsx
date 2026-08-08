@@ -58,10 +58,23 @@ export default function HomeHero({ guides = [] }) {
         <p className="font-sans text-[24px] uppercase leading-tight tracking-[0.2em] text-white/85">
           Skip the research. Take the trip
         </p>
-        {/* 72pt = 96px at full size. */}
-        <h1 className="mt-4 max-w-5xl font-serif font-light leading-[1.05] text-white text-4xl md:text-6xl lg:text-[96px]">
-          <span className="md:hidden">Guides built from real trips</span>
-          <span className="hidden md:inline">Travel guides built from real trips</span>
+        {/* 72px at full size (founder 2026-08-08, down from 96px) — same cap
+            as the "Discover the latest guides" section heading. The line
+            break is explicit rather than left to natural wrapping: the
+            headline reads as a claim on line one ("Travel guides") answered
+            on line two ("built from real trips"), and where the box edge
+            happens to fall varies with viewport. */}
+        <h1 className="mt-4 max-w-5xl font-serif font-light leading-[1.05] text-white text-4xl md:text-6xl lg:text-[72px]">
+          <span className="md:hidden">
+            Guides
+            <br />
+            built from real trips
+          </span>
+          <span className="hidden md:inline">
+            Travel guides
+            <br />
+            built from real trips
+          </span>
         </h1>
 
         <div ref={searchRef} className="mt-8 w-full max-w-[640px] md:mt-10">
