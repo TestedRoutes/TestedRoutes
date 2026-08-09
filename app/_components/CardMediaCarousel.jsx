@@ -34,26 +34,74 @@ export function buildMediaSlides({ photos = [], videoUrl = null, videoSlot = nul
 // to another slide or scrolling the card away pauses it. No poster: the
 // photo-to-first-frame swap reads as a jump, so the clip stays invisible
 // (container bg shows) until it has frames, then fades in.
-function CardVideo({ src, title, className = "h-full w-full object-cover" }) {
+//
+// hoverOnly (founder 2026-08-08, inspire cards): on hover-capable devices
+// the clip sits frozen on its first frame and only plays while the pointer
+// is over it. Touch devices keep the autoplay-when-visible behavior — there
+// is no hover to wait for.
+function CardVideo({ src, title, className = "h-full w-full object-cover", hoverOnly = false }) {
   const ref = useRef(null);
   const [ready, setReady] = useState(false);
+  const hovering = useRef(false);
+  const visible = useRef(false);
 
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
+    const hoverCapable =
+      hoverOnly &&
+      typeof matchMedia !== "undefined" &&
+      matchMedia("(hover: hover) and (pointer: fine)").matches;
+
+    const sync = () => {
+      const shouldPlay = visible.current && (!hoverCapable || hovering.current);
+      if (shouldPlay) el.play().catch(() => {});
+      else el.pause();
+    };
+
     // Media events race hydration; poll readyState until frames exist.
+    // preload="metadata" alone never decodes a frame, so the frozen
+    // hover-only clip nudges currentTime to force the first frame in.
     const poll = setInterval(() => {
+      if (hoverCapable && el.readyState < 2 && el.readyState >= 1 && el.currentTime === 0) {
+        try {
+          el.currentTime = 0.001;
+        } catch {}
+      }
       if (el.readyState >= 2) {
         setReady(true);
         clearInterval(poll);
       }
     }, 250);
-    if (typeof IntersectionObserver === "undefined")
-      return () => clearInterval(poll);
+
+    const onEnter = () => {
+      hovering.current = true;
+      sync();
+    };
+    const onLeave = () => {
+      hovering.current = false;
+      sync();
+    };
+    if (hoverCapable) {
+      el.addEventListener("mouseenter", onEnter);
+      el.addEventListener("mouseleave", onLeave);
+    }
+
+    if (typeof IntersectionObserver === "undefined") {
+      visible.current = true;
+      sync();
+      return () => {
+        clearInterval(poll);
+        if (hoverCapable) {
+          el.removeEventListener("mouseenter", onEnter);
+          el.removeEventListener("mouseleave", onLeave);
+        }
+      };
+    }
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting) el.play().catch(() => {});
-        else el.pause();
+        visible.current = entry.isIntersecting;
+        sync();
       },
       { threshold: 0.5 }
     );
@@ -61,8 +109,12 @@ function CardVideo({ src, title, className = "h-full w-full object-cover" }) {
     return () => {
       clearInterval(poll);
       observer.disconnect();
+      if (hoverCapable) {
+        el.removeEventListener("mouseenter", onEnter);
+        el.removeEventListener("mouseleave", onLeave);
+      }
     };
-  }, []);
+  }, [hoverOnly]);
 
   return (
     <video
@@ -97,6 +149,7 @@ export default function CardMediaCarousel({
   imgClassName = "",
   eagerFirstSlide = false,
   fit = "cover",
+  videoHoverOnly = false,
 }) {
   const isContain = (slide) => (slide.fit || fit) === "contain";
   const [idx, setIdx] = useState(0);
@@ -150,6 +203,7 @@ export default function CardMediaCarousel({
                   poster={slide.poster}
                   title={alt}
                   className={mediaClass}
+                  hoverOnly={videoHoverOnly}
                 />
               ) : (
                 <img

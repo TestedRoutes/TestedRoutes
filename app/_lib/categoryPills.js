@@ -5,7 +5,9 @@
 // category-specific photos later.
 import toubkal from "../../content/category-pills/Toubkal 2025.jpg";
 import denali from "../../content/category-pills/7_Summits_Denali 2022.jpg";
-import summitsAlaska from "../../content/category-pills/Summits Alaska 2019 v2.jpg";
+// 1280px copy (founder swap 2026-08-08) — wider than the older 640px pills
+// because the adventure cards render large now.
+import skiing from "../../content/category-pills/skiing.jpg";
 import sharksFiji from "../../content/category-pills/Sharks Fiji 2025.jpg";
 import raftingZambia from "../../content/category-pills/Rafting Zambia 2019.jpg";
 import milfordSound from "../../content/category-pills/Milford Sound - NZ 2025.jpg";
@@ -21,7 +23,7 @@ import mtCook from "../../content/category-pills/Mt Cook - NZ 2026.jpg";
 const CATEGORY_PILLS = [
   { label: "Hiking", image: toubkal },
   { label: "Mountaineering", image: denali },
-  { label: "Skiing", image: summitsAlaska },
+  { label: "Skiing", image: skiing },
   { label: "Diving", image: sharksFiji },
   { label: "Rafting", image: raftingZambia },
   { label: "Kayaking", image: milfordSound },

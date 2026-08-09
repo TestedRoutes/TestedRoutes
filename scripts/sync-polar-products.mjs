@@ -3,7 +3,8 @@
  * Sync Sanity guides → Polar products.
  *
  * Source of truth: Sanity. Re-running upserts each guide's Polar product:
- *   - name, description, multi-currency prices come from Sanity
+ *   - name, description, multi-currency prices come from Sanity, and a
+ *     repriced guide patches its live product (old prices get archived)
  *   - PDF is uploaded once (file replacement is a future flag)
  *
  * Idempotency: Polar product ID written back to `guide.polarProductId` after
@@ -101,6 +102,52 @@ function pickPrices(guide) {
     return guide.customPrices;
   }
   return guide?.pricingTier?.prices ?? [];
+}
+
+// Sanity price entries in the shape Polar's products API wants.
+function fixedPrices(guide) {
+  return pickPrices(guide).map((p) => ({
+    amountType: "fixed",
+    priceCurrency: String(p.currency).toLowerCase(),
+    priceAmount: toCents(p.amount),
+  }));
+}
+
+// Order-independent fingerprints, so a reordered price array is not read as
+// a price change and does not needlessly archive every live price.
+function priceKey(prices) {
+  return prices
+    .map((p) => `${p.priceCurrency}:${p.priceAmount}`)
+    .sort()
+    .join("|");
+}
+
+function livePriceKey(product) {
+  return priceKey(
+    (product.prices || [])
+      .filter((p) => !p.isArchived && p.amountType === "fixed")
+      .map((p) => ({
+        priceCurrency: String(p.priceCurrency).toLowerCase(),
+        priceAmount: p.priceAmount,
+      })),
+  );
+}
+
+// Polar validates product names at 64 characters, which the longer plan
+// titles exceed ("Triftbrücke from Zurich: A Day Trip to the Trift
+// Suspension Bridge" is 66). The site keeps the full title; only the
+// checkout-facing name is shortened, and the part before the colon is the
+// route itself, so it identifies the product on its own.
+function productName(title) {
+  const full = (title || "guide").trim();
+  if (full.length <= 64) return full;
+  if (full.includes(":")) {
+    const head = full.split(":")[0].trim();
+    if (head.length >= 8 && head.length <= 64) return head;
+  }
+  const cut = full.slice(0, 64);
+  const lastSpace = cut.lastIndexOf(" ");
+  return (lastSpace > 10 ? cut.slice(0, lastSpace) : cut).replace(/[\s:,–-]+$/, "");
 }
 
 // Buyer-facing downloadables label, within Polar's 42-char server limit.
@@ -221,11 +268,7 @@ async function downloadPdf(url) {
 /* ────────── per-guide handlers ────────── */
 
 async function syncCreate({ guide }) {
-  const prices = pickPrices(guide).map((p) => ({
-    amountType: "fixed",
-    priceCurrency: String(p.currency).toLowerCase(),
-    priceAmount: toCents(p.amount),
-  }));
+  const prices = fixedPrices(guide);
 
   // 1. Upload PDF
   if (VERBOSE) console.log(`    ↑ uploading PDF for ${guide.slug}`);
@@ -246,7 +289,7 @@ async function syncCreate({ guide }) {
   // 3. Create the product (private, with all currency prices, sanity_story_id metadata)
   if (VERBOSE) console.log(`    + creating product`);
   const product = await polar.products.create({
-    name: guide.title,
+    name: productName(guide.title),
     description: guide.subtitle || `Tested route: ${guide.title}.`,
     recurringInterval: null,
     prices,
@@ -281,15 +324,24 @@ async function syncCreate({ guide }) {
 }
 
 async function syncUpdate({ guide, existing }) {
-  // Name + description, then the PDF itself. Price changes still need an
-  // archive-and-recreate flow and are not handled here.
+  // Name + description + prices, then the PDF itself.
   const description = guide.subtitle || `Tested route: ${guide.title}.`;
-  if (existing.name !== guide.title || existing.description !== description) {
-    if (VERBOSE) console.log(`    ~ updating name/description`);
-    await polar.products.update({
-      id: existing.id,
-      productUpdate: { name: guide.title, description },
-    });
+  const name = productName(guide.title);
+  const update = {};
+  if (existing.name !== name || existing.description !== description) {
+    update.name = name;
+    update.description = description;
+  }
+  // Repricing an existing product: send the whole fixed-price list and Polar
+  // archives whatever it replaces. Safe because checkout is created from the
+  // product ID (app/api/checkout/route.js), never a pinned price ID, and
+  // past orders keep their own archived price record.
+  if (livePriceKey(existing) !== priceKey(fixedPrices(guide))) {
+    update.prices = fixedPrices(guide);
+  }
+  if (Object.keys(update).length) {
+    if (VERBOSE) console.log(`    ~ updating ${Object.keys(update).join(", ")}`);
+    await polar.products.update({ id: existing.id, productUpdate: update });
   }
   await syncBenefitPdf({ guide, existing });
   return existing.id;
