@@ -169,6 +169,22 @@ const ALT = {
     "9. simplon-saas-fee-gorge.jpg": { alt: "The gorge tower at the entrance to Saas-Fee, glaciers above" },
     "10. simplon-eagle-monument.jpg": { alt: "The stone monument on Simplon Pass, minutes from the Hospiz" },
   },
+  "story-iceland-ring-road-7-days": {
+    "1. cover.jpg": { alt: "Cover of the Iceland Ring Road seven-day self-drive guide" },
+    "2. snapshot.jpg": { alt: "Route snapshot page: pace, difficulty, season and what to expect" },
+    "3. clip.mp4": { alt: "Strokkur erupting at Geysir, filmed from the roped edge" },
+    "4. clip.mp4": { alt: "A wide waterfall pouring over its lip on the south coast, walkers at the base for scale" },
+    "5.jpg": { alt: "Basalt columns at Reynisfjara, a walker in red climbing them, with the sea stacks beyond" },
+    "6. clip.mp4": { alt: "Dark sea cliffs dropping to the Atlantic under an open sky" },
+    "7. clip.mp4": { alt: "Icebergs drifting across the glacier lagoon toward the sea" },
+    "8.jpg": { alt: "A Reykjavík shopping street with painted shopfronts and a striped crossing" },
+    "9. clip.mp4": { alt: "Grey meltwater and low cloud over the lagoon" },
+    "10.jpg": { alt: "A blue-and-white Icelandic house with a turf roof under an open sky" },
+    "11. clip.mp4": { alt: "Steam rising off the orange mineral ground of a geothermal field" },
+    "12.jpg": { alt: "The black sand beach at Reynisfjara with the Reynisdrangar stacks and a lone figure in red" },
+    "13.jpg": { alt: "Hallgrímskirkja seen head-on from the plaza, its stepped concrete façade filling the frame" },
+    "15.jpg": { alt: "A single blue-white iceberg drifting in the turquoise water of the glacier lagoon" },
+  },
 };
 
 const client = createClient({
