@@ -51,8 +51,14 @@ export default function GuideListCard({ guide, t, lang = "en" }) {
   const contextLine =
     guide.cardLine ||
     [pretty(geo.country), pretty(geo.continent)].filter(Boolean).join(" · ");
+  // The subtitle is the customer-facing line from the Content Plan and says
+  // what this route actually is. The meta description is written for search
+  // and restates the title's keywords, so leading with it made every card
+  // read "Alp Flix to Ausserferrera: A 2-Day Alpine Passes Trail Hike / A
+  // 2-day hike on Switzerland's Alpine Passes Trail…". Subtitle first, meta
+  // description only as a fallback for guides that have no subtitle yet.
   const excerpt =
-    guide.metadata?.seo?.meta_description || guide.metadata?.hero?.subtitle || "";
+    guide.metadata?.hero?.subtitle || guide.metadata?.seo?.meta_description || "";
 
   const buyHref = guide.polarProductId
     ? `/api/checkout?products=${encodeURIComponent(guide.polarProductId)}`

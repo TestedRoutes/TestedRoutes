@@ -3,6 +3,7 @@ import Byline from "../../_components/Byline";
 import StickyBuyBar from "../../_components/StickyBuyBar";
 import GuideBody from "../../_components/GuideBody";
 import GuideCarousel from "./GuideCarousel";
+import GuideTitle from "./GuideTitle";
 import { PrimaryStats, LocationSection, buildLocation } from "./GuideTripSections";
 import { localePath } from "../../_lib/i18n";
 
@@ -116,9 +117,10 @@ export default function GuideSalesPage({
           {hero.eyebrow ? (
             <p className="text-[12px] uppercase tracking-[0.1em] text-slate-500">{hero.eyebrow}</p>
           ) : null}
-          <h1 className="mt-1 font-bold md:font-medium leading-tight text-slate-900 text-2xl md:text-4xl">
-            {guide.title}
-          </h1>
+          <GuideTitle
+            title={guide.title}
+            className="mt-1 font-bold md:font-medium leading-tight text-slate-900 text-2xl md:text-4xl"
+          />
           {sp.statusNote ? (
             <p className="mt-3 w-fit rounded-xl bg-amber-100 px-4 py-2 text-sm font-semibold text-amber-900">
               {sp.statusNote}
