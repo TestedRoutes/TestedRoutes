@@ -50,6 +50,30 @@ const CURATED = {
   "seychelles-map":
     "https://www.google.com/maps/d/viewer?mid=1EdUP3XbOOmub6TE5IM-6sC7K_SJa-3g",
 
+  // Iceland. Pin-level slugs (iceland-<pinid>) live in Sanity via
+  // sync_go_links from the country master; these are the extra print slugs
+  // with no master row. Maps place-card searches are deliberate v1
+  // destinations — re-point per venue in Studio when providers are picked.
+  //
+  // Namespacing rule, now that Iceland is a multi-guide country: anything
+  // that differs per itinerary is guide-scoped (iceland-7d-*), because the
+  // 5-day South Coast and the layover decks will each ship their own My Map
+  // and would otherwise collide on a slug that is already in print. Places
+  // and services stay country-scoped (iceland-car, iceland-drangar) so a pin
+  // reprinted in six guides keeps one slug and one destination to re-point.
+  "iceland-7d-map":
+    "https://www.google.com/maps/d/viewer?mid=1By0oiIG4vTBy-5NorrCBvuyhXXbfAjg",
+  "iceland-7d-hotels":
+    "https://www.google.com/maps/d/viewer?mid=1By0oiIG4vTBy-5NorrCBvuyhXXbfAjg",
+  "iceland-car":
+    "https://www.google.com/maps/search/?api=1&query=Car%20rental%20Keflavik%20Airport",
+  "iceland-grillmarkadurinn":
+    "https://www.google.com/maps/search/?api=1&query=Grillmarkadurinn%20Reykjavik",
+  "iceland-drangar":
+    "https://www.google.com/maps/search/?api=1&query=Drangar%20restaurant%20Hotel%20Kria%20Vik",
+  "iceland-black-crust":
+    "https://www.google.com/maps/search/?api=1&query=Black%20Crust%20Pizzeria%20Vik",
+
   // Triftbrücke day-trip guide — QR targets, mirrors the guide's meta.yaml
   // reservations. Printed in the PDF: treat every slug as frozen.
   "trift-gondola": "https://www.grimselwelt.ch/en/railways/triftbahn/",
