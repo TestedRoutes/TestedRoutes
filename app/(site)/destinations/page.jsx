@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 import seychellesHero from "../../../content/countries/seychelles/destination/generated/web/source-dargent-from-water.jpg";
-import icelandHero from "../../../content/countries/iceland/destination/generated/web/ring-road-empty-highway.jpg";
+import icelandHero from "../../../content/countries/iceland/destination/generated/web/svartifoss-wide.jpg";
 
 export const metadata = {
   title: "Destinations · TestedRoutes",
@@ -17,7 +17,7 @@ const DESTINATIONS = [
     blurb:
       "How many days you need, what a week really costs, and whether you need a 4x4 – the Ring Road, the south coast, and the layover version.",
     image: icelandHero,
-    alt: "An empty stretch of Iceland's Route 1 running toward distant mountains",
+    alt: "Svartifoss falling between dark basalt columns into a green gorge, Iceland",
   },
   {
     name: "Seychelles",
