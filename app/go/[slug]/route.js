@@ -65,6 +65,27 @@ const CURATED = {
     "https://www.google.com/maps/d/viewer?mid=1By0oiIG4vTBy-5NorrCBvuyhXXbfAjg",
   "iceland-7d-hotels":
     "https://www.google.com/maps/d/viewer?mid=1By0oiIG4vTBy-5NorrCBvuyhXXbfAjg",
+  // 5-day South Coast. Route-scoped per the map-system pattern
+  // {country}-{route}-{duration}-map: a bare iceland-5d-* would collide with the
+  // planned Iceland in Winter 5-day. The founder supplied the /edit link; only the
+  // mid is reused
+  // here and it is rebuilt into the /viewer form, because an edit URL in a printed
+  // QR would hand every reader write access to the master map.
+  "iceland-south-coast-5d-map":
+    "https://www.google.com/maps/d/viewer?mid=1LHV8hb50hJQFCObsvZKKpwG6vPrXwsU",
+  "iceland-south-coast-5d-hotels":
+    "https://www.google.com/maps/d/viewer?mid=1LHV8hb50hJQFCObsvZKKpwG6vPrXwsU",
+  // Venues first printed in the 5-day deck. Country-scoped per the rule above, so a
+  // reprint in the 3-day keeps the same slug. Place-card searches are the v1
+  // destination — re-point per venue in Studio once providers are picked.
+  "iceland-skogafoss-bistro-bar":
+    "https://www.google.com/maps/search/?api=1&query=Skogafoss%20Bistro%20Bar",
+  "iceland-freysnes-grill":
+    "https://www.google.com/maps/search/?api=1&query=Freysnes%20Skaftafell",
+  "iceland-mias-country-van":
+    "https://www.google.com/maps/search/?api=1&query=Mia%27s%20Country%20Van%20Iceland",
+  // Parking app - Fagradalsfjall, Skogar and the DC-3 wreck are all pay-by-app.
+  "parka-app": "https://parka.is/",
   "iceland-car":
     "https://www.google.com/maps/search/?api=1&query=Car%20rental%20Keflavik%20Airport",
   "iceland-grillmarkadurinn":
