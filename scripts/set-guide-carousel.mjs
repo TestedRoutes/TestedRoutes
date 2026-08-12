@@ -50,6 +50,19 @@ const MAX_EDGE = 1600;
 const ALT = {
   // Keys are scoped per doc id: the same natural filename ("1. cover.jpg")
   // can exist in every guide folder without captions bleeding across guides.
+  "story-tuvalu-2-days": {
+    "1. cover.jpg": { alt: "Cover of the Tuvalu two-day Funafuti guide" },
+    "2. snapshot.jpg": { alt: "Route snapshot page: pace, difficulty, season and what to expect" },
+    "3.mp4": { alt: "Waiting at the Alofa Road runway crossing, filmed on the route" },
+    "4.mp4": { alt: "The atoll's reef rim from the plane window on approach" },
+    "5.jpg": { alt: "Kids playing in the lagoon off the causeway at sunset" },
+    "6.mp4": { alt: "Crossing the lagoon by open boat toward the islets, filmed on the route" },
+    "7.jpg": { alt: "Sunset through a palm on Funafuti's ocean shore" },
+    "8.mp4": { alt: "Barefoot over the coral rubble of an islet beach, filmed on the route" },
+    "9.mp4": { alt: "Pandanus trees over the shore road at golden hour" },
+    "10.mp4": { alt: "Riding a hired scooter down Funafuti's one main road" },
+    "11.mp4": { alt: "Kids jumping off the village wharf into the lagoon" },
+  },
   "story-seychelles-1-week": {
     "1. cover.jpg": { alt: "Cover of the Seychelles seven-day island route guide" },
     "2. snapshot.jpg": { alt: "Route snapshot page: pace, difficulty, season and what to expect" },
