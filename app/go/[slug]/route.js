@@ -105,6 +105,22 @@ const CURATED = {
     "https://www.google.com/maps/d/viewer?mid=1By0oiIG4vTBy-5NorrCBvuyhXXbfAjg",
   "iceland-south-coast-5d-map":
     "https://www.google.com/maps/d/viewer?mid=1LHV8hb50hJQFCObsvZKKpwG6vPrXwsU",
+  // Reykjanes + Reykjavik layover. Map slugs are guide-scoped AND language-scoped
+  // (map-system v7): a translated deck ships long before its translated map, so every
+  // language gets its own slug on day one and they all alias the English map until a
+  // translated one exists. Sharing one slug across languages could only be undone by a
+  // reprint. The founder supplied the /edit link; only the mid is reused here and rebuilt
+  // into /viewer, because an edit URL in a printed QR hands every reader write access.
+  "iceland-reykjanes-1d-map-en":
+    "https://www.google.com/maps/d/viewer?mid=1gOs0-oEKpjFWfWEgh6g2Vb1cWwLIfV0",
+  "iceland-reykjanes-1d-map-lt":
+    "https://www.google.com/maps/d/viewer?mid=1gOs0-oEKpjFWfWEgh6g2Vb1cWwLIfV0",
+  "iceland-reykjanes-1d-map-de":
+    "https://www.google.com/maps/d/viewer?mid=1gOs0-oEKpjFWfWEgh6g2Vb1cWwLIfV0",
+  "iceland-reykjanes-1d-map-fr":
+    "https://www.google.com/maps/d/viewer?mid=1gOs0-oEKpjFWfWEgh6g2Vb1cWwLIfV0",
+  "iceland-reykjanes-1d-map-es":
+    "https://www.google.com/maps/d/viewer?mid=1gOs0-oEKpjFWfWEgh6g2Vb1cWwLIfV0",
   // Venues first printed in the 5-day deck. Country-scoped per the rule above, so a
   // reprint in the 3-day keeps the same slug. Place-card searches are the v1
   // destination — re-point per venue in Studio once providers are picked.
