@@ -96,15 +96,6 @@ const CURATED = {
     "https://www.google.com/maps/d/viewer?mid=1LHV8hb50hJQFCObsvZKKpwG6vPrXwsU",
   "iceland-south-coast-5d-map-es":
     "https://www.google.com/maps/d/viewer?mid=1LHV8hb50hJQFCObsvZKKpwG6vPrXwsU",
-  // RETIRING — the bare map slugs the currently-live PDFs print. The reprinted
-  // decks use the -en/-lt forms above, so these exist only to keep the PDFs on
-  // the site resolving until those reprints are published. Delete both, and the
-  // two stale-PinID Sanity docs, once the new PDFs are live. Deleting them first
-  // sends the map QR in every live PDF to the homepage.
-  "iceland-7d-map":
-    "https://www.google.com/maps/d/viewer?mid=1By0oiIG4vTBy-5NorrCBvuyhXXbfAjg",
-  "iceland-south-coast-5d-map":
-    "https://www.google.com/maps/d/viewer?mid=1LHV8hb50hJQFCObsvZKKpwG6vPrXwsU",
   // Reykjanes + Reykjavik layover. Map slugs are guide-scoped AND language-scoped
   // (map-system v7): a translated deck ships long before its translated map, so every
   // language gets its own slug on day one and they all alias the English map until a
@@ -136,16 +127,11 @@ const CURATED = {
     "https://www.google.com/maps/search/?api=1&query=Car%20rental%20Keflavik%20Airport",
   "iceland-grillmarkadurinn":
     "https://www.google.com/maps/search/?api=1&query=Grillmarkadurinn%20Reykjavik",
-  // Both venues now carry the master's PinID as their slug — the print moved to
-  // match the master rather than the other way round. The unsuffixed keys below
-  // are the same retire-after-reprint case as the bare map slugs.
+  // Both venues carry the master's PinID as their slug — the print moved to
+  // match the master rather than the other way round.
   "iceland-drangar-restaurant":
     "https://www.google.com/maps/search/?api=1&query=Drangar%20restaurant%20Hotel%20Kria%20Vik",
   "iceland-black-crust-pizzeria":
-    "https://www.google.com/maps/search/?api=1&query=Black%20Crust%20Pizzeria%20Vik",
-  "iceland-drangar":
-    "https://www.google.com/maps/search/?api=1&query=Drangar%20restaurant%20Hotel%20Kria%20Vik",
-  "iceland-black-crust":
     "https://www.google.com/maps/search/?api=1&query=Black%20Crust%20Pizzeria%20Vik",
 
   // Triftbrücke day-trip guide — QR targets, mirrors the guide's meta.yaml
