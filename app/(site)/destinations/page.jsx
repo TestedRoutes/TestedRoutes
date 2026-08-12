@@ -3,6 +3,7 @@ import Link from "next/link";
 
 import seychellesHero from "../../../content/countries/seychelles/destination/generated/web/source-dargent-from-water.jpg";
 import icelandHero from "../../../content/countries/iceland/destination/generated/web/svartifoss-wide.jpg";
+import tuvaluHero from "../../../content/countries/tuvalu/destination/generated/web/leaning-palm-lagoon.jpg";
 
 export const metadata = {
   title: "Destinations · TestedRoutes",
@@ -27,6 +28,15 @@ const DESTINATIONS = [
       "Four islands in seven days: what is worth your time, when to go, what it costs, and the tested route between them.",
     image: seychellesHero,
     alt: "Granite boulders at Anse Source d'Argent seen from the water, Seychelles",
+  },
+  {
+    name: "Tuvalu",
+    href: "/destinations/tuvalu",
+    region: "Oceania & Pacific",
+    blurb:
+      "The world's least-visited country: how to get there via Fiji, what the flight gap gives you, and two days on Funafuti that actually work.",
+    image: tuvaluHero,
+    alt: "A palm leaning over the turquoise shallows of a lagoon islet, Funafuti, Tuvalu",
   },
   {
     name: "Switzerland",
