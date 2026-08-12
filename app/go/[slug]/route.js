@@ -61,9 +61,24 @@ const CURATED = {
   // and would otherwise collide on a slug that is already in print. Places
   // and services stay country-scoped (iceland-car, iceland-drangar) so a pin
   // reprinted in six guides keeps one slug and one destination to re-point.
-  "iceland-7d-map":
+  //
+  // Map slugs carry a language suffix on top of that: {country}-{route}-
+  // {duration}-map-{lang}. Every language resolves to the English My Map today
+  // and nothing changes for the reader, but a translated map can later be
+  // swapped in per language from Studio without reprinting a PDF. A shared slug
+  // forecloses that permanently, so the full set is registered up front even
+  // though only the EN and LT decks exist — the point is to never have to
+  // reprint for it. Only the printed languages have a QR PNG in the pool; the
+  // rest get one when their deck is built.
+  "iceland-7d-map-en":
     "https://www.google.com/maps/d/viewer?mid=1By0oiIG4vTBy-5NorrCBvuyhXXbfAjg",
-  "iceland-7d-hotels":
+  "iceland-7d-map-lt":
+    "https://www.google.com/maps/d/viewer?mid=1By0oiIG4vTBy-5NorrCBvuyhXXbfAjg",
+  "iceland-7d-map-de":
+    "https://www.google.com/maps/d/viewer?mid=1By0oiIG4vTBy-5NorrCBvuyhXXbfAjg",
+  "iceland-7d-map-fr":
+    "https://www.google.com/maps/d/viewer?mid=1By0oiIG4vTBy-5NorrCBvuyhXXbfAjg",
+  "iceland-7d-map-es":
     "https://www.google.com/maps/d/viewer?mid=1By0oiIG4vTBy-5NorrCBvuyhXXbfAjg",
   // 5-day South Coast. Route-scoped per the map-system pattern
   // {country}-{route}-{duration}-map: a bare iceland-5d-* would collide with the
@@ -71,10 +86,32 @@ const CURATED = {
   // mid is reused
   // here and it is rebuilt into the /viewer form, because an edit URL in a printed
   // QR would hand every reader write access to the master map.
-  "iceland-south-coast-5d-map":
+  "iceland-south-coast-5d-map-en":
     "https://www.google.com/maps/d/viewer?mid=1LHV8hb50hJQFCObsvZKKpwG6vPrXwsU",
-  "iceland-south-coast-5d-hotels":
+  "iceland-south-coast-5d-map-lt":
     "https://www.google.com/maps/d/viewer?mid=1LHV8hb50hJQFCObsvZKKpwG6vPrXwsU",
+  "iceland-south-coast-5d-map-de":
+    "https://www.google.com/maps/d/viewer?mid=1LHV8hb50hJQFCObsvZKKpwG6vPrXwsU",
+  "iceland-south-coast-5d-map-fr":
+    "https://www.google.com/maps/d/viewer?mid=1LHV8hb50hJQFCObsvZKKpwG6vPrXwsU",
+  "iceland-south-coast-5d-map-es":
+    "https://www.google.com/maps/d/viewer?mid=1LHV8hb50hJQFCObsvZKKpwG6vPrXwsU",
+  // Reykjanes + Reykjavik layover. Map slugs are guide-scoped AND language-scoped
+  // (map-system v7): a translated deck ships long before its translated map, so every
+  // language gets its own slug on day one and they all alias the English map until a
+  // translated one exists. Sharing one slug across languages could only be undone by a
+  // reprint. The founder supplied the /edit link; only the mid is reused here and rebuilt
+  // into /viewer, because an edit URL in a printed QR hands every reader write access.
+  "iceland-reykjanes-1d-map-en":
+    "https://www.google.com/maps/d/viewer?mid=1gOs0-oEKpjFWfWEgh6g2Vb1cWwLIfV0",
+  "iceland-reykjanes-1d-map-lt":
+    "https://www.google.com/maps/d/viewer?mid=1gOs0-oEKpjFWfWEgh6g2Vb1cWwLIfV0",
+  "iceland-reykjanes-1d-map-de":
+    "https://www.google.com/maps/d/viewer?mid=1gOs0-oEKpjFWfWEgh6g2Vb1cWwLIfV0",
+  "iceland-reykjanes-1d-map-fr":
+    "https://www.google.com/maps/d/viewer?mid=1gOs0-oEKpjFWfWEgh6g2Vb1cWwLIfV0",
+  "iceland-reykjanes-1d-map-es":
+    "https://www.google.com/maps/d/viewer?mid=1gOs0-oEKpjFWfWEgh6g2Vb1cWwLIfV0",
   // Venues first printed in the 5-day deck. Country-scoped per the rule above, so a
   // reprint in the 3-day keeps the same slug. Place-card searches are the v1
   // destination — re-point per venue in Studio once providers are picked.
@@ -90,9 +127,11 @@ const CURATED = {
     "https://www.google.com/maps/search/?api=1&query=Car%20rental%20Keflavik%20Airport",
   "iceland-grillmarkadurinn":
     "https://www.google.com/maps/search/?api=1&query=Grillmarkadurinn%20Reykjavik",
-  "iceland-drangar":
+  // Both venues carry the master's PinID as their slug — the print moved to
+  // match the master rather than the other way round.
+  "iceland-drangar-restaurant":
     "https://www.google.com/maps/search/?api=1&query=Drangar%20restaurant%20Hotel%20Kria%20Vik",
-  "iceland-black-crust":
+  "iceland-black-crust-pizzeria":
     "https://www.google.com/maps/search/?api=1&query=Black%20Crust%20Pizzeria%20Vik",
 
   // Triftbrücke day-trip guide — QR targets, mirrors the guide's meta.yaml
