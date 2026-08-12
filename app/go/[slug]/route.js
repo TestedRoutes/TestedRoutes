@@ -61,9 +61,24 @@ const CURATED = {
   // and would otherwise collide on a slug that is already in print. Places
   // and services stay country-scoped (iceland-car, iceland-drangar) so a pin
   // reprinted in six guides keeps one slug and one destination to re-point.
-  "iceland-7d-map":
+  //
+  // Map slugs carry a language suffix on top of that: {country}-{route}-
+  // {duration}-map-{lang}. Every language resolves to the English My Map today
+  // and nothing changes for the reader, but a translated map can later be
+  // swapped in per language from Studio without reprinting a PDF. A shared slug
+  // forecloses that permanently, so the full set is registered up front even
+  // though only the EN and LT decks exist — the point is to never have to
+  // reprint for it. Only the printed languages have a QR PNG in the pool; the
+  // rest get one when their deck is built.
+  "iceland-7d-map-en":
     "https://www.google.com/maps/d/viewer?mid=1By0oiIG4vTBy-5NorrCBvuyhXXbfAjg",
-  "iceland-7d-hotels":
+  "iceland-7d-map-lt":
+    "https://www.google.com/maps/d/viewer?mid=1By0oiIG4vTBy-5NorrCBvuyhXXbfAjg",
+  "iceland-7d-map-de":
+    "https://www.google.com/maps/d/viewer?mid=1By0oiIG4vTBy-5NorrCBvuyhXXbfAjg",
+  "iceland-7d-map-fr":
+    "https://www.google.com/maps/d/viewer?mid=1By0oiIG4vTBy-5NorrCBvuyhXXbfAjg",
+  "iceland-7d-map-es":
     "https://www.google.com/maps/d/viewer?mid=1By0oiIG4vTBy-5NorrCBvuyhXXbfAjg",
   // 5-day South Coast. Route-scoped per the map-system pattern
   // {country}-{route}-{duration}-map: a bare iceland-5d-* would collide with the
@@ -71,9 +86,24 @@ const CURATED = {
   // mid is reused
   // here and it is rebuilt into the /viewer form, because an edit URL in a printed
   // QR would hand every reader write access to the master map.
-  "iceland-south-coast-5d-map":
+  "iceland-south-coast-5d-map-en":
     "https://www.google.com/maps/d/viewer?mid=1LHV8hb50hJQFCObsvZKKpwG6vPrXwsU",
-  "iceland-south-coast-5d-hotels":
+  "iceland-south-coast-5d-map-lt":
+    "https://www.google.com/maps/d/viewer?mid=1LHV8hb50hJQFCObsvZKKpwG6vPrXwsU",
+  "iceland-south-coast-5d-map-de":
+    "https://www.google.com/maps/d/viewer?mid=1LHV8hb50hJQFCObsvZKKpwG6vPrXwsU",
+  "iceland-south-coast-5d-map-fr":
+    "https://www.google.com/maps/d/viewer?mid=1LHV8hb50hJQFCObsvZKKpwG6vPrXwsU",
+  "iceland-south-coast-5d-map-es":
+    "https://www.google.com/maps/d/viewer?mid=1LHV8hb50hJQFCObsvZKKpwG6vPrXwsU",
+  // RETIRING — the bare map slugs the currently-live PDFs print. The reprinted
+  // decks use the -en/-lt forms above, so these exist only to keep the PDFs on
+  // the site resolving until those reprints are published. Delete both, and the
+  // two stale-PinID Sanity docs, once the new PDFs are live. Deleting them first
+  // sends the map QR in every live PDF to the homepage.
+  "iceland-7d-map":
+    "https://www.google.com/maps/d/viewer?mid=1By0oiIG4vTBy-5NorrCBvuyhXXbfAjg",
+  "iceland-south-coast-5d-map":
     "https://www.google.com/maps/d/viewer?mid=1LHV8hb50hJQFCObsvZKKpwG6vPrXwsU",
   // Venues first printed in the 5-day deck. Country-scoped per the rule above, so a
   // reprint in the 3-day keeps the same slug. Place-card searches are the v1
@@ -90,6 +120,13 @@ const CURATED = {
     "https://www.google.com/maps/search/?api=1&query=Car%20rental%20Keflavik%20Airport",
   "iceland-grillmarkadurinn":
     "https://www.google.com/maps/search/?api=1&query=Grillmarkadurinn%20Reykjavik",
+  // Both venues now carry the master's PinID as their slug — the print moved to
+  // match the master rather than the other way round. The unsuffixed keys below
+  // are the same retire-after-reprint case as the bare map slugs.
+  "iceland-drangar-restaurant":
+    "https://www.google.com/maps/search/?api=1&query=Drangar%20restaurant%20Hotel%20Kria%20Vik",
+  "iceland-black-crust-pizzeria":
+    "https://www.google.com/maps/search/?api=1&query=Black%20Crust%20Pizzeria%20Vik",
   "iceland-drangar":
     "https://www.google.com/maps/search/?api=1&query=Drangar%20restaurant%20Hotel%20Kria%20Vik",
   "iceland-black-crust":
