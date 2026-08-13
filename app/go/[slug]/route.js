@@ -123,8 +123,9 @@ const CURATED = {
     "https://www.google.com/maps/search/?api=1&query=Mia%27s%20Country%20Van%20Iceland",
   // Parking app - Fagradalsfjall, Skogar and the DC-3 wreck are all pay-by-app.
   "parka-app": "https://parka.is/",
-  "iceland-car":
-    "https://www.google.com/maps/search/?api=1&query=Car%20rental%20Keflavik%20Airport",
+  // Founder-named partner 2026-08-13: Blue Car Rental (KEF HQ, key-box pickup).
+  // Master Service row agrees; re-point to the affiliate deep link when signed.
+  "iceland-car": "https://www.bluecarrental.is/",
   "iceland-grillmarkadurinn":
     "https://www.google.com/maps/search/?api=1&query=Grillmarkadurinn%20Reykjavik",
   // Both venues carry the master's PinID as their slug — the print moved to
