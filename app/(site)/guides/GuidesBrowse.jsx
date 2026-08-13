@@ -136,8 +136,12 @@ export default function GuidesBrowse({
     filters.season ? { key: "season", label: prettyGeo(filters.season) } : null,
   ].filter(Boolean);
 
+  // Same responsive treatment as GuideFilterRow: on phones the pill and
+  // selects wrap two per row at a readable size (one row of five shrank
+  // them to unreadable slivers); from `sm` up they sit in one row,
+  // equal-width, capped at 160px.
   const selectClass =
-    "h-9 min-w-0 flex-1 cursor-pointer truncate rounded-full border border-slate-200 bg-white px-3 text-xs font-semibold text-slate-700 transition hover:border-slate-300 focus:border-slate-400 focus:outline-none sm:max-w-40";
+    "h-10 min-w-[calc(50%-0.25rem)] flex-1 cursor-pointer truncate rounded-full border border-slate-200 bg-white px-3 text-sm font-semibold text-slate-700 transition hover:border-slate-300 focus:border-slate-400 focus:outline-none sm:h-9 sm:min-w-0 sm:max-w-40 sm:text-xs";
   const dropdowns = [
     { key: "length", label: tl.filterLength, values: options.lengths, display: prettyGeo },
     { key: "activity", label: tl.filterActivity, values: options.activities },
@@ -217,7 +221,7 @@ export default function GuidesBrowse({
               type="button"
               onClick={() => setPanelOpen((o) => !o)}
               aria-expanded={panelOpen}
-              className={`flex h-9 shrink-0 items-center gap-2 rounded-full px-4 text-xs font-semibold transition ${
+              className={`flex h-10 min-w-[calc(50%-0.25rem)] shrink-0 items-center justify-between gap-2 rounded-full px-4 text-sm font-semibold transition sm:h-9 sm:min-w-0 sm:justify-start sm:text-xs ${
                 panelOpen || filters.country
                   ? "bg-brand-ink text-white"
                   : "border border-slate-200 bg-white text-slate-700 hover:border-slate-300"
@@ -260,7 +264,7 @@ export default function GuidesBrowse({
                 key={chip.key}
                 type="button"
                 onClick={() => setFilter(chip.key, "")}
-                className="flex h-9 shrink-0 items-center gap-2 rounded-full px-3 text-xs font-semibold text-slate-700 transition hover:bg-brand-ink/5"
+                className="flex h-10 shrink-0 items-center gap-2 rounded-full px-3 text-sm font-semibold text-slate-700 transition hover:bg-brand-ink/5 sm:h-9 sm:text-xs"
               >
                 {chip.label}
                 <span aria-hidden="true" className="text-brand-terracotta">
