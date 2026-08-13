@@ -2,8 +2,9 @@
 
 // One-line filter row shared by home, guides and inspire: trip type +
 // country selects on the left, an optional right-aligned slot (count or
-// View all) passed as children. Selects flex to fit small screens but
-// stay equal-width, capped at 160px on larger ones.
+// View all) passed as children. On phones the selects go two per row at a
+// readable size and the slot wraps below; from `sm` up everything sits in
+// one row, equal-width selects capped at 160px.
 export default function CardFilters({
   types = [],
   countries = [],
@@ -16,9 +17,9 @@ export default function CardFilters({
 }) {
   if (!types.length && !countries.length) return null;
   const selectClass =
-    "h-9 min-w-0 flex-1 cursor-pointer truncate rounded-full border border-slate-200 bg-white px-3 text-xs font-semibold text-slate-700 transition hover:border-slate-300 focus:border-slate-400 focus:outline-none sm:max-w-40";
+    "h-10 min-w-[calc(50%-0.25rem)] flex-1 cursor-pointer truncate rounded-full border border-slate-200 bg-white px-3 text-sm font-semibold text-slate-700 transition hover:border-slate-300 focus:border-slate-400 focus:outline-none sm:h-9 sm:min-w-0 sm:max-w-40 sm:text-xs";
   return (
-    <div className="flex w-full items-center gap-2">
+    <div className="flex w-full flex-wrap items-center gap-2">
       {types.length ? (
         <select
           value={type}

@@ -5,11 +5,13 @@ import { prettyGeo } from "../_lib/continents";
 // The four guide dropdowns — Country, Length, Activity, Season — shared by
 // the home grid and /guides (founder 2026-08-08). Options and state live in
 // the parent; this only renders the row. `children` is the right-aligned
-// slot (result count on /guides, View all on home). Selects flex to fit
-// small screens but stay equal-width, capped at 160px on larger ones.
+// slot (result count on /guides, View all on home). On phones the selects
+// wrap two per row at a readable size — four in one row shrank each to an
+// unreadable sliver; from `sm` up they sit in one row, equal-width, capped
+// at 160px.
 export default function GuideFilterRow({ options, filters, onChange, tl, children }) {
   const selectClass =
-    "h-9 min-w-0 flex-1 cursor-pointer truncate rounded-full border border-slate-200 bg-white px-3 text-xs font-semibold text-slate-700 transition hover:border-slate-300 focus:border-slate-400 focus:outline-none sm:max-w-40";
+    "h-10 min-w-[calc(50%-0.25rem)] flex-1 cursor-pointer truncate rounded-full border border-slate-200 bg-white px-3 text-sm font-semibold text-slate-700 transition hover:border-slate-300 focus:border-slate-400 focus:outline-none sm:h-9 sm:min-w-0 sm:max-w-40 sm:text-xs";
 
   const dropdowns = [
     { key: "country", label: tl.filterCountry, values: options.countries },
