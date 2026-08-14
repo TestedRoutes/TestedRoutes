@@ -7,28 +7,35 @@ import Byline from "../../../_components/Byline";
 import BuyBox from "../../../_components/BuyBox";
 import PhotoCarousel from "../../../_components/PhotoCarousel";
 
-/* Fixed page slots: hero, one card per part of the atoll, mid-page banner. */
+/* Fixed page slots: hero, one card per part of the atoll, mid-page banner.
+   Rearranged by the founder 2026-08-13: hero is the narrowest-point road, the
+   former hero (leaning palm) moved to the banner slot. */
+import narrowestPointRoad from "../../../../content/countries/tuvalu/destination/generated/web/narrowest-point-road.jpg";
 import leaningPalm from "../../../../content/countries/tuvalu/destination/generated/web/leaning-palm-lagoon.jpg";
-import governmentBuilding from "../../../../content/countries/tuvalu/destination/generated/web/government-building-palms.jpg";
-import runwayTerminalDusk from "../../../../content/countries/tuvalu/destination/generated/web/runway-terminal-dusk.jpg";
-import isletSandbar from "../../../../content/countries/tuvalu/destination/generated/web/islet-sandbar.jpg";
-import southSpitIslet from "../../../../content/countries/tuvalu/destination/generated/web/south-spit-islet.jpg";
-import pandanusOceanDawn from "../../../../content/countries/tuvalu/destination/generated/web/pandanus-ocean-dawn.jpg";
-import isletLoneFigure from "../../../../content/countries/tuvalu/destination/generated/web/islet-lone-figure-storm.jpg";
+import tuvaluRdSign from "../../../../content/countries/tuvalu/destination/generated/web/tuvalu-rd-sign.jpg";
+import runwayCentreline from "../../../../content/countries/tuvalu/destination/generated/web/runway-centreline-standing.jpg";
+import isletBeachFromWater from "../../../../content/countries/tuvalu/destination/generated/web/islet-beach-from-water.jpg";
+import southernSpitLowTide from "../../../../content/countries/tuvalu/destination/generated/web/southern-spit-low-tide.jpg";
+import northRoadDawnRun from "../../../../content/countries/tuvalu/destination/generated/web/north-road-dawn-run.jpg";
 
 /* Carousel — the rest of the trip, in trip order. */
 import fijiLinkAtr from "../../../../content/countries/tuvalu/destination/generated/web/fiji-link-atr.jpg";
-import hotelRestaurantLunch from "../../../../content/countries/tuvalu/destination/generated/web/hotel-restaurant-lunch.jpg";
+import atrParkedApron from "../../../../content/countries/tuvalu/destination/generated/web/atr-parked-apron.jpg";
+import tugboatWreck from "../../../../content/countries/tuvalu/destination/generated/web/tugboat-wreck.jpg";
+import governmentBuilding from "../../../../content/countries/tuvalu/destination/generated/web/government-building-palms.jpg";
+import villageRoadRedSkiff from "../../../../content/countries/tuvalu/destination/generated/web/village-road-red-skiff.jpg";
 import kidsCyclingCoralFlat from "../../../../content/countries/tuvalu/destination/generated/web/kids-cycling-coral-flat.jpg";
 import causewayContainers from "../../../../content/countries/tuvalu/destination/generated/web/causeway-containers.jpg";
-import tugboatWreck from "../../../../content/countries/tuvalu/destination/generated/web/tugboat-wreck.jpg";
 import whiteSandSpit from "../../../../content/countries/tuvalu/destination/generated/web/white-sand-spit.jpg";
 import boatBowIslet from "../../../../content/countries/tuvalu/destination/generated/web/boat-bow-islet.jpg";
+import isletSandbar from "../../../../content/countries/tuvalu/destination/generated/web/islet-sandbar.jpg";
+import isletDriftwood from "../../../../content/countries/tuvalu/destination/generated/web/islet-driftwood.jpg";
 import isletPalmsShade from "../../../../content/countries/tuvalu/destination/generated/web/islet-palms-shade.jpg";
-import boatMooredSpit from "../../../../content/countries/tuvalu/destination/generated/web/boat-moored-spit.jpg";
+import isletStormLight from "../../../../content/countries/tuvalu/destination/generated/web/islet-storm-light.jpg";
 import isletWindblown from "../../../../content/countries/tuvalu/destination/generated/web/islet-windblown.jpg";
-import runwayToHorizon from "../../../../content/countries/tuvalu/destination/generated/web/runway-to-horizon.jpg";
-import terminalBeforeFlight from "../../../../content/countries/tuvalu/destination/generated/web/terminal-before-flight.jpg";
+import isletOpenOcean from "../../../../content/countries/tuvalu/destination/generated/web/islet-open-ocean.jpg";
+import southSpitIslet from "../../../../content/countries/tuvalu/destination/generated/web/south-spit-islet.jpg";
+import palmTunnelRoad from "../../../../content/countries/tuvalu/destination/generated/web/palm-tunnel-road.jpg";
 import atollFromAir from "../../../../content/countries/tuvalu/destination/generated/web/atoll-from-air.jpg";
 
 export const metadata = {
@@ -61,50 +68,55 @@ const HOW_LONG = [
 const REGIONS = [
   {
     name: "Vaiaku, the capital",
-    image: governmentBuilding,
-    alt: "The three-storey government building of Tuvalu behind palms in Vaiaku",
+    image: tuvaluRdSign,
+    alt: "Standing at the TUVALU RD street sign in Vaiaku at dusk",
     body: "The whole apparatus of a nation in a village: the government building is the tallest thing in the country, the falekaupule meeting hall is the heart of it, and the one hotel faces the lagoon sunset. Everything is under ten minutes on foot, including the honour-system prison and a swimming beach with a shipwreck on it.",
   },
   {
     name: "The runway",
-    image: runwayTerminalDusk,
-    alt: "Funafuti's terminal building at dusk seen from the airstrip",
+    image: runwayCentreline,
+    alt: "Standing alone on the centreline of Funafuti's runway",
     body: "A third of the island is airstrip, there is no fence, and planes land a few times a week. The rest of the time it is the town square: football and volleyball as the heat drops, families walking the centreline, kids on bikes. Crossings close when the ATR appears - the guide builds the rule into departure day.",
   },
   {
     name: "The lagoon islets",
-    image: isletSandbar,
-    alt: "A tree-topped islet and its white sandbar in Funafuti's lagoon",
+    image: isletBeachFromWater,
+    alt: "A lagoon islet's white beach and palms seen from the water, nobody on it",
     body: "Tepuka, Te Afualiku and Fualifeke sit on the lagoon's western rim: white sand, leaning palms, and nobody on any of them. There is no tour and no website - a local boat is arranged in person, and the wet 30-minute crossing is half the fun. This is the best thing the country has.",
   },
   {
     name: "The southern spit",
-    image: southSpitIslet,
-    alt: "The tree-topped islet off the southern tip of Fongafale across the shallows",
+    image: southernSpitLowTide,
+    alt: "The rubble spit at low tide running out toward the islet off Fongafale's southern tip",
     body: "South of town the island narrows to a quiet tail: reef on both sides, almost no traffic, and a tidal islet off the end that connects and disconnects with the water. The classic early-morning run or walk before the day warms up.",
   },
   {
     name: "The ocean side and the north",
-    image: pandanusOceanDawn,
-    alt: "A pandanus tree over the coral-rubble ocean shore at dawn, Funafuti",
+    image: northRoadDawnRun,
+    alt: "Running the palm-lined north road at dawn, Funafuti",
     body: "The lagoon side is calm and swimmable; the ocean side is reef shelf and surf, best at dawn. North of town the road runs through a green tunnel of palms to Tengako's quiet beaches - about 10 km each way, made for a hired bicycle or scooter, past the point where the island narrows to roughly 60 metres.",
   },
 ];
 
-/* Trip photos in trip order: arrival, town, the boat day, departure. */
+/* Trip photos in trip order: arrival, town, the boat day, the north, departure. */
 const CAROUSEL = [
   { image: fijiLinkAtr, alt: "The Fiji Airways ATR 72 on the apron - the only way into Tuvalu", caption: "The only way in: the ATR from Fiji" },
-  { image: hotelRestaurantLunch, alt: "Lunch at the Funafuti Lagoon Hotel restaurant", caption: "The country's one working restaurant" },
+  { image: atrParkedApron, alt: "The ATR parked at Funafuti's airstrip under big clouds", caption: "Landed - the strip and the terminal" },
+  { image: tugboatWreck, alt: "A rusting tugboat beached on the lagoon shore", caption: "The tugboat wreck north of town" },
+  { image: governmentBuilding, alt: "The three-storey government building of Tuvalu behind palms in Vaiaku", caption: "The tallest building in the country" },
+  { image: villageRoadRedSkiff, alt: "The village main road with a red skiff parked beside it", caption: "Boats live in front yards here" },
   { image: kidsCyclingCoralFlat, alt: "Two kids cycling across the bare coral flat under a huge sky", caption: "The coral flat at low tide" },
   { image: causewayContainers, alt: "The geotube causeway with shipping containers stacked beside it", caption: "The causeway - everything arrives by ship" },
-  { image: tugboatWreck, alt: "A rusting tugboat beached on the lagoon shore", caption: "The tugboat wreck north of town" },
   { image: whiteSandSpit, alt: "The white sand spit north of the village, wide and empty", caption: "The beach north of the village" },
   { image: boatBowIslet, alt: "The bow of an open boat pointed at a lagoon islet", caption: "Crossing the lagoon by open boat" },
-  { image: isletPalmsShade, alt: "Palms leaning over an empty islet beach", caption: "Tepuka - nobody else's footprints" },
-  { image: boatMooredSpit, alt: "The boat moored off a coral-rubble spit", caption: "Your boat waits while you wander" },
-  { image: isletWindblown, alt: "A windblown islet seen from its own beach", caption: "The lagoon's weather moods" },
-  { image: runwayToHorizon, alt: "Funafuti's runway running dead straight to the horizon, empty", caption: "The runway, between flights" },
-  { image: terminalBeforeFlight, alt: "Funafuti's terminal with people gathering before a flight", caption: "The terminal wakes up twice a week" },
+  { image: isletSandbar, alt: "A tree-topped islet and its white sandbar in Funafuti's lagoon", caption: "The islets - sand, palms, nobody" },
+  { image: isletDriftwood, alt: "Driftwood on an empty islet beach with palms leaning overhead", caption: "Tepuka's beach, footprints ours only" },
+  { image: isletPalmsShade, alt: "Palms leaning over an empty islet beach", caption: "Shade where you find it" },
+  { image: isletStormLight, alt: "A lagoon islet under dramatic storm light", caption: "The lagoon's weather moods" },
+  { image: isletWindblown, alt: "A windblown islet seen from its own beach", caption: "The windward side" },
+  { image: isletOpenOcean, alt: "A lone islet in deep-blue open ocean", caption: "How small it all is" },
+  { image: southSpitIslet, alt: "The tree-topped islet off the southern tip of Fongafale across the shallows", caption: "The tidal islet off the southern tip" },
+  { image: palmTunnelRoad, alt: "The north road running through a green tunnel of palms", caption: "The green tunnel to Tengako" },
   { image: atollFromAir, alt: "The whole Funafuti atoll ring seen from the plane window", caption: "The country, from the climb-out" },
 ];
 
@@ -242,8 +254,8 @@ export default async function TuvaluDestinationPage() {
         <div className="min-w-0">
           <div className="relative mb-12 overflow-hidden rounded-[28px]">
             <Image
-              src={leaningPalm}
-              alt="A palm leaning over the turquoise shallows of a lagoon islet, Funafuti, Tuvalu"
+              src={narrowestPointRoad}
+              alt="The road at Fongafale's narrowest point with the lagoon and the open Pacific on either side"
               priority
               className="h-[320px] w-full object-cover md:h-[460px]"
               sizes="(max-width: 768px) 100vw, 830px"
@@ -440,8 +452,8 @@ export default async function TuvaluDestinationPage() {
 
             <div className="relative overflow-hidden rounded-[28px]">
               <Image
-                src={isletLoneFigure}
-                alt="A lone figure on the sand of an empty lagoon islet under storm light, Funafuti"
+                src={leaningPalm}
+                alt="A palm leaning over the turquoise shallows of a lagoon islet, Funafuti, Tuvalu"
                 className="h-[420px] w-full object-cover"
                 sizes="(max-width: 768px) 100vw, 768px"
               />
