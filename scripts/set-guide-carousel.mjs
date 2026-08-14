@@ -182,6 +182,17 @@ const ALT = {
     "9. simplon-saas-fee-gorge.jpg": { alt: "The gorge tower at the entrance to Saas-Fee, glaciers above" },
     "10. simplon-eagle-monument.jpg": { alt: "The stone monument on Simplon Pass, minutes from the Hospiz" },
   },
+  "story-iceland-layover-reykjavik-blue-lagoon": {
+    "1. cover.jpg": { alt: "Cover of the Iceland one-day layover guide" },
+    "2. snapshot.jpg": { alt: "Route snapshot page: pace, difficulty, season and what to expect" },
+    "3.mp4": { alt: "Swimming out into the Blue Lagoon's milky water, filmed on the route" },
+    "4.mp4": { alt: "Gunnuhver's steam column roaring over the rust-red ground, filmed on the route" },
+    "5.mp4": { alt: "Surf breaking on the sea stacks at the Reykjanes lighthouse corner, filmed on the route" },
+    "6.mp4": { alt: "Waves churning through the black lava shelf on the Reykjanes coast, filmed on the route" },
+    "7.jpg": { alt: "The painted shopping street in central Reykjavik, benches and gable ends" },
+    "8.jpg": { alt: "Hallgrimskirkja's concrete columns sweeping up to the spire" },
+    "9.mp4": { alt: "Grass-topped black-sand dunes on the Reykjanes coast, filmed on the route" },
+  },
   "story-iceland-south-coast-5-days": {
     "1. cover.jpg": { alt: "Cover of the Iceland South Coast five-day self-drive guide" },
     "2. snapshot.jpg": { alt: "Route snapshot page: pace, difficulty, season and what to expect" },

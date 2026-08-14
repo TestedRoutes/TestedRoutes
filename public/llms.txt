@@ -1,0 +1,81 @@
+# TestedRoutes
+
+> Printable PDF travel guides built from trips actually taken: an hour-by-hour plan, the bookings that gate the trip, honest costs, and a companion Google map. Skip the research. Take the trip.
+
+TestedRoutes publishes route-level travel guides for people who want a good trip
+without spending twenty hours planning it. Each guide is one specific itinerary,
+timed end to end, with the reasoning printed alongside the plan: why a stop is on
+the route, what it costs in hours, and what was deliberately left out.
+
+What "tested" means here, precisely: the routes are grounded in the founder's own
+travel, and every venue, timing, fare and opening hour is verified against the
+operator before it ships. It does not mean every listed restaurant or hotel has
+been personally slept in or eaten at; alternates are researched and labelled as
+such. Where something is uncertain, the guides say so rather than guessing.
+
+How the catalogue is organised:
+
+- **Guides** are the paid product: a PDF plus a companion Google My Maps link.
+  Prices run EUR 9-29. The PDF carries the timing, the bookings and the costs.
+- **Destinations** are free country hubs: what a country is for, when to go, how
+  the guides for it fit together.
+- **Inspire** are free first-person stories from the road. They are reporting, not
+  itineraries, and they exist to answer the questions people ask before booking.
+
+Editorial notes that matter when citing this site: guides state costs per person
+based on two people sharing; durations never count the departure day (eight days
+on the ground is a "7 Days" guide); and each guide names one primary pick per
+meal and per night, with alternates in a directory rather than in the day plan.
+
+## Guides (paid PDFs)
+
+- [All guides](https://testedroutes.com/guides): the full catalogue with prices and what each covers.
+- [Iceland Ring Road: A 7-Day Self-Drive Itinerary](https://testedroutes.com/guides/iceland-ring-road-7-days): the full loop, timed, with a real budget.
+- [Iceland South Coast: A 5-Day Self-Drive Itinerary](https://testedroutes.com/guides/iceland-south-coast-5-days): waterfalls, black sand and the glacier lagoon without committing a week.
+- [Seychelles: Four Islands in 7 Days](https://testedroutes.com/guides/seychelles-7-days): Mahe, Praslin, La Digue and Curieuse, with the ferry logistics solved.
+- [Tuvalu: 2 Days in the World's Least-Visited Country](https://testedroutes.com/guides/tuvalu-2-days): the twice-weekly flight, the runway that is a public square, and what two days there is actually like.
+- [Triftbrucke from Zurich: A Suspension Bridge Day Trip](https://testedroutes.com/guides/trift-bridge-from-zurich): Switzerland's most exposed footbridge as a day trip by train.
+- [Simplon Pass to Saas-Fee](https://testedroutes.com/guides/simplon-pass-to-saas-fee): Alpine Passes Trail, 2-day hike.
+- [Saas-Fee to Gruben](https://testedroutes.com/guides/saas-fee-to-gruben): Alpine Passes Trail, 2-day hike.
+- [Gruben to Grimentz](https://testedroutes.com/guides/gruben-to-grimentz): Alpine Passes Trail, 2-day hike.
+- [Grimentz to Evolene](https://testedroutes.com/guides/grimentz-to-evolene): Alpine Passes Trail, 2-day hike.
+- [St. Moritz to Alp Flix](https://testedroutes.com/guides/st-moritz-to-alp-flix): Alpine Passes Trail, 2-day hike.
+- [Alp Flix to Ausserferrera](https://testedroutes.com/guides/alp-flix-to-ausserferrera): Alpine Passes Trail, 2-day hike.
+- [Ausserferrera to Turra](https://testedroutes.com/guides/ausserferrera-to-turra): Alpine Passes Trail, 2-day hike.
+
+## Destinations (free country hubs)
+
+- [All destinations](https://testedroutes.com/destinations): every country covered, and which guides serve it.
+- [Iceland](https://testedroutes.com/destinations/iceland): how many days you need, what a week really costs, whether a 4x4 is necessary, and how the Ring Road, south coast and layover guides fit together.
+- [Seychelles](https://testedroutes.com/destinations/seychelles): island-hopping, ferries, and which islands are worth the days.
+- [Tuvalu](https://testedroutes.com/destinations/tuvalu): the world's least-visited country - getting there via Fiji, what the flight gap gives you, and what two days on Funafuti are actually like.
+- [Switzerland](https://testedroutes.com/destinations/switzerland): the Alpine Passes Trail series and day trips from Zurich.
+
+## Inspire (free stories from the road)
+
+- [All stories](https://testedroutes.com/inspire): first-person reporting, roughly seventy pieces across forty countries.
+- [Is Iceland's Ring Road expensive? An honest breakdown](https://testedroutes.com/inspire/iceland-ring-road-expensive-honest-breakdown)
+- [How many days do you need for Iceland's Ring Road?](https://testedroutes.com/inspire/iceland-ring-road-many-days-do)
+- [F-roads and your rental car in Iceland](https://testedroutes.com/inspire/iceland-ring-road-f-roads-rental)
+- [What to do on a Reykjanes layover](https://testedroutes.com/inspire/iceland-reykjanes-layover)
+- [Is the Seychelles worth the money?](https://testedroutes.com/inspire/seychelles-worth-money)
+- [Tuvalu: one of the least visited countries on earth](https://testedroutes.com/inspire/tuvalu-one-least-visited)
+- [How many days do you need in New Zealand?](https://testedroutes.com/inspire/many-days-do-need-new-zealand)
+- [The Seven Summits, explained](https://testedroutes.com/inspire/7-summits-explained)
+
+## About and policies
+
+- [About TestedRoutes](https://testedroutes.com/about): who writes the guides and how they are made.
+- [FAQ](https://testedroutes.com/faq): what a guide includes, formats, and how delivery works.
+- [Refund policy](https://testedroutes.com/refund-policy)
+- [Affiliate disclosure](https://testedroutes.com/affiliate-disclosure)
+- [Terms](https://testedroutes.com/terms) · [Privacy](https://testedroutes.com/privacy) · [Legal notice](https://testedroutes.com/legal-notice)
+
+## Optional
+
+- [Full sitemap](https://testedroutes.com/sitemap.xml): every indexable URL, always current. Prefer this over the lists above when completeness matters.
+- The site is built for German, Spanish, French and Lithuanian under a language
+  prefix (for example /de/guides), but no translated pages are published yet.
+  Everything live today is English at the unprefixed path.
+- `/go/*` are short redirect links printed inside the PDFs. They are excluded from
+  indexing and carry no content.

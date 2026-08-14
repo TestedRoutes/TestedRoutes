@@ -1,6 +1,7 @@
 import { loadGuides } from "./_lib/loadGuides";
 import { loadInspireStories } from "./_lib/loadInspireStories";
 import { ALT_LOCALES, localePath } from "./_lib/i18n";
+import { DESTINATION_SLUGS } from "./_lib/destinations";
 
 export const dynamic = "force-static";
 
@@ -13,10 +14,27 @@ export default async function sitemap() {
     { url: "/", changeFrequency: "weekly", priority: 1.0 },
     { url: "/about", changeFrequency: "monthly", priority: 0.7 },
     { url: "/destinations", changeFrequency: "weekly", priority: 0.6 },
-    { url: "/destinations/switzerland", changeFrequency: "weekly", priority: 0.8 },
-    { url: "/destinations/seychelles", changeFrequency: "weekly", priority: 0.8 },
+    // Derived from DESTINATION_SLUGS so a new hub cannot ship unindexed.
+    ...DESTINATION_SLUGS.map((slug) => ({
+      url: `/destinations/${slug}`,
+      changeFrequency: "weekly",
+      priority: 0.8,
+    })),
     { url: "/guides", changeFrequency: "weekly", priority: 0.9 },
     { url: "/inspire", changeFrequency: "weekly", priority: 0.8 },
+    { url: "/contact", changeFrequency: "yearly", priority: 0.4 },
+    // Support and policy pages. FAQ earns citations and rich results; the rest
+    // are the trust pages a commerce site is expected to publish, and Google
+    // looks for them. Low priority on purpose - indexed, never competing with
+    // the guides. /subscribe and /newsletter/confirmed stay out: one is a form,
+    // the other only makes sense mid-flow.
+    { url: "/faq", changeFrequency: "monthly", priority: 0.6 },
+    { url: "/refund-policy", changeFrequency: "yearly", priority: 0.4 },
+    { url: "/affiliate-disclosure", changeFrequency: "yearly", priority: 0.3 },
+    { url: "/terms", changeFrequency: "yearly", priority: 0.3 },
+    { url: "/privacy", changeFrequency: "yearly", priority: 0.3 },
+    { url: "/legal-notice", changeFrequency: "yearly", priority: 0.3 },
+    { url: "/security", changeFrequency: "yearly", priority: 0.3 },
   ];
 
   const [guides, stories] = await Promise.all([loadGuides(), loadInspireStories()]);
