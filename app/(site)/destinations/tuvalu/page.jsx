@@ -1,3 +1,10 @@
+/* SCOPE (destination playbook v4 §7): this page sells the DECISION - whether
+   to go, how long, when, what kind of trip. Execution belongs to the guide:
+   booking mechanics (where/when/how to arrange the boat), venue fares and
+   nightly rates, timing rules, paperwork mechanics, connectivity setup. The
+   teaser budget is 1-2 tested facts, and only ones a published story already
+   gives away. Before editing, run the executable-day test: if a reader could
+   run a day of the trip from this page alone, cut until they cannot. */
 import Image from "next/image";
 import Link from "next/link";
 import { client } from "../../../../sanity/lib/client";
@@ -60,7 +67,7 @@ const WHEN_TO_GO = [
 ];
 
 const HOW_LONG = [
-  ["Two full days", "What one flight gap gives you, and enough for the whole of Funafuti: the town, the runway at dusk, a boat day across the lagoon and the island's far tips. This is the trip the guide plans hour by hour."],
+  ["Two full days", "What one flight gap gives you, and enough to see why you came - the capital, the lagoon's empty islets, both ends of the island. The guide plans it hour by hour so none of it depends on luck."],
   ["Five to seven days", "Two flight gaps, or one long one. The extra days do not add sights - they add pace, a second boat morning, and the chance the weather rolls a day without costing you the trip."],
   ["Longer", "Only worth it if you are chasing the outer atolls, which means the government ferry: days at sea each way, word-of-mouth schedules, and genuine expedition territory."],
 ];
@@ -70,7 +77,7 @@ const REGIONS = [
     name: "Vaiaku, the capital",
     image: tuvaluRdSign,
     alt: "Standing at the TUVALU RD street sign in Vaiaku at dusk",
-    body: "The whole apparatus of a nation in a village: the government building is the tallest thing in the country, the falekaupule meeting hall is the heart of it, and the one hotel faces the lagoon sunset. Everything is under ten minutes on foot, including the honour-system prison and a swimming beach with a shipwreck on it.",
+    body: "The whole apparatus of a nation in a village: the tallest building in the country, the falekaupule meeting hall at the heart of it, streets that end at the lagoon sunset. Everything is under ten minutes on foot, the honour-system prison included - a country you can genuinely walk in an afternoon.",
   },
   {
     name: "The runway",
@@ -121,12 +128,8 @@ const CAROUSEL = [
 ];
 
 const TIPS = [
-  ["Arrange the boat on day one, not on boat day.", "The lagoon islets are the best thing in the country and there is no operator, no website and no counter. Ask at the hotel desk and around town on the afternoon you land. AUD 150-250 for the boat, fuel included, is a fair quote - it is per boat, not per head, so four people nearly halve the day."],
-  ["Land carrying the trip in cash.", "Australian dollars run the island. The first ATMs only arrived in 2025, card acceptance is new and patchy, and the bank keeps short weekday hours across the runway. Mixed notes, agreed prices, exact change."],
-  ["Plan around Sunday before you book the flights.", "The island keeps Sunday strictly: shops shut, boats rest, and no amount of money changes it. If your flight gap includes a Sunday, put the boat day on the weekday and keep Sunday for the walk south. A boat can still be found - start asking Saturday morning and accept a later start."],
-  ["Sit left flying in, right flying out.", "The atoll approach is the best aerial view of the trip: a ring of coral holding a lagoon. Two and a half hours over open ocean each way, and the window seat costs nothing."],
-  ["Expect the evening pause.", "Around 18:45 the island stops for evening devotion - about fifteen minutes. Not everyone observes it, but if police wave you off the road, wait it out. It is a custom, not an inconvenience."],
-  ["Keep a buffer night in Fiji.", "Weather holds the ATR in Suva more often than it cancels. Nothing on Funafuti needs rebooking - the hotel will have you back - but an onward flight booked for the same evening is asking for trouble."],
+  ["Plan around Sunday before you book the flights.", "The island keeps Sunday strictly: shops shut, boats rest, and no amount of money changes it - we learned this trying to hire a boat on one. A workaround exists, and the guide carries it, but the cheaper fix is choosing a flight gap whose boat day is a weekday."],
+  ["Expect the evening pause.", "Each evening, between a quarter to seven and seven, the island stops for devotion - the police gently waved us off the road mid-stroll. Wait out the minutes. It is a custom, not an inconvenience, and one of the things you will remember."],
   ["Walk the runway at dusk.", "When the heat drops, the airstrip becomes the island's living room: football, volleyball, families on the centreline. Join in. It is the single most Tuvaluan hour of the trip."],
 ];
 
@@ -134,12 +137,12 @@ const FAQ = [
   ["What is the least visited country in the world?", "Tuvalu, by most counts: fewer than 4,000 visitors a year. It is a nine-island nation of about 11,000 people in the central Pacific, and its capital atoll Funafuti is the only part with flights, so almost every visit is a visit to Funafuti."],
   ["Is Tuvalu worth visiting?", "Yes, if the appeal is the place itself rather than sights. There is one hotel, one restaurant and no tourism industry - what you get instead is a runway that turns into the town square at dusk, empty lagoon islets arranged by handshake, and a country you can genuinely walk end to end. If you need resorts and menus, no."],
   ["How do you get to Tuvalu?", "Fly Fiji Airways from Suva, about three times a week on a rotating schedule - roughly 2.5 hours over open ocean. There is no other scheduled way in. Book the flight pair first: the gap between two flights is your trip length, and everything else follows from it."],
-  ["How many days do you need in Tuvalu?", "Two full days covers Funafuti properly: the town and runway on day one, the lagoon islets and the island's far tips on day two. That is exactly what one flight gap gives you. More days add pace and weather margin, not sights."],
-  ["How much does a trip to Tuvalu cost?", "The unavoidable part is the flight pair from Fiji: about EUR 785 per person return. On the island the money is small - a double room around AUD 100 a night, meals modest, the boat shared per boat, bikes about AUD 10 a day. The guide itemises all of it in AUD and EUR."],
-  ["Do you need a visa for Tuvalu?", "Most passports get a 30-day visitor permit stamped on arrival - free for many nationalities, a fee for some. Check yours before flying; you will also need a passport valid six months beyond arrival and an onward ticket, which is checked at Suva check-in."],
+  ["How many days do you need in Tuvalu?", "Two full days covers Funafuti properly - the capital, the runway, the lagoon's empty islets and both ends of the island. That is exactly what one flight gap gives you. More days add pace and weather margin, not sights."],
+  ["How much does a trip to Tuvalu cost?", "The unavoidable part is the flight pair from Fiji: about EUR 785 per person return, and it dwarfs everything else. Once you land, Tuvalu is one of the cheapest countries you will ever stand in - the bed is the only line with real range, and the boat day is priced per boat, so sharing it halves the best day of the trip. The guide itemises every line in AUD and EUR."],
+  ["Do you need a visa for Tuvalu?", "Most passports get a 30-day visitor permit stamped on arrival - free for many nationalities, a fee for some. Check yours before flying; the guide's before-you-fly page carries the rest of the paperwork checklist, onward-ticket rule included."],
   ["Can you pay by card in Tuvalu?", "Barely. Cash runs the island: Australian dollars, carried in with you. The first ATMs arrived in 2025 and card acceptance is new and patchy, so treat any card as a backup, not a plan."],
-  ["Is there internet in Tuvalu?", "Slower and scarcer than you are used to. No eSIM works; a local TTC SIM from the airport kiosk is the reliable option, cash only, and some hosts share Starlink Wi-Fi for a small daily fee. Download offline maps before you fly."],
-  ["What happens in Tuvalu on Sunday?", "The island keeps it: shops shut, boats rest, and the day belongs to church. Plan anything that needs hiring or arranging for a weekday. There is also a daily pause - around 18:45 the island stops for evening devotion for about fifteen minutes."],
+  ["Is there internet in Tuvalu?", "Slower and scarcer than you are used to. No eSIM works here; connectivity is bought locally and takes cash, and some hosts share theirs. The guide covers the setup that actually works - and download offline maps before you fly either way."],
+  ["What happens in Tuvalu on Sunday?", "The island keeps it: shops shut, boats rest, and the day belongs to church. Plan anything that needs hiring or arranging for a weekday. There is also a daily pause - between a quarter to seven and seven each evening, the island stops for devotion."],
   ["Is Tuvalu sinking?", "The risk is real - the country's highest natural ground is only a few metres above the sea - and Tuvalu is actively raising land: the Coastal Adaptation Project has pumped a new stretch of reclaimed land along Funafuti's lagoon shore, which is now the island's best open space for an evening walk. For a visitor the practical effect is simple: this is a place to see deliberately, not eventually."],
   ["Is Tuvalu safe?", "Very. The prison runs on an honour system and mostly stands empty, which says most of it. The real hazards are sun, heat and current: no shade on the water, a reef-shelf ocean side that is not for swimming, and one hospital - bring your own medications."],
 ];
@@ -400,20 +403,18 @@ export default async function TuvaluDestinationPage() {
               </p>
               <p className="text-[15px] leading-relaxed text-slate-700">
                 On the ground there is nothing to rent with four wheels, and no
-                need: the terminal is minutes on foot from every bed in town.
-                Lodges hire scooters for about AUD 20 a day and bicycles for
-                about AUD 10, hitching a short lift is normal and free, and one
-                road runs the island end to end – you cannot get lost. The
-                lagoon boat is the exception: no operator exists, so it is
-                arranged in person on day one.
+                need: everything in town is minutes on foot, two wheels are
+                hired locally for small money, hitching a short lift is normal
+                and free, and one road runs the island end to end – you cannot
+                get lost. The lagoon boat is the exception: no operator exists,
+                so it is arranged in person, and the guide carries where to
+                ask, when, and what a fair deal looks like.
               </p>
               <p className="text-[15px] leading-relaxed text-slate-700">
-                Paperwork is light: a 30-day visitor permit stamped on arrival
-                for most passports, a passport valid six months beyond the trip,
-                and an onward ticket, which is checked at Suva check-in. Save
-                the hotel&apos;s booking reply offline – confirmation emails are
-                how things are done, and the connectivity to re-download one is
-                not guaranteed.
+                Paperwork is light – a 30-day visitor permit stamped on arrival
+                for most passports. The guide&apos;s before-you-fly page
+                carries the full checklist, from the onward-ticket rule to the
+                things worth saving offline.
               </p>
             </section>
 
@@ -427,14 +428,14 @@ export default async function TuvaluDestinationPage() {
                 cheapest countries you will ever stand in.
               </p>
               <p className="text-[15px] leading-relaxed text-slate-700">
-                On the island the money is small and mostly cash: a double room
-                at the hotel around AUD 100 a night, guesthouses less, meals
-                modest, bikes about AUD 10 a day. The boat day is priced per
+                On the island the money is small and mostly cash. The bed is
+                the only line with real range, and the boat day is priced per
                 boat rather than per head, so a shared boat nearly halves the
                 best day of the trip. There is no lean-versus-splurge decision
                 to make here – the island offers one level, and it is
                 inexpensive. The guide itemises the whole trip in AUD and EUR,
-                per person, including the flight pair.
+                per person, including the flight pair and what a fair boat
+                quote looks like.
               </p>
             </section>
 
@@ -496,10 +497,12 @@ export default async function TuvaluDestinationPage() {
                       {guide.title}
                     </p>
                     <p className="text-[14px] leading-relaxed text-slate-700">
-                      Two days and a fly-out morning, hour by hour. The boat-day
-                      playbook with a fair price to agree, the three beds in
-                      booking order with QR links, the full cost breakdown in
-                      AUD and EUR, and the companion Google map with every pin.
+                      Everything this page deliberately leaves out: the
+                      boat-day playbook with where to ask and the fair price to
+                      agree, the three beds in booking order with QR links, the
+                      paperwork and connectivity setup, the full cost breakdown
+                      in AUD and EUR, and the companion Google map with every
+                      pin.
                     </p>
                     <p className="mt-auto pt-2 text-sm font-semibold text-slate-900">
                       {guide.durationDisplay}
