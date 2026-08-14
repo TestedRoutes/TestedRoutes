@@ -3,7 +3,7 @@ import Link from "next/link";
 
 import seychellesHero from "../../../content/countries/seychelles/destination/generated/web/source-dargent-from-water.jpg";
 import icelandHero from "../../../content/countries/iceland/destination/generated/web/svartifoss-wide.jpg";
-import tuvaluHero from "../../../content/countries/tuvalu/destination/generated/web/leaning-palm-lagoon.jpg";
+import tuvaluHero from "../../../content/countries/tuvalu/destination/generated/web/narrowest-point-road.jpg";
 import kuwaitHero from "../../../content/countries/kuwait/destination/generated/web/marina-pier-at-night.jpg";
 
 export const metadata = {
@@ -37,7 +37,7 @@ const DESTINATIONS = [
     blurb:
       "The world's least-visited country: how to get there via Fiji, what the flight gap gives you, and two days on Funafuti that actually work.",
     image: tuvaluHero,
-    alt: "A palm leaning over the turquoise shallows of a lagoon islet, Funafuti, Tuvalu",
+    alt: "The road at Fongafale's narrowest point with the lagoon and the open Pacific on either side",
   },
   {
     name: "Kuwait",
