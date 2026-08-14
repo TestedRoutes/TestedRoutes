@@ -50,6 +50,23 @@ const MAX_EDGE = 1600;
 const ALT = {
   // Keys are scoped per doc id: the same natural filename ("1. cover.jpg")
   // can exist in every guide folder without captions bleeding across guides.
+  // Alt text is written from the actual frames, never from memory.
+  "story-kuwait-2-days": {
+    "1. cover.jpg": { alt: "Cover of the Kuwait two-day city and desert guide" },
+    "2. snapshot.jpg": { alt: "Route snapshot page: why this trip, at a glance, and the photo spread" },
+    "3.mp4": { alt: "Kuwait Towers against the low sun from the promenade, filmed on the route" },
+    "4.mp4": { alt: "Yachts at the Souq Sharq marina with the skyline behind" },
+    "5.mp4": { alt: "Wooden dhows moored hull to hull at the dhow harbour" },
+    "6.mp4": { alt: "Kuwait Bay through the glass of the Kuwait Towers viewing sphere" },
+    "7.mp4": { alt: "The fish market hall with the day's catch on the counters" },
+    "8.jpg": { alt: "The corniche promenade into the low sun below Kuwait Towers" },
+    "9.jpg": { alt: "Kuwait Towers and the national flag between palms" },
+    "10.jpg": { alt: "The marina and the lit skyline at night" },
+    "11.mp4": { alt: "The skyline across the water at dusk, red buoys in the foreground" },
+    "12.mp4": { alt: "A heritage courtyard strung with lights after dark" },
+    "13.jpg": { alt: "The desert road at dusk from the car" },
+    "14.jpg": { alt: "Baskets of the day's catch and a market cat at the fish market" },
+  },
   "story-tuvalu-2-days": {
     "1. cover.jpg": { alt: "Cover of the Tuvalu two-day Funafuti guide" },
     "2. snapshot.jpg": { alt: "Route snapshot page: pace, difficulty, season and what to expect" },

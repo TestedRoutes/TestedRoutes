@@ -4,6 +4,7 @@ import Link from "next/link";
 import seychellesHero from "../../../content/countries/seychelles/destination/generated/web/source-dargent-from-water.jpg";
 import icelandHero from "../../../content/countries/iceland/destination/generated/web/svartifoss-wide.jpg";
 import tuvaluHero from "../../../content/countries/tuvalu/destination/generated/web/leaning-palm-lagoon.jpg";
+import kuwaitHero from "../../../content/countries/kuwait/destination/generated/web/marina-pier-at-night.jpg";
 
 export const metadata = {
   title: "Destinations · TestedRoutes",
@@ -37,6 +38,15 @@ const DESTINATIONS = [
       "The world's least-visited country: how to get there via Fiji, what the flight gap gives you, and two days on Funafuti that actually work.",
     image: tuvaluHero,
     alt: "A palm leaning over the turquoise shallows of a lagoon islet, Funafuti, Tuvalu",
+  },
+  {
+    name: "Kuwait",
+    href: "/destinations/kuwait",
+    region: "Middle East · The Gulf",
+    blurb:
+      "Is it worth a stop, and how long you actually need – the city in a day, a Bronze-Age island and the desert at dusk on day two.",
+    image: kuwaitHero,
+    alt: "The wooden pier at Souq Sharq marina at night, the lit Kuwait City skyline behind",
   },
   {
     name: "Switzerland",

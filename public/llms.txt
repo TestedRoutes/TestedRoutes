@@ -34,6 +34,7 @@ meal and per night, with alternates in a directory rather than in the day plan.
 - [Iceland South Coast: A 5-Day Self-Drive Itinerary](https://testedroutes.com/guides/iceland-south-coast-5-days): waterfalls, black sand and the glacier lagoon without committing a week.
 - [Seychelles: Four Islands in 7 Days](https://testedroutes.com/guides/seychelles-7-days): Mahe, Praslin, La Digue and Curieuse, with the ferry logistics solved.
 - [Tuvalu: 2 Days in the World's Least-Visited Country](https://testedroutes.com/guides/tuvalu-2-days): the twice-weekly flight, the runway that is a public square, and what two days there is actually like.
+- [Kuwait in 2 Days: A Weekend Itinerary](https://testedroutes.com/guides/kuwait-2-days): the old souk and the dhow harbour in a day, then a Bronze-Age island by boat and the winter desert camps at dusk.
 - [Triftbrucke from Zurich: A Suspension Bridge Day Trip](https://testedroutes.com/guides/trift-bridge-from-zurich): Switzerland's most exposed footbridge as a day trip by train.
 - [Simplon Pass to Saas-Fee](https://testedroutes.com/guides/simplon-pass-to-saas-fee): Alpine Passes Trail, 2-day hike.
 - [Saas-Fee to Gruben](https://testedroutes.com/guides/saas-fee-to-gruben): Alpine Passes Trail, 2-day hike.
@@ -49,6 +50,7 @@ meal and per night, with alternates in a directory rather than in the day plan.
 - [Iceland](https://testedroutes.com/destinations/iceland): how many days you need, what a week really costs, whether a 4x4 is necessary, and how the Ring Road, south coast and layover guides fit together.
 - [Seychelles](https://testedroutes.com/destinations/seychelles): island-hopping, ferries, and which islands are worth the days.
 - [Tuvalu](https://testedroutes.com/destinations/tuvalu): the world's least-visited country - getting there via Fiji, what the flight gap gives you, and what two days on Funafuti are actually like.
+- [Kuwait](https://testedroutes.com/destinations/kuwait): whether Kuwait is worth visiting, how long you need, why the day of the week matters more than the month, and what the two-day trip costs.
 - [Switzerland](https://testedroutes.com/destinations/switzerland): the Alpine Passes Trail series and day trips from Zurich.
 
 ## Inspire (free stories from the road)
