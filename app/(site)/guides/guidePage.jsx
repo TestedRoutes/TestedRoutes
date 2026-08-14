@@ -19,6 +19,19 @@ import Byline from "../../_components/Byline";
 import GuideSalesPage from "./guideSalesPage";
 import { PrimaryStats, LocationSection, buildLocation } from "./GuideTripSections";
 
+/**
+ * Countries declared for the 30-day refund policy in Product structured data.
+ *
+ * The policy itself is worldwide, but schema.org has no "everywhere" value for
+ * applicableCountry, and omitting it makes Google flag the return policy as
+ * incomplete. So this lists the markets actually sold to - understating reach,
+ * never overstating the promise. Add a market here when one starts converting.
+ */
+const RETURN_POLICY_COUNTRIES = [
+  "US", "CA", "GB", "IE", "DE", "AT", "CH", "FR", "ES", "IT", "NL", "BE",
+  "SE", "NO", "DK", "FI", "PL", "LT", "LV", "EE", "CZ", "PT", "AU", "NZ",
+];
+
 // hreflang alternates across every published language version of the guide.
 async function guideLanguageAlternates(guide, lang, slug) {
   const languages = {};
@@ -337,12 +350,39 @@ export default async function GuidePage({ lang, slug }) {
             meta.seo?.meta_description || hero.subtitle || `${t.metaDescPrefix} ${guide.title}.`,
           image: guide.image ? [guide.image] : undefined,
           brand: { "@type": "Brand", name: "TestedRoutes" },
+          // The slug is the same product across locales, so the SKU dedupes
+          // /guides/x against /de/guides/x rather than looking like two items.
+          sku: guide.slug,
           offers: {
             "@type": "Offer",
             price: Number(priceEntry.amount),
             priceCurrency: priceEntry.currency || "EUR",
             availability: "https://schema.org/InStock",
+            itemCondition: "https://schema.org/NewCondition",
+            // Google warns when an Offer has no price validity. These pages are
+            // statically generated, so this is stamped a year out at build time
+            // and refreshes with every deploy - never a date that quietly expires.
+            priceValidUntil: new Date(Date.now() + 365 * 24 * 60 * 60 * 1000)
+              .toISOString()
+              .slice(0, 10),
+            seller: { "@type": "Organization", name: "TestedRoutes" },
             url: canonicalUrl,
+            // Mirrors /refund-policy exactly: 30 days, any reason, full refund.
+            // Structured data that overstates a policy is a manual-action risk, so
+            // if that page changes, change this in the same commit.
+            //
+            // returnMethod is deliberately omitted: the enum only offers ByMail,
+            // InStore and AtKiosk, and none is true of a PDF - there is nothing to
+            // send back. A warning is better than a false claim.
+            hasMerchantReturnPolicy: {
+              "@type": "MerchantReturnPolicy",
+              applicableCountry: RETURN_POLICY_COUNTRIES,
+              returnPolicyCategory: "https://schema.org/MerchantReturnFiniteReturnWindow",
+              merchantReturnDays: 30,
+              returnFees: "https://schema.org/FreeReturn",
+              refundType: "https://schema.org/FullRefund",
+              merchantReturnLink: "https://testedroutes.com/refund-policy",
+            },
           },
         }
       : null;

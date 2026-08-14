@@ -50,6 +50,23 @@ const MAX_EDGE = 1600;
 const ALT = {
   // Keys are scoped per doc id: the same natural filename ("1. cover.jpg")
   // can exist in every guide folder without captions bleeding across guides.
+  // Alt text is written from the actual frames, never from memory.
+  "story-kuwait-2-days": {
+    "1. cover.jpg": { alt: "Cover of the Kuwait two-day city and desert guide" },
+    "2. snapshot.jpg": { alt: "Route snapshot page: why this trip, at a glance, and the photo spread" },
+    "3.mp4": { alt: "Kuwait Towers against the low sun from the promenade, filmed on the route" },
+    "4.mp4": { alt: "Yachts at the Souq Sharq marina with the skyline behind" },
+    "5.mp4": { alt: "Wooden dhows moored hull to hull at the dhow harbour" },
+    "6.mp4": { alt: "Kuwait Bay through the glass of the Kuwait Towers viewing sphere" },
+    "7.mp4": { alt: "The fish market hall with the day's catch on the counters" },
+    "8.jpg": { alt: "The corniche promenade into the low sun below Kuwait Towers" },
+    "9.jpg": { alt: "Kuwait Towers and the national flag between palms" },
+    "10.jpg": { alt: "The marina and the lit skyline at night" },
+    "11.mp4": { alt: "The skyline across the water at dusk, red buoys in the foreground" },
+    "12.mp4": { alt: "A heritage courtyard strung with lights after dark" },
+    "13.jpg": { alt: "The desert road at dusk from the car" },
+    "14.jpg": { alt: "Baskets of the day's catch and a market cat at the fish market" },
+  },
   "story-tuvalu-2-days": {
     "1. cover.jpg": { alt: "Cover of the Tuvalu two-day Funafuti guide" },
     "2. snapshot.jpg": { alt: "Route snapshot page: pace, difficulty, season and what to expect" },
@@ -181,6 +198,17 @@ const ALT = {
     "8. simplon-saas-fee-glacier.jpg": { alt: "Saas-Fee under the Fee Glacier at the end of Day 2" },
     "9. simplon-saas-fee-gorge.jpg": { alt: "The gorge tower at the entrance to Saas-Fee, glaciers above" },
     "10. simplon-eagle-monument.jpg": { alt: "The stone monument on Simplon Pass, minutes from the Hospiz" },
+  },
+  "story-iceland-layover-reykjavik-blue-lagoon": {
+    "1. cover.jpg": { alt: "Cover of the Iceland one-day layover guide" },
+    "2. snapshot.jpg": { alt: "Route snapshot page: pace, difficulty, season and what to expect" },
+    "3.mp4": { alt: "Swimming out into the Blue Lagoon's milky water, filmed on the route" },
+    "4.mp4": { alt: "Gunnuhver's steam column roaring over the rust-red ground, filmed on the route" },
+    "5.mp4": { alt: "Surf breaking on the sea stacks at the Reykjanes lighthouse corner, filmed on the route" },
+    "6.mp4": { alt: "Waves churning through the black lava shelf on the Reykjanes coast, filmed on the route" },
+    "7.jpg": { alt: "The painted shopping street in central Reykjavik, benches and gable ends" },
+    "8.jpg": { alt: "Hallgrimskirkja's concrete columns sweeping up to the spire" },
+    "9.mp4": { alt: "Grass-topped black-sand dunes on the Reykjanes coast, filmed on the route" },
   },
   "story-iceland-south-coast-5-days": {
     "1. cover.jpg": { alt: "Cover of the Iceland South Coast five-day self-drive guide" },
