@@ -220,8 +220,9 @@ FILE_MAP = [
     ("apt-22-23-gruben-to-grimentz", "gruben-to-grimentz"),
     ("apt-24-25-grimentz-to-evolene", "grimentz-to-evolene"),
     ("trift-bridge-from-zurich", "triftbrucke-from-zurich"),
-    # Samoa (the 5-day sibling folder stays unmatched until its SKU exists)
+    # Samoa
     ("samoa-upolu-savaii-7-days", "samoa-upolu-savaii-7-days"),
+    ("samoa-upolu-5-days", "samoa-upolu-5-days"),
     # Tuvalu
     ("tuvalu-2-days", "tuvalu-2-days"),
     ("tr - guides\\testedroutes_tuvalu_guide_2_days", "tuvalu-2-days"),
