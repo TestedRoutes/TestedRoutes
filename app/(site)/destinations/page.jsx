@@ -5,6 +5,7 @@ import seychellesHero from "../../../content/countries/seychelles/destination/ge
 import icelandHero from "../../../content/countries/iceland/destination/generated/web/svartifoss-wide.jpg";
 import tuvaluHero from "../../../content/countries/tuvalu/destination/generated/web/narrowest-point-road.jpg";
 import kuwaitHero from "../../../content/countries/kuwait/destination/generated/web/marina-pier-at-night.jpg";
+import samoaHero from "../../../content/countries/samoa/destination/generated/web/beach-fales-white-sand.jpg";
 
 export const metadata = {
   title: "Destinations · TestedRoutes",
@@ -47,6 +48,15 @@ const DESTINATIONS = [
       "Is it worth a stop, and how long you actually need – the city in a day, a Bronze-Age island and the desert at dusk on day two.",
     image: kuwaitHero,
     alt: "The wooden pier at Souq Sharq marina at night, the lit Kuwait City skyline behind",
+  },
+  {
+    name: "Samoa",
+    href: "/destinations/samoa",
+    region: "Oceania & Pacific",
+    blurb:
+      "How many days you need and which islands to pick – two islands, one rental car, and a week where Sunday matters more than the weather.",
+    image: samoaHero,
+    alt: "White sand, a young palm and open beach fales on a Samoan beach, swimmers in the turquoise shallows",
   },
   {
     name: "Switzerland",
