@@ -220,6 +220,8 @@ FILE_MAP = [
     ("apt-22-23-gruben-to-grimentz", "gruben-to-grimentz"),
     ("apt-24-25-grimentz-to-evolene", "grimentz-to-evolene"),
     ("trift-bridge-from-zurich", "triftbrucke-from-zurich"),
+    # Samoa (the 5-day sibling folder stays unmatched until its SKU exists)
+    ("samoa-upolu-savaii-7-days", "samoa-upolu-savaii-7-days"),
     # Tuvalu
     ("tuvalu-2-days", "tuvalu-2-days"),
     ("tr - guides\\testedroutes_tuvalu_guide_2_days", "tuvalu-2-days"),
@@ -590,6 +592,10 @@ def collect_files() -> list:
             print(f"  ! missing root, skipped: {root}")
             continue
         for p in sorted(root.rglob("*")):
+            # ~$ files are Office lock stubs, not documents: unreadable while
+            # the founder has the deck open, and never worth touching anyway.
+            if p.name.startswith("~$"):
+                continue
             if p.is_file() and p.suffix.lower() in (".pptx", ".pdf"):
                 files.append(p)
     return files

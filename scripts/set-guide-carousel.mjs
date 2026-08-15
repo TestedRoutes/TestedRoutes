@@ -51,6 +51,23 @@ const ALT = {
   // Keys are scoped per doc id: the same natural filename ("1. cover.jpg")
   // can exist in every guide folder without captions bleeding across guides.
   // Alt text is written from the actual frames, never from memory.
+  "story-samoa-upolu-savaii-7-days": {
+    "1. cover.jpg": { alt: "Cover of the Samoa seven-day Upolu and Savai'i guide" },
+    "2. snapshot.jpg": { alt: "Route snapshot page: why this trip, at a glance, and the photo spread" },
+    "3.jpg": { alt: "To-Sua Ocean Trench from the rim, the ladder down to swimmers in the green pool" },
+    "4.mp4": { alt: "An Alofaaga blowhole firing seawater skyward over the lava shelf, filmed on the route" },
+    "5.mp4": { alt: "A tiny palm islet just offshore in evening light" },
+    "6.mp4": { alt: "Beach fales along the sand over turquoise shallows" },
+    "7.jpg": { alt: "A resort pool under palms after dark" },
+    "8.mp4": { alt: "A tall waterfall ribboning into a jungle gorge" },
+    "9.mp4": { alt: "Sunset over open water from the coast" },
+    "10.mp4": { alt: "Green spring water below a painted walkway rail" },
+    "11.jpg": { alt: "An empty white-sand beach with an island off the headland" },
+    "12.jpg": { alt: "A yellow Samoan island bus parked under palms" },
+    "13.jpg": { alt: "A thatched beach fale pavilion on the sand" },
+    "14.jpg": { alt: "A painted church with Samoan flags flying" },
+    "15.jpg": { alt: "A tall waterfall dropping into a green pool" },
+  },
   "story-kuwait-2-days": {
     "1. cover.jpg": { alt: "Cover of the Kuwait two-day city and desert guide" },
     "2. snapshot.jpg": { alt: "Route snapshot page: why this trip, at a glance, and the photo spread" },
