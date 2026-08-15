@@ -74,8 +74,8 @@ const HOW_LONG = [
 const REGIONS = [
   {
     name: "The beaches",
-    image: southEastCoastBeach,
-    alt: "An empty white-sand beach on Upolu's south-east coast, green cliffs behind and an island offshore",
+    image: lagoonShallows,
+    alt: "Clear turquoise shallows off a Samoan beach, fales along the shore",
     body: "Samoa's sand is the South Pacific postcard without the resort wall in front of it: long white crescents backed by village greens, open-sided fales instead of sunbeds, and an island or two on the horizon. The famous stretch faces sunrise in the south-east, and most mornings you will share it with more dogs than people.",
   },
   {
@@ -86,27 +86,27 @@ const REGIONS = [
   },
   {
     name: "The lagoon",
-    image: lagoonShallows,
-    alt: "Clear turquoise shallows off a Samoan beach, fales along the shore",
+    image: toSuaOceanTrench,
+    alt: "To-Sua Ocean Trench from the rim, the ladder down to swimmers in the green pool",
     body: "The swimming here is the quiet headline: a sinkhole you descend into by ladder, giant clams below a village flag, wild turtles grazing seagrass in waist-deep water, and a blue hole on the capital's own doorstep. None of it needs a boat, a tank or a tour – a mask and the tide table are the whole kit.",
   },
   {
     name: "Savai'i",
-    image: tagaLavaShelf,
-    alt: "Black lava shelf running to the sea at Taga on Savai'i",
+    image: muPagoaFalls,
+    alt: "Mu Pagoa falls dropping over the lava edge into the sea on Savai'i",
     body: "The bigger, emptier island across the strait, and the reason to take the full week: a coast of black lava where the sea fires through blowholes, a church buried to its windows by the 1905 eruption, and villages living the fa'a Samoa with almost no tourism around them. Fewer visitors cross than you would believe.",
   },
 ];
 
 /* Trip photos, roughly in trip order: Upolu first, then the Savai'i day, then the west. */
 const CAROUSEL = [
-  { image: founderAtSopoaga, alt: "The founder at the Sopo'aga Falls lookout, the fall behind", caption: "At the Sopo'aga lookout" },
   { image: sopoagaFallsSign, alt: "Two travellers at the Sopo'aga Falls sign above the gorge", caption: "Sopo'aga Falls" },
+  { image: southEastCoastBeach, alt: "An empty white-sand beach on Upolu's south-east coast, green cliffs behind and an island offshore", caption: "The south-east coast" },
   { image: coconutPalms, alt: "A coconut grove over a village green on Upolu", caption: "Village palms, Upolu" },
   { image: palmIsletAtDusk, alt: "A tiny palm islet just offshore in evening light", caption: "An islet at dusk" },
   { image: sunsetOverTheSea, alt: "Sunset over the sea from Upolu's coast", caption: "South-coast sunset" },
   { image: fishingBoatsSavaii, alt: "Fishing boats moored in the harbour on Savai'i", caption: "The Savai'i wharf" },
-  { image: muPagoaFalls, alt: "Mu Pagoa falls dropping over the lava edge into the sea", caption: "Mu Pagoa, where the river meets the sea" },
+  { image: tagaLavaShelf, alt: "Black lava shelf running to the sea at Taga on Savai'i", caption: "The lava shelf at Taga" },
   { image: alofaagaBlowhole, alt: "An Alofaaga blowhole firing seawater high above the lava shelf, a person tiny beside it", caption: "The Alofaaga blowholes" },
   { image: afuAauFalls, alt: "Twin falls into the green swimming pool at Afu Aau", caption: "Afu Aau falls, Savai'i" },
   { image: ladySamoaBus, alt: "A yellow Lady Samoa wooden island bus parked under palms", caption: "An island bus" },
@@ -254,8 +254,8 @@ export default async function SamoaDestinationPage() {
         <div className="min-w-0">
           <div className="relative mb-12 overflow-hidden rounded-[28px]">
             <Image
-              src={beachFalesWhiteSand}
-              alt="White sand, a young palm and open beach fales on a Samoan beach, swimmers in the turquoise shallows"
+              src={founderAtSopoaga}
+              alt="The founder at the Sopo'aga Falls lookout, the fall dropping into its jungle gorge behind"
               priority
               className="h-[320px] w-full object-cover md:h-[460px]"
               sizes="(max-width: 768px) 100vw, 830px"
@@ -495,8 +495,8 @@ export default async function SamoaDestinationPage() {
 
             <div className="relative overflow-hidden rounded-[28px]">
               <Image
-                src={toSuaOceanTrench}
-                alt="To-Sua Ocean Trench from the rim: the ladder down to swimmers in the green pool, gardens around it"
+                src={beachFalesWhiteSand}
+                alt="White sand, a young palm and open beach fales on a Samoan beach, swimmers in the turquoise shallows"
                 className="h-[420px] w-full object-cover"
                 sizes="(max-width: 768px) 100vw, 768px"
               />
