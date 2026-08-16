@@ -5,7 +5,9 @@
  *   URL:    https://testedroutes.com/api/webhooks/polar
  *   Secret: matches POLAR_WEBHOOK_SECRET in Vercel env vars
  *   Events: order.paid (minimum), order.refunded (so revenue figures are
- *           net of refunds rather than gross of them)
+ *           net of refunds rather than gross of them). Do NOT also tick
+ *           refund.created — it fires for the same refund and would double
+ *           count it.
  *
  * On a paid order we:
  *   1. find the story whose guide.polarProductId matches the order's product
@@ -303,11 +305,13 @@ export async function POST(request) {
       case "order.paid":
         await handleOrderPaid(event);
         break;
-      // Polar has used both spellings across payload versions; handling
-      // each costs nothing and a missed refund is invisible until the
-      // month's revenue doesn't match the bank.
+      // order.refunded ONLY. Polar also emits refund.created for the same
+      // refund — they are two distinct events, not two spellings — so
+      // handling both would subtract the same money twice and quietly turn
+      // a refunded day into a negative one. Leave refund.created unticked
+      // in the Polar dashboard; if a future need for it appears, dedupe on
+      // the refund id rather than adding a second case here.
       case "order.refunded":
-      case "refund.created":
         await handleOrderRefunded(event);
         break;
       case "customer.state_changed":
