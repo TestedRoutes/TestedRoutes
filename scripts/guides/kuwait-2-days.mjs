@@ -11,11 +11,12 @@
  * this doc and copied back into the plan in the same session - the plan and
  * the site must say the same thing, in that order of authority.
  *
- * Prices per the founder 2026-08-14: "19 EUR, 19 CHF(*), 19 GBP, 25 USD" -
- * (*) his message read "19 USD" twice; the house currency set is
- * EUR/CHF/GBP/USD with USD priced above the pack (Tuvalu: 29/29/29/35), so the
- * middle duplicate is read as CHF. If that reading is wrong, repricing is a
- * customPrices patch + polar sync, nothing is printed.
+ * Prices are the Weekend rung of the pricing ladder (Content Plan v57 Pricing
+ * tab, founder 2026-08-16): 15/15/19/15 EUR/CHF/USD/GBP. They are not derived
+ * here - a 2-3 day guide is Weekend, and Weekend is 15. This replaced the
+ * launch price of 19/19/25/19, which had been read off sibling guides before
+ * a ladder existed. Repricing is a customPrices patch + polar sync; nothing
+ * about the price is printed in the deck.
  *
  * The FCDO advisory: the founder's decision (2026-08-13, on the record in the
  * guide's meta.yaml) is to publish with an advisory note on the card rather
@@ -275,10 +276,10 @@ export default {
       format: ["PDF"],
       pages: 18,
       customPrices: [
-        { _key: "eur", _type: "priceEntry", currency: "EUR", amount: 19 },
-        { _key: "chf", _type: "priceEntry", currency: "CHF", amount: 19 },
-        { _key: "gbp", _type: "priceEntry", currency: "GBP", amount: 19 },
-        { _key: "usd", _type: "priceEntry", currency: "USD", amount: 25 },
+        { _key: "eur", _type: "priceEntry", currency: "EUR", amount: 15 },
+        { _key: "chf", _type: "priceEntry", currency: "CHF", amount: 15 },
+        { _key: "gbp", _type: "priceEntry", currency: "GBP", amount: 15 },
+        { _key: "usd", _type: "priceEntry", currency: "USD", amount: 19 },
       ],
       cardLine: "The Gulf capital, a Bronze-Age island and the desert at dusk",
       dayStrip: "Old town on foot · Kuwait Towers · Failaka by boat · Desert at dusk · Fly out",

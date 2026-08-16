@@ -10,10 +10,12 @@
  * the meta description is the plan's own cell, copied here unchanged (the
  * plan is the register; the site is the render).
  *
- * Prices: the plan says 49. The house currency set is EUR/CHF/GBP/USD with
- * USD priced above the pack, +6 on both recent siblings (Tuvalu 29/35,
- * Kuwait 19/25, Ring Road 29/35), so 49/49/49/55. If that reading is wrong,
- * repricing is a customPrices patch + polar sync, nothing is printed.
+ * Prices are the Week rung of the pricing ladder (Content Plan v57 Pricing
+ * tab, founder 2026-08-16): 29/29/35/29 EUR/CHF/USD/GBP. A 7-day itinerary is
+ * Week, and Week is 29 - the same as the Iceland Ring Road, which is the point
+ * of a ladder. This replaced 49/49/55/49, set when the plan still carried a
+ * per-guide price and the USD uplift was inferred from siblings. Repricing is
+ * a customPrices patch + polar sync; nothing is printed.
  *
  * trackLine: OSRM driving over the master's Route pins, chained across day
  * boundaries and split at the ferry - Upolu chain (248 km, deck says ~250),
@@ -281,10 +283,10 @@ export default {
       format: ["PDF"],
       pages: 28,
       customPrices: [
-        { _key: "eur", _type: "priceEntry", currency: "EUR", amount: 49 },
-        { _key: "chf", _type: "priceEntry", currency: "CHF", amount: 49 },
-        { _key: "gbp", _type: "priceEntry", currency: "GBP", amount: 49 },
-        { _key: "usd", _type: "priceEntry", currency: "USD", amount: 55 },
+        { _key: "eur", _type: "priceEntry", currency: "EUR", amount: 29 },
+        { _key: "chf", _type: "priceEntry", currency: "CHF", amount: 29 },
+        { _key: "gbp", _type: "priceEntry", currency: "GBP", amount: 29 },
+        { _key: "usd", _type: "priceEntry", currency: "USD", amount: 35 },
       ],
       cardLine: "Two islands, one ferry crossed the clever way",
       dayStrip: "Apia · East to Lalomanu · To-Sua · West coast · Savai'i by taxi · Lava fields · Fly out",

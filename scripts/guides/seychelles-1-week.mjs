@@ -3,8 +3,11 @@
  *
  * Source content: the sellable PDF and build spec under
  * content/countries/seychelles/guides/seychelles-7-days/, plus the PPTX
- * "at a glance" facts. Prices are the founder-confirmed
- * EUR 19 / USD 22 / GBP 19 / CHF 19 (customPrices - no tier matches).
+ * "at a glance" facts. Prices are the Week rung of the pricing ladder (Content
+ * Plan v57 Pricing tab, founder 2026-08-16): EUR 29 / USD 35 / GBP 29 / CHF 29,
+ * up from the EUR 19 / USD 22 / GBP 19 / CHF 19 this launched at. Still
+ * customPrices, not a pricingTier ref - the tier docs hold stale launch numbers
+ * and nothing reads them.
  *
  * Hand-ported 2026-08-16, not extracted like its twelve siblings: the original
  * create-seychelles-guide.mjs was the first of the family and is shaped
@@ -235,25 +238,25 @@ export default {
         {
           _key: "73c1a3ed89ba",
           _type: "priceEntry",
-          amount: 19,
+          amount: 29,
           currency: "EUR",
         },
         {
           _key: "ee1a43e9c01d",
           _type: "priceEntry",
-          amount: 22,
+          amount: 35,
           currency: "USD",
         },
         {
           _key: "d8a131c54db9",
           _type: "priceEntry",
-          amount: 19,
+          amount: 29,
           currency: "GBP",
         },
         {
           _key: "6ae07e8db612",
           _type: "priceEntry",
-          amount: 19,
+          amount: 29,
           currency: "CHF",
         },
       ],

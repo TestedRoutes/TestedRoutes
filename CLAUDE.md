@@ -59,7 +59,15 @@ newest sibling) and it retired on 2026-08-16.
 ```
 npm run publish:guide -- --slug <slug> --dry-run
 npm run publish:guide -- --slug <slug> --assets <dir>
+npm run check:guides                      # drift: every module vs live Sanity
 ```
+
+`check:guides` is the thing that stops the modules rotting the way the scripts
+did — it exits 1 when a module and its live document disagree. Drift is not
+automatically a defect (a module you edited but have not published shows up
+here too); it means the two disagree and you should know why. It shells out to
+`publish-guide.mjs --json` rather than rebuilding the doc, so the checker cannot
+drift from the publisher it checks.
 
 To add a SKU, copy the nearest existing data module and replace the content.
 Three things the engine does that are easy to undo by accident:
