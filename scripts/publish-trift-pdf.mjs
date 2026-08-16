@@ -5,11 +5,16 @@ import { readFileSync } from "node:fs";
 
 const PDF = String.raw`C:\Users\pauli\Desktop\TestedRoutes - Website\content\countries\switzerland\guides\trift-bridge-from-zurich\final\TestedRoutes-Triftbrucke-Day-Trip.pdf`;
 const SLUG = "triftbrucke-from-zurich";
+// Kept in step with the live price so a re-run of this script (its real job is
+// the PDF upload) cannot quietly roll the price back. Day / layover rung of the
+// ladder, Content Plan v57 Pricing tab, founder 2026-08-16. This guide has no
+// scripts/guides/ data module, so there is nowhere better for the number to
+// live yet.
 const PRICES = [
-  { _key: "chf", _type: "priceEntry", currency: "CHF", amount: 9 },
-  { _key: "eur", _type: "priceEntry", currency: "EUR", amount: 9 },
-  { _key: "usd", _type: "priceEntry", currency: "USD", amount: 11 },
-  { _key: "gbp", _type: "priceEntry", currency: "GBP", amount: 9 },
+  { _key: "chf", _type: "priceEntry", currency: "CHF", amount: 12 },
+  { _key: "eur", _type: "priceEntry", currency: "EUR", amount: 12 },
+  { _key: "usd", _type: "priceEntry", currency: "USD", amount: 15 },
+  { _key: "gbp", _type: "priceEntry", currency: "GBP", amount: 12 },
 ];
 
 const client = createClient({
