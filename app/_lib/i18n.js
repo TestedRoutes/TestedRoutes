@@ -134,6 +134,8 @@ const en = {
       "The full guide covers the route, logistics, costs, booking links and timings – everything you need to plan this yourself.",
     readFullGuide: "See the guide →",
     browseAllGuides: "Browse all guides →",
+    moreFrom: "More from {country}",
+    exploreDestination: "Explore {country} →",
     turnInspiration: "Turn inspiration into a plan",
     guidesCardTitle: "TestedRoutes Guides",
     guidesCardBody:
@@ -345,6 +347,8 @@ const de = {
       "Der komplette Guide deckt Route, Logistik, Kosten, Buchungslinks und Timing ab – alles, was du für die eigene Planung brauchst.",
     readFullGuide: "Zum Guide →",
     browseAllGuides: "Alle Guides ansehen →",
+    moreFrom: "Mehr aus {country}",
+    exploreDestination: "{country} entdecken →",
     turnInspiration: "Aus Inspiration wird ein Plan",
     guidesCardTitle: "TestedRoutes Guides",
     guidesCardBody:
@@ -556,6 +560,8 @@ const es = {
       "La guía completa cubre la ruta, la logística, los costes, los enlaces de reserva y los tiempos – todo lo que necesitas para planificarlo por tu cuenta.",
     readFullGuide: "Ver la guía →",
     browseAllGuides: "Ver todas las guías →",
+    moreFrom: "Más de {country}",
+    exploreDestination: "Explorar {country} →",
     turnInspiration: "Convierte la inspiración en un plan",
     guidesCardTitle: "TestedRoutes Guides",
     guidesCardBody:
@@ -767,6 +773,8 @@ const fr = {
       "Le guide complet couvre l'itinéraire, la logistique, le budget, les liens de réservation et les horaires – tout ce qu'il faut pour le planifier vous-même.",
     readFullGuide: "Voir le guide →",
     browseAllGuides: "Voir tous les guides →",
+    moreFrom: "Plus sur {country}",
+    exploreDestination: "Découvrir {country} →",
     turnInspiration: "Transformez l'inspiration en plan",
     guidesCardTitle: "TestedRoutes Guides",
     guidesCardBody:
@@ -977,6 +985,8 @@ const lt = {
       "Pilname gide – maršrutas, logistika, išlaidos, rezervacijų nuorodos ir laikai: viskas, ko reikia susiplanuoti patiems.",
     readFullGuide: "Žiūrėti gidą →",
     browseAllGuides: "Žiūrėti visus gidus →",
+    moreFrom: "Daugiau iš {country}",
+    exploreDestination: "Atrasti {country} →",
     turnInspiration: "Paverskite įkvėpimą planu",
     guidesCardTitle: "TestedRoutes Guides",
     guidesCardBody:
