@@ -36,6 +36,7 @@
  *   --reuse-assets   force carrying forward the assets already on the doc
  *   --replace        do NOT preserve fields other tools own; reset the doc to
  *                    exactly this data. Destructive - see the note further down.
+ *   --no-ping        skip the IndexNow submission after a successful publish
  *   --json           print the built doc as JSON and nothing else (parity checks)
  */
 import { createClient } from "next-sanity";
@@ -51,7 +52,8 @@ const REPO = path.resolve(HERE, "..");
 // ---------------------------------------------------------------------------
 function parseArgs(argv) {
   const args = {
-    dryRun: false, json: false, reuseAssets: false, replace: false, slug: null, assets: null,
+    dryRun: false, json: false, reuseAssets: false, replace: false,
+    noPing: false, slug: null, assets: null,
   };
   for (let i = 0; i < argv.length; i++) {
     const a = argv[i];
@@ -59,6 +61,7 @@ function parseArgs(argv) {
     else if (a === "--json") args.json = true;
     else if (a === "--reuse-assets") args.reuseAssets = true;
     else if (a === "--replace") args.replace = true;
+    else if (a === "--no-ping") args.noPing = true;
     else if (a === "--slug") args.slug = argv[++i];
     else if (a === "--assets") args.assets = argv[++i];
     else if (a.startsWith("--slug=")) args.slug = a.slice(7);
@@ -431,4 +434,22 @@ if (args.dryRun) {
   }
   const res = await client.createOrReplace(doc);
   log("published", res._id, "| metaDescription", doc.metaDescription.length, "chars");
+
+  // Submit to IndexNow so Bing hears about it now rather than on its own
+  // schedule. Best-effort by design: a search-engine ping must never be able to
+  // fail a publish that has already succeeded, and the document is live either
+  // way. Google does not participate in IndexNow - see ping-indexnow.mjs.
+  if (!args.noPing) {
+    try {
+      const { execFileSync } = await import("node:child_process");
+      execFileSync(
+        process.execPath,
+        [path.join(HERE, "ping-indexnow.mjs"), "--url", `https://testedroutes.com/guides/${args.slug}`],
+        { stdio: "inherit" },
+      );
+    } catch {
+      log("IndexNow ping failed - the guide is published regardless. Retry with:");
+      log(`  npm run ping:indexnow -- --slug ${args.slug}`);
+    }
+  }
 }

@@ -60,7 +60,17 @@ newest sibling) and it retired on 2026-08-16.
 npm run publish:guide -- --slug <slug> --dry-run
 npm run publish:guide -- --slug <slug> --assets <dir>
 npm run check:guides                      # drift: every module vs live Sanity
+npm run ping:indexnow -- --all            # submit the sitemap to IndexNow
 ```
+
+A real publish submits the guide's URL to IndexNow automatically (`--no-ping`
+skips it). **Bing and Yandex participate; Google does not** — so this speeds up
+the Bing side, which is what ChatGPT search runs on, and does nothing for
+Google. Google's queue is worked by requesting indexing in Search Console and
+by earning inbound links, neither of which a script can do. The key in
+`scripts/ping-indexnow.mjs` must match the filename in `public/`; the script
+refuses to submit when the key file is not reachable, because IndexNow answers
+202 and *then* discards the batch, which is invisible otherwise.
 
 `check:guides` is the thing that stops the modules rotting the way the scripts
 did — it exits 1 when a module and its live document disagree. Drift is not
