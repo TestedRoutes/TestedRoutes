@@ -105,6 +105,15 @@ mistake.
 
 ## Conventions
 
+- **Deliverables are append-only: publish a new version, never overwrite.**
+  Anything the founder can open — a deck, an exported PDF, a workbook, a
+  master, a copy document, map exports — gets the next version number on every
+  write (`_v1` → `_v2`), within a session as much as across sessions. He edits
+  these files by hand between rounds without saying so, and an overwrite
+  destroys that work silently: the write succeeds, the checks pass, nobody
+  finds out. Before writing, compare the previous version against what you
+  produced; if it differs, he has been in it, so re-read his file as the new
+  base. Scratch and intermediates are exempt. Full rule: guide playbook v13 §0a.
 - Comments explain constraints and the "why", often at paragraph length —
   match that register; don't strip them.
 - Verification in remote sessions: `next build` needs live Sanity env, so
