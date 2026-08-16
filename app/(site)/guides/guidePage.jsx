@@ -8,6 +8,7 @@ import {
   getAffiliateLinks,
 } from "../../_lib/affiliateLinks";
 import { getDict, localePath } from "../../_lib/i18n";
+import { checkoutHrefFor } from "../../_lib/checkoutHref";
 import GuideGallery from "../../_components/GuideGallery";
 import GuideCarousel from "./GuideCarousel";
 import GuideTitle from "./GuideTitle";
@@ -16,6 +17,7 @@ import GuideBody from "../../_components/GuideBody";
 import BuyBox from "../../_components/BuyBox";
 import StickyBuyBar from "../../_components/StickyBuyBar";
 import Byline from "../../_components/Byline";
+import ViewBeacon from "../../_components/ViewBeacon";
 import GuideSalesPage from "./guideSalesPage";
 import { PrimaryStats, LocationSection, buildLocation } from "./GuideTripSections";
 
@@ -272,9 +274,7 @@ export default async function GuidePage({ lang, slug }) {
 
   const photos = [guide.image, ...(guide.galleryPhotos || [])].filter(Boolean);
   const carouselSlides = guide.salesPage?.carousel || [];
-  const checkoutHref = guide.polarProductId
-    ? `/api/checkout?products=${encodeURIComponent(guide.polarProductId)}`
-    : null;
+  const checkoutHref = checkoutHrefFor(guide);
   const pdfHref = !checkoutHref ? guide.guidePdfUrl || null : null;
 
   const location = buildLocation(guide);
@@ -434,6 +434,7 @@ export default async function GuidePage({ lang, slug }) {
   return (
     <main className="mx-auto max-w-7xl px-6 pb-8 pt-8 md:pb-16">
       {jsonLdBlocks}
+      <ViewBeacon slug={guide.slug} />
       <nav
         className="mb-5 flex items-center gap-1.5 text-[12px] text-slate-400"
         aria-label="Breadcrumb"

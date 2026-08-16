@@ -35,9 +35,9 @@ Set these in Vercel (Production + Preview) and in `.env.local` for development.
 
 Two tokens — keep them separate so a leak of one doesn't escalate:
 
-- `POLAR_ACCESS_TOKEN` — runtime token used by `/api/checkout`. Org token,
-  minimum scopes: `checkouts:write`, `checkouts:read`, `products:read`.
-  Lives in Vercel.
+- `POLAR_ACCESS_TOKEN` — runtime token used by `/api/checkout` and by the
+  nightly analytics rollup. Org token, minimum scopes: `checkouts:write`,
+  `checkouts:read`, `products:read`, `orders:read`. Lives in Vercel.
 - `POLAR_SYNC_TOKEN` — script token for `npm run sync:polar`. Scopes:
   `products:write`, `benefits:write`, `files:write`, `organizations:read`.
   Stays in your local `.env.local`, not Vercel.
@@ -49,6 +49,65 @@ Two tokens — keep them separate so a leak of one doesn't escalate:
   (safety flag). Anything else → dry-run.
 - `NEXT_PUBLIC_SITE_URL` — e.g. `https://testedroutes.com`; used to build
   the Polar checkout `successUrl`.
+
+### Analytics
+
+Two layers that must not be confused with each other:
+
+**Consent-gated PostHog** (browser SDK) handles anything needing a stable
+identity across a visit — autocapture, session behaviour, `newsletter_signup`,
+`guide_request`. It is initialised only from the Klaro consent callback in
+`app/_lib/klaroConfig.js` and does nothing until the visitor opts in.
+
+**Anonymous server-side capture** (`app/_lib/serverAnalytics.js`) handles the
+four commercial events: `guide_view`, `checkout_started`, `go_link_click`,
+`order_paid`. No cookie, no stored IP, a fresh random `distinct_id` per event,
+so nothing links two events to one person. This is why it runs without the
+consent banner, and it is described to visitors under "Anonymous usage
+statistics" in the privacy policy. **If you ever make that `distinct_id`
+stable, the legal basis goes with it and the consent gate has to come back.**
+
+Server events carry `tr_source: "server"`; the rollup filters on it so
+client- and server-side events with the same name are never double-counted.
+
+- `NEXT_PUBLIC_POSTHOG_KEY` / `NEXT_PUBLIC_POSTHOG_HOST` — ingest. **Both
+  layers no-op entirely if these are unset**, which is the first thing to
+  check when the dashboard is empty.
+- `POSTHOG_PROJECT_ID` / `POSTHOG_PERSONAL_API_KEY` — read side, for the
+  rollup. A *personal* API key, not the project key, and the query API is on
+  `eu.posthog.com` while ingest is on `eu.i.posthog.com`.
+- `CRON_SECRET` — guards `/api/cron/analytics-rollup`.
+- `SENTRY_AUTH_TOKEN` / `SENTRY_ORG` / `SENTRY_PROJECT` — optional; new-issue
+  counts in the digest.
+- `GSC_SERVICE_ACCOUNT_JSON` / `GSC_SITE_URL` — optional; Search Console.
+  See `.env.local.example` for the setup order, which has a step everyone
+  misses.
+
+Every optional source degrades to a note in the snapshot's `sourceErrors`
+rather than failing the run or writing a zero.
+
+### Nightly rollup
+
+`vercel.json` runs `/api/cron/analytics-rollup` at 04:00 UTC. It queries the
+previous UTC day and writes one `analyticsSnapshot` document to Sanity
+(`_id: analytics.YYYY-MM-DD`, visible in Studio under "Analytics snapshots").
+Re-running a date replaces that day rather than doubling it.
+
+Backfill or test a specific day:
+
+```sh
+curl -H "Authorization: Bearer $CRON_SECRET" \
+  "https://testedroutes.com/api/cron/analytics-rollup?date=2026-08-15"
+```
+
+Two caveats that will otherwise be misread:
+
+- **Conversion is a ratio of totals**, not a per-person funnel. Anonymous
+  events have no stable identity, so "views → checkout starts" is
+  `count ÷ count`, not "share of visitors who went on to buy".
+- **Search Console data lags 2–3 days.** The `search` block carries its own
+  `dataDate`; it is never the snapshot's date. Read it before comparing
+  search numbers to anything else on the page.
 
 ## Pricing tiers
 

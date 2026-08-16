@@ -24,9 +24,17 @@
  * into the destination — that's intentional, /go/ is for outbound
  * campaign traffic, not a canonical path. Robots.txt should disallow
  * /go/ if we want to be extra-safe.
+ *
+ * Analytics: this route is the only place a printed QR code touches our
+ * infrastructure. The redirect completes before any browser JS exists, so
+ * a client-side tracker can never see these — an anonymous server capture
+ * is the only way to know which QRs readers actually scan in the field,
+ * and it is what turns the reservation links in a PDF into a signal about
+ * which parts of a guide get used.
  */
-import { NextResponse } from "next/server";
+import { NextResponse, after } from "next/server";
 import { buildUtmUrl } from "../../_lib/utm";
+import { captureServer, requestContext } from "../../_lib/serverAnalytics";
 import { client } from "../../../sanity/lib/client";
 import {
   resolveRegionalLink,
@@ -336,6 +344,41 @@ function buildAffiliateRedirect(link, country) {
   return withAffiliateParams(resolved.url, resolved.program, country);
 }
 
+/**
+ * Redirect, and record the scan without making the reader wait for it.
+ *
+ * `after()` runs the capture once the 302 is already on its way, which
+ * matters more here than anywhere else on the site: somebody is standing at
+ * a trailhead with one bar of signal, and the whole promise of a printed QR
+ * is that it resolves instantly. Fire-and-forget without `after()` would be
+ * worse than useless — a serverless function is frozen the moment it
+ * responds, so a floating promise is dropped rather than delivered, and it
+ * would be dropped most often on exactly the slow connections we would most
+ * want to hear about.
+ *
+ * `kind` records which of the four resolution branches matched. It's the
+ * difference between "the Saas-Fee hotel QR gets scanned a lot" and "people
+ * keep hitting a slug we never registered".
+ */
+function redirectWith(request, { slug, kind, target }) {
+  let targetHost = null;
+  try {
+    targetHost = new URL(target).host || null;
+  } catch {
+    // CURATED entries are hand-written; a malformed one shouldn't 500 the
+    // redirect, it should just lose one analytics dimension.
+  }
+  after(
+    captureServer("go_link_click", {
+      slug,
+      kind,
+      target_host: targetHost,
+      ...requestContext(request),
+    }),
+  );
+  return NextResponse.redirect(target, { status: 302 });
+}
+
 export async function GET(request, { params }) {
   const { slug: rawSlug } = await params;
   const slug = String(rawSlug || "").toLowerCase().trim();
@@ -352,13 +395,13 @@ export async function GET(request, { params }) {
   if (affiliate) {
     const target = buildAffiliateRedirect(affiliate, country);
     if (target) {
-      return NextResponse.redirect(target, { status: 302 });
+      return redirectWith(request, { slug, kind: "affiliate", target });
     }
   }
 
   // 2. Curated short link
   if (CURATED[slug]) {
-    return NextResponse.redirect(CURATED[slug], { status: 302 });
+    return redirectWith(request, { slug, kind: "curated", target: CURATED[slug] });
   }
 
   // 3. Guide passthrough
@@ -368,7 +411,7 @@ export async function GET(request, { params }) {
       medium: "referral",
       campaign: slug,
     });
-    return NextResponse.redirect(target, { status: 302 });
+    return redirectWith(request, { slug, kind: "guide", target });
   }
 
   // 4. Unknown — fall through to homepage with a tagged "unknown-<slug>"
@@ -378,5 +421,12 @@ export async function GET(request, { params }) {
     medium: "referral",
     campaign: `unknown-${slug.slice(0, 40)}`,
   });
-  return NextResponse.redirect(fallback, { status: 302 });
+  // Worth watching in the digest: a printed slug that never got registered
+  // shows up here as repeat traffic, and every one of those is a reader who
+  // scanned a code in a guide they paid for and landed nowhere useful.
+  return redirectWith(request, {
+    slug: slug.slice(0, 80),
+    kind: "unknown",
+    target: fallback,
+  });
 }
