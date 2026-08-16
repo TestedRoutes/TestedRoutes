@@ -88,4 +88,16 @@ export const structure = (S) =>
         .title("Authors")
         .schemaType("author")
         .child(S.documentTypeList("author").title("Authors")),
+      S.divider(),
+      // Machine-written by the nightly rollup. Listed so the numbers are
+      // inspectable when the dashboard says something surprising, not so
+      // anyone edits them.
+      S.listItem()
+        .title("Analytics snapshots")
+        .schemaType("analyticsSnapshot")
+        .child(
+          S.documentTypeList("analyticsSnapshot")
+            .title("Daily snapshots")
+            .defaultOrdering([{ field: "date", direction: "desc" }]),
+        ),
     ]);
