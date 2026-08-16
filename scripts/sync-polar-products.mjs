@@ -5,7 +5,8 @@
  * Source of truth: Sanity. Re-running upserts each guide's Polar product:
  *   - name, description, multi-currency prices come from Sanity, and a
  *     repriced guide patches its live product (old prices get archived)
- *   - PDF is uploaded once (file replacement is a future flag)
+ *   - a revised PDF replaces the downloadable (SHA-256 compared against the
+ *     file on the benefit, so unchanged bytes are left alone)
  *
  * Idempotency: Polar product ID written back to `guide.polarProductId` after
  * creation. Re-running skips already-synced guides for full create + benefit
