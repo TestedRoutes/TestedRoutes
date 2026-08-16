@@ -49,6 +49,42 @@ published docs). Carousel authoring flow: curate a numbered folder
 ("1. cover.jpg", "2. snapshot.jpg", …), then `set-guide-carousel.mjs`
 uploads it wholesale; alt text lives in that script's `ALT` map.
 
+## Publishing a guide SKU
+
+**One engine, `scripts/publish-guide.mjs`, plus one data module per SKU at
+`scripts/guides/<slug>.mjs`. Do not write a new per-guide script** — that was
+the old shape (13 near-identical ~345-line scripts, each cloned from the
+newest sibling) and it retired on 2026-08-16.
+
+```
+npm run publish:guide -- --slug <slug> --dry-run
+npm run publish:guide -- --slug <slug> --assets <dir>
+```
+
+To add a SKU, copy the nearest existing data module and replace the content.
+Three things the engine does that are easy to undo by accident:
+
+- **The story doc has several authors.** `guide.carousel`, `guide.cover`,
+  `guide.polarProductId`, `guide.statusNote` and `similarStories` are written
+  by other tools, so the engine merges over the live document rather than
+  replacing it. The legacy scripts called `createOrReplace` with only their own
+  fields; re-running one would have deleted the rest, and losing
+  `polarProductId` alone takes the buy button out of service with no error
+  anywhere. `--replace` opts back into replacement; you almost never want it.
+- **Gallery `_key`s live in the data module, never derived.** They are an
+  item's identity in Sanity. The two legacy lineages derived them differently
+  (`file.replace(/\W/g,"")` vs `f.slice(9,15)`), so any single rule rewrites
+  half the library's keys.
+- **Assets resolve explicitly, and republishing needs no source files.** With
+  no `--assets` directory the engine carries forward the assets already on the
+  doc. Guide hero/gallery sources have not survived on disk in practice, so
+  this is the normal path, not the fallback.
+
+A guide may acknowledge a check it knowingly fails via `knownIssues`; the
+failure becomes a warning that prints on every run. Say next to it why and
+since when — an acknowledgement nobody can date is indistinguishable from a
+mistake.
+
 ## Conventions
 
 - Comments explain constraints and the "why", often at paragraph length —
