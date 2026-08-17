@@ -23,13 +23,17 @@ export default {
     // forward, which is the normal path for every guide in this library.
     dir: null,
     hero: { file: "hero.jpg", alt: "Hiker on the Alpine Passes Trail above Simplon Pass with snow-covered peaks behind" },
+    // Rewritten 2026-08-17 from the published images themselves. These read
+    // "103820", "104008" and so on until then - capture timestamps carried over
+    // from the filenames, which announced a number to anyone using a screen
+    // reader on a page that is trying to sell something.
     gallery: [
-      { file: "g1.jpg", key: "02bf7763123d", alt: "103820" },
-      { file: "g2.jpg", key: "09335acad2a5", alt: "104008" },
-      { file: "g3.jpg", key: "0c7e4da70120", alt: "124027" },
-      { file: "g4.jpg", key: "6c5150cb497e", alt: "175224" },
-      { file: "g5.jpg", key: "90e7152b85c5", alt: "113558" },
-      { file: "g6.jpg", key: "16cd2beb40ef", alt: "133005" },
+      { file: "g1.jpg", key: "02bf7763123d", alt: "The stone eagle monument at Simplon Pass on its bare rock outcrop, mountains and the pass road behind" },
+      { file: "g2.jpg", key: "09335acad2a5", alt: "Looking down on the Simplon Pass road and its lay-by, lorries parked below a glaciated peak" },
+      { file: "g3.jpg", key: "0c7e4da70120", alt: "A hiker on the stony ridge path, a cairn beside the trail and the valley opening out beyond" },
+      { file: "g4.jpg", key: "6c5150cb497e", alt: "Dark timber barns and slate roofs of a hillside hamlet, a snow-capped peak across the valley" },
+      { file: "g5.jpg", key: "90e7152b85c5", alt: "A flag on a pole at a viewpoint above the valley, glaciated peaks along the skyline under cloud" },
+      { file: "g6.jpg", key: "16cd2beb40ef", alt: "Saas-Fee below its glacier, chalets and apartment blocks under the icefall" },
     ],
     trackLine: "tracklines/simplon-pass-to-saas-fee.json",
     pdf: {

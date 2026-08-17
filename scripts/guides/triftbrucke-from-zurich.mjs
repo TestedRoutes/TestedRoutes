@@ -26,12 +26,16 @@ export default {
     // forward, which is the normal path for every guide in this library.
     dir: null,
     hero: { file: "hero.jpg", alt: "Trift suspension bridge stretching across a rocky alpine gorge with snow-covered mountains behind" },
+    // Rewritten 2026-08-17 from the published images themselves. All five read
+    // "Triftbrücke from Zurich" until then - the guide's title repeated five
+    // times, which describes none of them and tells a screen reader nothing it
+    // did not already have from the heading.
     gallery: [
-      { file: "g1.jpg", key: "99efd273c509", alt: "Triftbrücke from Zurich" },
-      { file: "g2.jpg", key: "834339e0ad60", alt: "Triftbrücke from Zurich" },
-      { file: "g3.jpg", key: "e261fd9bfaa6", alt: "Triftbrücke from Zurich" },
-      { file: "g4.jpg", key: "3b51b052e19b", alt: "Triftbrücke from Zurich" },
-      { file: "g5.jpg", key: "24a9d3fcfc68", alt: "Triftbrücke from Zurich" },
+      { file: "g1.jpg", key: "99efd273c509", alt: "Looking along the Trift suspension bridge deck, snow between the planks and a snow-covered peak ahead" },
+      { file: "g2.jpg", key: "834339e0ad60", alt: "A hiker sitting on a rock above the milky green Triftsee, the snow-covered cirque behind" },
+      { file: "g3.jpg", key: "e261fd9bfaa6", alt: "Golden larches and fresh snow above the Trift valley, cloud filling the far side" },
+      { file: "g4.jpg", key: "3b51b052e19b", alt: "The forest trail below the bridge, sun through the conifers and moss over the boulders" },
+      { file: "g5.jpg", key: "24a9d3fcfc68", alt: "A hiker with a green pack on the snowy approach, looking across the gorge to the peaks" },
     ],
     pdf: {
       path: "content/countries/switzerland/guides/trift-bridge-from-zurich/final/TestedRoutes-Triftbrucke-Day-Trip.pdf",

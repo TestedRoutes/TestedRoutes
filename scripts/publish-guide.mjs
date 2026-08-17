@@ -187,9 +187,46 @@ async function resolveByReuse() {
   if (!existing.heroImage?.asset?._ref) {
     throw new Error(`${guide.docId} exists but has no heroImage asset to reuse.`);
   }
+
+  // Only the asset reference is reused. Everything else about an image - its
+  // alt text, its key - is authored content and comes from the data module.
+  //
+  // Carrying the whole live image object forward instead looks harmless and is
+  // not: it silently makes alt text uneditable, because the module's value is
+  // overwritten by the doc's on every publish. The publish reports success and
+  // changes nothing, which is the worst way for this to fail. Found 2026-08-17
+  // trying to fix six alt texts that read as capture timestamps.
+  const liveByKey = new Map(
+    (existing.galleryImages ?? []).filter((g) => g?._key).map((g) => [g._key, g]),
+  );
+  const galleryImages = guide.assets.gallery.map((g) => {
+    const live = liveByKey.get(g.key);
+    if (!live?.asset?._ref) {
+      throw new Error(
+        `gallery key "${g.key}" (${g.file}) has no matching image on ${guide.docId}, ` +
+          `so there is no asset to reuse. Publish with --assets <dir> to upload it.`,
+      );
+    }
+    return { _type: "image", _key: g.key, alt: g.alt, asset: live.asset };
+  });
+
+  const orphaned = [...liveByKey.keys()].filter(
+    (k) => !guide.assets.gallery.some((g) => g.key === k),
+  );
+  if (orphaned.length) {
+    // Publishing would drop these, so say so rather than quietly shrinking the
+    // gallery. Add them to the data module, or remove them deliberately.
+    log(`warning: ${orphaned.length} gallery image(s) on the doc are not in the data`);
+    log(`  module and would be dropped: ${orphaned.join(", ")}`);
+  }
+
   return {
-    heroImage: existing.heroImage,
-    galleryImages: existing.galleryImages ?? [],
+    heroImage: {
+      _type: "image",
+      alt: guide.assets.hero.alt,
+      asset: existing.heroImage.asset,
+    },
+    galleryImages,
     pdfRef: existing.pdfRef,
     trackLine: existing.trackLine,
   };
