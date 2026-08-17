@@ -6,11 +6,16 @@ import { readFileSync } from "node:fs";
 
 const PDF = String.raw`C:\Users\pauli\Desktop\TestedRoutes - Website\content\countries\switzerland\guides\simplon-pass-to-saas-fee\final\TestedRoutes-Simplon-Saas-Fee-Weekend-Hike.pdf`;
 const SLUG = "simplon-pass-to-saas-fee";
+// Kept in step with the live price so a re-run of this script (its real job is
+// the PDF upload) cannot quietly roll the price back. Weekend rung of the
+// ladder, Content Plan v57 Pricing tab, founder 2026-08-16. This guide has no
+// scripts/guides/ data module, so there is nowhere better for the number to
+// live yet.
 const PRICES = [
-  { _key: "chf", _type: "priceEntry", currency: "CHF", amount: 9 },
-  { _key: "eur", _type: "priceEntry", currency: "EUR", amount: 9 },
-  { _key: "usd", _type: "priceEntry", currency: "USD", amount: 11 },
-  { _key: "gbp", _type: "priceEntry", currency: "GBP", amount: 9 },
+  { _key: "chf", _type: "priceEntry", currency: "CHF", amount: 15 },
+  { _key: "eur", _type: "priceEntry", currency: "EUR", amount: 15 },
+  { _key: "usd", _type: "priceEntry", currency: "USD", amount: 19 },
+  { _key: "gbp", _type: "priceEntry", currency: "GBP", amount: 15 },
 ];
 
 const client = createClient({
