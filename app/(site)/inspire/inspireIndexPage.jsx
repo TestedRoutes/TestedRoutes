@@ -41,12 +41,11 @@ function buildCardPhotos(story) {
   return photos.slice(0, 5);
 }
 
-// Category names arrive from Sanity however the editor typed them
-// ("expedition", "Week+", "Seven Summits"); prettyGeo title-cases every word
-// and leaves the rest alone, so the filter pills read consistently without
-// flattening "Seven Summits" to "Seven summits".
-function categoryLabel(name, slug) {
-  return prettyGeo(name || slug);
+function prettyCategory(value) {
+  const raw = String(value || "").trim();
+  if (!raw) return "";
+  const words = raw.replace(/[-_]+/g, " ").toLowerCase();
+  return words.charAt(0).toUpperCase() + words.slice(1);
 }
 
 function buildCard(story, lang) {
@@ -65,16 +64,7 @@ function buildCard(story, lang) {
     geoLabel: display.geoLabel || "",
     country: story.metadata?.geography?.country || "",
     continentSlug: continentSlug(story.metadata?.geography?.continent),
-    // Two separate axes, and they were conflated before: the journey category
-    // is the trip length (Day / Weekend / Week+ / Expedition), the activity
-    // category is what you actually do (Hiking, Roadtrip, Kayaking). One
-    // field falling back to the other made "Day" and "Roadtrip" the same
-    // filter, which the two pill rows can't be built on.
-    durationLabel: categoryLabel(cls.journey_category_name, cls.journey_category),
-    activityLabel: categoryLabel(cls.activity_category_name, cls.activity_category),
-    // Sanity's editorial groupings, both fields flattened: the trip row on
-    // the browse page matches on these wherever stories are tagged.
-    collections: [cls.primary_collection, ...(cls.all_collections || [])].filter(Boolean),
+    categoryLabel: prettyCategory(cls.journey_category || cls.activity_category),
     categoryDurationLine: display.categoryDurationLine || "",
     difficultyLabel: display.difficultyLabel || "",
     hasGuide: !!(display.hasGuide ?? inspireStoryHasGuide(story)),
@@ -130,15 +120,11 @@ export default async function InspireIndexPage({ lang = "en", continent = "" }) 
     : "";
 
   return (
-    // No background of its own: the page shows the site's Bone-to-Parchment
-    // wash from <body>, like /destinations and /guides (founder 2026-08-17).
-    // It used to paint flat Parchment over that gradient, which made Inspire
-    // the one index whose canvas didn't match its siblings.
-    <main className="min-h-screen w-full pb-16 pt-12 text-slate-900 md:pt-16">
+    // Flat Parchment here instead of the site's Bone-to-Parchment wash: the
+    // card grid reads cleaner against one tone than against a gradient.
+    <main className="min-h-screen w-full bg-brand-parchment pb-16 pt-12 text-slate-900 md:pt-16">
       <div className="mx-auto flex w-full min-w-0 max-w-7xl flex-col gap-10 px-6">
-        {/* Left-aligned header + search, same as /guides and /destinations
-            (founder 2026-08-17). */}
-        <div className="space-y-2">
+        <div className="space-y-2 text-center">
           <h1 className="font-serif font-normal leading-[1.1] text-brand-ink text-2xl md:text-[26px] lg:text-5xl">
             {t.title}
           </h1>
@@ -159,16 +145,15 @@ export default async function InspireIndexPage({ lang = "en", continent = "" }) 
             </Link>
           </div>
         ) : (
-          <InspireBrowse cards={cards} lang={lang} initialContinent={activeContinent} />
+          <InspireBrowse
+            cards={cards}
+            lang={lang}
+            initialContinent={activeContinent}
+            initialContinentLabel={prettyGeo(activeContinent)}
+          />
         )}
 
-        {/* Double-height band (founder 2026-08-17). Stated as a floor rather
-            than extra padding so the box keeps its proportions if the copy
-            wraps: 226px is twice the 113px it measured at desktop, 388px twice
-            the 194px on phones, where the title and body both run to two
-            lines. justify-center keeps the stack optically centred in the
-            taller box on phones; md restores the side-by-side row. */}
-        <section className="flex min-h-[388px] flex-col items-start justify-center gap-4 rounded-[28px] bg-brand-terracotta p-6 text-white md:min-h-[226px] md:flex-row md:items-center md:justify-between md:p-8">
+        <section className="flex flex-col items-start gap-4 rounded-[28px] bg-brand-terracotta p-6 text-white md:flex-row md:items-center md:justify-between md:p-8">
           <div>
             <p className="font-serif text-xl font-normal leading-tight">{t.ctaTitle}</p>
             <p className="mt-1 text-sm text-white/70">{t.ctaBody}</p>

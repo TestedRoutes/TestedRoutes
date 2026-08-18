@@ -18,7 +18,7 @@ export default function HomeHero({ guides = [] }) {
     const observer = new IntersectionObserver(
       ([entry]) => {
         window.dispatchEvent(
-          new CustomEvent("page-search-visible", { detail: entry.isIntersecting })
+          new CustomEvent("home-hero-search-visible", { detail: entry.isIntersecting })
         );
       },
       { threshold: 0, rootMargin: "-80px 0px 0px 0px" }
@@ -26,7 +26,7 @@ export default function HomeHero({ guides = [] }) {
     observer.observe(el);
     return () => {
       observer.disconnect();
-      window.dispatchEvent(new CustomEvent("page-search-visible", { detail: true }));
+      window.dispatchEvent(new CustomEvent("home-hero-search-visible", { detail: true }));
     };
   }, []);
 
