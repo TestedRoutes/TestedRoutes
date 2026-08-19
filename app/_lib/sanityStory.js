@@ -7,6 +7,7 @@
  * Sanity instead of the public/Content/ filesystem.
  */
 
+import { cache } from "react";
 import { client } from "../../sanity/lib/client";
 import { urlFor } from "../../sanity/lib/image";
 import { portableTextToMarkdown } from "./portableTextToMarkdown";
@@ -569,7 +570,16 @@ const LANG_FILTER = `(language == $lang || (!defined(language) && $lang == "en")
 export const SANITY_CACHE_TAG = "sanity-content";
 const FETCH_OPTS = { next: { revalidate: 300, tags: [SANITY_CACHE_TAG] } };
 
-export async function fetchAllStories(lang = "en") {
+// Every fetch below is wrapped in React.cache so one request renders one
+// query, however many times the tree asks. Before this, a single guide-page
+// hit fetched the full catalogue three times over (layout nav, metadata,
+// page body) — the Data Cache above absorbs the network cost across
+// requests, cache() absorbs the repeats within one. The exported wrappers
+// normalize their default arguments first, because cache() keys on the
+// exact argument list: fetchAllStories() and fetchAllStories("en") must
+// land on the same entry.
+
+const fetchAllStoriesCached = cache(async (lang) => {
   // Guide-bearing docs live in the Guides section only; Inspire lists
   // dedicated story docs (a destination can have both without duplication).
   return client.fetch(
@@ -577,37 +587,115 @@ export async function fetchAllStories(lang = "en") {
     { lang },
     FETCH_OPTS,
   );
+});
+export function fetchAllStories(lang = "en") {
+  return fetchAllStoriesCached(lang);
 }
 
 // Guides are English-only for now; the language filter keeps future
 // translated story docs from leaking duplicates into the guide list.
-export async function fetchAllGuideStories(lang = "en") {
+const fetchAllGuideStoriesCached = cache(async (lang) => {
   return client.fetch(
     `*[_type == "story" && status == "published" && guide.hasGuide == true && ${LANG_FILTER}] | order(publishedDate desc) ${STORY_PROJECTION}`,
     { lang },
     FETCH_OPTS,
   );
+});
+export function fetchAllGuideStories(lang = "en") {
+  return fetchAllGuideStoriesCached(lang);
 }
 
-export async function fetchStoryCount(lang = "en") {
+// One guide by slug, matching either the guide page slug or the underlying
+// story slug — the same pair loadGuideBySlug matched when it filtered the
+// full catalogue in memory. Exists so a guide detail page (and a mistyped
+// /go/ link from a printed QR code) costs one document, not a fetch and
+// markdown render of every guide in the library.
+const fetchGuideStoryBySlugCached = cache(async (slug, lang) => {
+  const doc = await client.fetch(
+    `*[_type == "story" && status == "published" && guide.hasGuide == true && ${LANG_FILTER} && (guide.pageSlug == $slug || slug.current == $slug)][0] ${STORY_PROJECTION}`,
+    { lang, slug },
+    FETCH_OPTS,
+  );
+  return doc || null;
+});
+export function fetchGuideStoryBySlug(slug, lang = "en") {
+  if (!slug) return Promise.resolve(null);
+  return fetchGuideStoryBySlugCached(slug, lang);
+}
+
+// Slim list for the site-layout header search: title, slug and category
+// label only. The layout renders on every page, including ones that never
+// touch the catalogue — giving it the full STORY_PROJECTION meant every
+// legal-page hit paid for guide bodies, carousels and galleries it threw
+// away after four fields.
+const fetchGuideNavEntriesCached = cache(async (lang) => {
+  const docs = await client.fetch(
+    `*[_type == "story" && status == "published" && guide.hasGuide == true && ${LANG_FILTER}] | order(publishedDate desc) {
+      title,
+      "slug": coalesce(guide.pageSlug, slug.current),
+      "category": journeyCategory->{ name, "slug": slug.current },
+    }`,
+    { lang },
+    FETCH_OPTS,
+  );
+  return (docs || []).map((d) => ({
+    title: d.title,
+    slug: d.slug,
+    // Same label rule as shapeGuide's `category`.
+    category: (d.category?.name || d.category?.slug || "Guide").replace(/_/g, " "),
+    href: `/guides/${d.slug}`,
+  }));
+});
+export function fetchGuideNavEntries(lang = "en") {
+  return fetchGuideNavEntriesCached(lang);
+}
+
+// Slugs and dates only, for sitemap.xml. The sitemap wants one field per
+// URL, and it used to get there by loading the complete catalogue with
+// bodies and galleries ten times over (two full queries per locale) at
+// every build.
+const fetchSitemapEntriesCached = cache(async (lang) => {
+  const docs = await client.fetch(
+    `*[_type == "story" && status == "published" && ${LANG_FILTER}]{
+      "slug": slug.current,
+      "guideSlug": coalesce(guide.pageSlug, slug.current),
+      "hasGuide": guide.hasGuide == true,
+      publishedDate,
+    }`,
+    { lang },
+    FETCH_OPTS,
+  );
+  return docs || [];
+});
+export function fetchSitemapEntries(lang = "en") {
+  return fetchSitemapEntriesCached(lang);
+}
+
+const fetchStoryCountCached = cache(async (lang) => {
   return client.fetch(
     `count(*[_type == "story" && status == "published" && guide.hasGuide != true && ${LANG_FILTER}])`,
     { lang },
     FETCH_OPTS,
   );
+});
+export function fetchStoryCount(lang = "en") {
+  return fetchStoryCountCached(lang);
 }
 
-export async function fetchGuideCount(lang = "en") {
+const fetchGuideCountCached = cache(async (lang) => {
   return client.fetch(
     `count(*[_type == "story" && status == "published" && guide.hasGuide == true && ${LANG_FILTER}])`,
     { lang },
     FETCH_OPTS,
   );
+});
+export function fetchGuideCount(lang = "en") {
+  return fetchGuideCountCached(lang);
 }
 
 // All published language versions of one story (linked via storyId).
 // Used to build hreflang alternates and the language switcher targets.
-export async function fetchStoryTranslations(storyId) {
+export const fetchStoryTranslations = cache(async (storyId) => {
   if (!storyId) return [];
   const docs = await client.fetch(
     `*[_type == "story" && status == "published" && storyId == $storyId]{ "slug": slug.current, language, "hasGuide": guide.hasGuide, "guideSlug": guide.pageSlug }`,
@@ -620,4 +708,4 @@ export async function fetchStoryTranslations(storyId) {
     hasGuide: !!d.hasGuide,
     guideSlug: d.guideSlug || d.slug,
   }));
-}
+});

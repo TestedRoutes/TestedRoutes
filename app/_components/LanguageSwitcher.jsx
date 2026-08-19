@@ -1,6 +1,8 @@
 "use client";
 
 import { usePathname } from "next/navigation";
+// locale.js, not i18n.js: keeps the five UI-string dictionaries out of the
+// client bundle — this component only needs the registry and path helpers.
 import {
   LOCALES,
   LANG_NAMES,
@@ -8,7 +10,7 @@ import {
   langFromPathname,
   pathWithoutLocale,
   localePath,
-} from "../_lib/i18n";
+} from "../_lib/locale";
 
 export default function LanguageSwitcher() {
   const pathname = usePathname();

@@ -2,12 +2,14 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+// Helpers from locale.js, never i18n.js — this renders on every page and
+// the i18n module drags all five dictionaries into the client bundle. Nav
+// labels arrive as a prop from the server layout.
 import {
-  getDict,
   langFromPathname,
   localePath,
   pathWithoutLocale,
-} from "../_lib/i18n";
+} from "../_lib/locale";
 
 const TABS = [
   {
@@ -78,12 +80,12 @@ function activeSlug(pathname) {
   return null;
 }
 
-export default function MobileTabBar() {
+export default function MobileTabBar({ navDicts = {} }) {
   const pathname = usePathname();
   const barePath = pathWithoutLocale(pathname);
   const active = activeSlug(barePath);
   const lang = langFromPathname(pathname);
-  const nav = getDict(lang).nav;
+  const nav = navDicts[lang] || navDicts.en || {};
 
   // Guide detail pages swap the tab bar for the sticky buy bar.
   const parts = barePath.split("/").filter(Boolean);

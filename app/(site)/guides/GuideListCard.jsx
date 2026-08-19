@@ -4,7 +4,7 @@ import Link from "next/link";
 import CardMediaCarousel, {
   buildMediaSlides,
 } from "../../_components/CardMediaCarousel";
-import { localePath } from "../../_lib/i18n";
+import { localePath } from "../../_lib/locale";
 import { tripCategoryChipClass } from "../../_lib/tripCategory";
 import { checkoutHrefFor } from "../../_lib/checkoutHref";
 

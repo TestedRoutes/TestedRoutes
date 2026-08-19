@@ -7,12 +7,15 @@ import logoVertical from "../../content/brand/TR-logo-vertical.svg";
 import CurrencySwitcher from "./CurrencySwitcher";
 import LanguageSwitcher from "./LanguageSwitcher";
 import HomeSearchBar from "./HomeSearchBar";
+// Helpers come from locale.js, never i18n.js: this component is in the
+// client bundle of every page, and the i18n module carries all five
+// dictionaries (~48 KB). The per-locale nav labels arrive as a prop from
+// the server layout instead.
 import {
-  getDict,
   langFromPathname,
   localePath,
   pathWithoutLocale,
-} from "../_lib/i18n";
+} from "../_lib/locale";
 
 function getActiveSlug(pathname) {
   const bare = pathWithoutLocale(pathname);
@@ -44,11 +47,11 @@ function logoLinkClassName(active) {
   return base;
 }
 
-export default function SiteHeader({ currency = "EUR", guides = [] }) {
+export default function SiteHeader({ currency = "EUR", guides = [], navDicts = {} }) {
   const pathname = usePathname();
   const active = getActiveSlug(pathname);
   const lang = langFromPathname(pathname);
-  const nav = getDict(lang).nav;
+  const nav = navDicts[lang] || navDicts.en || {};
   // Guides + Inspire have localized routes; other sections stay English.
   const navLinks = [
     { slug: "guides", label: nav.guides, href: localePath(lang, "/guides") },

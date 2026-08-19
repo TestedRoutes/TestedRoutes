@@ -2,7 +2,10 @@
 
 import Link from "next/link";
 import { useState } from "react";
-import { getDict } from "../_lib/i18n";
+// English only as the fallback: every current call site passes `t`, and
+// importing getDict would put all five locale dictionaries in the client
+// bundle where one suffices as a safety net.
+import en from "../_lib/dicts/en";
 
 export default function BuyBox({
   price,
@@ -13,7 +16,7 @@ export default function BuyBox({
   essentialBookings,
   t: tProp,
 }) {
-  const t = tProp || getDict("en").guide;
+  const t = tProp || en.guide;
   const bookings = Array.isArray(essentialBookings) ? essentialBookings : [];
   const bookingCount = bookings.length;
   const [openLinks, setOpenLinks] = useState(true);

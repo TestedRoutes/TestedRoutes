@@ -3,7 +3,14 @@ import SiteFooter from "../_components/SiteFooter";
 import MobileTabBar from "../_components/MobileTabBar";
 import PostHogProvider from "../_components/PostHogProvider";
 import { getRequestCurrency } from "../_lib/currency";
-import { loadGuides } from "../_lib/loadGuides";
+import { fetchGuideNavEntries } from "../_lib/sanityStory";
+import { LOCALES, getDict } from "../_lib/i18n";
+
+// Header + tab bar are client components that resolve their locale from the
+// pathname, so they need nav labels for every locale — but importing the
+// dictionaries client-side costs ~48 KB on every page. The nav sub-dicts are
+// a few hundred bytes, so the server resolves all five and passes them down.
+const NAV_DICTS = Object.fromEntries(LOCALES.map((l) => [l, getDict(l).nav]));
 
 
 const SITE_URL = "https://testedroutes.com";
@@ -47,27 +54,23 @@ export const metadata = {
 export default async function SiteLayout({ children }) {
   const currency = await getRequestCurrency();
   // This fetch runs on every page, including ones that never touch Sanity
-  // (legal pages, contact, about). If it throws, the whole site is down —
-  // so degrade to an empty header search instead of propagating. Content
-  // pages that genuinely need Sanity still surface their own errors.
-  let allGuides = [];
+  // (legal pages, contact, about) — so it asks for the slim nav projection
+  // (title/slug/category), not the full catalogue the header search would
+  // throw away. If it throws, the whole site is down — so degrade to an
+  // empty header search instead of propagating. Content pages that
+  // genuinely need Sanity still surface their own errors.
+  let searchableGuides = [];
   try {
-    allGuides = await loadGuides();
+    searchableGuides = await fetchGuideNavEntries();
   } catch (err) {
     console.error("[site-layout] header guide list failed to load:", err);
   }
-  const searchableGuides = allGuides.map((g) => ({
-    title: g.title,
-    slug: g.slug,
-    category: g.category,
-    href: g.href,
-  }));
   return (
     <PostHogProvider>
-      <SiteHeader currency={currency} guides={searchableGuides} />
+      <SiteHeader currency={currency} guides={searchableGuides} navDicts={NAV_DICTS} />
       {children}
       <SiteFooter />
-      <MobileTabBar />
+      <MobileTabBar navDicts={NAV_DICTS} />
     </PostHogProvider>
   );
 }

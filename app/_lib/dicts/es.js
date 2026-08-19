@@ -1,0 +1,215 @@
+// UI strings: es. One locale per module so client components can import
+// a single language (or none) instead of the whole five-locale registry.
+const es = {
+  nav: {
+    destinations: "Destinos",
+    guides: "Guías",
+    inspire: "Inspiración",
+    aboutMe: "Sobre mí",
+    explore: "Explorar",
+    about: "Sobre mí",
+  },
+  inspireList: {
+    title: "Viajes reales. Lecciones reales",
+    subtitle: "Historias para inspirar tu próximo viaje",
+    searchPlaceholder: "Buscar historias – prueba 'glaciar' o 'escala'",
+    searchButton: "Buscar",
+    heading: "Viajes, no solo publicaciones",
+    story: "historia",
+    stories: "historias",
+    noMatchTitle: "No hay viajes que coincidan",
+    noMatchBody: "Prueba una frase más corta o borra la búsqueda.",
+    clearSearch: "Borrar búsqueda",
+    guideBadge: "Guía",
+    familyBadge: "Familia",
+    credibility: [
+      "Más de 140 países",
+      "Más de 15 años planificando viajes independientes",
+      "5/7 cumbres completadas",
+      "Rutas probadas en viajes reales",
+    ],
+    collectionsHeading: "Explora por tipo de viaje",
+    viewCollection: "Ver colección",
+    collections: [
+      {
+        title: "Días alpinos en Suiza",
+        intro:
+          "Excursiones de un día desde Zúrich que combinan paisaje alpino, lógica de transporte y ritmo realista.",
+      },
+      {
+        title: "Rutas por países por libre",
+        intro:
+          "Rutas largas construidas sobre el flujo, la logística y lo que de verdad funciona sobre el terreno.",
+      },
+      {
+        title: "Experiencias extremas",
+        intro:
+          "Las experiencias que definen cómo se diseñan y prueban las rutas en el mundo real.",
+      },
+      {
+        title: "Rutas de expedición",
+        intro:
+          "Viajes de larga distancia marcados por la logística terrestre, fronteras difíciles e incertidumbre.",
+      },
+    ],
+    howITestTitle: "Cómo pruebo las rutas detrás de mis guías",
+    howITestBody:
+      "No construyo rutas desde un escritorio. Las pruebo sobre el terreno – altitud, logística, terreno e incertidumbre real.",
+    extremeLabels: [
+      "Encierro de Pamplona | España",
+      "Buceo con tiburones | Fiyi",
+      "Volcano boarding | Nicaragua",
+      "Paracaidismo y parapente | Brasil",
+      "Escalada en hielo | Italia",
+      "El tren del mineral de hierro | Mauritania",
+      "Cumbres | Alaska",
+      "Cruces remotos | África Occidental",
+    ],
+    ctaTitle: "¿Listo para convertir la inspiración en una ruta real?",
+    ctaBody:
+      "Guías premium creadas tras 15 años de viajes independientes por 140 países.",
+    browseGuides: "Ver guías →",
+    emptyTitle: "Traducciones en camino",
+    emptyBody:
+      "Estas historias ya existen en inglés – las traducciones están en camino.",
+    emptyLink: "Leer en inglés →",
+    readStory: "Leer la historia",
+  },
+  story: {
+    quickFacts: "Datos clave",
+    bestSeason: "Mejor época:",
+    fullGuideChip: "Guía completa disponible ↓",
+    planningTrip: "¿Planificando este viaje?",
+    planningBody:
+      "La guía completa cubre la ruta, la logística, los costes, los enlaces de reserva y los tiempos – todo lo que necesitas para planificarlo por tu cuenta.",
+    readFullGuide: "Ver la guía →",
+    browseAllGuides: "Ver todas las guías →",
+    moreFrom: "Más de {country}",
+    exploreDestination: "Explorar {country} →",
+    turnInspiration: "Convierte la inspiración en un plan",
+    guidesCardTitle: "TestedRoutes Guides",
+    guidesCardBody:
+      "Guías probadas sobre el terreno, fruto de 15 años de viajes independientes. Formato PDF, funciona sin conexión.",
+    endCtaTitle: "¿Te ha gustado la historia? La ruta ya está planificada.",
+    endCtaBody:
+      "Consigue la guía probada de este viaje – ruta exacta, reservas, costes y tiempos en un solo PDF.",
+    gallery: "Galería",
+    guidesForTrip: "Guías para este viaje",
+  },
+  guideList: {
+    title: "Guías",
+    tagline: "Imprímela, síguela y el viaje funciona.",
+    heading: "Guías probadas sobre el terreno",
+    browseHeading: "Explora las guías",
+    filterType: "Tipo de viaje",
+    filterCountry: "País",
+    filterAll: "Todos",
+    filterLength: "Duración",
+    filterActivity: "Actividad",
+    filterSeason: "Temporada",
+    typeCountry: "Escribe un país…",
+    mostGuides: "Más guías",
+    allOfContinent: "Todo {name}",
+    allCountries: "Todos los países",
+    countriesWord: "países",
+    trust: [
+      { title: "Recorrido en persona", body: "Probado sobre el terreno, no detrás de una pantalla" },
+      { title: "Hecha para el camino", body: "Un PDF, funciona sin conexión, sin apps" },
+      { title: "Números reales", body: "Costes, tiempos y logística que cuadran" },
+    ],
+    testedBy: "Probado por",
+    credentials: "140 países",
+    guide: "guía",
+    guides: "guías",
+    pdfGuide: "Guía PDF",
+    purchased: "compradas",
+    from: "Desde",
+    viewGuide: "Ver guía",
+    buyGuide: "Comprar guía",
+    searchPlaceholder: "Buscar guías…",
+    comingSoon: "Próximamente",
+    metaDescription:
+      "Cada guía es una ruta real, probada sobre el terreno. Compra una vez, síguela paso a paso.",
+  },
+  guide: {
+    metaDescPrefix: "Guía de viaje por libre:",
+    viewAllPhotos: "Ver todo",
+    readFullStory: "Leer la historia completa →",
+    tripDetails: "Detalles del viaje",
+    lastReviewed: "Última revisión",
+    location: "Ubicación",
+    startingPoint: "Punto de partida",
+    stop: "Parada",
+    destination: "Destino",
+    finish: "Final",
+    whyThisTrip: "Por qué este viaje",
+    whoThisIsFor: "Para quién es",
+    notSuitable: "No recomendado",
+    whatYouGet: "Qué incluye",
+    affiliateHeading: "Aviso de afiliados.",
+    affiliateBody:
+      "Algunos enlaces de abajo son enlaces de afiliado. Si compras a través de ellos, recibimos una pequeña comisión sin coste extra para ti. Como Asociado de Amazon, TestedRoutes gana con las compras que cumplen los requisitos.",
+    affiliateMore: "Más sobre cómo funciona",
+    myExperience: "Mi experiencia",
+    continuesInFull: "Continúa en la guía completa",
+    wantFullPlan: "¿Quieres el plan completo?",
+    pdfIncludes:
+      "El PDF incluye el plan día a día, horarios de transporte, enlaces de reserva y reglas según el tiempo. Descarga instantánea tras la compra.",
+    getFullGuide: "Consigue la guía completa",
+    readersSay: "Qué dicen los lectores",
+    saveTime: "Ahorra tiempo y dinero",
+    guidedTour: "Tour guiado",
+    fixedSchedule: "Horario fijo · Ritmo de grupo",
+    planYourself: "Planificarlo tú",
+    hoursPlus: "Más de 8 horas",
+    researchRisk: "Investigación · Riesgo de lagunas",
+    thisGuide: "Esta guía",
+    thirtyMin: "30 min · Ruta completa",
+    faqTitle: "Preguntas frecuentes",
+    faq: [
+      {
+        question: "¿Está actualizada esta guía?",
+        answer:
+          "Sí. Cada guía de TestedRoutes se revisa con regularidad – la fecha al inicio de los detalles del viaje muestra la última revisión. Las revisiones detectan reservas rotas, cambios de transporte, precios y cierres estacionales para que la guía siga siendo precisa.",
+      },
+      {
+        question: "¿En qué formato está la guía?",
+        answer:
+          "PDF, descargable al instante tras la compra. Funciona sin conexión una vez guardada en tu móvil, tablet u ordenador – sin necesidad de app.",
+      },
+      {
+        question: "¿Y si hace mal tiempo el día de mi viaje?",
+        answer:
+          "La guía incluye reglas de decisión go/no-go y alternativas según el tiempo cuando existen. Si el viaje depende totalmente del tiempo y tus fechas no funcionan, solicita un reembolso en un plazo de 30 días.",
+      },
+      {
+        question: "¿Puedo pedir un reembolso si no me sirve?",
+        answer:
+          "Sí – 30 días, sin preguntas. Escribe a refunds@testedroutes.com con tu número de pedido. Todos los detalles en nuestra política de reembolsos.",
+      },
+    ],
+    youMightAlsoLike: "También te puede gustar",
+    bottomLine1: "Viaja más.",
+    bottomLine2: "Pierde menos tiempo planificando.",
+    bottomBody:
+      "Guías premium creadas tras 15 años de viajes independientes por 140 países.",
+    bottomTagline: "La IA no ha estado allí. Yo sí.",
+    bottomFooter: "PDF · Descarga instantánea · Reembolso de 30 días",
+    getGuide: "Consigue la guía",
+    comingSoonBtn: "Próximamente",
+    pdfGuideLabel: "Guía PDF",
+    instantDownload: "Descarga instantánea",
+    pdfInstantDownload: "PDF · Descarga instantánea",
+    getLinksFree: "Consigue los enlaces gratis",
+    refunds: "Reembolso de 30 días, sin preguntas.",
+    readPolicy: "Leer la política",
+    openBookingsOne: "Abrir también mi enlace de reserva (hotel, transporte)",
+    openBookingsMany: "Abrir también mis {count} enlaces de reserva (hotel, transporte)",
+    trust: [
+      { label: "Sin riesgo", rest: "Reembolso completo de 30 días" },
+      { label: "Pago único", rest: "Sin suscripción" },
+      { label: "Funciona sin conexión", rest: "Guárdala en tu móvil" },
+    ],
+  },
+};
+export default es;

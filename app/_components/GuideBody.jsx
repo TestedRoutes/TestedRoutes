@@ -2,7 +2,10 @@
 
 import Link from "next/link";
 import { PortableText } from "@portabletext/react";
-import { getDict } from "../_lib/i18n";
+// English only as the fallback: every current call site passes `t`, and
+// importing getDict would put all five locale dictionaries in the client
+// bundle where one suffices as a safety net.
+import en from "../_lib/dicts/en";
 import CollapsibleSection from "./CollapsibleSection";
 
 /**
@@ -89,7 +92,7 @@ const components = {
 // Deliberately no link out to the Inspire story here: the guide page is the
 // purchase surface, and the story→guide funnel only runs one way.
 export default function GuideBody({ blocks, checkoutHref, pdfHref, price, t: tProp, bare }) {
-  const t = tProp || getDict("en").guide;
+  const t = tProp || en.guide;
   if (!Array.isArray(blocks) || blocks.length === 0) return null;
 
   // `bare`: the sales layout supplies its own heading and CTAs, and its body
