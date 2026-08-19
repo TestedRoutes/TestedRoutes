@@ -298,7 +298,17 @@ export default async function GuidePage({ lang, slug }) {
       "@type": "Person",
       name: "Paulius Pikelis",
       url: "https://testedroutes.com/about",
-      // sameAs: fill once IG / YouTube / LinkedIn URLs are confirmed.
+      // The seven registered @testedroutes handles (Action Tracker #120).
+      // Ties the byline to verifiable profiles — an LLM/search trust signal.
+      sameAs: [
+        "https://www.instagram.com/testedroutes/",
+        "https://www.tiktok.com/@testedroutes",
+        "https://www.youtube.com/@testedroutes",
+        "https://www.pinterest.com/testedroutes/",
+        "https://x.com/testedroutes/",
+        "https://www.linkedin.com/company/testedroutes/",
+        "https://www.threads.com/@testedroutes/",
+      ],
     },
     publisher: {
       "@type": "Organization",

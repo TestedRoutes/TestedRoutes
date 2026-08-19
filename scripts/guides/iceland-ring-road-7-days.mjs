@@ -22,15 +22,12 @@ import { paragraph } from "./_lib.mjs";
 export default {
   docId: "story-iceland-ring-road-7-days",
 
-  // metaDescription is 169 characters, over the 160 ceiling, so Google will cut
-  // it off around "where to sleep so you never...". Worth re-cutting.
-  //
-  // The Content Plan cannot supply the replacement as things stand: its Iceland
-  // Ring Road row (v54, row 124) holds the Iceland South Coast guide's
-  // description - "Seljalandsfoss to Jokulsarlon in five days" - so the two
-  // Iceland guides are crossed in the plan. The site has both correct. Fix the
-  // plan first, since it is the authority, then sync back to here.
-  knownIssues: ["metaDescriptionLength"],
+  // metaDescription re-cut 2026-08-19 to 159 characters (was 169, truncating
+  // in Google around "where to sleep so you never..."). The Content Plan's
+  // crossed Iceland rows were fixed in the same pass (v58: the South Coast
+  // description moved from the Ring Road row to its own, this text now on
+  // row 124), so plan and module agree again and the knownIssues
+  // acknowledgement is retired.
 
   assets: {
     // Where the hero and gallery sources live when publishing from
@@ -75,7 +72,7 @@ export default {
       "The full loop without rookie route mistakes - and a real budget.",
     metaTitle: "Iceland Ring Road: 7-Day Self-Drive Itinerary",
     metaDescription:
-      "The full Ring Road in seven days, planned to the hour: which slots to book before you fly, where to sleep so you never double back, and what to cut when you fall behind.",
+      "The full Ring Road in seven days, planned to the hour: what to book before you fly, where to sleep so you never double back, and what to cut when you run late.",
 
 
     body: [

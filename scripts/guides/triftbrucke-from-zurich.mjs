@@ -9,10 +9,18 @@
  * but writing five new ones needs someone who can see the photographs.
  * Noted 2026-08-16.
  *
- * This doc also has an open Studio draft whose guide.polarProductId differs
- * from the published one (draft ce85132d..., published 281914f7...).
- * Publishing that draft from the Studio would repoint the buy button at a
- * different Polar product. Unresolved as of 2026-08-16.
+ * The diverging Studio draft was resolved 2026-08-19 (Tracker #230). The
+ * published guide.polarProductId (281914f7...) is the correct one - it is the
+ * product the live buy button sells and the one this module carries; the
+ * draft's ce85132d... was stale, and the draft has been patched to match, so
+ * a Studio Publish can no longer repoint checkout. The draft's two genuine
+ * founder edits were rescued into this module and published: the corrected
+ * map pins on routePoints ("Trift Suspension Bridge" highlight) and
+ * routeStops ("Triftbrücke"), moved in the Studio on 2026-08-16 but never
+ * published. The rest of the draft still predates the 2026-08-17 alt-text
+ * and en-dash fixes - it should be discarded in the Studio, not published.
+ * Full draft snapshot at content/countries/switzerland/guides/
+ * trift-bridge-from-zurich/generated/studio-draft-backup-20260819.json.
  */
 
 import { paragraph } from "./_lib.mjs";
@@ -455,9 +463,12 @@ export default {
         _key: "35c381ce305a",
         _type: "routePoint",
         coordinates: {
+          // Founder's Studio correction of 2026-08-16, rescued from the
+          // discarded draft - the old 46.6958/8.3526 pin sat kilometres
+          // west of the bridge.
           _type: "geopoint",
-          lat: 46.6958,
-          lng: 8.3526,
+          lat: 46.7298,
+          lng: 8.3719,
         },
         name: "Trift Suspension Bridge",
         type: "highlight",
@@ -480,9 +491,11 @@ export default {
         _key: "9f87609480fa",
         _type: "routeStop",
         coordinates: {
+          // Founder's Studio correction of 2026-08-16, rescued from the
+          // discarded draft - matches the bridge's real longitude.
           _type: "geopoint",
-          lat: 46.6958,
-          lng: 8.3526,
+          lat: 46.6943,
+          lng: 8.4145,
         },
         name: "Triftbrücke",
         type: "bridge",
