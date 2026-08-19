@@ -27,10 +27,11 @@
 export const runtime = "nodejs";
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-const TOPICS = ["general", "refund", "privacy", "partnership", "security"];
+const TOPICS = ["general", "guide-feedback", "refund", "privacy", "partnership", "security"];
 
 const TOPIC_LABELS = {
   general: "General inquiry",
+  "guide-feedback": "Guide feedback / correction",
   refund: "Refund request",
   privacy: "Privacy / data request",
   partnership: "Partnership / press",

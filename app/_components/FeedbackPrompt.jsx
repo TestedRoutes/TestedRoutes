@@ -2,15 +2,18 @@
 
 import { useState } from "react";
 
-// "Spotted something?" — the buyers-only feedback path on guide pages
-// (Tracker #57), placed near the last-reviewed date because that's the
-// promise it backs up: the date says "verified", this says "and if the
-// ground disagrees, telling us fixes it". Submission is verified against
-// the purchase registry server-side (email-hash match), so the form asks
-// for the purchase email rather than carrying a token.
+// "Spotted something?" — buyers-only feedback form posting to
+// /api/feedback (purchase verified server-side by email-hash match).
 //
-// English only, like the rest of the guide surface — guides are EN-only;
-// localize when they are.
+// NOT MOUNTED ANYWHERE right now. Built for the guide pages per Tracker
+// #57's spec, shipped, and pulled the same day (founder 2026-08-20): a
+// buyer who spots a closed trail is holding the PDF or reading email,
+// not browsing the sales page — the on-page placement answered a
+// question nobody was asking there. Kept because the PDF QR flow (#58,
+// /f/{slug}) is this exact form minus the buyer gate; adapt it there,
+// or delete this if #58 ships with its own component.
+//
+// English only, like the rest of the guide surface — guides are EN-only.
 export default function FeedbackPrompt({ guideSlug }) {
   const [open, setOpen] = useState(false);
   const [email, setEmail] = useState("");

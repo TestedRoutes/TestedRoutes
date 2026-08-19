@@ -2,7 +2,6 @@ import Link from "next/link";
 import Byline from "../../_components/Byline";
 import ViewBeacon from "../../_components/ViewBeacon";
 import StickyBuyBar from "../../_components/StickyBuyBar";
-import FeedbackPrompt from "../../_components/FeedbackPrompt";
 import GuideBody from "../../_components/GuideBody";
 import GuideCarousel from "./GuideCarousel";
 import GuideTitle from "./GuideTitle";
@@ -174,10 +173,6 @@ export default function GuideSalesPage({
             lang={lang}
             t={t}
           />
-          {/* Next to the last-reviewed date on purpose: the date claims
-              "verified", this backs it — buyers who find the ground
-              disagreeing have a direct path to a person (Tracker #57). */}
-          <FeedbackPrompt guideSlug={guide.slug} />
         </section>
       ) : null}
 

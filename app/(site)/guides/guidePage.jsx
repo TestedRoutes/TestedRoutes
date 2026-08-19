@@ -15,7 +15,6 @@ import GuideCarousel from "./GuideCarousel";
 import GuideTitle from "./GuideTitle";
 import CollapsibleSection from "../../_components/CollapsibleSection";
 import GuideBody from "../../_components/GuideBody";
-import FeedbackPrompt from "../../_components/FeedbackPrompt";
 import BuyBox from "../../_components/BuyBox";
 import StickyBuyBar from "../../_components/StickyBuyBar";
 import Byline from "../../_components/Byline";
@@ -512,11 +511,6 @@ export default async function GuidePage({ lang, slug }) {
                 lang={lang}
                 t={t}
               />
-              {/* Next to the last-reviewed date on purpose: the date claims
-                  "verified", this backs it — buyers who find the ground
-                  disagreeing get a direct path to a person (Tracker #57).
-                  Also wired in the parked sales layout for when it returns. */}
-              <FeedbackPrompt guideSlug={guide.slug} />
             </section>
           ) : null}
 
