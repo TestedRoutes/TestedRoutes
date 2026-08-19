@@ -35,6 +35,7 @@ import { revalidatePath } from "next/cache";
 import { writeClient } from "../../../../sanity/lib/writeClient";
 import { captureServer } from "../../../_lib/serverAnalytics";
 import { mintPurchaseToken, hashBuyerEmail } from "../../../_lib/purchaseToken";
+import { buildPurchaseEmail } from "../../../_lib/purchaseEmail";
 
 const WEBHOOK_SECRET = process.env.POLAR_WEBHOOK_SECRET;
 
@@ -252,7 +253,7 @@ async function registerPurchaseAndEmail({ payload, story, email }) {
  * decision 2026-08-19) via Resend; silently skipped until RESEND_API_KEY
  * and CONTACT_FROM_EMAIL exist in the environment (Tracker #54).
  */
-async function sendPurchaseEmail({ email, guideTitle, slug, token }) {
+async function sendPurchaseEmail({ email, guideTitle, token }) {
   const apiKey = process.env.RESEND_API_KEY;
   const from = process.env.CONTACT_FROM_EMAIL;
   if (!apiKey || !from) {
@@ -260,26 +261,16 @@ async function sendPurchaseEmail({ email, guideTitle, slug, token }) {
     return;
   }
   const downloadUrl = `https://testedroutes.com/api/guide-download?token=${encodeURIComponent(token)}`;
-  const guideUrl = `https://testedroutes.com/guides/${slug}`;
+  const { subject, text, html } = buildPurchaseEmail({ guideTitle, downloadUrl });
   const { Resend } = await import("resend");
   const resend = new Resend(apiKey);
   const result = await resend.emails.send({
     from,
     to: [email],
     replyTo: "hello@testedroutes.com",
-    subject: `Your ${guideTitle} guide – and a link that never goes stale`,
-    text:
-      `Thanks for buying ${guideTitle}.\n\n` +
-      `Polar's receipt with your PDF is on its way separately. This email is the ` +
-      `one to keep: the link below always serves the newest version of your guide, ` +
-      `so when we update timings, prices or routes, you just download it again – ` +
-      `no repurchase, ever.\n\n` +
-      `Your permanent copy:\n${downloadUrl}\n\n` +
-      `The guide's page, for the companion map and any updates we post:\n${guideUrl}\n\n` +
-      `Spotted something on the trip that doesn't match the guide – a closed ` +
-      `trail, a changed fare, a better option? Reply to this email. It reaches a ` +
-      `person, and it fixes the guide for the next traveller.\n\n` +
-      `Paulius\nTestedRoutes – Skip the research. Take the trip.`,
+    subject,
+    text,
+    html,
   });
   if (result?.error) {
     throw new Error(`Resend error: ${JSON.stringify(result.error)}`);
