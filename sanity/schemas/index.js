@@ -1,5 +1,6 @@
 import affiliateLink from "./documents/affiliateLink";
 import analyticsSnapshot from "./documents/analyticsSnapshot";
+import purchase from "./documents/purchase";
 import author from "./documents/author";
 import category from "./documents/category";
 import collection from "./documents/collection";
@@ -34,6 +35,7 @@ export const schemaTypes = [
   pricingTier,
   affiliateLink,
   analyticsSnapshot,
+  purchase,
 
   // objects
   guide,
