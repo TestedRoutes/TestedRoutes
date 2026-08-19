@@ -30,6 +30,22 @@ export function buildMediaSlides({ photos = [], videoUrl = null, videoSlot = nul
   return slides;
 }
 
+// Browse pages hold dozens of cards, each a Sanity CDN rendition baked at one
+// width — so a phone was downloading the 1080px cut of every photo. The CDN
+// resizes via the `w` query param, so a srcset is just the same URL at three
+// widths; the browser picks. Non-Sanity URLs (or ones without a `w`) get no
+// srcset and behave exactly as before.
+const SRCSET_WIDTHS = [480, 720, 1080];
+function sanitySrcSet(src) {
+  if (!/^https:\/\/cdn\.sanity\.io\//.test(src || "") || !/[?&]w=\d+/.test(src)) return undefined;
+  return SRCSET_WIDTHS.map(
+    (w) => `${src.replace(/([?&])w=\d+/, `$1w=${w}`)} ${w}w`,
+  ).join(", ");
+}
+// Card grids run 3-up on desktop, 2-up on tablet, full width on phones.
+// Callers with a different geometry can override.
+const DEFAULT_SIZES = "(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw";
+
 // Muted looping clip that plays only while at least half visible — swiping
 // to another slide or scrolling the card away pauses it. No poster: the
 // photo-to-first-frame swap reads as a jump, so the clip stays invisible
@@ -39,15 +55,46 @@ export function buildMediaSlides({ photos = [], videoUrl = null, videoSlot = nul
 // the clip sits frozen on its first frame and only plays while the pointer
 // is over it. Touch devices keep the autoplay-when-visible behavior — there
 // is no hover to wait for.
+//
+// The element mounts with no src at all. A browse page holds well over a
+// hundred of these, and preload="metadata" on each meant the browser opened
+// them all at page load — that connection storm was most of the "few
+// seconds to flip pages" the founder reported. The src attaches when the
+// card scrolls within ~200px of the viewport; until then the clip costs
+// nothing.
 function CardVideo({ src, title, className = "h-full w-full object-cover", hoverOnly = false }) {
   const ref = useRef(null);
+  const [activated, setActivated] = useState(false);
   const [ready, setReady] = useState(false);
   const hovering = useRef(false);
   const visible = useRef(false);
 
+  // Near-viewport activation, separate from the play/pause observer below:
+  // loading should start a little before the card is seen, playing only
+  // once it genuinely is.
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
+    if (typeof IntersectionObserver === "undefined") {
+      setActivated(true);
+      return;
+    }
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setActivated(true);
+          io.disconnect();
+        }
+      },
+      { rootMargin: "200px 0px" },
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el || !activated) return;
     const hoverCapable =
       hoverOnly &&
       typeof matchMedia !== "undefined" &&
@@ -62,7 +109,12 @@ function CardVideo({ src, title, className = "h-full w-full object-cover", hover
     // Media events race hydration; poll readyState until frames exist.
     // preload="metadata" alone never decodes a frame, so the frozen
     // hover-only clip nudges currentTime to force the first frame in.
+    // Capped: a clip that 404s or never buffers used to keep this timer
+    // alive for the life of the page — after ~15s it gives up and the
+    // slide keeps showing the container background.
+    let attempts = 0;
     const poll = setInterval(() => {
+      attempts += 1;
       if (hoverCapable && el.readyState < 2 && el.readyState >= 1 && el.currentTime === 0) {
         try {
           el.currentTime = 0.001;
@@ -70,6 +122,8 @@ function CardVideo({ src, title, className = "h-full w-full object-cover", hover
       }
       if (el.readyState >= 2) {
         setReady(true);
+        clearInterval(poll);
+      } else if (attempts >= 60) {
         clearInterval(poll);
       }
     }, 250);
@@ -114,16 +168,16 @@ function CardVideo({ src, title, className = "h-full w-full object-cover", hover
         el.removeEventListener("mouseleave", onLeave);
       }
     };
-  }, [hoverOnly]);
+  }, [hoverOnly, activated]);
 
   return (
     <video
       ref={ref}
-      src={src}
+      src={activated ? src : undefined}
       muted
       loop
       playsInline
-      preload="metadata"
+      preload={activated ? "metadata" : "none"}
       aria-label={title}
       className={`${className} transition-opacity duration-500 ${
         ready ? "opacity-100" : "opacity-0"
@@ -143,6 +197,13 @@ function CardVideo({ src, title, className = "h-full w-full object-cover", hover
 // whole on the neutral track, sized by height — the same treatment the guide
 // page carousel gives them. A slide opts in with fit: "contain"; `fit` sets
 // the default for slides that don't carry one.
+//
+// Only the first slide's media mounts up front. With ~5 slides per card and
+// dozens of cards per browse page, mounting every slide meant hundreds of
+// media elements fetched eagerly for slides nobody had swiped to. The rest
+// mount on the first sign of intent — pointer over the strip, an arrow
+// click, or the strip scrolling. The slide wrappers themselves always
+// render, so scroll-snap geometry and the dot count never change.
 export default function CardMediaCarousel({
   slides,
   alt,
@@ -150,10 +211,13 @@ export default function CardMediaCarousel({
   eagerFirstSlide = false,
   fit = "cover",
   videoHoverOnly = false,
+  sizes = DEFAULT_SIZES,
 }) {
   const isContain = (slide) => (slide.fit || fit) === "contain";
   const [idx, setIdx] = useState(0);
+  const [expanded, setExpanded] = useState(false);
   const stripRef = useRef(null);
+  const expand = () => setExpanded(true);
 
   const scrollToIndex = (i) => {
     const el = stripRef.current;
@@ -163,13 +227,16 @@ export default function CardMediaCarousel({
   };
   const prev = (e) => {
     e.preventDefault();
+    expand();
     scrollToIndex(idx - 1);
   };
   const next = (e) => {
     e.preventDefault();
+    expand();
     scrollToIndex(idx + 1);
   };
   const onScroll = () => {
+    expand();
     const el = stripRef.current;
     if (!el || !el.clientWidth) return;
     const i = Math.round(el.scrollLeft / el.clientWidth);
@@ -183,6 +250,7 @@ export default function CardMediaCarousel({
       <div
         ref={stripRef}
         onScroll={onScroll}
+        onPointerEnter={expand}
         className="flex h-full w-full snap-x snap-mandatory overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
       >
         {slides.map((slide, i) => {
@@ -190,6 +258,7 @@ export default function CardMediaCarousel({
           const mediaClass = contain
             ? "h-full w-auto max-w-full rounded-lg object-contain"
             : "h-full w-full object-cover";
+          const mountMedia = i === 0 || expanded;
           return (
             <div
               key={`${i}-${slide.src}`}
@@ -197,7 +266,11 @@ export default function CardMediaCarousel({
                 contain ? "flex items-center justify-center px-2 py-2" : ""
               }`}
             >
-              {slide.type === "video" ? (
+              {!mountMedia ? (
+                // Placeholder keeps the slide's width in the snap strip;
+                // the real media mounts when `expanded` flips.
+                <div className="h-full w-full bg-slate-100" aria-hidden="true" />
+              ) : slide.type === "video" ? (
                 <CardVideo
                   src={slide.src}
                   poster={slide.poster}
@@ -208,6 +281,8 @@ export default function CardMediaCarousel({
               ) : (
                 <img
                   src={slide.src}
+                  srcSet={sanitySrcSet(slide.src)}
+                  sizes={sanitySrcSet(slide.src) ? sizes : undefined}
                   alt={alt}
                   loading={i === 0 && eagerFirstSlide ? undefined : "lazy"}
                   decoding="async"
