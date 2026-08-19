@@ -5,9 +5,12 @@ Guidance for Claude Code sessions working in this repo.
 ## What this is
 
 Next.js site (App Router, JS not TS) selling PDF travel guides, content in
-Sanity (project `y3gc8dx6`, dataset `production` — private, no anonymous
-reads). Payments via Polar, deployed on Vercel. Sanity Studio is embedded at
-`/studio`; schemas live in `sanity/schemas/`.
+Sanity (project `y3gc8dx6`, dataset `production` — publicly readable, which
+is why the site's read client carries no token; writes need
+`SANITY_API_WRITE_TOKEN`. Verified by anonymous query 2026-08-19; an earlier
+note here claimed the dataset was private). Payments via Polar, deployed on
+Vercel. Sanity Studio is embedded at `/studio`; schemas live in
+`sanity/schemas/`.
 
 ## Guide card standard (decided 2026-08)
 
