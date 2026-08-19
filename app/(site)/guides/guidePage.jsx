@@ -8,6 +8,7 @@ import {
   getAffiliateLinks,
 } from "../../_lib/affiliateLinks";
 import { getDict, localePath } from "../../_lib/i18n";
+import { sanitySrcSet } from "../../_lib/imageSrcSet";
 import { checkoutHrefFor } from "../../_lib/checkoutHref";
 import GuideGallery from "../../_components/GuideGallery";
 import GuideCarousel from "./GuideCarousel";
@@ -200,9 +201,12 @@ function RelatedGuides({ items, t, lang }) {
             {g.image ? (
               <img
                 src={g.image}
+                srcSet={sanitySrcSet(g.image)}
+                sizes="(min-width: 768px) 25vw, 50vw"
                 alt={g.title}
                 className="aspect-[4/3] w-full object-cover"
                 loading="lazy"
+                decoding="async"
               />
             ) : (
               <div className="aspect-[4/3] w-full bg-slate-100" />
@@ -564,9 +568,14 @@ export default async function GuidePage({ lang, slug }) {
                     {s.image ? (
                       <img
                         src={s.image}
+                        // An 80px thumbnail was downloading the 800px cut;
+                        // small explicit widths let the browser take ~160px.
+                        srcSet={sanitySrcSet(s.image, [160, 320])}
+                        sizes="80px"
                         alt={s.title}
                         className="h-14 w-20 shrink-0 rounded-lg object-cover"
                         loading="lazy"
+                        decoding="async"
                       />
                     ) : null}
                     <p className="text-sm font-medium leading-snug text-slate-900">{s.title}</p>

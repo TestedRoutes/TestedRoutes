@@ -194,7 +194,7 @@ export default {
     accommodationType: "hotel",
     journeyStyle: "self_guided",
     journeyCategory: { _ref: "category-journey-week", _type: "reference" },
-    activityCategory: { _ref: "category-activity-road-trips", _type: "reference" },
+    activityCategory: { _ref: "category-activity-roadtrip", _type: "reference" },
     routeMode: "driving",
     timeOfDay: "multi_day",
     weatherDependent: true,

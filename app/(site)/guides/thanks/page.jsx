@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { loadGuides } from "../../../_lib/loadGuides";
 import { getRequestCurrency } from "../../../_lib/currency";
+import { sanitySrcSet } from "../../../_lib/imageSrcSet";
 
 export const metadata = {
   title: "Thank you · TestedRoutes",
@@ -18,6 +19,8 @@ function GuideCard({ guide }) {
         {guide.image ? (
           <img
             src={guide.image}
+            srcSet={sanitySrcSet(guide.image)}
+            sizes="(min-width: 768px) 33vw, 100vw"
             alt={guide.title}
             className="h-full w-full object-cover transition group-hover:scale-[1.02]"
             loading="lazy"

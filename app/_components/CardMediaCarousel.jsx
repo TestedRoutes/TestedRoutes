@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { sanitySrcSet } from "../_lib/imageSrcSet";
 
 // Only direct video files can autoplay inline; page links (YouTube, TikTok)
 // would need an iframe, which is too heavy for a card.
@@ -30,20 +31,9 @@ export function buildMediaSlides({ photos = [], videoUrl = null, videoSlot = nul
   return slides;
 }
 
-// Browse pages hold dozens of cards, each a Sanity CDN rendition baked at one
-// width — so a phone was downloading the 1080px cut of every photo. The CDN
-// resizes via the `w` query param, so a srcset is just the same URL at three
-// widths; the browser picks. Non-Sanity URLs (or ones without a `w`) get no
-// srcset and behave exactly as before.
-const SRCSET_WIDTHS = [480, 720, 1080];
-function sanitySrcSet(src) {
-  if (!/^https:\/\/cdn\.sanity\.io\//.test(src || "") || !/[?&]w=\d+/.test(src)) return undefined;
-  return SRCSET_WIDTHS.map(
-    (w) => `${src.replace(/([?&])w=\d+/, `$1w=${w}`)} ${w}w`,
-  ).join(", ");
-}
 // Card grids run 3-up on desktop, 2-up on tablet, full width on phones.
-// Callers with a different geometry can override.
+// Callers with a different geometry can override. (Srcset generation lives
+// in _lib/imageSrcSet so server components share the same helper.)
 const DEFAULT_SIZES = "(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw";
 
 // Muted looping clip that plays only while at least half visible — swiping

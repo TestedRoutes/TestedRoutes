@@ -34,7 +34,7 @@ export default {
   doc: {
     accommodationType: "mountain_hut",
     activityCategory: {
-      _ref: "category-activity-outdoor-hiking",
+      _ref: "category-activity-hiking",
       _type: "reference",
     },
     activityTags: [
