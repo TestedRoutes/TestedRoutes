@@ -315,6 +315,30 @@ async function handleOrderRefunded(payload) {
   if (!story) {
     console.warn(`[polar-webhook] refund for unmapped product ${productId}`);
   }
+
+  // Mark the purchase registry so the day-14 rating email skips this
+  // buyer — asking how the trip was after a refund reads wrong. The token
+  // itself stays valid (generous-refund posture); revocation is a separate,
+  // human decision. Best-effort: a miss here means one odd email, not a
+  // broken webhook.
+  const orderId =
+    payload?.data?.order_id ||
+    payload?.data?.orderId ||
+    payload?.data?.order?.id ||
+    payload?.data?.id;
+  if (orderId) {
+    try {
+      await writeClient
+        .patch(`purchase-${orderId}`)
+        .set({ refunded: true })
+        .commit();
+    } catch (err) {
+      // Pre-registry refunds have no purchase doc; that's expected, not news.
+      if (err?.statusCode !== 404) {
+        console.error("[polar-webhook] refund flag on purchase failed:", err);
+      }
+    }
+  }
 }
 
 export async function POST(request) {

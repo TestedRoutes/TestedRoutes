@@ -53,6 +53,46 @@ export default {
         "Use for refund abuse or a buyer-requested erasure; leave off otherwise.",
     },
     {
+      name: "refunded",
+      title: "Refunded",
+      type: "boolean",
+      readOnly: true,
+      description:
+        "Set by the Polar refund webhook. A refunded buyer keeps their token " +
+        "(founder's generous-refund posture) but is excluded from the day-14 " +
+        "rating email - asking how the trip was after a refund reads wrong.",
+    },
+    {
+      name: "ratingEmailSentAt",
+      title: "Rating email sent",
+      type: "datetime",
+      readOnly: true,
+      description: "Stamped by the day-14 cron. One rating email per purchase, ever.",
+    },
+    {
+      name: "rating",
+      title: "Rating (1-5)",
+      type: "number",
+      readOnly: true,
+      description:
+        "Set when the buyer taps a star. One rating per purchase; a later tap " +
+        "updates it (people change their minds - the newest opinion wins).",
+    },
+    {
+      name: "ratedAt",
+      title: "Rated at",
+      type: "datetime",
+      readOnly: true,
+    },
+    {
+      name: "ratingComment",
+      title: "Rating comment",
+      type: "text",
+      rows: 3,
+      readOnly: true,
+      description: "Optional free text left on the rating thank-you page.",
+    },
+    {
       name: "notes",
       title: "Internal notes",
       type: "text",
