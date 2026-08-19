@@ -15,9 +15,10 @@
  *   without an imprint is a spam heuristic and an EU expectation. Entity
  *   facts verbatim from the register (legal-notice page).
  * - Brand palette from tailwind.config.js: Parchment #f4f3ef canvas,
- *   Coffee Bean #1f0d07 ink, Taupe #5f524d secondary, Tiger Flame #fe6730
- *   CTA (white text), Bone #dcdacd hairlines. Serif falls back to Georgia
- *   - webfonts don't load reliably in mail clients.
+ *   Coffee Bean #1f0d07 ink, Taupe #5f524d secondary, Brandy #943d21 for
+ *   the button (founder pick 2026-08-19 - Tiger Flame stays a web-CTA
+ *   color), Bone #dcdacd hairlines. Serif falls back to Georgia -
+ *   webfonts don't load reliably in mail clients.
  */
 // Exactly one link, by founder decision (2026-08-19): Polar's receipt is
 // the delivery email and already carries a download button, so a second
@@ -59,7 +60,7 @@ export function buildPurchaseEmail({ guideTitle, downloadUrl }) {
             you download it again. No repurchase, ever.
           </p>
           <table role="presentation" cellpadding="0" cellspacing="0" style="margin:24px auto;">
-            <tr><td style="border-radius:999px;background-color:#fe6730;">
+            <tr><td style="border-radius:999px;background-color:#943d21;">
               <a href="${downloadUrl}" style="display:inline-block;padding:13px 34px;font-family:Helvetica,Arial,sans-serif;font-size:15px;color:#ffffff;text-decoration:none;border-radius:999px;">Your always-current copy</a>
             </td></tr>
           </table>
