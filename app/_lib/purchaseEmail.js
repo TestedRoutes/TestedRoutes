@@ -1,7 +1,13 @@
 /**
- * The post-purchase relationship email (Tracker #55), extracted from the
- * webhook so the template can be previewed and iterated without touching
- * delivery plumbing. Returns { subject, text, html } for Resend.
+ * Branded buyer-email shell. CURRENTLY UNSENT: the purchase-time email
+ * this was built for was cut by the founder on 2026-08-19 — Polar's
+ * receipt already delivers the file at that moment, and two same-moment
+ * emails read as noise. The template is kept because the day-14 rating
+ * email (#62) is the next sender of buyer email and inherits this shell
+ * (palette, footer, one-button structure) with its own copy. If #62 ships
+ * with a different module and nothing imports this one, delete it.
+ *
+ * Returns { subject, text, html } for Resend.
  *
  * Design constraints, learned from the first live send reading as spam:
  * - Table layout with inline styles - email clients ignore stylesheets.

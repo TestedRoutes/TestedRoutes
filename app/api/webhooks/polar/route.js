@@ -34,8 +34,7 @@ import {
 import { revalidatePath } from "next/cache";
 import { writeClient } from "../../../../sanity/lib/writeClient";
 import { captureServer } from "../../../_lib/serverAnalytics";
-import { mintPurchaseToken, hashBuyerEmail } from "../../../_lib/purchaseToken";
-import { buildPurchaseEmail } from "../../../_lib/purchaseEmail";
+import { hashBuyerEmail } from "../../../_lib/purchaseToken";
 
 const WEBHOOK_SECRET = process.env.POLAR_WEBHOOK_SECRET;
 
@@ -182,22 +181,27 @@ async function tagBuyerInBeehiiv({ email, slug }) {
 
 /**
  * The signed-token foundation (Tracker #55). Registers the purchase in
- * Sanity and emails the buyer their permanent token link. Both steps are
- * best-effort like the Beehiiv tag: a failure is logged, never allowed to
- * 5xx the webhook, because a Polar retry would re-run everything above.
+ * Sanity — silently. There is deliberately NO purchase-time email from us:
+ * the founder cut it on 2026-08-19 after seeing the live pair, because
+ * Polar's receipt (which cannot be turned off — they are the Merchant of
+ * Record, the invoice is legally theirs) already delivers the file, and a
+ * second same-moment email read as noise. The buyer's permanent token
+ * link ships later instead, with the day-14 rating email (#62), minted
+ * fresh from this registry — which is why registering every order still
+ * matters even though nothing visible happens at purchase time.
  *
- * createIfNotExists makes the registry idempotent across webhook retries;
- * the email is only attempted when the purchase doc was created in this
- * call (a retry that finds the doc already there sends nothing, so a
- * transient failure after doc-creation cannot double-email the buyer —
- * the trade is a possibly-lost email over a possibly-duplicated one,
- * chosen because Polar's own receipt email always arrives regardless).
+ * Best-effort like the Beehiiv tag: a failure is logged, never allowed to
+ * 5xx the webhook. createIfNotExists keeps the registry idempotent across
+ * Polar's webhook retries.
  *
  * The dataset is publicly readable, so the purchase doc carries only an
  * HMAC hash of the buyer email — see purchaseToken.js for the full
- * reasoning. Plaintext email goes to Resend for the send and nowhere else.
+ * reasoning. The hash cannot be reversed into an address: the day-14
+ * sender must fetch the address from Polar's API by order id at send
+ * time (an orders:read scope decision for #62) and can use the hash only
+ * to correlate. This dataset never holds an address, by design.
  */
-async function registerPurchaseAndEmail({ payload, story, email }) {
+async function registerPurchase({ payload, story, email }) {
   const orderId =
     payload?.data?.id || payload?.data?.order_id || payload?.data?.orderId;
   if (!orderId) {
@@ -210,70 +214,19 @@ async function registerPurchaseAndEmail({ payload, story, email }) {
   }
   const slug = story.guidePageSlug || story.slug;
 
-  let createdNow = false;
   try {
-    const docId = `purchase-${orderId}`;
-    const existing = await writeClient.getDocument(docId);
-    if (!existing) {
-      await writeClient.createIfNotExists({
-        _id: docId,
-        _type: "purchase",
-        orderId: String(orderId),
-        story: { _type: "reference", _ref: story._id },
-        guideSlug: slug,
-        emailHash: email ? hashBuyerEmail(email) : null,
-        createdAt: new Date().toISOString(),
-        revoked: false,
-      });
-      createdNow = true;
-    }
-  } catch (err) {
-    console.error("[polar-webhook] purchase doc creation failed:", err);
-    return;
-  }
-
-  if (!createdNow || !email) return;
-  try {
-    await sendPurchaseEmail({
-      email,
-      guideTitle: story.title,
-      slug,
-      token: mintPurchaseToken({ orderId, slug }),
+    await writeClient.createIfNotExists({
+      _id: `purchase-${orderId}`,
+      _type: "purchase",
+      orderId: String(orderId),
+      story: { _type: "reference", _ref: story._id },
+      guideSlug: slug,
+      emailHash: email ? hashBuyerEmail(email) : null,
+      createdAt: new Date().toISOString(),
+      revoked: false,
     });
   } catch (err) {
-    console.error("[polar-webhook] purchase email failed:", err);
-  }
-}
-
-/**
- * The relationship email, not the delivery email — Polar's receipt with
- * the file attachment always arrives separately. This one carries the
- * permanent token link ("always-current copy") and sets up the feedback
- * relationship the trust system builds on. Sends from hello@ (founder
- * decision 2026-08-19) via Resend; silently skipped until RESEND_API_KEY
- * and CONTACT_FROM_EMAIL exist in the environment (Tracker #54).
- */
-async function sendPurchaseEmail({ email, guideTitle, token }) {
-  const apiKey = process.env.RESEND_API_KEY;
-  const from = process.env.CONTACT_FROM_EMAIL;
-  if (!apiKey || !from) {
-    console.warn("[polar-webhook] Resend not configured; skipping purchase email");
-    return;
-  }
-  const downloadUrl = `https://testedroutes.com/api/guide-download?token=${encodeURIComponent(token)}`;
-  const { subject, text, html } = buildPurchaseEmail({ guideTitle, downloadUrl });
-  const { Resend } = await import("resend");
-  const resend = new Resend(apiKey);
-  const result = await resend.emails.send({
-    from,
-    to: [email],
-    replyTo: "hello@testedroutes.com",
-    subject,
-    text,
-    html,
-  });
-  if (result?.error) {
-    throw new Error(`Resend error: ${JSON.stringify(result.error)}`);
+    console.error("[polar-webhook] purchase doc creation failed:", err);
   }
 }
 
@@ -315,9 +268,9 @@ async function handleOrderPaid(payload) {
     console.warn("[polar-webhook] no buyer email in order.paid payload; skipping Beehiiv tag");
   }
 
-  // Registry + token email last: everything above must succeed regardless
-  // of whether the trust-system plumbing does.
-  await registerPurchaseAndEmail({ payload, story, email });
+  // Registry last: everything above must succeed regardless of whether
+  // the trust-system plumbing does.
+  await registerPurchase({ payload, story, email });
 }
 
 /**
