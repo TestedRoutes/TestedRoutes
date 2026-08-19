@@ -4,6 +4,7 @@ export const metadata = {
   title: "Affiliate Disclosure · TestedRoutes",
   description:
     "How affiliate links work on testedroutes.com, why we use them, and which programs we participate in.",
+  alternates: { canonical: "/affiliate-disclosure" },
 };
 
 const LAST_UPDATED = "16 July 2026";

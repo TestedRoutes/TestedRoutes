@@ -4,6 +4,7 @@ export const metadata = {
   title: "FAQ · TestedRoutes",
   description:
     "How TestedRoutes guides are delivered, our refund policy, supported devices and formats, and how we keep guides up to date.",
+  alternates: { canonical: "/faq" },
 };
 
 const SECTIONS = [

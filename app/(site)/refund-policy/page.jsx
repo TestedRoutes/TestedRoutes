@@ -4,6 +4,7 @@ export const metadata = {
   title: "Refund Policy · TestedRoutes",
   description:
     "30-day no-questions-asked refunds on every TestedRoutes guide. How to request a refund and how long it takes.",
+  alternates: { canonical: "/refund-policy" },
 };
 
 const LAST_UPDATED = "17 July 2026";

@@ -4,6 +4,7 @@ export const metadata = {
   title: "Terms of Service · TestedRoutes",
   description:
     "The terms that apply when you browse testedroutes.com or buy a guide: what 'tested' means, licences, refunds, and dispute resolution.",
+  alternates: { canonical: "/terms" },
 };
 
 const LAST_UPDATED = "16 July 2026";

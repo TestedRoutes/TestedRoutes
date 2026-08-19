@@ -51,17 +51,27 @@ export async function POST(request) {
     ...(language ? { custom_fields: [{ name: "language", value: language }] } : {}),
   };
 
-  const res = await fetch(
-    `https://api.beehiiv.com/v2/publications/${encodeURIComponent(publicationId)}/subscriptions`,
-    {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${apiKey}`,
+  // The try/catch covers what res.ok cannot: a rejected fetch (DNS failure,
+  // network drop, the 10s timeout). Without it a Beehiiv blip surfaces as an
+  // unhandled 500 instead of the 502 the form already knows how to show.
+  let res;
+  try {
+    res = await fetch(
+      `https://api.beehiiv.com/v2/publications/${encodeURIComponent(publicationId)}/subscriptions`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${apiKey}`,
+        },
+        body: JSON.stringify(payload),
+        signal: AbortSignal.timeout(10_000),
       },
-      body: JSON.stringify(payload),
-    },
-  );
+    );
+  } catch (err) {
+    console.error("[beehiiv] request failed:", err);
+    return Response.json({ error: "Could not subscribe right now." }, { status: 502 });
+  }
 
   if (!res.ok) {
     const text = await res.text().catch(() => "");

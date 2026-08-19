@@ -558,12 +558,24 @@ function formatPrice(amount, currency) {
 // those as English so they never vanish from the EN site.
 const LANG_FILTER = `(language == $lang || (!defined(language) && $lang == "en"))`;
 
+// Every content read goes through Next's Data Cache. This is what keeps the
+// site up when Sanity is down: if a background revalidation fails, Next keeps
+// serving the last good data instead of throwing into the error boundary —
+// before this, a Sanity 5xx turned every route into the error wall at once.
+// Pages themselves still render per-request (the currency decision, Decisions
+// #23, is untouched); only the Sanity payloads are cached. The 5-minute
+// window is a ceiling, not the publish latency: /api/revalidate purges the
+// tag on every Sanity webhook / publish, so edits still land immediately.
+export const SANITY_CACHE_TAG = "sanity-content";
+const FETCH_OPTS = { next: { revalidate: 300, tags: [SANITY_CACHE_TAG] } };
+
 export async function fetchAllStories(lang = "en") {
   // Guide-bearing docs live in the Guides section only; Inspire lists
   // dedicated story docs (a destination can have both without duplication).
   return client.fetch(
     `*[_type == "story" && status == "published" && guide.hasGuide != true && ${LANG_FILTER}] | order(publishedDate desc) ${STORY_PROJECTION}`,
     { lang },
+    FETCH_OPTS,
   );
 }
 
@@ -573,6 +585,7 @@ export async function fetchAllGuideStories(lang = "en") {
   return client.fetch(
     `*[_type == "story" && status == "published" && guide.hasGuide == true && ${LANG_FILTER}] | order(publishedDate desc) ${STORY_PROJECTION}`,
     { lang },
+    FETCH_OPTS,
   );
 }
 
@@ -580,6 +593,7 @@ export async function fetchStoryCount(lang = "en") {
   return client.fetch(
     `count(*[_type == "story" && status == "published" && guide.hasGuide != true && ${LANG_FILTER}])`,
     { lang },
+    FETCH_OPTS,
   );
 }
 
@@ -587,6 +601,7 @@ export async function fetchGuideCount(lang = "en") {
   return client.fetch(
     `count(*[_type == "story" && status == "published" && guide.hasGuide == true && ${LANG_FILTER}])`,
     { lang },
+    FETCH_OPTS,
   );
 }
 
@@ -597,6 +612,7 @@ export async function fetchStoryTranslations(storyId) {
   const docs = await client.fetch(
     `*[_type == "story" && status == "published" && storyId == $storyId]{ "slug": slug.current, language, "hasGuide": guide.hasGuide, "guideSlug": guide.pageSlug }`,
     { storyId },
+    FETCH_OPTS,
   );
   return (docs || []).map((d) => ({
     slug: d.slug,

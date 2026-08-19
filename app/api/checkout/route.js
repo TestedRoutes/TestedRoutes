@@ -35,6 +35,35 @@ function safeSlug(value) {
   return /^[a-z0-9-]{1,80}$/.test(slug) ? slug : null;
 }
 
+// Polar product ids are UUIDs. Anything else is garbage we should reject
+// before it reaches the Polar API rather than surfacing as a 500.
+const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+
+/**
+ * `products` is attacker-controllable like `g`, but it decides what the
+ * checkout actually sells, so it gets held to the catalogue: only product
+ * ids that a published guide carries in Sanity may reach Polar. Without
+ * this, any product id in the Polar org — retired SKUs, test products —
+ * could be checked out through the site.
+ *
+ * Fails open on a catalogue outage: checkout is the money path, and
+ * refusing every sale because Sanity is briefly unreachable is worse than
+ * skipping the allow-list for those requests. The UUID shape check above
+ * still applies either way.
+ */
+async function filterToKnownProducts(products) {
+  let known = null;
+  try {
+    const { loadGuides } = await import("../../_lib/loadGuides");
+    const guides = await loadGuides();
+    known = new Set(guides.map((g) => g.polarProductId).filter(Boolean));
+  } catch (err) {
+    console.error("[polar-checkout] catalogue lookup failed, skipping allow-list:", err);
+    return products;
+  }
+  return products.filter((id) => known.has(id));
+}
+
 if (!polar) {
   console.error("[polar-checkout] POLAR_ACCESS_TOKEN is not set");
 }
@@ -47,10 +76,20 @@ export async function GET(request) {
     );
   }
   const params = new URL(request.url).searchParams;
-  const products = params.getAll("products");
+  // Cap at 5 before any work happens: legitimate checkouts carry one id
+  // (Polar has no multi-item cart), so a long list is never a real buyer.
+  const rawProducts = params.getAll("products").slice(0, 5);
+  const wellFormed = rawProducts.filter((id) => UUID_RE.test(String(id)));
+  if (wellFormed.length === 0) {
+    return Response.json(
+      { error: "Missing or malformed products in query params" },
+      { status: 400 },
+    );
+  }
+  const products = await filterToKnownProducts(wellFormed);
   if (products.length === 0) {
     return Response.json(
-      { error: "Missing products in query params" },
+      { error: "Unknown product" },
       { status: 400 },
     );
   }
@@ -81,9 +120,11 @@ export async function GET(request) {
     });
     return Response.redirect(checkout.url, 302);
   } catch (err) {
+    // Details go to the log only — upstream error messages can carry
+    // internals (ids, config hints) that don't belong in a public response.
     console.error("[polar-checkout] checkout create threw:", err);
     return Response.json(
-      { error: "checkout handler error", message: String(err?.message || err) },
+      { error: "checkout handler error" },
       { status: 500 },
     );
   }

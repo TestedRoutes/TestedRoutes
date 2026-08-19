@@ -4,6 +4,7 @@ export const metadata = {
   title: "Legal Notice · TestedRoutes",
   description:
     "Legal entity details, registration, and payment-processor information for testedroutes.com.",
+  alternates: { canonical: "/legal-notice" },
 };
 
 const LAST_UPDATED = "16 July 2026";

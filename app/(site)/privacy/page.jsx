@@ -4,6 +4,7 @@ export const metadata = {
   title: "Privacy Policy · TestedRoutes",
   description:
     "What data testedroutes.com collects, why, who it is shared with, and your GDPR rights. Cookies, analytics and marketing run only after you opt in.",
+  alternates: { canonical: "/privacy" },
 };
 
 const LAST_UPDATED = "16 August 2026";

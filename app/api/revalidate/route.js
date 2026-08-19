@@ -15,7 +15,8 @@
  *     -H "content-type: application/json" \
  *     -d '{"_type":"story","slug":"triftbrucke-from-zurich","guide":{"hasGuide":true}}'
  */
-import { revalidatePath } from "next/cache";
+import { revalidatePath, revalidateTag } from "next/cache";
+import { SANITY_CACHE_TAG } from "../../_lib/sanityStory";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -56,6 +57,11 @@ export async function POST(request) {
     revalidatePath(p);
     revalidated.push(p);
   };
+
+  // Purge the cached Sanity payloads themselves, not just the route outputs —
+  // every content read is tagged, so this is what makes an edit visible
+  // before the 5-minute revalidate window would have expired on its own.
+  revalidateTag(SANITY_CACHE_TAG);
 
   touch("/");
   touch("/inspire");

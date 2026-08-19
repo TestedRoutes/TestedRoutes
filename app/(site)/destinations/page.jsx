@@ -10,6 +10,7 @@ import samoaHero from "../../../content/countries/samoa/destination/generated/we
 export const metadata = {
   title: "Destinations · TestedRoutes",
   description: "Self-guided travel routes across the countries and regions I have personally tested.",
+  alternates: { canonical: "/destinations" },
 };
 
 const DESTINATIONS = [
