@@ -1,0 +1,60 @@
+# First CI for this repo (Tracker #238). Until now the Vercel preview deploy
+# was the only check a PR got, and the guide data modules had no gate at all.
+#
+# Two tiers on purpose:
+# - The parse and module checks run with no credentials, so every PR gets
+#   them - including remote/sandbox sessions where .env.local cannot exist.
+# - The drift check (check:guides) needs a Sanity token to read the live
+#   documents, so it runs only when the SANITY_API_WRITE_TOKEN repo secret
+#   is configured. Prefer storing a read-only viewer token under that name:
+#   the checker only reads, and CI has no business writing to Sanity.
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+    env:
+      SANITY_API_WRITE_TOKEN: ${{ secrets.SANITY_API_WRITE_TOKEN }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+
+      # next build needs live Sanity env, so the Vercel preview stays the
+      # real build check (CLAUDE.md). esbuild parse-checks are the local
+      # stand-in: plain .js files under app/ contain JSX, hence the loader.
+      - name: Parse-check app/ and scripts/ (esbuild)
+        run: |
+          set -e
+          git ls-files 'app/*.js' 'app/*.jsx' 'app/**/*.js' 'app/**/*.jsx' 'scripts/*.mjs' 'scripts/guides/*.mjs' \
+            | xargs npx esbuild --loader:.js=jsx --loader:.jsx=jsx --log-level=error --outdir=/tmp/parse-check
+
+      # The data modules are what stops guide content rotting the way the 13
+      # per-guide scripts did. Import each one: a module that fails to load,
+      # or loads without a docId, would take publish-guide.mjs down with it.
+      - name: Load every guide data module
+        run: |
+          set -e
+          for f in scripts/guides/*.mjs; do
+            [ "$(basename "$f")" = "_lib.mjs" ] && continue
+            node --input-type=module -e "
+              const m = await import(process.cwd() + '/' + process.argv[1]);
+              if (!m.default?.docId) throw new Error('no docId in ' + process.argv[1]);
+            " "$f"
+            echo "ok: $f"
+          done
+
+      # Exits 1 when a module and its live Sanity document disagree. Drift is
+      # not automatically a defect - it means the two disagree and someone
+      # should know why (CLAUDE.md). Skipped without the token secret.
+      - name: Guide drift check against live Sanity
+        if: env.SANITY_API_WRITE_TOKEN != ''
+        run: node scripts/check-guides.mjs
