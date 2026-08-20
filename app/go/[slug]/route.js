@@ -55,8 +55,13 @@ const SITE_ORIGIN = process.env.NEXT_PUBLIC_SITE_URL || "https://testedroutes.co
 const CURATED = {
   // Seychelles 7-day guide — downloadable Google My Map (beaches, food,
   // hotels, ferries). External My Maps link, so no UTMs to bake in.
+  // Re-pointed 2026-08-20: the original map (mid 1EdUP3XbOOmub…) landed in
+  // Drive trash and the founder supplied the re-created map's /edit link;
+  // only the mid is reused here, rebuilt into /viewer form, because an edit
+  // URL in a printed QR would hand every reader write access. This is the
+  // slug doing its job — the printed QR survived the map dying.
   "seychelles-map":
-    "https://www.google.com/maps/d/viewer?mid=1EdUP3XbOOmub6TE5IM-6sC7K_SJa-3g",
+    "https://www.google.com/maps/d/viewer?mid=1VZWPmBZZq24veSICitDCx9ymLYY6bbA",
 
   // Iceland. Pin-level slugs (iceland-<pinid>) live in Sanity via
   // sync_go_links from the country master; these are the extra print slugs
