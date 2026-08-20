@@ -1,21 +1,18 @@
-// One-shot: upload the Triftbrücke PDF asset and set customPrices on the
-// guide story (draft + published). Usage: node --env-file=.env.local scripts/publish-trift-pdf.mjs
+// One-shot: upload the Triftbrücke PDF asset onto the guide story
+// (draft + published). Usage: node --env-file=.env.local scripts/publish-trift-pdf.mjs
+//
+// This script used to set guide.customPrices too, from the days when the
+// guide had no scripts/guides/ data module and the price had nowhere better
+// to live. The module exists now and carries the price, which check:guides
+// verifies against the live document — while nothing checks this script.
+// Two writers for one field is exactly the drift shape the publish engine
+// was rebuilt to remove (tracker #237), so this script is PDF-only now: a
+// re-run can never roll the price back.
 import { createClient } from "next-sanity";
 import { readFileSync } from "node:fs";
 
 const PDF = String.raw`C:\Users\pauli\Desktop\TestedRoutes - Website\content\countries\switzerland\guides\trift-bridge-from-zurich\final\TestedRoutes-Triftbrucke-Day-Trip.pdf`;
 const SLUG = "triftbrucke-from-zurich";
-// Kept in step with the live price so a re-run of this script (its real job is
-// the PDF upload) cannot quietly roll the price back. Day / layover rung of the
-// ladder, Content Plan v57 Pricing tab, founder 2026-08-16. This guide has no
-// scripts/guides/ data module, so there is nowhere better for the number to
-// live yet.
-const PRICES = [
-  { _key: "chf", _type: "priceEntry", currency: "CHF", amount: 12 },
-  { _key: "eur", _type: "priceEntry", currency: "EUR", amount: 12 },
-  { _key: "usd", _type: "priceEntry", currency: "USD", amount: 15 },
-  { _key: "gbp", _type: "priceEntry", currency: "GBP", amount: 12 },
-];
 
 const client = createClient({
   projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID,
@@ -40,7 +37,6 @@ for (const d of docs) {
     .patch(d._id)
     .set({
       "guide.pdf": { _type: "file", asset: { _type: "reference", _ref: asset._id } },
-      "guide.customPrices": PRICES,
     })
     .commit();
   console.log("patched", d._id);
