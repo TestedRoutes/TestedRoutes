@@ -14,6 +14,7 @@ const lt = {
     subtitle: "Istorijos kitai jūsų kelionei įkvėpti",
     searchPlaceholder: "Ieškoti istorijų – pabandykite 'ledynas' arba 'persėdimas'",
     searchButton: "Ieškoti",
+    filterStyle: "Stilius",
     heading: "Kelionės, o ne tik įrašai",
     story: "istorija",
     stories: "istorijos",

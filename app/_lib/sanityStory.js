@@ -157,6 +157,12 @@ function buildLegacyMetadata(doc) {
     classification: {
       journey_category: doc.journeyCategory?.slug,
       activity_category: doc.activityCategory?.slug,
+      // The category documents' own names, carried alongside the slugs the
+      // rest of the app matches on. The Inspire filter pills show these
+      // because a slug loses what the editor wrote — "week" is the slug for
+      // the tier named "Week+".
+      journey_category_name: doc.journeyCategory?.name,
+      activity_category_name: doc.activityCategory?.name,
       primary_collection: doc.primaryCollection?.name,
       all_collections: (doc.allCollections || []).map((c) => c.name),
       activity_tags: doc.activityTags,
