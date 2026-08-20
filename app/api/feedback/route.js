@@ -19,6 +19,15 @@
  *
  * Doc 1 is the transaction; 2 and 3 are best-effort. Rate-limited
  * per-instance like /api/e — honest about its limits at this scale.
+ *
+ * Two sources, two gates (#58): "web" is the buyers-only path above;
+ * "pdf-qr" is the open path behind the QR printed in the guide PDF
+ * (/f/{slug}). No buyer gate there per the 2026-05-02 founder decision —
+ * whoever is holding the printed guide has it legitimately or is at least
+ * reading it, and a companion on the trip may not be the buyer of record.
+ * Email is optional on that path: without it we can't reply, and the form
+ * says so, but a real correction with no reply address still fixes the
+ * guide. The honeypot and rate limit hold for both sources.
  */
 import { writeClient } from "../../../sanity/lib/writeClient";
 import { verifyPurchaseToken, hashBuyerEmail } from "../../_lib/purchaseToken";
@@ -75,40 +84,52 @@ export async function POST(request) {
   const name = typeof body?.name === "string" ? body.name.trim().slice(0, 120) : "";
   const email = String(body?.email || "").trim().toLowerCase();
   const token = typeof body?.token === "string" ? body.token : null;
+  // Only the two public form sources are accepted from the wire; anything
+  // else collapses to "web" so a crafted source value can't invent a new
+  // category in the inbox (ai-monitor docs are created server-side, not here).
+  const source = body?.source === "pdf-qr" ? "pdf-qr" : "web";
 
-  // Buyers-only gate: a valid token for this guide, or the purchase email.
   let emailHash = null;
-  let purchase = null;
-  const tokenClaims = token ? verifyPurchaseToken(token) : null;
-  if (tokenClaims) {
-    purchase = await writeClient.getDocument(`purchase-${tokenClaims.orderId}`);
-    if (purchase && !purchase.revoked) {
-      emailHash = purchase.emailHash || null;
-    } else {
-      purchase = null;
+  if (source === "pdf-qr") {
+    // Open path — no purchase lookup. Hash the email only to give triage a
+    // correlation handle when one is offered; an invalid address is treated
+    // as none rather than bounced, because the message matters more than
+    // the reply channel here.
+    emailHash = EMAIL_RE.test(email) ? hashBuyerEmail(email) : null;
+  } else {
+    // Buyers-only gate: a valid token for this guide, or the purchase email.
+    let purchase = null;
+    const tokenClaims = token ? verifyPurchaseToken(token) : null;
+    if (tokenClaims) {
+      purchase = await writeClient.getDocument(`purchase-${tokenClaims.orderId}`);
+      if (purchase && !purchase.revoked) {
+        emailHash = purchase.emailHash || null;
+      } else {
+        purchase = null;
+      }
     }
-  }
-  if (!purchase) {
-    if (!EMAIL_RE.test(email)) {
-      return Response.json(
-        { error: "Enter the email you bought the guide with — that's how we match you to your purchase." },
-        { status: 400 },
-      );
-    }
-    emailHash = hashBuyerEmail(email);
-    purchase = await writeClient.fetch(
-      `*[_type == "purchase" && emailHash == $hash && revoked != true && guideSlug == $slug][0]{ _id }`,
-      { hash: emailHash, slug: guideSlug },
-    );
     if (!purchase) {
-      return Response.json(
-        {
-          error:
-            "We couldn't find a purchase of this guide under that email. " +
-            "Check it matches your receipt — or write to hello@testedroutes.com and a person will sort it out.",
-        },
-        { status: 403 },
+      if (!EMAIL_RE.test(email)) {
+        return Response.json(
+          { error: "Enter the email you bought the guide with — that's how we match you to your purchase." },
+          { status: 400 },
+        );
+      }
+      emailHash = hashBuyerEmail(email);
+      purchase = await writeClient.fetch(
+        `*[_type == "purchase" && emailHash == $hash && revoked != true && guideSlug == $slug][0]{ _id }`,
+        { hash: emailHash, slug: guideSlug },
       );
+      if (!purchase) {
+        return Response.json(
+          {
+            error:
+              "We couldn't find a purchase of this guide under that email. " +
+              "Check it matches your receipt — or write to hello@testedroutes.com and a person will sort it out.",
+          },
+          { status: 403 },
+        );
+      }
     }
   }
 
@@ -124,7 +145,7 @@ export async function POST(request) {
     submitterName: name || null,
     emailHash,
     body: message,
-    source: "web",
+    source,
     status: "new",
     createdAt: new Date().toISOString(),
   });
@@ -152,8 +173,10 @@ export async function POST(request) {
           ...(EMAIL_RE.test(email) ? { replyTo: email } : {}),
           subject: `[Guide feedback] ${guideTitle}`,
           text:
-            `Verified buyer feedback on ${guideTitle}.\n\n` +
-            `From: ${name || "(no name given)"}${EMAIL_RE.test(email) ? ` <${email}>` : " (via token)"}\n\n` +
+            (source === "pdf-qr"
+              ? `Feedback via the PDF QR on ${guideTitle} (open form, not purchase-verified).\n\n`
+              : `Verified buyer feedback on ${guideTitle}.\n\n`) +
+            `From: ${name || "(no name given)"}${EMAIL_RE.test(email) ? ` <${email}>` : source === "pdf-qr" ? " (no email left)" : " (via token)"}\n\n` +
             `${message}\n\n` +
             `Triage doc: ${doc._id} (Studio -> Feedback). Reply to this email to answer them directly.`,
         });
