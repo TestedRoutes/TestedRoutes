@@ -10,7 +10,7 @@ import {
   getInspireStoryGuideUrl,
 } from "../../_lib/inspireStoryDisplay";
 import { LOCALES, getDict, localePath } from "../../_lib/i18n";
-import { DESTINATION_SLUGS } from "../../_lib/destinations";
+import { VISIBLE_DESTINATION_SLUGS } from "../../_lib/destinations";
 import GuideGallery from "../../_components/GuideGallery";
 import Byline from "../../_components/Byline";
 
@@ -122,9 +122,11 @@ async function resolveGuideTargets(story, lang, currency) {
   // one is built. Better than the generic /guides card, which is the same link
   // on every story and tells a reader nothing about where they are.
   // Keyed on destination_slug, not country — the latter is the display name.
+  // Visible hubs only: a hidden hub's URL just 307s to /destinations, and a
+  // "Explore X" link that lands on the generic index is worse than no link.
   const destinationSlug = story.metadata?.geography?.destination_slug;
   const hubHref =
-    destinationSlug && DESTINATION_SLUGS.includes(destinationSlug)
+    destinationSlug && VISIBLE_DESTINATION_SLUGS.includes(destinationSlug)
       ? localePath(lang, `/destinations/${destinationSlug}`)
       : null;
 

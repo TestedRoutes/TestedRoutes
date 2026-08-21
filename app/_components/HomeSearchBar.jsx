@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { HIDDEN_DESTINATION_SLUGS } from "../_lib/destinations";
 
 // Supports either uncontrolled (own state) or controlled (parent owns query
 // via `query` + `onQueryChange`). The controlled mode lets neighbour widgets
@@ -11,6 +12,11 @@ import { useState } from "react";
 const DESTINATION_TERMS = ["switzerland", "swiss", "zurich", "geneva", "lucerne", "interlaken"];
 
 function resolveDestinationSearch(query) {
+  // The Switzerland hub is hidden (_lib/destinations.js): deep-linking a
+  // search there would land on a redirect to the generic index, which reads
+  // as a broken search. Swiss queries fall through to guide matching instead
+  // — the Swiss guides all still exist. Un-hide the hub and this gate can go.
+  if (HIDDEN_DESTINATION_SLUGS.includes("switzerland")) return null;
   const normalized = query.toLowerCase().trim();
   if (!normalized) return null;
   if (!DESTINATION_TERMS.some((term) => normalized.includes(term))) return null;

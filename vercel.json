@@ -42,6 +42,7 @@
     },
     { "source": "/inspire-story.html", "destination": "/inspire", "permanent": true },
     { "source": "/guides/:slug.html", "destination": "/guides/:slug", "permanent": true },
-    { "source": "/destinations/switzerland/index.html", "destination": "/destinations/switzerland", "permanent": true }
+    { "source": "/destinations/switzerland/index.html", "destination": "/destinations/switzerland", "permanent": true },
+    { "source": "/destinations/switzerland", "destination": "/destinations", "permanent": false }
   ]
 }

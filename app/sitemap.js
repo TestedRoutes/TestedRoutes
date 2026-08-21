@@ -1,6 +1,6 @@
 import { fetchSitemapEntries } from "./_lib/sanityStory";
 import { ALT_LOCALES, localePath } from "./_lib/i18n";
-import { DESTINATION_SLUGS } from "./_lib/destinations";
+import { VISIBLE_DESTINATION_SLUGS } from "./_lib/destinations";
 
 export const dynamic = "force-static";
 
@@ -13,8 +13,9 @@ export default async function sitemap() {
     { url: "/", changeFrequency: "weekly", priority: 1.0 },
     { url: "/about", changeFrequency: "monthly", priority: 0.7 },
     { url: "/destinations", changeFrequency: "weekly", priority: 0.6 },
-    // Derived from DESTINATION_SLUGS so a new hub cannot ship unindexed.
-    ...DESTINATION_SLUGS.map((slug) => ({
+    // Derived from the registry so a new hub cannot ship unindexed; hidden
+    // hubs (redirecting pages) stay out — a sitemap URL that 307s is noise.
+    ...VISIBLE_DESTINATION_SLUGS.map((slug) => ({
       url: `/destinations/${slug}`,
       changeFrequency: "weekly",
       priority: 0.8,

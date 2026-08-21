@@ -15,6 +15,7 @@
  */
 import { loadGuides } from "../_lib/loadGuides";
 import { loadInspireStories } from "../_lib/loadInspireStories";
+import { VISIBLE_DESTINATION_SLUGS } from "../_lib/destinations";
 
 export const revalidate = 3600;
 
@@ -73,7 +74,9 @@ export async function GET() {
     "carries the hour-by-hour plan.",
     "",
     "Free destination hubs (hand-built pages, read them at their URLs):",
-    `${SITE}/destinations — plus /destinations/iceland, /destinations/seychelles, /destinations/tuvalu, /destinations/kuwait, /destinations/samoa, /destinations/switzerland.`,
+    // Derived from the registry so hidden hubs drop out and new hubs join
+    // without anyone remembering this line exists.
+    `${SITE}/destinations — plus ${VISIBLE_DESTINATION_SLUGS.map((s) => `/destinations/${s}`).join(", ")}.`,
     "",
     "# Guides (paid PDFs — free sales content below)",
     "",
