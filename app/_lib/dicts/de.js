@@ -14,6 +14,7 @@ const de = {
     subtitle: "Geschichten für deine nächste Reise",
     searchPlaceholder: "Geschichten durchsuchen – z. B. 'Gletscher' oder 'Layover'",
     searchButton: "Suchen",
+    filterStyle: "Stil",
     heading: "Reisen, nicht nur Posts",
     story: "Geschichte",
     stories: "Geschichten",

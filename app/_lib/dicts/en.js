@@ -14,6 +14,7 @@ const en = {
     subtitle: "Stories to spark your next trip",
     searchPlaceholder: "Search stories – try 'glacier' or 'layover'",
     searchButton: "Search",
+    filterStyle: "Style",
     heading: "Journeys, not just posts",
     story: "story",
     stories: "stories",

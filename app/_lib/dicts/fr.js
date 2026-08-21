@@ -14,6 +14,7 @@ const fr = {
     subtitle: "Des histoires pour inspirer votre prochain voyage",
     searchPlaceholder: "Rechercher une histoire – essayez 'glacier' ou 'escale'",
     searchButton: "Rechercher",
+    filterStyle: "Style",
     heading: "Des voyages, pas seulement des posts",
     story: "histoire",
     stories: "histoires",

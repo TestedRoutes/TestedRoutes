@@ -39,6 +39,12 @@ function primaryNavLinkClass(active, slug) {
   return `${base} text-slate-600 hover:bg-brand-ink/5 hover:text-slate-900`;
 }
 
+function emitHeaderSearchHover(hovering) {
+  window.dispatchEvent(
+    new CustomEvent("header-search-hover", { detail: hovering }),
+  );
+}
+
 function logoLinkClassName(active) {
   const base = "flex shrink-0 items-center border-b-2 border-transparent";
   if (active === "home") {
@@ -59,29 +65,34 @@ export default function SiteHeader({ currency = "EUR", guides = [], navDicts = {
     { slug: "inspire", label: nav.inspire, href: localePath(lang, "/inspire") },
     { slug: "about", label: nav.aboutMe, href: "/about" },
   ];
-  const [heroSearchVisible, setHeroSearchVisible] = useState(true);
+  // null until a page reports on its own search bar — the home hero and the
+  // Inspire filter card both do. The header search is the stand-in for
+  // whichever one has scrolled away, so a page that reports gets the exact
+  // handover point instead of the scroll guess below.
+  const [pageSearchVisible, setPageSearchVisible] = useState(null);
   const [scrolledPast, setScrolledPast] = useState(false);
 
   useEffect(() => {
-    setHeroSearchVisible(true);
+    setPageSearchVisible(null);
     setScrolledPast(false);
   }, [pathname]);
 
   useEffect(() => {
-    const handler = (e) => setHeroSearchVisible(Boolean(e.detail));
-    window.addEventListener("home-hero-search-visible", handler);
-    return () => window.removeEventListener("home-hero-search-visible", handler);
+    const handler = (e) => setPageSearchVisible(Boolean(e.detail));
+    window.addEventListener("page-search-visible", handler);
+    return () => window.removeEventListener("page-search-visible", handler);
   }, []);
 
   const barePath = pathWithoutLocale(pathname);
-  const isHome = barePath === "/";
   const isSection =
     barePath.startsWith("/destinations") ||
     barePath.startsWith("/guides") ||
     barePath.startsWith("/inspire");
 
-  // On section pages (no hero search to observe), reveal the header search
-  // after a short scroll — same UX as home, just threshold-based.
+  // Fallback for section pages that report nothing (/guides, /destinations):
+  // reveal the header search after a short scroll. A page whose own search
+  // bar reports its visibility overrides this — 120px is a guess at "past the
+  // header copy", and on /inspire that lands well above the cards.
   useEffect(() => {
     if (!isSection) return;
     const handler = () => setScrolledPast(window.scrollY > 120);
@@ -90,8 +101,9 @@ export default function SiteHeader({ currency = "EUR", guides = [], navDicts = {
     return () => window.removeEventListener("scroll", handler);
   }, [isSection]);
 
+  // Home stays hidden until its hero reports, which it does on mount.
   const showHeaderSearch =
-    (isHome && !heroSearchVisible) || (isSection && scrolledPast);
+    pageSearchVisible !== null ? !pageSearchVisible : isSection && scrolledPast;
 
   return (
     // Always the solid Bone bar (founder 2026-08-08: the hero photo no
@@ -118,7 +130,16 @@ export default function SiteHeader({ currency = "EUR", guides = [], navDicts = {
         </Link>
 
         {showHeaderSearch ? (
-          <div className="hidden flex-1 justify-center px-6 md:flex">
+          // Hovering here can open a page-owned panel — /inspire hangs its
+          // full filter box off this search. The hover is announced on the
+          // window rather than wired through props so the header stays
+          // ignorant of what any given page wants to drop, the same loose
+          // coupling the hero search uses to report its own visibility.
+          <div
+            className="hidden flex-1 justify-center px-6 md:flex"
+            onMouseEnter={() => emitHeaderSearchHover(true)}
+            onMouseLeave={() => emitHeaderSearchHover(false)}
+          >
             <div className="w-full max-w-xl">
               <HomeSearchBar guides={guides} variant="compact" />
             </div>
