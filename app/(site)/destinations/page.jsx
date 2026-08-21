@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { HIDDEN_DESTINATION_SLUGS } from "../../_lib/destinations";
 
 import seychellesHero from "../../../content/countries/seychelles/destination/generated/web/source-dargent-from-water.jpg";
 import icelandHero from "../../../content/countries/iceland/destination/generated/web/svartifoss-wide.jpg";
@@ -83,7 +84,11 @@ export default function DestinationsPage() {
         </p>
       </header>
       <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-        {DESTINATIONS.map((d) => (
+        {/* Hidden hubs (see _lib/destinations.js) keep their card data here
+            so un-hiding is a one-line change; they just don't render. */}
+        {DESTINATIONS.filter(
+          (d) => !HIDDEN_DESTINATION_SLUGS.includes(d.href.split("/").pop()),
+        ).map((d) => (
           <Link
             key={d.href}
             href={d.href}

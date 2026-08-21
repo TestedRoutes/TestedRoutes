@@ -7,6 +7,7 @@ import GuideCarousel from "./GuideCarousel";
 import GuideTitle from "./GuideTitle";
 import { PrimaryStats, LocationSection, buildLocation } from "./GuideTripSections";
 import { localePath } from "../../_lib/i18n";
+import { VISIBLE_DESTINATION_SLUGS } from "../../_lib/destinations";
 
 /**
  * Sales layout for guide pages (guide-page-build-spec.md).
@@ -71,7 +72,11 @@ export default function GuideSalesPage({
   const location = buildLocation(guide);
   const showLocation = !!(location.start || location.destinations?.length);
   const reviewed = formatReviewDate(meta.maintenance?.last_reviewed_date);
-  const destSlug = meta.geography?.destination_slug;
+  // Visible hubs only — a hidden hub's URL just redirects to the generic
+  // index (see _lib/destinations.js), so the breadcrumb and bottom link drop.
+  const rawDestSlug = meta.geography?.destination_slug;
+  const destSlug =
+    rawDestSlug && VISIBLE_DESTINATION_SLUGS.includes(rawDestSlug) ? rawDestSlug : null;
   const destName = meta.geography?.country;
 
   const formatFacts = [

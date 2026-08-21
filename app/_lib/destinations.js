@@ -10,3 +10,17 @@
  * Adding a destination page? Add its slug here in the same commit.
  */
 export const DESTINATION_SLUGS = ["iceland", "seychelles", "tuvalu", "switzerland", "kuwait", "samoa"];
+
+/**
+ * Hidden hubs — pages that exist in the repo but are paused from every
+ * public surface (founder 2026-08-21: the Switzerland hub is outdated and
+ * there is no time to fix it now). The page route 307-redirects to
+ * /destinations (vercel.json), and every list that would link or index it
+ * filters on VISIBLE_DESTINATION_SLUGS instead. To bring a hub back: remove
+ * its slug here and delete its redirect from vercel.json — the page and its
+ * card are untouched underneath.
+ */
+export const HIDDEN_DESTINATION_SLUGS = ["switzerland"];
+export const VISIBLE_DESTINATION_SLUGS = DESTINATION_SLUGS.filter(
+  (slug) => !HIDDEN_DESTINATION_SLUGS.includes(slug),
+);

@@ -8,6 +8,7 @@ import {
   getAffiliateLinks,
 } from "../../_lib/affiliateLinks";
 import { getDict, localePath } from "../../_lib/i18n";
+import { VISIBLE_DESTINATION_SLUGS } from "../../_lib/destinations";
 import { sanitySrcSet } from "../../_lib/imageSrcSet";
 import { checkoutHrefFor } from "../../_lib/checkoutHref";
 import GuideGallery from "../../_components/GuideGallery";
@@ -456,7 +457,10 @@ export default async function GuidePage({ lang, slug }) {
         <Link href={localePath(lang, "/guides")} className="hover:text-slate-600">
           {dict.nav.guides}
         </Link>
-        {meta.geography?.destination_slug ? (
+        {/* Visible hubs only — a hidden hub's URL just redirects to the
+            generic index (see _lib/destinations.js). */}
+        {meta.geography?.destination_slug &&
+        VISIBLE_DESTINATION_SLUGS.includes(meta.geography.destination_slug) ? (
           <>
             <span>›</span>
             <Link

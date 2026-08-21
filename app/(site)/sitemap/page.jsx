@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { loadGuides } from "../../_lib/loadGuides";
 import { loadInspireStories } from "../../_lib/loadInspireStories";
+import { VISIBLE_DESTINATION_SLUGS } from "../../_lib/destinations";
 
 export const dynamic = "force-static";
 
@@ -55,7 +56,16 @@ export default async function SitemapPage() {
 
       <SitemapSection heading="Destinations">
         <SitemapItem href="/destinations" label="All destinations" />
-        <SitemapItem href="/destinations/switzerland" label="Switzerland" />
+        {/* Derived from the registry — this list was hand-written once and
+            sat at "Switzerland" only while five newer hubs shipped unlisted;
+            hidden hubs stay out along the way. */}
+        {VISIBLE_DESTINATION_SLUGS.map((slug) => (
+          <SitemapItem
+            key={slug}
+            href={`/destinations/${slug}`}
+            label={slug.charAt(0).toUpperCase() + slug.slice(1)}
+          />
+        ))}
       </SitemapSection>
 
       <SitemapSection heading={`Guides (${sortedGuides.length})`}>
