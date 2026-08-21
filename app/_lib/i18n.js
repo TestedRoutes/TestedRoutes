@@ -16,9 +16,11 @@
 // until their content is translated.
 
 export {
+  ALL_LOCALES,
   LOCALES,
   DEFAULT_LOCALE,
   ALT_LOCALES,
+  PAUSED_LOCALES,
   LANG_NAMES,
   DATE_LOCALES,
   isLocale,

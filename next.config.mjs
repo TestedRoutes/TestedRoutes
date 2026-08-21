@@ -16,6 +16,19 @@ const nextConfig = {
       { protocol: "https", hostname: "cdn.sanity.io" },
     ],
   },
+  // Localization is PAUSED (app/_lib/locale.js has the registry gate and the
+  // re-enable story). Redirecting here rather than only in the /[lang] pages
+  // gives a real 307 at the routing layer — a page-level redirect() streams
+  // as HTTP 200 with a client-side hop because the page renders inside the
+  // layout's Suspense boundary, which is a weaker signal for anything
+  // indexed. temporary (307), never permanent: the prefixes come back when
+  // localization resumes. Delete this block when it does.
+  async redirects() {
+    return ["de", "es", "fr", "lt"].flatMap((lang) => [
+      { source: `/${lang}`, destination: "/", permanent: false },
+      { source: `/${lang}/:path*`, destination: "/:path*", permanent: false },
+    ]);
+  },
 };
 
 export default withSentryConfig(nextConfig, {
