@@ -1,3 +1,21 @@
+// The feedback inbox (Tracker #59). One view per triage state rather than
+// one list with a status column, because triage is the workflow: open Inbox,
+// read, set the status, and the doc leaves the view on its own. Docs are
+// created by /api/feedback only — initialValueTemplates([]) removes the
+// Studio's "create new" button so nobody can hand-author one. Triage status
+// is internal-only, and story status NEVER auto-flips off feedback
+// (founder decision 2026-05-02).
+const feedbackList = (S, title, status) =>
+  S.documentList()
+    .title(title)
+    .filter(
+      status
+        ? `_type == "feedback" && status == "${status}"`
+        : `_type == "feedback"`,
+    )
+    .defaultOrdering([{ field: "createdAt", direction: "desc" }])
+    .initialValueTemplates([]);
+
 export const structure = (S) =>
   S.list()
     .title("TestedRoutes")
@@ -35,6 +53,32 @@ export const structure = (S) =>
           S.documentList()
             .title("Stories flagged for review")
             .filter("_type == 'story' && needsAttention == true"),
+        ),
+      S.divider(),
+      S.listItem()
+        .title("Feedback")
+        .schemaType("feedback")
+        .child(
+          S.list()
+            .title("Feedback")
+            .items([
+              S.listItem()
+                .title("Inbox (new)")
+                .child(feedbackList(S, "New feedback", "new")),
+              S.listItem()
+                .title("Acknowledged")
+                .child(feedbackList(S, "Acknowledged", "acknowledged")),
+              S.listItem()
+                .title("Actioned")
+                .child(feedbackList(S, "Actioned", "actioned")),
+              S.listItem()
+                .title("Dismissed")
+                .child(feedbackList(S, "Dismissed", "dismissed")),
+              S.divider(),
+              S.listItem()
+                .title("All feedback")
+                .child(feedbackList(S, "All feedback", null)),
+            ]),
         ),
       S.divider(),
       S.listItem()
