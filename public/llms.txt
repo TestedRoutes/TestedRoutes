@@ -37,6 +37,7 @@ meal and per night, with alternates in a directory rather than in the day plan.
 - [Tuvalu: 2 Days in the World's Least-Visited Country](https://testedroutes.com/guides/tuvalu-2-days): the twice-weekly flight, the runway that is a public square, and what two days there is actually like.
 - [Kuwait in 2 Days: A Weekend Itinerary](https://testedroutes.com/guides/kuwait-2-days): the old souk and the dhow harbour in a day, then a Bronze-Age island by boat and the winter desert camps at dusk.
 - [Samoa in a Week: Upolu & Savai'i Self-Drive](https://testedroutes.com/guides/samoa-upolu-savaii-7-days): both islands in seven days - To-Sua, the waterfalls, the inter-island ferry crossed the clever way, lava fields and blowholes.
+- [Fiji Honeymoon: A 2-Week Itinerary](https://testedroutes.com/guides/fiji-honeymoon-14-days): three Yasawa islands on the hop-on boat pass, the shark dive and the manta channel, then Taveuni's Rainbow Reef - at honeymoon pace.
 - [Triftbrucke from Zurich: A Suspension Bridge Day Trip](https://testedroutes.com/guides/trift-bridge-from-zurich): Switzerland's most exposed footbridge as a day trip by train.
 - [Simplon Pass to Saas-Fee](https://testedroutes.com/guides/simplon-pass-to-saas-fee): Alpine Passes Trail, 2-day hike.
 - [Saas-Fee to Gruben](https://testedroutes.com/guides/saas-fee-to-gruben): Alpine Passes Trail, 2-day hike.
@@ -54,6 +55,7 @@ meal and per night, with alternates in a directory rather than in the day plan.
 - [Tuvalu](https://testedroutes.com/destinations/tuvalu): the world's least-visited country - getting there via Fiji, what the flight gap gives you, and what two days on Funafuti are actually like.
 - [Kuwait](https://testedroutes.com/destinations/kuwait): whether Kuwait is worth visiting, how long you need, why the day of the week matters more than the month, and what the two-day trip costs.
 - [Samoa](https://testedroutes.com/destinations/samoa): how many days you need, Upolu vs Savai'i, when to go, and why Sunday shapes the week more than the weather.
+- [Fiji](https://testedroutes.com/destinations/fiji): which islands to pick, how long you need, when to go, and how the island-hopping boat system actually works.
 - [Switzerland](https://testedroutes.com/destinations/switzerland): the Alpine Passes Trail series and day trips from Zurich.
 
 ## Inspire (free stories from the road)
