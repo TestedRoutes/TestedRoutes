@@ -10,7 +10,6 @@ import marinaPierNight from "../../../../content/countries/kuwait/destination/ge
 import winterCampLit from "../../../../content/countries/kuwait/destination/generated/web/winter-camp-lit-in-the-desert.jpg";
 import soukFoodCourtyard from "../../../../content/countries/kuwait/destination/generated/web/souk-food-courtyard.jpg";
 import dhowPortHulls from "../../../../content/countries/kuwait/destination/generated/web/dhow-port-wooden-hulls.jpg";
-import towersIntoSun from "../../../../content/countries/kuwait/destination/generated/web/kuwait-towers-into-the-sun.jpg";
 import desertDuskCar from "../../../../content/countries/kuwait/destination/generated/web/desert-dusk-from-the-car.jpg";
 import soukTeaLane from "../../../../content/countries/kuwait/destination/generated/web/souk-tea-house-lane.jpg";
 import fishMarketHall from "../../../../content/countries/kuwait/destination/generated/web/fish-market-hall.jpg";
@@ -25,6 +24,18 @@ import desertSunsetHighway from "../../../../content/countries/kuwait/destinatio
 import marinaFlagpoleNight from "../../../../content/countries/kuwait/destination/generated/web/marina-flagpole-at-night.jpg";
 import waterfrontArcadeNight from "../../../../content/countries/kuwait/destination/generated/web/waterfront-arcade-at-night.jpg";
 import nightSkylineMarina from "../../../../content/countries/kuwait/destination/generated/web/night-skyline-from-the-marina.jpg";
+
+/*
+ * Scope note (founder decision, 2026-08-14): this page sells the DECISION -
+ * whether Kuwait is worth a stop, how long, when. Everything operational
+ * (booking mechanics, fares, opening windows, within-day sequencing, primary
+ * picks, fallbacks) belongs to the paid guide and is deliberately absent
+ * here. FAQ answers open with the decision half of the answer, then refer to
+ * the guide for the mechanics. The only execution-flavoured facts allowed
+ * are ones a published inspire story already gives away (the visa-expiry
+ * trap, "nobody walks"). When editing, the test is: could a reader run a
+ * day of the trip from this page? If yes, cut until they cannot.
+ */
 
 export const metadata = {
   title: "Kuwait: is it worth a stop, and how long you actually need · TestedRoutes",
@@ -41,16 +52,16 @@ export const metadata = {
 };
 
 const WHEN_TO_GO = [
-  ["November to March", "The season. Days of 18–22 °C, cool evenings with a sea wind, and the desert filling up with the winter tent camps – they exist from about mid-November to mid-March, and after dark they are the best thing in the country."],
-  ["April and October", "The shoulders. Hot but workable, into the mid-30s. The camps are gone or going, so the desert half of the trip loses its payoff."],
+  ["November to March", "The season. Mild, walkable days, cool evenings with a sea wind, and the desert filling up with the winter tent camps – they exist from about mid-November to mid-March, and after dark they are the best thing in the country."],
+  ["April and October", "The shoulders. Hot but workable. The camps are gone or going, so the desert half of the trip loses its payoff."],
   ["May to September", "No. Summer runs past 45 °C, life moves indoors, and walking the old town – most of day one – stops being pleasant at all."],
   ["What I would pick", "December or January for the camps at their fullest, accepting jacket weather in the evenings; late February if you want the mildest walking days and can live without the busiest tent season. Either way, the day of the week matters more than the month – see below."],
 ];
 
 const HOW_LONG = [
-  ["Under 24 hours", "The city, and it genuinely fits. The old market at Mubarakiya, Safat Square and the Liberation Tower, the dhow harbour, the fish market, Souq Sharq marina, then a ticket up Kuwait Towers for the panorama. I was done by four with hours to spare. This is the layover version, and it is a better layover than almost any airport offers."],
-  ["Two days", "The version almost nobody takes, and the reason to stay a night: a morning boat to Failaka island – Bronze-Age ruins, a tank graveyard from 1990 and an abandoned town, twenty kilometres offshore – then back over the bay for the desert at dusk, when the winter camps switch their lights on. Day one covers the city properly; day two is a different country."],
-  ["Three or more", "Honestly, no. The remaining museums and the Avenues mall fill half a day more at most, and the rest of the country is desert you have already seen, oil infrastructure you cannot photograph, and border towns with nothing in them. Kuwait is a superb stop and a poor holiday – two days is the right amount."],
+  ["Under 24 hours", "The city, and it genuinely fits – the old souk, the dhow harbour and the towers make one of the better layover days anywhere. How well it fits depends on which weekday you land and what you do in what order, which is exactly what the guide times out."],
+  ["Two days", "The version almost nobody takes, and the reason to stay a night: a boat to Failaka island – Bronze-Age ruins, a tank graveyard from 1990, an abandoned town – then the desert at dusk, when the winter camps switch their lights on. Day one is the city; day two is a different country."],
+  ["Three or more", "Honestly, no. The remaining museums fill half a day at most, and the rest of the country is desert you have already seen, oil infrastructure you cannot photograph, and border towns with nothing in them. Kuwait is a superb stop and a poor holiday – two days is the right amount."],
 ];
 
 const REGIONS = [
@@ -58,25 +69,19 @@ const REGIONS = [
     name: "The old town",
     image: soukFoodCourtyard,
     alt: "The open-air food courtyard of Souk Al-Mubarakiya under its timber roof, tables and heaters between the trees",
-    body: "Souk Al-Mubarakiya is two hundred years of market under one roof – perfume, oud, gold, dates, spices, and free museums hidden inside it. Around it sit Safat Square, the Liberation Tower standing over the old town, and the Grand Mosque, which you enter on a free guided tour that runs Sunday to Thursday only. Lunch is the souk's open courtyard around the mosque of Al-Bahar: grills, flat bread from stone ovens, and tea brewed over coals.",
+    body: "Souk Al-Mubarakiya is two hundred years of market under one roof – perfume, oud, gold, dates and spices, tea brewed over coals in the lanes, and free museums hidden inside it. The Grand Mosque and the Liberation Tower stand over the same few streets. This is the half of Kuwait that feels its age, and you will have much of it to yourself.",
   },
   {
     name: "The waterfront",
     image: dhowPortHulls,
     alt: "Wooden dhows moored hull to hull at the dhow harbour, white rocks in the foreground",
-    body: "The Gulf Road string of sights that fills an afternoon: the dhow harbour with hundreds of wooden ships moored hull to hull, the fish market with the day's catch coming in under blue mosaics, Sadu House and its weaving, the Vintage Ship, Al-Bahhar village for souvenirs, and Souq Sharq marina with its footbridge viewpoint. Nobody walks in Kuwait, so you will often have the promenade to yourself.",
+    body: "The city faces the Gulf along one long corniche: hundreds of working wooden dhows moored hull to hull, a fish market with the catch coming in under blue mosaics, and Kuwait Towers – the country's postcard – with the whole bay visible from the sphere. Nobody walks in Kuwait, so the best promenade in the Gulf is usually empty.",
   },
   {
-    name: "Kuwait Towers and the corniche",
-    image: towersIntoSun,
-    alt: "Kuwait Towers against the low winter sun, palms and the promenade below",
-    body: "The three towers are the country's postcard, and the viewing sphere turns once every thirty minutes at 123 metres. Go up in the last hour of light – sunset runs from about 16:50 in December to 18:10 in late March – and the whole bay arranges itself below you. The corniche promenade underneath is the city's best walk, which in Kuwait means you may be the only person on it.",
-  },
-  {
-    name: "Across the bay",
+    name: "The desert and the island",
     image: desertDuskCar,
     alt: "The desert highway at dusk from the car, power lines running to the horizon",
-    body: "Day two's country. A morning ferry from Marina Crescent crosses to Failaka island – a Bronze-Age Greek trading post, a tank graveyard left from 1990 and a whole abandoned town. Back on the mainland, the 36-kilometre causeway crosses the bay to Subiya, where the desert begins: highways, power lines, empty ground, and – from mid-November to mid-March – the winter tent camps that light up at dusk and explain where the whole city goes at weekends.",
+    body: "Cross the bay and the desert begins: empty ground, big sky, and – in winter – whole villages of lit tents appearing at dusk, the country's favourite tradition. Offshore sits Failaka, a Bronze-Age Greek trading post turned 1990 battlefield, reachable by boat and visited by almost nobody. Together they are the second day, and the reason the stop becomes a trip.",
   },
 ];
 
@@ -101,33 +106,29 @@ const CAROUSEL = [
 // by line; publishing totals on a free page gives away the research and
 // anchors a reader on a number before they know what is optional inside it.
 const COSTS = [
-  ["Lean", "A budget room in Sharq, eating in the souk and the fish market, and none of the paid bookings – most of the trip is free to look at"],
-  ["Core", "The route as written: a mid-range hotel, the Failaka ferry, the towers, and proper dinners"],
+  ["Lean", "A budget room, eating where the city eats, and none of the paid bookings – most of the trip is free to look at"],
+  ["Core", "The route as written: a mid-range hotel, the boat, the towers, and proper dinners"],
   ["Splurge", "A waterfront five-star, both museums, and dinner inside a full-size wooden dhow"],
 ];
 
 const TIPS = [
-  ["Check the visa expiry, not the approval.", "My e-visa, approved months ahead, had expired before I ever used it – Kuwait issues them with their own clock running. Visa on arrival saved the day in about forty-five minutes, but check the dates before you fly and spare yourself the airport arithmetic."],
-  ["Plan around Friday, not the weather.", "The Kuwaiti weekend is Friday and Saturday. On Friday there are no mosque tours, Sadu House is shut and the souk trades in the evening only – so a European Saturday-Sunday city break hits the two worst days in the country. Put the city day on any Sunday to Thursday and everything in it is open."],
-  ["Confirm the Failaka ferry before you fly.", "Sailing times shift with the tides and are posted a month at a time. Message the operator on WhatsApp before you book anything else, then buy the ticket in person at the Marina office – on the day works, the evening before is safer, and bring a passport copy because the coast guard asks."],
-  ["Go up the towers in the last hour of light.", "The sphere turns once every thirty minutes, and the difference between noon and the golden hour is the difference between a view and the photo you keep. Sunset runs 16:50 to 18:10 across the season, and tickets are sold at the base only."],
-  ["Get the International Driving Permit at home.", "Rental desks ask for one alongside your licence, and it can only be issued in your home country – there is no fixing it after you land. Driving itself is easy: fast, wide roads, loose lane discipline, and speed cameras everywhere, with fines that start at KD 70."],
-  ["Leave the duty-free at your departure airport.", "Alcohol is illegal everywhere in Kuwait and none may be brought in – bottles are seized at the airport. Dinner is the whole evening out here, and the country runs perfectly well on juice, tea and the best fruit cocktails in the Gulf."],
-  ["Stay on the tarmac in the desert.", "Landmines and unexploded ordnance remain in the Kuwaiti desert from 1990. The camps and the dusk light are all visible from the road – there is no reason to drive off it, and the official advice is blunt: do not."],
+  ["Check the visa expiry, not the approval.", "My e-visa, approved months ahead, had expired before I ever used it – Kuwait issues them with their own clock running. Visa on arrival saved the day, but check the dates before you fly and spare yourself the airport arithmetic."],
+  ["Plan around Friday, not the weather.", "The Kuwaiti weekend is Friday and Saturday, and Friday closes more of the country than you expect – so a European Saturday-Sunday city break lands on the two worst days. Put the city day on a weekday. The guide plans both days around what is actually open when."],
+  ["Leave the duty-free at your departure airport.", "Kuwait is completely dry and none may be brought in – bottles are seized on arrival. Dinner is the whole evening out here, and the country runs perfectly well on juice, tea and the best fruit cocktails in the Gulf."],
 ];
 
 const FAQ = [
   ["Is Kuwait worth visiting?", "Yes – for a day or two, and on purpose. It is the Gulf without the theme park: a real old souk, a working dhow harbour, one iconic tower, and a desert culture that still actually happens every winter. It gets written off as a layover because the city genuinely fits in a day; the mistake is thinking that is all there is. The second day – a Bronze-Age island by boat and the tent camps lighting up at dusk – is the part almost nobody sees."],
   ["Is Kuwait safe to visit?", "The city itself is calm and low-crime, and I travelled it recently without issue. But check your government's travel advice before you book and again before you fly – conditions in the wider region have changed quickly, and advisories move faster than guidebooks. The UK's is at gov.uk/foreign-travel-advice/kuwait. Two hard local rules: never photograph government, military or oil sites, and never drive off-road in the desert, where landmines from 1990 remain."],
-  ["How many days do you need in Kuwait?", "One day covers the city properly – the souk, the mosque, the harbour, the fish market and the towers, done by late afternoon. Two days is the right trip: the second buys you Failaka island by ferry and the desert at dusk, which is a different country from the first day. More than two adds little; Kuwait is a superb stop and a poor holiday."],
-  ["What can you do on a Kuwait layover?", "With eight clear hours you can do the old town and the towers: visa on arrival takes about forty-five minutes, the Grand Mosque tour needs booking ahead and runs Sunday to Thursday, the souk and the dhow harbour are free, and Kuwait Towers stays open to 23:00. The city is twenty minutes from the airport with no traffic. It is one of the better layover cities anywhere – provided it is not a Friday."],
+  ["How many days do you need in Kuwait?", "One day covers the city properly – the souk, the harbour and the towers. Two days is the right trip: the second buys you Failaka island and the desert at dusk, which is a different country from the first day. More than two adds little; Kuwait is a superb stop and a poor holiday. The guide is built around the two-day version, with the city day planned so it works as a standalone layover."],
+  ["What can you do on a Kuwait layover?", "A lot – the city is about twenty minutes from the airport, visas are straightforward for most passports, and the old town, the harbour and the towers make one of the better layover days anywhere. Whether your hours land well depends on the weekday and the order you do things in, and that is precisely what the guide times out, landing to boarding."],
   ["Can you drink alcohol in Kuwait?", "No. Alcohol is illegal to sell, serve, carry or import anywhere in the country, including hotel bars, and duty-free bottles are seized at the airport. Dinner culture fills the gap – restaurants are the whole evening out, and tables turn late."],
-  ["When is the best time to visit Kuwait?", "November to March. Winter days run 18–22 °C with cool evenings, and the desert tent camps – the best thing in the country after dark – exist from about mid-November to mid-March. Summer regularly passes 45 °C and is genuinely not usable for this trip. Whatever the month, put the city day on a Sunday to Thursday: the Kuwaiti weekend closes the mosque tours and half the old town."],
-  ["Do you need a car in Kuwait?", "Yes, or someone driving one. Kuwait is built around cars and car parks; distances between sights are short but unwalkable in aggregate, and there is no metro. A rental with an International Driving Permit is the cheap answer. The upgrade is a driver-guide for the day at around €170 per person – in a city where parking eats time, someone else driving turns a logistics day into a sightseeing one."],
-  ["Can you visit Failaka island?", "Yes, by passenger ferry from Marina Crescent – about forty minutes and KD 15 return. Sailings shift with the tides and are posted a month at a time, so confirm your date by WhatsApp first and buy the ticket in person a day ahead with a passport copy. On the island, a three-dinar bus tour covers the Bronze-Age Greek ruins, the tank graveyard and the abandoned town; there are no taxis and one kitchen."],
-  ["What days is the weekend in Kuwait?", "Friday and Saturday. The working week is Sunday to Thursday, which is when everything in a city itinerary is open – mosque tours, Sadu House, the souk on full hours. Friday is the day to avoid arriving: no mosque tours, museums shut, and the souk trades evenings only. Hotel prices run opposite to Europe's, higher midweek than at the weekend."],
-  ["Do you need a visa for Kuwait?", "Most Western passports get a visa on arrival – about forty-five minutes in the queue – or an e-visa ahead of time. The trap is the e-visa's expiry: Kuwait issues them valid from approval, not from travel, so one approved months early can be dead before you fly. Check the expiry date, not just the approval."],
-  ["What are the winter desert camps?", "From about mid-November to mid-March, Kuwaiti families move out to licensed tent camps in the desert – generators, satellite dishes and strings of lights included – to live, for a season, the way their grandparents did. After dark the desert on both sides of the road fills with lit villages of tents. It is the country's favourite tradition, it empties the city at weekends, and seen from the road at dusk it is the best free sight in Kuwait."],
+  ["When is the best time to visit Kuwait?", "November to March. Winter days are mild with cool evenings, and the desert tent camps – the best thing in the country after dark – exist from about mid-November to mid-March. Summer regularly passes 45 °C and is genuinely not usable for this trip. Whatever the month, put the city day on a weekday: the Kuwaiti weekend is Friday and Saturday, and Friday closes more than you expect."],
+  ["Do you need a car in Kuwait?", "Yes, or someone driving one. Kuwait is built around cars and car parks; distances between sights are short but unwalkable in aggregate, and there is no metro. A rental is the cheap answer and a driver-guide for the day is the comfortable one – the guide prices both, covers the paperwork that rental desks actually ask for, and says which one suits which traveller."],
+  ["Can you visit Failaka island?", "Yes – a half-day by passenger boat from the city, and the reason to stay a second day: Bronze-Age Greek ruins, a tank graveyard left from 1990, and a whole abandoned town. The crossings are tide-dependent and most listings are wrong about how the tickets actually work, so this is the one part of the trip worth doing on tested information – the guide carries the confirmation step, the ticket rule and the island logistics."],
+  ["What days is the weekend in Kuwait?", "Friday and Saturday – the working week is Sunday to Thursday. That one fact shapes the whole trip: Friday closes much of what a visitor comes for, and hotel prices run opposite to Europe's, higher midweek than at the weekend. The guide plans both days around it."],
+  ["Do you need a visa for Kuwait?", "Most Western passports get a visa on arrival or an e-visa ahead of time. The trap is the e-visa's expiry: Kuwait issues them valid from approval, not from travel, so one approved months early can be dead before you fly – mine was. Check the expiry date, not just the approval."],
+  ["What are the winter desert camps?", "From about mid-November to mid-March, Kuwaiti families move out to licensed tent camps in the desert – generators, satellite dishes and strings of lights included – to live, for a season, the way their grandparents did. After dark the desert on both sides of the road fills with lit villages of tents. It is the country's favourite tradition, it empties the city at weekends, and seen at dusk it is the best free sight in Kuwait. The guide times day two so you reach it exactly as the light goes."],
 ];
 
 function SectionHeading({ children }) {
@@ -264,14 +265,13 @@ export default async function KuwaitDestinationPage() {
               </p>
               <p className="text-[15px] leading-relaxed text-slate-700">
                 What you actually do: walk the old town while the rest of the
-                city drives, eat in the souk's open courtyard where tea is
-                brewed over coals, ride the sphere of Kuwait Towers at the last
-                light, and then – if you take the second day almost nobody takes
-                – cross to a Bronze-Age island by boat and watch the desert
-                switch its lights on at dusk. The trip runs on a rental car,
-                because Kuwait is built around cars and you will often be the
-                only pedestrian in the capital. Treat that as part of the
-                experience rather than a flaw and the city is a pleasure.
+                city drives, drink tea brewed over coals in the souk, ride the
+                sphere of Kuwait Towers, and then – if you take the second day
+                almost nobody takes – cross to a Bronze-Age island by boat and
+                watch the desert switch its lights on at dusk. The trip runs on
+                a car, because Kuwait is built around cars and you will often
+                be the only pedestrian in the capital. Treat that as part of
+                the experience rather than a flaw and the city is a pleasure.
               </p>
               <p className="text-[15px] leading-relaxed text-slate-700">
                 Two honest caveats. The country is completely dry – no alcohol
@@ -310,9 +310,9 @@ export default async function KuwaitDestinationPage() {
               <p className="text-[15px] leading-relaxed text-slate-700">
                 The calendar that actually decides the trip is the week, not
                 the year: the Kuwaiti weekend is Friday and Saturday, and
-                Friday closes the mosque tours, Sadu House and the souk's
-                daytime hours. Put the city day on any Sunday to Thursday and
-                everything in it is open.
+                Friday closes more of the country than a visitor expects. Put
+                the city day on a weekday – the guide plans both days around
+                what is open when.
               </p>
             </section>
 
@@ -347,9 +347,9 @@ export default async function KuwaitDestinationPage() {
                   >
                     {guide.title}
                   </Link>{" "}
-                  covers the two-day version hour by hour – the city day, the
-                  Failaka ferry playbook, and the desert timed so you reach the
-                  camps exactly as the light goes.
+                  is the two-day version done for you: both days hour by hour,
+                  every booking in the order it has to be made, and the desert
+                  timed so you reach the camps exactly as the light goes.
                 </p>
               ) : null}
             </section>
@@ -386,41 +386,29 @@ export default async function KuwaitDestinationPage() {
               <SectionHeading>Getting there and around</SectionHeading>
               <p className="text-[15px] leading-relaxed text-slate-700">
                 Everything lands at Kuwait International, about twenty minutes
-                south of the centre. Most Western passports get a visa on
-                arrival in about forty-five minutes, or an e-visa ahead of time
-                – with one trap worth knowing: Kuwait's e-visas run their
+                south of the centre, and most Western passports enter easily –
+                with one trap worth knowing: Kuwait's e-visas run their
                 validity from approval, not from travel, so one approved months
-                early can expire before you fly. Check the expiry date, not the
-                approval. Terminal 1 is closed, so confirm which terminal your
-                airline actually uses.
+                early can expire before you fly. Check the expiry date, not
+                the approval.
               </p>
               <p className="text-[15px] leading-relaxed text-slate-700">
-                Pick the rental car up at the airport and the trip runs itself
-                from there. You drive on the right, the roads are wide and
-                fast, lane discipline is loose, and speed cameras are
-                everywhere – fines start at KD 70, so set the cruise control
-                and forget about it. Rental desks ask for an International
-                Driving Permit alongside your licence, and it can only be
-                issued in your home country. If you would rather not drive at
-                all, taxis cover the city (KD 7–8 from the airport) and a
-                driver-guide for a full day runs around €170 per person – the
-                one upgrade that turns a logistics day into a sightseeing one.
+                On the ground this is a driving country, and there are exactly
+                two ways to do it: a rental car, or a driver-guide for the day.
+                Both work; they suit different travellers and different
+                budgets, and the rental comes with paperwork that catches
+                people at the desk. The guide prices both options, covers what
+                the desks actually ask for, and says which to pick.
               </p>
               <p className="text-[15px] leading-relaxed text-slate-700">
-                Day two adds two more vehicles: a passenger ferry to Failaka –
-                forty minutes, KD 15 return, times posted monthly because they
-                move with the tides – and the 36-kilometre causeway across the
-                bay, one of the longest sea bridges in the world, which puts
-                the desert twenty minutes from downtown.
-              </p>
-              <p className="text-[15px] leading-relaxed text-slate-700">
-                The rules that matter: alcohol is illegal everywhere and
-                duty-free is seized on arrival; photographing government,
-                military or oil installations is a criminal offence; and the
-                desert is strictly a stay-on-tarmac country – landmines and
-                unexploded ordnance remain from 1990. None of these complicate
-                the trip in practice. Cards work almost everywhere; carry some
-                dinars in small notes for the souk and the island bus.
+                Day two adds a boat – the tide-dependent crossing to Failaka –
+                and one of the world's longest sea bridges, which puts the
+                desert twenty minutes from downtown. The rules that matter
+                everywhere: alcohol is illegal and duty-free is seized on
+                arrival; photographing government, military or oil sites is a
+                criminal offence; and the desert is strictly a stay-on-tarmac
+                country – landmines and unexploded ordnance remain from 1990.
+                None of these complicate the trip in practice.
               </p>
             </section>
 
@@ -431,12 +419,11 @@ export default async function KuwaitDestinationPage() {
                 execute, because the two things that usually dominate – getting
                 around, and getting in – barely register. For two people
                 sharing, the car for both days plus every kilometre of fuel
-                comes to roughly €30 each. Petrol is so cheap that the whole
-                trip's driving costs less than one airport coffee, and almost
-                everything you look at – the souk, the harbour, the mosque
-                tour, the desert at dusk – is free. That €30 is what the
-                driving costs, not what the trip costs; the rest is a
-                decision:
+                comes to roughly €30 each; petrol is so cheap that the whole
+                trip's driving costs less than one airport coffee. Almost
+                everything you look at – the souk, the harbour, the desert at
+                dusk – is free. That €30 is what the driving costs, not what
+                the trip costs; the rest is a decision:
               </p>
               <div className="overflow-x-auto rounded-2xl border border-brand-line bg-white">
                 <table className="w-full min-w-[480px] text-left text-[14px]">
@@ -457,14 +444,11 @@ export default async function KuwaitDestinationPage() {
                 </table>
               </div>
               <p className="text-[15px] leading-relaxed text-slate-700">
-                The hotel is the only line with real range – the same night
-                runs from a €40 budget room in Sharq to €350+ on the
-                waterfront, and everything else in the country is either cheap
-                or free. Two levers move the total: hotel rates follow the
-                working week rather than the weekend, so Sunday to Thursday
-                nights cost more than Friday and Saturday; and the paid
-                activities are few enough to count on one hand – the ferry,
-                the towers, and the museums if it rains.
+                The hotel is the only line with real range, and it moves on a
+                lever most visitors point the wrong way: rates follow the
+                working week rather than the weekend, so the same room costs
+                more midweek. The paid activities are few enough to count on
+                one hand.
               </p>
               {guide ? (
                 <p className="text-[15px] leading-relaxed text-slate-700">
@@ -475,10 +459,10 @@ export default async function KuwaitDestinationPage() {
                   >
                     guide
                   </Link>{" "}
-                  costs all three levels out line by line – hotel bands by
-                  night, every activity per person, the ferry, the car and the
-                  fuel against the real distance – so you can build the trip at
-                  the level you want instead of guessing.
+                  costs all three levels out line by line – nine hotels in
+                  three bands, every activity per person, the car and the fuel
+                  against the real distance – so you can build the trip at the
+                  level you actually want instead of guessing.
                 </p>
               ) : null}
             </section>
@@ -541,12 +525,12 @@ export default async function KuwaitDestinationPage() {
                       {guide.title}
                     </p>
                     <p className="text-[14px] leading-relaxed text-slate-700">
-                      Both days hour by hour: the city day built around the
-                      mosque-tour booking, the Failaka ferry playbook with the
-                      WhatsApp confirmation step, the desert timed to reach the
-                      camps at dusk, nine hotels and nine restaurants each with
-                      a QR link, a three-tier budget, and the companion Google
-                      map with every pin.
+                      Everything this page deliberately leaves out: both days
+                      hour by hour, the ferry procedure and its confirmation
+                      step, every booking in the order it has to be made, nine
+                      hotels and nine restaurants each with a QR link, a
+                      three-tier budget, and the companion Google map with
+                      every pin.
                     </p>
                     <p className="mt-auto pt-2 text-sm font-semibold text-slate-900">
                       {guide.durationDisplay}
