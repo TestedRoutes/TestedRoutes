@@ -1,6 +1,8 @@
 "use client";
 
 import { usePathname } from "next/navigation";
+// locale.js, not i18n.js: keeps the five UI-string dictionaries out of the
+// client bundle — this component only needs the registry and path helpers.
 import {
   LOCALES,
   LANG_NAMES,
@@ -8,11 +10,15 @@ import {
   langFromPathname,
   pathWithoutLocale,
   localePath,
-} from "../_lib/i18n";
+} from "../_lib/locale";
 
 export default function LanguageSwitcher() {
   const pathname = usePathname();
   const current = langFromPathname(pathname);
+
+  // Localization paused (locale.js): a one-language select is furniture.
+  // Re-enabling the registry brings the switcher back without touching this.
+  if (LOCALES.length < 2) return null;
 
   function switchTo(next) {
     if (next === current) return;

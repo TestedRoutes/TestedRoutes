@@ -4,6 +4,7 @@ import { useState } from "react";
 
 const TOPICS = [
   { value: "general", label: "General inquiry" },
+  { value: "guide-feedback", label: "Guide feedback / correction" },
   { value: "refund", label: "Refund request" },
   { value: "privacy", label: "Privacy / data request (GDPR)" },
   { value: "partnership", label: "Partnership / press" },

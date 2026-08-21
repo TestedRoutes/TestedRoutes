@@ -9,7 +9,8 @@ import {
   getInspireFeaturedCardDisplay,
   getInspireStoryGuideUrl,
 } from "../../_lib/inspireStoryDisplay";
-import { getDict, localePath } from "../../_lib/i18n";
+import { LOCALES, getDict, localePath } from "../../_lib/i18n";
+import { DESTINATION_SLUGS } from "../../_lib/destinations";
 import GuideGallery from "../../_components/GuideGallery";
 import Byline from "../../_components/Byline";
 
@@ -115,29 +116,41 @@ function resolveGuideHref(metadata) {
 // Iceland guide — offers all guides for its destination country.
 async function resolveGuideTargets(story, lang, currency) {
   const guides = await loadGuides(currency, lang);
+  const country = story.metadata?.geography?.country;
+
+  // Last resort when no guide covers this country yet: the destination hub, if
+  // one is built. Better than the generic /guides card, which is the same link
+  // on every story and tells a reader nothing about where they are.
+  // Keyed on destination_slug, not country — the latter is the display name.
+  const destinationSlug = story.metadata?.geography?.destination_slug;
+  const hubHref =
+    destinationSlug && DESTINATION_SLUGS.includes(destinationSlug)
+      ? localePath(lang, `/destinations/${destinationSlug}`)
+      : null;
 
   const direct = resolveGuideHref(story.metadata);
   if (direct) {
-    return { guideHref: localePath(lang, direct), guideOptions: [] };
+    return { guideHref: localePath(lang, direct), guideOptions: [], hubHref };
   }
   const slugMatch = guides.find((g) => g.slug === story.slug);
   if (slugMatch) {
     return {
       guideHref: localePath(lang, slugMatch.href || `/guides/${slugMatch.slug}`),
       guideOptions: [],
+      hubHref,
     };
   }
 
-  const country = story.metadata?.geography?.country;
   const matches = country
     ? guides.filter((g) => g.metadata?.geography?.country === country)
     : [];
   if (matches.length === 1) {
-    return { guideHref: localePath(lang, matches[0].href), guideOptions: [] };
+    return { guideHref: localePath(lang, matches[0].href), guideOptions: [], hubHref };
   }
   if (matches.length > 1) {
     return {
       guideHref: null,
+      hubHref,
       guideOptions: matches.slice(0, 3).map((g) => ({
         title: g.title,
         duration: g.duration || "",
@@ -146,7 +159,37 @@ async function resolveGuideTargets(story, lang, currency) {
       })),
     };
   }
-  return { guideHref: null, guideOptions: [] };
+  return { guideHref: null, guideOptions: [], hubHref };
+}
+
+/**
+ * Other stories from the same country.
+ *
+ * More than a nicety. Over half the published stories sit in countries with no
+ * guide and no destination hub — New Zealand alone had sixteen — and their only
+ * outbound links were a breadcrumb and a generic "browse all guides" card. A
+ * crawler landing there found nothing to follow and left, which is one of the
+ * ways a page ends up "discovered, currently not indexed". Linking each story
+ * to its siblings turns those isolated pages into a cluster that can be walked.
+ *
+ * Ordered newest first and capped at three, so the block stays a suggestion
+ * rather than a second index page.
+ */
+async function resolveRelatedStories(story, lang) {
+  const country = story.metadata?.geography?.country;
+  if (!country) return [];
+
+  const all = await loadInspireStories(lang);
+  return all
+    .filter((s) => s.slug !== story.slug && s.metadata?.geography?.country === country)
+    .sort((a, b) => String(b.date || "").localeCompare(String(a.date || "")))
+    .slice(0, 3)
+    .map((s) => ({
+      title: s.title,
+      slug: s.slug,
+      href: localePath(lang, `/inspire/${s.slug}`),
+      image: s.cardPhotos?.[0] || s.heroPhoto || null,
+    }));
 }
 
 // Compact list of guide choices, used wherever the single-guide CTA
@@ -194,6 +237,9 @@ async function storyLanguageAlternates(story, lang, slug) {
     const translations = await fetchStoryTranslations(story.metadata?.story_id);
     for (const tr of translations) {
       if (!tr.slug) continue;
+      // Only serving locales (locale.js) — a translation doc authored while
+      // localization is paused must not advertise a URL that redirects away.
+      if (!LOCALES.includes(tr.language)) continue;
       languages[tr.language] = localePath(tr.language, `/inspire/${tr.slug}`);
     }
     if (languages.en) languages["x-default"] = languages.en;
@@ -244,12 +290,14 @@ export default async function StoryPage({ lang, slug }) {
   const t = getDict(lang).story;
   const display = getInspireFeaturedCardDisplay(story) || {};
   const currency = await getRequestCurrency();
-  const { guideHref, guideOptions } = await resolveGuideTargets(
+  const { guideHref, guideOptions, hubHref } = await resolveGuideTargets(
     story,
     lang,
     currency,
   );
   const hasGuideOptions = guideOptions.length > 0;
+  const relatedStories = await resolveRelatedStories(story, lang);
+  const countryName = story.metadata?.geography?.country || "";
   const bodyHtml = renderMarkdown(stripLeadingTitle(story.storyContent, story.title));
   const [bodyFirst, bodySecond] = guideHref
     ? splitHtmlAtMid(bodyHtml)
@@ -381,6 +429,45 @@ export default async function StoryPage({ lang, slug }) {
               </section>
             ) : null}
 
+            {/* Other stories from the same country. Server-rendered on purpose:
+                these links exist to be crawled as much as clicked. */}
+            {relatedStories.length ? (
+              <section className="mt-12 border-t border-brand-line pt-8">
+                <h2 className="mb-4 font-serif text-xl text-brand-ink">
+                  {t.moreFrom.replace("{country}", countryName)}
+                </h2>
+                <div className="grid gap-3 sm:grid-cols-3">
+                  {relatedStories.map((s) => (
+                    <Link
+                      key={s.slug}
+                      href={s.href}
+                      className="group rounded-2xl border border-brand-line bg-white p-3 shadow-card transition hover:-translate-y-0.5 hover:shadow-card-hover"
+                    >
+                      {s.image ? (
+                        <img
+                          src={s.image}
+                          alt=""
+                          className="mb-3 h-28 w-full rounded-lg object-cover"
+                          loading="lazy"
+                        />
+                      ) : null}
+                      <p className="text-sm font-medium leading-snug text-slate-900">
+                        {s.title}
+                      </p>
+                    </Link>
+                  ))}
+                </div>
+                {hubHref ? (
+                  <Link
+                    href={hubHref}
+                    className="mt-4 inline-block text-sm font-medium text-brand-terracotta hover:underline"
+                  >
+                    {t.exploreDestination.replace("{country}", countryName)}
+                  </Link>
+                ) : null}
+              </section>
+            ) : null}
+
           </div>
 
           {/* Desktop sidebar */}
@@ -419,11 +506,16 @@ export default async function StoryPage({ lang, slug }) {
                     <p className="mt-2 text-xs leading-relaxed text-white/60">
                       {t.guidesCardBody}
                     </p>
+                    {/* Prefer the country's hub over the catalogue: the generic
+                        link is identical on every guideless story, so it carries
+                        no signal about where the reader actually is. */}
                     <Link
-                      href={localePath(lang, "/guides")}
+                      href={hubHref || localePath(lang, "/guides")}
                       className="mt-4 flex w-full items-center justify-center rounded-full bg-white py-2.5 text-xs font-semibold text-slate-900 transition hover:bg-slate-100"
                     >
-                      {t.browseAllGuides}
+                      {hubHref
+                        ? t.exploreDestination.replace("{country}", countryName)
+                        : t.browseAllGuides}
                     </Link>
                   </>
                 )}

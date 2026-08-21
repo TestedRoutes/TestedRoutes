@@ -1,5 +1,6 @@
 import Link from "next/link";
 import Byline from "../../_components/Byline";
+import ViewBeacon from "../../_components/ViewBeacon";
 import StickyBuyBar from "../../_components/StickyBuyBar";
 import GuideBody from "../../_components/GuideBody";
 import GuideCarousel from "./GuideCarousel";
@@ -83,6 +84,9 @@ export default function GuideSalesPage({
   return (
     <main className="mx-auto max-w-5xl px-6 pb-8 pt-8 md:pb-16">
       {jsonLdBlocks}
+      {/* Mirrors the classic layout so view counting survives whenever
+          SALES_LAYOUT_ENABLED is flipped back on in guidePage.jsx. */}
+      <ViewBeacon slug={guide.slug} />
 
       <nav
         className="mb-5 flex items-center gap-1.5 text-[12px] text-slate-400"

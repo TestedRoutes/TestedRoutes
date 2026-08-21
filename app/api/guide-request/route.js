@@ -37,24 +37,34 @@ export async function POST(request) {
     return Response.json({ error: "Request form is not configured yet." }, { status: 500 });
   }
 
-  const subRes = await fetch(
-    `https://api.beehiiv.com/v2/publications/${encodeURIComponent(publicationId)}/subscriptions`,
-    {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${beehiivKey}`,
+  // The try/catch covers what subRes.ok cannot: a rejected fetch (DNS
+  // failure, network drop, the 10s timeout). Without it a Beehiiv blip
+  // surfaces as an unhandled 500 instead of the 502 the form handles.
+  let subRes;
+  try {
+    subRes = await fetch(
+      `https://api.beehiiv.com/v2/publications/${encodeURIComponent(publicationId)}/subscriptions`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${beehiivKey}`,
+        },
+        body: JSON.stringify({
+          email,
+          reactivate_existing: true,
+          send_welcome_email: true,
+          utm_source: "testedroutes.com",
+          utm_medium: "home-guide-request",
+          custom_fields: [{ name: "requested_destination", value: destination }],
+        }),
+        signal: AbortSignal.timeout(10_000),
       },
-      body: JSON.stringify({
-        email,
-        reactivate_existing: true,
-        send_welcome_email: true,
-        utm_source: "testedroutes.com",
-        utm_medium: "home-guide-request",
-        custom_fields: [{ name: "requested_destination", value: destination }],
-      }),
-    },
-  );
+    );
+  } catch (err) {
+    console.error("[guide-request beehiiv] request failed:", err);
+    return Response.json({ error: "Could not save your request right now." }, { status: 502 });
+  }
 
   if (!subRes.ok) {
     const text = await subRes.text().catch(() => "");

@@ -15,7 +15,19 @@
  *     -H "content-type: application/json" \
  *     -d '{"_type":"story","slug":"triftbrucke-from-zurich","guide":{"hasGuide":true}}'
  */
-import { revalidatePath } from "next/cache";
+import { timingSafeEqual } from "node:crypto";
+import { revalidatePath, revalidateTag } from "next/cache";
+import { SANITY_CACHE_TAG } from "../../_lib/sanityStory";
+
+// Constant-time secret comparison. A plain !== leaks how many leading
+// characters matched through response timing; over HTTPS on a webhook the
+// practical risk is small, but the safe version costs one line.
+function secretsMatch(provided, expected) {
+  const a = Buffer.from(String(provided));
+  const b = Buffer.from(String(expected));
+  if (a.length !== b.length) return false;
+  return timingSafeEqual(a, b);
+}
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -34,7 +46,7 @@ export async function POST(request) {
       { status: 500 },
     );
   }
-  if (!secret || secret !== expected) {
+  if (!secret || !secretsMatch(secret, expected)) {
     return Response.json({ error: "Unauthorized" }, { status: 401 });
   }
 
@@ -56,6 +68,11 @@ export async function POST(request) {
     revalidatePath(p);
     revalidated.push(p);
   };
+
+  // Purge the cached Sanity payloads themselves, not just the route outputs —
+  // every content read is tagged, so this is what makes an edit visible
+  // before the 5-minute revalidate window would have expired on its own.
+  revalidateTag(SANITY_CACHE_TAG);
 
   touch("/");
   touch("/inspire");

@@ -4,8 +4,9 @@ import Link from "next/link";
 import CardMediaCarousel, {
   buildMediaSlides,
 } from "../../_components/CardMediaCarousel";
-import { localePath } from "../../_lib/i18n";
+import { localePath } from "../../_lib/locale";
 import { tripCategoryChipClass } from "../../_lib/tripCategory";
+import { checkoutHrefFor } from "../../_lib/checkoutHref";
 
 // Whole card is the link ("more information"); the Buy button jumps straight
 // to checkout for people who already know they want it.
@@ -60,9 +61,7 @@ export default function GuideListCard({ guide, t, lang = "en" }) {
   const excerpt =
     guide.metadata?.hero?.subtitle || guide.metadata?.seo?.meta_description || "";
 
-  const buyHref = guide.polarProductId
-    ? `/api/checkout?products=${encodeURIComponent(guide.polarProductId)}`
-    : guide.guidePdfUrl || null;
+  const buyHref = checkoutHrefFor(guide) || guide.guidePdfUrl || null;
   const onBuy = (e) => {
     e.preventDefault();
     e.stopPropagation();

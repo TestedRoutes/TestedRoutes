@@ -1,10 +1,13 @@
 import Link from "next/link";
-import { getDict } from "../_lib/i18n";
+// English only as the fallback: every current call site passes `t`, and
+// importing getDict would put all five locale dictionaries in the client
+// bundle where one suffices as a safety net.
+import en from "../_lib/dicts/en";
 
 // Mobile-only purchase bar pinned to the bottom of guide detail pages.
 // MobileTabBar hides itself on these pages so the two never stack.
 export default function StickyBuyBar({ price, checkoutHref, pdfHref, t: tProp }) {
-  const t = tProp || getDict("en").guide;
+  const t = tProp || en.guide;
   const href = checkoutHref || pdfHref;
   if (!href) return null;
 

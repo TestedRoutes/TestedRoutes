@@ -3,10 +3,11 @@ import Link from "next/link";
 export const metadata = {
   title: "Privacy Policy · TestedRoutes",
   description:
-    "What data testedroutes.com collects, why, who it is shared with, and your GDPR rights. Analytics and marketing run only after you opt in.",
+    "What data testedroutes.com collects, why, who it is shared with, and your GDPR rights. Cookies, analytics and marketing run only after you opt in.",
+  alternates: { canonical: "/privacy" },
 };
 
-const LAST_UPDATED = "16 July 2026";
+const LAST_UPDATED = "16 August 2026";
 
 const MARKETING_PLATFORMS = [
   {
@@ -56,9 +57,13 @@ export default function PrivacyPage() {
           We collect as little personal data as we can while still running the
           site well. A cookie-consent banner controls everything
           non-essential: strictly necessary cookies work without consent, and
-          every analytics or marketing tool listed below fires only after you
-          opt in. You can change or withdraw your choices at any time via the
-          cookie settings on the site.
+          every tool that sets a cookie or could identify you – all the
+          analytics and marketing platforms listed below – fires only after
+          you opt in. You can change or withdraw your choices at any time via
+          the cookie settings on the site. The one thing outside that banner
+          is anonymous, cookie-free counting of page views, purchase starts
+          and QR scans, described under &ldquo;Anonymous usage
+          statistics&rdquo; below; it holds nothing that could identify you.
         </p>
       </section>
 
@@ -148,6 +153,28 @@ export default function PrivacyPage() {
           Payment details are entered on our payment processor&apos;s own
           checkout pages and are never captured in analytics or session
           recordings.
+        </p>
+
+        <h3 className="text-sm font-medium text-slate-900">
+          Anonymous usage statistics
+        </h3>
+        <p className="text-sm leading-relaxed text-slate-600">
+          Separately from the above, we count a small number of events on our
+          servers so we can tell how many people view a guide, how many go on
+          to start a purchase, and which QR codes printed inside our guides
+          get scanned. We record only the event itself, the guide it relates
+          to, and your country – never your IP address, never a cookie, and
+          never any identifier. Each event is stored with a random one-time
+          value, so two events can never be connected to each other or to
+          you, by us or by anyone else. Because the result is a count rather
+          than information about a person, it is not personal data and it is
+          not covered by the consent banner. Legal basis, to the extent any
+          applies: our legitimate interest in knowing which guides are useful
+          (Art. 6(1)(f) GDPR).
+        </p>
+        <p className="text-sm leading-relaxed text-slate-600">
+          We also use Vercel Web Analytics for aggregate visitor counts. It is
+          cookie-free and does not track visitors across sites or sessions.
         </p>
 
         <h3 className="text-sm font-medium text-slate-900">Error tracking</h3>
@@ -295,7 +322,8 @@ export default function PrivacyPage() {
             <span className="mt-0.5 shrink-0 text-slate-400">•</span>
             <span>
               <strong>Vercel</strong> – hosting and content delivery for
-              testedroutes.com.
+              testedroutes.com, plus cookie-free aggregate visitor counts
+              (Vercel Web Analytics).
             </span>
           </li>
           <li className="flex gap-2">
@@ -333,7 +361,8 @@ export default function PrivacyPage() {
             <span className="mt-0.5 shrink-0 text-slate-400">•</span>
             <span>
               <strong>PostHog</strong> – product analytics and session replay
-              (consent-gated).
+              (consent-gated), and the anonymous usage statistics described
+              above.
             </span>
           </li>
           <li className="flex gap-2">
@@ -341,6 +370,14 @@ export default function PrivacyPage() {
             <span>
               <strong>Sentry</strong> – technical error tracking with no
               personal data.
+            </span>
+          </li>
+          <li className="flex gap-2">
+            <span className="mt-0.5 shrink-0 text-slate-400">•</span>
+            <span>
+              <strong>Google Search Console</strong> – aggregate statistics on
+              the Google searches our pages appear in. Google reports these to
+              us already grouped and anonymised; we never see who searched.
             </span>
           </li>
         </ul>

@@ -6,6 +6,7 @@ export const metadata = {
   title: "About Me · TestedRoutes",
   description:
     "Paulius Pikelis – 15+ years of independent travel across 140+ countries. Every route in these guides is personally tested, from day hikes to overland expeditions.",
+  alternates: { canonical: "/about" },
 };
 
 const ROAD_EXPEDITIONS = [

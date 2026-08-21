@@ -739,7 +739,18 @@ async function findAssets() {
   /* Source files to explicitly ignore (warn if big ones found) */
   const ignored = files.filter((n) => /\.(pptx?|docx?|xlsx?|psd|ai|sketch|fig|key|pages|numbers)$/i.test(n));
 
-  return { heroName, gallery, pdf, ignored, teaser: null, videoClips: [] };
+  /* generated/ may hold only clips (video-only story: no photo renditions).
+     Those must still publish — dropping them here loses the story's entire
+     media set with no error anywhere. Hero/gallery stay whatever the root
+     scan found (usually nothing for these stories). */
+  return {
+    heroName,
+    gallery,
+    pdf,
+    ignored,
+    teaser: teaser ? path.join("generated", teaser) : null,
+    videoClips: genClips,
+  };
 }
 
 function altFromFilename(name) {
@@ -1590,6 +1601,13 @@ async function main() {
 
   if (ignored.length) {
     console.log(`  ignored: ${ignored.join(", ")} (non-publishable source files)\n`);
+  }
+
+  if (!heroName) {
+    console.warn(
+      `  ⚠ No hero image — story will publish without hero/gallery` +
+        `${videoClips.length || teaser ? " (videos only)" : ""}\n`,
+    );
   }
 
   const existing = TOKEN

@@ -51,6 +51,25 @@ const ALT = {
   // Keys are scoped per doc id: the same natural filename ("1. cover.jpg")
   // can exist in every guide folder without captions bleeding across guides.
   // Alt text is written from the actual frames, never from memory.
+  "story-fiji-honeymoon-14-days": {
+    "1. cover.jpg": { alt: "Cover of the Fiji 14-day honeymoon guide" },
+    "2. snapshot.jpg": { alt: "Route snapshot page: why this trip, at a glance, and the route map" },
+    "3.jpg": { alt: "A thatched pavilion under coconut palms on a resort lawn" },
+    "4.mp4": { alt: "A fire dancer spinning flames on the sand after dark, filmed on the route" },
+    "5.jpg": { alt: "Palms leaning over a white-sand island beach" },
+    "6.mp4": { alt: "A resort pool deck under palms, blue umbrellas along the water" },
+    "7.mp4": { alt: "A diver signalling OK as sharks circle behind him on the Awakening dive" },
+    "8.jpg": { alt: "A beach bonfire at sunset beside calm water" },
+    "9.jpg": { alt: "Feet up on a sun lounger over white sand and turquoise shallows" },
+    "10.jpg": { alt: "A thatched beach umbrella and palms over the sand" },
+    "11.mp4": { alt: "Yachts moored off the Port Denarau marina" },
+    "12.jpg": { alt: "A last walk along the beach at sunset" },
+    "13.jpg": { alt: "The chalked activities board at a Yasawa island resort" },
+    "14.mp4": { alt: "Fire and knife dancers performing on the sand after dark" },
+    "15.jpg": { alt: "A garden bure under coconut palms at dusk" },
+    "16.jpg": { alt: "A resort transfer boat on turquoise water off the reef" },
+    "17.jpg": { alt: "A resort bed made up with BULA spelled in leaves and hibiscus flowers" },
+  },
   "story-samoa-upolu-savaii-7-days": {
     "1. cover.jpg": { alt: "Cover of the Samoa seven-day Upolu and Savai'i guide" },
     "2. snapshot.jpg": { alt: "Route snapshot page: why this trip, at a glance, and the photo spread" },

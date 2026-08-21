@@ -1,5 +1,4 @@
-import { loadGuides } from "./_lib/loadGuides";
-import { loadInspireStories } from "./_lib/loadInspireStories";
+import { fetchSitemapEntries } from "./_lib/sanityStory";
 import { ALT_LOCALES, localePath } from "./_lib/i18n";
 import { DESTINATION_SLUGS } from "./_lib/destinations";
 
@@ -37,25 +36,35 @@ export default async function sitemap() {
     { url: "/security", changeFrequency: "yearly", priority: 0.3 },
   ];
 
-  const [guides, stories] = await Promise.all([loadGuides(), loadInspireStories()]);
+  // Slug-only projection: the sitemap needs one field per URL, so it no
+  // longer loads the full catalogue (bodies, galleries) per locale. One
+  // slim query per language, fetched in parallel.
+  const [entries, ...localizedEntries] = await Promise.all([
+    fetchSitemapEntries(),
+    ...ALT_LOCALES.map((lang) => fetchSitemapEntries(lang)),
+  ]);
 
-  const guideRoutes = guides.map((g) => ({
-    url: `/guides/${g.slug}`,
-    changeFrequency: "monthly",
-    priority: 0.9,
-  }));
+  const guideRoutes = entries
+    .filter((e) => e.hasGuide)
+    .map((e) => ({
+      url: `/guides/${e.guideSlug}`,
+      changeFrequency: "monthly",
+      priority: 0.9,
+    }));
 
-  const storyRoutes = stories.map((s) => ({
-    url: `/inspire/${s.slug}`,
-    changeFrequency: "monthly",
-    priority: 0.7,
-    lastModified: s.date ? new Date(s.date) : now,
-  }));
+  const storyRoutes = entries
+    .filter((e) => !e.hasGuide)
+    .map((e) => ({
+      url: `/inspire/${e.slug}`,
+      changeFrequency: "monthly",
+      priority: 0.7,
+      lastModified: e.publishedDate ? new Date(e.publishedDate) : now,
+    }));
 
   // Localized Inspire + Guides: only languages with published content.
   const localizedRoutes = [];
-  for (const lang of ALT_LOCALES) {
-    const localized = await loadInspireStories(lang);
+  ALT_LOCALES.forEach((lang, i) => {
+    const localized = localizedEntries[i].filter((e) => !e.hasGuide);
     if (localized.length) {
       localizedRoutes.push({
         url: localePath(lang, "/inspire"),
@@ -67,11 +76,11 @@ export default async function sitemap() {
           url: localePath(lang, `/inspire/${s.slug}`),
           changeFrequency: "monthly",
           priority: 0.6,
-          lastModified: s.date ? new Date(s.date) : now,
+          lastModified: s.publishedDate ? new Date(s.publishedDate) : now,
         });
       }
     }
-    const localizedGuides = await loadGuides(undefined, lang);
+    const localizedGuides = localizedEntries[i].filter((e) => e.hasGuide);
     if (localizedGuides.length) {
       localizedRoutes.push({
         url: localePath(lang, "/guides"),
@@ -80,13 +89,13 @@ export default async function sitemap() {
       });
       for (const g of localizedGuides) {
         localizedRoutes.push({
-          url: localePath(lang, `/guides/${g.slug}`),
+          url: localePath(lang, `/guides/${g.guideSlug}`),
           changeFrequency: "monthly",
           priority: 0.8,
         });
       }
     }
-  }
+  });
 
   return [...staticRoutes, ...guideRoutes, ...storyRoutes, ...localizedRoutes].map((r) => ({
     url: `${SITE_URL}${r.url}`,

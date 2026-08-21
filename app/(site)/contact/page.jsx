@@ -5,6 +5,7 @@ export const metadata = {
   title: "Contact · TestedRoutes",
   description:
     "Send us a message about a guide, a refund, a privacy request, a partnership, or a security issue.",
+  alternates: { canonical: "/contact" },
 };
 
 export default function ContactPage() {

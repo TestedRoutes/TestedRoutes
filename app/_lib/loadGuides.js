@@ -1,14 +1,32 @@
-import { fetchAllGuideStories, shapeGuide } from "./sanityStory";
+import { cache } from "react";
+import { fetchAllGuideStories, fetchGuideStoryBySlug, shapeGuide } from "./sanityStory";
 import { DEFAULT_CURRENCY } from "./currency";
 
-export async function loadGuides(currency = DEFAULT_CURRENCY, lang = "en") {
+// cache() around the shaping, not just the fetch: shapeGuide runs a
+// markdown render over every guide body, which is the expensive half. The
+// exported wrappers normalize default arguments first — cache() keys on the
+// exact argument list, so loadGuides() and loadGuides("EUR", "en") must
+// resolve to one entry, not two shaping passes.
+const loadGuidesCached = cache(async (currency, lang) => {
   const docs = await fetchAllGuideStories(lang);
   return docs.map((d) => shapeGuide(d, currency));
+});
+
+export function loadGuides(currency = DEFAULT_CURRENCY, lang = "en") {
+  return loadGuidesCached(currency, lang);
 }
 
-export async function loadGuideBySlug(slug, currency = DEFAULT_CURRENCY, lang = "en") {
-  const all = await loadGuides(currency, lang);
-  return all.find((g) => g.slug === slug || g.metadataSlug === slug) || null;
+// One guide, one query — the catalogue-wide fetch-and-find this used to do
+// made every guide page, links page and unknown /go/ slug pay for shaping
+// the whole library.
+const loadGuideBySlugCached = cache(async (slug, currency, lang) => {
+  const doc = await fetchGuideStoryBySlug(slug, lang);
+  return doc ? shapeGuide(doc, currency) : null;
+});
+
+export function loadGuideBySlug(slug, currency = DEFAULT_CURRENCY, lang = "en") {
+  if (!slug) return Promise.resolve(null);
+  return loadGuideBySlugCached(slug, currency, lang);
 }
 
 // Slim, serializable card shape — full shaped guides carry bodyBlocks and

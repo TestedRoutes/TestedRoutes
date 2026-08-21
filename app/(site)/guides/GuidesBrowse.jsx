@@ -2,7 +2,12 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import GuideListCard from "./GuideListCard";
-import { prettyGeo, continentSlug } from "../../_lib/continents";
+import {
+  prettyGeo,
+  continentBucket as bucketOf,
+  continentTabLabel as bucketLabel,
+  CONTINENT_TAB_ORDER as TAB_ORDER,
+} from "../../_lib/continents";
 import {
   buildGuideFilterOptions,
   matchesGuideFilters,
@@ -17,19 +22,10 @@ const TRUST_ICONS = [
   <path key="pin" d="M12 21 C12 21 5 14.5 5 9.5 A7 7 0 0 1 19 9.5 C19 14.5 12 21 12 21 Z M12 12 a2.5 2.5 0 1 0 0-5 a2.5 2.5 0 0 0 0 5 Z" />,
 ];
 
-// The continent tabs group the two American continents into one "Americas"
-// tab (founder mockup 2026-08-08); everything else keeps its own slug.
-const AMERICAS = new Set(["north-america", "south-america", "central-america", "americas"]);
-const TAB_ORDER = ["europe", "asia", "africa", "americas", "oceania"];
-
+// Tab order, the Americas grouping and the labels are shared with the Inspire
+// browse page — see app/_lib/continents.js.
 function continentBucket(guide) {
-  const slug = continentSlug(guide.metadata?.geography?.continent);
-  if (!slug) return "";
-  return AMERICAS.has(slug) ? "americas" : slug;
-}
-
-function bucketLabel(bucket) {
-  return bucket === "americas" ? "Americas" : prettyGeo(bucket);
+  return bucketOf(guide.metadata?.geography?.continent);
 }
 
 export default function GuidesBrowse({
@@ -139,7 +135,9 @@ export default function GuidesBrowse({
   // Same responsive treatment as GuideFilterRow: on phones the pill and
   // selects wrap two per row at a readable size (one row of five shrank
   // them to unreadable slivers); from `sm` up they sit in one row,
-  // equal-width, capped at 160px.
+  // equal-width, capped at 160px. The Country pill carries the same
+  // flex-1/max-w-40 sizing as the selects — content-sized it came out
+  // visibly narrower than its three neighbours.
   const selectClass =
     "h-10 min-w-[calc(50%-0.25rem)] flex-1 cursor-pointer truncate rounded-full border border-slate-200 bg-white px-3 text-sm font-semibold text-slate-700 transition hover:border-slate-300 focus:border-slate-400 focus:outline-none sm:h-9 sm:min-w-0 sm:max-w-40 sm:text-xs";
   const dropdowns = [
@@ -155,9 +153,12 @@ export default function GuidesBrowse({
       ))}
     </div>
   );
-  const firstRow = filtered.slice(0, 4);
-  const secondRow = filtered.slice(4, 8);
-  const rest = filtered.slice(8);
+  // Two rows of cards between each band (founder 2026-08-17) — the grid is
+  // four-up from `lg`, so a block is eight guides. Narrower viewports show
+  // the same eight over more rows; the bands stay where they are.
+  const firstBlock = filtered.slice(0, 8);
+  const secondBlock = filtered.slice(8, 16);
+  const rest = filtered.slice(16);
 
   return (
     <div className="space-y-10">
@@ -221,17 +222,19 @@ export default function GuidesBrowse({
               type="button"
               onClick={() => setPanelOpen((o) => !o)}
               aria-expanded={panelOpen}
-              className={`flex h-10 min-w-[calc(50%-0.25rem)] shrink-0 items-center justify-between gap-2 rounded-full px-4 text-sm font-semibold transition sm:h-9 sm:min-w-0 sm:justify-start sm:text-xs ${
+              className={`flex h-10 min-w-[calc(50%-0.25rem)] flex-1 items-center justify-between gap-2 rounded-full px-3 text-sm font-semibold transition sm:h-9 sm:min-w-0 sm:max-w-40 sm:text-xs ${
                 panelOpen || filters.country
-                  ? "bg-brand-ink text-white"
+                  ? "border border-transparent bg-brand-ink text-white"
                   : "border border-slate-200 bg-white text-slate-700 hover:border-slate-300"
               }`}
             >
-              {tl.filterCountry}: {countryPillLabel}
+              <span className="truncate">
+                {tl.filterCountry}: {countryPillLabel}
+              </span>
               <svg
                 viewBox="0 0 12 8"
                 aria-hidden="true"
-                className={`h-2 w-3 transition-transform ${panelOpen ? "rotate-180" : ""}`}
+                className={`h-2 w-3 shrink-0 transition-transform ${panelOpen ? "rotate-180" : ""}`}
                 fill="none"
                 stroke="currentColor"
                 strokeWidth="2"
@@ -352,9 +355,9 @@ export default function GuidesBrowse({
           ) : null}
         </div>
 
-        {cardGrid(firstRow)}
+        {cardGrid(firstBlock)}
 
-        {/* Trust trio (founder 2026-08-08): after the first row of guides,
+        {/* Trust trio (founder 2026-08-08): after the first two rows of guides,
             full page width on Taupe Grey #5F524D — same breakout as the
             How-I-test band further down. */}
         <div className="relative left-1/2 w-screen -translate-x-1/2 bg-brand-taupe py-10 md:py-12">
@@ -382,7 +385,7 @@ export default function GuidesBrowse({
           </div>
         </div>
 
-        {secondRow.length ? cardGrid(secondRow) : null}
+        {secondBlock.length ? cardGrid(secondBlock) : null}
         {interlude}
         {rest.length ? cardGrid(rest) : null}
 

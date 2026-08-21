@@ -12,6 +12,10 @@ import { getCategoryItems } from "../_lib/categoryPills";
 import { ABOUT_IMAGES } from "../_lib/aboutImages";
 import { getDict } from "../_lib/i18n";
 
+export const metadata = {
+  alternates: { canonical: "/" },
+};
+
 // Continent → country index of the guide catalogue for the destination
 // cards (founder 2026-08-08: those cards sell guides now, not stories).
 // Each country lists its guides by title — same structure the section had

@@ -5,6 +5,7 @@ export const metadata = {
   title: "Subscribe · TestedRoutes",
   description:
     "Field-tested travel routes, in your inbox when they drop. One email per route, no spam, unsubscribe anytime.",
+  alternates: { canonical: "/subscribe" },
 };
 
 // TODO(lead-magnet): point this at the actual signed PDF URL once the

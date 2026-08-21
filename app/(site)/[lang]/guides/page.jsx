@@ -1,5 +1,5 @@
-import { notFound } from "next/navigation";
-import { ALT_LOCALES } from "../../../_lib/i18n";
+import { notFound, redirect } from "next/navigation";
+import { ALT_LOCALES, PAUSED_LOCALES } from "../../../_lib/i18n";
 import GuidesIndexPage, {
   buildGuidesIndexMetadata,
 } from "../../guides/guidesIndexPage";
@@ -16,7 +16,11 @@ export async function generateMetadata({ params }) {
 
 export default async function LocalizedGuidesPage({ params, searchParams }) {
   const { lang } = await params;
-  if (!ALT_LOCALES.includes(lang)) notFound();
+  if (!ALT_LOCALES.includes(lang)) {
+    // Paused locale (locale.js): redirect, don't 404 — see [lang]/page.jsx.
+    if (PAUSED_LOCALES.includes(lang)) redirect("/guides");
+    notFound();
+  }
   const { q = "" } = (await searchParams) || {};
   return <GuidesIndexPage lang={lang} q={q} />;
 }

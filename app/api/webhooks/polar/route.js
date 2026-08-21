@@ -4,7 +4,10 @@
  * Wire up at https://polar.sh/dashboard/<org>/settings/webhooks
  *   URL:    https://testedroutes.com/api/webhooks/polar
  *   Secret: matches POLAR_WEBHOOK_SECRET in Vercel env vars
- *   Events: order.paid (minimum)
+ *   Events: order.paid (minimum), order.refunded (so revenue figures are
+ *           net of refunds rather than gross of them). Do NOT also tick
+ *           refund.created — it fires for the same refund and would double
+ *           count it.
  *
  * On a paid order we:
  *   1. find the story whose guide.polarProductId matches the order's product
@@ -30,6 +33,8 @@ import {
 } from "@polar-sh/sdk/webhooks";
 import { revalidatePath } from "next/cache";
 import { writeClient } from "../../../../sanity/lib/writeClient";
+import { captureServer } from "../../../_lib/serverAnalytics";
+import { hashBuyerEmail } from "../../../_lib/purchaseToken";
 
 const WEBHOOK_SECRET = process.env.POLAR_WEBHOOK_SECRET;
 
@@ -48,6 +53,27 @@ function extractBuyerEmail(payload) {
   ];
   for (const c of candidates) {
     if (typeof c === "string" && c.includes("@")) return c.trim().toLowerCase();
+  }
+  return null;
+}
+
+/**
+ * Order total in minor units (cents). Polar has moved this field around
+ * between payload versions, so probe the known spellings the same way
+ * extractBuyerEmail does rather than pinning one and silently recording
+ * every sale as zero after an upstream rename.
+ */
+function extractOrderAmount(payload) {
+  const data = payload?.data || {};
+  const candidates = [
+    data.total_amount,
+    data.totalAmount,
+    data.amount,
+    data.net_amount,
+    data.netAmount,
+  ];
+  for (const c of candidates) {
+    if (typeof c === "number" && Number.isFinite(c)) return c;
   }
   return null;
 }
@@ -153,6 +179,57 @@ async function tagBuyerInBeehiiv({ email, slug }) {
   }
 }
 
+/**
+ * The signed-token foundation (Tracker #55). Registers the purchase in
+ * Sanity — silently. There is deliberately NO purchase-time email from us:
+ * the founder cut it on 2026-08-19 after seeing the live pair, because
+ * Polar's receipt (which cannot be turned off — they are the Merchant of
+ * Record, the invoice is legally theirs) already delivers the file, and a
+ * second same-moment email read as noise. The buyer's permanent token
+ * link ships later instead, with the day-14 rating email (#62), minted
+ * fresh from this registry — which is why registering every order still
+ * matters even though nothing visible happens at purchase time.
+ *
+ * Best-effort like the Beehiiv tag: a failure is logged, never allowed to
+ * 5xx the webhook. createIfNotExists keeps the registry idempotent across
+ * Polar's webhook retries.
+ *
+ * The dataset is publicly readable, so the purchase doc carries only an
+ * HMAC hash of the buyer email — see purchaseToken.js for the full
+ * reasoning. The hash cannot be reversed into an address: the day-14
+ * sender must fetch the address from Polar's API by order id at send
+ * time (an orders:read scope decision for #62) and can use the hash only
+ * to correlate. This dataset never holds an address, by design.
+ */
+async function registerPurchase({ payload, story, email }) {
+  const orderId =
+    payload?.data?.id || payload?.data?.order_id || payload?.data?.orderId;
+  if (!orderId) {
+    console.warn("[polar-webhook] order.paid payload had no order id; skipping token");
+    return;
+  }
+  if (!process.env.PURCHASE_TOKEN_SECRET) {
+    console.warn("[polar-webhook] PURCHASE_TOKEN_SECRET not set; skipping purchase registry");
+    return;
+  }
+  const slug = story.guidePageSlug || story.slug;
+
+  try {
+    await writeClient.createIfNotExists({
+      _id: `purchase-${orderId}`,
+      _type: "purchase",
+      orderId: String(orderId),
+      story: { _type: "reference", _ref: story._id },
+      guideSlug: slug,
+      emailHash: email ? hashBuyerEmail(email) : null,
+      createdAt: new Date().toISOString(),
+      revoked: false,
+    });
+  } catch (err) {
+    console.error("[polar-webhook] purchase doc creation failed:", err);
+  }
+}
+
 async function handleOrderPaid(payload) {
   const productId =
     payload?.data?.product_id ||
@@ -163,6 +240,21 @@ async function handleOrderPaid(payload) {
     return;
   }
   const story = await fetchStoryByProductId(productId);
+
+  // Record the sale before anything that can fail, and record it even when
+  // the product maps to no story. An unmapped product id is a real failure
+  // mode — a Polar product created by hand, or a slug renamed without
+  // re-running sync:polar — and the version of this that returned early
+  // would drop the sale from the revenue figures at exactly the moment
+  // something was wrong. Better to bank the money and let guide_slug be
+  // null, which is a question the digest can ask out loud.
+  await captureServer("order_paid", {
+    guide_slug: story?.slug || null,
+    product_id: productId,
+    amount_cents: extractOrderAmount(payload),
+    currency: payload?.data?.currency || null,
+  });
+
   if (!story) {
     console.warn(`[polar-webhook] no story found for product ${productId}`);
     return;
@@ -174,6 +266,78 @@ async function handleOrderPaid(payload) {
     await tagBuyerInBeehiiv({ email, slug: story.slug });
   } else {
     console.warn("[polar-webhook] no buyer email in order.paid payload; skipping Beehiiv tag");
+  }
+
+  // Registry last: everything above must succeed regardless of whether
+  // the trust-system plumbing does.
+  await registerPurchase({ payload, story, email });
+}
+
+/**
+ * A refund reverses a sale, so the analytics stream has to hear about it.
+ *
+ * Without this, order_paid is the only money event that exists and every
+ * revenue figure is gross of refunds forever — the first real order this
+ * system ever saw was refunded three hours after purchase, which would have
+ * been reported as a €19 day. The nightly rollup cross-checks against
+ * Polar's own totals and would flag the gap, but a flag is a worse answer
+ * than the number simply being right.
+ *
+ * Deliberately does NOT touch guide.purchasesCount. That counter is social
+ * proof on the guide page, and whether a refunded sale should still count
+ * is a copy decision rather than a data one — left alone until someone
+ * decides, rather than quietly changed by an analytics patch.
+ */
+async function handleOrderRefunded(payload) {
+  const productId =
+    payload?.data?.product_id ||
+    payload?.data?.productId ||
+    payload?.data?.product?.id ||
+    payload?.data?.order?.product_id ||
+    payload?.data?.order?.productId;
+  const story = productId ? await fetchStoryByProductId(productId) : null;
+
+  // Polar reports the refunded slice on refund events; a full refund and a
+  // partial one are the same event type with different amounts.
+  const amount =
+    payload?.data?.amount ??
+    payload?.data?.refunded_amount ??
+    payload?.data?.refundedAmount ??
+    extractOrderAmount(payload);
+
+  await captureServer("order_refunded", {
+    guide_slug: story?.slug || null,
+    product_id: productId || null,
+    amount_cents: typeof amount === "number" ? amount : null,
+    currency: payload?.data?.currency || null,
+  });
+
+  if (!story) {
+    console.warn(`[polar-webhook] refund for unmapped product ${productId}`);
+  }
+
+  // Mark the purchase registry so the day-14 rating email skips this
+  // buyer — asking how the trip was after a refund reads wrong. The token
+  // itself stays valid (generous-refund posture); revocation is a separate,
+  // human decision. Best-effort: a miss here means one odd email, not a
+  // broken webhook.
+  const orderId =
+    payload?.data?.order_id ||
+    payload?.data?.orderId ||
+    payload?.data?.order?.id ||
+    payload?.data?.id;
+  if (orderId) {
+    try {
+      await writeClient
+        .patch(`purchase-${orderId}`)
+        .set({ refunded: true })
+        .commit();
+    } catch (err) {
+      // Pre-registry refunds have no purchase doc; that's expected, not news.
+      if (err?.statusCode !== 404) {
+        console.error("[polar-webhook] refund flag on purchase failed:", err);
+      }
+    }
   }
 }
 
@@ -220,6 +384,15 @@ export async function POST(request) {
     switch (event.type) {
       case "order.paid":
         await handleOrderPaid(event);
+        break;
+      // order.refunded ONLY. Polar also emits refund.created for the same
+      // refund — they are two distinct events, not two spellings — so
+      // handling both would subtract the same money twice and quietly turn
+      // a refunded day into a negative one. Leave refund.created unticked
+      // in the Polar dashboard; if a future need for it appears, dedupe on
+      // the refund id rather than adding a second case here.
+      case "order.refunded":
+        await handleOrderRefunded(event);
         break;
       case "customer.state_changed":
         // TODO: no customer accounts on the site today. When subscriptions

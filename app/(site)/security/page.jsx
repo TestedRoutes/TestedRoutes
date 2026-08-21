@@ -2,6 +2,7 @@ export const metadata = {
   title: "Security & Vulnerability Disclosure · TestedRoutes",
   description:
     "How to report a security issue with testedroutes.com. We treat reports promptly and won't take legal action against good-faith research.",
+  alternates: { canonical: "/security" },
 };
 
 const LAST_UPDATED = "16 July 2026";

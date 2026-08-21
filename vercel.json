@@ -2,6 +2,32 @@
   "framework": "nextjs",
   "cleanUrls": true,
   "trailingSlash": false,
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        { "key": "Strict-Transport-Security", "value": "max-age=63072000; includeSubDomains" },
+        { "key": "X-Content-Type-Options", "value": "nosniff" },
+        { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" },
+        { "key": "X-Frame-Options", "value": "SAMEORIGIN" },
+        { "key": "Permissions-Policy", "value": "camera=(), microphone=(), geolocation=()" }
+      ]
+    }
+  ],
+  "crons": [
+    {
+      "path": "/api/cron/analytics-rollup",
+      "schedule": "0 4 * * *"
+    },
+    {
+      "path": "/api/cron/rating-emails",
+      "schedule": "30 4 * * *"
+    },
+    {
+      "path": "/api/cron/link-monitor",
+      "schedule": "0 5 * * 1"
+    }
+  ],
   "redirects": [
     { "source": "/index.html", "destination": "/", "permanent": true },
     { "source": "/about.html", "destination": "/about", "permanent": true },

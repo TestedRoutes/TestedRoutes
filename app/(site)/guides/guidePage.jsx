@@ -8,6 +8,8 @@ import {
   getAffiliateLinks,
 } from "../../_lib/affiliateLinks";
 import { getDict, localePath } from "../../_lib/i18n";
+import { sanitySrcSet } from "../../_lib/imageSrcSet";
+import { checkoutHrefFor } from "../../_lib/checkoutHref";
 import GuideGallery from "../../_components/GuideGallery";
 import GuideCarousel from "./GuideCarousel";
 import GuideTitle from "./GuideTitle";
@@ -16,6 +18,7 @@ import GuideBody from "../../_components/GuideBody";
 import BuyBox from "../../_components/BuyBox";
 import StickyBuyBar from "../../_components/StickyBuyBar";
 import Byline from "../../_components/Byline";
+import ViewBeacon from "../../_components/ViewBeacon";
 import GuideSalesPage from "./guideSalesPage";
 import { PrimaryStats, LocationSection, buildLocation } from "./GuideTripSections";
 
@@ -198,9 +201,12 @@ function RelatedGuides({ items, t, lang }) {
             {g.image ? (
               <img
                 src={g.image}
+                srcSet={sanitySrcSet(g.image)}
+                sizes="(min-width: 768px) 25vw, 50vw"
                 alt={g.title}
                 className="aspect-[4/3] w-full object-cover"
                 loading="lazy"
+                decoding="async"
               />
             ) : (
               <div className="aspect-[4/3] w-full bg-slate-100" />
@@ -272,9 +278,7 @@ export default async function GuidePage({ lang, slug }) {
 
   const photos = [guide.image, ...(guide.galleryPhotos || [])].filter(Boolean);
   const carouselSlides = guide.salesPage?.carousel || [];
-  const checkoutHref = guide.polarProductId
-    ? `/api/checkout?products=${encodeURIComponent(guide.polarProductId)}`
-    : null;
+  const checkoutHref = checkoutHrefFor(guide);
   const pdfHref = !checkoutHref ? guide.guidePdfUrl || null : null;
 
   const location = buildLocation(guide);
@@ -298,7 +302,17 @@ export default async function GuidePage({ lang, slug }) {
       "@type": "Person",
       name: "Paulius Pikelis",
       url: "https://testedroutes.com/about",
-      // sameAs: fill once IG / YouTube / LinkedIn URLs are confirmed.
+      // The seven registered @testedroutes handles (Action Tracker #120).
+      // Ties the byline to verifiable profiles — an LLM/search trust signal.
+      sameAs: [
+        "https://www.instagram.com/testedroutes/",
+        "https://www.tiktok.com/@testedroutes",
+        "https://www.youtube.com/@testedroutes",
+        "https://www.pinterest.com/testedroutes/",
+        "https://x.com/testedroutes/",
+        "https://www.linkedin.com/company/testedroutes/",
+        "https://www.threads.com/@testedroutes/",
+      ],
     },
     publisher: {
       "@type": "Organization",
@@ -340,6 +354,14 @@ export default async function GuidePage({ lang, slug }) {
   const priceEntry = Array.isArray(guide.prices)
     ? guide.prices.find((p) => p?.currency === "EUR") || guide.prices[0]
     : null;
+  // Sanity's publishedDate, which the shaper exposes as created_date. It comes
+  // through as either a bare date or a full ISO timestamp depending on the
+  // field type, so take the leading YYYY-MM-DD and drop anything that isn't one.
+  const offerValidFrom =
+    typeof guide.metadata?.created_date === "string" &&
+    /^\d{4}-\d{2}-\d{2}/.test(guide.metadata.created_date)
+      ? guide.metadata.created_date.slice(0, 10)
+      : null;
   const productJsonLd =
     priceEntry && Number.isFinite(Number(priceEntry.amount))
       ? {
@@ -359,14 +381,53 @@ export default async function GuidePage({ lang, slug }) {
             priceCurrency: priceEntry.currency || "EUR",
             availability: "https://schema.org/InStock",
             itemCondition: "https://schema.org/NewCondition",
-            // Google warns when an Offer has no price validity. These pages are
-            // statically generated, so this is stamped a year out at build time
-            // and refreshes with every deploy - never a date that quietly expires.
+            // Google warns when an Offer has no price validity, at either end.
+            // validFrom is the guide's own publish date out of Sanity; it is
+            // omitted rather than faked when the doc has no usable date, since
+            // a wrong start date is worse than a missing one. priceValidUntil
+            // is stamped a year out at build time - these pages are statically
+            // generated, so it refreshes with every deploy and is never a date
+            // that quietly expires.
+            ...(offerValidFrom ? { validFrom: offerValidFrom } : {}),
             priceValidUntil: new Date(Date.now() + 365 * 24 * 60 * 60 * 1000)
               .toISOString()
               .slice(0, 10),
             seller: { "@type": "Organization", name: "TestedRoutes" },
             url: canonicalUrl,
+            // A PDF is delivered by download link the moment Polar confirms
+            // payment: no carrier, no fee, no waiting. Google still expects
+            // shippingDetails on a merchant listing, and spelling the digital
+            // case out - zero rate, zero handling, zero transit - is both
+            // literally true and the only way to clear that warning. The
+            // destination list reuses RETURN_POLICY_COUNTRIES for exactly the
+            // reason that constant exists: schema.org has no "everywhere".
+            shippingDetails: {
+              "@type": "OfferShippingDetails",
+              shippingRate: {
+                "@type": "MonetaryAmount",
+                value: 0,
+                currency: priceEntry.currency || "EUR",
+              },
+              shippingDestination: RETURN_POLICY_COUNTRIES.map((country) => ({
+                "@type": "DefinedRegion",
+                addressCountry: country,
+              })),
+              deliveryTime: {
+                "@type": "ShippingDeliveryTime",
+                handlingTime: {
+                  "@type": "QuantitativeValue",
+                  minValue: 0,
+                  maxValue: 0,
+                  unitCode: "DAY",
+                },
+                transitTime: {
+                  "@type": "QuantitativeValue",
+                  minValue: 0,
+                  maxValue: 0,
+                  unitCode: "DAY",
+                },
+              },
+            },
             // Mirrors /refund-policy exactly: 30 days, any reason, full refund.
             // Structured data that overstates a policy is a manual-action risk, so
             // if that page changes, change this in the same commit.
@@ -434,6 +495,7 @@ export default async function GuidePage({ lang, slug }) {
   return (
     <main className="mx-auto max-w-7xl px-6 pb-8 pt-8 md:pb-16">
       {jsonLdBlocks}
+      <ViewBeacon slug={guide.slug} />
       <nav
         className="mb-5 flex items-center gap-1.5 text-[12px] text-slate-400"
         aria-label="Breadcrumb"
@@ -553,9 +615,14 @@ export default async function GuidePage({ lang, slug }) {
                     {s.image ? (
                       <img
                         src={s.image}
+                        // An 80px thumbnail was downloading the 800px cut;
+                        // small explicit widths let the browser take ~160px.
+                        srcSet={sanitySrcSet(s.image, [160, 320])}
+                        sizes="80px"
                         alt={s.title}
                         className="h-14 w-20 shrink-0 rounded-lg object-cover"
                         loading="lazy"
+                        decoding="async"
                       />
                     ) : null}
                     <p className="text-sm font-medium leading-snug text-slate-900">{s.title}</p>

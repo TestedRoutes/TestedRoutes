@@ -1,5 +1,5 @@
-import { notFound } from "next/navigation";
-import { ALT_LOCALES, localePath } from "../../_lib/i18n";
+import { notFound, redirect } from "next/navigation";
+import { ALT_LOCALES, PAUSED_LOCALES, localePath } from "../../_lib/i18n";
 import HomePage from "../page";
 
 // Localized home: same content as the English home for now (chrome
@@ -20,6 +20,12 @@ export async function generateMetadata({ params }) {
 
 export default async function LocalizedHomePage({ params }) {
   const { lang } = await params;
-  if (!ALT_LOCALES.includes(lang)) notFound();
+  if (!ALT_LOCALES.includes(lang)) {
+    // Paused locale (locale.js): these URLs served before the pause, so send
+    // the reader to the English page rather than a 404. 307, not permanent —
+    // the prefix comes back when localization resumes.
+    if (PAUSED_LOCALES.includes(lang)) redirect("/");
+    notFound();
+  }
   return <HomePage />;
 }

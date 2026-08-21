@@ -1,3 +1,21 @@
+// The feedback inbox (Tracker #59). One view per triage state rather than
+// one list with a status column, because triage is the workflow: open Inbox,
+// read, set the status, and the doc leaves the view on its own. Docs are
+// created by /api/feedback only — initialValueTemplates([]) removes the
+// Studio's "create new" button so nobody can hand-author one. Triage status
+// is internal-only, and story status NEVER auto-flips off feedback
+// (founder decision 2026-05-02).
+const feedbackList = (S, title, status) =>
+  S.documentList()
+    .title(title)
+    .filter(
+      status
+        ? `_type == "feedback" && status == "${status}"`
+        : `_type == "feedback"`,
+    )
+    .defaultOrdering([{ field: "createdAt", direction: "desc" }])
+    .initialValueTemplates([]);
+
 export const structure = (S) =>
   S.list()
     .title("TestedRoutes")
@@ -35,6 +53,32 @@ export const structure = (S) =>
           S.documentList()
             .title("Stories flagged for review")
             .filter("_type == 'story' && needsAttention == true"),
+        ),
+      S.divider(),
+      S.listItem()
+        .title("Feedback")
+        .schemaType("feedback")
+        .child(
+          S.list()
+            .title("Feedback")
+            .items([
+              S.listItem()
+                .title("Inbox (new)")
+                .child(feedbackList(S, "New feedback", "new")),
+              S.listItem()
+                .title("Acknowledged")
+                .child(feedbackList(S, "Acknowledged", "acknowledged")),
+              S.listItem()
+                .title("Actioned")
+                .child(feedbackList(S, "Actioned", "actioned")),
+              S.listItem()
+                .title("Dismissed")
+                .child(feedbackList(S, "Dismissed", "dismissed")),
+              S.divider(),
+              S.listItem()
+                .title("All feedback")
+                .child(feedbackList(S, "All feedback", null)),
+            ]),
         ),
       S.divider(),
       S.listItem()
@@ -88,4 +132,33 @@ export const structure = (S) =>
         .title("Authors")
         .schemaType("author")
         .child(S.documentTypeList("author").title("Authors")),
+      S.listItem()
+        .title("Contributors")
+        .schemaType("contributor")
+        .child(S.documentTypeList("contributor").title("Contributors")),
+      // Stays empty until guide-page comments ship (#119, 2.0). Listed so the
+      // type is reachable the day the first comment lands, machine-created
+      // like feedback — hence no "create new" button here either.
+      S.listItem()
+        .title("Comments")
+        .schemaType("comment")
+        .child(
+          S.documentList()
+            .title("Comments")
+            .filter('_type == "comment"')
+            .defaultOrdering([{ field: "createdAt", direction: "desc" }])
+            .initialValueTemplates([]),
+        ),
+      S.divider(),
+      // Machine-written by the nightly rollup. Listed so the numbers are
+      // inspectable when the dashboard says something surprising, not so
+      // anyone edits them.
+      S.listItem()
+        .title("Analytics snapshots")
+        .schemaType("analyticsSnapshot")
+        .child(
+          S.documentTypeList("analyticsSnapshot")
+            .title("Daily snapshots")
+            .defaultOrdering([{ field: "date", direction: "desc" }]),
+        ),
     ]);

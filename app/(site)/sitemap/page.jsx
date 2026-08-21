@@ -7,6 +7,7 @@ export const dynamic = "force-static";
 export const metadata = {
   title: "Sitemap · TestedRoutes",
   description: "Every page on TestedRoutes, organised by section.",
+  alternates: { canonical: "/sitemap" },
   robots: {
     index: false,
     follow: true,

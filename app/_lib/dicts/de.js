@@ -1,0 +1,215 @@
+// UI strings: de. One locale per module so client components can import
+// a single language (or none) instead of the whole five-locale registry.
+const de = {
+  nav: {
+    destinations: "Reiseziele",
+    guides: "Guides",
+    inspire: "Inspiration",
+    aboutMe: "Über mich",
+    explore: "Entdecken",
+    about: "Über mich",
+  },
+  inspireList: {
+    title: "Echte Reisen. Echte Erkenntnisse",
+    subtitle: "Geschichten für deine nächste Reise",
+    searchPlaceholder: "Geschichten durchsuchen – z. B. 'Gletscher' oder 'Layover'",
+    searchButton: "Suchen",
+    heading: "Reisen, nicht nur Posts",
+    story: "Geschichte",
+    stories: "Geschichten",
+    noMatchTitle: "Keine passenden Reisen",
+    noMatchBody: "Versuche einen kürzeren Begriff oder lösche die Suche.",
+    clearSearch: "Suche löschen",
+    guideBadge: "Guide",
+    familyBadge: "Familie",
+    credibility: [
+      "140+ Länder",
+      "15+ Jahre unabhängige Reiseplanung",
+      "5/7 Summits bestiegen",
+      "Routen auf echten Reisen getestet",
+    ],
+    collectionsHeading: "Nach Reiseart entdecken",
+    viewCollection: "Kollektion ansehen",
+    collections: [
+      {
+        title: "Schweizer Alpentage",
+        intro:
+          "Strukturierte Tagesausflüge ab Zürich – alpine Landschaft, klare Transportlogik und realistisches Tempo.",
+      },
+      {
+        title: "Länderrouten auf eigene Faust",
+        intro:
+          "Längere Routen, gebaut auf Ablauf, Logistik und dem, was vor Ort wirklich funktioniert.",
+      },
+      {
+        title: "Extreme Erlebnisse",
+        intro:
+          "Die Erlebnisse, die prägen, wie Routen in der echten Welt entworfen und getestet werden.",
+      },
+      {
+        title: "Expeditionsrouten",
+        intro:
+          "Langstrecken, geprägt von Overland-Logistik, schwierigen Grenzen und Ungewissheit.",
+      },
+    ],
+    howITestTitle: "Wie ich die Routen hinter meinen Guides teste",
+    howITestBody:
+      "Ich baue Routen nicht am Schreibtisch. Ich teste sie im Gelände – Höhe, Logistik, Terrain und echte Ungewissheit.",
+    extremeLabels: [
+      "Stierlauf | Spanien",
+      "Haitauchen | Fidschi",
+      "Volcano Boarding | Nicaragua",
+      "Fallschirmspringen & Paragliding | Brasilien",
+      "Eisklettern | Italien",
+      "Mit dem Erzzug | Mauretanien",
+      "Gipfeltouren | Alaska",
+      "Grenzübergänge | Westafrika",
+    ],
+    ctaTitle: "Bereit, aus Inspiration eine echte Route zu machen?",
+    ctaBody:
+      "Premium-Reiseguides aus 15 Jahren unabhängigen Reisens durch 140 Länder.",
+    browseGuides: "Guides entdecken →",
+    emptyTitle: "Übersetzungen folgen in Kürze",
+    emptyBody:
+      "Diese Geschichten gibt es bereits auf Englisch – Übersetzungen sind unterwegs.",
+    emptyLink: "Auf Englisch lesen →",
+    readStory: "Geschichte lesen",
+  },
+  story: {
+    quickFacts: "Auf einen Blick",
+    bestSeason: "Beste Jahreszeit:",
+    fullGuideChip: "Kompletter Guide verfügbar ↓",
+    planningTrip: "Diese Reise planen?",
+    planningBody:
+      "Der komplette Guide deckt Route, Logistik, Kosten, Buchungslinks und Timing ab – alles, was du für die eigene Planung brauchst.",
+    readFullGuide: "Zum Guide →",
+    browseAllGuides: "Alle Guides ansehen →",
+    moreFrom: "Mehr aus {country}",
+    exploreDestination: "{country} entdecken →",
+    turnInspiration: "Aus Inspiration wird ein Plan",
+    guidesCardTitle: "TestedRoutes Guides",
+    guidesCardBody:
+      "Routengeprüfte Guides aus 15 Jahren unabhängigen Reisens. PDF-Format, offline nutzbar.",
+    endCtaTitle: "Geschichte gefallen? Die Route ist schon geplant.",
+    endCtaBody:
+      "Hol dir den getesteten Guide zu dieser Reise – exakte Route, Buchungen, Kosten und Timing in einem PDF.",
+    gallery: "Galerie",
+    guidesForTrip: "Guides für diese Reise",
+  },
+  guideList: {
+    title: "Guides",
+    tagline: "Ausdrucken, folgen, der Trip funktioniert.",
+    heading: "Im Gelände getestete Reiseguides",
+    browseHeading: "Guides durchsuchen",
+    filterType: "Reiseart",
+    filterCountry: "Land",
+    filterAll: "Alle",
+    filterLength: "Dauer",
+    filterActivity: "Aktivität",
+    filterSeason: "Saison",
+    typeCountry: "Land eingeben…",
+    mostGuides: "Meiste Guides",
+    allOfContinent: "Ganz {name}",
+    allCountries: "Alle Länder",
+    countriesWord: "Länder",
+    trust: [
+      { title: "Selbst gelaufen", body: "Am Boden getestet, nicht am Bildschirm" },
+      { title: "Für unterwegs gemacht", body: "Ein PDF, offline nutzbar, keine App nötig" },
+      { title: "Echte Zahlen", body: "Kosten, Zeiten und Logistik, die aufgehen" },
+    ],
+    testedBy: "Getestet von",
+    credentials: "140 Länder",
+    guide: "Guide",
+    guides: "Guides",
+    pdfGuide: "PDF-Guide",
+    purchased: "mal gekauft",
+    from: "Ab",
+    viewGuide: "Guide ansehen",
+    buyGuide: "Guide kaufen",
+    searchPlaceholder: "Guides durchsuchen…",
+    comingSoon: "Bald verfügbar",
+    metaDescription:
+      "Jeder Guide ist eine echte, im Gelände getestete Route. Einmal kaufen, Schritt für Schritt folgen.",
+  },
+  guide: {
+    metaDescPrefix: "Reiseguide zum Selbstplanen:",
+    viewAllPhotos: "Alle ansehen",
+    readFullStory: "Zur ganzen Geschichte →",
+    tripDetails: "Reisedetails",
+    lastReviewed: "Zuletzt überprüft",
+    location: "Lage & Route",
+    startingPoint: "Startpunkt",
+    stop: "Stopp",
+    destination: "Ziel",
+    finish: "Ende",
+    whyThisTrip: "Warum dieser Trip",
+    whoThisIsFor: "Für wen das ist",
+    notSuitable: "Nicht geeignet",
+    whatYouGet: "Was du bekommst",
+    affiliateHeading: "Affiliate-Hinweis.",
+    affiliateBody:
+      "Einige Links unten sind Affiliate-Links. Kaufst du darüber, erhalten wir eine kleine Provision – ohne Mehrkosten für dich. Als Amazon-Partner verdient TestedRoutes an qualifizierten Käufen.",
+    affiliateMore: "Mehr dazu, wie das funktioniert",
+    myExperience: "Meine Erfahrung",
+    continuesInFull: "Geht im kompletten Guide weiter",
+    wantFullPlan: "Den kompletten Plan?",
+    pdfIncludes:
+      "Das PDF enthält den Tag-für-Tag-Plan, Transportzeiten, Buchungslinks und Wetterregeln. Sofort-Download nach dem Kauf.",
+    getFullGuide: "Kompletten Guide holen",
+    readersSay: "Was Leser sagen",
+    saveTime: "Zeit und Geld sparen",
+    guidedTour: "Geführte Tour",
+    fixedSchedule: "Fester Zeitplan · Gruppentempo",
+    planYourself: "Selbst planen",
+    hoursPlus: "8+ Stunden",
+    researchRisk: "Recherche · Risiko von Lücken",
+    thisGuide: "Dieser Guide",
+    thirtyMin: "30 Min · Komplette Route",
+    faqTitle: "Häufige Fragen",
+    faq: [
+      {
+        question: "Ist dieser Guide aktuell?",
+        answer:
+          "Ja. Jeder TestedRoutes-Guide wird regelmäßig überprüft – das Datum oben bei den Reisedetails zeigt die letzte Überprüfung. Dabei werden defekte Buchungslinks, Transportänderungen, Preise und saisonale Schließungen geprüft, damit der Guide korrekt bleibt.",
+      },
+      {
+        question: "In welchem Format kommt der Guide?",
+        answer:
+          "Als PDF, sofort nach dem Kauf herunterladbar. Einmal auf Handy, Tablet oder Laptop gespeichert, funktioniert er offline – keine App nötig.",
+      },
+      {
+        question: "Was, wenn das Wetter an meinem Tag schlecht ist?",
+        answer:
+          "Der Guide enthält Go/No-Go-Entscheidungsregeln und wetterabhängige Alternativen, wo es sie gibt. Ist der Trip komplett wetterabhängig und deine Termine passen nicht, fordere innerhalb von 30 Tagen eine Rückerstattung an.",
+      },
+      {
+        question: "Bekomme ich eine Rückerstattung, wenn es nicht passt?",
+        answer:
+          "Ja – 30 Tage, ohne Nachfragen. Schreib an refunds@testedroutes.com mit deiner Bestellnummer. Alle Details in unserer Rückerstattungsrichtlinie.",
+      },
+    ],
+    youMightAlsoLike: "Das könnte dir auch gefallen",
+    bottomLine1: "Mehr reisen.",
+    bottomLine2: "Weniger Zeit mit Planung verlieren.",
+    bottomBody:
+      "Premium-Reiseguides aus 15 Jahren unabhängigen Reisens durch 140 Länder.",
+    bottomTagline: "KI war nicht dort. Ich schon.",
+    bottomFooter: "PDF · Sofort-Download · 30 Tage Rückgaberecht",
+    getGuide: "Guide holen",
+    comingSoonBtn: "Bald verfügbar",
+    pdfGuideLabel: "PDF-Guide",
+    instantDownload: "Sofort-Download",
+    pdfInstantDownload: "PDF · Sofort-Download",
+    getLinksFree: "Links gratis erhalten",
+    refunds: "30 Tage Geld zurück, ohne Nachfragen.",
+    readPolicy: "Zur Richtlinie",
+    openBookingsOne: "Öffne auch meinen Buchungslink (Hotel, Transport)",
+    openBookingsMany: "Öffne auch meine {count} Buchungslinks (Hotel, Transport)",
+    trust: [
+      { label: "Ohne Risiko", rest: "30 Tage volle Rückerstattung" },
+      { label: "Einmaliger Kauf", rest: "Kein Abo" },
+      { label: "Funktioniert offline", rest: "Aufs Handy speichern" },
+    ],
+  },
+};
+export default de;
