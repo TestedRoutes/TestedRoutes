@@ -7,6 +7,7 @@ import icelandHero from "../../../content/countries/iceland/destination/generate
 import tuvaluHero from "../../../content/countries/tuvalu/destination/generated/web/narrowest-point-road.jpg";
 import kuwaitHero from "../../../content/countries/kuwait/destination/generated/web/marina-pier-at-night.jpg";
 import samoaHero from "../../../content/countries/samoa/destination/generated/web/founder-at-sopoaga-falls.jpg";
+import fijiHero from "../../../content/countries/fiji/destination/generated/web/island-beach-pavilion.jpg";
 
 export const metadata = {
   title: "Destinations · TestedRoutes",
@@ -59,6 +60,15 @@ const DESTINATIONS = [
       "How many days you need and which islands to pick – two islands, one rental car, and a week where Sunday matters more than the weather.",
     image: samoaHero,
     alt: "The founder at the Sopo'aga Falls lookout, the fall dropping into its jungle gorge behind",
+  },
+  {
+    name: "Fiji",
+    href: "/destinations/fiji",
+    region: "Oceania & Pacific",
+    blurb:
+      "Which islands to pick and how long you need – there are two completely different Fijis, and one boat timetable runs the good one.",
+    image: fijiHero,
+    alt: "A thatched pavilion and red ti plants on a white-sand island beach in Fiji",
   },
   {
     name: "Switzerland",

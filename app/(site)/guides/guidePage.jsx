@@ -355,6 +355,14 @@ export default async function GuidePage({ lang, slug }) {
   const priceEntry = Array.isArray(guide.prices)
     ? guide.prices.find((p) => p?.currency === "EUR") || guide.prices[0]
     : null;
+  // Sanity's publishedDate, which the shaper exposes as created_date. It comes
+  // through as either a bare date or a full ISO timestamp depending on the
+  // field type, so take the leading YYYY-MM-DD and drop anything that isn't one.
+  const offerValidFrom =
+    typeof guide.metadata?.created_date === "string" &&
+    /^\d{4}-\d{2}-\d{2}/.test(guide.metadata.created_date)
+      ? guide.metadata.created_date.slice(0, 10)
+      : null;
   const productJsonLd =
     priceEntry && Number.isFinite(Number(priceEntry.amount))
       ? {
@@ -374,14 +382,53 @@ export default async function GuidePage({ lang, slug }) {
             priceCurrency: priceEntry.currency || "EUR",
             availability: "https://schema.org/InStock",
             itemCondition: "https://schema.org/NewCondition",
-            // Google warns when an Offer has no price validity. These pages are
-            // statically generated, so this is stamped a year out at build time
-            // and refreshes with every deploy - never a date that quietly expires.
+            // Google warns when an Offer has no price validity, at either end.
+            // validFrom is the guide's own publish date out of Sanity; it is
+            // omitted rather than faked when the doc has no usable date, since
+            // a wrong start date is worse than a missing one. priceValidUntil
+            // is stamped a year out at build time - these pages are statically
+            // generated, so it refreshes with every deploy and is never a date
+            // that quietly expires.
+            ...(offerValidFrom ? { validFrom: offerValidFrom } : {}),
             priceValidUntil: new Date(Date.now() + 365 * 24 * 60 * 60 * 1000)
               .toISOString()
               .slice(0, 10),
             seller: { "@type": "Organization", name: "TestedRoutes" },
             url: canonicalUrl,
+            // A PDF is delivered by download link the moment Polar confirms
+            // payment: no carrier, no fee, no waiting. Google still expects
+            // shippingDetails on a merchant listing, and spelling the digital
+            // case out - zero rate, zero handling, zero transit - is both
+            // literally true and the only way to clear that warning. The
+            // destination list reuses RETURN_POLICY_COUNTRIES for exactly the
+            // reason that constant exists: schema.org has no "everywhere".
+            shippingDetails: {
+              "@type": "OfferShippingDetails",
+              shippingRate: {
+                "@type": "MonetaryAmount",
+                value: 0,
+                currency: priceEntry.currency || "EUR",
+              },
+              shippingDestination: RETURN_POLICY_COUNTRIES.map((country) => ({
+                "@type": "DefinedRegion",
+                addressCountry: country,
+              })),
+              deliveryTime: {
+                "@type": "ShippingDeliveryTime",
+                handlingTime: {
+                  "@type": "QuantitativeValue",
+                  minValue: 0,
+                  maxValue: 0,
+                  unitCode: "DAY",
+                },
+                transitTime: {
+                  "@type": "QuantitativeValue",
+                  minValue: 0,
+                  maxValue: 0,
+                  unitCode: "DAY",
+                },
+              },
+            },
             // Mirrors /refund-policy exactly: 30 days, any reason, full refund.
             // Structured data that overstates a policy is a manual-action risk, so
             // if that page changes, change this in the same commit.

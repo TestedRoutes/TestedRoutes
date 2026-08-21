@@ -16,6 +16,10 @@ export default function LanguageSwitcher() {
   const pathname = usePathname();
   const current = langFromPathname(pathname);
 
+  // Localization paused (locale.js): a one-language select is furniture.
+  // Re-enabling the registry brings the switcher back without touching this.
+  if (LOCALES.length < 2) return null;
+
   function switchTo(next) {
     if (next === current) return;
     // Prefer the page's own hreflang alternate when it exists (localized
