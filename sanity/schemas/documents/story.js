@@ -24,6 +24,7 @@ export default {
     { name: "differentiation", title: "Differentiation", options: { collapsible: true, collapsed: true } },
     { name: "credibility", title: "Credibility", options: { collapsible: true, collapsed: true } },
     { name: "maintenance", title: "Maintenance", options: { collapsible: true, collapsed: true } },
+    { name: "contributorModel", title: "Contributor model (2.0)", options: { collapsible: true, collapsed: true } },
     { name: "route", title: "Route", options: { collapsible: true, collapsed: true } },
     { name: "sales", title: "Sales pitch (guide landing page)", options: { collapsible: true, collapsed: false } },
   ],
@@ -985,6 +986,78 @@ export default {
     },
     { name: "needsAttention", title: "Needs attention", type: "boolean", group: "internal", fieldset: "maintenance" },
     { name: "attentionNotes", title: "Attention notes", type: "text", rows: 2, group: "internal", fieldset: "maintenance" },
+
+    /* ── Contributor model (Tracker #60) ──
+       Future-proofing for 2.0: fields exist so contributor SKUs need no
+       schema migration when the model activates. Founder-authored stories —
+       everything today — leave contributor empty and carry
+       reviewStatus "founder" (backfilled 2026-08-21). */
+    {
+      name: "contributor",
+      title: "Contributor",
+      type: "reference",
+      group: "internal",
+      fieldset: "contributorModel",
+      to: [{ type: "contributor" }],
+      description:
+        "Empty = founder-authored. Set only when a 2.0 contributor's trip " +
+        "became this SKU; the public byline follows this reference.",
+    },
+    {
+      name: "revenueShare",
+      title: "Revenue share (%)",
+      type: "number",
+      group: "internal",
+      fieldset: "contributorModel",
+      // A share on a founder-authored story is a data-entry accident; hiding
+      // the field until a contributor is set makes it impossible.
+      hidden: ({ document }) => !document?.contributor,
+      validation: (Rule) => Rule.min(0).max(100),
+      description:
+        "The contributor's royalty percentage of this SKU's net revenue. " +
+        "Recorded here for reporting; the payout itself is off-platform (#111).",
+    },
+    {
+      name: "reviewStatus",
+      title: "Review status",
+      type: "string",
+      group: "internal",
+      fieldset: "contributorModel",
+      options: {
+        list: [
+          { title: "Founder-authored (no review)", value: "founder" },
+          { title: "Pending review", value: "pending" },
+          { title: "Approved", value: "approved" },
+        ],
+        layout: "radio",
+      },
+      initialValue: "founder",
+      description:
+        "Editorial state under the trust-based model: founder content needs no " +
+        "review; contributor submissions arrive pending and get approved by a " +
+        "person. Nothing on the site gates on this yet.",
+    },
+    {
+      name: "rating",
+      title: "Average rating",
+      type: "number",
+      group: "internal",
+      fieldset: "contributorModel",
+      readOnly: true,
+      description:
+        "Machine-written aggregate of verified-buyer ratings from the purchase " +
+        "registry (day-14 email flow). Feeds the public display (#63); never " +
+        "edit by hand — the next rollup would overwrite it.",
+    },
+    {
+      name: "ratingCount",
+      title: "Rating count",
+      type: "number",
+      group: "internal",
+      fieldset: "contributorModel",
+      readOnly: true,
+      description: "How many ratings the average is built on. Machine-written.",
+    },
 
     /* Homepage featuring */
     { name: "featuredInHomepage", title: "Featured on homepage", type: "boolean", group: "internal" },

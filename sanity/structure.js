@@ -132,6 +132,23 @@ export const structure = (S) =>
         .title("Authors")
         .schemaType("author")
         .child(S.documentTypeList("author").title("Authors")),
+      S.listItem()
+        .title("Contributors")
+        .schemaType("contributor")
+        .child(S.documentTypeList("contributor").title("Contributors")),
+      // Stays empty until guide-page comments ship (#119, 2.0). Listed so the
+      // type is reachable the day the first comment lands, machine-created
+      // like feedback — hence no "create new" button here either.
+      S.listItem()
+        .title("Comments")
+        .schemaType("comment")
+        .child(
+          S.documentList()
+            .title("Comments")
+            .filter('_type == "comment"')
+            .defaultOrdering([{ field: "createdAt", direction: "desc" }])
+            .initialValueTemplates([]),
+        ),
       S.divider(),
       // Machine-written by the nightly rollup. Listed so the numbers are
       // inspectable when the dashboard says something surprising, not so
