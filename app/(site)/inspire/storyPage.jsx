@@ -9,7 +9,7 @@ import {
   getInspireFeaturedCardDisplay,
   getInspireStoryGuideUrl,
 } from "../../_lib/inspireStoryDisplay";
-import { getDict, localePath } from "../../_lib/i18n";
+import { LOCALES, getDict, localePath } from "../../_lib/i18n";
 import { DESTINATION_SLUGS } from "../../_lib/destinations";
 import GuideGallery from "../../_components/GuideGallery";
 import Byline from "../../_components/Byline";
@@ -237,6 +237,9 @@ async function storyLanguageAlternates(story, lang, slug) {
     const translations = await fetchStoryTranslations(story.metadata?.story_id);
     for (const tr of translations) {
       if (!tr.slug) continue;
+      // Only serving locales (locale.js) — a translation doc authored while
+      // localization is paused must not advertise a URL that redirects away.
+      if (!LOCALES.includes(tr.language)) continue;
       languages[tr.language] = localePath(tr.language, `/inspire/${tr.slug}`);
     }
     if (languages.en) languages["x-default"] = languages.en;
