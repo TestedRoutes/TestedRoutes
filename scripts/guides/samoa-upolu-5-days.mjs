@@ -1,9 +1,11 @@
 /**
  * samoa-upolu-5-days: content for the Sanity story doc.
  *
- * Published by a sibling of the Samoa 7-day script rather than by a
- * create-<slug> script of its own, so there was nothing to extract: this
- * module is built from the live document.
+ * Originally published by create-samoa-upolu-5-days-guide.mjs (a clone of
+ * the 7-day sibling, re-added to main by PR #71 and deleted in the PR that
+ * touched this comment). This module is built from the live document and
+ * was diffed against that script before its deletion: nothing existed only
+ * in the legacy file.
  */
 
 import { paragraph } from "./_lib.mjs";
