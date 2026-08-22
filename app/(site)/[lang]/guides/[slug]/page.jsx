@@ -15,7 +15,13 @@ import GuidePage, { buildGuideMetadata } from "../../../guides/guidePage";
 
 export async function generateMetadata({ params }) {
   const { lang, slug } = await params;
-  if (!ALT_LOCALES.includes(lang)) return {};
+  if (!ALT_LOCALES.includes(lang)) {
+  // Decided here, before streaming: (site)/loading.jsx makes every page
+  // under it stream, so a notFound()/redirect() thrown in the page body
+  // arrives after the 200 header has flushed. generateMetadata runs first.
+    if (PAUSED_LOCALES.includes(lang)) redirect(`/guides/${slug}`);
+    notFound();
+  }
   return buildGuideMetadata(lang, slug);
 }
 

@@ -256,7 +256,9 @@ async function storyLanguageAlternates(story, lang, slug) {
 
 export async function buildStoryMetadata(lang, slug) {
   const story = await findStory(lang, slug);
-  if (!story) return {};
+  // Real 404 for unknown slugs - see buildGuideMetadata for why this
+  // lives in metadata rather than only in the page body.
+  if (!story) notFound();
   const seo = story.metadata?.seo || {};
   const title = `${seo.meta_title || story.title} · TestedRoutes`;
   const description =

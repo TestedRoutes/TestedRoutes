@@ -15,7 +15,13 @@ import StoryPage, { buildStoryMetadata } from "../../../inspire/storyPage";
 
 export async function generateMetadata({ params }) {
   const { lang, slug } = await params;
-  if (!ALT_LOCALES.includes(lang)) return {};
+  if (!ALT_LOCALES.includes(lang)) {
+  // Decided here, before streaming: (site)/loading.jsx makes every page
+  // under it stream, so a notFound()/redirect() thrown in the page body
+  // arrives after the 200 header has flushed. generateMetadata runs first.
+    if (PAUSED_LOCALES.includes(lang)) redirect(`/inspire/${slug}`);
+    notFound();
+  }
   return buildStoryMetadata(lang, slug);
 }
 

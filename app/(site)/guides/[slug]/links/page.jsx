@@ -12,7 +12,7 @@ import { PROGRAM_CONFIG } from "../../../../_lib/affiliatePrograms";
 export async function generateMetadata({ params }) {
   const { slug } = await params;
   const guide = await loadGuideBySlug(slug);
-  if (!guide) return {};
+  if (!guide) notFound(); // real 404 before the streaming shell flushes 200
   const title = `${guide.title} – Booking & affiliate links · TestedRoutes`;
   const description = `Curated booking, gear, and tour links for ${guide.title}. Free to use; the full guide with the day-by-day plan is sold separately.`;
   return {
