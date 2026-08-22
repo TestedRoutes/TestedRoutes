@@ -57,7 +57,10 @@ async function guideLanguageAlternates(guide, lang, slug) {
 
 export async function buildGuideMetadata(lang, slug) {
   const guide = await loadGuideBySlug(slug, undefined, lang);
-  if (!guide) return {};
+  // notFound() here, not just in the page: metadata runs before the
+  // streaming shell flushes its 200, so this is what makes an unknown
+  // slug a real 404 instead of a soft one.
+  if (!guide) notFound();
   const t = getDict(lang).guide;
   const seo = guide.metadata?.seo || {};
   const title = seo.meta_title
