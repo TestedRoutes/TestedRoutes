@@ -1,13 +1,13 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { loadGuides, loadGuideBySlug } from "../../../../_lib/loadGuides";
+import { loadGuideBySlug } from "../../../../_lib/loadGuides";
 import { groupAffiliateLinks } from "../../../../_lib/affiliateLinks";
 import { PROGRAM_CONFIG } from "../../../../_lib/affiliatePrograms";
 
-export async function generateStaticParams() {
-  const guides = await loadGuides();
-  return guides.map((g) => ({ slug: g.slug }));
-}
+// No generateStaticParams here on purpose - same reason as the guide page
+// itself: the (site) layout's cookies() call makes every route in this
+// group dynamic, and declaring params made unknown slugs soft-200 through
+// a failed on-demand static render instead of 404ing.
 
 export async function generateMetadata({ params }) {
   const { slug } = await params;
