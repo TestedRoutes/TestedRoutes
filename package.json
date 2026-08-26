@@ -22,7 +22,7 @@
     "qa:deck": "python scripts/qa_deck.py"
   },
   "dependencies": {
-    "@anthropic-ai/sdk": "^0.117.1",
+    "@anthropic-ai/sdk": "^0.120.0",
     "@polar-sh/sdk": "^0.49.0",
     "@portabletext/react": "^6.0.3",
     "@sanity/image-url": "^1.1.0",
@@ -32,14 +32,14 @@
     "js-yaml": "^4.1.1",
     "klaro": "^0.7.21",
     "leaflet": "^1.9.4",
-    "marked": "^18.0.9",
+    "marked": "^18.0.10",
     "next": "^15.5.15",
     "next-sanity": "^9.12.0",
-    "posthog-js": "^1.417.1",
+    "posthog-js": "^1.418.10",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-leaflet": "^4.2.1",
-    "resend": "^6.20.0",
+    "resend": "^6.22.0",
     "sanity": "^3.88.0",
     "styled-components": "^6.5.3"
   },
