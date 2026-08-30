@@ -246,21 +246,25 @@ export default function GuideGallery({
               ×
             </button>
             {/* One-by-one feed at natural aspect ratios — nothing cropped,
-                videos in their authored spots. */}
-            <div className="flex flex-col gap-4">
+                videos in their authored spots. Each slide is capped to the
+                viewport height (85vh, leaving room for the close button and
+                a hint of the next slide): the library is mostly portrait
+                media, and at w-full a vertical shot in a ~1024px column
+                towers several screens tall. */}
+            <div className="flex flex-col items-center gap-4">
               {slides.map((slide, i) =>
                 slide.type === "video" ? (
                   <GalleryVideo
                     key={`${i}-${slide.src}`}
                     src={slide.src}
-                    className="w-full rounded-xl"
+                    className="max-h-[85vh] w-auto max-w-full rounded-xl"
                   />
                 ) : (
                   <img
                     key={`${i}-${slide.src}`}
                     src={slide.src}
                     alt=""
-                    className="w-full rounded-xl"
+                    className="max-h-[85vh] w-auto max-w-full rounded-xl"
                     loading="lazy"
                   />
                 )
