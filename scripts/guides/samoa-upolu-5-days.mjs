@@ -153,7 +153,6 @@ export default {
       format: ["PDF"],
       hasGuide: true,
       pages: 24,
-      purchasesCount: 1,
       status: "available",
     },
     highlights: [
