@@ -151,12 +151,35 @@ function SectionHeading({ children }) {
   );
 }
 
+/*
+ * Samoa carries two guide SKUs (the 7-day Upolu & Savai'i week, the 5-day
+ * Upolu-only trip), so the fetch takes them all - a `[0]` here once made the
+ * page render the 5-day guide's title and price under week-long sales copy.
+ * The 7-day week stays the hub's primary SKU: the inline guide sentences and
+ * the BuyBox describe the seven-day version specifically ("all seven days",
+ * the ferry crossed the clever way), so it is resolved by slug below rather
+ * than by array position.
+ */
+const WEEK_SLUG = "samoa-upolu-savaii-7-days";
+
+// Card blurbs per SKU, keyed by guide slug. Scope boundary (destination
+// playbook §7): each blurb sells what this page deliberately withholds -
+// mechanics are asserted to exist, never demonstrated. No fares, clock
+// times, booking channels or within-day sequencing. Unknown future SKUs
+// fall back to the guide's own subtitle.
+const GUIDE_BLURBS = {
+  [WEEK_SLUG]:
+    "Everything this page deliberately leaves out: all seven days hour by hour, the ferry crossed the clever way with every step of it worked out, fifteen hotels and nine restaurants each with a QR link, a three-tier budget line by line, and the companion Google map with every pin.",
+  "samoa-upolu-5-days":
+    "Upolu without the ferry, done for you: all five days hour by hour, To-Sua timed to beat the day-trip vans, hotels and restaurants each with a QR link, a three-tier budget line by line, and the companion Google map with every pin.",
+};
+
 async function fetchSamoaContent() {
   try {
     return await client.fetch(
       `{
-        "guide": *[_type == "story" && status == "published" && guide.hasGuide == true && destination->slug.current == "samoa" && (language == "en" || !defined(language))][0]{
-          title, "slug": coalesce(guide.pageSlug, slug.current), durationDisplay, heroImage,
+        "guides": *[_type == "story" && status == "published" && guide.hasGuide == true && destination->slug.current == "samoa" && (language == "en" || !defined(language))] | order(durationDays desc){
+          title, "slug": coalesce(guide.pageSlug, slug.current), subtitle, durationDisplay, heroImage,
           "prices": coalesce(guide.customPrices, guide.pricingTier->prices)
         },
         "stories": *[_type == "story" && status == "published" && guide.hasGuide != true && destination->slug.current == "samoa" && (language == "en" || !defined(language))] | order(publishedDate desc){
@@ -165,7 +188,7 @@ async function fetchSamoaContent() {
       }`,
     );
   } catch {
-    return { guide: null, stories: [] };
+    return { guides: [], stories: [] };
   }
 }
 
@@ -179,7 +202,8 @@ function storyImage(heroImage, width = 800) {
 }
 
 export default async function SamoaDestinationPage() {
-  const { guide, stories } = await fetchSamoaContent();
+  const { guides, stories } = await fetchSamoaContent();
+  const guide = guides?.find((g) => g.slug === WEEK_SLUG) ?? guides?.[0] ?? null;
   const guidePrice = Array.isArray(guide?.prices)
     ? guide.prices.find((p) => p?.currency === "EUR")
     : null;
@@ -519,38 +543,42 @@ export default async function SamoaDestinationPage() {
               </div>
             </section>
 
-            {guide ? (
+            {guides?.length ? (
               <section className="space-y-4">
                 <SectionHeading>Guides for this destination</SectionHeading>
-                <Link
-                  href={`/guides/${guide.slug}`}
-                  className="group flex flex-col overflow-hidden rounded-2xl border border-brand-line bg-white shadow-card transition hover:-translate-y-0.5 hover:shadow-card-hover sm:flex-row"
-                >
-                  {storyImage(guide.heroImage) ? (
-                    <img
-                      src={storyImage(guide.heroImage)}
-                      alt={guide.title}
-                      className="aspect-[4/3] w-full object-cover sm:w-64"
-                      loading="lazy"
-                    />
-                  ) : null}
-                  <div className="flex flex-1 flex-col gap-2 p-6">
-                    <p className="font-serif text-xl leading-snug text-brand-ink group-hover:text-slate-700">
-                      {guide.title}
-                    </p>
-                    <p className="text-[14px] leading-relaxed text-slate-700">
-                      Everything this page deliberately leaves out: all seven
-                      days hour by hour, the ferry crossed the clever way with
-                      every step of it worked out, fifteen hotels and nine
-                      restaurants each with a QR link, a three-tier budget line
-                      by line, and the companion Google map with every pin.
-                    </p>
-                    <p className="mt-auto pt-2 text-sm font-semibold text-slate-900">
-                      {guide.durationDisplay}
-                      {guidePrice ? ` · €${guidePrice.amount}` : ""}
-                    </p>
-                  </div>
-                </Link>
+                {guides.map((g) => {
+                  const price = Array.isArray(g.prices)
+                    ? g.prices.find((p) => p?.currency === "EUR")
+                    : null;
+                  return (
+                    <Link
+                      key={g.slug}
+                      href={`/guides/${g.slug}`}
+                      className="group flex flex-col overflow-hidden rounded-2xl border border-brand-line bg-white shadow-card transition hover:-translate-y-0.5 hover:shadow-card-hover sm:flex-row"
+                    >
+                      {storyImage(g.heroImage) ? (
+                        <img
+                          src={storyImage(g.heroImage)}
+                          alt={g.title}
+                          className="aspect-[4/3] w-full object-cover sm:w-64"
+                          loading="lazy"
+                        />
+                      ) : null}
+                      <div className="flex flex-1 flex-col gap-2 p-6">
+                        <p className="font-serif text-xl leading-snug text-brand-ink group-hover:text-slate-700">
+                          {g.title}
+                        </p>
+                        <p className="text-[14px] leading-relaxed text-slate-700">
+                          {GUIDE_BLURBS[g.slug] ?? g.subtitle}
+                        </p>
+                        <p className="mt-auto pt-2 text-sm font-semibold text-slate-900">
+                          {g.durationDisplay}
+                          {price ? ` · €${price.amount}` : ""}
+                        </p>
+                      </div>
+                    </Link>
+                  );
+                })}
               </section>
             ) : null}
 
