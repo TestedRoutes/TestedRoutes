@@ -29,6 +29,14 @@ import ansePierrot from "../../../../content/countries/seychelles/destination/ge
 import sourceDargentKayak from "../../../../content/countries/seychelles/destination/generated/web/source-dargent-kayak.jpg";
 import batCurry from "../../../../content/countries/seychelles/destination/generated/web/bat-curry.jpg";
 
+/* Scope note (destination playbook §7): this page sells the DECISION — whether
+   to go, how long, when — and stops there. Execution stays in the paid guide:
+   no venue fares or entry fees, no timing rules, no booking mechanics or
+   within-day sequencing, and exactly ONE currency figure on the whole page
+   (the unavoidable inter-island ferry total; the SKU price rendered from
+   Sanity is the sanctioned second). This hub predates §7 and was audited and
+   cut against it on 2026-08-30 — do not reintroduce helpful specifics here;
+   they are what the guide sells. */
 export const metadata = {
   title: "Seychelles: what to actually do, and how long you need · TestedRoutes",
   description:
@@ -67,7 +75,7 @@ const ISLANDS = [
     name: "Praslin",
     image: anseGeorgetteSunset,
     alt: "Sunset over the water and granite boulders at Anse Georgette, Praslin, Seychelles",
-    body: "Half an hour by fast ferry from Mahé, and the reason most people come is the forest. Vallée de Mai is UNESCO-listed and the only place the coco de mer palm grows wild, producing the largest seed in the plant kingdom. It is also home to the endemic black parrot. The beaches on Praslin are the postcard ones: one of them regularly ranks among the best in the world, another is reached only through a resort with a reservation made days in advance.",
+    body: "Half an hour by fast ferry from Mahé, and the reason most people come is the forest. Vallée de Mai is UNESCO-listed and the only place the coco de mer palm grows wild, producing the largest seed in the plant kingdom. It is also home to the endemic black parrot. The beaches on Praslin are the postcard ones: one of them regularly ranks among the best in the world, another takes some arranging to reach, which is exactly why it stays quiet.",
   },
   {
     name: "La Digue",
@@ -99,20 +107,20 @@ const CAROUSEL = [
   { image: batCurry, alt: "A plate of fruit bat curry at an outdoor table, Seychelles", caption: "Fruit bat curry, found at last" },
 ];
 
+/* Levels are DESCRIBED, never priced (playbook §8): the tier bands live in
+   the guide's cost breakdown. The page's one allowed figure is the ferry
+   total in the section intro. */
 const COSTS = [
-  ["Lean", "€200 to €250", "Guesthouses, takeaway lunches, ferries, few paid activities"],
-  ["Core", "€380 to €420", "Best-value hotels, mixed meals out, full activity list, rental cars"],
-  ["Splurge", "€1,000+", "Top-tier resorts, private pools, helicopter transfers"],
+  ["Lean", "Guesthouses, takeaway lunches, the free beaches, few paid activities"],
+  ["Core", "Best-value hotels, mixed meals out, the full activity list, rental cars"],
+  ["Splurge", "Top-tier resorts, private pools, helicopter transfers"],
 ];
 
 const TIPS = [
   ["Set the alarm for Source d'Argent.", "By mid-morning the most photographed beach on earth is full of day-trippers who came over specifically for it. Get there before sunrise and you get four empty coves and the granite turning from grey to gold to pink while you stand in it. We did it two mornings in a row. The first visitors did not appear until nine."],
-  ["Stay late on Source d'Argent.", "Crowds disappear once the sun starts setting in. You will experience dramatic colors. No worries, you can exit L'Union Estate any time."],
-  ["Book ferries before hotels.", "Ferry availability, not room availability, is what actually constrains a Seychelles itinerary in season. Lock the crossings first and build the nights around them."],
+  ["Ferries, not hotels, are the real constraint.", "Ferry seats, not rooms, are what actually run out in season – I watched people get left standing on the dock. The guide carries the booking order and the deadlines."],
   ["The best food is not in the restaurants.", "The standout meal of the week was a local takeaway counter with thousands of reviews, five minutes by bike, eaten at a shaded table. Fruit bat curry is a real Creole dish and worth chasing, though it took me two days of asking to find a place that had it on."],
-  ["Rent the bike for your whole stay on La Digue, not by the day.", "The island rewards riding it before dawn and after dark, and the daily rate makes you calculate rather than just go."],
   ["Walk past the first wild beach.", "On the eastern side of La Digue, each cove is emptier than the last. Most people stop at the first one they reach. Twenty minutes more on foot buys you a beach to yourself, but the currents there are serious, so swim only where locals are swimming."],
-  ["Cover up between eleven and three.", "Reef-safe SPF, a long-sleeve rash guard, and water you carry with you. Several of the best beaches have no shop at all."],
 ];
 
 const FAQ = [
@@ -121,7 +129,7 @@ const FAQ = [
   ["Which island should I stay on?", "All three, in sequence. If you can only pick one, La Digue for atmosphere, Praslin for the balance of beaches and forest, Mahé for variety and convenience. Splitting your nights is the whole point of coming here."],
   ["Do you need to rent a car?", "On Mahé and Praslin, yes: it is cheaper than taxis and the good beaches are spread out. On La Digue, no. Bicycles are the transport and there is essentially nowhere to drive."],
   ["Are the ferries rough?", "They can be. The Mahé to Praslin crossing takes about an hour and is exposed. If you are prone to seasickness, get some pills from home or sit outside, low and toward the back, and look at the horizon. The Praslin to La Digue hop is short enough not to matter."],
-  ["Do you need a visa for Seychelles?", "No visa for EU, UK and US passport holders, but an online travel authorisation is mandatory before departure and your accommodation must appear on the country's certified list. Apply well ahead of the flight."],
+  ["Do you need a visa for Seychelles?", "No visa for EU, UK and US passport holders, but an online travel authorisation is mandatory before departure, and the application has a couple of catches worth knowing about ahead – the guide walks through them. Apply well ahead of the flight."],
   ["Is Seychelles safe, and are there health requirements?", "It is a straightforward country to travel independently. Malaria-free, no required vaccinations, tap water generally fine at hotels. The real hazards are sun and current, not crime or disease."],
   ["Can you do Seychelles without an organised tour?", "Yes, and you should. Ferries, rental cars and bicycles cover everything except the boat day to Curieuse, which needs a licensed operator. That is the only part of the trip we did not arrange ourselves on the day."],
 ];
@@ -384,9 +392,9 @@ export default async function SeychellesDestinationPage() {
             dramatically more expensive.
           </p>
           <p className="text-[15px] leading-relaxed text-slate-700">
-            Book the ferries before you fly. They sell out in high season, and I
-            watched people get left standing on the dock without tickets as they
-            had assumed these would be available on the spot. The crossings can
+            The ferries sell out in high season, and I watched people get left
+            standing on the dock without tickets as they had assumed these
+            would be available on the spot. The crossings can
             be genuinely rough. On more than one hop I sat outside, stared at a
             fixed point on the horizon, and concentrated on not embarrassing
             myself while locals scrolled their phones. Get pills against sea
@@ -401,31 +409,34 @@ export default async function SeychellesDestinationPage() {
           </p>
           <p className="text-[15px] leading-relaxed text-slate-700">
             Paperwork is light. No visa for EU, UK or US travellers, but an
-            online travel authorisation is mandatory before you fly, and your
-            accommodation has to be on the certified list or the authorisation
-            can be held up. Sort that before you book hotels, not after.
+            online travel authorisation is mandatory before you fly – apply
+            well ahead, and know the application has a couple of catches the
+            guide walks through.
           </p>
         </section>
 
         <section className="space-y-4">
           <SectionHeading>What it costs</SectionHeading>
           <p className="text-[15px] leading-relaxed text-slate-700">
-            Excluding international flights, per couple, per day:
+            Once you are here, the one cost nobody can avoid is moving between
+            the islands: the three ferry legs of the seven-day route – Mahé to
+            Praslin, the short hop to La Digue, and the direct boat back – come
+            to roughly €140 per person. That is what the island-hopping costs,
+            not what the trip costs. Everything above it is a decision, and the
+            decisions run in three styles:
           </p>
           <div className="overflow-x-auto rounded-2xl border border-brand-line bg-white">
             <table className="w-full min-w-[480px] text-left text-[14px]">
               <thead>
                 <tr className="border-b border-slate-100 text-[11px] font-semibold uppercase tracking-wider text-slate-400">
                   <th className="px-5 py-3 font-semibold">Style</th>
-                  <th className="px-5 py-3 font-semibold">Per day for two</th>
                   <th className="px-5 py-3 font-semibold">What that looks like</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-100 text-slate-900">
-                {COSTS.map(([style, price, looks]) => (
+                {COSTS.map(([style, looks]) => (
                   <tr key={style}>
                     <td className="px-5 py-3 font-medium">{style}</td>
-                    <td className="px-5 py-3 whitespace-nowrap">{price}</td>
                     <td className="px-5 py-3 text-slate-700">{looks}</td>
                   </tr>
                 ))}
@@ -444,9 +455,11 @@ export default async function SeychellesDestinationPage() {
           </p>
           <p className="text-[15px] leading-relaxed text-slate-700">
             The beaches, which are the thing people fly here for, are almost all
-            free. The most photographed beach on earth costs about nine euros to
-            enter. That is the whole entry fee for the headline attraction of
-            the country.
+            free – even the most photographed beach on earth charges only a
+            small entry fee. The guide costs the whole week out line by line at
+            all three levels, every night, every crossing, every activity, so
+            you can build the trip at the level you actually want instead of
+            guessing at a number.
           </p>
         </section>
 
