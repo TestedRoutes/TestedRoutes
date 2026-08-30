@@ -132,12 +132,33 @@ function SectionHeading({ children }) {
   );
 }
 
+/*
+ * Seychelles has one guide SKU today, but the hub inherited the `[0]` fetch
+ * that bit Iceland and Samoa the day their second SKU published: hard-coded
+ * primary sales copy rendered over whichever guide happened to sort first.
+ * So the fetch takes all guides - a future second SKU appears as its own
+ * card with no code change - and the 7-day four-island week is resolved by
+ * slug as the hub's primary, since the inline guide sentences and the
+ * BuyBox describe that version specifically.
+ */
+const WEEK_SLUG = "seychelles-7-days";
+
+// Card blurbs per SKU, keyed by guide slug. Scope boundary (destination
+// playbook §7): each blurb sells what this page deliberately withholds -
+// mechanics are asserted to exist, never demonstrated. No fares, clock
+// times, booking channels or within-day sequencing. Unknown future SKUs
+// fall back to the guide's own subtitle.
+const GUIDE_BLURBS = {
+  [WEEK_SLUG]:
+    "Seven days, four islands, day by day. Ferry timings and booking deadlines, hotel picks at three price levels per island, restaurant list, full cost breakdown at lean, core and splurge, packing list, and the companion Google map with every pin.",
+};
+
 async function fetchSeychellesContent() {
   try {
     return await client.fetch(
       `{
-        "guide": *[_type == "story" && status == "published" && guide.hasGuide == true && destination->slug.current == "seychelles" && (language == "en" || !defined(language))][0]{
-          title, "slug": coalesce(guide.pageSlug, slug.current), durationDisplay, heroImage,
+        "guides": *[_type == "story" && status == "published" && guide.hasGuide == true && destination->slug.current == "seychelles" && (language == "en" || !defined(language))] | order(durationDays desc){
+          title, "slug": coalesce(guide.pageSlug, slug.current), subtitle, durationDisplay, heroImage,
           "prices": coalesce(guide.customPrices, guide.pricingTier->prices)
         },
         "stories": *[_type == "story" && status == "published" && guide.hasGuide != true && destination->slug.current == "seychelles" && (language == "en" || !defined(language))] | order(publishedDate desc){
@@ -146,7 +167,7 @@ async function fetchSeychellesContent() {
       }`,
     );
   } catch {
-    return { guide: null, stories: [] };
+    return { guides: [], stories: [] };
   }
 }
 
@@ -160,7 +181,8 @@ function storyImage(heroImage, width = 800) {
 }
 
 export default async function SeychellesDestinationPage() {
-  const { guide, stories } = await fetchSeychellesContent();
+  const { guides, stories } = await fetchSeychellesContent();
+  const guide = guides?.find((g) => g.slug === WEEK_SLUG) ?? guides?.[0] ?? null;
   const guidePrice = Array.isArray(guide?.prices)
     ? guide.prices.find((p) => p?.currency === "EUR")
     : null;
@@ -488,38 +510,42 @@ export default async function SeychellesDestinationPage() {
           </div>
         </section>
 
-        {guide ? (
+        {guides?.length ? (
           <section className="space-y-4">
             <SectionHeading>Guides for this destination</SectionHeading>
-            <Link
-              href={`/guides/${guide.slug}`}
-              className="group flex flex-col overflow-hidden rounded-2xl border border-brand-line bg-white shadow-card transition hover:-translate-y-0.5 hover:shadow-card-hover sm:flex-row"
-            >
-              {storyImage(guide.heroImage) ? (
-                <img
-                  src={storyImage(guide.heroImage)}
-                  alt={guide.title}
-                  className="aspect-[4/3] w-full object-cover sm:w-64"
-                  loading="lazy"
-                />
-              ) : null}
-              <div className="flex flex-1 flex-col gap-2 p-6">
-                <p className="font-serif text-xl leading-snug text-brand-ink group-hover:text-slate-700">
-                  {guide.title}
-                </p>
-                <p className="text-[14px] leading-relaxed text-slate-700">
-                  Seven days, four islands, day by day. Ferry timings and
-                  booking deadlines, hotel picks at three price levels per
-                  island, restaurant list, full cost breakdown at lean, core and
-                  splurge, packing list, and the companion Google map with every
-                  pin.
-                </p>
-                <p className="mt-auto pt-2 text-sm font-semibold text-slate-900">
-                  {guide.durationDisplay}
-                  {guidePrice ? ` · €${guidePrice.amount}` : ""}
-                </p>
-              </div>
-            </Link>
+            {guides.map((g) => {
+              const price = Array.isArray(g.prices)
+                ? g.prices.find((p) => p?.currency === "EUR")
+                : null;
+              return (
+                <Link
+                  key={g.slug}
+                  href={`/guides/${g.slug}`}
+                  className="group flex flex-col overflow-hidden rounded-2xl border border-brand-line bg-white shadow-card transition hover:-translate-y-0.5 hover:shadow-card-hover sm:flex-row"
+                >
+                  {storyImage(g.heroImage) ? (
+                    <img
+                      src={storyImage(g.heroImage)}
+                      alt={g.title}
+                      className="aspect-[4/3] w-full object-cover sm:w-64"
+                      loading="lazy"
+                    />
+                  ) : null}
+                  <div className="flex flex-1 flex-col gap-2 p-6">
+                    <p className="font-serif text-xl leading-snug text-brand-ink group-hover:text-slate-700">
+                      {g.title}
+                    </p>
+                    <p className="text-[14px] leading-relaxed text-slate-700">
+                      {GUIDE_BLURBS[g.slug] ?? g.subtitle}
+                    </p>
+                    <p className="mt-auto pt-2 text-sm font-semibold text-slate-900">
+                      {g.durationDisplay}
+                      {price ? ` · €${price.amount}` : ""}
+                    </p>
+                  </div>
+                </Link>
+              );
+            })}
           </section>
         ) : null}
 
