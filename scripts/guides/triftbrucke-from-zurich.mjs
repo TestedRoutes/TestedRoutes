@@ -326,7 +326,6 @@ export default {
         _ref: "pricingTier-day-trip",
         _type: "reference",
       },
-      purchasesCount: 4,
       status: "available",
     },
     highlights: [

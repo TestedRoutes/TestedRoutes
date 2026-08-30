@@ -274,7 +274,6 @@ export default {
           _type: "reference",
         },
       },
-      purchasesCount: 2,
       sample: {
         body: "Day 4 takes you to Curieuse, where giant tortoises roam loose in a national park, and gets you onto the last ferry to La Digue. This is the page exactly as it appears in the guide.",
         image: {
