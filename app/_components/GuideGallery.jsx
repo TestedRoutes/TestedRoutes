@@ -248,30 +248,33 @@ export default function GuideGallery({
             >
               ×
             </button>
-            {/* One-by-one feed at natural aspect ratios — nothing cropped,
-                videos in their authored spots. Each slide is capped to the
-                viewport height (85vh, leaving room for the close button and
-                a hint of the next slide): the library is mostly portrait
-                media, and at w-full a vertical shot in a ~1024px column
-                towers several screens tall. */}
-            <div className="flex flex-col items-center gap-4">
-              {slides.map((slide, i) =>
-                slide.type === "video" ? (
-                  <GalleryVideo
-                    key={`${i}-${slide.src}`}
-                    src={slide.src}
-                    className="max-h-[85vh] w-auto max-w-full rounded-xl"
-                  />
-                ) : (
-                  <img
-                    key={`${i}-${slide.src}`}
-                    src={slide.src}
-                    alt=""
-                    className="max-h-[85vh] w-auto max-w-full rounded-xl"
-                    loading="lazy"
-                  />
-                )
-              )}
+            {/* One-by-one feed, one screen per slide: every slide gets a
+                fixed 80svh frame and the media letterboxes inside it with
+                object-contain — nothing cropped, videos in their authored
+                spots. The frame (not the media) carries the size, because
+                sizing the media itself via max-h/max-w interplay proved
+                fragile on real phones: a portrait shot could still render
+                past the viewport edge. svh, not vh: Android's vh is the
+                URL-bar-collapsed height, which overshoots while the bar is
+                showing. */}
+            <div className="flex flex-col gap-4">
+              {slides.map((slide, i) => (
+                <div key={`${i}-${slide.src}`} className="h-[80svh] w-full">
+                  {slide.type === "video" ? (
+                    <GalleryVideo
+                      src={slide.src}
+                      className="h-full w-full object-contain"
+                    />
+                  ) : (
+                    <img
+                      src={slide.src}
+                      alt=""
+                      className="h-full w-full object-contain"
+                      loading="lazy"
+                    />
+                  )}
+                </div>
+              ))}
             </div>
           </div>
         </div>
