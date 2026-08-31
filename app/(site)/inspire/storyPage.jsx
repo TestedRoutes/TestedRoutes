@@ -8,6 +8,7 @@ import { getRequestCurrency } from "../../_lib/currency";
 import {
   getInspireFeaturedCardDisplay,
   getInspireStoryGuideUrl,
+  getInspireStoryRelatedGuideSlugs,
 } from "../../_lib/inspireStoryDisplay";
 import { LOCALES, getDict, localePath } from "../../_lib/i18n";
 import { VISIBLE_DESTINATION_SLUGS } from "../../_lib/destinations";
@@ -81,13 +82,22 @@ function splitHtmlAtMid(html) {
   return [html.slice(0, best), html.slice(best)];
 }
 
-function MidStoryGuideCta({ guideHref, t }) {
+// The pinned guide's title, shown in every single-guide CTA so the reader
+// sees *which* guide before clicking — an anonymous "See the guide" button
+// reads as if no specific guide were attached.
+function GuideTitleLine({ title }) {
+  if (!title) return null;
+  return <p className="mt-2 text-sm font-semibold leading-snug text-white">{title}</p>;
+}
+
+function MidStoryGuideCta({ guideHref, guideTitle, t }) {
   return (
     <aside className="my-8 rounded-[20px] bg-brand-terracotta p-6 text-white shadow-lg">
       <p className="mb-2 text-[10px] font-bold uppercase tracking-[0.2em] text-white/50">
         {t.planningTrip}
       </p>
       <p className="text-sm leading-relaxed text-white/80">{t.planningBody}</p>
+      <GuideTitleLine title={guideTitle} />
       <Link
         href={guideHref}
         className="mt-4 inline-flex items-center justify-center rounded-full bg-white px-6 py-2.5 text-xs font-semibold text-slate-900 transition hover:bg-slate-100"
@@ -111,9 +121,13 @@ function resolveGuideHref(metadata) {
   return guideUrl;
 }
 
-// A story either pins one guide (its own guide reference, or a same-slug
-// guide) or — for shared stories like "Blue Lagoon" that belong to every
-// Iceland guide — offers all guides for its destination country.
+// Which guide(s) a story sells for. The authored `relatedGuideSlugs` tag
+// decides: one slug pins a named CTA, several render as a "Guides for this
+// trip" list in the authored order. Untagged stories keep the legacy
+// fallbacks — a direct guide_url, a same-slug guide, then the country's
+// guides ordered by lifetime purchases (a stage story showing its country's
+// other valleys is wrong, which is why tagging beats every fallback; the
+// purchase ordering just keeps the fallback from being publish-date trivia).
 async function resolveGuideTargets(story, lang, currency) {
   const guides = await loadGuides(currency, lang);
   const country = story.metadata?.geography?.country;
@@ -130,38 +144,69 @@ async function resolveGuideTargets(story, lang, currency) {
       ? localePath(lang, `/destinations/${destinationSlug}`)
       : null;
 
+  // Tags carry /guides/ page slugs, but match the story slug too so a tag
+  // written before a pageSlug rename keeps resolving.
+  const findGuide = (slug) =>
+    guides.find((g) => g.slug === slug || g.metadataSlug === slug);
+  const pin = (g, href) => ({
+    guideHref: localePath(lang, href || g.href || `/guides/${g.slug}`),
+    guideTitle: g?.title || null,
+    guideOptions: [],
+    hubHref,
+  });
+  const toOption = (g) => ({
+    title: g.title,
+    duration: g.duration || "",
+    price: g.price || "",
+    href: localePath(lang, g.href),
+  });
+
+  // Slugs that match no live guide are dropped here (a tag can predate its
+  // guide's publish); check:inspire is where they get reported.
+  const tagged = getInspireStoryRelatedGuideSlugs(story.metadata)
+    .map(findGuide)
+    .filter(Boolean);
+  if (tagged.length === 1) return pin(tagged[0]);
+  if (tagged.length > 1) {
+    return {
+      guideHref: null,
+      guideTitle: null,
+      hubHref,
+      guideOptions: tagged.map(toOption),
+    };
+  }
+
   const direct = resolveGuideHref(story.metadata);
   if (direct) {
-    return { guideHref: localePath(lang, direct), guideOptions: [], hubHref };
-  }
-  const slugMatch = guides.find((g) => g.slug === story.slug);
-  if (slugMatch) {
+    const directGuide = findGuide(direct.replace(/^\/guides\//, ""));
     return {
-      guideHref: localePath(lang, slugMatch.href || `/guides/${slugMatch.slug}`),
+      guideHref: localePath(lang, direct),
+      guideTitle: directGuide?.title || null,
       guideOptions: [],
       hubHref,
     };
   }
+  const slugMatch = guides.find((g) => g.slug === story.slug);
+  if (slugMatch) return pin(slugMatch);
 
   const matches = country
     ? guides.filter((g) => g.metadata?.geography?.country === country)
     : [];
-  if (matches.length === 1) {
-    return { guideHref: localePath(lang, matches[0].href), guideOptions: [], hubHref };
-  }
+  if (matches.length === 1) return pin(matches[0]);
   if (matches.length > 1) {
+    // Most-purchased first; sort() is stable, so ties keep the fetch order
+    // (newest published first) rather than reshuffling.
+    const ranked = [...matches].sort(
+      (a, b) => (b.purchases || 0) - (a.purchases || 0),
+    );
     return {
       guideHref: null,
+      guideTitle: null,
       hubHref,
-      guideOptions: matches.slice(0, 3).map((g) => ({
-        title: g.title,
-        duration: g.duration || "",
-        price: g.price || "",
-        href: localePath(lang, g.href),
-      })),
+      guideOptions: ranked.slice(0, 3).map(toOption),
     };
   }
-  return { guideHref: null, guideOptions: [], hubHref };
+  return { guideHref: null, guideTitle: null, guideOptions: [], hubHref };
 }
 
 /**
@@ -294,7 +339,7 @@ export default async function StoryPage({ lang, slug }) {
   const t = getDict(lang).story;
   const display = getInspireFeaturedCardDisplay(story) || {};
   const currency = await getRequestCurrency();
-  const { guideHref, guideOptions, hubHref } = await resolveGuideTargets(
+  const { guideHref, guideTitle, guideOptions, hubHref } = await resolveGuideTargets(
     story,
     lang,
     currency,
@@ -374,6 +419,7 @@ export default async function StoryPage({ lang, slug }) {
                 {guideHref ? (
                   <>
                     <p className="text-sm leading-relaxed text-white/80">{t.planningBody}</p>
+                    <GuideTitleLine title={guideTitle} />
                     <Link
                       href={guideHref}
                       className="mt-4 flex w-full items-center justify-center rounded-full bg-white py-2.5 text-xs font-semibold text-slate-900 transition hover:bg-slate-100"
@@ -399,7 +445,7 @@ export default async function StoryPage({ lang, slug }) {
                   />
                   {guideHref && bodySecond ? (
                     <>
-                      <MidStoryGuideCta guideHref={guideHref} t={t} />
+                      <MidStoryGuideCta guideHref={guideHref} guideTitle={guideTitle} t={t} />
                       <div
                         className={PROSE_CLASS}
                         dangerouslySetInnerHTML={{ __html: bodySecond }}
@@ -426,12 +472,19 @@ export default async function StoryPage({ lang, slug }) {
                   {t.endCtaBody}
                 </p>
                 {guideHref ? (
-                  <Link
-                    href={guideHref}
-                    className="mt-5 inline-flex rounded-full bg-white px-6 py-2.5 text-sm font-semibold text-slate-900 transition hover:bg-slate-100"
-                  >
-                    {t.readFullGuide}
-                  </Link>
+                  <>
+                    {guideTitle ? (
+                      <p className="mx-auto mt-3 max-w-md text-sm font-semibold leading-snug text-white">
+                        {guideTitle}
+                      </p>
+                    ) : null}
+                    <Link
+                      href={guideHref}
+                      className="mt-5 inline-flex rounded-full bg-white px-6 py-2.5 text-sm font-semibold text-slate-900 transition hover:bg-slate-100"
+                    >
+                      {t.readFullGuide}
+                    </Link>
+                  </>
                 ) : (
                   <div className="mx-auto mt-5 w-full max-w-md text-left">
                     <GuideOptionRows options={guideOptions} dark />
@@ -493,6 +546,7 @@ export default async function StoryPage({ lang, slug }) {
                     <p className="text-xs leading-relaxed text-white/70">
                       {t.planningBody}
                     </p>
+                    <GuideTitleLine title={guideTitle} />
                     <Link
                       href={guideHref}
                       className="mt-4 flex w-full items-center justify-center rounded-full bg-white py-2.5 text-xs font-semibold text-slate-900 transition hover:bg-slate-100"

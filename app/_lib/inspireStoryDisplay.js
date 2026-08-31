@@ -243,12 +243,28 @@ export function getInspireStoryGuideUrl(metadata) {
   return "";
 }
 
+// Guides the story is explicitly tagged with (/guides/ slugs, display order).
+// The story page pins one or lists several; empty means "not tagged", which
+// sends the page to its country fallback.
+export function getInspireStoryRelatedGuideSlugs(metadata) {
+  try {
+    const m = safeMetadata(metadata);
+    if (!Array.isArray(m.related_guide_slugs)) return [];
+    return m.related_guide_slugs.filter((s) => typeof s === "string" && s.trim());
+  } catch {
+    return [];
+  }
+}
+
 export function inspireStoryHasGuide(metadata) {
   try {
     const m = safeMetadata(metadata);
     const g = m.guide && typeof m.guide === "object" && !Array.isArray(m.guide) ? m.guide : {};
     if (g.has_guide === true || g.has_guide === "true" || g.has_guide === 1 || g.has_guide === "1") return true;
     if (m.has_guide === true || m.has_guide === "true" || m.has_guide === 1 || m.has_guide === "1") return true;
+    // A story tagged with companion guides earns the badge too — same signal
+    // to the browse card as the legacy guide_url pin.
+    if (getInspireStoryRelatedGuideSlugs(m).length) return true;
     return Boolean(getInspireStoryGuideUrl(m));
   } catch {
     return false;

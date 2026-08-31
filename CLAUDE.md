@@ -52,6 +52,20 @@ published docs). Carousel authoring flow: curate a numbered folder
 ("1. cover.jpg", "2. snapshot.jpg", …), then `set-guide-carousel.mjs`
 uploads it wholesale; alt text lives in that script's `ALT` map.
 
+## Inspire story → guide tagging (2026-08-31)
+
+Each inspire story declares the guides it sells for: a `guides:` list of
+/guides/ slugs in its meta yaml (→ `relatedGuideSlugs` on the story doc).
+The story page pins one slug as a named CTA, renders several as "Guides
+for this trip" in the authored order; untagged stories fall back to the
+country's guides ordered by `guide.purchasesCount` (top 3) — right for
+genuinely shared stories ("every Iceland guide"), wrong for stage stories,
+so tag anything specific. `npm run set:story-guides -- --story <slug>
+--guides a,b` patches the field (published + drafts + translations)
+without a full republish; `npm run check:inspire` is the drift checker
+(errors on tags that match no live guide, warns on untagged stories the
+fallback is choosing for; no token needed).
+
 ## Publishing a guide SKU
 
 **One engine, `scripts/publish-guide.mjs`, plus one data module per SKU at
