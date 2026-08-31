@@ -10,7 +10,12 @@ Reads the Content Plan masterfile, and for every row whose Status is
   4. cuts every video -> generated/{stem}.mp4 (7s, 720p, muted), keeping the
      _{n}- slot in the name; stale renditions of renamed/removed masters are
      cleaned from generated/ so reordering is a pure rename + re-run
-  5. drafts {ID}_meta_en.yaml (plan fields + Claude-proposed fields)
+  5. requires {ID}_meta_en.yaml, authored in the Claude Code session BEFORE the
+     run (founder decision 2026-08-31: the publish pipeline makes no Anthropic
+     API calls - the session does that work, with the stories and contact
+     sheets in front of it, which the API call never had). A missing meta
+     fails the story and writes a {ID}_meta_en.yaml.draft scaffold from the
+     plan fields for the session to complete and rename.
   6. runs scripts/publish-to-sanity.mjs on the folder
   7. writes the ledger + review CSV, and sets the row's Status to
      "Published" in the masterfile.
@@ -30,7 +35,6 @@ import os
 import re
 import subprocess
 import sys
-import urllib.request
 import zipfile
 from datetime import datetime, timezone
 from pathlib import Path
@@ -93,7 +97,6 @@ NOISE_LINE = re.compile(
     re.I,
 )
 
-CLAUDE_MODEL = os.environ.get("CLAUDE_MODEL", "claude-sonnet-4-6")
 
 
 def load_env_local():
@@ -364,59 +367,12 @@ def clean_orphan_renditions(folder, story_id):
     return removed
 
 
-def claude_meta(row, docx_meta, body, photo_names):
-    key = os.environ.get("ANTHROPIC_API_KEY")
-    if not key:
-        return {}
-    prompt = f"""You draft metadata for a travel story on testedroutes.com. Respond with ONLY a JSON object, no prose.
-
-Story title: {row['title']}
-Country: {row['country']} | Region: {row['region']} | Angle: {row['angle']}
-Editorial note: {row['note']}
-Existing meta description candidate: {docx_meta.get('meta_description', '(none)')}
-Target query: {docx_meta.get('target_query', '(none)')}
-Photos: {', '.join(photo_names[:6])}
-
-Story text:
-{body[:4000]}
-
-Return JSON with exactly these keys:
-- "place": the specific place the story happens (e.g. "La Digue", "Darvaza"), or null if none is clearly identifiable. Never just repeat the country.
-- "subtitle": one sentence, max 90 chars, factual, in the story's voice. Use en-dash (–) never em-dash.
-- "hero_alt": alt text for the hero photo, max 120 chars, descriptive, includes place and country.
-- "meta_description": max 160 chars, improves on the candidate if one exists. En-dash only.
-- "keywords": 4-6 lowercase search phrases.
-- "months": array of months from {MONTHS} when this trip is doable, ONLY if the story or common knowledge makes it clear; else [].
-- "trip_length": one of {TRIP_LENGTHS} or null if unclear.
-- "difficulty": one of {DIFFICULTIES} or null if not applicable (e.g. essays/lists).
-- "activity": array drawn ONLY from {ACTIVITIES}; [] if none apply.
-
-Never invent facts not supported by the text. Prefer null/[] over guessing."""
-    req = urllib.request.Request(
-        "https://api.anthropic.com/v1/messages",
-        data=json.dumps({
-            "model": CLAUDE_MODEL,
-            "max_tokens": 900,
-            "messages": [{"role": "user", "content": prompt}],
-        }).encode(),
-        headers={
-            "x-api-key": key,
-            "anthropic-version": "2023-06-01",
-            "content-type": "application/json",
-        },
-    )
-    for attempt in range(2):
-        try:
-            with urllib.request.urlopen(req, timeout=120) as resp:
-                data = json.loads(resp.read())
-            text = "".join(b.get("text", "") for b in data.get("content", []))
-            jm = re.search(r"\{.*\}", text, re.S)
-            return json.loads(jm.group(0)) if jm else {}
-        except Exception as e:  # noqa: BLE001
-            if attempt == 1:
-                print(f"    ! claude meta failed: {e}")
-                return {}
-    return {}
+# claude_meta() lived here until 2026-08-31: it called the Anthropic API to
+# draft place/subtitle/heroAlt/keywords. Removed on the founder's decision -
+# the Claude Code session authors {ID}_meta_en.yaml before the run (it has
+# read the stories and looked at the media, which the API call never did),
+# and the publish pipeline itself must never spend API credits. See
+# TR-inspire-authoring_6.md for the authoring contract.
 
 
 def prettify(value):
@@ -557,15 +513,25 @@ def main():
                     )
                 print("    meta: existing file kept")
             else:
-                ai = claude_meta(row, docx_meta, body, photos)
-                meta = build_meta(row, docx_meta, ai, sid)
+                # No meta file: the Claude Code session authors it before the
+                # run (no API calls in this pipeline - founder decision
+                # 2026-08-31). Scaffold the deterministic plan-derived half so
+                # the session only fills the editorial fields, and FAIL the
+                # story - a meta with null place/subtitle/heroAlt published
+                # "successfully" once, and nothing reported it.
+                meta = build_meta(row, docx_meta, {}, sid)
                 if slot:
                     meta["video_slot"] = slot
-                meta_path.write_text(
+                draft = folder / f"{sid}_meta_en.yaml.draft"
+                draft.write_text(
                     yaml.safe_dump(meta, sort_keys=False, allow_unicode=True, width=100),
                     encoding="utf-8",
                 )
-                print(f"    meta: drafted (place={meta.get('place')}, trip_length={meta.get('trip_length')})")
+                print(f"    ! meta missing: scaffold written to {draft.name} - author "
+                      "place/subtitle/heroAlt/metaDescription/keywords/trip_length/"
+                      "difficulty/activity in the session, rename to .yaml, re-run")
+                failed.append((sid, "meta_en.yaml missing (session authors it - no API drafting)"))
+                continue
 
             cmd = ["node", "--env-file=.env.local", "scripts/publish-to-sanity.mjs", str(folder)]
             if args.dry_run:

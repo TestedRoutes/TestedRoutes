@@ -57,6 +57,7 @@ meal and per night, with alternates in a directory rather than in the day plan.
 - [Kuwait](https://testedroutes.com/destinations/kuwait): whether Kuwait is worth visiting, how long you need, why the day of the week matters more than the month, and what the two-day trip costs.
 - [Samoa](https://testedroutes.com/destinations/samoa): how many days you need, Upolu vs Savai'i, when to go, and why Sunday shapes the week more than the weather.
 - [Fiji](https://testedroutes.com/destinations/fiji): which islands to pick, how long you need, when to go, and how the island-hopping boat system actually works.
+- [Mauritania](https://testedroutes.com/destinations/mauritania): whether Mauritania is worth visiting and how safe it is, the iron-ore train, the Eye of the Sahara, and how many days the desert needs.
 
 ## Inspire (free stories from the road)
 
