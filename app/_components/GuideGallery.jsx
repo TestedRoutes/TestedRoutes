@@ -143,8 +143,11 @@ export default function GuideGallery({
 
   return (
     <>
-      {/* Mobile: full-width swipe carousel */}
-      <div className="relative overflow-hidden rounded-xl md:hidden">
+      {/* Mobile: full-width swipe carousel. touch-manipulation: tapping
+          through photos must never trigger the browser's double-tap zoom —
+          once the page is pinch-zoomed, the fixed lightbox renders off-center
+          and can't be recentered without zooming the whole page. */}
+      <div className="relative touch-manipulation overflow-hidden rounded-xl md:hidden">
         {/* Portrait frame: vertical photos/clips fill it naturally and
             landscape ones center-crop, mirroring how the desktop mosaic
             treats verticals. */}
@@ -230,7 +233,7 @@ export default function GuideGallery({
       {/* Lightbox: full grid of every photo */}
       {open ? (
         <div
-          className="fixed inset-0 z-[1200] flex items-start justify-center overflow-y-auto bg-slate-900/85 p-4 sm:p-8"
+          className="fixed inset-0 z-[1200] flex touch-manipulation items-start justify-center overflow-y-auto bg-slate-900/85 p-4 sm:p-8"
           onClick={() => setOpen(false)}
         >
           <div
