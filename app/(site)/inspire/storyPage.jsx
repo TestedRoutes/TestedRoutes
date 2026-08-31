@@ -357,7 +357,14 @@ export default async function StoryPage({ lang, slug }) {
         ) : null}
 
         <div className="flex flex-col gap-8 md:flex-row">
-          <div className="flex min-w-0 flex-1 flex-col gap-6 self-start">
+          {/* md:self-start, never bare self-start: below md this wrapper is a
+              flex-COLUMN item, so self-start moves to the horizontal axis and
+              turns the column's width into fit-content. The truncate-titled
+              guide rows carry a ~460px intrinsic min-width (nowrap text), the
+              column adopts it, and Android expands the layout viewport past
+              the screen — which strands every fixed overlay (the gallery
+              lightbox) partly off-screen. */}
+          <div className="flex min-w-0 flex-1 flex-col gap-6 md:self-start">
             {/* Mobile guide CTA */}
             {guideHref || hasGuideOptions ? (
               <div className="rounded-[20px] bg-brand-terracotta p-5 text-white shadow-lg md:hidden">
