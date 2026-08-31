@@ -861,6 +861,20 @@ export default {
 
     /* ──────────────── RELATIONSHIPS ──────────────── */
     {
+      name: "relatedGuideSlugs",
+      title: "Related guide slugs",
+      type: "array",
+      group: "relationships",
+      of: [{ type: "string" }],
+      description:
+        "The guides this inspire story sells for, by /guides/ URL slug, in display order. " +
+        "One slug pins a named \"See the guide\" CTA; several render as a \"Guides for this trip\" " +
+        "list. Left empty, the story page falls back to the country's guides ordered by " +
+        "purchases — fine for shared stories, wrong for stage stories, so tag anything that " +
+        "belongs to specific guides. Slugs (not references) so a story can be tagged before " +
+        "its guide is published; check:inspire flags entries that match no live guide.",
+    },
+    {
       name: "similarStories",
       title: "Similar stories",
       type: "array",

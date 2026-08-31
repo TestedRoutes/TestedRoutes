@@ -12,6 +12,8 @@
     "publish": "node --env-file=.env.local scripts/publish-to-sanity.mjs",
     "publish:guide": "node --env-file=.env.local scripts/publish-guide.mjs",
     "check:guides": "node --env-file=.env.local scripts/check-guides.mjs",
+    "check:inspire": "node scripts/check-inspire-guides.mjs",
+    "set:story-guides": "node --env-file=.env.local scripts/set-story-guides.mjs",
     "ping:indexnow": "node scripts/ping-indexnow.mjs",
     "patch:affiliates": "node --env-file=.env.local scripts/patch-affiliates.mjs",
     "setup:pricing": "node --env-file=.env.local scripts/setup-pricing-tiers.mjs",

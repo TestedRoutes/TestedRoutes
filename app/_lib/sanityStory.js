@@ -93,6 +93,7 @@ const STORY_PROJECTION = /* groq */ `
     linkText,
     notes,
   },
+  relatedGuideSlugs,
   "similarStories": similarStories[]->{
     _id,
     title,
@@ -276,6 +277,13 @@ function buildLegacyMetadata(doc) {
       faq: Array.isArray(doc.faq) ? doc.faq : [],
       testimonials: Array.isArray(doc.testimonials) ? doc.testimonials : [],
     },
+
+    // Guides this story sells for, by /guides/ slug, in authored display
+    // order. Distinct from metadata.guide, which describes the story *being*
+    // a guide; this one points outward at companion guides.
+    related_guide_slugs: Array.isArray(doc.relatedGuideSlugs)
+      ? doc.relatedGuideSlugs.filter((s) => typeof s === "string" && s.trim())
+      : [],
 
     guide: doc.guide
       ? {

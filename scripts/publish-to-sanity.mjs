@@ -1519,6 +1519,13 @@ async function buildStoryDoc(fm, body, heroName, galleryNames, pdfName, affiliat
     adrenalineLevel: fm.differentiation?.adrenaline,
 
     guide: guideField,
+    /* `guides:` in the meta yaml — the /guides/ slugs this story sells for,
+       in display order. The machine-readable twin of the content-plan block's
+       prose `links_to_guide`; the story page pins one or lists several, and
+       without it falls back to guessing by country. */
+    relatedGuideSlugs: Array.isArray(fm.guides)
+      ? fm.guides.map((s) => String(s).trim()).filter(Boolean)
+      : undefined,
     affiliateLinks: affiliateRefs && affiliateRefs.length ? affiliateRefs : undefined,
     whyThisTrip: fm.sales?.whyThisTrip,
     whoThisIsFor: fm.sales?.whoThisIsFor,
