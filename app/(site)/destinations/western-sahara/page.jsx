@@ -72,7 +72,7 @@ const WHEN_TO_GO = [
 
 const HOW_LONG = [
   ["A long weekend", "The Dakhla trip: fly in, the lagoon, the white dune, the town's market and promenade, seafood, out. This is the trip the place is built for, and it does not need more days – it needs the right ones."],
-  ["A week", "The weekend trip plus slow days: more lagoon, the empty beaches down the peninsula, and time for the desert light to do its work. Honest limit: by day five you have seen the sights and you are here for the water and the calm."],
+  ["A week", "The kite trip. A week here is for the wind: daily sessions on the flat lagoon – lessons if you are new, your own kit if you are not – with the dune, the town and the empty beaches filling the light-wind days. If you are not kiting, the long weekend is the better-sized trip."],
   ["The overland transit", "Two long driving days as part of a Morocco-to-Mauritania crossing – roughly a thousand kilometres of sealed, empty desert road. A completely different trip: the emptiness is the sight, and Dakhla is the rest stop you will remember."],
 ];
 
