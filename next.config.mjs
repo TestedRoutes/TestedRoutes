@@ -11,6 +11,12 @@ const nextConfig = {
   // Strict Mode's double-mount in dev. Strict Mode has no effect on production
   // builds, so this only changes dev behaviour.
   reactStrictMode: false,
+  // Keep the database layer out of webpack's server bundles. Bundling
+  // drizzle-orm produced a fragile vendor-chunks/drizzle-orm.js in the dev
+  // cache that intermittently went missing ("Cannot find module
+  // './vendor-chunks/drizzle-orm.js'"); externalizing means Node resolves
+  // these from node_modules directly, in dev and in production alike.
+  serverExternalPackages: ["drizzle-orm", "@neondatabase/serverless"],
   images: {
     remotePatterns: [
       { protocol: "https", hostname: "cdn.sanity.io" },

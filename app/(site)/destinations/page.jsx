@@ -8,6 +8,7 @@ import tuvaluHero from "../../../content/countries/tuvalu/destination/generated/
 import kuwaitHero from "../../../content/countries/kuwait/destination/generated/web/marina-pier-at-night.jpg";
 import samoaHero from "../../../content/countries/samoa/destination/generated/web/founder-at-sopoaga-falls.jpg";
 import fijiHero from "../../../content/countries/fiji/destination/generated/web/island-beach-pavilion.jpg";
+import mauritaniaHero from "../../../content/countries/mauritania/destination/generated/web/zouerat-rails-dusk.jpg";
 
 export const metadata = {
   title: "Destinations · TestedRoutes",
@@ -69,6 +70,15 @@ const DESTINATIONS = [
       "Which islands to pick and how long you need – there are two completely different Fijis, and one boat timetable runs the good one.",
     image: fijiHero,
     alt: "A thatched pavilion and red ti plants on a white-sand island beach in Fiji",
+  },
+  {
+    name: "Mauritania",
+    href: "/destinations/mauritania",
+    region: "North & West Africa · The Sahara",
+    blurb:
+      "Is it worth it and is it safe – the iron-ore train ridden on the ore, the Eye of the Sahara, and a desert with almost no other tourists.",
+    image: mauritaniaHero,
+    alt: "The iron-ore railway running to the horizon at dusk near Zouerat, Mauritania",
   },
   {
     name: "Switzerland",
