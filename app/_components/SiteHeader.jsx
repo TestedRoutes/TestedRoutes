@@ -47,7 +47,12 @@ function logoLinkClassName(active) {
   return base;
 }
 
-export default function SiteHeader({ currency = "EUR", guides = [], navDicts = {} }) {
+export default function SiteHeader({
+  currency = "EUR",
+  guides = [],
+  stories = [],
+  navDicts = {},
+}) {
   const pathname = usePathname();
   const active = getActiveSlug(pathname);
   const lang = langFromPathname(pathname);
@@ -120,7 +125,13 @@ export default function SiteHeader({ currency = "EUR", guides = [], navDicts = {
         {showHeaderSearch ? (
           <div className="hidden flex-1 justify-center px-6 md:flex">
             <div className="w-full max-w-xl">
-              <HomeSearchBar guides={guides} variant="compact" />
+              {/* In the Inspire section the header search suggests and lands
+                  on stories; everywhere else it searches guides. */}
+              <HomeSearchBar
+                guides={active === "inspire" ? stories : guides}
+                scope={active === "inspire" ? "inspire" : "guides"}
+                variant="compact"
+              />
             </div>
           </div>
         ) : null}
