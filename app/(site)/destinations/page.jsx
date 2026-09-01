@@ -8,7 +8,7 @@ import tuvaluHero from "../../../content/countries/tuvalu/destination/generated/
 import kuwaitHero from "../../../content/countries/kuwait/destination/generated/web/marina-pier-at-night.jpg";
 import samoaHero from "../../../content/countries/samoa/destination/generated/web/founder-at-sopoaga-falls.jpg";
 import fijiHero from "../../../content/countries/fiji/destination/generated/web/island-beach-pavilion.jpg";
-import mauritaniaHero from "../../../content/countries/mauritania/destination/generated/web/zouerat-rails-dusk.jpg";
+import mauritaniaHero from "../../../content/countries/mauritania/destination/generated/web/riding-empty-ore-wagons.jpg";
 
 export const metadata = {
   title: "Destinations · TestedRoutes",
@@ -78,7 +78,7 @@ const DESTINATIONS = [
     blurb:
       "Is it worth it and is it safe – the iron-ore train ridden on the ore, the Eye of the Sahara, and a desert with almost no other tourists.",
     image: mauritaniaHero,
-    alt: "The iron-ore railway running to the horizon at dusk near Zouerat, Mauritania",
+    alt: "Travellers riding on top of an empty iron-ore wagon rake through the desert, Mauritania",
   },
   {
     name: "Switzerland",
