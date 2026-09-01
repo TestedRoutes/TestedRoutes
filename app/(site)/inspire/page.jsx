@@ -5,6 +5,8 @@ export async function generateMetadata() {
 }
 
 export default async function InspirePage({ searchParams }) {
-  const { continent = "" } = (await searchParams) || {};
-  return <InspireIndexPage lang="en" continent={continent} />;
+  // ?q= pre-fills the story search — the header search bar lands here when
+  // a query matches no story title directly.
+  const { continent = "", q = "" } = (await searchParams) || {};
+  return <InspireIndexPage lang="en" continent={continent} q={q} />;
 }

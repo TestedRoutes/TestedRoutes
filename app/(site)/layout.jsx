@@ -3,7 +3,7 @@ import SiteFooter from "../_components/SiteFooter";
 import MobileTabBar from "../_components/MobileTabBar";
 import PostHogProvider from "../_components/PostHogProvider";
 import { getRequestCurrency } from "../_lib/currency";
-import { fetchGuideNavEntries } from "../_lib/sanityStory";
+import { fetchGuideNavEntries, fetchInspireNavEntries } from "../_lib/sanityStory";
 import { LOCALES, getDict } from "../_lib/i18n";
 
 // Header + tab bar are client components that resolve their locale from the
@@ -60,14 +60,25 @@ export default async function SiteLayout({ children }) {
   // empty header search instead of propagating. Content pages that
   // genuinely need Sanity still surface their own errors.
   let searchableGuides = [];
+  let searchableStories = [];
   try {
-    searchableGuides = await fetchGuideNavEntries();
+    // One list per header search scope: guides everywhere, stories while in
+    // the Inspire section (SiteHeader picks per pathname).
+    [searchableGuides, searchableStories] = await Promise.all([
+      fetchGuideNavEntries(),
+      fetchInspireNavEntries(),
+    ]);
   } catch (err) {
-    console.error("[site-layout] header guide list failed to load:", err);
+    console.error("[site-layout] header search lists failed to load:", err);
   }
   return (
     <PostHogProvider>
-      <SiteHeader currency={currency} guides={searchableGuides} navDicts={NAV_DICTS} />
+      <SiteHeader
+        currency={currency}
+        guides={searchableGuides}
+        stories={searchableStories}
+        navDicts={NAV_DICTS}
+      />
       {children}
       <SiteFooter />
       <MobileTabBar navDicts={NAV_DICTS} />

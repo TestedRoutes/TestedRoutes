@@ -1,9 +1,10 @@
 "use client";
 
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
 import { HIDDEN_DESTINATION_SLUGS } from "../_lib/destinations";
+import { langFromPathname, localePath } from "../_lib/locale";
 
 // Supports either uncontrolled (own state) or controlled (parent owns query
 // via `query` + `onQueryChange`). The controlled mode lets neighbour widgets
@@ -73,13 +74,18 @@ const VARIANT_STYLES = {
   },
 };
 
+// scope decides where a no-match submit lands (/guides?q= vs /inspire?q=)
+// and whether the Switzerland destination shortcut applies; the suggestion
+// dropdown just lists whatever entries were passed in `guides`.
 export default function HomeSearchBar({
   guides = [],
   query: controlledQuery,
   onQueryChange,
   variant = "hero",
+  scope = "guides",
 }) {
   const router = useRouter();
+  const pathname = usePathname();
   const isControlled = controlledQuery !== undefined && typeof onQueryChange === "function";
   const [internalQuery, setInternalQuery] = useState("");
   const query = isControlled ? controlledQuery : internalQuery;
@@ -92,8 +98,21 @@ export default function HomeSearchBar({
       router.push(matches[0].href);
       return;
     }
-    const url = resolveDestinationSearch(query);
-    if (url) router.push(url);
+    const url = scope === "guides" ? resolveDestinationSearch(query) : null;
+    if (url) {
+      router.push(url);
+      return;
+    }
+    // No local match (the header instance only carries slim nav entries, and
+    // the destination shortcut is Switzerland-only) — land on the section's
+    // index with the query pre-filled instead of doing nothing. /guides?q=
+    // is the same target the home continent cards link to.
+    const term = query.trim();
+    if (!term) return;
+    const indexPath = scope === "inspire" ? "/inspire" : "/guides";
+    router.push(
+      `${localePath(langFromPathname(pathname), indexPath)}?q=${encodeURIComponent(term)}`,
+    );
   };
 
   return (

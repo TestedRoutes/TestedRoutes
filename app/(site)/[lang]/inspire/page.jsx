@@ -26,12 +26,13 @@ export async function generateMetadata({ params }) {
   return buildInspireIndexMetadata(lang);
 }
 
-export default async function LocalizedInspirePage({ params }) {
+export default async function LocalizedInspirePage({ params, searchParams }) {
   const { lang } = await params;
   if (!ALT_LOCALES.includes(lang)) {
     // Paused locale (locale.js): redirect, don't 404 — see [lang]/page.jsx.
     if (PAUSED_LOCALES.includes(lang)) redirect("/inspire");
     notFound();
   }
-  return <InspireIndexPage lang={lang} />;
+  const { q = "" } = (await searchParams) || {};
+  return <InspireIndexPage lang={lang} q={q} />;
 }

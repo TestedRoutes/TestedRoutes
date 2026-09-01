@@ -108,7 +108,7 @@ export async function buildInspireIndexMetadata(lang) {
   };
 }
 
-export default async function InspireIndexPage({ lang = "en", continent = "" }) {
+export default async function InspireIndexPage({ lang = "en", continent = "", q = "" }) {
   const t = getDict(lang).inspireList;
   const stories = await loadInspireStories(lang);
   const cards = stories.map((s) => buildCard(s, lang));
@@ -148,6 +148,7 @@ export default async function InspireIndexPage({ lang = "en", continent = "" }) 
           <InspireBrowse
             cards={cards}
             lang={lang}
+            initialSearch={q}
             initialContinent={activeContinent}
             initialContinentLabel={prettyGeo(activeContinent)}
           />

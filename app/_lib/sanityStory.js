@@ -658,6 +658,34 @@ export function fetchGuideNavEntries(lang = "en") {
   return fetchGuideNavEntriesCached(lang);
 }
 
+// Inspire counterpart of the guide nav list above, and the same slim idea:
+// the header search suggests stories while the user is in the Inspire
+// section, so it only needs title + slug + a country label — never the
+// full story payload. Entries share the guide-entry shape ({title, slug,
+// category, href}) so HomeSearchBar renders both without caring which.
+const fetchInspireNavEntriesCached = cache(async (lang) => {
+  const docs = await client.fetch(
+    `*[_type == "story" && status == "published" && guide.hasGuide != true && ${LANG_FILTER}] | order(publishedDate desc) {
+      title,
+      "slug": slug.current,
+      "destination": destination->{ name, country },
+    }`,
+    { lang },
+    FETCH_OPTS,
+  );
+  return (docs || [])
+    .filter((d) => d.slug)
+    .map((d) => ({
+      title: d.title,
+      slug: d.slug,
+      category: d.destination?.country || d.destination?.name || "",
+      href: `/inspire/${d.slug}`,
+    }));
+});
+export function fetchInspireNavEntries(lang = "en") {
+  return fetchInspireNavEntriesCached(lang);
+}
+
 // Slugs and dates only, for sitemap.xml. The sitemap wants one field per
 // URL, and it used to get there by loading the complete catalogue with
 // bodies and galleries ten times over (two full queries per locale) at

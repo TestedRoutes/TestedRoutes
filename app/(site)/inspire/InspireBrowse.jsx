@@ -112,10 +112,11 @@ function StoryCard({ card, t }) {
 export default function InspireBrowse({
   cards,
   lang = "en",
+  initialSearch = "",
   initialContinent = "",
   initialContinentLabel = "",
 }) {
-  const [search, setSearch] = useState("");
+  const [search, setSearch] = useState(initialSearch);
   const [typeFilter, setTypeFilter] = useState("");
   const [countryFilter, setCountryFilter] = useState("");
   const [continentFilter, setContinentFilter] = useState(initialContinent);
