@@ -10,6 +10,7 @@ import samoaHero from "../../../content/countries/samoa/destination/generated/we
 import fijiHero from "../../../content/countries/fiji/destination/generated/web/island-beach-pavilion.jpg";
 import mauritaniaHero from "../../../content/countries/mauritania/destination/generated/web/riding-empty-ore-wagons.jpg";
 import westernSaharaHero from "../../../content/countries/western-sahara/destination/generated/web/white-dune-tidal-pool.jpg";
+import gambiaHero from "../../../content/countries/gambia/destination/generated/web/kunta-kinteh-ferry-midriver.jpg";
 
 export const metadata = {
   title: "Destinations · TestedRoutes",
@@ -89,6 +90,15 @@ const DESTINATIONS = [
       "Can you visit and is it safe – Dakhla's kite lagoon, the white dune, and a thousand kilometres of the emptiest sealed road in Africa.",
     image: westernSaharaHero,
     alt: "A horseshoe tidal pool ringed by white sand beneath the dune near Dakhla, a lone figure at its rim",
+  },
+  {
+    name: "The Gambia",
+    href: "/destinations/gambia",
+    region: "North & West Africa · The Smiling Coast",
+    blurb:
+      "Is it safe and is there more than the beach – crocodiles you can touch, wild monkey troops beside the hotel strip, and a river day in the mangrove creeks.",
+    image: gambiaHero,
+    alt: "The Kunta Kinteh ferry crossing the green water of the Gambia River mouth",
   },
   {
     name: "Switzerland",
