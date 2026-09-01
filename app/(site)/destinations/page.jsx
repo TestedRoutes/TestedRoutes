@@ -9,6 +9,7 @@ import kuwaitHero from "../../../content/countries/kuwait/destination/generated/
 import samoaHero from "../../../content/countries/samoa/destination/generated/web/founder-at-sopoaga-falls.jpg";
 import fijiHero from "../../../content/countries/fiji/destination/generated/web/island-beach-pavilion.jpg";
 import mauritaniaHero from "../../../content/countries/mauritania/destination/generated/web/riding-empty-ore-wagons.jpg";
+import westernSaharaHero from "../../../content/countries/western-sahara/destination/generated/web/white-dune-tidal-pool.jpg";
 
 export const metadata = {
   title: "Destinations · TestedRoutes",
@@ -79,6 +80,15 @@ const DESTINATIONS = [
       "Is it worth it and is it safe – the iron-ore train ridden on the ore, the Eye of the Sahara, and a desert with almost no other tourists.",
     image: mauritaniaHero,
     alt: "Travellers riding on top of an empty iron-ore wagon rake through the desert, Mauritania",
+  },
+  {
+    name: "Western Sahara",
+    href: "/destinations/western-sahara",
+    region: "North & West Africa · The Atlantic Sahara",
+    blurb:
+      "Can you visit and is it safe – Dakhla's kite lagoon, the white dune, and a thousand kilometres of the emptiest sealed road in Africa.",
+    image: westernSaharaHero,
+    alt: "A horseshoe tidal pool ringed by white sand beneath the dune near Dakhla, a lone figure at its rim",
   },
   {
     name: "Switzerland",
