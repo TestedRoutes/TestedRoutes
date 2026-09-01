@@ -211,13 +211,34 @@ def extract_docx(docx_path, plan_title):
 
     body = []
     key_pending = None  # bare meta key waiting for its value paragraph
+    in_fm_block = False  # inside a ----delimited frontmatter block
+    fm_last_key = None  # last key consumed inside the dash block (wrap absorption)
     for p in paras:
         # Header region (before the first real paragraph): consume meta
         # keys and drop template noise. Once the body starts, everything
         # is story text.
         if not body:
+            s = p.strip()
+            # ----delimited frontmatter (the .md-style docx the sessions
+            # write): everything between the dash lines is metadata, however
+            # its long values wrap across paragraphs. This block leaked into
+            # eight live story bodies on 2026-09-01 because the old parser
+            # bailed on the first line it did not recognise.
+            if re.fullmatch(r"-{3,}", s):
+                in_fm_block = not in_fm_block
+                fm_last_key = None
+                continue
+            if in_fm_block:
+                km = re.match(r"^([a-z_]+):\s*(.*)$", s)
+                if km and km.group(1) in DOCX_META_KEYS:
+                    meta[km.group(1)] = km.group(2).strip()
+                    fm_last_key = km.group(1)
+                elif fm_last_key:
+                    # wrapped continuation of the previous value
+                    meta[fm_last_key] = (meta[fm_last_key] + " " + s).strip()
+                continue
             if key_pending:
-                meta[key_pending] = p.strip()
+                meta[key_pending] = s
                 key_pending = None
                 continue
             km = re.match(r"^([a-z_]+):\s*(.*)$", p)
@@ -226,18 +247,33 @@ def extract_docx(docx_path, plan_title):
                 continue
             # A paragraph that IS a bare meta key (metadata laid out as
             # alternating key/value paragraphs rather than a table).
-            bare = re.sub(r"[^a-z_]", "_", p.strip().lower().replace(" ", "_"))
+            bare = re.sub(r"[^a-z_]", "_", s.lower().replace(" ", "_"))
             if bare in DOCX_META_KEYS:
                 key_pending = bare
                 continue
-            # The draft template's document heading.
-            if re.match(r"^testedroutes\s*[-–]\s*inspire story", p.strip(), re.I):
+            # The draft templates' document headings.
+            if re.match(r"^testedroutes\s*[-–]\s*inspire story", s, re.I):
                 continue
-            if NOISE_LINE.match(p.strip()):
+            if re.match(r"^(inspire|founder story)\s*/", s, re.I):
                 continue
-            if plan_title and p.strip().lower() == plan_title.strip().lower():
+            if NOISE_LINE.match(s):
+                continue
+            if plan_title and s.lower() == plan_title.strip().lower():
                 continue
         body.append(p)
+
+    # GATE: a body that still opens with frontmatter means the docx uses a
+    # layout this parser does not strip. Fail the story - eight stories
+    # published their metadata as visible prose before this existed, and
+    # nothing reported it.
+    for h in (b.strip() for b in body[:6]):
+        km = re.match(r"^([a-z_]+):", h)
+        if (re.fullmatch(r"-{3,}", h) or (km and km.group(1) in DOCX_META_KEYS)
+                or NOISE_LINE.match(h) or re.match(r"^(inspire|founder story)\s*/", h, re.I)):
+            raise ValueError(
+                f"frontmatter leaked into story body (starts {h[:60]!r}) - "
+                "the docx layout defeats extract_docx; fix the extractor, never publish this"
+            )
     return meta, "\n\n".join(body).strip()
 
 
