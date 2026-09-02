@@ -521,7 +521,33 @@ def main():
             if src.suffix == ".docx":
                 docx_meta, body = extract_docx(src, row["title"])
             else:
+                # .md stories (the Claude Code batches) carry ----delimited
+                # YAML frontmatter and open with the H1 title. Both must come
+                # off here: the raw read used to ship them into the body as
+                # visible prose - the same failure class extract_docx's gate
+                # exists for (#119), which never fired on this branch because
+                # nothing stripped the .md shape before it. The frontmatter
+                # keys feed docx_meta so build_meta scaffolds keep working.
                 docx_meta, body = {}, src.read_text(encoding="utf-8")
+                fm = re.match(r"^---\r?\n(.*?)\r?\n---\r?\n", body, re.S)
+                if fm:
+                    try:
+                        docx_meta = {k: v for k, v in (yaml.safe_load(fm.group(1)) or {}).items()
+                                     if isinstance(k, str)}
+                    except yaml.YAMLError:
+                        docx_meta = {}
+                    body = body[fm.end():]
+                body = body.lstrip()
+                if body.startswith("#"):
+                    first, _, rest = body.partition("\n")
+                    if row["title"] and first.lstrip("# ").strip().lower() == str(row["title"]).strip().lower():
+                        body = rest.lstrip()
+                for h in (b.strip() for b in body.splitlines()[:6]):
+                    km = re.match(r"^([a-z_]+):", h)
+                    if re.fullmatch(r"-{3,}", h) or (km and km.group(1) in DOCX_META_KEYS):
+                        raise ValueError(
+                            f"frontmatter leaked into story body (starts {h[:60]!r}) - "
+                            "the .md strip failed; fix it, never publish this")
             if len(body) < 200:
                 print(f"    ! story too short ({len(body)} chars)"); failed.append((sid, "story too short")); continue
 
