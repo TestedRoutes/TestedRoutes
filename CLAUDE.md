@@ -48,7 +48,15 @@ back through the authoring flow either.
 `scripts/*.mjs` run locally with `node --env-file=.env.local …` and need
 `SANITY_API_WRITE_TOKEN` — they cannot run in remote/sandbox sessions (no
 `.env.local` there; token fetches are also how drafts get patched alongside
-published docs). Carousel authoring flow: curate a numbered folder
+published docs).
+
+**The publish pipeline makes no Anthropic API calls** (founder decision
+2026-08-31). `batch_publish.py` requires each story's `{ID}_meta_en.yaml` to be
+authored by the Claude Code session before the run — the session writes the
+editorial fields (place, subtitle, heroAlt, metaDescription, keywords,
+trip_length, …) with the story and contact sheets in front of it. A missing
+meta fails that story and leaves a `.yaml.draft` scaffold to complete; the
+field contract lives in the newest `TR-inspire-authoring_*.md`. Carousel authoring flow: curate a numbered folder
 ("1. cover.jpg", "2. snapshot.jpg", …), then `set-guide-carousel.mjs`
 uploads it wholesale; alt text lives in that script's `ALT` map.
 
