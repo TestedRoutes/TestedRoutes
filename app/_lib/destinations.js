@@ -9,7 +9,7 @@
  *
  * Adding a destination page? Add its slug here in the same commit.
  */
-export const DESTINATION_SLUGS = ["iceland", "seychelles", "tuvalu", "switzerland", "kuwait", "samoa", "fiji", "mauritania", "western-sahara", "gambia"];
+export const DESTINATION_SLUGS = ["iceland", "seychelles", "tuvalu", "switzerland", "kuwait", "samoa", "fiji", "mauritania", "western-sahara", "gambia", "senegal"];
 
 /**
  * Hidden hubs — pages that exist in the repo but are paused from every
