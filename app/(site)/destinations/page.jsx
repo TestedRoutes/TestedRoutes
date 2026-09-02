@@ -12,6 +12,7 @@ import mauritaniaHero from "../../../content/countries/mauritania/destination/ge
 import westernSaharaHero from "../../../content/countries/western-sahara/destination/generated/web/white-dune-tidal-pool.jpg";
 import gambiaHero from "../../../content/countries/gambia/destination/generated/web/kunta-kinteh-ferry-midriver.jpg";
 import senegalHero from "../../../content/countries/senegal/destination/generated/web/dakar-from-renaissance-monument.jpg";
+import guineaHero from "../../../content/countries/guinea/destination/generated/web/red-road-toward-the-fouta.jpg";
 
 export const metadata = {
   title: "Destinations · TestedRoutes",
@@ -109,6 +110,15 @@ const DESTINATIONS = [
       "Is it safe and is it worth it – Dakar and its monument, colonial Saint-Louis on its river island, and the lake that is not always pink.",
     image: senegalHero,
     alt: "Dakar spreading below the hill of the African Renaissance Monument, Senegal",
+  },
+  {
+    name: "Guinea",
+    href: "/destinations/guinea",
+    region: "North & West Africa · The Fouta Djallon",
+    blurb:
+      "Is it safe and is it worth it – the water tower of West Africa, a capital at the end of a peninsula, and roads that decide the whole trip.",
+    image: guineaHero,
+    alt: "A red laterite road running downhill toward the blue hills of the Fouta Djallon, Guinea",
   },
   {
     name: "Switzerland",
