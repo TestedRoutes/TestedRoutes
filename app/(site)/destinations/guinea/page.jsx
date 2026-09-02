@@ -46,10 +46,13 @@ import conakryShoreAndMarket from "../../../../content/countries/guinea/destinat
  * Kinkon, Kambadaga and Dalaba are saved research, not visits - the founder was
  * asleep on the Labe road while the driver passed waterfalls and decided not to
  * wake anyone.
- * ONE EXCEPTION, founder-confirmed 2026-09-03: Conakry itself WAS seen properly,
- * at the start of the 2024 rally rather than in 2023 - Madina market, the Musee
- * national de Guinee and the Grande Mosquee Faycal. Those three may be named
- * here. Nothing beyond naming them, until he describes what they were like.
+ * ONE EXCEPTION, founder-confirmed 2026-09-03: Conakry itself WAS seen, at the
+ * start of the 2024 rally rather than in 2023. Precisely what he saw, in his
+ * words: the market (and the observation that the city is effectively one
+ * continuous market running out to Coyah), the Grande Mosquee Faycal FROM
+ * OUTSIDE THE GATES ONLY - they were not allowed in - and fishermen with their
+ * boats on the shore. He believes they did NOT go into the Musee national, so
+ * the museum is not claimed anywhere on this page. Do not reinstate it.
  * The test before any edit: could a reader run a day of this trip from this
  * page? If yes, cut until they cannot.
  */
@@ -77,7 +80,7 @@ const WHEN_TO_GO = [
 ];
 
 const HOW_LONG = [
-  ["A stopover", "Conakry and straight back out. A day covers the capital's three set pieces – Madina market, the national museum and the Grande Mosquée Fayçal – along with the Atlantic and the traffic, but none of the reason you came to Guinea. Fine if a flight routing forces it. Not a trip."],
+  ["A stopover", "Conakry and straight back out. A day gives you a market that seems never to end, the Grande Mosquée Fayçal, fishing boats on the shore and a great deal of traffic – but none of the reason you came to Guinea. Fine if a flight routing forces it. Not a trip."],
   ["A week", "Enough to reach the Fouta Djallon and stay there – the plateaus, the waterfalls, the villages – and still get back to the coast without spending the week in a vehicle. This is the shape almost everyone should take, and it is the one we could not manage."],
   ["Two weeks", "The Fouta Djallon properly, plus a second region: the forested southeast toward Nzérékoré, or the long run east to Kankan and the upper Niger. Distances here are measured in hours rather than kilometres, and two weeks is where the country stops fighting you."],
   ["What we actually had", "Four days, driving, at the end of a rally from Gibraltar. We crossed a rope border, lost a car, and reached Conakry at three in the morning. It was enough to learn the roads and nowhere near enough to see the country – which is exactly why the honest answer above is a week."],
@@ -100,7 +103,7 @@ const REGIONS = [
     name: "Conakry and the coast",
     image: conakryCoastFromTheRoad,
     alt: "Tarpaulin stalls and low houses along the shore of Conakry with the Atlantic behind, Guinea",
-    body: "The capital sits on a long thin peninsula pushed out into the Atlantic, which makes it one of the more geographically odd cities in West Africa and does nothing for its traffic. It is loud, wet in season, and not the reason you come – but it holds a half-day easily: the sprawl of Madina market, the Musée national de Guinée, and the Grande Mosquée Fayçal. Every flight lands here and every road ends here, and the water is never far from the road.",
+    body: "The capital sits on a long thin peninsula pushed out into the Atlantic, which makes it one of the more geographically odd cities in West Africa and does nothing for its traffic. It is loud, wet in season, and not the reason you come – but what stays with you is that the whole place behaves like one continuous market. Madina is the famous one; the stalls simply never stop, out of the city and along the road as far as Coyah. Add the Grande Mosquée Fayçal, fishing boats pulled up on the shore, and the Atlantic at the end of the street.",
   },
 ];
 
