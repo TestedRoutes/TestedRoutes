@@ -43,7 +43,13 @@ import conakryShoreAndMarket from "../../../../content/countries/guinea/destinat
  * what the roads are, what the Fouta Djallon is, and that a week is the honest
  * minimum - which is a stronger and more citable answer than a thin sights
  * list. Do not add a sight we did not stand at. The maps.me bookmarks pinning
- * Kinkon, Kambadaga and Dalaba are saved research, not visits.
+ * Kinkon, Kambadaga and Dalaba are saved research, not visits - the founder was
+ * asleep on the Labe road while the driver passed waterfalls and decided not to
+ * wake anyone.
+ * ONE EXCEPTION, founder-confirmed 2026-09-03: Conakry itself WAS seen properly,
+ * at the start of the 2024 rally rather than in 2023 - Madina market, the Musee
+ * national de Guinee and the Grande Mosquee Faycal. Those three may be named
+ * here. Nothing beyond naming them, until he describes what they were like.
  * The test before any edit: could a reader run a day of this trip from this
  * page? If yes, cut until they cannot.
  */
@@ -71,7 +77,7 @@ const WHEN_TO_GO = [
 ];
 
 const HOW_LONG = [
-  ["A stopover", "Conakry and straight back out. Honestly assessed, this is a capital most people pass through rather than visit, and a stopover gives you the Atlantic, the markets and the traffic without the reason you came. Fine if a flight routing forces it. Not a trip."],
+  ["A stopover", "Conakry and straight back out. A day covers the capital's three set pieces – Madina market, the national museum and the Grande Mosquée Fayçal – along with the Atlantic and the traffic, but none of the reason you came to Guinea. Fine if a flight routing forces it. Not a trip."],
   ["A week", "Enough to reach the Fouta Djallon and stay there – the plateaus, the waterfalls, the villages – and still get back to the coast without spending the week in a vehicle. This is the shape almost everyone should take, and it is the one we could not manage."],
   ["Two weeks", "The Fouta Djallon properly, plus a second region: the forested southeast toward Nzérékoré, or the long run east to Kankan and the upper Niger. Distances here are measured in hours rather than kilometres, and two weeks is where the country stops fighting you."],
   ["What we actually had", "Four days, driving, at the end of a rally from Gibraltar. We crossed a rope border, lost a car, and reached Conakry at three in the morning. It was enough to learn the roads and nowhere near enough to see the country – which is exactly why the honest answer above is a week."],
@@ -94,7 +100,7 @@ const REGIONS = [
     name: "Conakry and the coast",
     image: conakryCoastFromTheRoad,
     alt: "Tarpaulin stalls and low houses along the shore of Conakry with the Atlantic behind, Guinea",
-    body: "The capital sits on a long thin peninsula pushed out into the Atlantic, which makes it one of the more geographically odd cities in West Africa and does nothing for its traffic. It is loud, wet in season, and not a sightseeing city – but it is where every flight lands and every road ends, and the water is never far from the road.",
+    body: "The capital sits on a long thin peninsula pushed out into the Atlantic, which makes it one of the more geographically odd cities in West Africa and does nothing for its traffic. It is loud, wet in season, and not the reason you come – but it holds a half-day easily: the sprawl of Madina market, the Musée national de Guinée, and the Grande Mosquée Fayçal. Every flight lands here and every road ends here, and the water is never far from the road.",
   },
 ];
 
@@ -296,8 +302,8 @@ export default async function GuineaDestinationPage() {
                 road that gets you there. There is no circuit, no tourist
                 infrastructure to speak of, and no way to see the country
                 quickly. Conakry, where every flight lands, is a working
-                capital on a long thin peninsula rather than a place you come
-                to see.
+                capital on a long thin peninsula – worth half a day rather than
+                a trip.
               </p>
               <p className="text-[15px] leading-relaxed text-slate-700">
                 The honest caveats are two. Guinea sits higher on every
