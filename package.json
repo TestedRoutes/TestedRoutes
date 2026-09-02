@@ -20,6 +20,7 @@
     "sync:polar": "node --env-file=.env.local scripts/sync-polar-products.mjs",
     "sweep:em-dashes": "node --env-file=.env.local scripts/sweep-sanity-em-dashes.mjs",
     "reexport:cards": "node --env-file=.env.local scripts/reexport-card-pages.mjs",
+    "resize:destinations": "node scripts/resize-destination-photos.mjs",
     "generate:outlines": "node scripts/generate-country-outlines.mjs",
     "qa:deck": "python scripts/qa_deck.py"
   },
