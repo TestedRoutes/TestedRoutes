@@ -383,6 +383,8 @@ function validate(doc) {
 //   guide.cover           reexport-card-pages.mjs
 //   guide.polarProductId  sync-polar-products.mjs
 //   guide.statusNote      patch-status-note.mjs
+//   guide.contentVersion  publish-sku.mjs (structured-content store)
+//   guide.pdfRenderedFrom render-guide-pdf.mjs (Stage 2)
 //   similarStories        patched by hand after related guides publish
 //
 // The legacy scripts called createOrReplace with only their own fields, which
