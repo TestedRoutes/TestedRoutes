@@ -23,6 +23,9 @@
     "resize:destinations": "node scripts/resize-destination-photos.mjs",
     "db:push": "drizzle-kit push",
     "db:studio": "drizzle-kit studio",
+    "import:master": "python scripts/import_fiji_master.py",
+    "publish:sku": "node --env-file=.env.local scripts/publish-sku.mjs",
+    "check:sku": "node --env-file=.env.local scripts/check-sku.mjs",
     "generate:outlines": "node scripts/generate-country-outlines.mjs",
     "qa:deck": "python scripts/qa_deck.py"
   },

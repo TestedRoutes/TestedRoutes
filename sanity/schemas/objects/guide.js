@@ -231,5 +231,23 @@ export default {
       readOnly: true,
       hidden: ({ parent }) => !parent?.hasGuide,
     },
+    {
+      name: "contentVersion",
+      title: "Content version",
+      type: "number",
+      description:
+        "Set by publish:sku on each structured-content publish (bumps only when the content actually changed). The reader/app cache key. Do not edit manually.",
+      readOnly: true,
+      hidden: ({ parent }) => !parent?.hasGuide,
+    },
+    {
+      name: "pdfRenderedFrom",
+      title: "PDF rendered from content version",
+      type: "number",
+      description:
+        "The contentVersion the currently uploaded PDF was rendered from; a gap vs Content version means the sellable PDF is stale. Machine-written by the render script.",
+      readOnly: true,
+      hidden: ({ parent }) => !parent?.hasGuide,
+    },
   ],
 };
