@@ -6,27 +6,25 @@ import Byline from "../../../_components/Byline";
 import BuyBox from "../../../_components/BuyBox";
 import PhotoCarousel from "../../../_components/PhotoCarousel";
 
-import redRoadTowardTheFouta from "../../../../content/countries/guinea/destination/generated/web/red-road-toward-the-fouta.jpg";
-import foutaDjallonGreenValley from "../../../../content/countries/guinea/destination/generated/web/fouta-djallon-green-valley.jpg";
-import roundHutsVillageMorning from "../../../../content/countries/guinea/destination/generated/web/round-huts-village-morning.jpg";
-import conakryCoastFromTheRoad from "../../../../content/countries/guinea/destination/generated/web/conakry-coast-from-the-road.jpg";
-import threeCarsOnTheRedRoad from "../../../../content/countries/guinea/destination/generated/web/three-cars-on-the-red-road.jpg";
-import drivingTheDirtRoadIn from "../../../../content/countries/guinea/destination/generated/web/driving-the-dirt-road-in.jpg";
-import villageAndBigTreeAtDawn from "../../../../content/countries/guinea/destination/generated/web/village-and-big-tree-at-dawn.jpg";
+import villageAndMangoTreeAtDawn from "../../../../content/countries/guinea/destination/generated/web/village-and-mango-tree-at-dawn.jpg";
+import foutaDjallonFromTheRoad from "../../../../content/countries/guinea/destination/generated/web/fouta-djallon-from-the-road.jpg";
+import thatchedHutsOnTheRidge from "../../../../content/countries/guinea/destination/generated/web/thatched-huts-on-the-ridge.jpg";
+import grandeMosqueeFaycal from "../../../../content/countries/guinea/destination/generated/web/grande-mosquee-faycal.jpg";
+import riverLaundryAndBridge from "../../../../content/countries/guinea/destination/generated/web/river-laundry-and-bridge.jpg";
 import cattleOnTheFloodedFlats from "../../../../content/countries/guinea/destination/generated/web/cattle-on-the-flooded-flats.jpg";
 import carsBelowTheEscarpment from "../../../../content/countries/guinea/destination/generated/web/cars-below-the-escarpment.jpg";
-import thatchedHutsOnTheRidge from "../../../../content/countries/guinea/destination/generated/web/thatched-huts-on-the-ridge.jpg";
-import redRoadAndBlueHills from "../../../../content/countries/guinea/destination/generated/web/red-road-and-blue-hills.jpg";
+import redRoadTowardTheFouta from "../../../../content/countries/guinea/destination/generated/web/red-road-toward-the-fouta.jpg";
 import mudBrickVillageHouses from "../../../../content/countries/guinea/destination/generated/web/mud-brick-village-houses.jpg";
-import theCarUpOnTheJack from "../../../../content/countries/guinea/destination/generated/web/the-car-up-on-the-jack.jpg";
 import underTheCarFuelTank from "../../../../content/countries/guinea/destination/generated/web/under-the-car-fuel-tank.jpg";
 import villageChildrenCrowdingIn from "../../../../content/countries/guinea/destination/generated/web/village-children-crowding-in.jpg";
-import theVillageSquareFillsUp from "../../../../content/countries/guinea/destination/generated/web/the-village-square-fills-up.jpg";
-import salvagedPartsAndThePlate from "../../../../content/countries/guinea/destination/generated/web/salvaged-parts-and-the-plate.jpg";
-import asleepOnCarSeats from "../../../../content/countries/guinea/destination/generated/web/asleep-on-car-seats.jpg";
-import foutaDjallonFromTheRoad from "../../../../content/countries/guinea/destination/generated/web/fouta-djallon-from-the-road.jpg";
 import theFinishLineConakry from "../../../../content/countries/guinea/destination/generated/web/the-finish-line-conakry.jpg";
 import conakryShoreAndMarket from "../../../../content/countries/guinea/destination/generated/web/conakry-shore-and-market.jpg";
+import carsUnderTarpaulinsConakry from "../../../../content/countries/guinea/destination/generated/web/cars-under-tarpaulins-conakry.jpg";
+import hotelPoolAboveTheAtlantic from "../../../../content/countries/guinea/destination/generated/web/hotel-pool-above-the-atlantic.jpg";
+import crew2024AndTheCars from "../../../../content/countries/guinea/destination/generated/web/the-2024-crew-and-the-cars.jpg";
+import theRoadOutOfConakry from "../../../../content/countries/guinea/destination/generated/web/the-road-out-of-conakry.jpg";
+import roadsideKitchenAndButcher from "../../../../content/countries/guinea/destination/generated/web/roadside-kitchen-and-butcher.jpg";
+import riverBathingAndPalms from "../../../../content/countries/guinea/destination/generated/web/river-bathing-and-palms.jpg";
 
 /*
  * Scope note (destination playbook §7): this page sells the DECISION - whether
@@ -89,44 +87,41 @@ const HOW_LONG = [
 const REGIONS = [
   {
     name: "The Fouta Djallon",
-    image: foutaDjallonGreenValley,
-    alt: "Green wooded valley falling away from a flat-topped escarpment in the Fouta Djallon, Guinea",
+    image: foutaDjallonFromTheRoad,
+    alt: "Wide green valleys and plateau edges of the Fouta Djallon seen from the roadside, Guinea",
     body: "The highland heart of the country, and the reason to come: sandstone plateaus between roughly 500 and 1,500 metres, cut by gorges and waterfalls, noticeably cooler and greener than the coast. The World Bank calls it the water tower of West Africa, because the Niger, the Senegal and the Gambia rivers all rise here. It is the part of Guinea that rewards a week and punishes a weekend.",
   },
   {
     name: "The northern borderlands",
-    image: roundHutsVillageMorning,
-    alt: "A large mango tree over a village of round thatched houses at sunrise near Koundara, Guinea",
+    image: thatchedHutsOnTheRidge,
+    alt: "Thatched houses on a cleared ridge with hills beyond, Fouta Djallon foothills, Guinea",
     body: "The country you enter through if you come overland from Guinea-Bissau or Senegal: Koundara, the long red laterite roads, and villages of round thatched houses under enormous shade trees. Brick and cement thin out, mud and straw take over, and the traffic becomes motorbikes. Almost nobody visits this corner deliberately, which is most of its charm.",
   },
   {
     name: "Conakry and the coast",
-    image: conakryCoastFromTheRoad,
-    alt: "Tarpaulin stalls and low houses along the shore of Conakry with the Atlantic behind, Guinea",
-    body: "The capital sits on a long thin peninsula pushed out into the Atlantic, which makes it one of the more geographically odd cities in West Africa and does nothing for its traffic. It is loud, wet in season, and not the reason you come – but what stays with you is that the whole place behaves like one continuous market. Madina is the famous one; the stalls simply never stop, out of the city and along the road as far as Coyah. Add the Grande Mosquée Fayçal, fishing boats pulled up on the shore, and the Atlantic at the end of the street.",
+    image: grandeMosqueeFaycal,
+    alt: "The four minarets and golden domes of the Grande Mosquee Faycal above its empty forecourt, Conakry",
+    body: "The capital sits on a long thin peninsula pushed out into the Atlantic, which makes it one of the more geographically odd cities in West Africa and does nothing at all for its traffic. It is loud, wet in season, and not the reason you come \– but what stays with you is that the whole place behaves like one continuous market. Madina is the famous one; the stalls simply never stop, out of the city and along the road as far as Coyah. Add the Grande Mosqu\ée Fay\çal, fishing boats pulled up on the shore, and the Atlantic at the end of the street.",
   },
 ];
 
-/* Trip photos in route order: over the border, the long red roads toward the
-   Fouta, the day the car died, the village that emptied itself onto the road,
-   then the highlands and the run down to the coast. */
+/* Trip photos: the 2023 crossing north to south, then the 2024 return to
+   Conakry - the cars found under their covers, the city, and the road out. */
 const CAROUSEL = [
-  { image: drivingTheDirtRoadIn, alt: "View from inside a rally car driving a red dirt road in Guinea, another car ahead", caption: "Over the border, on a road nobody has resurfaced" },
-  { image: villageAndBigTreeAtDawn, alt: "Round thatched houses and a large tree silhouetted at dawn, northern Guinea", caption: "First light, on the Koundara road" },
   { image: cattleOnTheFloodedFlats, alt: "A white cow grazing beside standing water on green flats, northern Guinea", caption: "The rains had already started" },
   { image: carsBelowTheEscarpment, alt: "Three rally cars parked on a red dirt road with a long escarpment behind, Guinea", caption: "On the road toward Mali town" },
-  { image: thatchedHutsOnTheRidge, alt: "Thatched houses on a cleared ridge with hills beyond, Fouta Djallon foothills, Guinea", caption: "A ridge village, foothills of the Fouta" },
-  { image: redRoadAndBlueHills, alt: "A red laterite road running toward blue hills under a wide sky, Guinea", caption: "The highlands, still ahead" },
+  { image: redRoadTowardTheFouta, alt: "A red laterite road running downhill toward the blue hills of the Fouta Djallon, Guinea", caption: "The highlands, still ahead" },
   { image: mudBrickVillageHouses, alt: "Mud-brick houses with thatched roofs and a mango tree in a village, Guinea", caption: "Mud brick, thatch and shade" },
-  { image: theCarUpOnTheJack, alt: "A rally car jacked up under trees with the crew standing around it, Guinea", caption: "The day the fuel tank went" },
   { image: underTheCarFuelTank, alt: "The underside of a jacked-up car showing the fuel tank and a bottle catching fuel", caption: "Three holes, and a bottle underneath" },
   { image: villageChildrenCrowdingIn, alt: "Village children smiling and crowding towards the camera, Guinea", caption: "The village that had looked empty" },
-  { image: theVillageSquareFillsUp, alt: "A crowd of children and adults filling a red-earth village square around parked cars, Guinea", caption: "The square, filling up" },
-  { image: salvagedPartsAndThePlate, alt: "Salvaged car parts, tools and a Lithuanian number plate laid out on a kerb, Guinea", caption: "Stripped for parts, plate and all" },
-  { image: asleepOnCarSeats, alt: "Two of the crew asleep on car seats laid on the ground in a mechanics' yard, Guinea", caption: "Asleep on the seats, in the mechanics' yard" },
-  { image: foutaDjallonFromTheRoad, alt: "Wide green valleys and plateau edges of the Fouta Djallon seen from the roadside, Guinea", caption: "The Fouta Djallon, from the Labé road" },
   { image: theFinishLineConakry, alt: "The rally crew and two Subarus with a Lithuanian flag under palms in Conakry, Guinea", caption: "The finish line, Conakry" },
   { image: conakryShoreAndMarket, alt: "Stalls, low houses and the Atlantic along the shore in Conakry, Guinea", caption: "Where the road runs out" },
+  { image: carsUnderTarpaulinsConakry, alt: "Two cars under dusty tarpaulins in a walled yard behind a house, Conakry, Guinea", caption: "A year later, still under their covers" },
+  { image: crew2024AndTheCars, alt: "The 2024 rally crew with a Lithuanian flag beside two Subarus under palms, Conakry", caption: "Both survivors, ready to go again" },
+  { image: hotelPoolAboveTheAtlantic, alt: "An infinity pool above the Atlantic at dusk in Conakry, Guinea", caption: "The Atlantic, from the edge of the city" },
+  { image: theRoadOutOfConakry, alt: "A motorbike rider in a Guinea football shirt on the divided highway out of Conakry", caption: "The road out, and the median we could not cross" },
+  { image: roadsideKitchenAndButcher, alt: "A roadside kitchen and butcher under an awning on the highway east of Conakry, Guinea", caption: "The market does not stop at the city limits" },
+  { image: riverBathingAndPalms, alt: "People bathing and washing clothes on rocks in a wide palm-lined river, Guinea", caption: "The river does the laundry" },
 ];
 
 // Deliberately no tier totals here (destination playbook §8). The one number on
@@ -275,8 +270,8 @@ export default async function GuineaDestinationPage() {
         <div className="min-w-0">
           <div className="relative mb-12 overflow-hidden rounded-[28px]">
             <Image
-              src={redRoadTowardTheFouta}
-              alt="A red laterite road running downhill toward the blue hills of the Fouta Djallon, Guinea"
+              src={villageAndMangoTreeAtDawn}
+              alt="A large mango tree over a village of round thatched houses at sunrise near Koundara, Guinea"
               priority
               className="h-[320px] w-full object-cover md:h-[460px]"
               sizes="(max-width: 768px) 100vw, 830px"
@@ -495,8 +490,8 @@ export default async function GuineaDestinationPage() {
 
             <div className="relative overflow-hidden rounded-[28px]">
               <Image
-                src={threeCarsOnTheRedRoad}
-                alt="Three rally cars parked along a red dirt road with the crew and a Lithuanian flag, Guinea"
+                src={riverLaundryAndBridge}
+                alt="Washing spread to dry on river rocks below an iron truss bridge, Guinea"
                 className="h-[420px] w-full object-cover"
                 sizes="(max-width: 768px) 100vw, 768px"
               />

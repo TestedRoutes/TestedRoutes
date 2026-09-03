@@ -12,7 +12,7 @@ import mauritaniaHero from "../../../content/countries/mauritania/destination/ge
 import westernSaharaHero from "../../../content/countries/western-sahara/destination/generated/web/white-dune-tidal-pool.jpg";
 import gambiaHero from "../../../content/countries/gambia/destination/generated/web/kunta-kinteh-ferry-midriver.jpg";
 import senegalHero from "../../../content/countries/senegal/destination/generated/web/dakar-from-renaissance-monument.jpg";
-import guineaHero from "../../../content/countries/guinea/destination/generated/web/red-road-toward-the-fouta.jpg";
+import guineaHero from "../../../content/countries/guinea/destination/generated/web/village-and-mango-tree-at-dawn.jpg";
 
 export const metadata = {
   title: "Destinations · TestedRoutes",
@@ -118,7 +118,7 @@ const DESTINATIONS = [
     blurb:
       "Is it safe and is it worth it – the water tower of West Africa, a capital at the end of a peninsula, and roads that decide the whole trip.",
     image: guineaHero,
-    alt: "A red laterite road running downhill toward the blue hills of the Fouta Djallon, Guinea",
+    alt: "A large mango tree over a village of round thatched houses at sunrise near Koundara, Guinea",
   },
   {
     name: "Switzerland",
