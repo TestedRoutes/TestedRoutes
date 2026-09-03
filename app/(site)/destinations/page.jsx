@@ -14,6 +14,7 @@ import gambiaHero from "../../../content/countries/gambia/destination/generated/
 import senegalHero from "../../../content/countries/senegal/destination/generated/web/dakar-from-renaissance-monument.jpg";
 import guineaHero from "../../../content/countries/guinea/destination/generated/web/village-and-mango-tree-at-dawn.jpg";
 import guineaBissauHero from "../../../content/countries/guinea-bissau/destination/generated/web/colonial-street-palms-bissau-velho.jpg";
+import canaryIslandsHero from "../../../content/countries/canary-islands/destination/generated/web/papagayo-coves-golden-hour.jpg";
 
 export const metadata = {
   title: "Destinations · TestedRoutes",
@@ -129,6 +130,15 @@ const DESTINATIONS = [
       "Is it safe and is there anything to see – an empty Portuguese old town, a day-long road east, and the archipelago that is the real reason to come.",
     image: guineaBissauHero,
     alt: "Palms leaning over a red dirt street of decaying colonial buildings in Bissau Velho, Guinea-Bissau",
+  },
+  {
+    name: "Canary Islands",
+    href: "/destinations/canary-islands",
+    region: "Spain · Atlantic & volcanic islands",
+    blurb:
+      "Which island to pick and how many days you need – four islands that feel like four countries, winter swimming included, and the ferry move that beats choosing.",
+    image: canaryIslandsHero,
+    alt: "The turquoise coves and red headlands of Punta del Papagayo at golden hour, Lanzarote",
   },
   {
     name: "Switzerland",
