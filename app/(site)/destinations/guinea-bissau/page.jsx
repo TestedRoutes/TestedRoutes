@@ -9,23 +9,16 @@ import PhotoCarousel from "../../../_components/PhotoCarousel";
 import colonialStreetPalmsBissauVelho from "../../../../content/countries/guinea-bissau/destination/generated/web/colonial-street-palms-bissau-velho.jpg";
 import colonialStreetCrossingBissau from "../../../../content/countries/guinea-bissau/destination/generated/web/colonial-street-crossing-bissau.jpg";
 import bissauRooftopsAtSunset from "../../../../content/countries/guinea-bissau/destination/generated/web/bissau-rooftops-at-sunset.jpg";
-import colonialStreetWideBissau from "../../../../content/countries/guinea-bissau/destination/generated/web/colonial-street-wide-bissau.jpg";
-import redDirtStreetBissauVelho from "../../../../content/countries/guinea-bissau/destination/generated/web/red-dirt-street-bissau-velho.jpg";
-import piroguesOnTheMud from "../../../../content/countries/guinea-bissau/destination/generated/web/pirogues-on-the-mud-at-low-tide.jpg";
 import piroguesAndThePort from "../../../../content/countries/guinea-bissau/destination/generated/web/pirogues-and-the-port-bissau.jpg";
 import sunsetColonialRoofline from "../../../../content/countries/guinea-bissau/destination/generated/web/sunset-over-the-colonial-roofline.jpg";
-import derelictBlockAtSunset from "../../../../content/countries/guinea-bissau/destination/generated/web/derelict-block-at-sunset-bissau.jpg";
-import longRedColonialBuilding from "../../../../content/countries/guinea-bissau/destination/generated/web/long-red-colonial-building-bissau.jpg";
 import fortRampAndFlag from "../../../../content/countries/guinea-bissau/destination/generated/web/fort-ramp-and-flag-bissau.jpg";
-import bissauRooftopsTowerBlock from "../../../../content/countries/guinea-bissau/destination/generated/web/bissau-rooftops-tower-block.jpg";
 import tidalCreekDugoutCanoe from "../../../../content/countries/guinea-bissau/destination/generated/web/tidal-creek-and-dugout-canoe.jpg";
 import villageOfMudAndThatch from "../../../../content/countries/guinea-bissau/destination/generated/web/village-of-mud-and-thatch.jpg";
 import roundHutsDryGround from "../../../../content/countries/guinea-bissau/destination/generated/web/round-huts-across-dry-ground.jpg";
-import thatchedVillageLateLight from "../../../../content/countries/guinea-bissau/destination/generated/web/thatched-village-late-light.jpg";
 import lilyPondUnderBigTrees from "../../../../content/countries/guinea-bissau/destination/generated/web/lily-pond-under-big-trees.jpg";
-import causewayInTheRain from "../../../../content/countries/guinea-bissau/destination/generated/web/causeway-in-the-rain.jpg";
 import azulejoTilePanel from "../../../../content/countries/guinea-bissau/destination/generated/web/azulejo-tile-panel-bissau.jpg";
 import bissauCitySign from "../../../../content/countries/guinea-bissau/destination/generated/web/bissau-city-sign.jpg";
+import groupWithFlagMonument from "../../../../content/countries/guinea-bissau/destination/generated/web/group-with-flag-independence-monument.jpg";
 
 /*
  * Scope note (destination playbook §7): this page sells the DECISION - whether
@@ -112,32 +105,27 @@ const REGIONS = [
   },
   {
     name: "The tidal coast",
-    image: piroguesOnTheMud,
-    alt: "Long painted fishing pirogues lying over on grey mud at low tide in Bissau",
+    image: piroguesAndThePort,
+    alt: "Fishing pirogues on the mudflats at low tide with the cranes of Bissau's port behind",
     body: "The whole coast is mangrove, creek and estuary, and the tide is the thing that runs it. At low water the harbour at Bissau becomes a mudflat with painted boats lying over on their sides and the port cranes stranded behind them; inland the same water reaches a long way up through the mangroves. It is not a beach coastline. It is a working, shifting, amphibious one.",
   },
 ];
 
-/* Trip photos: the old town first, then the water, then the road east. */
+/* Trip photos, the founder's cull: the old town first, then the water, then the road east. */
 const CAROUSEL = [
-  { image: colonialStreetCrossingBissau, alt: "Colonial buildings at a crossing in Bissau's old town", caption: "Bissau Velho, at the crossing" },
-  { image: colonialStreetWideBissau, alt: "A wide street of colonial buildings in Bissau with parked cars", caption: "The old town, wider" },
-  { image: redDirtStreetBissauVelho, alt: "Palms leaning over a red dirt street lined with decaying colonial facades", caption: "Palms over the red dirt" },
+  { image: colonialStreetPalmsBissauVelho, alt: "Palms leaning over a red dirt street of decaying colonial buildings in Bissau Velho", caption: "Palms over the red dirt, Bissau Velho" },
+  { image: colonialStreetCrossingBissau, alt: "Colonial buildings at a crossing in Bissau's old town", caption: "The old town, at the crossing" },
   { image: azulejoTilePanel, alt: "A blue and white Portuguese tile panel showing a harvest scene under palms, on a wall in Bissau", caption: "Tiles that outlasted the empire" },
-  { image: longRedColonialBuilding, alt: "A long red colonial building with a tiled roof in Bissau", caption: "The long red building" },
   { image: fortRampAndFlag, alt: "The ramp up to Bissau's fort with a flag flying above it", caption: "The fort, from the ramp" },
+  { image: groupWithFlagMonument, alt: "The rally group holding a Lithuanian flag beside the independence monument in Bissau", caption: "The flag, briefly, by the monument" },
   { image: sunsetColonialRoofline, alt: "Sunset behind the colonial roofline at a junction in Bissau", caption: "Sunset on the roofline" },
-  { image: derelictBlockAtSunset, alt: "A derelict modernist block standing at a junction in Bissau at sunset", caption: "Not everything empty is old" },
-  { image: piroguesOnTheMud, alt: "Painted pirogues lying over on the mud at low tide", caption: "Low tide takes the harbour with it" },
-  { image: piroguesAndThePort, alt: "Fishing pirogues on the mudflats with the cranes of Bissau's port behind", caption: "The port, waiting for water" },
-  { image: bissauRooftopsTowerBlock, alt: "Bissau's red-tiled rooftops at sunset with a tower block beyond", caption: "Rooftops, from above" },
   { image: bissauCitySign, alt: "Multicoloured letters spelling BISSAU at a roundabout in the capital", caption: "Arrival, more or less" },
+  { image: bissauRooftopsAtSunset, alt: "Bissau's red-tiled rooftops at sunset", caption: "Rooftops, from above" },
+  { image: piroguesAndThePort, alt: "Fishing pirogues on the mudflats with the cranes of Bissau's port behind", caption: "Low tide takes the harbour with it" },
   { image: tidalCreekDugoutCanoe, alt: "A dugout canoe on the mud of a tidal creek running through mangroves", caption: "Mangrove country, east of the capital" },
-  { image: causewayInTheRain, alt: "Cars stopped on a causeway over tidal flats in the rain", caption: "A tidal crossing, in the rain" },
   { image: villageOfMudAndThatch, alt: "Round mud houses with thatched roofs beside a red laterite road", caption: "Mud and thatch, inland" },
   { image: roundHutsDryGround, alt: "Round thatched huts standing across dry open ground", caption: "The interior, mid-morning" },
   { image: lilyPondUnderBigTrees, alt: "A pond covered in lilies under big trees with an animal drinking at the edge", caption: "Shade and water, on the road east" },
-  { image: thatchedVillageLateLight, alt: "A thatched village under big trees in late afternoon light", caption: "Late light, near the border" },
 ];
 
 // Deliberately no tier totals (destination playbook §8). The ONE figure on
