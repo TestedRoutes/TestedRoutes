@@ -97,7 +97,7 @@ const REGIONS = [
     name: "The northern borderlands",
     image: roundHutsVillageMorning,
     alt: "A large mango tree over a village of round thatched houses at sunrise near Koundara, Guinea",
-    body: "The country you enter through if you come overland from Guinea-Bissau or Senegal: Koundara, the long red laterite roads, and villages of round thatched houses under enormous shade trees. Brick and cement thin out, mud and straw take over, and the traffic becomes donkeys. Almost nobody visits this corner deliberately, which is most of its charm.",
+    body: "The country you enter through if you come overland from Guinea-Bissau or Senegal: Koundara, the long red laterite roads, and villages of round thatched houses under enormous shade trees. Brick and cement thin out, mud and straw take over, and the traffic becomes motorbikes. Almost nobody visits this corner deliberately, which is most of its charm.",
   },
   {
     name: "Conakry and the coast",
