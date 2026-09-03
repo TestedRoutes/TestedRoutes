@@ -1,17 +1,22 @@
 "use client";
 
 import Link from "next/link";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import CardMediaCarousel, { buildMediaSlides } from "../../_components/CardMediaCarousel";
-import CardFilters from "../../_components/CardFilters";
 import { getDict } from "../../_lib/i18n";
+import {
+  CONTINENT_TAB_ORDER as TAB_ORDER,
+  continentTabLabel as bucketLabel,
+} from "../../_lib/continents";
 
 function cardHaystack(card) {
   return [
     card.title,
     card.geoLabel,
+    card.country,
     card.categoryLabel,
     card.categoryDurationLine,
+    ...(Array.isArray(card.styles) ? card.styles : []),
     card.excerpt,
   ]
     .filter(Boolean)
@@ -28,6 +33,16 @@ function matchesSearch(card, query) {
 function sortRecentFirst(cards) {
   return [...cards].sort((a, b) => (b.dateMillis || 0) - (a.dateMillis || 0));
 }
+
+// "{n} countries" → "3 countries". The dictionaries carry the templates so
+// each language can put the number where its grammar wants it.
+function fill(template, vars) {
+  return String(template || "").replace(/\{(\w+)\}/g, (_, k) => String(vars[k] ?? ""));
+}
+
+// Style pills match on a normalised key: "Hiking" as the activity category
+// and "hiking" as a free-text tag are the same style.
+const styleKey = (name) => String(name || "").trim().toLowerCase();
 
 function StoryCard({ card, t }) {
   const photos =
@@ -68,7 +83,7 @@ function StoryCard({ card, t }) {
           against and the reserved space costs a two-line title its room. */}
       <div className="flex flex-1 flex-col gap-2.5 p-5 sm:gap-3">
         <p className="truncate text-[11px] font-medium uppercase tracking-[0.18em] text-slate-500">
-          {card.geoLabel || " "}
+          {card.geoLabel || " "}
         </p>
         <div className="flex flex-nowrap items-start justify-between gap-2 sm:min-h-[3.5rem]">
           <p className="line-clamp-2 min-w-0 flex-1 text-lg font-semibold leading-snug tracking-tight text-slate-900">
@@ -109,97 +124,482 @@ function StoryCard({ card, t }) {
   return <div className={shellStatic}>{inner}</div>;
 }
 
+function Chevron({ open }) {
+  return (
+    <svg
+      viewBox="0 0 12 8"
+      aria-hidden="true"
+      className={`h-2 w-3 shrink-0 transition-transform ${open ? "rotate-180" : ""}`}
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <path d="M1 1.5 L6 6.5 L11 1.5" />
+    </svg>
+  );
+}
+
+function MagnifierIcon({ className }) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      aria-hidden="true"
+      className={className}
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+    >
+      <circle cx="11" cy="11" r="7" />
+      <path d="M16.5 16.5 L21 21" />
+    </svg>
+  );
+}
+
+// Filter block redesign (founder mockup 2026-09-03): one rounded panel
+// holds the search bar (with a Country dropdown and the Search button
+// inside the pill), the continent tabs with counts, the style pills with
+// counts, and a status row of dismissable chips. The Country dropdown is a
+// multi-select — several countries at once is the normal way to plan a
+// region trip — scoped by the continent picked in its sidebar, which is
+// the same state as the tab row above.
+//
+// Every count on a tab, pill or country line is unscoped (the whole
+// library), so the numbers stay put while the visitor narrows down; only
+// the "Showing X of Y" line and the panel's Show button follow the live
+// result set.
 export default function InspireBrowse({
   cards,
   lang = "en",
   initialSearch = "",
   initialContinent = "",
-  initialContinentLabel = "",
 }) {
   const [search, setSearch] = useState(initialSearch);
-  const [typeFilter, setTypeFilter] = useState("");
-  const [countryFilter, setCountryFilter] = useState("");
-  const [continentFilter, setContinentFilter] = useState(initialContinent);
+  const [continent, setContinent] = useState(initialContinent);
+  const [countries, setCountries] = useState([]);
+  const [style, setStyle] = useState("");
+  const [panelOpen, setPanelOpen] = useState(false);
+  const [countryQuery, setCountryQuery] = useState("");
+  const panelRef = useRef(null);
   const dict = getDict(lang);
   const t = dict.inspireList;
+  const tl = dict.guideList;
 
-  const types = useMemo(
-    () => [...new Set(cards.map((c) => c.categoryLabel).filter(Boolean))].sort(),
-    [cards],
+  // The country panel closes on outside click or Escape, like a native
+  // dropdown would.
+  useEffect(() => {
+    if (!panelOpen) return;
+    const onDown = (e) => {
+      if (panelRef.current && !panelRef.current.contains(e.target)) setPanelOpen(false);
+    };
+    const onKey = (e) => {
+      if (e.key === "Escape") setPanelOpen(false);
+    };
+    document.addEventListener("pointerdown", onDown);
+    document.addEventListener("keydown", onKey);
+    return () => {
+      document.removeEventListener("pointerdown", onDown);
+      document.removeEventListener("keydown", onKey);
+    };
+  }, [panelOpen]);
+
+  const total = cards.length;
+
+  const continentCounts = useMemo(() => {
+    const counts = new Map();
+    for (const c of cards) {
+      if (!c.continentSlug) continue;
+      counts.set(c.continentSlug, (counts.get(c.continentSlug) || 0) + 1);
+    }
+    return counts;
+  }, [cards]);
+
+  // Only continents that actually have stories get a tab; the order is the
+  // one /guides uses, so a story and its guide sit under the same tab.
+  const tabs = useMemo(() => TAB_ORDER.filter((b) => continentCounts.has(b)), [continentCounts]);
+
+  // Style pills: one per activity category in the library, labelled with
+  // the category's Sanity name. A story counts under a pill when that is
+  // its activity category or one of its tags names it, so the counts can
+  // add up to more than the library — a story can be both a road trip and
+  // a hike.
+  const styles = useMemo(() => {
+    const labels = new Map();
+    for (const c of cards) {
+      if (c.styleLabel) labels.set(styleKey(c.styleLabel), c.styleLabel);
+    }
+    const counts = new Map();
+    for (const c of cards) {
+      for (const key of new Set((c.styles || []).map(styleKey))) {
+        if (labels.has(key)) counts.set(key, (counts.get(key) || 0) + 1);
+      }
+    }
+    return [...labels.entries()]
+      .map(([key, label]) => ({ key, label, count: counts.get(key) || 0 }))
+      .sort((a, b) => b.count - a.count || a.label.localeCompare(b.label));
+  }, [cards]);
+
+  // Country → story count and the continent bucket(s) it appears under.
+  const countryIndex = useMemo(() => {
+    const index = new Map();
+    for (const c of cards) {
+      if (!c.country) continue;
+      const entry = index.get(c.country) || { count: 0, continents: new Set() };
+      entry.count += 1;
+      if (c.continentSlug) entry.continents.add(c.continentSlug);
+      index.set(c.country, entry);
+    }
+    return index;
+  }, [cards]);
+
+  // The panel lists the countries of the active continent, most stories
+  // first (the mockup's order), filtered by the panel's own search box.
+  const scopedCountries = useMemo(
+    () =>
+      [...countryIndex.entries()]
+        .filter(([, entry]) => !continent || entry.continents.has(continent))
+        .map(([name, entry]) => [name, entry.count])
+        .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0])),
+    [countryIndex, continent],
   );
-  const countries = useMemo(
-    () => [...new Set(cards.map((c) => c.country).filter(Boolean))].sort(),
-    [cards],
-  );
+  const listedCountries = useMemo(() => {
+    const needle = countryQuery.trim().toLowerCase();
+    if (!needle) return scopedCountries;
+    return scopedCountries.filter(([name]) => name.toLowerCase().includes(needle));
+  }, [scopedCountries, countryQuery]);
 
   const filtered = useMemo(() => {
     const matched = cards.filter(
       (c) =>
         matchesSearch(c, search) &&
-        (!typeFilter || c.categoryLabel === typeFilter) &&
-        (!countryFilter || c.country === countryFilter) &&
-        (!continentFilter || c.continentSlug === continentFilter),
+        (!continent || c.continentSlug === continent) &&
+        (!countries.length || countries.includes(c.country)) &&
+        (!style || (c.styles || []).some((s) => styleKey(s) === style)),
     );
     return sortRecentFirst(matched);
-  }, [cards, search, typeFilter, countryFilter, continentFilter]);
+  }, [cards, search, continent, countries, style]);
+
+  // Switching continent drops any picked country that is not in it: a
+  // hidden Switzerland filter under the Africa tab would empty the grid
+  // with no visible reason.
+  const selectContinent = (bucket) => {
+    setContinent(bucket);
+    setCountryQuery("");
+    if (bucket) {
+      setCountries((list) =>
+        list.filter((name) => countryIndex.get(name)?.continents.has(bucket)),
+      );
+    }
+  };
+  const toggleCountry = (name) =>
+    setCountries((list) =>
+      list.includes(name) ? list.filter((n) => n !== name) : [...list, name],
+    );
+  const toggleStyle = (key) => setStyle((s) => (s === key ? "" : key));
+  const clearAll = () => {
+    setSearch("");
+    setContinent("");
+    setCountries([]);
+    setStyle("");
+    setCountryQuery("");
+  };
+
+  const hasFilters = !!(search.trim() || continent || countries.length || style);
+  const countryPillLabel =
+    countries.length === 0
+      ? tl.allCountries
+      : countries.length === 1
+        ? countries[0]
+        : fill(t.countriesSelected, { n: countries.length });
+  const styleLabelOf = (key) => styles.find((s) => s.key === key)?.label || key;
+  const chips = [
+    continent
+      ? { key: "continent", label: bucketLabel(continent), clear: () => selectContinent("") }
+      : null,
+    ...countries.map((name) => ({
+      key: `country:${name}`,
+      label: name,
+      clear: () => toggleCountry(name),
+    })),
+    style ? { key: "style", label: styleLabelOf(style), clear: () => setStyle("") } : null,
+  ].filter(Boolean);
+  const scopeLabel = continent ? bucketLabel(continent) : t.allContinents;
+  const showLabel =
+    filtered.length === 1 ? t.showStory : fill(t.showStories, { n: filtered.length });
+
+  const tabClass = (active) =>
+    `-mb-px flex shrink-0 items-baseline gap-1.5 border-b-2 pb-3 font-sans text-base font-bold transition-colors ${
+      active
+        ? "border-brand-terracotta text-brand-ink"
+        : "border-transparent text-slate-500 hover:text-slate-700"
+    }`;
+  const tabCountClass = (active) =>
+    `text-xs font-medium tabular-nums ${active ? "text-slate-500" : "text-slate-400"}`;
+  const sideClass = (active) =>
+    `flex shrink-0 items-center justify-between gap-4 rounded-2xl px-4 py-2.5 text-sm font-bold transition ${
+      active ? "bg-brand-ink text-white" : "text-slate-600 hover:bg-slate-100"
+    }`;
+  const sideCountClass = (active) =>
+    `text-xs font-medium tabular-nums ${active ? "text-white/70" : "text-slate-400"}`;
+
+  const continentRows = [
+    { bucket: "", label: tl.filterAll, count: total },
+    ...tabs.map((b) => ({
+      bucket: b,
+      label: bucketLabel(b),
+      count: continentCounts.get(b) || 0,
+    })),
+  ];
 
   return (
     <div className="space-y-10">
-      <div className="mx-auto w-full max-w-2xl">
-        <label htmlFor="inspire-search" className="sr-only">
-          Search journeys
-        </label>
-        <div className="flex w-full items-center gap-2 rounded-full bg-white p-1.5 shadow-md ring-1 ring-slate-200 ">
-          <input
-            id="inspire-search"
-            type="search"
-            placeholder={t.searchPlaceholder}
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            className="min-w-0 flex-1 bg-transparent px-4 py-3 text-sm text-brand-ink outline-none placeholder:text-slate-400 md:px-5 md:text-base"
-          />
-          <button
-            type="button"
-            onClick={() => document.getElementById("inspire-search")?.blur()}
-            className="shrink-0 rounded-full bg-brand-terracotta px-4 py-3 text-sm font-normal tracking-[0.05em] text-white transition hover:bg-brand-terracotta/90 md:px-6 md:text-base"
-          >
-            {t.searchButton}
-          </button>
-        </div>
-      </div>
-
-      <section className="w-full min-w-0 space-y-6">
-        <div className="flex flex-wrap items-center gap-3">
-          {/* 20px DM Sans Semibold (founder 2026-08-08) — font-sans opts out
-              of the global serif h2 default. */}
-          <h2 className="font-sans text-xl font-semibold">{t.heading}</h2>
-          {continentFilter ? (
+      <div className="rounded-[28px] bg-slate-100/70 p-3 ring-1 ring-brand-line md:p-4">
+        <div ref={panelRef} className="relative">
+          <label htmlFor="inspire-search" className="sr-only">
+            {t.searchPlaceholder}
+          </label>
+          {/* One capsule from sm up: input, Country, Search. On phones the
+              three don't fit one row (the input shrank to a sliver), so the
+              Country pill drops to its own full-width row underneath. */}
+          <div className="flex w-full flex-wrap items-center gap-2 rounded-[28px] bg-white p-1.5 shadow-card ring-1 ring-brand-line sm:flex-nowrap sm:rounded-full">
+            <input
+              id="inspire-search"
+              type="search"
+              placeholder={t.searchPlaceholder}
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              className="min-w-0 flex-1 bg-transparent px-4 py-3 text-sm text-brand-ink outline-none placeholder:text-slate-400 md:px-5 md:text-base"
+            />
             <button
               type="button"
-              onClick={() => setContinentFilter("")}
-              className="inline-flex items-center gap-2 rounded-full bg-brand-terracotta-soft px-3.5 py-1.5 text-xs font-semibold text-slate-900 transition hover:bg-brand-terracotta-soft/70"
+              onClick={() => setPanelOpen((o) => !o)}
+              aria-expanded={panelOpen}
+              aria-haspopup="dialog"
+              className="order-last flex h-11 basis-full items-center justify-between gap-2 rounded-full bg-brand-ink px-4 text-sm font-semibold text-white transition hover:bg-brand-ink/90 sm:order-none sm:max-w-[14rem] sm:shrink-0 sm:basis-auto sm:justify-start md:h-12 md:px-5"
             >
-              {initialContinentLabel || continentFilter}
-              <span aria-hidden="true" className="text-slate-500">
+              <span className="truncate">{countryPillLabel}</span>
+              <Chevron open={panelOpen} />
+            </button>
+            {/* Search is live as you type; the button is the visible
+                "go" that phones expect and just closes the keyboard. Text
+                from sm up, an icon on phones where the row is tight. */}
+            <button
+              type="button"
+              onClick={() => document.getElementById("inspire-search")?.blur()}
+              aria-label={t.searchButton}
+              className="flex h-11 shrink-0 items-center justify-center rounded-full bg-brand-terracotta px-3.5 text-sm font-semibold text-white transition hover:bg-brand-terracotta/90 sm:px-5 md:h-12 md:px-6 md:text-base"
+            >
+              <MagnifierIcon className="h-5 w-5 sm:hidden" />
+              <span className="hidden sm:inline">{t.searchButton}</span>
+            </button>
+          </div>
+
+          {/* Country panel: continent sidebar on the left (the same state
+              as the tab row), checkbox grid on the right. In flow on phones,
+              anchored under the search bar from md up. */}
+          {panelOpen ? (
+            <div
+              role="dialog"
+              aria-label={tl.filterCountry}
+              className="z-20 mt-3 w-full overflow-hidden rounded-3xl bg-white shadow-card-hover ring-1 ring-brand-line md:absolute md:left-0 md:top-full"
+            >
+              <div className="flex flex-col md:flex-row">
+                <div className="shrink-0 border-b border-brand-line bg-slate-50/70 p-3 md:w-56 md:border-b-0 md:border-r md:p-4">
+                  <div className="flex gap-1.5 overflow-x-auto [-ms-overflow-style:none] [scrollbar-width:none] md:flex-col md:overflow-visible [&::-webkit-scrollbar]:hidden">
+                    {continentRows.map((row) => (
+                      <button
+                        key={row.bucket || "all"}
+                        type="button"
+                        onClick={() => selectContinent(row.bucket)}
+                        className={sideClass(continent === row.bucket)}
+                      >
+                        <span>{row.label}</span>
+                        <span className={sideCountClass(continent === row.bucket)}>
+                          {row.count}
+                        </span>
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="min-w-0 flex-1 p-4 md:p-6">
+                  <div className="flex flex-wrap items-center justify-between gap-3">
+                    <p className="font-sans text-[11px] font-semibold uppercase tracking-[0.2em] text-slate-500">
+                      {scopeLabel} · {fill(t.countriesWithStories, { n: scopedCountries.length })}
+                    </p>
+                    <div className="flex items-center gap-2 rounded-full bg-slate-50 px-4 ring-1 ring-brand-line">
+                      <MagnifierIcon className="h-3.5 w-3.5 shrink-0 text-slate-400" />
+                      <input
+                        type="search"
+                        value={countryQuery}
+                        onChange={(e) => setCountryQuery(e.target.value)}
+                        placeholder={t.findCountry}
+                        aria-label={t.findCountry}
+                        className="w-36 min-w-0 bg-transparent py-2 text-sm text-brand-ink outline-none placeholder:text-slate-400 sm:w-44"
+                      />
+                    </div>
+                  </div>
+
+                  {listedCountries.length ? (
+                    <ul className="mt-4 grid max-h-[50vh] gap-x-6 gap-y-0.5 overflow-y-auto sm:grid-cols-2 lg:grid-cols-3">
+                      {listedCountries.map(([name, count]) => {
+                        const checked = countries.includes(name);
+                        return (
+                          <li key={name}>
+                            <label className="flex cursor-pointer items-center gap-3 rounded-xl px-2 py-2 transition hover:bg-slate-50">
+                              <input
+                                type="checkbox"
+                                className="sr-only"
+                                checked={checked}
+                                onChange={() => toggleCountry(name)}
+                              />
+                              <span
+                                aria-hidden="true"
+                                className={`flex h-5 w-5 shrink-0 items-center justify-center rounded-md ring-1 transition ${
+                                  checked
+                                    ? "bg-brand-ink text-white ring-brand-ink"
+                                    : "bg-white ring-slate-300"
+                                }`}
+                              >
+                                {checked ? (
+                                  <svg
+                                    viewBox="0 0 12 12"
+                                    className="h-3 w-3"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    strokeWidth="2"
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                  >
+                                    <path d="M2.5 6.5 L5 9 L9.5 3.5" />
+                                  </svg>
+                                ) : null}
+                              </span>
+                              <span
+                                className={`min-w-0 flex-1 truncate text-[15px] ${
+                                  checked ? "font-bold text-brand-ink" : "text-slate-800"
+                                }`}
+                              >
+                                {name}
+                              </span>
+                              <span className="text-xs tabular-nums text-slate-400">{count}</span>
+                            </label>
+                          </li>
+                        );
+                      })}
+                    </ul>
+                  ) : (
+                    <p className="mt-6 text-sm text-slate-500">{t.noCountryMatch}</p>
+                  )}
+
+                  <div className="mt-5 flex items-center justify-between gap-4 border-t border-brand-line pt-4">
+                    <button
+                      type="button"
+                      onClick={() => setCountries([])}
+                      className="text-sm font-medium text-slate-500 underline underline-offset-4 transition hover:text-brand-ink"
+                    >
+                      {t.clearSelection}
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setPanelOpen(false)}
+                      className="rounded-full bg-brand-terracotta px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-brand-terracotta/90"
+                    >
+                      {showLabel}
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          ) : null}
+        </div>
+
+        {/* Continent tabs with counts: All + one per continent with stories,
+            active tab underlined in Brandy (the /guides treatment). */}
+        <div className="mt-4 border-b border-brand-line">
+          <div className="flex gap-6 overflow-x-auto [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+            {continentRows.map((row) => (
+              <button
+                key={row.bucket || "all"}
+                type="button"
+                onClick={() => selectContinent(row.bucket)}
+                className={tabClass(continent === row.bucket)}
+              >
+                {row.label}
+                <span className={tabCountClass(continent === row.bucket)}>{row.count}</span>
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {/* Style pills: equal-width grid from sm up, six to a row from lg;
+            content-sized and wrapping on phones, where a two-column grid
+            truncated "Culture & People". One active at a time, in Coffee
+            Bean. */}
+        {styles.length ? (
+          <div className="mt-4 flex flex-wrap gap-2 sm:grid sm:grid-cols-3 lg:grid-cols-6">
+            {styles.map((s) => {
+              const active = style === s.key;
+              return (
+                <button
+                  key={s.key}
+                  type="button"
+                  onClick={() => toggleStyle(s.key)}
+                  aria-pressed={active}
+                  className={`flex min-w-0 items-center justify-center gap-1.5 rounded-full px-3 py-2.5 text-sm font-semibold ring-1 transition ${
+                    active
+                      ? "bg-brand-ink text-white ring-brand-ink"
+                      : "bg-white text-slate-700 ring-brand-line hover:ring-slate-300"
+                  }`}
+                >
+                  <span className="truncate">{s.label}</span>
+                  <span
+                    className={`text-xs font-medium tabular-nums ${
+                      active ? "text-white/60" : "text-slate-400"
+                    }`}
+                  >
+                    {s.count}
+                  </span>
+                </button>
+              );
+            })}
+          </div>
+        ) : null}
+
+        {/* Status row: live count, one chip per active filter, Clear all. */}
+        <div className="mt-4 flex flex-wrap items-center gap-2 border-t border-brand-line pt-4">
+          <p className="mr-1 text-sm tabular-nums text-slate-600">
+            {fill(t.showing, { shown: filtered.length, total })}
+          </p>
+          {chips.map((chip) => (
+            <button
+              key={chip.key}
+              type="button"
+              onClick={chip.clear}
+              className="flex items-center gap-2 rounded-full bg-brand-ink px-3.5 py-1.5 text-xs font-semibold text-white transition hover:bg-brand-ink/90"
+            >
+              {chip.label}
+              <span aria-hidden="true" className="text-white/60">
                 ✕
               </span>
-              <span className="sr-only">Clear continent filter</span>
+              <span className="sr-only">Clear filter</span>
+            </button>
+          ))}
+          {hasFilters ? (
+            <button
+              type="button"
+              onClick={clearAll}
+              className="ml-1 text-sm font-medium text-brand-terracotta underline underline-offset-4 transition hover:text-brand-ink"
+            >
+              {t.clearAll}
             </button>
           ) : null}
         </div>
-        <CardFilters
-          types={types}
-          countries={countries}
-          type={typeFilter}
-          country={countryFilter}
-          onType={setTypeFilter}
-          onCountry={setCountryFilter}
-          labels={dict.guideList}
-        >
-          <p className="text-xs font-medium tabular-nums text-slate-500">
-            {filtered.length} {filtered.length === 1 ? t.story : t.stories}
-          </p>
-        </CardFilters>
+      </div>
+
+      <section className="w-full min-w-0">
         {filtered.length === 0 ? (
           <div className="rounded-3xl border border-dashed border-slate-300/70 bg-gradient-to-b from-white to-slate-50/95 px-5 py-9 text-center shadow-sm ring-1 ring-slate-200/60 sm:px-8 sm:py-11">
             <p className="text-[15px] font-semibold tracking-tight text-slate-900 sm:text-base">
@@ -210,10 +610,10 @@ export default function InspireBrowse({
             </p>
             <button
               type="button"
-              onClick={() => setSearch("")}
+              onClick={clearAll}
               className="mt-5 rounded-full bg-slate-900 px-5 py-2 text-xs font-semibold text-white transition hover:bg-slate-800"
             >
-              {t.clearSearch}
+              {t.clearAll}
             </button>
           </div>
         ) : (

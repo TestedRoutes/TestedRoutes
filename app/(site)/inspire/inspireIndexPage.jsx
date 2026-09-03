@@ -9,7 +9,7 @@ import {
   inspireStoryHasGuide,
 } from "../../_lib/inspireStoryDisplay";
 import { LOCALES, getDict, localePath } from "../../_lib/i18n";
-import { continentSlug, prettyGeo } from "../../_lib/continents";
+import { continentBucket } from "../../_lib/continents";
 import InspireBrowse from "./InspireBrowse";
 
 const EN_DESCRIPTION =
@@ -63,8 +63,13 @@ function buildCard(story, lang) {
     heroAlt: getInspireStoryHeroAlt(story) || story.title,
     geoLabel: display.geoLabel || "",
     country: story.metadata?.geography?.country || "",
-    continentSlug: continentSlug(story.metadata?.geography?.continent),
+    // Bucketed (the Americas share one tab) so the tab row matches /guides.
+    continentSlug: continentBucket(story.metadata?.geography?.continent),
     categoryLabel: prettyCategory(cls.journey_category || cls.activity_category),
+    // Style pills: the activity category names the pill; the tags let a
+    // story sit under more than one.
+    styleLabel: cls.activity_category_name || "",
+    styles: [cls.activity_category_name, ...(Array.isArray(cls.activity_tags) ? cls.activity_tags : [])].filter(Boolean),
     categoryDurationLine: display.categoryDurationLine || "",
     difficultyLabel: display.difficultyLabel || "",
     hasGuide: !!(display.hasGuide ?? inspireStoryHasGuide(story)),
@@ -114,7 +119,7 @@ export default async function InspireIndexPage({ lang = "en", continent = "", q 
   const cards = stories.map((s) => buildCard(s, lang));
   // Home links in per continent ("See all in Africa"); ignore a slug that
   // no story matches so a stale link still shows the full index.
-  const wantedContinent = continentSlug(continent);
+  const wantedContinent = continentBucket(continent);
   const activeContinent = cards.some((c) => c.continentSlug === wantedContinent)
     ? wantedContinent
     : "";
@@ -124,7 +129,9 @@ export default async function InspireIndexPage({ lang = "en", continent = "", q 
     // card grid reads cleaner against one tone than against a gradient.
     <main className="min-h-screen w-full bg-brand-parchment pb-16 pt-12 text-slate-900 md:pt-16">
       <div className="mx-auto flex w-full min-w-0 max-w-7xl flex-col gap-10 px-6">
-        <div className="space-y-2 text-center">
+        {/* Left-aligned (founder mockup 2026-09-03); the filter panel below
+            starts on the same edge. */}
+        <div className="space-y-2">
           <h1 className="font-serif font-normal leading-[1.1] text-brand-ink text-2xl md:text-[26px] lg:text-5xl">
             {t.title}
           </h1>
@@ -150,7 +157,6 @@ export default async function InspireIndexPage({ lang = "en", continent = "", q 
             lang={lang}
             initialSearch={q}
             initialContinent={activeContinent}
-            initialContinentLabel={prettyGeo(activeContinent)}
           />
         )}
 
