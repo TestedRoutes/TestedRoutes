@@ -6,7 +6,7 @@ import Byline from "../../../_components/Byline";
 import BuyBox from "../../../_components/BuyBox";
 import PhotoCarousel from "../../../_components/PhotoCarousel";
 
-import kuntaKintehFerryMidriver from "../../../../content/countries/gambia/destination/generated/web/kunta-kinteh-ferry-midriver.jpg";
+import colobusTroopFeedingBijilo from "../../../../content/countries/gambia/destination/generated/web/colobus-troop-feeding-bijilo.jpg";
 import ferryRailCrossingBanjul from "../../../../content/countries/gambia/destination/generated/web/ferry-rail-crossing-banjul.jpg";
 import ferryDeckMidriver from "../../../../content/countries/gambia/destination/generated/web/ferry-deck-midriver.jpg";
 import kachikallyPoolWeed from "../../../../content/countries/gambia/destination/generated/web/kachikally-pool-weed.jpg";
@@ -22,6 +22,7 @@ import stillCreekDugout from "../../../../content/countries/gambia/destination/g
 import laminJettyPirogues from "../../../../content/countries/gambia/destination/generated/web/lamin-jetty-pirogues.jpg";
 import beachPalmsFromSurf from "../../../../content/countries/gambia/destination/generated/web/beach-palms-from-surf.jpg";
 import beachEveningStrip from "../../../../content/countries/gambia/destination/generated/web/beach-evening-strip.jpg";
+import founderInTheAtlanticSurf from "../../../../content/countries/gambia/destination/generated/web/founder-in-the-atlantic-surf.jpg";
 
 /*
  * Scope note (destination playbook §7): this page sells the DECISION -
@@ -267,8 +268,8 @@ export default async function GambiaDestinationPage() {
         <div className="min-w-0">
           <div className="relative mb-12 overflow-hidden rounded-[28px]">
             <Image
-              src={kuntaKintehFerryMidriver}
-              alt="The Kunta Kinteh ferry crossing the green water of the Gambia River mouth"
+              src={colobusTroopFeedingBijilo}
+              alt="A troop of red colobus monkeys sitting in a circle to feed on the sandy path in Bijilo forest"
               priority
               className="h-[320px] w-full object-cover md:h-[460px]"
               sizes="(max-width: 768px) 100vw, 830px"
@@ -483,8 +484,8 @@ export default async function GambiaDestinationPage() {
 
             <div className="relative overflow-hidden rounded-[28px]">
               <Image
-                src={stillCreekDugout}
-                alt="A dugout canoe resting on a still mangrove creek near Lamin, The Gambia"
+                src={founderInTheAtlanticSurf}
+                alt="The founder in the surf off the Atlantic strip, palms and the beach hotels behind"
                 className="h-[420px] w-full object-cover"
                 sizes="(max-width: 768px) 100vw, 768px"
               />
