@@ -25,6 +25,14 @@ const lt = {
     countriesSelected: "{n} šalys",
     findCountry: "Rasti šalį",
     noCountryMatch: "Šalių nerasta",
+    // Journey band after the second row of stories; order matches
+    // INSPIRE_JOURNEYS in app/_lib/inspireJourneys.js.
+    journeys: [
+      { eyebrow: "Šveicarija", title: "Alpine Passes Trail", blurb: "Žygis nuo trobelės iki trobelės" },
+      { eyebrow: "Naujoji Zelandija", title: "NZ Pietų sala", blurb: "10 dienų kelionė automobiliu" },
+      { eyebrow: "Centrinė Azija", title: "Mongol Rally", blurb: "Ralis sausuma" },
+      { eyebrow: "Visame pasaulyje", title: "7 viršukalnės", blurb: "Kopimo projektas" },
+    ],
     heading: "Kelionės, o ne tik įrašai",
     story: "istorija",
     stories: "istorijos",

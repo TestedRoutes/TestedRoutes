@@ -8,6 +8,7 @@ import {
   CONTINENT_TAB_ORDER as TAB_ORDER,
   continentTabLabel as bucketLabel,
 } from "../../_lib/continents";
+import { INSPIRE_JOURNEYS, journeyMatches } from "../../_lib/inspireJourneys";
 
 function cardHaystack(card) {
   return [
@@ -43,6 +44,24 @@ function fill(template, vars) {
 // Style pills match on a normalised key: "Hiking" as the activity category
 // and "hiking" as a free-text tag are the same style.
 const styleKey = (name) => String(name || "").trim().toLowerCase();
+
+// Pill rows (founder 2026-09-04): activities — what you do — on the first
+// line; everything else (themes and projects: Africa Rally, Seven Summits,
+// Culture & People…) on the second. A new activity category lands on the
+// second line until it is added here. Keys are the lower-cased Sanity
+// names, including the older duplicates still in the category list.
+const ACTIVITY_STYLES = new Set([
+  "roadtrip",
+  "road trips",
+  "hiking",
+  "outdoor hiking",
+  "mountaineering",
+  "mountain climbing",
+  "diving",
+  "bungee",
+  "kayaking",
+  "adrenaline",
+]);
 
 function StoryCard({ card, t }) {
   const photos =
@@ -180,9 +199,11 @@ export default function InspireBrowse({
   const [continent, setContinent] = useState(initialContinent);
   const [countries, setCountries] = useState([]);
   const [style, setStyle] = useState("");
+  const [journey, setJourney] = useState("");
   const [panelOpen, setPanelOpen] = useState(false);
   const [countryQuery, setCountryQuery] = useState("");
   const panelRef = useRef(null);
+  const blockRef = useRef(null);
   const dict = getDict(lang);
   const t = dict.inspireList;
   const tl = dict.guideList;
@@ -270,16 +291,27 @@ export default function InspireBrowse({
     return scopedCountries.filter(([name]) => name.toLowerCase().includes(needle));
   }, [scopedCountries, countryQuery]);
 
+  // Journey band counts, unscoped like every other count on the page.
+  const journeyCounts = useMemo(() => {
+    const counts = new Map();
+    for (const j of INSPIRE_JOURNEYS) {
+      counts.set(j.key, cards.filter((c) => journeyMatches(j, c)).length);
+    }
+    return counts;
+  }, [cards]);
+
   const filtered = useMemo(() => {
+    const activeJourney = INSPIRE_JOURNEYS.find((j) => j.key === journey) || null;
     const matched = cards.filter(
       (c) =>
         matchesSearch(c, search) &&
         (!continent || c.continentSlug === continent) &&
         (!countries.length || countries.includes(c.country)) &&
-        (!style || (c.styles || []).some((s) => styleKey(s) === style)),
+        (!style || (c.styles || []).some((s) => styleKey(s) === style)) &&
+        (!activeJourney || journeyMatches(activeJourney, c)),
     );
     return sortRecentFirst(matched);
-  }, [cards, search, continent, countries, style]);
+  }, [cards, search, continent, countries, style, journey]);
 
   // Switching continent drops any picked country that is not in it: a
   // hidden Switzerland filter under the Africa tab would empty the grid
@@ -298,15 +330,27 @@ export default function InspireBrowse({
       list.includes(name) ? list.filter((n) => n !== name) : [...list, name],
     );
   const toggleStyle = (key) => setStyle((s) => (s === key ? "" : key));
+  // A journey card sits below the first two rows of stories, so applying
+  // one scrolls back up to the filter block where its chip and the
+  // narrowed grid are.
+  const pickJourney = (key) => {
+    setJourney((j) => (j === key ? "" : key));
+    blockRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
   const clearAll = () => {
     setSearch("");
     setContinent("");
     setCountries([]);
     setStyle("");
+    setJourney("");
     setCountryQuery("");
   };
 
-  const hasFilters = !!(search.trim() || continent || countries.length || style);
+  const journeyCopy = (i) => (Array.isArray(t.journeys) ? t.journeys[i] : null) || {};
+  const journeyLabelOf = (key) =>
+    journeyCopy(INSPIRE_JOURNEYS.findIndex((j) => j.key === key)).title || key;
+
+  const hasFilters = !!(search.trim() || continent || countries.length || style || journey);
   const countryPillLabel =
     countries.length === 0
       ? tl.allCountries
@@ -324,6 +368,9 @@ export default function InspireBrowse({
       clear: () => toggleCountry(name),
     })),
     style ? { key: "style", label: styleLabelOf(style), clear: () => setStyle("") } : null,
+    journey
+      ? { key: "journey", label: journeyLabelOf(journey), clear: () => setJourney("") }
+      : null,
   ].filter(Boolean);
   const scopeLabel = continent ? bucketLabel(continent) : t.allContinents;
   const showLabel =
@@ -344,6 +391,58 @@ export default function InspireBrowse({
   const sideCountClass = (active) =>
     `text-xs font-medium tabular-nums ${active ? "text-white/70" : "text-slate-400"}`;
 
+  // Two pill rows; both grids share one column count so the pills line up
+  // and the shorter row leaves its last slots empty.
+  const activityPills = styles.filter((s) => ACTIVITY_STYLES.has(s.key));
+  const typePills = styles.filter((s) => !ACTIVITY_STYLES.has(s.key));
+  const pillCols = Math.max(1, activityPills.length, typePills.length);
+  const pillRow = (pills) =>
+    pills.length ? (
+      <div
+        className="flex flex-wrap gap-2 sm:grid sm:grid-cols-3 lg:[grid-template-columns:repeat(var(--pill-cols),minmax(0,1fr))]"
+        style={{ "--pill-cols": pillCols }}
+      >
+        {pills.map((s) => {
+          const active = style === s.key;
+          return (
+            <button
+              key={s.key}
+              type="button"
+              onClick={() => toggleStyle(s.key)}
+              aria-pressed={active}
+              className={`flex min-w-0 items-center justify-center gap-1.5 rounded-full px-3 py-2.5 text-sm font-semibold ring-1 transition ${
+                active
+                  ? "bg-brand-ink text-white ring-brand-ink"
+                  : "bg-white text-slate-700 ring-brand-line hover:ring-slate-300"
+              }`}
+            >
+              <span className="truncate">{s.label}</span>
+              <span
+                className={`text-xs font-medium tabular-nums ${
+                  active ? "text-white/60" : "text-slate-400"
+                }`}
+              >
+                {s.count}
+              </span>
+            </button>
+          );
+        })}
+      </div>
+    ) : null;
+
+  const cardGrid = (list) => (
+    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5 lg:grid-cols-4 lg:gap-6">
+      {list.map((card) => (
+        <StoryCard key={card.id} card={card} t={t} />
+      ))}
+    </div>
+  );
+  // The journey band sits after two rows of stories (founder mockup
+  // 2026-09-04) — the grid is four-up from lg, so eight cards — and the
+  // rest of the results follow it, same shape as the trust trio on /guides.
+  const firstBlock = filtered.slice(0, 8);
+  const rest = filtered.slice(8);
+
   const continentRows = [
     { bucket: "", label: tl.filterAll, count: total },
     ...tabs.map((b) => ({
@@ -355,7 +454,12 @@ export default function InspireBrowse({
 
   return (
     <div className="space-y-10">
-      <div className="rounded-[28px] bg-slate-100/70 p-3 ring-1 ring-brand-line md:p-4">
+      {/* scroll-mt clears the sticky header when a journey card scrolls
+          back up here. */}
+      <div
+        ref={blockRef}
+        className="scroll-mt-24 rounded-[28px] bg-slate-100/70 p-3 ring-1 ring-brand-line md:p-4"
+      >
         <div ref={panelRef} className="relative">
           <label htmlFor="inspire-search" className="sr-only">
             {t.searchPlaceholder}
@@ -534,42 +638,14 @@ export default function InspireBrowse({
           </div>
         </div>
 
-        {/* Style pills: equal-width grid from sm up; from lg the column
-            count is half the pill count so the block is always exactly two
-            rows however many categories the library grows (founder
-            2026-09-04). Content-sized and wrapping on phones, where a
-            two-column grid truncated "Culture & People". One active at a
-            time, in Coffee Bean. */}
+        {/* Style pills: activities on the first line, types on the second
+            (see ACTIVITY_STYLES). Equal-width grid from sm up; content-sized
+            and wrapping on phones, where a two-column grid truncated
+            "Culture & People". One active at a time, in Coffee Bean. */}
         {styles.length ? (
-          <div
-            className="mt-4 flex flex-wrap gap-2 sm:grid sm:grid-cols-3 lg:[grid-template-columns:repeat(var(--pill-cols),minmax(0,1fr))]"
-            style={{ "--pill-cols": Math.max(1, Math.ceil(styles.length / 2)) }}
-          >
-            {styles.map((s) => {
-              const active = style === s.key;
-              return (
-                <button
-                  key={s.key}
-                  type="button"
-                  onClick={() => toggleStyle(s.key)}
-                  aria-pressed={active}
-                  className={`flex min-w-0 items-center justify-center gap-1.5 rounded-full px-3 py-2.5 text-sm font-semibold ring-1 transition ${
-                    active
-                      ? "bg-brand-ink text-white ring-brand-ink"
-                      : "bg-white text-slate-700 ring-brand-line hover:ring-slate-300"
-                  }`}
-                >
-                  <span className="truncate">{s.label}</span>
-                  <span
-                    className={`text-xs font-medium tabular-nums ${
-                      active ? "text-white/60" : "text-slate-400"
-                    }`}
-                  >
-                    {s.count}
-                  </span>
-                </button>
-              );
-            })}
+          <div className="mt-4 space-y-2">
+            {pillRow(activityPills)}
+            {pillRow(typePills)}
           </div>
         ) : null}
 
@@ -604,7 +680,7 @@ export default function InspireBrowse({
         </div>
       </div>
 
-      <section className="w-full min-w-0">
+      <section className="w-full min-w-0 space-y-10">
         {filtered.length === 0 ? (
           <div className="rounded-3xl border border-dashed border-slate-300/70 bg-gradient-to-b from-white to-slate-50/95 px-5 py-9 text-center shadow-sm ring-1 ring-slate-200/60 sm:px-8 sm:py-11">
             <p className="text-[15px] font-semibold tracking-tight text-slate-900 sm:text-base">
@@ -622,12 +698,51 @@ export default function InspireBrowse({
             </button>
           </div>
         ) : (
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5 lg:grid-cols-4 lg:gap-6">
-            {filtered.map((card) => (
-              <StoryCard key={card.id} card={card} t={t} />
-            ))}
-          </div>
+          cardGrid(firstBlock)
         )}
+
+        {/* Journey band: four dark cards, each a filter over the stories
+            (app/_lib/inspireJourneys.js), counts live. */}
+        <section aria-labelledby="inspire-journeys" className="space-y-5">
+          <h2
+            id="inspire-journeys"
+            className="font-sans text-base font-light uppercase tracking-[0.3em] text-brand-ink md:text-xl"
+          >
+            {t.heading}
+          </h2>
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4 lg:gap-6">
+            {INSPIRE_JOURNEYS.map((j, i) => {
+              const copy = journeyCopy(i);
+              const n = journeyCounts.get(j.key) || 0;
+              const active = journey === j.key;
+              return (
+                <button
+                  key={j.key}
+                  type="button"
+                  onClick={() => pickJourney(j.key)}
+                  aria-pressed={active}
+                  className={`flex min-h-[14rem] flex-col justify-between rounded-3xl bg-gradient-to-b from-slate-800 to-brand-ink p-6 text-left text-brand-cream shadow-card transition duration-200 ease-out hover:-translate-y-0.5 hover:shadow-card-hover md:min-h-[18rem] ${
+                    active ? "ring-2 ring-brand-terracotta" : "ring-1 ring-white/10"
+                  }`}
+                >
+                  <p className="font-sans text-[11px] font-medium uppercase tracking-[0.2em] text-brand-cream/80">
+                    {copy.eyebrow}
+                  </p>
+                  <div>
+                    <p className="font-serif text-2xl font-normal leading-tight md:text-[28px]">
+                      {copy.title}
+                    </p>
+                    <p className="mt-1.5 text-sm text-brand-cream/70">
+                      {n} {n === 1 ? t.story : t.stories} · {copy.blurb}
+                    </p>
+                  </div>
+                </button>
+              );
+            })}
+          </div>
+        </section>
+
+        {rest.length ? cardGrid(rest) : null}
       </section>
     </div>
   );

@@ -25,6 +25,14 @@ const en = {
     countriesSelected: "{n} countries",
     findCountry: "Find a country",
     noCountryMatch: "No country matches",
+    // Journey band after the second row of stories; order matches
+    // INSPIRE_JOURNEYS in app/_lib/inspireJourneys.js.
+    journeys: [
+      { eyebrow: "Switzerland", title: "Alpine Passes Trail", blurb: "Hut-to-hut traverse" },
+      { eyebrow: "New Zealand", title: "NZ South Island", blurb: "10-day roadtrip" },
+      { eyebrow: "Central Asia", title: "Mongol Rally", blurb: "Overland rally" },
+      { eyebrow: "Worldwide", title: "7 Summits", blurb: "Climbing project" },
+    ],
     heading: "Journeys, not just posts",
     story: "story",
     stories: "stories",
