@@ -79,8 +79,8 @@ const HOW_LONG = [
 const REGIONS = [
   {
     name: "Teide and the caldera",
-    image: teideConeClearMorning,
-    alt: "The bare cone of Mount Teide under deep blue sky, seen across the caldera scrub, Tenerife",
+    image: roquesDeGarciaAboveClouds,
+    alt: "The Roques de García spires over the Llano de Ucanca, with cloud spilling over the caldera rim, Tenerife",
     body: "Spain's highest peak rises out of a caldera that is a full day on its own: a moonscape of lava plains, rock spires and mine-like ridges above the cloud layer. The drive up is half the event. Access to the summit itself is rationed and sells out - the one part of a Tenerife trip that has to be decided early.",
   },
   {
@@ -246,9 +246,10 @@ export default async function TenerifeDestinationPage() {
       <div className="grid grid-cols-1 gap-6 md:grid-cols-[minmax(0,1fr)_320px] lg:gap-8">
         <div className="min-w-0">
           <div className="relative mb-12 overflow-hidden rounded-[28px]">
+            {/* Hero = the founder's Tenerife-hero.jpg pick (cull-folder convention, 2026-09-04). */}
             <Image
-              src={roquesDeGarciaAboveClouds}
-              alt="The Roques de García spires over the Llano de Ucanca, with cloud spilling over the caldera rim, Tenerife"
+              src={teideConeClearMorning}
+              alt="The bare cone of Mount Teide under deep blue sky, seen across the caldera scrub, Tenerife"
               priority
               className="h-[320px] w-full object-cover md:h-[460px]"
               sizes="(max-width: 768px) 100vw, 830px"

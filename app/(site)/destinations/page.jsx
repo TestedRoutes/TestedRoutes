@@ -15,7 +15,7 @@ import senegalHero from "../../../content/countries/senegal/destination/generate
 import guineaHero from "../../../content/countries/guinea/destination/generated/web/village-and-mango-tree-at-dawn.jpg";
 import guineaBissauHero from "../../../content/countries/guinea-bissau/destination/generated/web/colonial-street-palms-bissau-velho.jpg";
 import canaryIslandsHero from "../../../content/countries/canary-islands/destination/generated/web/papagayo-coves-golden-hour.jpg";
-import tenerifeHero from "../../../content/countries/canary-islands/destination/generated/web/roques-de-garcia-above-the-clouds.jpg";
+import tenerifeHero from "../../../content/countries/canary-islands/destination/generated/web/teide-cone-clear-morning.jpg";
 import granCanariaHero from "../../../content/countries/canary-islands/destination/generated/web/roque-nublo-and-el-fraile.jpg";
 import lanzaroteHero from "../../../content/countries/canary-islands/destination/generated/web/la-geria-crater-vines.jpg";
 import fuerteventuraHero from "../../../content/countries/canary-islands/destination/generated/web/cofete-through-the-cactus.jpg";
@@ -151,7 +151,7 @@ const DESTINATIONS = [
     blurb:
       "How many days you need and which side to stay on – Teide above the clouds, the Anaga laurel ridges, old towns, and the honest north–south split.",
     image: tenerifeHero,
-    alt: "The Roques de García spires over the Llano de Ucanca with cloud spilling over the caldera rim, Tenerife",
+    alt: "The bare cone of Mount Teide under deep blue sky, seen across the caldera scrub, Tenerife",
   },
   {
     name: "Gran Canaria",
