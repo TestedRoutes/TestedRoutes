@@ -12,6 +12,7 @@ import mauritaniaHero from "../../../content/countries/mauritania/destination/ge
 import westernSaharaHero from "../../../content/countries/western-sahara/destination/generated/web/white-dune-tidal-pool.jpg";
 import gambiaHero from "../../../content/countries/gambia/destination/generated/web/kunta-kinteh-ferry-midriver.jpg";
 import senegalHero from "../../../content/countries/senegal/destination/generated/web/dakar-from-renaissance-monument.jpg";
+import guineaBissauHero from "../../../content/countries/guinea-bissau/destination/generated/web/colonial-street-palms-bissau-velho.jpg";
 
 export const metadata = {
   title: "Destinations · TestedRoutes",
@@ -109,6 +110,15 @@ const DESTINATIONS = [
       "Is it safe and is it worth it – Dakar and its monument, colonial Saint-Louis on its river island, and the lake that is not always pink.",
     image: senegalHero,
     alt: "Dakar spreading below the hill of the African Renaissance Monument, Senegal",
+  },
+  {
+    name: "Guinea-Bissau",
+    href: "/destinations/guinea-bissau",
+    region: "North & West Africa · The Atlantic coast",
+    blurb:
+      "Is it safe and is there anything to see – an empty Portuguese old town, a day-long road east, and the archipelago that is the real reason to come.",
+    image: guineaBissauHero,
+    alt: "Palms leaning over a red dirt street of decaying colonial buildings in Bissau Velho, Guinea-Bissau",
   },
   {
     name: "Switzerland",
