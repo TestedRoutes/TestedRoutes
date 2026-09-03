@@ -64,6 +64,10 @@ meal and per night, with alternates in a directory rather than in the day plan.
 - [Guinea](https://testedroutes.com/destinations/guinea): whether Guinea is safe and worth visiting, how many days you need, when to go, what the roads are actually like, and which of the three Guineas this is.
 - [Guinea-Bissau](https://testedroutes.com/destinations/guinea-bissau): whether Guinea-Bissau is safe after the November 2025 coup, whether it is worth visiting at all, how many days you need, why the capital has two halves that most write-ups reduce to one, and how the Bijagós archipelago differs from the mainland we drove across.
 - [Canary Islands](https://testedroutes.com/destinations/canary-islands): which island to pick – Tenerife, Gran Canaria, Lanzarote or Fuerteventura – how many days each needs, when to go, and how islands pair by ferry.
+- [Tenerife](https://testedroutes.com/destinations/tenerife): how many days Tenerife needs, whether it is worth visiting, north or south coast, what Teide's sell-out means for your dates, and when to go.
+- [Gran Canaria](https://testedroutes.com/destinations/gran-canaria): how many days Gran Canaria needs, whether it is worth visiting, why the mountain interior is the island's real product, and when to go.
+- [Lanzarote](https://testedroutes.com/destinations/lanzarote): whether Lanzarote is worth visiting, how many days it needs, what Timanfaya actually is, the Manrique sites, and when to go.
+- [Fuerteventura](https://testedroutes.com/destinations/fuerteventura): how many days Fuerteventura needs, whether Playa de Cofete is worth it, north or south base, wind, and when to go.
 
 ## Inspire (free stories from the road)
 
