@@ -7,16 +7,25 @@
 // and the copy (eyebrow, title, blurb) lives in each dictionary's
 // `inspireList.journeys`, in this order. Counts are computed live from the
 // cards, so the band never claims stories that are not on the page.
+//
+// Card photos come from the founder's About set (content/about, static
+// imports so next/image sizes them). A journey without an `image` falls
+// back to the hero of its newest story.
+import milfordSound from "../../content/about/Milford Sound - NZ 2025.jpg";
+import mongolRally from "../../content/about/Mongol rally.jpg";
+import aconcagua from "../../content/about/7_Summits_Aconcagua 2017.jpg";
+
 export const INSPIRE_JOURNEYS = [
-  { key: "alpine-passes-trail", match: { collection: "Alpine Passes Trail" } },
-  { key: "nz-south-island", match: { countries: ["New Zealand"] } },
+  { key: "alpine-passes-trail", match: { collection: "Alpine Passes Trail" }, image: null },
+  { key: "nz-south-island", match: { countries: ["New Zealand"] }, image: milfordSound },
   {
     key: "mongol-rally",
     match: {
       countries: ["Kazakhstan", "Kyrgyzstan", "Tajikistan", "Turkmenistan", "Uzbekistan"],
     },
+    image: mongolRally,
   },
-  { key: "seven-summits", match: { countries: ["7 Summits"] } },
+  { key: "seven-summits", match: { countries: ["7 Summits"] }, image: aconcagua },
 ];
 
 export function journeyMatches(journey, card) {

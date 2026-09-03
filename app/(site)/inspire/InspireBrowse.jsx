@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useMemo, useRef, useState } from "react";
@@ -306,14 +307,25 @@ export default function InspireBrowse({
     return scopedCountries.filter(([name]) => name.toLowerCase().includes(needle));
   }, [scopedCountries, countryQuery]);
 
-  // Journey band counts, unscoped like every other count on the page.
-  const journeyCounts = useMemo(() => {
-    const counts = new Map();
+  // Journey band: story count per journey (unscoped like every other count
+  // on the page) and the newest matching story's hero, the card photo for a
+  // journey that has no image of its own.
+  const journeyInfo = useMemo(() => {
+    const info = new Map();
+    const recent = sortRecentFirst(cards);
     for (const j of INSPIRE_JOURNEYS) {
-      counts.set(j.key, cards.filter((c) => journeyMatches(j, c)).length);
+      const matched = recent.filter((c) => journeyMatches(j, c));
+      info.set(j.key, {
+        count: matched.length,
+        fallbackPhoto: matched.find((c) => c.heroPhoto)?.heroPhoto || null,
+      });
     }
-    return counts;
+    return info;
   }, [cards]);
+  const journeyCounts = useMemo(
+    () => new Map([...journeyInfo].map(([key, v]) => [key, v.count])),
+    [journeyInfo],
+  );
 
   const filtered = useMemo(() => {
     const activeJourney = INSPIRE_JOURNEYS.find((j) => j.key === journey) || null;
@@ -866,44 +878,71 @@ export default function InspireBrowse({
           cardGrid(firstBlock)
         )}
 
-        {/* Journey band: four dark cards, each a filter over the stories
-            (app/_lib/inspireJourneys.js), counts live. */}
-        <section aria-labelledby="inspire-journeys" className="space-y-5">
-          <h2
-            id="inspire-journeys"
-            className="font-sans text-base font-light uppercase tracking-[0.3em] text-brand-ink md:text-xl"
-          >
-            {t.heading}
-          </h2>
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4 lg:gap-6">
-            {INSPIRE_JOURNEYS.map((j, i) => {
-              const copy = journeyCopy(i);
-              const n = journeyCounts.get(j.key) || 0;
-              const active = journey === j.key;
-              return (
-                <button
-                  key={j.key}
-                  type="button"
-                  onClick={() => pickJourney(j.key)}
-                  aria-pressed={active}
-                  className={`flex min-h-[14rem] flex-col justify-between rounded-3xl bg-gradient-to-b from-slate-800 to-brand-ink p-6 text-left text-brand-cream shadow-card transition duration-200 ease-out hover:-translate-y-0.5 hover:shadow-card-hover md:min-h-[18rem] ${
-                    active ? "ring-2 ring-brand-terracotta" : "ring-1 ring-white/10"
-                  }`}
-                >
-                  <p className="font-sans text-[11px] font-medium uppercase tracking-[0.2em] text-brand-cream/80">
-                    {copy.eyebrow}
-                  </p>
-                  <div>
-                    <p className="font-serif text-2xl font-normal leading-tight md:text-[28px]">
-                      {copy.title}
-                    </p>
-                    <p className="mt-1.5 text-sm text-brand-cream/70">
-                      {n} {n === 1 ? t.story : t.stories} · {copy.blurb}
-                    </p>
-                  </div>
-                </button>
-              );
-            })}
+        {/* Journey band (founder 2026-09-04): a Coffee Bean strip the full
+            page width — same breakout as the trust trio on /guides — with
+            four photo cards, each a filter over the stories
+            (app/_lib/inspireJourneys.js), counts live. Cards are kept short
+            (the first cut at 18rem was "too tall"). */}
+        <section
+          aria-labelledby="inspire-journeys"
+          className="relative left-1/2 w-screen -translate-x-1/2 bg-brand-ink py-10 md:py-12"
+        >
+          <div className="mx-auto max-w-7xl space-y-5 px-6">
+            <h2
+              id="inspire-journeys"
+              className="font-sans text-base font-light uppercase tracking-[0.3em] text-brand-cream md:text-xl"
+            >
+              {t.heading}
+            </h2>
+            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4 lg:gap-6">
+              {INSPIRE_JOURNEYS.map((j, i) => {
+                const copy = journeyCopy(i);
+                const info = journeyInfo.get(j.key) || { count: 0, fallbackPhoto: null };
+                const n = info.count;
+                const active = journey === j.key;
+                return (
+                  <button
+                    key={j.key}
+                    type="button"
+                    onClick={() => pickJourney(j.key)}
+                    aria-pressed={active}
+                    className={`group relative h-44 overflow-hidden rounded-3xl bg-slate-800 text-left text-brand-cream transition duration-200 ease-out hover:-translate-y-0.5 md:h-52 ${
+                      active ? "ring-2 ring-brand-terracotta" : "ring-1 ring-white/10"
+                    }`}
+                  >
+                    {j.image ? (
+                      <Image
+                        src={j.image}
+                        alt=""
+                        fill
+                        sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
+                        className="object-cover transition duration-500 ease-out group-hover:scale-[1.03]"
+                      />
+                    ) : info.fallbackPhoto ? (
+                      // Sanity CDN rendition, already sized for cards.
+                      <img
+                        src={info.fallbackPhoto}
+                        alt=""
+                        className="absolute inset-0 h-full w-full object-cover transition duration-500 ease-out group-hover:scale-[1.03]"
+                      />
+                    ) : null}
+                    {/* Photo darkens toward the bottom so the title reads. */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-brand-ink/90 via-brand-ink/35 to-brand-ink/10" />
+                    <div className="absolute inset-0 flex flex-col justify-between p-5">
+                      <p className="font-sans text-[11px] font-medium uppercase tracking-[0.2em] text-brand-cream/85">
+                        {copy.eyebrow}
+                      </p>
+                      <div>
+                        <p className="font-serif text-2xl font-normal leading-tight">{copy.title}</p>
+                        <p className="mt-1 text-sm text-brand-cream/75">
+                          {n} {n === 1 ? t.story : t.stories} · {copy.blurb}
+                        </p>
+                      </div>
+                    </div>
+                  </button>
+                );
+              })}
+            </div>
           </div>
         </section>
 
