@@ -110,6 +110,14 @@ export default function SiteHeader({
   // 2026-09-04), and the bar goes dark with it so the top reads as one
   // block. Story pages stay on the light bar.
   const dark = barePath === "/inspire";
+  // Currency only matters where prices show: home, /guides and story pages
+  // (which sell the guides behind them). The Inspire index, Destinations
+  // and About carry no prices, so no switcher (founder 2026-09-04).
+  const showCurrency = !(
+    barePath === "/inspire" ||
+    barePath.startsWith("/destinations") ||
+    barePath.startsWith("/about")
+  );
 
   return (
     // Always the solid Bone bar (founder 2026-08-08: the hero photo no
@@ -174,7 +182,7 @@ export default function SiteHeader({
             </Link>
           ))}
           <LanguageSwitcher />
-          <CurrencySwitcher current={currency} />
+          {showCurrency ? <CurrencySwitcher current={currency} /> : null}
         </div>
 
         {/* The bottom tab bar covers primary nav on mobile, so the header
@@ -185,7 +193,7 @@ export default function SiteHeader({
           }`}
         >
           <LanguageSwitcher />
-          <CurrencySwitcher current={currency} />
+          {showCurrency ? <CurrencySwitcher current={currency} /> : null}
         </div>
       </nav>
     </header>
