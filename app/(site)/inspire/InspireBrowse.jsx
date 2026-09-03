@@ -534,12 +534,17 @@ export default function InspireBrowse({
           </div>
         </div>
 
-        {/* Style pills: equal-width grid from sm up, six to a row from lg;
-            content-sized and wrapping on phones, where a two-column grid
-            truncated "Culture & People". One active at a time, in Coffee
-            Bean. */}
+        {/* Style pills: equal-width grid from sm up; from lg the column
+            count is half the pill count so the block is always exactly two
+            rows however many categories the library grows (founder
+            2026-09-04). Content-sized and wrapping on phones, where a
+            two-column grid truncated "Culture & People". One active at a
+            time, in Coffee Bean. */}
         {styles.length ? (
-          <div className="mt-4 flex flex-wrap gap-2 sm:grid sm:grid-cols-3 lg:grid-cols-6">
+          <div
+            className="mt-4 flex flex-wrap gap-2 sm:grid sm:grid-cols-3 lg:[grid-template-columns:repeat(var(--pill-cols),minmax(0,1fr))]"
+            style={{ "--pill-cols": Math.max(1, Math.ceil(styles.length / 2)) }}
+          >
             {styles.map((s) => {
               const active = style === s.key;
               return (
