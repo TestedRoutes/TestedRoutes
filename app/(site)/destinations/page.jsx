@@ -12,6 +12,7 @@ import mauritaniaHero from "../../../content/countries/mauritania/destination/ge
 import westernSaharaHero from "../../../content/countries/western-sahara/destination/generated/web/white-dune-tidal-pool.jpg";
 import gambiaHero from "../../../content/countries/gambia/destination/generated/web/kunta-kinteh-ferry-midriver.jpg";
 import senegalHero from "../../../content/countries/senegal/destination/generated/web/dakar-from-renaissance-monument.jpg";
+import canaryIslandsHero from "../../../content/countries/canary-islands/destination/generated/web/roques-de-garcia-above-the-clouds.jpg";
 
 export const metadata = {
   title: "Destinations · TestedRoutes",
@@ -109,6 +110,15 @@ const DESTINATIONS = [
       "Is it safe and is it worth it – Dakar and its monument, colonial Saint-Louis on its river island, and the lake that is not always pink.",
     image: senegalHero,
     alt: "Dakar spreading below the hill of the African Renaissance Monument, Senegal",
+  },
+  {
+    name: "Canary Islands",
+    href: "/destinations/canary-islands",
+    region: "Spain · Atlantic & volcanic islands",
+    blurb:
+      "Which island to pick and how many days you need – four islands that feel like four countries, winter swimming included, and the ferry move that beats choosing.",
+    image: canaryIslandsHero,
+    alt: "The Roques de García spires over the Llano de Ucanca with cloud spilling over the caldera rim, Tenerife",
   },
   {
     name: "Switzerland",
