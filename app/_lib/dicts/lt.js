@@ -25,6 +25,12 @@ const lt = {
     countriesSelected: "{n} šalys",
     findCountry: "Rasti šalį",
     noCountryMatch: "Šalių nerasta",
+    // Row labels in the search typeahead.
+    kindCountry: "Šalis",
+    kindContinent: "Žemynas",
+    kindStyle: "Stilius",
+    kindJourney: "Kelionė",
+    kindStory: "Istorija",
     // Journey band after the second row of stories; order matches
     // INSPIRE_JOURNEYS in app/_lib/inspireJourneys.js.
     journeys: [

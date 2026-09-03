@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useEffect, useMemo, useRef, useState } from "react";
 import CardMediaCarousel, { buildMediaSlides } from "../../_components/CardMediaCarousel";
 import { getDict } from "../../_lib/i18n";
@@ -202,8 +203,12 @@ export default function InspireBrowse({
   const [journey, setJourney] = useState("");
   const [panelOpen, setPanelOpen] = useState(false);
   const [countryQuery, setCountryQuery] = useState("");
+  const [suggestOpen, setSuggestOpen] = useState(false);
+  const [activeIdx, setActiveIdx] = useState(-1);
   const panelRef = useRef(null);
   const blockRef = useRef(null);
+  const searchRef = useRef(null);
+  const router = useRouter();
   const dict = getDict(lang);
   const t = dict.inspireList;
   const tl = dict.guideList;
@@ -225,6 +230,16 @@ export default function InspireBrowse({
       document.removeEventListener("keydown", onKey);
     };
   }, [panelOpen]);
+
+  // Same for the typeahead list under the search input.
+  useEffect(() => {
+    if (!suggestOpen) return;
+    const onDown = (e) => {
+      if (searchRef.current && !searchRef.current.contains(e.target)) setSuggestOpen(false);
+    };
+    document.addEventListener("pointerdown", onDown);
+    return () => document.removeEventListener("pointerdown", onDown);
+  }, [suggestOpen]);
 
   const total = cards.length;
 
@@ -452,6 +467,97 @@ export default function InspireBrowse({
     })),
   ];
 
+  // Typeahead (founder 2026-09-04): from two characters the input offers
+  // things to pick — filters first (continent, country, style, journey;
+  // at most four), then story titles. Picking a filter applies it and
+  // clears the box; picking a story opens it. Cheap enough to compute on
+  // every keystroke for a library this size.
+  const needle = search.trim().toLowerCase();
+  const has = (s) => String(s || "").toLowerCase().includes(needle);
+  let suggestions = [];
+  if (needle.length >= 2) {
+    const filters = [];
+    for (const row of continentRows) {
+      if (row.bucket && has(row.label)) {
+        filters.push({
+          kind: "continent",
+          label: row.label,
+          count: row.count,
+          apply: () => selectContinent(row.bucket),
+        });
+      }
+    }
+    for (const [name, entry] of countryIndex) {
+      if (has(name)) {
+        filters.push({
+          kind: "country",
+          label: name,
+          count: entry.count,
+          apply: () => setCountries((list) => (list.includes(name) ? list : [...list, name])),
+        });
+      }
+    }
+    for (const s of styles) {
+      if (has(s.label)) {
+        filters.push({ kind: "style", label: s.label, count: s.count, apply: () => setStyle(s.key) });
+      }
+    }
+    INSPIRE_JOURNEYS.forEach((j, i) => {
+      const copy = journeyCopy(i);
+      if (has(copy.title)) {
+        filters.push({
+          kind: "journey",
+          label: copy.title,
+          count: journeyCounts.get(j.key) || 0,
+          apply: () => setJourney(j.key),
+        });
+      }
+    });
+    const storyRows = cards
+      .filter((c) => c.href && has(c.title))
+      .slice(0, 6)
+      .map((c) => ({ kind: "story", label: c.title, meta: c.geoLabel, href: c.href }));
+    suggestions = [...filters.slice(0, 4), ...storyRows];
+  }
+  const kindLabels = {
+    continent: t.kindContinent,
+    country: t.kindCountry,
+    style: t.kindStyle,
+    journey: t.kindJourney,
+    story: t.kindStory,
+  };
+  const pickSuggestion = (s) => {
+    setSuggestOpen(false);
+    setActiveIdx(-1);
+    if (s.href) {
+      router.push(s.href);
+      return;
+    }
+    s.apply();
+    setSearch("");
+  };
+  const onSearchKeyDown = (e) => {
+    if (!suggestions.length) return;
+    if (e.key === "ArrowDown") {
+      e.preventDefault();
+      setSuggestOpen(true);
+      setActiveIdx((i) => (i + 1) % suggestions.length);
+    } else if (e.key === "ArrowUp") {
+      e.preventDefault();
+      setActiveIdx((i) => (i <= 0 ? suggestions.length - 1 : i - 1));
+    } else if (e.key === "Enter") {
+      if (suggestOpen && activeIdx >= 0) {
+        e.preventDefault();
+        pickSuggestion(suggestions[activeIdx]);
+      } else {
+        setSuggestOpen(false);
+      }
+    } else if (e.key === "Escape") {
+      setSuggestOpen(false);
+      setActiveIdx(-1);
+    }
+  };
+
   return (
     <div className="space-y-10">
       {/* scroll-mt clears the sticky header when a journey card scrolls
@@ -467,18 +573,35 @@ export default function InspireBrowse({
           {/* One capsule from sm up: input, Country, Search. On phones the
               three don't fit one row (the input shrank to a sliver), so the
               Country pill drops to its own full-width row underneath. */}
+          <div ref={searchRef} className="relative">
           <div className="flex w-full flex-wrap items-center gap-2 rounded-[28px] bg-white p-1.5 shadow-card ring-1 ring-brand-line sm:flex-nowrap sm:rounded-full">
             <input
               id="inspire-search"
               type="search"
+              autoComplete="off"
               placeholder={t.searchPlaceholder}
               value={search}
-              onChange={(e) => setSearch(e.target.value)}
+              onChange={(e) => {
+                setSearch(e.target.value);
+                setSuggestOpen(true);
+                setActiveIdx(-1);
+                setPanelOpen(false);
+              }}
+              onFocus={() => setSuggestOpen(true)}
+              onKeyDown={onSearchKeyDown}
+              role="combobox"
+              aria-expanded={suggestOpen && suggestions.length > 0}
+              aria-controls="inspire-suggestions"
+              aria-autocomplete="list"
+              aria-activedescendant={activeIdx >= 0 ? `inspire-suggestion-${activeIdx}` : undefined}
               className="min-w-0 flex-1 bg-transparent px-4 py-3 text-sm text-brand-ink outline-none placeholder:text-slate-400 md:px-5 md:text-base"
             />
             <button
               type="button"
-              onClick={() => setPanelOpen((o) => !o)}
+              onClick={() => {
+                setSuggestOpen(false);
+                setPanelOpen((o) => !o);
+              }}
               aria-expanded={panelOpen}
               aria-haspopup="dialog"
               className="order-last flex h-11 basis-full items-center justify-between gap-2 rounded-full bg-brand-ink px-4 text-sm font-semibold text-white transition hover:bg-brand-ink/90 sm:order-none sm:max-w-[14rem] sm:shrink-0 sm:basis-auto sm:justify-start md:h-12 md:px-5"
@@ -498,6 +621,48 @@ export default function InspireBrowse({
               <MagnifierIcon className="h-5 w-5 sm:hidden" />
               <span className="hidden sm:inline">{t.searchButton}</span>
             </button>
+          </div>
+
+          {suggestOpen && suggestions.length ? (
+            <ul
+              id="inspire-suggestions"
+              role="listbox"
+              className="absolute inset-x-0 top-full z-30 mt-2 overflow-hidden rounded-2xl bg-white shadow-card-hover ring-1 ring-brand-line"
+            >
+              {suggestions.map((s, i) => (
+                <li
+                  key={`${s.kind}:${s.label}`}
+                  id={`inspire-suggestion-${i}`}
+                  role="option"
+                  aria-selected={i === activeIdx}
+                >
+                  {/* onMouseDown preventDefault keeps the input focused so
+                      the list doesn't close before the click lands. */}
+                  <button
+                    type="button"
+                    onMouseDown={(e) => e.preventDefault()}
+                    onClick={() => pickSuggestion(s)}
+                    className={`flex w-full items-center justify-between gap-3 px-4 py-2.5 text-left text-sm transition ${
+                      i === activeIdx ? "bg-slate-50" : "hover:bg-slate-50"
+                    }`}
+                  >
+                    <span className="min-w-0 truncate">
+                      <span className="font-semibold text-slate-900">{s.label}</span>
+                      {s.kind === "story" && s.meta ? (
+                        <span className="ml-2 text-slate-500">– {s.meta}</span>
+                      ) : null}
+                    </span>
+                    <span className="shrink-0 text-xs tabular-nums text-slate-400">
+                      {kindLabels[s.kind]}
+                      {s.kind !== "story"
+                        ? ` · ${s.count} ${s.count === 1 ? t.story : t.stories}`
+                        : ""}
+                    </span>
+                  </button>
+                </li>
+              ))}
+            </ul>
+          ) : null}
           </div>
 
           {/* Country panel: continent sidebar on the left (the same state

@@ -182,7 +182,15 @@ export default function SiteHeader({
             </Link>
           ))}
           <LanguageSwitcher />
-          {showCurrency ? <CurrencySwitcher current={currency} /> : null}
+          {/* Hidden, not removed: the nav must not shift between pages, so
+              the switcher keeps its slot (visibility: hidden) where it is off. */}
+          {showCurrency ? (
+            <CurrencySwitcher current={currency} />
+          ) : (
+            <span className="invisible" aria-hidden="true">
+              <CurrencySwitcher current={currency} />
+            </span>
+          )}
         </div>
 
         {/* The bottom tab bar covers primary nav on mobile, so the header
@@ -193,7 +201,15 @@ export default function SiteHeader({
           }`}
         >
           <LanguageSwitcher />
-          {showCurrency ? <CurrencySwitcher current={currency} /> : null}
+          {/* Hidden, not removed: the nav must not shift between pages, so
+              the switcher keeps its slot (visibility: hidden) where it is off. */}
+          {showCurrency ? (
+            <CurrencySwitcher current={currency} />
+          ) : (
+            <span className="invisible" aria-hidden="true">
+              <CurrencySwitcher current={currency} />
+            </span>
+          )}
         </div>
       </nav>
     </header>

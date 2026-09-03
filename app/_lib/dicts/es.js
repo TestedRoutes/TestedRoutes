@@ -25,6 +25,12 @@ const es = {
     countriesSelected: "{n} países",
     findCountry: "Buscar un país",
     noCountryMatch: "Ningún país coincide",
+    // Row labels in the search typeahead.
+    kindCountry: "País",
+    kindContinent: "Continente",
+    kindStyle: "Estilo",
+    kindJourney: "Viaje",
+    kindStory: "Historia",
     // Journey band after the second row of stories; order matches
     // INSPIRE_JOURNEYS in app/_lib/inspireJourneys.js.
     journeys: [
