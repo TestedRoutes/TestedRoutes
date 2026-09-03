@@ -15,6 +15,10 @@ import senegalHero from "../../../content/countries/senegal/destination/generate
 import guineaHero from "../../../content/countries/guinea/destination/generated/web/village-and-mango-tree-at-dawn.jpg";
 import guineaBissauHero from "../../../content/countries/guinea-bissau/destination/generated/web/colonial-street-palms-bissau-velho.jpg";
 import canaryIslandsHero from "../../../content/countries/canary-islands/destination/generated/web/papagayo-coves-golden-hour.jpg";
+import tenerifeHero from "../../../content/countries/canary-islands/destination/generated/web/roques-de-garcia-above-the-clouds.jpg";
+import granCanariaHero from "../../../content/countries/canary-islands/destination/generated/web/roque-nublo-and-el-fraile.jpg";
+import lanzaroteHero from "../../../content/countries/canary-islands/destination/generated/web/la-geria-crater-vines.jpg";
+import fuerteventuraHero from "../../../content/countries/canary-islands/destination/generated/web/cofete-through-the-cactus.jpg";
 
 export const metadata = {
   title: "Destinations · TestedRoutes",
@@ -139,6 +143,42 @@ const DESTINATIONS = [
       "Which island to pick and how many days you need – four islands that feel like four countries, winter swimming included, and the ferry move that beats choosing.",
     image: canaryIslandsHero,
     alt: "The turquoise coves and red headlands of Punta del Papagayo at golden hour, Lanzarote",
+  },
+  {
+    name: "Tenerife",
+    href: "/destinations/tenerife",
+    region: "Canary Islands · Spain",
+    blurb:
+      "How many days you need and which side to stay on – Teide above the clouds, the Anaga laurel ridges, old towns, and the honest north–south split.",
+    image: tenerifeHero,
+    alt: "The Roques de García spires over the Llano de Ucanca with cloud spilling over the caldera rim, Tenerife",
+  },
+  {
+    name: "Gran Canaria",
+    href: "/destinations/gran-canaria",
+    region: "Canary Islands · Spain",
+    blurb:
+      "How many days you need and why the interior wins – a viewpoint every few bends, cave villages, a slot canyon, and desert dunes at the bottom.",
+    image: granCanariaHero,
+    alt: "Roque Nublo and El Fraile standing over the plateau with pine forest dropping away behind, Gran Canaria",
+  },
+  {
+    name: "Lanzarote",
+    href: "/destinations/lanzarote",
+    region: "Canary Islands · Spain",
+    blurb:
+      "Is it worth visiting and how many days you need – smoking ground, vines in craters, turquoise pools in lava tubes. The underrated one.",
+    image: lanzaroteHero,
+    alt: "Thousands of dug-out craters with single vines behind stone walls in the black ash of La Geria, Lanzarote",
+  },
+  {
+    name: "Fuerteventura",
+    href: "/destinations/fuerteventura",
+    region: "Canary Islands · Spain",
+    blurb:
+      "How many days you need and which end to stay on – the biggest easy sands in the Canaries, and the wildest beach of all behind a mountain wall.",
+    image: fuerteventuraHero,
+    alt: "Cofete beach and the Jandía mountain wall seen past a candelabra cactus, Fuerteventura",
   },
   {
     name: "Switzerland",
