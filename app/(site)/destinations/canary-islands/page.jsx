@@ -26,7 +26,6 @@ import laGeriaCraterVines from "../../../../content/countries/canary-islands/des
 import jameosDelAguaPool from "../../../../content/countries/canary-islands/destination/generated/web/jameos-del-agua-pool.jpg";
 import mascaVillageInItsGorge from "../../../../content/countries/canary-islands/destination/generated/web/masca-village-in-its-gorge.jpg";
 import taganangaAndTheAnagaCoast from "../../../../content/countries/canary-islands/destination/generated/web/taganana-and-the-anaga-coast.jpg";
-import cloudPouringIntoTheCaldera from "../../../../content/countries/canary-islands/destination/generated/web/cloud-pouring-into-the-caldera.jpg";
 import losGigantesFromPlayaDeLosGuios from "../../../../content/countries/canary-islands/destination/generated/web/los-gigantes-from-playa-de-los-guios.jpg";
 
 // Hero and closing image are the founder's own picks (cull, 2026-09-03:
