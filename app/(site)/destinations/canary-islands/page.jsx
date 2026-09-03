@@ -9,10 +9,12 @@ import PhotoCarousel from "../../../_components/PhotoCarousel";
 import roquesDeGarciaAboveClouds from "../../../../content/countries/canary-islands/destination/generated/web/roques-de-garcia-above-the-clouds.jpg";
 import teideConeClearMorning from "../../../../content/countries/canary-islands/destination/generated/web/teide-cone-clear-morning.jpg";
 import roqueNubloAndElFraile from "../../../../content/countries/canary-islands/destination/generated/web/roque-nublo-and-el-fraile.jpg";
-import cofeteAndTheJandiaWall from "../../../../content/countries/canary-islands/destination/generated/web/cofete-and-the-jandia-wall.jpg";
+import cofeteThroughTheCactus from "../../../../content/countries/canary-islands/destination/generated/web/cofete-through-the-cactus.jpg";
+import cofeteGoldenHourFromTheMirador from "../../../../content/countries/canary-islands/destination/generated/web/cofete-golden-hour-from-the-mirador.jpg";
+import guayadequeRavine from "../../../../content/countries/canary-islands/destination/generated/web/guayadeque-ravine.jpg";
+import losHervideros from "../../../../content/countries/canary-islands/destination/generated/web/los-hervideros-lava-coast.jpg";
 import elGolfoGreenLagoon from "../../../../content/countries/canary-islands/destination/generated/web/el-golfo-green-lagoon.jpg";
 import maspalomasDunesSunset from "../../../../content/countries/canary-islands/destination/generated/web/maspalomas-dunes-sunset.jpg";
-import puertoDeMoganMarina from "../../../../content/countries/canary-islands/destination/generated/web/puerto-de-mogan-marina.jpg";
 import granCanariaInteriorTracks from "../../../../content/countries/canary-islands/destination/generated/web/gran-canaria-interior-tracks.jpg";
 import maspalomasDuneRipples from "../../../../content/countries/canary-islands/destination/generated/web/maspalomas-dune-ripples.jpg";
 import groundSquirrelsLaOliva from "../../../../content/countries/canary-islands/destination/generated/web/ground-squirrels-la-oliva.jpg";
@@ -27,12 +29,14 @@ import taganangaAndTheAnagaCoast from "../../../../content/countries/canary-isla
 import cloudPouringIntoTheCaldera from "../../../../content/countries/canary-islands/destination/generated/web/cloud-pouring-into-the-caldera.jpg";
 import losGigantesFromPlayaDeLosGuios from "../../../../content/countries/canary-islands/destination/generated/web/los-gigantes-from-playa-de-los-guios.jpg";
 
-const HERO_IMAGE = roquesDeGarciaAboveClouds;
+// Hero and closing image are the founder's own picks (cull, 2026-09-03:
+// hero.jpg + Last.jpg dropped into the destination shortlist folder).
+const HERO_IMAGE = papagayoCovesGoldenHour;
 const HERO_ALT =
-  "The Roques de García spires over the Llano de Ucanca, with cloud spilling over the caldera rim of Teide National Park, Tenerife";
-const MIDPAGE_IMAGE = maspalomasDunesSunset;
+  "The turquoise coves and red headlands of Punta del Papagayo at golden hour, Lanzarote";
+const MIDPAGE_IMAGE = cofeteGoldenHourFromTheMirador;
 const MIDPAGE_ALT =
-  "Sunset over the dune ridges of Maspalomas with the lighthouse on the horizon, Gran Canaria";
+  "Cofete beach and the Jandía mountain wall at golden hour, from the mirador's stone wall with its old telescope, Fuerteventura";
 
 /*
  * Scope note (destination playbook §7): this page sells the DECISION - which
@@ -111,27 +115,28 @@ const REGIONS = [
   },
   {
     name: "Fuerteventura",
-    image: cofeteAndTheJandiaWall,
-    alt: "The wild sweep of Cofete beach under the Jandía mountain wall, seen from the pass, Fuerteventura",
+    image: cofeteThroughTheCactus,
+    alt: "Cofete beach and the Jandía mountain wall seen past a candelabra cactus, Fuerteventura",
     body: "The beach island. The biggest, easiest sands in the archipelago in the north, the wildest beach of all hiding behind a mountain ridge in the south, and a bare, windblown interior that feels like a different continent. The least variety of the four and the best coastline – know which trade you are making.",
   },
 ];
 
 /* Trip photos in journey order: Gran Canaria, Fuerteventura, Lanzarote, Tenerife. */
 const CAROUSEL = [
-  { image: puertoDeMoganMarina, alt: "Sailboats and the white village of Puerto de Mogán beneath its cliff, Gran Canaria", caption: "Puerto de Mogán, the first base" },
   { image: granCanariaInteriorTracks, alt: "Dirt tracks winding through the bare mountain interior of Gran Canaria, palms in the foreground", caption: "Gran Canaria's interior, mid-drive" },
+  { image: guayadequeRavine, alt: "The steep red walls of the Guayadeque ravine above a railed path, cactus on the slope, Gran Canaria", caption: "Guayadeque, the ravine that lives in caves" },
   { image: maspalomasDuneRipples, alt: "Rippled sand dunes running toward the resort strip and mountains at Maspalomas, Gran Canaria", caption: "Maspalomas, doing its Sahara impression" },
+  { image: maspalomasDunesSunset, alt: "Sunset over the dune ridges of Maspalomas with the lighthouse on the horizon, Gran Canaria", caption: "The dunes again, at closing time" },
   { image: groundSquirrelsLaOliva, alt: "Two ground squirrels on a stone wall in front of a bare volcanic plain at La Oliva, Fuerteventura", caption: "The car-park squirrels of La Oliva" },
   { image: grandesPlayasCorralejo, alt: "The white sand of Grandes Playas running empty toward a volcano cone, Corralejo, Fuerteventura", caption: "Grandes Playas, the easy Fuerteventura" },
   { image: villaWinterUnderTheRidge, alt: "The lonely white Villa Winter with its round tower under the Jandía mountains at Cofete, Fuerteventura", caption: "Villa Winter, alone at Cofete" },
-  { image: papagayoCovesGoldenHour, alt: "The turquoise coves and headlands of Papagayo at golden hour, Lanzarote", caption: "Papagayo, straight off the ferry" },
   { image: timanfayaLavaField, alt: "A black lava field with a red ash apron running to the volcano cones of Timanfaya, Lanzarote", caption: "Timanfaya, where the ground still smokes" },
   { image: laGeriaCraterVines, alt: "Thousands of dug-out craters with single vines behind stone walls in the black ash of La Geria, Lanzarote", caption: "La Geria: a vineyard on Mars" },
   { image: jameosDelAguaPool, alt: "The turquoise pool of Jameos del Agua with a leaning palm and black lava rim, Lanzarote", caption: "Jameos del Agua, Manrique's lava pool" },
+  { image: losHervideros, alt: "Waves breaking white against the black lava coast of Los Hervideros, volcano cones on the skyline, Lanzarote", caption: "Los Hervideros, the sea against the lava" },
   { image: mascaVillageInItsGorge, alt: "The rooftops of Masca village under its rock spire, with the gorge falling to a silver sea, Tenerife", caption: "Masca, at the end of the switchbacks" },
   { image: taganangaAndTheAnagaCoast, alt: "The green ridges of the Anaga mountains dropping to Taganana's villages and a deep blue sea, Tenerife", caption: "Taganana, on the Anaga coast" },
-  { image: cloudPouringIntoTheCaldera, alt: "Cloud pouring over the caldera rim onto dark lava in Teide National Park, Tenerife", caption: "The cloud layer, from above" },
+  { image: roquesDeGarciaAboveClouds, alt: "The Roques de García spires over the Llano de Ucanca, with cloud spilling over the caldera rim, Tenerife", caption: "Above the cloud layer, in the caldera" },
   { image: losGigantesFromPlayaDeLosGuios, alt: "The sheer cliff wall of Los Gigantes above the black sand of Playa de los Guíos, Tenerife", caption: "Los Gigantes, the day's coda" },
 ];
 

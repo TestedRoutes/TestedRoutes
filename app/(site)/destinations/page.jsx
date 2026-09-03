@@ -12,7 +12,7 @@ import mauritaniaHero from "../../../content/countries/mauritania/destination/ge
 import westernSaharaHero from "../../../content/countries/western-sahara/destination/generated/web/white-dune-tidal-pool.jpg";
 import gambiaHero from "../../../content/countries/gambia/destination/generated/web/kunta-kinteh-ferry-midriver.jpg";
 import senegalHero from "../../../content/countries/senegal/destination/generated/web/dakar-from-renaissance-monument.jpg";
-import canaryIslandsHero from "../../../content/countries/canary-islands/destination/generated/web/roques-de-garcia-above-the-clouds.jpg";
+import canaryIslandsHero from "../../../content/countries/canary-islands/destination/generated/web/papagayo-coves-golden-hour.jpg";
 
 export const metadata = {
   title: "Destinations · TestedRoutes",
@@ -118,7 +118,7 @@ const DESTINATIONS = [
     blurb:
       "Which island to pick and how many days you need – four islands that feel like four countries, winter swimming included, and the ferry move that beats choosing.",
     image: canaryIslandsHero,
-    alt: "The Roques de García spires over the Llano de Ucanca with cloud spilling over the caldera rim, Tenerife",
+    alt: "The turquoise coves and red headlands of Punta del Papagayo at golden hour, Lanzarote",
   },
   {
     name: "Switzerland",
