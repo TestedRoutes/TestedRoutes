@@ -224,6 +224,7 @@ export default function InspireBrowse({
   const [styleKeys, setStyleKeys] = useState([]);
   const [journey, setJourney] = useState("");
   const [panelOpen, setPanelOpen] = useState(false);
+  const [activityOpen, setActivityOpen] = useState(false);
   const [countryQuery, setCountryQuery] = useState("");
   const [suggestOpen, setSuggestOpen] = useState(false);
   const [activeIdx, setActiveIdx] = useState(-1);
@@ -238,12 +239,16 @@ export default function InspireBrowse({
   // The country panel closes on outside click or Escape, like a native
   // dropdown would.
   useEffect(() => {
-    if (!panelOpen) return;
+    if (!panelOpen && !activityOpen) return;
+    const closeBoth = () => {
+      setPanelOpen(false);
+      setActivityOpen(false);
+    };
     const onDown = (e) => {
-      if (panelRef.current && !panelRef.current.contains(e.target)) setPanelOpen(false);
+      if (panelRef.current && !panelRef.current.contains(e.target)) closeBoth();
     };
     const onKey = (e) => {
-      if (e.key === "Escape") setPanelOpen(false);
+      if (e.key === "Escape") closeBoth();
     };
     document.addEventListener("pointerdown", onDown);
     document.addEventListener("keydown", onKey);
@@ -251,7 +256,7 @@ export default function InspireBrowse({
       document.removeEventListener("pointerdown", onDown);
       document.removeEventListener("keydown", onKey);
     };
-  }, [panelOpen]);
+  }, [panelOpen, activityOpen]);
 
   // Same for the typeahead list under the search input.
   useEffect(() => {
@@ -458,8 +463,11 @@ export default function InspireBrowse({
     ...styles.filter((s) => ACTIVITY_STYLES.has(s.key)),
     ...styles.filter((s) => !ACTIVITY_STYLES.has(s.key)),
   ];
-  const activityValue = styleKeys[0] || "";
-  const pickActivity = (key) => setStyleKeys(key ? [key] : []);
+  const activityLabel = styleKeys.length ? styleLabelOf(styleKeys[0]) : tl.filterAll;
+  const pickActivity = (key) => {
+    setStyleKeys(key ? [key] : []);
+    setActivityOpen(false);
+  };
   // The /guides control sizing: two per row at thumb size on phones, one
   // compact row from sm up.
   const controlClass =
@@ -794,6 +802,7 @@ export default function InspireBrowse({
               type="button"
               onClick={() => {
                 setSuggestOpen(false);
+                setActivityOpen(false);
                 setPanelOpen((o) => !o);
               }}
               aria-expanded={panelOpen}
@@ -810,19 +819,26 @@ export default function InspireBrowse({
               <Chevron open={panelOpen} />
             </button>
             {orderedStyles.length ? (
-              <select
-                value={activityValue}
-                onChange={(e) => pickActivity(e.target.value)}
-                aria-label={tl.filterActivity}
-                className={`cursor-pointer truncate border-slate-200 bg-white px-4 text-slate-700 hover:border-slate-300 focus:border-slate-400 focus:outline-none sm:px-3 ${controlClass}`}
+              <button
+                type="button"
+                onClick={() => {
+                  setSuggestOpen(false);
+                  setPanelOpen(false);
+                  setActivityOpen((o) => !o);
+                }}
+                aria-expanded={activityOpen}
+                aria-haspopup="dialog"
+                className={`flex items-center justify-between gap-2 px-4 sm:px-3 ${controlClass} ${
+                  activityOpen || styleKeys.length
+                    ? "border-transparent bg-brand-ink text-white"
+                    : "border-slate-200 bg-white text-slate-700 hover:border-slate-300"
+                }`}
               >
-                <option value="">{`${tl.filterActivity}: ${tl.filterAll}`}</option>
-                {orderedStyles.map((s) => (
-                  <option key={s.key} value={s.key}>
-                    {s.label} · {s.count}
-                  </option>
-                ))}
-              </select>
+                <span className="truncate">
+                  {tl.filterActivity}: {activityLabel}
+                </span>
+                <Chevron open={activityOpen} />
+              </button>
             ) : null}
           </div>
 
@@ -864,6 +880,48 @@ export default function InspireBrowse({
                   {panelFooter}
                 </div>
               </div>
+            </div>
+          ) : null}
+
+          {/* Activity panel: the same anchored-dropdown treatment as
+              Country (founder 2026-09-04, "same look and feel"), single
+              pick, applies and closes like the /guides country list. */}
+          {activityOpen ? (
+            <div
+              role="dialog"
+              aria-label={tl.filterActivity}
+              className="absolute left-0 top-full z-20 mt-3 w-full overflow-hidden rounded-3xl bg-white p-4 shadow-card-hover ring-1 ring-brand-line md:w-96 md:p-6"
+            >
+              <ul className="grid gap-1 sm:grid-cols-2 md:grid-cols-1">
+                <li>
+                  <button
+                    type="button"
+                    onClick={() => pickActivity("")}
+                    className={`flex w-full items-center justify-between rounded-xl px-3 py-2.5 text-sm transition hover:bg-slate-50 ${
+                      styleKeys.length === 0 ? "font-bold text-brand-terracotta" : "text-slate-800"
+                    }`}
+                  >
+                    <span>{tl.filterAll}</span>
+                    <span className="text-xs tabular-nums text-slate-400">{total}</span>
+                  </button>
+                </li>
+                {orderedStyles.map((st) => (
+                  <li key={st.key}>
+                    <button
+                      type="button"
+                      onClick={() => pickActivity(st.key)}
+                      className={`flex w-full items-center justify-between rounded-xl px-3 py-2.5 text-sm transition hover:bg-slate-50 ${
+                        styleKeys.includes(st.key)
+                          ? "font-bold text-brand-terracotta"
+                          : "text-slate-800"
+                      }`}
+                    >
+                      <span className="truncate">{st.label}</span>
+                      <span className="text-xs tabular-nums text-slate-400">{st.count}</span>
+                    </button>
+                  </li>
+                ))}
+              </ul>
             </div>
           ) : null}
         </div>

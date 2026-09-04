@@ -135,14 +135,14 @@ export default async function InspireIndexPage({ lang = "en", continent = "", q 
           block before the filter panel on Parchment. The two lines are the
           same copy as before, left-aligned (founder 2026-09-03). */}
       <div className="bg-brand-ink text-brand-cream">
-        <div className="mx-auto w-full max-w-7xl space-y-2 px-6 py-12 md:py-16">
+        <div className="mx-auto w-full max-w-7xl space-y-1.5 px-6 py-6 md:space-y-2 md:py-16">
           <h1 className="font-serif font-normal leading-[1.1] text-brand-cream text-2xl md:text-[26px] lg:text-5xl">
             {t.title}
           </h1>
           <p className="font-serif text-sm font-light text-brand-cream/70 md:text-2xl">{t.subtitle}</p>
         </div>
       </div>
-      <div className="mx-auto flex w-full min-w-0 max-w-7xl flex-col gap-10 px-6 pt-10 md:pt-12">
+      <div className="mx-auto flex w-full min-w-0 max-w-7xl flex-col gap-10 px-6 pt-6 md:pt-12">
 
         {lang !== "en" && cards.length === 0 ? (
           <div className="mx-auto w-full max-w-xl rounded-3xl border border-dashed border-slate-300/70 bg-white px-6 py-10 text-center shadow-sm ring-1 ring-slate-200/60">
