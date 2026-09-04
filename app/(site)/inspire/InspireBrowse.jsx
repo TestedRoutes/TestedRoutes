@@ -196,6 +196,52 @@ function MagnifierIcon({ className }) {
   );
 }
 
+// One tick row in a filter panel: box, label, count. Country and Activity
+// share it (founder 2026-09-04: "the same look and feel as with countries
+// filter"), so the two lists cannot drift apart — a class changed for one
+// panel lands in the other.
+function CheckRow({ label, count, checked, onToggle }) {
+  return (
+    <label className="flex cursor-pointer items-center gap-2 rounded-xl px-1 py-2 transition hover:bg-slate-50 sm:gap-3 sm:px-2">
+      <input type="checkbox" className="sr-only" checked={checked} onChange={onToggle} />
+      <span
+        aria-hidden="true"
+        className={`flex h-5 w-5 shrink-0 items-center justify-center rounded-md ring-1 transition ${
+          checked ? "bg-brand-ink text-white ring-brand-ink" : "bg-white ring-slate-300"
+        }`}
+      >
+        {checked ? (
+          <svg
+            viewBox="0 0 12 12"
+            className="h-3 w-3"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <path d="M2.5 6.5 L5 9 L9.5 3.5" />
+          </svg>
+        ) : null}
+      </span>
+      {/* Two columns on a 375px phone leave ~100px for the name, so names
+          wrap there instead of truncating (Equatorial Guinea, Nature &
+          Wildlife); from sm up the column is wide enough to clip instead.
+          break-words is for the ones that are a single long word with
+          nowhere to wrap (Turkmenistan, Mountaineering) - without it they
+          overflow the column and run under the count. */}
+      <span
+        className={`min-w-0 flex-1 break-words text-sm leading-tight sm:truncate sm:text-[15px] ${
+          checked ? "font-bold text-brand-ink" : "text-slate-800"
+        }`}
+      >
+        {label}
+      </span>
+      <span className="shrink-0 text-xs tabular-nums text-slate-400">{count}</span>
+    </label>
+  );
+}
+
 // Filter block redesign (founder mockup 2026-09-03): one rounded panel
 // holds the search bar, the continent tabs with counts, a control row that
 // mirrors /guides (founder 2026-09-04: "similar looks and feel as the
@@ -501,6 +547,13 @@ export default function InspireBrowse({
     ...styles.filter((s) => ACTIVITY_STYLES.has(s.key)),
     ...styles.filter((s) => !ACTIVITY_STYLES.has(s.key)),
   ];
+  // What the panel actually lists: an activity no story would return under
+  // the other filters drops out, the same rule the country list follows —
+  // a zero row is a dead end. Anything already ticked stays, so a visitor
+  // can always untick their own choice.
+  const listedStyles = orderedStyles.filter(
+    (st) => (styleCounts.get(st.key) || 0) > 0 || styleKeys.includes(st.key),
+  );
   const activityLabel =
     styleKeys.length === 0
       ? tl.filterAll
@@ -531,51 +584,16 @@ export default function InspireBrowse({
   const countryList = (listClass) =>
     listedCountries.length ? (
       <ul className={`grid gap-x-3 gap-y-0.5 overflow-y-auto sm:gap-x-6 ${listClass}`}>
-        {listedCountries.map(([name, count]) => {
-          const checked = countries.includes(name);
-          return (
-            <li key={name}>
-              {/* Two columns on a 375px phone leave ~100px for the name, so
-                  names wrap there instead of truncating (Equatorial Guinea). */}
-              <label className="flex cursor-pointer items-center gap-2 rounded-xl px-1 py-2 transition hover:bg-slate-50 sm:gap-3 sm:px-2">
-                <input
-                  type="checkbox"
-                  className="sr-only"
-                  checked={checked}
-                  onChange={() => toggleCountry(name)}
-                />
-                <span
-                  aria-hidden="true"
-                  className={`flex h-5 w-5 shrink-0 items-center justify-center rounded-md ring-1 transition ${
-                    checked ? "bg-brand-ink text-white ring-brand-ink" : "bg-white ring-slate-300"
-                  }`}
-                >
-                  {checked ? (
-                    <svg
-                      viewBox="0 0 12 12"
-                      className="h-3 w-3"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    >
-                      <path d="M2.5 6.5 L5 9 L9.5 3.5" />
-                    </svg>
-                  ) : null}
-                </span>
-                <span
-                  className={`min-w-0 flex-1 text-sm leading-tight sm:truncate sm:text-[15px] ${
-                    checked ? "font-bold text-brand-ink" : "text-slate-800"
-                  }`}
-                >
-                  {name}
-                </span>
-                <span className="text-xs tabular-nums text-slate-400">{count}</span>
-              </label>
-            </li>
-          );
-        })}
+        {listedCountries.map(([name, count]) => (
+          <li key={name}>
+            <CheckRow
+              label={name}
+              count={count}
+              checked={countries.includes(name)}
+              onToggle={() => toggleCountry(name)}
+            />
+          </li>
+        ))}
       </ul>
     ) : (
       <p className="mt-6 text-sm text-slate-500">{t.noCountryMatch}</p>
@@ -922,61 +940,38 @@ export default function InspireBrowse({
             </div>
           ) : null}
 
-          {/* Activity panel: the same tickbox treatment as the Country
-              panel (founder 2026-09-04) - multi-select, counts scoped to the
-              other active filters, Clear + Show footer. */}
+          {/* Activity panel: the Country panel's treatment applied to
+              activities (founder 2026-09-04, "the same look and feel as with
+              countries filter") - full panel width, the same eyebrow +
+              multi-column tick list, counts scoped to the other active
+              filters, Clear + Show footer. No continent rail: the activity
+              list has no second dimension to scope by, so it takes the
+              whole width instead.
+              Order is activities first, then trip types (ACTIVITY_STYLES),
+              and the grid flows by row, so the two groups stay contiguous
+              in reading order across the columns. */}
           {activityOpen ? (
             <div
               role="dialog"
               aria-label={tl.filterActivity}
-              className="absolute left-0 top-full z-20 mt-3 w-full overflow-hidden rounded-3xl bg-white p-4 shadow-card-hover ring-1 ring-brand-line md:w-96 md:p-6"
+              className="absolute left-0 top-full z-20 mt-3 w-full overflow-hidden rounded-3xl bg-white p-4 shadow-card-hover ring-1 ring-brand-line md:p-6"
             >
-              <ul className="grid gap-x-3 gap-y-0.5 sm:grid-cols-2 md:grid-cols-1">
-                {orderedStyles.map((st) => {
-                  const checked = styleKeys.includes(st.key);
-                  const count = styleCounts.get(st.key) || 0;
-                  if (!count && !checked) return null;
-                  return (
-                    <li key={st.key}>
-                      <label className="flex cursor-pointer items-center gap-2 rounded-xl px-1 py-2 transition hover:bg-slate-50 sm:gap-3 sm:px-2">
-                        <input
-                          type="checkbox"
-                          className="sr-only"
-                          checked={checked}
-                          onChange={() => toggleStyle(st.key)}
-                        />
-                        <span
-                          aria-hidden="true"
-                          className={`flex h-5 w-5 shrink-0 items-center justify-center rounded-md ring-1 transition ${
-                            checked ? "bg-brand-ink text-white ring-brand-ink" : "bg-white ring-slate-300"
-                          }`}
-                        >
-                          {checked ? (
-                            <svg
-                              viewBox="0 0 12 12"
-                              className="h-3 w-3"
-                              fill="none"
-                              stroke="currentColor"
-                              strokeWidth="2"
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                            >
-                              <path d="M2.5 6.5 L5 9 L9.5 3.5" />
-                            </svg>
-                          ) : null}
-                        </span>
-                        <span
-                          className={`min-w-0 flex-1 text-sm leading-tight ${
-                            checked ? "font-bold text-brand-ink" : "text-slate-800"
-                          }`}
-                        >
-                          {st.label}
-                        </span>
-                        <span className="text-xs tabular-nums text-slate-400">{count}</span>
-                      </label>
-                    </li>
-                  );
-                })}
+              {/* stylesSelected is "{n} activities" in every dictionary - it
+                  counts what is listed here as readily as what is ticked. */}
+              <p className="font-sans text-[11px] font-semibold uppercase tracking-[0.2em] text-slate-500">
+                {scopeLabel} · {fill(t.stylesSelected, { n: listedStyles.length })}
+              </p>
+              <ul className="mt-4 grid max-h-[45vh] grid-cols-2 gap-x-3 gap-y-0.5 overflow-y-auto sm:gap-x-6 lg:grid-cols-3">
+                {listedStyles.map((st) => (
+                  <li key={st.key}>
+                    <CheckRow
+                      label={st.label}
+                      count={styleCounts.get(st.key) || 0}
+                      checked={styleKeys.includes(st.key)}
+                      onToggle={() => toggleStyle(st.key)}
+                    />
+                  </li>
+                ))}
               </ul>
               <div className="mt-4 flex items-center justify-between gap-4 border-t border-brand-line pt-4">
                 <button
