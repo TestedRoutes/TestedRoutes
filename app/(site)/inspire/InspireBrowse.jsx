@@ -11,6 +11,23 @@ import {
   continentTabLabel as bucketLabel,
 } from "../../_lib/continents";
 import { INSPIRE_JOURNEYS, journeyMatches } from "../../_lib/inspireJourneys";
+import {
+  ArrowIcon,
+  BLOCK_CLASS,
+  CAPSULE_CLASS,
+  ContinentRail,
+  ContinentTabs,
+  EYEBROW_CLASS,
+  fill,
+  FilterChip,
+  FilterPill,
+  MagnifierIcon,
+  PANEL_CLASS,
+  PanelFooter,
+  SEARCH_BUTTON_CLASS,
+  SEARCH_INPUT_CLASS,
+  TickList,
+} from "../../_components/FilterUi";
 
 function cardHaystack(card) {
   return [
@@ -35,12 +52,6 @@ function matchesSearch(card, query) {
 
 function sortRecentFirst(cards) {
   return [...cards].sort((a, b) => (b.dateMillis || 0) - (a.dateMillis || 0));
-}
-
-// "{n} countries" → "3 countries". The dictionaries carry the templates so
-// each language can put the number where its grammar wants it.
-function fill(template, vars) {
-  return String(template || "").replace(/\{(\w+)\}/g, (_, k) => String(vars[k] ?? ""));
 }
 
 // Style pills match on a normalised key: "Hiking" as the activity category
@@ -143,103 +154,6 @@ function StoryCard({ card, t }) {
     );
   }
   return <div className={shellStatic}>{inner}</div>;
-}
-
-function Chevron({ open }) {
-  return (
-    <svg
-      viewBox="0 0 12 8"
-      aria-hidden="true"
-      className={`h-2 w-3 shrink-0 transition-transform ${open ? "rotate-180" : ""}`}
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <path d="M1 1.5 L6 6.5 L11 1.5" />
-    </svg>
-  );
-}
-
-function ArrowIcon({ className }) {
-  return (
-    <svg
-      viewBox="0 0 24 24"
-      aria-hidden="true"
-      className={className}
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <path d="M5 12 H19 M13 6 L19 12 L13 18" />
-    </svg>
-  );
-}
-
-function MagnifierIcon({ className }) {
-  return (
-    <svg
-      viewBox="0 0 24 24"
-      aria-hidden="true"
-      className={className}
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-    >
-      <circle cx="11" cy="11" r="7" />
-      <path d="M16.5 16.5 L21 21" />
-    </svg>
-  );
-}
-
-// One tick row in a filter panel: box, label, count. Country and Activity
-// share it (founder 2026-09-04: "the same look and feel as with countries
-// filter"), so the two lists cannot drift apart — a class changed for one
-// panel lands in the other.
-function CheckRow({ label, count, checked, onToggle }) {
-  return (
-    <label className="flex cursor-pointer items-center gap-2 rounded-xl px-1 py-2 transition hover:bg-slate-50 sm:gap-3 sm:px-2">
-      <input type="checkbox" className="sr-only" checked={checked} onChange={onToggle} />
-      <span
-        aria-hidden="true"
-        className={`flex h-5 w-5 shrink-0 items-center justify-center rounded-md ring-1 transition ${
-          checked ? "bg-brand-ink text-white ring-brand-ink" : "bg-white ring-slate-300"
-        }`}
-      >
-        {checked ? (
-          <svg
-            viewBox="0 0 12 12"
-            className="h-3 w-3"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          >
-            <path d="M2.5 6.5 L5 9 L9.5 3.5" />
-          </svg>
-        ) : null}
-      </span>
-      {/* Two columns on a 375px phone leave ~100px for the name, so names
-          wrap there instead of truncating (Equatorial Guinea, Nature &
-          Wildlife); from sm up the column is wide enough to clip instead.
-          break-words is for the ones that are a single long word with
-          nowhere to wrap (Turkmenistan, Mountaineering) - without it they
-          overflow the column and run under the count. */}
-      <span
-        className={`min-w-0 flex-1 break-words text-sm leading-tight sm:truncate sm:text-[15px] ${
-          checked ? "font-bold text-brand-ink" : "text-slate-800"
-        }`}
-      >
-        {label}
-      </span>
-      <span className="shrink-0 text-xs tabular-nums text-slate-400">{count}</span>
-    </label>
-  );
 }
 
 // Filter block redesign (founder mockup 2026-09-03): one rounded panel
@@ -524,21 +438,6 @@ export default function InspireBrowse({
   const showLabel =
     filtered.length === 1 ? t.showStory : fill(t.showStories, { n: filtered.length });
 
-  const tabClass = (active) =>
-    `-mb-px flex shrink-0 items-baseline gap-1.5 border-b-2 pb-3 font-sans text-base font-bold transition-colors ${
-      active
-        ? "border-brand-terracotta text-brand-ink"
-        : "border-transparent text-slate-500 hover:text-slate-700"
-    }`;
-  const tabCountClass = (active) =>
-    `text-xs font-medium tabular-nums ${active ? "text-slate-500" : "text-slate-400"}`;
-  const sideClass = (active) =>
-    `flex shrink-0 items-center justify-between gap-4 rounded-2xl px-4 py-2.5 text-sm font-bold transition ${
-      active ? "bg-brand-ink text-white" : "text-slate-600 hover:bg-slate-100"
-    }`;
-  const sideCountClass = (active) =>
-    `text-xs font-medium tabular-nums ${active ? "text-white/70" : "text-slate-400"}`;
-
   // Activity is a single-pick dropdown in the /guides style (founder
   // 2026-09-04). It writes into the same styleKeys state the pills used, so
   // chips, counts and the filter logic are untouched; activities list before
@@ -560,12 +459,7 @@ export default function InspireBrowse({
       : styleKeys.length === 1
         ? styleLabelOf(styleKeys[0])
         : fill(t.stylesSelected, { n: styleKeys.length });
-  // The /guides control sizing: two per row at thumb size on phones, one
-  // compact row from sm up.
-  const controlClass =
-    "h-11 min-w-[calc(50%-0.25rem)] flex-1 rounded-full border text-sm font-semibold transition sm:h-9 sm:min-w-0 sm:max-w-44 sm:text-xs";
 
-  // Country picker pieces shared by the desktop panel and the phone sheet.
   const findBox = (className = "") => (
     <div
       className={`flex items-center gap-2 rounded-full bg-slate-50 px-4 ring-1 ring-brand-line ${className}`}
@@ -579,41 +473,6 @@ export default function InspireBrowse({
         aria-label={t.findCountry}
         className="min-w-0 flex-1 bg-transparent py-2 text-sm text-brand-ink outline-none placeholder:text-slate-400"
       />
-    </div>
-  );
-  const countryList = (listClass) =>
-    listedCountries.length ? (
-      <ul className={`grid gap-x-3 gap-y-0.5 overflow-y-auto sm:gap-x-6 ${listClass}`}>
-        {listedCountries.map(([name, count]) => (
-          <li key={name}>
-            <CheckRow
-              label={name}
-              count={count}
-              checked={countries.includes(name)}
-              onToggle={() => toggleCountry(name)}
-            />
-          </li>
-        ))}
-      </ul>
-    ) : (
-      <p className="mt-6 text-sm text-slate-500">{t.noCountryMatch}</p>
-    );
-  const panelFooter = (
-    <div className="mt-4 flex items-center justify-between gap-4 border-t border-brand-line pt-4">
-      <button
-        type="button"
-        onClick={() => setCountries([])}
-        className="text-sm font-medium text-slate-500 underline underline-offset-4 transition hover:text-brand-ink"
-      >
-        {t.clearSelection}
-      </button>
-      <button
-        type="button"
-        onClick={() => setPanelOpen(false)}
-        className="rounded-full bg-brand-terracotta px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-brand-terracotta/90"
-      >
-        {showLabel}
-      </button>
     </div>
   );
 
@@ -631,9 +490,9 @@ export default function InspireBrowse({
   const rest = filtered.slice(8);
 
   const continentRows = [
-    { bucket: "", label: tl.filterAll, count: total },
+    { key: "", label: tl.filterAll, count: total },
     ...tabs.map((b) => ({
-      bucket: b,
+      key: b,
       label: bucketLabel(b),
       count: continentCounts.get(b) || 0,
     })),
@@ -739,10 +598,7 @@ export default function InspireBrowse({
     <div className="space-y-10">
       {/* scroll-mt clears the sticky header when a journey card scrolls
           back up here. */}
-      <div
-        ref={blockRef}
-        className="scroll-mt-24 rounded-[28px] bg-slate-100/70 p-3 ring-1 ring-brand-line md:p-4"
-      >
+      <div ref={blockRef} className={BLOCK_CLASS}>
         <div>
           <label htmlFor="inspire-search" className="sr-only">
             {t.searchPlaceholder}
@@ -751,7 +607,7 @@ export default function InspireBrowse({
               live in the /guides-style control row under the tabs (founder
               2026-09-04). */}
           <div ref={searchRef} className="relative">
-          <div className="flex w-full items-center gap-2 rounded-full bg-white p-1.5 shadow-card ring-1 ring-brand-line">
+          <div className={CAPSULE_CLASS}>
             <input
               id="inspire-search"
               type="search"
@@ -771,7 +627,7 @@ export default function InspireBrowse({
               aria-controls="inspire-suggestions"
               aria-autocomplete="list"
               aria-activedescendant={activeIdx >= 0 ? `inspire-suggestion-${activeIdx}` : undefined}
-              className="min-w-0 flex-1 bg-transparent px-4 py-3 text-sm text-brand-ink outline-none placeholder:text-slate-400 md:px-5 md:text-base"
+              className={SEARCH_INPUT_CLASS}
             />
             {/* Search is live as you type; the button is the visible
                 "go" that phones expect and just closes the keyboard. Text
@@ -780,7 +636,7 @@ export default function InspireBrowse({
               type="button"
               onClick={() => document.getElementById("inspire-search")?.blur()}
               aria-label={t.searchButton}
-              className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-brand-terracotta text-sm font-semibold text-white transition hover:bg-brand-terracotta/90 sm:w-auto sm:px-5 md:h-12 md:px-6 md:text-base"
+              className={SEARCH_BUTTON_CLASS}
             >
               <ArrowIcon className="h-5 w-5 sm:hidden" />
               <span className="hidden sm:inline">{t.searchButton}</span>
@@ -833,69 +689,38 @@ export default function InspireBrowse({
 
         {/* Continent tabs with counts: All + one per continent with stories,
             active tab underlined in Brandy (the /guides treatment). */}
-        <div className="mt-4 border-b border-brand-line">
-          <div className="flex gap-6 overflow-x-auto [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-            {continentRows.map((row) => (
-              <button
-                key={row.bucket || "all"}
-                type="button"
-                onClick={() => selectContinent(row.bucket)}
-                className={tabClass(continent === row.bucket)}
-              >
-                {row.label}
-                <span className={tabCountClass(continent === row.bucket)}>{row.count}</span>
-              </button>
-            ))}
-          </div>
+        <div className="mt-4">
+          <ContinentTabs rows={continentRows} active={continent} onPick={selectContinent} />
         </div>
 
-        {/* Control row, the /guides pattern (founder 2026-09-04): the
-            Country pill opens the panel anchored below; Activity is a plain
-            select. Two per row at thumb size on phones, one compact row from
-            sm up. */}
+        {/* Control row, the /guides pattern (founder 2026-09-04): one pill
+            per filter, each opening its panel anchored below. Two per row at
+            thumb size on phones, one compact row from sm up. */}
         <div ref={panelRef} className="relative mt-4">
           <div className="flex w-full flex-wrap items-center gap-2">
-            <button
-              type="button"
+            <FilterPill
+              label={tl.filterCountry}
+              value={countryPillLabel}
+              open={panelOpen}
+              active={countries.length > 0}
               onClick={() => {
                 setSuggestOpen(false);
                 setActivityOpen(false);
                 setPanelOpen((o) => !o);
               }}
-              aria-expanded={panelOpen}
-              aria-haspopup="dialog"
-              className={`flex items-center justify-between gap-2 px-4 sm:px-3 ${controlClass} ${
-                panelOpen || countries.length
-                  ? "border-transparent bg-brand-ink text-white"
-                  : "border-slate-200 bg-white text-slate-700 hover:border-slate-300"
-              }`}
-            >
-              <span className="truncate">
-                {tl.filterCountry}: {countryPillLabel}
-              </span>
-              <Chevron open={panelOpen} />
-            </button>
+            />
             {orderedStyles.length ? (
-              <button
-                type="button"
+              <FilterPill
+                label={tl.filterActivity}
+                value={activityLabel}
+                open={activityOpen}
+                active={styleKeys.length > 0}
                 onClick={() => {
                   setSuggestOpen(false);
                   setPanelOpen(false);
                   setActivityOpen((o) => !o);
                 }}
-                aria-expanded={activityOpen}
-                aria-haspopup="dialog"
-                className={`flex items-center justify-between gap-2 px-4 sm:px-3 ${controlClass} ${
-                  activityOpen || styleKeys.length
-                    ? "border-transparent bg-brand-ink text-white"
-                    : "border-slate-200 bg-white text-slate-700 hover:border-slate-300"
-                }`}
-              >
-                <span className="truncate">
-                  {tl.filterActivity}: {activityLabel}
-                </span>
-                <Chevron open={activityOpen} />
-              </button>
+              />
             ) : null}
           </div>
 
@@ -903,38 +728,33 @@ export default function InspireBrowse({
               continent sidebar (same state as the tab row) from md up, the
               searchable multi-select checkbox list always. */}
           {panelOpen ? (
-            <div
-              role="dialog"
-              aria-label={tl.filterCountry}
-              className="absolute left-0 top-full z-20 mt-3 w-full overflow-hidden rounded-3xl bg-white shadow-card-hover ring-1 ring-brand-line"
-            >
+            <div role="dialog" aria-label={tl.filterCountry} className={PANEL_CLASS}>
               <div className="flex">
-                <div className="hidden w-56 shrink-0 border-r border-brand-line bg-slate-50/70 p-4 md:block">
-                  <div className="flex flex-col gap-1.5">
-                    {continentRows.map((row) => (
-                      <button
-                        key={row.bucket || "all"}
-                        type="button"
-                        onClick={() => selectContinent(row.bucket)}
-                        className={sideClass(continent === row.bucket)}
-                      >
-                        <span>{row.label}</span>
-                        <span className={sideCountClass(continent === row.bucket)}>
-                          {row.count}
-                        </span>
-                      </button>
-                    ))}
-                  </div>
-                </div>
+                <ContinentRail rows={continentRows} active={continent} onPick={selectContinent} />
                 <div className="min-w-0 flex-1 p-4 md:p-6">
                   <div className="flex flex-wrap items-center justify-between gap-3">
-                    <p className="font-sans text-[11px] font-semibold uppercase tracking-[0.2em] text-slate-500">
+                    <p className={EYEBROW_CLASS}>
                       {scopeLabel} · {fill(t.countriesWithStories, { n: scopedCountries.length })}
                     </p>
                     {findBox("w-full sm:w-56")}
                   </div>
-                  {countryList("mt-4 max-h-[45vh] grid-cols-2 lg:grid-cols-3")}
-                  {panelFooter}
+                  <TickList
+                    rows={listedCountries.map(([name, count]) => ({
+                      key: name,
+                      label: name,
+                      count,
+                    }))}
+                    isChecked={(name) => countries.includes(name)}
+                    onToggle={toggleCountry}
+                    emptyLabel={t.noCountryMatch}
+                    className="mt-4"
+                  />
+                  <PanelFooter
+                    clearLabel={t.clearSelection}
+                    onClear={() => setCountries([])}
+                    showLabel={showLabel}
+                    onClose={() => setPanelOpen(false)}
+                  />
                 </div>
               </div>
             </div>
@@ -954,41 +774,29 @@ export default function InspireBrowse({
             <div
               role="dialog"
               aria-label={tl.filterActivity}
-              className="absolute left-0 top-full z-20 mt-3 w-full overflow-hidden rounded-3xl bg-white p-4 shadow-card-hover ring-1 ring-brand-line md:p-6"
+              className={`${PANEL_CLASS} p-4 md:p-6`}
             >
               {/* stylesSelected is "{n} activities" in every dictionary - it
                   counts what is listed here as readily as what is ticked. */}
-              <p className="font-sans text-[11px] font-semibold uppercase tracking-[0.2em] text-slate-500">
+              <p className={EYEBROW_CLASS}>
                 {scopeLabel} · {fill(t.stylesSelected, { n: listedStyles.length })}
               </p>
-              <ul className="mt-4 grid max-h-[45vh] grid-cols-2 gap-x-3 gap-y-0.5 overflow-y-auto sm:gap-x-6 lg:grid-cols-3">
-                {listedStyles.map((st) => (
-                  <li key={st.key}>
-                    <CheckRow
-                      label={st.label}
-                      count={styleCounts.get(st.key) || 0}
-                      checked={styleKeys.includes(st.key)}
-                      onToggle={() => toggleStyle(st.key)}
-                    />
-                  </li>
-                ))}
-              </ul>
-              <div className="mt-4 flex items-center justify-between gap-4 border-t border-brand-line pt-4">
-                <button
-                  type="button"
-                  onClick={() => setStyleKeys([])}
-                  className="text-sm font-medium text-slate-500 underline underline-offset-4 transition hover:text-brand-ink"
-                >
-                  {t.clearSelection}
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setActivityOpen(false)}
-                  className="rounded-full bg-brand-terracotta px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-brand-terracotta/90"
-                >
-                  {showLabel}
-                </button>
-              </div>
+              <TickList
+                rows={listedStyles.map((st) => ({
+                  key: st.key,
+                  label: st.label,
+                  count: styleCounts.get(st.key) || 0,
+                }))}
+                isChecked={(key) => styleKeys.includes(key)}
+                onToggle={toggleStyle}
+                className="mt-4"
+              />
+              <PanelFooter
+                clearLabel={t.clearSelection}
+                onClear={() => setStyleKeys([])}
+                showLabel={showLabel}
+                onClose={() => setActivityOpen(false)}
+              />
             </div>
           ) : null}
         </div>
@@ -999,18 +807,7 @@ export default function InspireBrowse({
             {fill(t.showing, { shown: filtered.length, total })}
           </p>
           {chips.map((chip) => (
-            <button
-              key={chip.key}
-              type="button"
-              onClick={chip.clear}
-              className="flex items-center gap-2 rounded-full bg-brand-ink px-3.5 py-1.5 text-xs font-semibold text-white transition hover:bg-brand-ink/90"
-            >
-              {chip.label}
-              <span aria-hidden="true" className="text-white/60">
-                ✕
-              </span>
-              <span className="sr-only">Clear filter</span>
-            </button>
+            <FilterChip key={chip.key} label={chip.label} onClear={chip.clear} />
           ))}
           {hasFilters ? (
             <button
