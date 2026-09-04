@@ -100,7 +100,7 @@ const CAROUSEL = [
   { image: timanfayaParkSign, alt: "The Timanfaya national park sign with its fire-devil emblem on a lava wall, Lanzarote", caption: "Timanfaya's fire devil" },
   { image: timanfayaSmokingVent, alt: "Steam erupting from a vent in the rocks during the geyser demonstration at Timanfaya, Lanzarote", caption: "The ground, making its point" },
   { image: lagomarPoolInTheRock, alt: "A turquoise pool folded into red rock with palms at Lagomar, Lanzarote", caption: "Lagomar, folded into the rock" },
-  { image: jameosCaveRestaurant, alt: "Tables set inside the red-lit lava cave of Jameos del Agua, Lanzarote", caption: "Dinner tables, inside a lava tube" },
+  { image: laGeriaCraterVines, alt: "Thousands of dug-out craters with single vines behind stone walls in the black ash of La Geria, Lanzarote", caption: "La Geria: a vineyard on Mars" },
   { image: jardinDeCactusQuarry, alt: "The cactus garden filling an old quarry with a windmill on the rim, Guatiza, Lanzarote", caption: "The cactus garden, in its quarry" },
   { image: salinasDeJanubioSaltPans, alt: "The salt pans of Janubio mirroring the sky on Lanzarote's west coast", caption: "Janubio, the salt colour chart" },
   { image: herviderosLavaArch, alt: "Surf churning through a black lava arch at Los Hervideros, Lanzarote", caption: "Los Hervideros, up close" },
@@ -238,9 +238,10 @@ export default async function LanzaroteDestinationPage() {
       <div className="grid grid-cols-1 gap-6 md:grid-cols-[minmax(0,1fr)_320px] lg:gap-8">
         <div className="min-w-0">
           <div className="relative mb-12 overflow-hidden rounded-[28px]">
+            {/* Hero = the founder's lanzarote/hero.jpg pick (cull-folder convention, 2026-09-04). */}
             <Image
-              src={laGeriaCraterVines}
-              alt="Thousands of dug-out craters with single vines behind stone walls in the black ash of La Geria, Lanzarote"
+              src={jameosCaveRestaurant}
+              alt="Dinner tables set on the red-lit floor of the Jameos del Agua lava cave, Lanzarote"
               priority
               className="h-[320px] w-full object-cover md:h-[460px]"
               sizes="(max-width: 768px) 100vw, 830px"
