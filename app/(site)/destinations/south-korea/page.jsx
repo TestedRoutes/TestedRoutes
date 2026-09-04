@@ -6,29 +6,31 @@ import Byline from "../../../_components/Byline";
 import BuyBox from "../../../_components/BuyBox";
 import PhotoCarousel from "../../../_components/PhotoCarousel";
 
-import hanRiverSunsetFromBanpo from "../../../../content/countries/south-korea/destination/generated/web/han-river-sunset-from-banpo.jpg";
-import bukchonRooftopsFromTheHanok from "../../../../content/countries/south-korea/destination/generated/web/bukchon-rooftops-from-the-hanok.jpg";
+import gwanghwamunGateLastMorning from "../../../../content/countries/south-korea/destination/generated/web/gwanghwamun-gate-last-morning.jpg";
+import namsangolHanokAndNSeoulTower from "../../../../content/countries/south-korea/destination/generated/web/namsangol-hanok-and-n-seoul-tower.jpg";
 import seoulAtNightFromNamsan from "../../../../content/countries/south-korea/destination/generated/web/seoul-at-night-from-namsan.jpg";
-import peaceGondolaOverTheImjin from "../../../../content/countries/south-korea/destination/generated/web/peace-gondola-over-the-imjin.jpg";
+import intoNorthKoreaFromTheHill from "../../../../content/countries/south-korea/destination/generated/web/into-north-korea-from-the-hill.jpg";
 import theMudPoolDaecheonBeach from "../../../../content/countries/south-korea/destination/generated/web/the-mud-pool-daecheon-beach.jpg";
-import sunsetStepsUnderBanpoBridge from "../../../../content/countries/south-korea/destination/generated/web/sunset-steps-under-banpo-bridge.jpg";
+import secretGardenPond from "../../../../content/countries/south-korea/destination/generated/web/secret-garden-pond.jpg";
 import sungnyemunGateAndTowers from "../../../../content/countries/south-korea/destination/generated/web/sungnyemun-gate-and-towers.jpg";
-import deoksugungStoneHall from "../../../../content/countries/south-korea/destination/generated/web/deoksugung-stone-hall.jpg";
 import insadongTeahouse from "../../../../content/countries/south-korea/destination/generated/web/insadong-teahouse.jpg";
 import jogyesaLanterns from "../../../../content/countries/south-korea/destination/generated/web/jogyesa-lanterns.jpg";
-import secretGardenPond from "../../../../content/countries/south-korea/destination/generated/web/secret-garden-pond.jpg";
-import namsangolHanokCourtyard from "../../../../content/countries/south-korea/destination/generated/web/namsangol-hanok-courtyard.jpg";
-import theHanokRoom from "../../../../content/countries/south-korea/destination/generated/web/the-hanok-room.jpg";
+import changdeokgungRoofsAndSkyline from "../../../../content/countries/south-korea/destination/generated/web/changdeokgung-roofs-and-skyline.jpg";
+import bukchonLaneAndTowers from "../../../../content/countries/south-korea/destination/generated/web/bukchon-lane-and-towers.jpg";
+import teaAtTheHanokWindow from "../../../../content/countries/south-korea/destination/generated/web/tea-at-the-hanok-window.jpg";
+import ribbonsOnTheWireImjingak from "../../../../content/countries/south-korea/destination/generated/web/ribbons-on-the-wire-imjingak.jpg";
 import theLastTrainImjingak from "../../../../content/countries/south-korea/destination/generated/web/the-last-train-imjingak.jpg";
-import intoNorthKoreaFromTheHill from "../../../../content/countries/south-korea/destination/generated/web/into-north-korea-from-the-hill.jpg";
-import throneHallCourtyardGyeongbokgung from "../../../../content/countries/south-korea/destination/generated/web/throne-hall-courtyard-gyeongbokgung.jpg";
+import twoHanbokTowardTheGate from "../../../../content/countries/south-korea/destination/generated/web/two-hanbok-toward-the-gate.jpg";
+import emperorPauLeeAtHeungnyemun from "../../../../content/countries/south-korea/destination/generated/web/emperor-pau-lee-at-heungnyemun.jpg";
+import gyeonghoeruPavilionPond from "../../../../content/countries/south-korea/destination/generated/web/gyeonghoeru-pavilion-pond.jpg";
 import myeongdongAtDusk from "../../../../content/countries/south-korea/destination/generated/web/myeongdong-at-dusk.jpg";
 import theBbqTable from "../../../../content/countries/south-korea/destination/generated/web/the-bbq-table.jpg";
 import nSeoulTowerAtNight from "../../../../content/countries/south-korea/destination/generated/web/n-seoul-tower-at-night.jpg";
+import headToToeInMudAtTheGate from "../../../../content/countries/south-korea/destination/generated/web/head-to-toe-in-mud-at-the-gate.jpg";
 import daecheonBeach from "../../../../content/countries/south-korea/destination/generated/web/daecheon-beach.jpg";
 import yedanghoBridge from "../../../../content/countries/south-korea/destination/generated/web/yedangho-bridge.jpg";
-import gangnamBearKStarRoad from "../../../../content/countries/south-korea/destination/generated/web/gangnam-bear-k-star-road.jpg";
-import teaAndSweetsInsadong from "../../../../content/countries/south-korea/destination/generated/web/tea-and-sweets-insadong.jpg";
+import hanRiverSunsetFromBanpo from "../../../../content/countries/south-korea/destination/generated/web/han-river-sunset-from-banpo.jpg";
+import sunsetStepsUnderBanpoBridge from "../../../../content/countries/south-korea/destination/generated/web/sunset-steps-under-banpo-bridge.jpg";
 
 /*
  * Scope note (destination playbook §7): this page sells the DECISION - whether
@@ -91,8 +93,8 @@ const HOW_LONG = [
 const REGIONS = [
   {
     name: "The old city",
-    image: bukchonRooftopsFromTheHanok,
-    alt: "Tiled hanok rooftops in Bukchon at morning with N Seoul Tower and the city's office towers behind, South Korea",
+    image: namsangolHanokAndNSeoulTower,
+    alt: "A hanok courtyard at Namsangol Hanok Village with N Seoul Tower rising behind it on Namsan, Seoul",
     body: "Five Joseon palaces sit inside the modern centre, and between two of them the hanok villages – whole neighbourhoods of tiled-roof houses – climb the hillside with the skyline stacked behind them. The old city is walkable end to end, the palaces are free if you turn up in a hanbok, and the teahouses of Insadong are where the walking stops. This is the part of Seoul that makes the trip.",
   },
   {
@@ -103,8 +105,8 @@ const REGIONS = [
   },
   {
     name: "The DMZ",
-    image: peaceGondolaOverTheImjin,
-    alt: "A peace gondola cabin crossing the Imjin River above green rice fields near the DMZ, Paju, South Korea",
+    image: intoNorthKoreaFromTheHill,
+    alt: "The Imjin River and the hills of North Korea seen from an observatory on the South Korean side of the DMZ",
     body: "An hour north of the capital the peninsula stops. Imjingak, on the edge of the civilian control line, is a heavy place of ribbons and memorials and a bullet-riddled train; beyond it are the tunnel the North dug under the border, a hill with a clear view across the river into North Korea, and a gondola over the Imjin to an old American base. Visited on a guided tour, always, and back in the city by mid-afternoon.",
   },
   {
@@ -119,22 +121,24 @@ const REGIONS = [
    afternoon, Myeongdong and the tower, then the mud festival and the river. */
 const CAROUSEL = [
   { image: sungnyemunGateAndTowers, alt: "Sungnyemun, the old south gate of Seoul, boxed in by glass office towers", caption: "Sungnyemun gate, the first thing you walk to" },
-  { image: deoksugungStoneHall, alt: "The stone neoclassical Seokjojeon hall and fountain inside Deoksugung palace, Seoul", caption: "Deoksugung, the palace with a European wing" },
   { image: insadongTeahouse, alt: "The wooden interior of a traditional teahouse in Insadong, Seoul", caption: "An Insadong teahouse" },
-  { image: teaAndSweetsInsadong, alt: "Tea and a plate of Korean sweets on a wooden teahouse table, Insadong, Seoul", caption: "No idea what I ordered. Ordered it again." },
   { image: jogyesaLanterns, alt: "The main hall of Jogyesa temple under rows of coloured lanterns, Seoul", caption: "Jogyesa, in the middle of the city" },
-  { image: secretGardenPond, alt: "Buyongji pond and its pavilion in the Secret Garden of Changdeokgung palace, Seoul", caption: "The Secret Garden, with a guide only" },
-  { image: namsangolHanokCourtyard, alt: "A hanok courtyard with tiled roofs at Namsangol Hanok Village, Seoul", caption: "Namsangol, calm and right in the centre" },
-  { image: theHanokRoom, alt: "A traditional hanok room with paper sliding doors, a low round table and a wooden daybed, Bukchon, Seoul", caption: "The hanok night" },
+  { image: changdeokgungRoofsAndSkyline, alt: "The tiled roofs of Changdeokgung palace with Seoul's office towers rising behind them", caption: "Changdeokgung, with the city behind it" },
+  { image: bukchonLaneAndTowers, alt: "A lane of hanok houses in Bukchon with tiled roofs and the modern skyline beyond, Seoul", caption: "Bukchon at the end of the working day" },
+  { image: teaAtTheHanokWindow, alt: "A tea tray on a low wooden table by a hanok window looking out over Seoul, Bukchon", caption: "The hanok night: tea on arrival" },
+  { image: ribbonsOnTheWireImjingak, alt: "Coloured ribbons with handwritten wishes tied to a barbed-wire fence at Imjingak, near the DMZ", caption: "Imjingak: wishes on the wire" },
   { image: theLastTrainImjingak, alt: "The rusted, bullet-riddled steam locomotive displayed at Imjingak, near the DMZ, South Korea", caption: "The last train, Imjingak" },
-  { image: intoNorthKoreaFromTheHill, alt: "The Imjin River and the hills of North Korea seen from an observatory on the South Korean side", caption: "Across the river: North Korea" },
-  { image: throneHallCourtyardGyeongbokgung, alt: "The Geunjeongjeon throne hall courtyard at Gyeongbokgung palace with visitors in hanbok, Seoul", caption: "Gyeongbokgung, in a hanbok" },
+  { image: twoHanbokTowardTheGate, alt: "Two visitors in flowing hanbok walking toward Gwanghwamun gate at Gyeongbokgung, Seoul", caption: "Half the palace was in hanbok" },
+  { image: emperorPauLeeAtHeungnyemun, alt: "A man in a peach hanbok and wide black gat hat in front of Heungnyemun gate at Gyeongbokgung, Seoul", caption: "Emperor Pau-Lee, for the afternoon" },
+  { image: gyeonghoeruPavilionPond, alt: "Gyeonghoeru pavilion standing on stone pillars in its pond at Gyeongbokgung palace, Seoul", caption: "Gyeonghoeru, after the rain" },
   { image: myeongdongAtDusk, alt: "Myeongdong shopping street at dusk with lit signs and crowds, Seoul", caption: "Myeongdong, signs coming on" },
   { image: theBbqTable, alt: "A Korean barbecue table with a round grill, tongs and side dishes, Myeongdong, Seoul", caption: "Meat and a heater, no instructions" },
   { image: nSeoulTowerAtNight, alt: "N Seoul Tower lit blue at night above pine trees on Namsan, Seoul", caption: "N Seoul Tower after dark" },
+  { image: headToToeInMudAtTheGate, alt: "A man covered head to toe in grey mud, arms out, under the entrance arch of the Boryeong Mud Festival", caption: "Two hours later" },
   { image: daecheonBeach, alt: "Daecheon Beach at Boryeong, sand, umbrellas and the Yellow Sea, South Korea", caption: "Daecheon Beach, where the mud comes off" },
   { image: yedanghoBridge, alt: "The Yedangho suspension bridge over a lake with floating houses, Yesan, South Korea", caption: "Yedangho, on the way back" },
-  { image: gangnamBearKStarRoad, alt: "A GangnamDol bear statue in sunglasses on K-Star Road at night, Gangnam, Seoul", caption: "Gangnam, briefly" },
+  { image: hanRiverSunsetFromBanpo, alt: "Sunset over the Han River from Banpo, the Sebitseom floating islands on the left and the city skyline in silhouette, Seoul", caption: "The Han at sunset, with the locals" },
+  { image: sunsetStepsUnderBanpoBridge, alt: "People sitting on the riverside steps under Banpo bridge at sunset, Han River, Seoul", caption: "Where the city goes at dusk" },
 ];
 
 // Deliberately no tier totals here (destination playbook §8). The one number on
@@ -285,8 +289,8 @@ export default async function SouthKoreaDestinationPage() {
         <div className="min-w-0">
           <div className="relative mb-12 overflow-hidden rounded-[28px]">
             <Image
-              src={hanRiverSunsetFromBanpo}
-              alt="Sunset over the Han River from Banpo, the Sebitseom floating islands on the left and the city skyline in silhouette, Seoul, South Korea"
+              src={gwanghwamunGateLastMorning}
+              alt="Gwanghwamun, the main gate of Gyeongbokgung palace, wide across its forecourt with visitors below, Seoul, South Korea"
               priority
               className="h-[320px] w-full object-cover md:h-[460px]"
               sizes="(max-width: 768px) 100vw, 830px"
@@ -507,8 +511,8 @@ export default async function SouthKoreaDestinationPage() {
 
             <div className="relative overflow-hidden rounded-[28px]">
               <Image
-                src={sunsetStepsUnderBanpoBridge}
-                alt="People sitting on the riverside steps under Banpo bridge at sunset, Han River, Seoul"
+                src={secretGardenPond}
+                alt="Buyongji pond and its pavilions in the Secret Garden of Changdeokgung palace, a visitor at the rail, Seoul"
                 className="h-[420px] w-full object-cover"
                 sizes="(max-width: 768px) 100vw, 768px"
               />
