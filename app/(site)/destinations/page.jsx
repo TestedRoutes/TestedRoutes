@@ -17,7 +17,7 @@ import guineaBissauHero from "../../../content/countries/guinea-bissau/destinati
 import canaryIslandsHero from "../../../content/countries/canary-islands/destination/generated/web/papagayo-coves-golden-hour.jpg";
 import tenerifeHero from "../../../content/countries/canary-islands/destination/generated/web/teide-cone-clear-morning.jpg";
 import granCanariaHero from "../../../content/countries/canary-islands/destination/generated/web/roque-nublo-and-el-fraile.jpg";
-import lanzaroteHero from "../../../content/countries/canary-islands/destination/generated/web/la-geria-crater-vines.jpg";
+import lanzaroteHero from "../../../content/countries/canary-islands/destination/generated/web/jameos-cave-restaurant.jpg";
 import fuerteventuraHero from "../../../content/countries/canary-islands/destination/generated/web/cofete-through-the-cactus.jpg";
 
 export const metadata = {
@@ -169,7 +169,7 @@ const DESTINATIONS = [
     blurb:
       "Is it worth visiting and how many days you need – smoking ground, vines in craters, turquoise pools in lava tubes. The underrated one.",
     image: lanzaroteHero,
-    alt: "Thousands of dug-out craters with single vines behind stone walls in the black ash of La Geria, Lanzarote",
+    alt: "Dinner tables set on the red-lit floor of the Jameos del Agua lava cave, Lanzarote",
   },
   {
     name: "Fuerteventura",
