@@ -60,6 +60,19 @@ INSPIRE = REPO / "content" / "countries"
 LEDGER_PATH = INSPIRE / "publish-ledger.json"
 REVIEW_DIR = INSPIRE / "_review"
 
+# "Americas" is the one plan region that spans two continents - Costa Rica and
+# Argentina share it - so it cannot be resolved from the region label alone and
+# is left None here on purpose. COUNTRY_CONTINENT below is consulted first and
+# carries the countries we actually publish; anything not listed still scaffolds
+# a null continent, which is the honest answer rather than a wrong one.
+COUNTRY_CONTINENT = {
+    "Costa Rica": "North America",
+    "Nicaragua": "North America",
+    "Panama": "North America",
+    "Argentina": "South America",
+    "USA": "North America",
+}
+
 REGION_CONTINENT = {
     "Americas": None,
     "Asia": "Asia",
@@ -432,7 +445,8 @@ def build_meta(row, docx_meta, ai, story_id):
         "language": "en",
         "author": "Paulius Pikelis",
         "destination": prettify(row["country"]),
-        "continent": REGION_CONTINENT.get(row["region"]),
+        "continent": COUNTRY_CONTINENT.get(prettify(row["country"]))
+        or REGION_CONTINENT.get(row["region"]),
         "place": ai.get("place"),
         "subtitle": ai.get("subtitle"),
         "heroAlt": ai.get("hero_alt"),

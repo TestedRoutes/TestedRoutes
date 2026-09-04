@@ -19,6 +19,7 @@ import tenerifeHero from "../../../content/countries/canary-islands/destination/
 import granCanariaHero from "../../../content/countries/canary-islands/destination/generated/web/mirador-signpost-at-dusk.jpg";
 import lanzaroteHero from "../../../content/countries/canary-islands/destination/generated/web/papagayo-sunset-cove.jpg";
 import fuerteventuraHero from "../../../content/countries/canary-islands/destination/generated/web/cofete-coast-from-the-mirador.jpg";
+import panamaHero from "../../../content/countries/panama/destination/generated/web/island-and-clear-water-bocas.jpg";
 
 export const metadata = {
   title: "Destinations · TestedRoutes",
@@ -27,6 +28,15 @@ export const metadata = {
 };
 
 const DESTINATIONS = [
+  {
+    name: "Panama",
+    href: "/destinations/panama",
+    region: "Americas · Central America",
+    blurb:
+      "Is it worth visiting, how long you need, and what to skip – one focused day in the capital, the heart of the trip in Bocas del Toro, and the parts that did not earn their place.",
+    image: panamaHero,
+    alt: "A palm-covered island ringed by white sand and clear green water in Bocas del Toro, Panama",
+  },
   {
     name: "Iceland",
     href: "/destinations/iceland",
