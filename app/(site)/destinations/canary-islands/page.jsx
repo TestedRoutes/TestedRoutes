@@ -9,7 +9,7 @@ import PhotoCarousel from "../../../_components/PhotoCarousel";
 import roquesDeGarciaAboveClouds from "../../../../content/countries/canary-islands/destination/generated/web/roques-de-garcia-above-the-clouds.jpg";
 import teideConeClearMorning from "../../../../content/countries/canary-islands/destination/generated/web/teide-cone-clear-morning.jpg";
 import roqueNubloAndElFraile from "../../../../content/countries/canary-islands/destination/generated/web/roque-nublo-and-el-fraile.jpg";
-import cofeteThroughTheCactus from "../../../../content/countries/canary-islands/destination/generated/web/cofete-through-the-cactus.jpg";
+import cofeteCactusValley from "../../../../content/countries/canary-islands/destination/generated/web/cofete-cactus-valley.jpg";
 import cofeteGoldenHourFromTheMirador from "../../../../content/countries/canary-islands/destination/generated/web/cofete-golden-hour-from-the-mirador.jpg";
 import guayadequeRavine from "../../../../content/countries/canary-islands/destination/generated/web/guayadeque-ravine.jpg";
 import losHervideros from "../../../../content/countries/canary-islands/destination/generated/web/los-hervideros-lava-coast.jpg";
@@ -20,19 +20,19 @@ import maspalomasDuneRipples from "../../../../content/countries/canary-islands/
 import groundSquirrelsLaOliva from "../../../../content/countries/canary-islands/destination/generated/web/ground-squirrels-la-oliva.jpg";
 import grandesPlayasCorralejo from "../../../../content/countries/canary-islands/destination/generated/web/grandes-playas-corralejo.jpg";
 import villaWinterUnderTheRidge from "../../../../content/countries/canary-islands/destination/generated/web/villa-winter-under-the-ridge.jpg";
-import papagayoCovesGoldenHour from "../../../../content/countries/canary-islands/destination/generated/web/papagayo-coves-golden-hour.jpg";
+import papagayoFirstEveningSunset from "../../../../content/countries/canary-islands/destination/generated/web/papagayo-first-evening-sunset.jpg";
 import timanfayaLavaField from "../../../../content/countries/canary-islands/destination/generated/web/timanfaya-lava-field.jpg";
 import laGeriaCraterVines from "../../../../content/countries/canary-islands/destination/generated/web/la-geria-crater-vines.jpg";
 import jameosDelAguaPool from "../../../../content/countries/canary-islands/destination/generated/web/jameos-del-agua-pool.jpg";
-import mascaVillageInItsGorge from "../../../../content/countries/canary-islands/destination/generated/web/masca-village-in-its-gorge.jpg";
-import taganangaAndTheAnagaCoast from "../../../../content/countries/canary-islands/destination/generated/web/taganana-and-the-anaga-coast.jpg";
+import mascaAtDusk from "../../../../content/countries/canary-islands/destination/generated/web/masca-at-dusk.jpg";
+import anagaLaurelForestRoad from "../../../../content/countries/canary-islands/destination/generated/web/anaga-laurel-forest-road.jpg";
 import losGigantesFromPlayaDeLosGuios from "../../../../content/countries/canary-islands/destination/generated/web/los-gigantes-from-playa-de-los-guios.jpg";
 
 // Hero and closing image are the founder's own picks (cull, 2026-09-03:
 // hero.jpg + Last.jpg dropped into the destination shortlist folder).
-const HERO_IMAGE = papagayoCovesGoldenHour;
+const HERO_IMAGE = papagayoFirstEveningSunset;
 const HERO_ALT =
-  "The turquoise coves and red headlands of Punta del Papagayo at golden hour, Lanzarote";
+  "The sun setting over the sea and the Papagayo coves on the trip's first Lanzarote evening";
 const MIDPAGE_IMAGE = cofeteGoldenHourFromTheMirador;
 const MIDPAGE_ALT =
   "Cofete beach and the Jandía mountain wall at golden hour, from the mirador's stone wall with its old telescope, Fuerteventura";
@@ -114,8 +114,8 @@ const REGIONS = [
   },
   {
     name: "Fuerteventura",
-    image: cofeteThroughTheCactus,
-    alt: "Cofete beach and the Jandía mountain wall seen past a candelabra cactus, Fuerteventura",
+    image: cofeteCactusValley,
+    alt: "Candelabra cactus above the Cofete valley, the beach and Jandía wall beyond, Fuerteventura",
     body: "The beach island. The biggest, easiest sands in the archipelago in the north, the wildest beach of all hiding behind a mountain ridge in the south, and a bare, windblown interior that feels like a different continent. The least variety of the four and the best coastline – know which trade you are making.",
   },
 ];
@@ -133,8 +133,8 @@ const CAROUSEL = [
   { image: laGeriaCraterVines, alt: "Thousands of dug-out craters with single vines behind stone walls in the black ash of La Geria, Lanzarote", caption: "La Geria: a vineyard on Mars" },
   { image: jameosDelAguaPool, alt: "The turquoise pool of Jameos del Agua with a leaning palm and black lava rim, Lanzarote", caption: "Jameos del Agua, Manrique's lava pool" },
   { image: losHervideros, alt: "Waves breaking white against the black lava coast of Los Hervideros, volcano cones on the skyline, Lanzarote", caption: "Los Hervideros, the sea against the lava" },
-  { image: mascaVillageInItsGorge, alt: "The rooftops of Masca village under its rock spire, with the gorge falling to a silver sea, Tenerife", caption: "Masca, at the end of the switchbacks" },
-  { image: taganangaAndTheAnagaCoast, alt: "The green ridges of the Anaga mountains dropping to Taganana's villages and a deep blue sea, Tenerife", caption: "Taganana, on the Anaga coast" },
+  { image: mascaAtDusk, alt: "Masca village in its gorge at dusk, the sea glowing between the rock walls, Tenerife", caption: "Masca, at dusk" },
+  { image: anagaLaurelForestRoad, alt: "A wet road tunnelling through moss-covered laurel forest in the Anaga mountains, Tenerife", caption: "The laurel-forest road, Anaga" },
   { image: roquesDeGarciaAboveClouds, alt: "The Roques de García spires over the Llano de Ucanca, with cloud spilling over the caldera rim, Tenerife", caption: "Above the cloud layer, in the caldera" },
   { image: losGigantesFromPlayaDeLosGuios, alt: "The sheer cliff wall of Los Gigantes above the black sand of Playa de los Guíos, Tenerife", caption: "Los Gigantes, the day's coda" },
 ];

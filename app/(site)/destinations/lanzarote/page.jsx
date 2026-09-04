@@ -6,19 +6,22 @@ import Byline from "../../../_components/Byline";
 import PhotoCarousel from "../../../_components/PhotoCarousel";
 
 import laGeriaCraterVines from "../../../../content/countries/canary-islands/destination/generated/web/la-geria-crater-vines.jpg";
+import papagayoSunsetCove from "../../../../content/countries/canary-islands/destination/generated/web/papagayo-sunset-cove.jpg";
+import overlookingPapagayo from "../../../../content/countries/canary-islands/destination/generated/web/overlooking-papagayo.jpg";
+import papagayoFirstEveningSunset from "../../../../content/countries/canary-islands/destination/generated/web/papagayo-first-evening-sunset.jpg";
+import papagayoHeadlandTurquoise from "../../../../content/countries/canary-islands/destination/generated/web/papagayo-headland-turquoise.jpg";
+import timanfayaCamelTrain from "../../../../content/countries/canary-islands/destination/generated/web/timanfaya-camel-train.jpg";
+import cactusGardenBarrels from "../../../../content/countries/canary-islands/destination/generated/web/cactus-garden-barrels.jpg";
+import teguisePlaza from "../../../../content/countries/canary-islands/destination/generated/web/teguise-plaza.jpg";
+import puntaMujeresPools from "../../../../content/countries/canary-islands/destination/generated/web/punta-mujeres-pools.jpg";
+import elGolfoBoats from "../../../../content/countries/canary-islands/destination/generated/web/el-golfo-boats.jpg";
+import playaBlancaBeach from "../../../../content/countries/canary-islands/destination/generated/web/playa-blanca-beach.jpg";
 import timanfayaLavaField from "../../../../content/countries/canary-islands/destination/generated/web/timanfaya-lava-field.jpg";
 import jameosDelAguaPool from "../../../../content/countries/canary-islands/destination/generated/web/jameos-del-agua-pool.jpg";
 import elGolfoGreenLagoon from "../../../../content/countries/canary-islands/destination/generated/web/el-golfo-green-lagoon.jpg";
-import papagayoCovesGoldenHour from "../../../../content/countries/canary-islands/destination/generated/web/papagayo-coves-golden-hour.jpg";
-import losHervideros from "../../../../content/countries/canary-islands/destination/generated/web/los-hervideros-lava-coast.jpg";
-import timanfayaRoadIntoTheCones from "../../../../content/countries/canary-islands/destination/generated/web/timanfaya-road-into-the-cones.jpg";
-import timanfayaParkSign from "../../../../content/countries/canary-islands/destination/generated/web/timanfaya-park-sign.jpg";
 import timanfayaSmokingVent from "../../../../content/countries/canary-islands/destination/generated/web/timanfaya-smoking-vent.jpg";
 import lagomarPoolInTheRock from "../../../../content/countries/canary-islands/destination/generated/web/lagomar-pool-in-the-rock.jpg";
-import jardinDeCactusQuarry from "../../../../content/countries/canary-islands/destination/generated/web/jardin-de-cactus-quarry.jpg";
 import jameosCaveRestaurant from "../../../../content/countries/canary-islands/destination/generated/web/jameos-cave-restaurant.jpg";
-import salinasDeJanubioSaltPans from "../../../../content/countries/canary-islands/destination/generated/web/salinas-de-janubio-salt-pans.jpg";
-import herviderosLavaArch from "../../../../content/countries/canary-islands/destination/generated/web/hervideros-lava-arch.jpg";
 
 /*
  * Scope note (destination playbook §7): island-level decision page. The
@@ -89,21 +92,24 @@ const REGIONS = [
   },
   {
     name: "Papagayo and the south",
-    image: papagayoCovesGoldenHour,
-    alt: "The turquoise coves and red headlands of Punta del Papagayo at golden hour, Lanzarote",
+    image: papagayoHeadlandTurquoise,
+    alt: "The Papagayo headland and its turquoise cove under bare hills, Lanzarote",
     body: "The island's beach headline: a string of turquoise coves under bare headlands at its southern tip, with the ferry port and resort base of Playa Blanca beside them. We watched the sunset here twice on one trip - it earned the repeat.",
   },
 ];
 
 const CAROUSEL = [
-  { image: timanfayaRoadIntoTheCones, alt: "The park road running straight into the red and black volcano cones of Timanfaya, Lanzarote", caption: "The road into the fire country" },
-  { image: timanfayaParkSign, alt: "The Timanfaya national park sign with its fire-devil emblem on a lava wall, Lanzarote", caption: "Timanfaya's fire devil" },
+  { image: timanfayaCamelTrain, alt: "A camel train resting below a red volcano slope at Timanfaya, Lanzarote", caption: "The camel train, Timanfaya" },
+  { image: jameosCaveRestaurant, alt: "Tables set inside the red-lit lava cave of Jameos del Agua, Lanzarote", caption: "Dinner tables, inside a lava tube" },
+  { image: papagayoFirstEveningSunset, alt: "The sun setting over the sea and the Papagayo coves, Lanzarote", caption: "The first evening, Papagayo" },
   { image: timanfayaSmokingVent, alt: "Steam erupting from a vent in the rocks during the geyser demonstration at Timanfaya, Lanzarote", caption: "The ground, making its point" },
-  { image: lagomarPoolInTheRock, alt: "A turquoise pool folded into red rock with palms at Lagomar, Lanzarote", caption: "Lagomar, folded into the rock" },
   { image: laGeriaCraterVines, alt: "Thousands of dug-out craters with single vines behind stone walls in the black ash of La Geria, Lanzarote", caption: "La Geria: a vineyard on Mars" },
-  { image: jardinDeCactusQuarry, alt: "The cactus garden filling an old quarry with a windmill on the rim, Guatiza, Lanzarote", caption: "The cactus garden, in its quarry" },
-  { image: salinasDeJanubioSaltPans, alt: "The salt pans of Janubio mirroring the sky on Lanzarote's west coast", caption: "Janubio, the salt colour chart" },
-  { image: herviderosLavaArch, alt: "Surf churning through a black lava arch at Los Hervideros, Lanzarote", caption: "Los Hervideros, up close" },
+  { image: cactusGardenBarrels, alt: "Golden barrel cactus under lava rock in the Jardín de Cactus, Guatiza, Lanzarote", caption: "The cactus garden, up close" },
+  { image: lagomarPoolInTheRock, alt: "A turquoise pool folded into red rock with palms at Lagomar, Lanzarote", caption: "Lagomar, folded into the rock" },
+  { image: teguisePlaza, alt: "The church tower and palms on the plaza of Teguise, Lanzarote", caption: "Teguise, the old capital" },
+  { image: elGolfoBoats, alt: "Fishing boats on the black beach below the cliffs at El Golfo, Lanzarote", caption: "El Golfo, boats on black sand" },
+  { image: puntaMujeresPools, alt: "A natural seawater pool between lava rocks at Punta Mujeres at dusk, Lanzarote", caption: "Punta Mujeres, the evening dip" },
+  { image: playaBlancaBeach, alt: "Cactus above the beach and turquoise water at Playa Blanca, Lanzarote", caption: "Playa Blanca, the easy afternoon" },
 ];
 
 // §8: no tier totals. The ONE figure is the flight pair, echoed once in the FAQ.
@@ -238,10 +244,10 @@ export default async function LanzaroteDestinationPage() {
       <div className="grid grid-cols-1 gap-6 md:grid-cols-[minmax(0,1fr)_320px] lg:gap-8">
         <div className="min-w-0">
           <div className="relative mb-12 overflow-hidden rounded-[28px]">
-            {/* Hero = the founder's lanzarote/hero.jpg pick (cull-folder convention, 2026-09-04). */}
+            {/* Hero = the founder's lanzarote/hero.jpg pick (re-cull 2026-09-04). */}
             <Image
-              src={jameosCaveRestaurant}
-              alt="Dinner tables set on the red-lit floor of the Jameos del Agua lava cave, Lanzarote"
+              src={papagayoSunsetCove}
+              alt="The sun setting into the sea over a Papagayo cove, Lanzarote"
               priority
               className="h-[320px] w-full object-cover md:h-[460px]"
               sizes="(max-width: 768px) 100vw, 830px"
@@ -433,9 +439,10 @@ export default async function LanzaroteDestinationPage() {
             </section>
 
             <div className="relative overflow-hidden rounded-[28px]">
+              {/* Closing image = the founder's lanzarote/last.jpg pick. */}
               <Image
-                src={losHervideros}
-                alt="Waves breaking white against the black lava coast of Los Hervideros, volcano cones on the skyline, Lanzarote"
+                src={overlookingPapagayo}
+                alt="The founder overlooking the Papagayo coves from the headland, Lanzarote"
                 className="h-[420px] w-full object-cover"
                 sizes="(max-width: 768px) 100vw, 768px"
               />
