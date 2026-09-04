@@ -14,11 +14,11 @@ import gambiaHero from "../../../content/countries/gambia/destination/generated/
 import senegalHero from "../../../content/countries/senegal/destination/generated/web/dakar-from-renaissance-monument.jpg";
 import guineaHero from "../../../content/countries/guinea/destination/generated/web/village-and-mango-tree-at-dawn.jpg";
 import guineaBissauHero from "../../../content/countries/guinea-bissau/destination/generated/web/colonial-street-palms-bissau-velho.jpg";
-import canaryIslandsHero from "../../../content/countries/canary-islands/destination/generated/web/papagayo-coves-golden-hour.jpg";
+import canaryIslandsHero from "../../../content/countries/canary-islands/destination/generated/web/papagayo-first-evening-sunset.jpg";
 import tenerifeHero from "../../../content/countries/canary-islands/destination/generated/web/teide-cone-clear-morning.jpg";
-import granCanariaHero from "../../../content/countries/canary-islands/destination/generated/web/roque-nublo-and-el-fraile.jpg";
-import lanzaroteHero from "../../../content/countries/canary-islands/destination/generated/web/jameos-cave-restaurant.jpg";
-import fuerteventuraHero from "../../../content/countries/canary-islands/destination/generated/web/cofete-through-the-cactus.jpg";
+import granCanariaHero from "../../../content/countries/canary-islands/destination/generated/web/mirador-signpost-at-dusk.jpg";
+import lanzaroteHero from "../../../content/countries/canary-islands/destination/generated/web/papagayo-sunset-cove.jpg";
+import fuerteventuraHero from "../../../content/countries/canary-islands/destination/generated/web/cofete-coast-from-the-mirador.jpg";
 
 export const metadata = {
   title: "Destinations · TestedRoutes",
@@ -142,7 +142,7 @@ const DESTINATIONS = [
     blurb:
       "Which island to pick and how many days you need – four islands that feel like four countries, winter swimming included, and the ferry move that beats choosing.",
     image: canaryIslandsHero,
-    alt: "The turquoise coves and red headlands of Punta del Papagayo at golden hour, Lanzarote",
+    alt: "The sun setting over the sea and the Papagayo coves, Lanzarote",
   },
   {
     name: "Tenerife",
@@ -160,7 +160,7 @@ const DESTINATIONS = [
     blurb:
       "How many days you need and why the interior wins – a viewpoint every few bends, cave villages, a slot canyon, and desert dunes at the bottom.",
     image: granCanariaHero,
-    alt: "Roque Nublo and El Fraile standing over the plateau with pine forest dropping away behind, Gran Canaria",
+    alt: "A trail signpost at a mirador over Gran Canaria's mountain heart at dusk",
   },
   {
     name: "Lanzarote",
@@ -169,7 +169,7 @@ const DESTINATIONS = [
     blurb:
       "Is it worth visiting and how many days you need – smoking ground, vines in craters, turquoise pools in lava tubes. The underrated one.",
     image: lanzaroteHero,
-    alt: "Dinner tables set on the red-lit floor of the Jameos del Agua lava cave, Lanzarote",
+    alt: "The sun setting into the sea over a Papagayo cove, Lanzarote",
   },
   {
     name: "Fuerteventura",
@@ -178,7 +178,7 @@ const DESTINATIONS = [
     blurb:
       "How many days you need and which end to stay on – the biggest easy sands in the Canaries, and the wildest beach of all behind a mountain wall.",
     image: fuerteventuraHero,
-    alt: "Cofete beach and the Jandía mountain wall seen past a candelabra cactus, Fuerteventura",
+    alt: "The Cofete coast and the Jandía ridge from the mirador, Fuerteventura",
   },
   {
     name: "Switzerland",

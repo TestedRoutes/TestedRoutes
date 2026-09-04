@@ -5,19 +5,23 @@ import { urlFor } from "../../../../sanity/lib/image";
 import Byline from "../../../_components/Byline";
 import PhotoCarousel from "../../../_components/PhotoCarousel";
 
-import roqueNubloAndElFraile from "../../../../content/countries/canary-islands/destination/generated/web/roque-nublo-and-el-fraile.jpg";
+import miradorSignpostAtDusk from "../../../../content/countries/canary-islands/destination/generated/web/mirador-signpost-at-dusk.jpg";
+import duneJumpAtSunset from "../../../../content/countries/canary-islands/destination/generated/web/dune-jump-at-sunset.jpg";
+import puertoDeMoganMorning from "../../../../content/countries/canary-islands/destination/generated/web/puerto-de-mogan-morning.jpg";
+import artenaraCaveBalcony from "../../../../content/countries/canary-islands/destination/generated/web/artenara-cave-balcony.jpg";
+import guayadequeCactusSlope from "../../../../content/countries/canary-islands/destination/generated/web/guayadeque-cactus-slope.jpg";
+import slotCanyonWide from "../../../../content/countries/canary-islands/destination/generated/web/slot-canyon-wide.jpg";
+import barrancoWallLookout from "../../../../content/countries/canary-islands/destination/generated/web/barranco-wall-lookout.jpg";
+import caveWindowOverTheRidges from "../../../../content/countries/canary-islands/destination/generated/web/cave-window-over-the-ridges.jpg";
+import roqueNubloUpClose from "../../../../content/countries/canary-islands/destination/generated/web/roque-nublo-up-close.jpg";
+import dunesSunsetWalker from "../../../../content/countries/canary-islands/destination/generated/web/dunes-sunset-walker.jpg";
 import centralMassifPanorama from "../../../../content/countries/canary-islands/destination/generated/web/central-massif-panorama-gran-canaria.jpg";
 import guayadequeRavine from "../../../../content/countries/canary-islands/destination/generated/web/guayadeque-ravine.jpg";
 import maspalomasDuneRipples from "../../../../content/countries/canary-islands/destination/generated/web/maspalomas-dune-ripples.jpg";
 import playaDeLasNievesCliffs from "../../../../content/countries/canary-islands/destination/generated/web/playa-de-las-nieves-cliffs.jpg";
-import maspalomasDunesSunset from "../../../../content/countries/canary-islands/destination/generated/web/maspalomas-dunes-sunset.jpg";
 import granCanariaInteriorTracks from "../../../../content/countries/canary-islands/destination/generated/web/gran-canaria-interior-tracks.jpg";
 import pineRingedReservoir from "../../../../content/countries/canary-islands/destination/generated/web/pine-ringed-reservoir-gran-canaria.jpg";
-import roqueNubloPlateauWide from "../../../../content/countries/canary-islands/destination/generated/web/roque-nublo-plateau-wide.jpg";
 import roqueNubloBalconyPanorama from "../../../../content/countries/canary-islands/destination/generated/web/roque-nublo-balcony-panorama.jpg";
-import slotCanyonCurves from "../../../../content/countries/canary-islands/destination/generated/web/slot-canyon-curves.jpg";
-import montanaLasTierrasCaveVillage from "../../../../content/countries/canary-islands/destination/generated/web/montana-las-tierras-cave-village.jpg";
-import southeastBarrancoRidges from "../../../../content/countries/canary-islands/destination/generated/web/southeast-barranco-ridges.jpg";
 import puertoDeLasNievesHarbour from "../../../../content/countries/canary-islands/destination/generated/web/puerto-de-las-nieves-harbour.jpg";
 
 /*
@@ -99,14 +103,18 @@ const REGIONS = [
 ];
 
 const CAROUSEL = [
+  { image: puertoDeMoganMorning, alt: "Sailboats in the marina of Puerto de Mogán under its headland, Gran Canaria", caption: "Puerto de Mogán, the first base" },
   { image: granCanariaInteriorTracks, alt: "Dirt tracks winding through the bare mountain interior of Gran Canaria, palms in the foreground", caption: "The interior, mid-drive" },
   { image: pineRingedReservoir, alt: "A reservoir ringed by pines below bare ridges in the Gran Canaria mountains", caption: "Pine country, around the reservoirs" },
-  { image: roqueNubloPlateauWide, alt: "Roque Nublo and El Fraile standing over the bare summit plateau, Gran Canaria", caption: "The stone giant, from the plateau" },
+  { image: artenaraCaveBalcony, alt: "A cave-house balcony at Artenara with plants, corn and a kettle over the mountain view, Gran Canaria", caption: "A balcony inside the rock, Artenara" },
+  { image: guayadequeCactusSlope, alt: "Cactus on the steep slopes of the Barranco de Guayadeque, Gran Canaria", caption: "Guayadeque, ravine country" },
+  { image: slotCanyonWide, alt: "A figure in red between the curved walls of the Barranco de las Vacas slot canyon, Gran Canaria", caption: "The little slot canyon" },
+  { image: barrancoWallLookout, alt: "The founder sitting on a stone wall above a barranco panorama, Gran Canaria", caption: "Mirador country, southeast" },
+  { image: caveWindowOverTheRidges, alt: "The mountain heart of Gran Canaria seen through a cave window near Roque Nublo", caption: "A window in the rock" },
+  { image: roqueNubloUpClose, alt: "Roque Nublo and El Fraile up close, a walker tiny at the base, Gran Canaria", caption: "The stone giant, up close" },
   { image: roqueNubloBalconyPanorama, alt: "A hiker on the balcony rocks beside Roque Nublo, ridges fading behind, Gran Canaria", caption: "The balcony rocks, past the monolith" },
-  { image: slotCanyonCurves, alt: "A figure standing under the curved terracotta arch of the Barranco de las Vacas slot canyon, Gran Canaria", caption: "The little slot canyon" },
-  { image: montanaLasTierrasCaveVillage, alt: "Cave houses built into the cliff at Montaña Las Tierras, Barranco de Guayadeque, Gran Canaria", caption: "Montaña Las Tierras, where the road ends" },
-  { image: southeastBarrancoRidges, alt: "Bare layered ridges of a southeast barranco running toward the sea, Gran Canaria", caption: "Ravine country, in the southeast" },
   { image: puertoDeLasNievesHarbour, alt: "Boats in the harbour of Puerto de las Nieves under the Agaete cliffs, Gran Canaria", caption: "Puerto de las Nieves, Agaete" },
+  { image: dunesSunsetWalker, alt: "A walker on a Maspalomas dune ridge at sunset, Gran Canaria", caption: "Maspalomas, at closing time" },
 ];
 
 // §8: no tier totals. The ONE figure is the flight pair, echoed once in the FAQ.
@@ -241,9 +249,10 @@ export default async function GranCanariaDestinationPage() {
       <div className="grid grid-cols-1 gap-6 md:grid-cols-[minmax(0,1fr)_320px] lg:gap-8">
         <div className="min-w-0">
           <div className="relative mb-12 overflow-hidden rounded-[28px]">
+            {/* Hero = the founder's gran-canaria/hero.jpeg pick (re-cull 2026-09-04). */}
             <Image
-              src={roqueNubloAndElFraile}
-              alt="Roque Nublo and El Fraile standing over the plateau with pine forest dropping away behind, Gran Canaria"
+              src={miradorSignpostAtDusk}
+              alt="A trail signpost at a mirador over Gran Canaria's mountain heart at dusk"
               priority
               className="h-[320px] w-full object-cover md:h-[460px]"
               sizes="(max-width: 768px) 100vw, 830px"
@@ -445,9 +454,10 @@ export default async function GranCanariaDestinationPage() {
             </section>
 
             <div className="relative overflow-hidden rounded-[28px]">
+              {/* Closing image = the founder's gran-canaria/last.jpg pick. */}
               <Image
-                src={maspalomasDunesSunset}
-                alt="Sunset over the dune ridges of Maspalomas with the lighthouse on the horizon, Gran Canaria"
+                src={duneJumpAtSunset}
+                alt="The founder mid-jump on a Maspalomas dune crest at sunset, Gran Canaria"
                 className="h-[420px] w-full object-cover"
                 sizes="(max-width: 768px) 100vw, 768px"
               />

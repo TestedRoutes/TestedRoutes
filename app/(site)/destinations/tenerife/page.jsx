@@ -6,12 +6,13 @@ import Byline from "../../../_components/Byline";
 import PhotoCarousel from "../../../_components/PhotoCarousel";
 
 import roquesDeGarciaAboveClouds from "../../../../content/countries/canary-islands/destination/generated/web/roques-de-garcia-above-the-clouds.jpg";
+import costaAdejeInfinityPool from "../../../../content/countries/canary-islands/destination/generated/web/costa-adeje-infinity-pool.jpg";
+import mascaAtDusk from "../../../../content/countries/canary-islands/destination/generated/web/masca-at-dusk.jpg";
+import dragoDeIcod from "../../../../content/countries/canary-islands/destination/generated/web/drago-de-icod.jpg";
+import laOrotavaGardens from "../../../../content/countries/canary-islands/destination/generated/web/la-orotava-gardens.jpg";
+import calderaInTheMist from "../../../../content/countries/canary-islands/destination/generated/web/caldera-in-the-mist.jpg";
+import emptyMountainRoad from "../../../../content/countries/canary-islands/destination/generated/web/empty-mountain-road.jpg";
 import teideConeClearMorning from "../../../../content/countries/canary-islands/destination/generated/web/teide-cone-clear-morning.jpg";
-import taganangaAndTheAnagaCoast from "../../../../content/countries/canary-islands/destination/generated/web/taganana-and-the-anaga-coast.jpg";
-import garachicoRoqueAndLavaPools from "../../../../content/countries/canary-islands/destination/generated/web/garachico-roque-and-lava-pools.jpg";
-import losGigantesMarinaUnderCliffs from "../../../../content/countries/canary-islands/destination/generated/web/los-gigantes-marina-under-cliffs.jpg";
-import mascaGorgeToTheSea from "../../../../content/countries/canary-islands/destination/generated/web/masca-gorge-to-the-sea.jpg";
-import mascaVillageInItsGorge from "../../../../content/countries/canary-islands/destination/generated/web/masca-village-in-its-gorge.jpg";
 import anagaLaurelForestRoad from "../../../../content/countries/canary-islands/destination/generated/web/anaga-laurel-forest-road.jpg";
 import anagaCliffsBreakingWave from "../../../../content/countries/canary-islands/destination/generated/web/anaga-cliffs-breaking-wave.jpg";
 import garachicoTownAndRoque from "../../../../content/countries/canary-islands/destination/generated/web/garachico-town-and-roque.jpg";
@@ -85,33 +86,34 @@ const REGIONS = [
   },
   {
     name: "Anaga and the northeast",
-    image: taganangaAndTheAnagaCoast,
-    alt: "Green Anaga ridges dropping to Taganana's villages and a deep blue sea, Tenerife",
+    image: anagaCliffsBreakingWave,
+    alt: "A wave breaking hard against the rocks under dark Anaga cliffs, Tenerife",
     body: "The oldest corner of the island and the greenest thing in the Canaries: laurel forest over knife-edge ridges, roads that tunnel through moss, and steep drops to black-sand coves where the Atlantic arrives with real force. It feels a continent away from the south coast, and it is barely an hour's drive.",
   },
   {
     name: "The north coast towns",
-    image: garachicoRoqueAndLavaPools,
-    alt: "Garachico's offshore roque and natural lava pools under heavy surf, Tenerife",
+    image: dragoDeIcod,
+    alt: "The ancient dragon tree of Icod de los Vinos over the town's gardens, Tenerife",
     body: "Garachico with its lava pools and cobbled centre, Icod and its ancient dragon tree, La Orotava's balconied old town, La Laguna's grid of colonial streets. This is the historic, Spanish, lived-in Tenerife most visitors never meet - greener, cloudier, and the best argument for spending a night away from the resorts.",
   },
   {
     name: "The southwest coast",
-    image: losGigantesMarinaUnderCliffs,
-    alt: "The marina of Los Gigantes sitting directly beneath its sheer cliff wall, Tenerife",
+    image: losGigantesFromPlayaDeLosGuios,
+    alt: "The sheer cliff wall of Los Gigantes above the black sand of Playa de los Guíos, Tenerife",
     body: "The sunshine machine. Costa Adeje and its neighbours hold the resorts, the reliable warmth and the easy beach days; Los Gigantes closes the coast with a wall of sea cliffs that dwarfs the town beneath. Use it as the warm base it is - just do not mistake it for the island.",
   },
 ];
 
 const CAROUSEL = [
-  { image: mascaVillageInItsGorge, alt: "The rooftops of Masca village under its rock spire, the gorge falling to a silver sea, Tenerife", caption: "Masca, at the end of the switchbacks" },
+  { image: mascaAtDusk, alt: "Masca village in its gorge at dusk, the sea glowing between the rock walls, Tenerife", caption: "Masca, at dusk" },
   { image: anagaLaurelForestRoad, alt: "A wet road tunnelling through moss-covered laurel forest in the Anaga mountains, Tenerife", caption: "The laurel-forest road, Anaga" },
-  { image: anagaCliffsBreakingWave, alt: "A wave breaking hard against the rocks under dark Anaga cliffs, Tenerife", caption: "The Atlantic, arriving at Anaga" },
+  { image: laOrotavaGardens, alt: "The terraced gardens of La Orotava with the sea beyond, Tenerife", caption: "La Orotava, in the morning" },
+  { image: calderaInTheMist, alt: "Mist drifting over the rock formations of the Teide caldera, Tenerife", caption: "The caldera, in and out of cloud" },
+  { image: emptyMountainRoad, alt: "The founder sitting in the middle of an empty mountain road below dark crags, Tenerife", caption: "Roads to yourself, up high" },
+  { image: roqueCinchadoAndTeide, alt: "The leaning Roque Cinchado with the cone of Teide rising behind, Tenerife", caption: "Roque Cinchado, Teide behind" },
   { image: garachicoTownAndRoque, alt: "Garachico town and its offshore roque under an evening sky, Tenerife", caption: "Garachico, from above" },
   { image: garachicoPlazaDragonTrees, alt: "Garachico's plaza with palms and old trees in front of the church tower, Tenerife", caption: "Plaza evening, Garachico" },
-  { image: roqueCinchadoAndTeide, alt: "The leaning Roque Cinchado with the cone of Teide rising behind, Tenerife", caption: "Roque Cinchado, Teide behind" },
   { image: costaAdejeVillaTerrace, alt: "A villa pool terrace with palms at dusk in Costa Adeje, Tenerife", caption: "The south coast, doing its job" },
-  { image: losGigantesFromPlayaDeLosGuios, alt: "The sheer cliff wall of Los Gigantes above the black sand of Playa de los Guíos, Tenerife", caption: "Los Gigantes, from the black sand" },
 ];
 
 // §8: no tier totals. The ONE figure is the flight pair, echoed once in the FAQ.
@@ -454,9 +456,10 @@ export default async function TenerifeDestinationPage() {
             </section>
 
             <div className="relative overflow-hidden rounded-[28px]">
+              {/* Closing image = the founder's tenerife/last.jpg pick. */}
               <Image
-                src={mascaGorgeToTheSea}
-                alt="The Masca gorge falling away to the sea, with the switchback road stitched across its wall, Tenerife"
+                src={costaAdejeInfinityPool}
+                alt="The founder in a Costa Adeje infinity pool, bare mountains behind, Tenerife"
                 className="h-[420px] w-full object-cover"
                 sizes="(max-width: 768px) 100vw, 768px"
               />

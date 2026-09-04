@@ -5,15 +5,20 @@ import { urlFor } from "../../../../sanity/lib/image";
 import Byline from "../../../_components/Byline";
 import PhotoCarousel from "../../../_components/PhotoCarousel";
 
-import cofeteThroughTheCactus from "../../../../content/countries/canary-islands/destination/generated/web/cofete-through-the-cactus.jpg";
+import cofeteCoastFromTheMirador from "../../../../content/countries/canary-islands/destination/generated/web/cofete-coast-from-the-mirador.jpg";
+import cofeteSurfFromTheSand from "../../../../content/countries/canary-islands/destination/generated/web/cofete-surf-from-the-sand.jpg";
+import cofeteCactusValley from "../../../../content/countries/canary-islands/destination/generated/web/cofete-cactus-valley.jpg";
+import sicasumbreGoatMonument from "../../../../content/countries/canary-islands/destination/generated/web/sicasumbre-goat-monument.jpg";
+import ayoseAndGuizeStatues from "../../../../content/countries/canary-islands/destination/generated/web/ayose-and-guize-statues.jpg";
+import betancuriaCourtyard from "../../../../content/countries/canary-islands/destination/generated/web/betancuria-courtyard.jpg";
+import corralejoEveningLagoon from "../../../../content/countries/canary-islands/destination/generated/web/corralejo-evening-lagoon.jpg";
+import resortBeachMorning from "../../../../content/countries/canary-islands/destination/generated/web/resort-beach-morning.jpg";
+import puntaJandiaLighthouse from "../../../../content/countries/canary-islands/destination/generated/web/punta-jandia-lighthouse.jpg";
 import grandesPlayasTurquoise from "../../../../content/countries/canary-islands/destination/generated/web/grandes-playas-turquoise.jpg";
 import betancuriaChurchAndPalms from "../../../../content/countries/canary-islands/destination/generated/web/betancuria-church-and-palms.jpg";
 import cofeteGoldenHourFromTheMirador from "../../../../content/countries/canary-islands/destination/generated/web/cofete-golden-hour-from-the-mirador.jpg";
 import lavaFieldAndVolcano from "../../../../content/countries/canary-islands/destination/generated/web/lava-field-and-volcano-fuerteventura.jpg";
-import jandiaCoastDeepBlue from "../../../../content/countries/canary-islands/destination/generated/web/jandia-coast-deep-blue.jpg";
-import sicasumbreWindingRoad from "../../../../content/countries/canary-islands/destination/generated/web/sicasumbre-winding-road.jpg";
 import morroVelosaPanorama from "../../../../content/countries/canary-islands/destination/generated/web/morro-velosa-panorama.jpg";
-import molinoDeAntiguaWindmill from "../../../../content/countries/canary-islands/destination/generated/web/molino-de-antigua-windmill.jpg";
 import groundSquirrelsLaOliva from "../../../../content/countries/canary-islands/destination/generated/web/ground-squirrels-la-oliva.jpg";
 import corralejoDuneRoad from "../../../../content/countries/canary-islands/destination/generated/web/corralejo-dune-road.jpg";
 import grandesPlayasCorralejo from "../../../../content/countries/canary-islands/destination/generated/web/grandes-playas-corralejo.jpg";
@@ -94,14 +99,18 @@ const REGIONS = [
 ];
 
 const CAROUSEL = [
-  { image: corralejoDuneRoad, alt: "The road running through the Corralejo dunes toward a volcano cone, Fuerteventura", caption: "The dune road, Corralejo" },
-  { image: grandesPlayasCorralejo, alt: "The white sand of Grandes Playas running empty toward a volcano cone, Corralejo, Fuerteventura", caption: "Grandes Playas, mid-morning" },
-  { image: sicasumbreWindingRoad, alt: "A road winding through the bare volcanic hills at Sicasumbre, Fuerteventura", caption: "The interior, doing its Mars impression" },
+  { image: sicasumbreGoatMonument, alt: "The goat monument at the Sicasumbre mirador over bare volcanic hills, Fuerteventura", caption: "Sicasumbre, the stargazing mirador" },
+  { image: ayoseAndGuizeStatues, alt: "The statues of Ayose and Guize above the central valleys, Fuerteventura", caption: "Ayose and Guize, the old kings" },
+  { image: betancuriaCourtyard, alt: "Palms over a colonial courtyard in Betancuria, Fuerteventura", caption: "Betancuria, the old capital" },
   { image: morroVelosaPanorama, alt: "The bare valleys of central Fuerteventura from the Morro Velosa viewpoint", caption: "Morro Velosa, over the bare middle" },
-  { image: molinoDeAntiguaWindmill, alt: "The white windmill of Molino de Antigua over its cactus garden, Fuerteventura", caption: "Molino de Antigua" },
-  { image: groundSquirrelsLaOliva, alt: "Two ground squirrels on a stone wall in front of a bare volcanic plain at La Oliva, Fuerteventura", caption: "The car-park squirrels of La Oliva" },
+  { image: corralejoDuneRoad, alt: "The road running through the Corralejo dunes toward a volcano cone, Fuerteventura", caption: "The dune road, Corralejo" },
+  { image: cofeteCactusValley, alt: "Candelabra cactus above the Cofete valley, the beach and Jandía wall beyond, Fuerteventura", caption: "Cofete, past the cactus" },
+  { image: grandesPlayasCorralejo, alt: "The white sand of Grandes Playas running empty toward a volcano cone, Corralejo, Fuerteventura", caption: "Grandes Playas, mid-morning" },
+  { image: resortBeachMorning, alt: "Sun loungers by the sea wall on a Corralejo resort morning, Fuerteventura", caption: "The easy register, Corralejo" },
+  { image: corralejoEveningLagoon, alt: "A shallow lagoon on the Corralejo shore at dusk, Fuerteventura", caption: "Low tide, end of day" },
+  { image: puntaJandiaLighthouse, alt: "The lighthouse at Punta Jandía at the island's end, Fuerteventura", caption: "Punta Jandía, the island's end" },
   { image: villaWinterUnderTheRidge, alt: "The lonely white Villa Winter with its round tower under the Jandía mountains at Cofete, Fuerteventura", caption: "Villa Winter, alone at Cofete" },
-  { image: cofeteThroughTheCactus, alt: "Cofete beach and the Jandía mountain wall seen past a candelabra cactus, Fuerteventura", caption: "Cofete, past the cactus" },
+  { image: groundSquirrelsLaOliva, alt: "Two ground squirrels on a stone wall in front of a bare volcanic plain at La Oliva, Fuerteventura", caption: "The car-park squirrels of La Oliva" },
 ];
 
 // §8: no tier totals. The ONE figure is the flight pair, echoed once in the FAQ.
@@ -236,9 +245,10 @@ export default async function FuerteventuraDestinationPage() {
       <div className="grid grid-cols-1 gap-6 md:grid-cols-[minmax(0,1fr)_320px] lg:gap-8">
         <div className="min-w-0">
           <div className="relative mb-12 overflow-hidden rounded-[28px]">
+            {/* Hero = the founder's fuerteventura/hero.jpg pick (re-cull 2026-09-04). */}
             <Image
-              src={cofeteThroughTheCactus}
-              alt="Cofete beach and the Jandía mountain wall seen past a candelabra cactus, Fuerteventura"
+              src={cofeteCoastFromTheMirador}
+              alt="The Cofete coast and the Jandía ridge from the mirador, the old telescope on its wall, Fuerteventura"
               priority
               className="h-[320px] w-full object-cover md:h-[460px]"
               sizes="(max-width: 768px) 100vw, 830px"
@@ -436,9 +446,10 @@ export default async function FuerteventuraDestinationPage() {
             </section>
 
             <div className="relative overflow-hidden rounded-[28px]">
+              {/* Closing image = the founder's fuerteventura/last.jpg pick. */}
               <Image
-                src={jandiaCoastDeepBlue}
-                alt="The deep blue Jandía coast under the mountain ridge, Fuerteventura"
+                src={cofeteSurfFromTheSand}
+                alt="Surf lines rolling onto Cofete's empty sand under the Jandía wall, Fuerteventura"
                 className="h-[420px] w-full object-cover"
                 sizes="(max-width: 768px) 100vw, 768px"
               />
