@@ -197,9 +197,11 @@ function MagnifierIcon({ className }) {
 }
 
 // Filter block redesign (founder mockup 2026-09-03): one rounded panel
-// holds the search bar (with a Country dropdown and the Search button
-// inside the pill), the continent tabs with counts, the style pills with
-// counts, and a status row of dismissable chips. The Country dropdown is a
+// holds the search bar, the continent tabs with counts, a control row that
+// mirrors /guides (founder 2026-09-04: "similar looks and feel as the
+// Guides page" — a Country pill that opens the panel plus an Activity
+// dropdown, replacing the style-pill rows and the phone bottom sheet), and
+// a status row of dismissable chips. The Country panel stays a
 // multi-select — several countries at once is the normal way to plan a
 // region trip — scoped by the continent picked in its sidebar, which is
 // the same state as the tab row above.
@@ -245,15 +247,9 @@ export default function InspireBrowse({
     };
     document.addEventListener("pointerdown", onDown);
     document.addEventListener("keydown", onKey);
-    // On phones the panel is a bottom sheet over the page: freeze the page
-    // behind it so a swipe through the country list does not scroll the grid.
-    const phone = window.matchMedia("(max-width: 767px)").matches;
-    const prevOverflow = document.body.style.overflow;
-    if (phone) document.body.style.overflow = "hidden";
     return () => {
       document.removeEventListener("pointerdown", onDown);
       document.removeEventListener("keydown", onKey);
-      if (phone) document.body.style.overflow = prevOverflow;
     };
   }, [panelOpen]);
 
@@ -412,7 +408,7 @@ export default function InspireBrowse({
   );
   const countryPillLabel =
     countries.length === 0
-      ? tl.allCountries
+      ? tl.filterAll
       : countries.length === 1
         ? countries[0]
         : fill(t.countriesSelected, { n: countries.length });
@@ -454,51 +450,20 @@ export default function InspireBrowse({
   const sideCountClass = (active) =>
     `text-xs font-medium tabular-nums ${active ? "text-white/70" : "text-slate-400"}`;
 
-  // Two pill rows; both grids share one column count so the pills line up
-  // and the shorter row leaves its last slots empty.
-  const activityPills = styles.filter((s) => ACTIVITY_STYLES.has(s.key));
-  const typePills = styles.filter((s) => !ACTIVITY_STYLES.has(s.key));
-  const pillCols = Math.max(1, activityPills.length, typePills.length);
-  const pillButton = (s, extra = "") => {
-    const active = styleKeys.includes(s.key);
-    return (
-      <button
-        key={s.key}
-        type="button"
-        onClick={() => toggleStyle(s.key)}
-        aria-pressed={active}
-        className={`flex min-w-0 items-center justify-center gap-1.5 rounded-full px-3 py-2.5 text-sm font-semibold ring-1 transition ${extra} ${
-          active
-            ? "bg-brand-ink text-white ring-brand-ink"
-            : "bg-white text-slate-700 ring-brand-line hover:ring-slate-300"
-        }`}
-      >
-        <span className="truncate">{s.label}</span>
-        <span
-          className={`text-xs font-medium tabular-nums ${active ? "text-white/60" : "text-slate-400"}`}
-        >
-          {s.count}
-        </span>
-      </button>
-    );
-  };
-  // From sm up the two rows are equal-width grids. On phones every pill sits
-  // in one row that scrolls sideways (founder mobile mockup 2026-09-04),
-  // bleeding to the panel edge so the cut-off pill hints there are more.
-  const pillRow = (pills) =>
-    pills.length ? (
-      <div
-        className="hidden sm:grid sm:grid-cols-3 sm:gap-2 lg:[grid-template-columns:repeat(var(--pill-cols),minmax(0,1fr))]"
-        style={{ "--pill-cols": pillCols }}
-      >
-        {pills.map((s) => pillButton(s))}
-      </div>
-    ) : null;
-  const pillScroller = styles.length ? (
-    <div className="-mx-3 flex gap-2 overflow-x-auto px-3 [-ms-overflow-style:none] [scrollbar-width:none] sm:hidden [&::-webkit-scrollbar]:hidden">
-      {[...activityPills, ...typePills].map((s) => pillButton(s, "shrink-0 px-4 py-3 text-base"))}
-    </div>
-  ) : null;
+  // Activity is a single-pick dropdown in the /guides style (founder
+  // 2026-09-04). It writes into the same styleKeys state the pills used, so
+  // chips, counts and the filter logic are untouched; activities list before
+  // trip types, both alphabetical inside their group (ACTIVITY_STYLES).
+  const orderedStyles = [
+    ...styles.filter((s) => ACTIVITY_STYLES.has(s.key)),
+    ...styles.filter((s) => !ACTIVITY_STYLES.has(s.key)),
+  ];
+  const activityValue = styleKeys[0] || "";
+  const pickActivity = (key) => setStyleKeys(key ? [key] : []);
+  // The /guides control sizing: two per row at thumb size on phones, one
+  // compact row from sm up.
+  const controlClass =
+    "h-11 min-w-[calc(50%-0.25rem)] flex-1 rounded-full border text-sm font-semibold transition sm:h-9 sm:min-w-0 sm:max-w-44 sm:text-xs";
 
   // Country picker pieces shared by the desktop panel and the phone sheet.
   const findBox = (className = "") => (
@@ -713,13 +678,12 @@ export default function InspireBrowse({
         ref={blockRef}
         className="scroll-mt-24 rounded-[28px] bg-slate-100/70 p-3 ring-1 ring-brand-line md:p-4"
       >
-        <div ref={panelRef} className="relative">
+        <div>
           <label htmlFor="inspire-search" className="sr-only">
             {t.searchPlaceholder}
           </label>
-          {/* From sm up the capsule holds input, Country and Search. On
-              phones it is input + a round arrow, and Country becomes its own
-              full-width pill under the tabs (founder mobile mockup
+          {/* The capsule holds input + Search only; Country and Activity
+              live in the /guides-style control row under the tabs (founder
               2026-09-04). */}
           <div ref={searchRef} className="relative">
           <div className="flex w-full items-center gap-2 rounded-full bg-white p-1.5 shadow-card ring-1 ring-brand-line">
@@ -744,19 +708,6 @@ export default function InspireBrowse({
               aria-activedescendant={activeIdx >= 0 ? `inspire-suggestion-${activeIdx}` : undefined}
               className="min-w-0 flex-1 bg-transparent px-4 py-3 text-sm text-brand-ink outline-none placeholder:text-slate-400 md:px-5 md:text-base"
             />
-            <button
-              type="button"
-              onClick={() => {
-                setSuggestOpen(false);
-                setPanelOpen((o) => !o);
-              }}
-              aria-expanded={panelOpen}
-              aria-haspopup="dialog"
-              className="hidden h-11 max-w-[14rem] shrink-0 items-center gap-2 rounded-full bg-brand-ink px-4 text-sm font-semibold text-white transition hover:bg-brand-ink/90 sm:flex md:h-12 md:px-5"
-            >
-              <span className="truncate">{countryPillLabel}</span>
-              <Chevron open={panelOpen} />
-            </button>
             {/* Search is live as you type; the button is the visible
                 "go" that phones expect and just closes the keyboard. Text
                 from sm up, a round arrow on phones. */}
@@ -813,87 +764,6 @@ export default function InspireBrowse({
           ) : null}
           </div>
 
-          {/* Country panel: continent sidebar on the left (the same state
-              as the tab row), checkbox grid on the right. In flow on phones,
-              anchored under the search bar from md up. */}
-          {panelOpen ? (
-            <>
-              {/* Desktop: anchored under the capsule, continent sidebar on
-                  the left (the same state as the tab row), checkbox grid on
-                  the right. */}
-              <div
-                role="dialog"
-                aria-label={tl.filterCountry}
-                className="absolute left-0 top-full z-20 mt-3 hidden w-full overflow-hidden rounded-3xl bg-white shadow-card-hover ring-1 ring-brand-line md:block"
-              >
-                <div className="flex">
-                  <div className="w-56 shrink-0 border-r border-brand-line bg-slate-50/70 p-4">
-                    <div className="flex flex-col gap-1.5">
-                      {continentRows.map((row) => (
-                        <button
-                          key={row.bucket || "all"}
-                          type="button"
-                          onClick={() => selectContinent(row.bucket)}
-                          className={sideClass(continent === row.bucket)}
-                        >
-                          <span>{row.label}</span>
-                          <span className={sideCountClass(continent === row.bucket)}>
-                            {row.count}
-                          </span>
-                        </button>
-                      ))}
-                    </div>
-                  </div>
-                  <div className="min-w-0 flex-1 p-6">
-                    <div className="flex flex-wrap items-center justify-between gap-3">
-                      <p className="font-sans text-[11px] font-semibold uppercase tracking-[0.2em] text-slate-500">
-                        {scopeLabel} · {fill(t.countriesWithStories, { n: scopedCountries.length })}
-                      </p>
-                      {findBox("w-56")}
-                    </div>
-                    {countryList("mt-4 max-h-[50vh] grid-cols-2 lg:grid-cols-3")}
-                    {panelFooter}
-                  </div>
-                </div>
-              </div>
-
-              {/* Phones: a bottom sheet (founder mobile mockup 2026-09-04).
-                  The list shows about five rows and scrolls inside, so the
-                  Show button is always one thumb away; the continent scope
-                  comes from the tab row above. */}
-              <div className="md:hidden">
-                <div
-                  className="fixed inset-0 z-[55] bg-brand-ink/40"
-                  aria-hidden="true"
-                  onClick={() => setPanelOpen(false)}
-                />
-                <div
-                  role="dialog"
-                  aria-modal="true"
-                  aria-label={tl.filterCountry}
-                  className="fixed inset-x-0 bottom-0 z-[60] rounded-t-3xl bg-white px-5 pb-[max(1.25rem,env(safe-area-inset-bottom))] pt-3 shadow-card-hover"
-                >
-                  <div className="mx-auto mb-4 h-1.5 w-12 rounded-full bg-slate-200" />
-                  <div className="flex items-center justify-between gap-3">
-                    <p className="truncate text-xl font-bold text-brand-ink">
-                      {continent ? bucketLabel(continent) : tl.allCountries} · {scopedCountries.length}
-                    </p>
-                    <button
-                      type="button"
-                      onClick={() => setPanelOpen(false)}
-                      aria-label="Close"
-                      className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-slate-100 text-lg text-slate-600"
-                    >
-                      ×
-                    </button>
-                  </div>
-                  {findBox("mt-4 w-full py-1")}
-                  {countryList("mt-4 max-h-[13rem] grid-cols-2")}
-                  {panelFooter}
-                </div>
-              </div>
-            </>
-          ) : null}
         </div>
 
         {/* Continent tabs with counts: All + one per continent with stories,
@@ -914,32 +784,89 @@ export default function InspireBrowse({
           </div>
         </div>
 
-        {/* Phones: the Country control is its own full-width pill under the
-            tabs; from sm it sits inside the search capsule. */}
-        <button
-          type="button"
-          onClick={() => {
-            setSuggestOpen(false);
-            setPanelOpen((o) => !o);
-          }}
-          aria-expanded={panelOpen}
-          aria-haspopup="dialog"
-          className="mt-4 flex w-full items-center justify-between gap-3 rounded-full bg-white px-5 py-3.5 text-base font-bold text-brand-ink ring-1 ring-brand-line sm:hidden"
-        >
-          <span className="truncate">{countryPillLabel}</span>
-          <Chevron open={panelOpen} />
-        </button>
-
-        {/* Style pills: activities on the first line, types on the second
-            (see ACTIVITY_STYLES), equal-width grids from sm up; one sideways
-            scrolling row on phones. Any number lit at once, in Coffee Bean. */}
-        {styles.length ? (
-          <div className="mt-4 space-y-2">
-            {pillScroller}
-            {pillRow(activityPills)}
-            {pillRow(typePills)}
+        {/* Control row, the /guides pattern (founder 2026-09-04): the
+            Country pill opens the panel anchored below; Activity is a plain
+            select. Two per row at thumb size on phones, one compact row from
+            sm up. */}
+        <div ref={panelRef} className="relative mt-4">
+          <div className="flex w-full flex-wrap items-center gap-2">
+            <button
+              type="button"
+              onClick={() => {
+                setSuggestOpen(false);
+                setPanelOpen((o) => !o);
+              }}
+              aria-expanded={panelOpen}
+              aria-haspopup="dialog"
+              className={`flex items-center justify-between gap-2 px-4 sm:px-3 ${controlClass} ${
+                panelOpen || countries.length
+                  ? "border-transparent bg-brand-ink text-white"
+                  : "border-slate-200 bg-white text-slate-700 hover:border-slate-300"
+              }`}
+            >
+              <span className="truncate">
+                {tl.filterCountry}: {countryPillLabel}
+              </span>
+              <Chevron open={panelOpen} />
+            </button>
+            {orderedStyles.length ? (
+              <select
+                value={activityValue}
+                onChange={(e) => pickActivity(e.target.value)}
+                aria-label={tl.filterActivity}
+                className={`cursor-pointer truncate border-slate-200 bg-white px-4 text-slate-700 hover:border-slate-300 focus:border-slate-400 focus:outline-none sm:px-3 ${controlClass}`}
+              >
+                <option value="">{`${tl.filterActivity}: ${tl.filterAll}`}</option>
+                {orderedStyles.map((s) => (
+                  <option key={s.key} value={s.key}>
+                    {s.label} · {s.count}
+                  </option>
+                ))}
+              </select>
+            ) : null}
           </div>
-        ) : null}
+
+          {/* Country panel, anchored under the control row on every size:
+              continent sidebar (same state as the tab row) from md up, the
+              searchable multi-select checkbox list always. */}
+          {panelOpen ? (
+            <div
+              role="dialog"
+              aria-label={tl.filterCountry}
+              className="absolute left-0 top-full z-20 mt-3 w-full overflow-hidden rounded-3xl bg-white shadow-card-hover ring-1 ring-brand-line"
+            >
+              <div className="flex">
+                <div className="hidden w-56 shrink-0 border-r border-brand-line bg-slate-50/70 p-4 md:block">
+                  <div className="flex flex-col gap-1.5">
+                    {continentRows.map((row) => (
+                      <button
+                        key={row.bucket || "all"}
+                        type="button"
+                        onClick={() => selectContinent(row.bucket)}
+                        className={sideClass(continent === row.bucket)}
+                      >
+                        <span>{row.label}</span>
+                        <span className={sideCountClass(continent === row.bucket)}>
+                          {row.count}
+                        </span>
+                      </button>
+                    ))}
+                  </div>
+                </div>
+                <div className="min-w-0 flex-1 p-4 md:p-6">
+                  <div className="flex flex-wrap items-center justify-between gap-3">
+                    <p className="font-sans text-[11px] font-semibold uppercase tracking-[0.2em] text-slate-500">
+                      {scopeLabel} · {fill(t.countriesWithStories, { n: scopedCountries.length })}
+                    </p>
+                    {findBox("w-full sm:w-56")}
+                  </div>
+                  {countryList("mt-4 max-h-[45vh] grid-cols-2 lg:grid-cols-3")}
+                  {panelFooter}
+                </div>
+              </div>
+            </div>
+          ) : null}
+        </div>
 
         {/* Status row: live count, one chip per active filter, Clear all. */}
         <div className="mt-4 flex flex-wrap items-center gap-2 border-t border-brand-line pt-4">
