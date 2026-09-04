@@ -12,8 +12,34 @@ const en = {
   inspireList: {
     title: "Real journeys. Real lessons",
     subtitle: "Stories to spark your next trip",
-    searchPlaceholder: "Search stories – try 'glacier' or 'layover'",
+    searchPlaceholder: "Search stories, places, journeys",
     searchButton: "Search",
+    // Filter block (2026-09-03 redesign). {n}/{shown}/{total} are filled by the browse component.
+    showing: "Showing {shown} of {total} stories",
+    clearAll: "Clear all",
+    clearSelection: "Clear selection",
+    showStories: "Show {n} stories",
+    showStory: "Show 1 story",
+    allContinents: "All continents",
+    countriesWithStories: "{n} countries with stories",
+    countriesSelected: "{n} countries",
+    stylesSelected: "{n} activities",
+    findCountry: "Find a country",
+    noCountryMatch: "No country matches",
+    // Row labels in the search typeahead.
+    kindCountry: "Country",
+    kindContinent: "Continent",
+    kindStyle: "Style",
+    kindJourney: "Journey",
+    kindStory: "Story",
+    // Journey band after the second row of stories; order matches
+    // INSPIRE_JOURNEYS in app/_lib/inspireJourneys.js.
+    journeys: [
+      { eyebrow: "Switzerland", title: "Alpine Passes Trail", blurb: "Hut-to-hut traverse" },
+      { eyebrow: "New Zealand", title: "NZ South Island", blurb: "10-day roadtrip" },
+      { eyebrow: "Central Asia", title: "Mongol Rally", blurb: "Overland rally" },
+      { eyebrow: "Worldwide", title: "7 Summits", blurb: "Climbing project" },
+    ],
     heading: "Journeys, not just posts",
     story: "story",
     stories: "stories",

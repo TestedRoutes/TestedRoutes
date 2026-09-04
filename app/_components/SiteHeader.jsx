@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import logoVertical from "../../content/brand/TR-logo-vertical.svg";
+import logoVerticalWhite from "../../content/brand/TR-logo-vertical-white.svg";
 import CurrencySwitcher from "./CurrencySwitcher";
 import LanguageSwitcher from "./LanguageSwitcher";
 import HomeSearchBar from "./HomeSearchBar";
@@ -29,10 +30,17 @@ function getActiveSlug(pathname) {
   return null;
 }
 
-function primaryNavLinkClass(active, slug) {
+function primaryNavLinkClass(active, slug, dark) {
   // Pill-on-hover: links carry their own padding so the highlight has a
-  // shape; 5% Coffee Bean reads as a soft warm gray on Parchment.
+  // shape; 5% Coffee Bean reads as a soft warm gray on Parchment. On the
+  // dark bar the same shapes in Bone over Coffee Bean.
   const base = "rounded-full px-3 py-1.5 font-bold tracking-[0.05em] transition-colors";
+  if (dark) {
+    if (active === slug) {
+      return `${base} text-brand-cream underline decoration-brand-cream/40 decoration-1 underline-offset-[6px]`;
+    }
+    return `${base} text-brand-cream/70 hover:bg-white/10 hover:text-brand-cream`;
+  }
   if (active === slug) {
     return `${base} text-slate-900 underline decoration-slate-800/35 decoration-1 underline-offset-[6px]`;
   }
@@ -98,15 +106,34 @@ export default function SiteHeader({
   const showHeaderSearch =
     (isHome && !heroSearchVisible) || (isSection && scrolledPast);
 
+  // The Inspire index opens on a Coffee Bean band (founder mockup
+  // 2026-09-04), and the bar goes dark with it so the top reads as one
+  // block. Story pages stay on the light bar.
+  const dark = barePath === "/inspire";
+  // Currency only matters where prices show: home, /guides and story pages
+  // (which sell the guides behind them). The Inspire index, Destinations
+  // and About carry no prices, so no switcher (founder 2026-09-04).
+  const showCurrency = !(
+    barePath === "/inspire" ||
+    barePath.startsWith("/destinations") ||
+    barePath.startsWith("/about")
+  );
+
   return (
     // Always the solid Bone bar (founder 2026-08-08: the hero photo no
     // longer runs behind it, so the transparent-over-photo state is gone).
     // Bone #F4F3EF, the styleguide's main background. NB: the brand-bone
     // token is #DCDACD - tailwind.config.js has the bone/parchment names
     // swapped relative to styleguide V3.
-    <header className="sticky top-0 z-50 border-b border-slate-200/40 bg-brand-parchment">
+    <header
+      className={`sticky top-0 z-50 border-b ${
+        dark ? "border-white/10 bg-brand-ink" : "border-slate-200/40 bg-brand-parchment"
+      }`}
+    >
       <nav
-        className="mx-auto flex h-16 md:h-20 max-w-7xl items-center justify-between gap-3 px-4 text-sm text-slate-900 md:gap-6 md:px-6"
+        className={`mx-auto flex h-16 md:h-20 max-w-7xl items-center justify-between gap-3 px-4 text-sm md:gap-6 md:px-6 ${
+          dark ? "text-brand-cream" : "text-slate-900"
+        }`}
         aria-label="Primary"
       >
         <Link
@@ -116,7 +143,7 @@ export default function SiteHeader({
         >
           {/* SVG logo needs no next/image optimization; plain img keeps it crisp. */}
           <img
-            src={logoVertical.src}
+            src={dark ? logoVerticalWhite.src : logoVertical.src}
             alt="TestedRoutes"
             className="h-[21px] w-auto md:h-[34px]"
           />
@@ -136,11 +163,18 @@ export default function SiteHeader({
           </div>
         ) : null}
 
-        <div className="hidden items-center gap-3 md:flex">
+        {/* The language and currency selects are shared components with
+            their own light styling; on the dark bar they are restyled from
+            here as outlined pills in Bone. */}
+        <div
+          className={`hidden items-center gap-3 md:flex ${
+            dark ? "[&_label]:text-brand-cream/70 [&_select]:border-white/30 [&_select]:bg-transparent [&_select]:text-brand-cream" : ""
+          }`}
+        >
           {navLinks.map((link) => (
             <Link
               key={link.slug}
-              className={primaryNavLinkClass(active, link.slug)}
+              className={primaryNavLinkClass(active, link.slug, dark)}
               href={link.href}
               aria-current={active === link.slug ? "page" : undefined}
             >
@@ -148,14 +182,34 @@ export default function SiteHeader({
             </Link>
           ))}
           <LanguageSwitcher />
-          <CurrencySwitcher current={currency} />
+          {/* Hidden, not removed: the nav must not shift between pages, so
+              the switcher keeps its slot (visibility: hidden) where it is off. */}
+          {showCurrency ? (
+            <CurrencySwitcher current={currency} />
+          ) : (
+            <span className="invisible" aria-hidden="true">
+              <CurrencySwitcher current={currency} />
+            </span>
+          )}
         </div>
 
         {/* The bottom tab bar covers primary nav on mobile, so the header
             only carries the language + currency switchers here. */}
-        <div className="flex items-center gap-2 md:hidden">
+        <div
+          className={`flex items-center gap-2 md:hidden ${
+            dark ? "[&_label]:text-brand-cream/70 [&_select]:border-white/30 [&_select]:bg-transparent [&_select]:text-brand-cream" : ""
+          }`}
+        >
           <LanguageSwitcher />
-          <CurrencySwitcher current={currency} />
+          {/* Hidden, not removed: the nav must not shift between pages, so
+              the switcher keeps its slot (visibility: hidden) where it is off. */}
+          {showCurrency ? (
+            <CurrencySwitcher current={currency} />
+          ) : (
+            <span className="invisible" aria-hidden="true">
+              <CurrencySwitcher current={currency} />
+            </span>
+          )}
         </div>
       </nav>
     </header>

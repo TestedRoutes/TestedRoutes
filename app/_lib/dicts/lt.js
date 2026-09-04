@@ -12,8 +12,34 @@ const lt = {
   inspireList: {
     title: "Tikros kelionės. Tikros pamokos",
     subtitle: "Istorijos kitai jūsų kelionei įkvėpti",
-    searchPlaceholder: "Ieškoti istorijų – pabandykite 'ledynas' arba 'persėdimas'",
+    searchPlaceholder: "Ieškoti istorijų, vietų, kelionių",
     searchButton: "Ieškoti",
+    // Filter block (2026-09-03 redesign). {n}/{shown}/{total} are filled by the browse component.
+    showing: "Rodoma {shown} iš {total} istorijų",
+    clearAll: "Išvalyti viską",
+    clearSelection: "Atšaukti pasirinkimą",
+    showStories: "Rodyti {n} istorijas",
+    showStory: "Rodyti 1 istoriją",
+    allContinents: "Visi žemynai",
+    countriesWithStories: "{n} šalys su istorijomis",
+    countriesSelected: "{n} šalys",
+    stylesSelected: "{n} veiklos",
+    findCountry: "Rasti šalį",
+    noCountryMatch: "Šalių nerasta",
+    // Row labels in the search typeahead.
+    kindCountry: "Šalis",
+    kindContinent: "Žemynas",
+    kindStyle: "Stilius",
+    kindJourney: "Kelionė",
+    kindStory: "Istorija",
+    // Journey band after the second row of stories; order matches
+    // INSPIRE_JOURNEYS in app/_lib/inspireJourneys.js.
+    journeys: [
+      { eyebrow: "Šveicarija", title: "Alpine Passes Trail", blurb: "Žygis nuo trobelės iki trobelės" },
+      { eyebrow: "Naujoji Zelandija", title: "NZ Pietų sala", blurb: "10 dienų kelionė automobiliu" },
+      { eyebrow: "Centrinė Azija", title: "Mongol Rally", blurb: "Ralis sausuma" },
+      { eyebrow: "Visame pasaulyje", title: "7 viršukalnės", blurb: "Kopimo projektas" },
+    ],
     heading: "Kelionės, o ne tik įrašai",
     story: "istorija",
     stories: "istorijos",

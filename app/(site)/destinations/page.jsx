@@ -12,6 +12,13 @@ import mauritaniaHero from "../../../content/countries/mauritania/destination/ge
 import westernSaharaHero from "../../../content/countries/western-sahara/destination/generated/web/white-dune-tidal-pool.jpg";
 import gambiaHero from "../../../content/countries/gambia/destination/generated/web/kunta-kinteh-ferry-midriver.jpg";
 import senegalHero from "../../../content/countries/senegal/destination/generated/web/dakar-from-renaissance-monument.jpg";
+import guineaHero from "../../../content/countries/guinea/destination/generated/web/village-and-mango-tree-at-dawn.jpg";
+import guineaBissauHero from "../../../content/countries/guinea-bissau/destination/generated/web/colonial-street-palms-bissau-velho.jpg";
+import canaryIslandsHero from "../../../content/countries/canary-islands/destination/generated/web/papagayo-first-evening-sunset.jpg";
+import tenerifeHero from "../../../content/countries/canary-islands/destination/generated/web/teide-cone-clear-morning.jpg";
+import granCanariaHero from "../../../content/countries/canary-islands/destination/generated/web/mirador-signpost-at-dusk.jpg";
+import lanzaroteHero from "../../../content/countries/canary-islands/destination/generated/web/papagayo-sunset-cove.jpg";
+import fuerteventuraHero from "../../../content/countries/canary-islands/destination/generated/web/cofete-coast-from-the-mirador.jpg";
 
 export const metadata = {
   title: "Destinations · TestedRoutes",
@@ -109,6 +116,69 @@ const DESTINATIONS = [
       "Is it safe and is it worth it – Dakar and its monument, colonial Saint-Louis on its river island, and the lake that is not always pink.",
     image: senegalHero,
     alt: "Dakar spreading below the hill of the African Renaissance Monument, Senegal",
+  },
+  {
+    name: "Guinea",
+    href: "/destinations/guinea",
+    region: "North & West Africa · The Fouta Djallon",
+    blurb:
+      "Is it safe and is it worth it – the water tower of West Africa, a capital at the end of a peninsula, and roads that decide the whole trip.",
+    image: guineaHero,
+    alt: "A large mango tree over a village of round thatched houses at sunrise near Koundara, Guinea",
+  },
+  {
+    name: "Guinea-Bissau",
+    href: "/destinations/guinea-bissau",
+    region: "North & West Africa · The Atlantic coast",
+    blurb:
+      "Is it safe and is there anything to see – an empty Portuguese old town, a day-long road east, and the archipelago that is the real reason to come.",
+    image: guineaBissauHero,
+    alt: "Palms leaning over a red dirt street of decaying colonial buildings in Bissau Velho, Guinea-Bissau",
+  },
+  {
+    name: "Canary Islands",
+    href: "/destinations/canary-islands",
+    region: "Spain · Atlantic & volcanic islands",
+    blurb:
+      "Which island to pick and how many days you need – four islands that feel like four countries, winter swimming included, and the ferry move that beats choosing.",
+    image: canaryIslandsHero,
+    alt: "The sun setting over the sea and the Papagayo coves, Lanzarote",
+  },
+  {
+    name: "Tenerife",
+    href: "/destinations/tenerife",
+    region: "Canary Islands · Spain",
+    blurb:
+      "How many days you need and which side to stay on – Teide above the clouds, the Anaga laurel ridges, old towns, and the honest north–south split.",
+    image: tenerifeHero,
+    alt: "The bare cone of Mount Teide under deep blue sky, seen across the caldera scrub, Tenerife",
+  },
+  {
+    name: "Gran Canaria",
+    href: "/destinations/gran-canaria",
+    region: "Canary Islands · Spain",
+    blurb:
+      "How many days you need and why the interior wins – a viewpoint every few bends, cave villages, a slot canyon, and desert dunes at the bottom.",
+    image: granCanariaHero,
+    alt: "A trail signpost at a mirador over Gran Canaria's mountain heart at dusk",
+  },
+  {
+    name: "Lanzarote",
+    href: "/destinations/lanzarote",
+    region: "Canary Islands · Spain",
+    blurb:
+      "Is it worth visiting and how many days you need – smoking ground, vines in craters, turquoise pools in lava tubes. The underrated one.",
+    image: lanzaroteHero,
+    alt: "The sun setting into the sea over a Papagayo cove, Lanzarote",
+  },
+  {
+    name: "Fuerteventura",
+    href: "/destinations/fuerteventura",
+    region: "Canary Islands · Spain",
+    blurb:
+      "How many days you need and which end to stay on – the biggest easy sands in the Canaries, and the wildest beach of all behind a mountain wall.",
+    image: fuerteventuraHero,
+    alt: "The Cofete coast and the Jandía ridge from the mirador, Fuerteventura",
   },
   {
     name: "Switzerland",

@@ -9,7 +9,7 @@ import {
   inspireStoryHasGuide,
 } from "../../_lib/inspireStoryDisplay";
 import { LOCALES, getDict, localePath } from "../../_lib/i18n";
-import { continentSlug, prettyGeo } from "../../_lib/continents";
+import { continentBucket } from "../../_lib/continents";
 import InspireBrowse from "./InspireBrowse";
 
 const EN_DESCRIPTION =
@@ -63,8 +63,15 @@ function buildCard(story, lang) {
     heroAlt: getInspireStoryHeroAlt(story) || story.title,
     geoLabel: display.geoLabel || "",
     country: story.metadata?.geography?.country || "",
-    continentSlug: continentSlug(story.metadata?.geography?.continent),
+    // Bucketed (the Americas share one tab) so the tab row matches /guides.
+    continentSlug: continentBucket(story.metadata?.geography?.continent),
     categoryLabel: prettyCategory(cls.journey_category || cls.activity_category),
+    // Style pills: the activity category names the pill; the tags let a
+    // story sit under more than one.
+    styleLabel: cls.activity_category_name || "",
+    styles: [cls.activity_category_name, ...(Array.isArray(cls.activity_tags) ? cls.activity_tags : [])].filter(Boolean),
+    // Collection names, for the journey band (app/_lib/inspireJourneys.js).
+    collections: [cls.primary_collection, ...(Array.isArray(cls.all_collections) ? cls.all_collections : [])].filter(Boolean),
     categoryDurationLine: display.categoryDurationLine || "",
     difficultyLabel: display.difficultyLabel || "",
     hasGuide: !!(display.hasGuide ?? inspireStoryHasGuide(story)),
@@ -114,7 +121,7 @@ export default async function InspireIndexPage({ lang = "en", continent = "", q 
   const cards = stories.map((s) => buildCard(s, lang));
   // Home links in per continent ("See all in Africa"); ignore a slug that
   // no story matches so a stale link still shows the full index.
-  const wantedContinent = continentSlug(continent);
+  const wantedContinent = continentBucket(continent);
   const activeContinent = cards.some((c) => c.continentSlug === wantedContinent)
     ? wantedContinent
     : "";
@@ -122,14 +129,20 @@ export default async function InspireIndexPage({ lang = "en", continent = "", q 
   return (
     // Flat Parchment here instead of the site's Bone-to-Parchment wash: the
     // card grid reads cleaner against one tone than against a gradient.
-    <main className="min-h-screen w-full bg-brand-parchment pb-16 pt-12 text-slate-900 md:pt-16">
-      <div className="mx-auto flex w-full min-w-0 max-w-7xl flex-col gap-10 px-6">
-        <div className="space-y-2 text-center">
-          <h1 className="font-serif font-normal leading-[1.1] text-brand-ink text-2xl md:text-[26px] lg:text-5xl">
+    <main className="min-h-screen w-full bg-brand-parchment pb-16 text-slate-900">
+      {/* Dark top (founder mockup 2026-09-04): SiteHeader goes Coffee Bean on
+          this page and this band continues it, so the page opens on one dark
+          block before the filter panel on Parchment. The two lines are the
+          same copy as before, left-aligned (founder 2026-09-03). */}
+      <div className="bg-brand-ink text-brand-cream">
+        <div className="mx-auto w-full max-w-7xl space-y-1.5 px-6 py-6 md:space-y-2 md:py-16">
+          <h1 className="font-serif font-normal leading-[1.1] text-brand-cream text-2xl md:text-[26px] lg:text-5xl">
             {t.title}
           </h1>
-          <p className="font-serif text-sm font-light text-slate-600 md:text-2xl">{t.subtitle}</p>
+          <p className="font-serif text-sm font-light text-brand-cream/70 md:text-2xl">{t.subtitle}</p>
         </div>
+      </div>
+      <div className="mx-auto flex w-full min-w-0 max-w-7xl flex-col gap-10 px-6 pt-6 md:pt-12">
 
         {lang !== "en" && cards.length === 0 ? (
           <div className="mx-auto w-full max-w-xl rounded-3xl border border-dashed border-slate-300/70 bg-white px-6 py-10 text-center shadow-sm ring-1 ring-slate-200/60">
@@ -150,7 +163,6 @@ export default async function InspireIndexPage({ lang = "en", continent = "", q 
             lang={lang}
             initialSearch={q}
             initialContinent={activeContinent}
-            initialContinentLabel={prettyGeo(activeContinent)}
           />
         )}
 
