@@ -324,7 +324,7 @@ export default async function GranCanariaDestinationPage() {
                   {HOW_LONG.map(([label, text]) => (
                     <div
                       key={label}
-                      className="grid grid-cols-1 gap-1 px-5 py-3 md:grid-cols-[220px_1fr] md:gap-4"
+                      className="grid grid-cols-1 gap-1 px-5 py-3 md:grid-cols-[200px_1fr] md:gap-4"
                     >
                       <p className="self-center text-[11px] font-semibold uppercase tracking-wider text-slate-400">
                         {label}
