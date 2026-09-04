@@ -23,9 +23,12 @@ function seasonRank(value) {
   return i === -1 ? SEASON_ORDER.length : i;
 }
 
-const cardCountry = (g) => prettyGeo(g.metadata?.geography?.country);
-const cardActivity = (g) => prettyGeo(g.metadata?.classification?.activity_category);
-const cardSeasons = (g) =>
+// Exported so the browse pages count facets off the same accessors they
+// filter by - a second copy of these metadata paths is how a count and a
+// result set start disagreeing.
+export const cardCountry = (g) => prettyGeo(g.metadata?.geography?.country);
+export const cardActivity = (g) => prettyGeo(g.metadata?.classification?.activity_category);
+export const cardSeasons = (g) =>
   (g.metadata?.timing?.best_seasons || []).map((s) => String(s).toLowerCase());
 
 export function buildGuideFilterOptions(guides) {
@@ -40,13 +43,23 @@ export function buildGuideFilterOptions(guides) {
   };
 }
 
-// filters: { country, length, activity, season } — empty string means "All".
+// A filter value is "All" (empty string or empty array), one pick (a
+// string), or several OR-ed together (an array). /guides picks several —
+// its panels are tickboxes since 2026-09-04, and "Iceland or Norway" is
+// how a trip actually gets planned; home still passes single strings from
+// its selects, so both shapes stay supported.
+const picked = (value, test) => {
+  if (Array.isArray(value)) return !value.length || value.some(test);
+  return !value || test(value);
+};
+
+// filters: { country, length, activity, season } — empty means "All".
 export function matchesGuideFilters(guide, filters) {
   return (
-    (!filters.country || cardCountry(guide) === filters.country) &&
-    (!filters.length || guide.category === filters.length) &&
-    (!filters.activity || cardActivity(guide) === filters.activity) &&
-    (!filters.season || cardSeasons(guide).includes(filters.season))
+    picked(filters.country, (v) => cardCountry(guide) === v) &&
+    picked(filters.length, (v) => guide.category === v) &&
+    picked(filters.activity, (v) => cardActivity(guide) === v) &&
+    picked(filters.season, (v) => cardSeasons(guide).includes(v))
   );
 }
 
