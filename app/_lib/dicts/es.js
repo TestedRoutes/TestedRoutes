@@ -12,8 +12,34 @@ const es = {
   inspireList: {
     title: "Viajes reales. Lecciones reales",
     subtitle: "Historias para inspirar tu próximo viaje",
-    searchPlaceholder: "Buscar historias – prueba 'glaciar' o 'escala'",
+    searchPlaceholder: "Buscar historias, lugares, viajes",
     searchButton: "Buscar",
+    // Filter block (2026-09-03 redesign). {n}/{shown}/{total} are filled by the browse component.
+    showing: "Mostrando {shown} de {total} historias",
+    clearAll: "Borrar todo",
+    clearSelection: "Borrar selección",
+    showStories: "Ver {n} historias",
+    showStory: "Ver 1 historia",
+    allContinents: "Todos los continentes",
+    countriesWithStories: "{n} países con historias",
+    countriesSelected: "{n} países",
+    stylesSelected: "{n} actividades",
+    findCountry: "Buscar un país",
+    noCountryMatch: "Ningún país coincide",
+    // Row labels in the search typeahead.
+    kindCountry: "País",
+    kindContinent: "Continente",
+    kindStyle: "Estilo",
+    kindJourney: "Viaje",
+    kindStory: "Historia",
+    // Journey band after the second row of stories; order matches
+    // INSPIRE_JOURNEYS in app/_lib/inspireJourneys.js.
+    journeys: [
+      { eyebrow: "Suiza", title: "Alpine Passes Trail", blurb: "Travesía de refugio en refugio" },
+      { eyebrow: "Nueva Zelanda", title: "Isla Sur de NZ", blurb: "Roadtrip de 10 días" },
+      { eyebrow: "Asia Central", title: "Mongol Rally", blurb: "Rally por tierra" },
+      { eyebrow: "Todo el mundo", title: "7 Cumbres", blurb: "Proyecto de escalada" },
+    ],
     heading: "Viajes, no solo publicaciones",
     story: "historia",
     stories: "historias",

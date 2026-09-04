@@ -12,8 +12,34 @@ const de = {
   inspireList: {
     title: "Echte Reisen. Echte Erkenntnisse",
     subtitle: "Geschichten für deine nächste Reise",
-    searchPlaceholder: "Geschichten durchsuchen – z. B. 'Gletscher' oder 'Layover'",
+    searchPlaceholder: "Geschichten, Orte, Reisen durchsuchen",
     searchButton: "Suchen",
+    // Filter block (2026-09-03 redesign). {n}/{shown}/{total} are filled by the browse component.
+    showing: "{shown} von {total} Geschichten",
+    clearAll: "Alle zurücksetzen",
+    clearSelection: "Auswahl aufheben",
+    showStories: "{n} Geschichten anzeigen",
+    showStory: "1 Geschichte anzeigen",
+    allContinents: "Alle Kontinente",
+    countriesWithStories: "{n} Länder mit Geschichten",
+    countriesSelected: "{n} Länder",
+    stylesSelected: "{n} Aktivitäten",
+    findCountry: "Land suchen",
+    noCountryMatch: "Kein Land gefunden",
+    // Row labels in the search typeahead.
+    kindCountry: "Land",
+    kindContinent: "Kontinent",
+    kindStyle: "Stil",
+    kindJourney: "Reise",
+    kindStory: "Geschichte",
+    // Journey band after the second row of stories; order matches
+    // INSPIRE_JOURNEYS in app/_lib/inspireJourneys.js.
+    journeys: [
+      { eyebrow: "Schweiz", title: "Alpine Passes Trail", blurb: "Traverse von Hütte zu Hütte" },
+      { eyebrow: "Neuseeland", title: "Südinsel Neuseelands", blurb: "10-Tage-Roadtrip" },
+      { eyebrow: "Zentralasien", title: "Mongol Rally", blurb: "Overland-Rallye" },
+      { eyebrow: "Weltweit", title: "7 Summits", blurb: "Bergsteigerprojekt" },
+    ],
     heading: "Reisen, nicht nur Posts",
     story: "Geschichte",
     stories: "Geschichten",

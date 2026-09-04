@@ -158,6 +158,9 @@ function buildLegacyMetadata(doc) {
     classification: {
       journey_category: doc.journeyCategory?.slug,
       activity_category: doc.activityCategory?.slug,
+      // The display name too: the Inspire style pills label themselves
+      // with it rather than prettifying the slug ("Culture & People").
+      activity_category_name: doc.activityCategory?.name,
       primary_collection: doc.primaryCollection?.name,
       all_collections: (doc.allCollections || []).map((c) => c.name),
       activity_tags: doc.activityTags,
