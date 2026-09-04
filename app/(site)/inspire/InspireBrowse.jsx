@@ -317,15 +317,53 @@ export default function InspireBrowse({
     return index;
   }, [cards]);
 
+  // Facet counts (founder 2026-09-04: picking Fiji must scope the activity
+  // numbers to Fiji): each panel's counts respect every OTHER active filter,
+  // so a number always means "stories you would get by ticking this". The
+  // tab row stays unscoped - it is navigation, not a result preview.
+  const matchesExcept = (c, skip) => {
+    const activeJourney = INSPIRE_JOURNEYS.find((j) => j.key === journey) || null;
+    return (
+      matchesSearch(c, search) &&
+      (!continent || c.continentSlug === continent) &&
+      (skip === "countries" || !countries.length || countries.includes(c.country)) &&
+      (skip === "styles" ||
+        !styleKeys.length ||
+        (c.styles || []).some((st) => styleKeys.includes(styleKey(st)))) &&
+      (!activeJourney || journeyMatches(activeJourney, c))
+    );
+  };
+  const styleCounts = useMemo(() => {
+    const counts = new Map();
+    for (const c of cards) {
+      if (!matchesExcept(c, "styles")) continue;
+      for (const key of new Set((c.styles || []).map(styleKey))) {
+        counts.set(key, (counts.get(key) || 0) + 1);
+      }
+    }
+    return counts;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [cards, search, continent, countries, journey]);
+  const scopedCountryCounts = useMemo(() => {
+    const counts = new Map();
+    for (const c of cards) {
+      if (!c.country || !matchesExcept(c, "countries")) continue;
+      counts.set(c.country, (counts.get(c.country) || 0) + 1);
+    }
+    return counts;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [cards, search, continent, styleKeys, journey]);
+
   // The panel lists the countries of the active continent, most stories
   // first (the mockup's order), filtered by the panel's own search box.
   const scopedCountries = useMemo(
     () =>
       [...countryIndex.entries()]
         .filter(([, entry]) => !continent || entry.continents.has(continent))
-        .map(([name, entry]) => [name, entry.count])
+        .map(([name]) => [name, scopedCountryCounts.get(name) || 0])
+        .filter(([name, count]) => count > 0 || countries.includes(name))
         .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0])),
-    [countryIndex, continent],
+    [countryIndex, continent, scopedCountryCounts, countries],
   );
   const listedCountries = useMemo(() => {
     const needle = countryQuery.trim().toLowerCase();
@@ -463,11 +501,12 @@ export default function InspireBrowse({
     ...styles.filter((s) => ACTIVITY_STYLES.has(s.key)),
     ...styles.filter((s) => !ACTIVITY_STYLES.has(s.key)),
   ];
-  const activityLabel = styleKeys.length ? styleLabelOf(styleKeys[0]) : tl.filterAll;
-  const pickActivity = (key) => {
-    setStyleKeys(key ? [key] : []);
-    setActivityOpen(false);
-  };
+  const activityLabel =
+    styleKeys.length === 0
+      ? tl.filterAll
+      : styleKeys.length === 1
+        ? styleLabelOf(styleKeys[0])
+        : fill(t.stylesSelected, { n: styleKeys.length });
   // The /guides control sizing: two per row at thumb size on phones, one
   // compact row from sm up.
   const controlClass =
@@ -883,45 +922,78 @@ export default function InspireBrowse({
             </div>
           ) : null}
 
-          {/* Activity panel: the same anchored-dropdown treatment as
-              Country (founder 2026-09-04, "same look and feel"), single
-              pick, applies and closes like the /guides country list. */}
+          {/* Activity panel: the same tickbox treatment as the Country
+              panel (founder 2026-09-04) - multi-select, counts scoped to the
+              other active filters, Clear + Show footer. */}
           {activityOpen ? (
             <div
               role="dialog"
               aria-label={tl.filterActivity}
               className="absolute left-0 top-full z-20 mt-3 w-full overflow-hidden rounded-3xl bg-white p-4 shadow-card-hover ring-1 ring-brand-line md:w-96 md:p-6"
             >
-              <ul className="grid gap-1 sm:grid-cols-2 md:grid-cols-1">
-                <li>
-                  <button
-                    type="button"
-                    onClick={() => pickActivity("")}
-                    className={`flex w-full items-center justify-between rounded-xl px-3 py-2.5 text-sm transition hover:bg-slate-50 ${
-                      styleKeys.length === 0 ? "font-bold text-brand-terracotta" : "text-slate-800"
-                    }`}
-                  >
-                    <span>{tl.filterAll}</span>
-                    <span className="text-xs tabular-nums text-slate-400">{total}</span>
-                  </button>
-                </li>
-                {orderedStyles.map((st) => (
-                  <li key={st.key}>
-                    <button
-                      type="button"
-                      onClick={() => pickActivity(st.key)}
-                      className={`flex w-full items-center justify-between rounded-xl px-3 py-2.5 text-sm transition hover:bg-slate-50 ${
-                        styleKeys.includes(st.key)
-                          ? "font-bold text-brand-terracotta"
-                          : "text-slate-800"
-                      }`}
-                    >
-                      <span className="truncate">{st.label}</span>
-                      <span className="text-xs tabular-nums text-slate-400">{st.count}</span>
-                    </button>
-                  </li>
-                ))}
+              <ul className="grid gap-x-3 gap-y-0.5 sm:grid-cols-2 md:grid-cols-1">
+                {orderedStyles.map((st) => {
+                  const checked = styleKeys.includes(st.key);
+                  const count = styleCounts.get(st.key) || 0;
+                  if (!count && !checked) return null;
+                  return (
+                    <li key={st.key}>
+                      <label className="flex cursor-pointer items-center gap-2 rounded-xl px-1 py-2 transition hover:bg-slate-50 sm:gap-3 sm:px-2">
+                        <input
+                          type="checkbox"
+                          className="sr-only"
+                          checked={checked}
+                          onChange={() => toggleStyle(st.key)}
+                        />
+                        <span
+                          aria-hidden="true"
+                          className={`flex h-5 w-5 shrink-0 items-center justify-center rounded-md ring-1 transition ${
+                            checked ? "bg-brand-ink text-white ring-brand-ink" : "bg-white ring-slate-300"
+                          }`}
+                        >
+                          {checked ? (
+                            <svg
+                              viewBox="0 0 12 12"
+                              className="h-3 w-3"
+                              fill="none"
+                              stroke="currentColor"
+                              strokeWidth="2"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                            >
+                              <path d="M2.5 6.5 L5 9 L9.5 3.5" />
+                            </svg>
+                          ) : null}
+                        </span>
+                        <span
+                          className={`min-w-0 flex-1 text-sm leading-tight ${
+                            checked ? "font-bold text-brand-ink" : "text-slate-800"
+                          }`}
+                        >
+                          {st.label}
+                        </span>
+                        <span className="text-xs tabular-nums text-slate-400">{count}</span>
+                      </label>
+                    </li>
+                  );
+                })}
               </ul>
+              <div className="mt-4 flex items-center justify-between gap-4 border-t border-brand-line pt-4">
+                <button
+                  type="button"
+                  onClick={() => setStyleKeys([])}
+                  className="text-sm font-medium text-slate-500 underline underline-offset-4 transition hover:text-brand-ink"
+                >
+                  {t.clearSelection}
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setActivityOpen(false)}
+                  className="rounded-full bg-brand-terracotta px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-brand-terracotta/90"
+                >
+                  {showLabel}
+                </button>
+              </div>
             </div>
           ) : null}
         </div>

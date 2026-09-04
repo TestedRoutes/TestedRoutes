@@ -23,6 +23,7 @@ const lt = {
     allContinents: "Visi žemynai",
     countriesWithStories: "{n} šalys su istorijomis",
     countriesSelected: "{n} šalys",
+    stylesSelected: "{n} veiklos",
     findCountry: "Rasti šalį",
     noCountryMatch: "Šalių nerasta",
     // Row labels in the search typeahead.

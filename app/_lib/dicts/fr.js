@@ -23,6 +23,7 @@ const fr = {
     allContinents: "Tous les continents",
     countriesWithStories: "{n} pays avec des histoires",
     countriesSelected: "{n} pays",
+    stylesSelected: "{n} activités",
     findCountry: "Trouver un pays",
     noCountryMatch: "Aucun pays ne correspond",
     // Row labels in the search typeahead.
