@@ -189,6 +189,15 @@ const DESTINATIONS = [
     image: null,
     alt: null,
   },
+  {
+    name: "South Korea",
+    href: "/destinations/south-korea",
+    region: "Asia · Seoul and the DMZ",
+    blurb:
+      "How many days Seoul needs and when to go – palaces in a hanbok, a border you can look across, and a July mud festival two hours down the coast.",
+    image: southKoreaHero,
+    alt: "Sunset over the Han River from Banpo, the Sebitseom floating islands on the left and the city skyline in silhouette, Seoul, South Korea",
+  },
 ];
 
 export default function DestinationsPage() {
