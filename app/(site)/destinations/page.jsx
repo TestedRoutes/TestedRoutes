@@ -19,6 +19,7 @@ import tenerifeHero from "../../../content/countries/canary-islands/destination/
 import granCanariaHero from "../../../content/countries/canary-islands/destination/generated/web/mirador-signpost-at-dusk.jpg";
 import lanzaroteHero from "../../../content/countries/canary-islands/destination/generated/web/papagayo-sunset-cove.jpg";
 import fuerteventuraHero from "../../../content/countries/canary-islands/destination/generated/web/cofete-coast-from-the-mirador.jpg";
+import southKoreaHero from "../../../content/countries/south-korea/destination/generated/web/gwanghwamun-gate-last-morning.jpg";
 
 export const metadata = {
   title: "Destinations · TestedRoutes",
@@ -188,6 +189,15 @@ const DESTINATIONS = [
       "Day trips, weekend trips and multi-day itineraries across the Alps, all doable without a tour.",
     image: null,
     alt: null,
+  },
+  {
+    name: "South Korea",
+    href: "/destinations/south-korea",
+    region: "Asia · Seoul and the DMZ",
+    blurb:
+      "How many days Seoul needs and when to go – palaces in a hanbok, a border you can look across, and a July mud festival two hours down the coast.",
+    image: southKoreaHero,
+    alt: "Gwanghwamun, the main gate of Gyeongbokgung palace, wide across its forecourt with visitors below, Seoul, South Korea",
   },
 ];
 
