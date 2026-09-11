@@ -13,6 +13,7 @@
     "publish:guide": "node --env-file=.env.local scripts/publish-guide.mjs",
     "check:guides": "node --env-file=.env.local scripts/check-guides.mjs",
     "check:inspire": "node scripts/check-inspire-guides.mjs",
+    "check:swiss-hubs": "node scripts/check-swiss-hubs.mjs",
     "set:story-guides": "node --env-file=.env.local scripts/set-story-guides.mjs",
     "ping:indexnow": "node scripts/ping-indexnow.mjs",
     "patch:affiliates": "node --env-file=.env.local scripts/patch-affiliates.mjs",
