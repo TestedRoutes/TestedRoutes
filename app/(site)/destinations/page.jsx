@@ -20,6 +20,9 @@ import granCanariaHero from "../../../content/countries/canary-islands/destinati
 import lanzaroteHero from "../../../content/countries/canary-islands/destination/generated/web/papagayo-sunset-cove.jpg";
 import fuerteventuraHero from "../../../content/countries/canary-islands/destination/generated/web/cofete-coast-from-the-mirador.jpg";
 import southKoreaHero from "../../../content/countries/south-korea/destination/generated/web/gwanghwamun-gate-last-morning.jpg";
+import panamaHero from "../../../content/countries/panama/destination/generated/web/island-and-clear-water-bocas.jpg";
+import costaRicaHero from "../../../content/countries/costa-rica/destination/generated/web/arenal-cone-over-the-lodge-pool.jpg";
+import nicaraguaHero from "../../../content/countries/nicaragua/destination/generated/web/masaya-crater-glow-at-night.jpg";
 
 export const metadata = {
   title: "Destinations · TestedRoutes",
@@ -28,6 +31,33 @@ export const metadata = {
 };
 
 const DESTINATIONS = [
+  {
+    name: "Nicaragua",
+    href: "/destinations/nicaragua",
+    region: "Americas · Central America",
+    blurb:
+      "Is it safe now, and is the risk the one you think it is – the country the founder ranked first of three, set against what has changed since.",
+    image: nicaraguaHero,
+    alt: "Orange volcanic glow rising through smoke from the Santiago crater at Masaya volcano at night, Nicaragua",
+  },
+  {
+    name: "Costa Rica",
+    href: "/destinations/costa-rica",
+    region: "Americas · Central America",
+    blurb:
+      "Is it worth what it charges, how many days you need, and which coast – the polished, expensive one, with the two coasts on opposite weather calendars.",
+    image: costaRicaHero,
+    alt: "Arenal volcano's cone under a cap of cloud, above a lodge garden and pool near La Fortuna, Costa Rica",
+  },
+  {
+    name: "Panama",
+    href: "/destinations/panama",
+    region: "Americas · Central America",
+    blurb:
+      "Is it worth visiting, how long you need, and what to skip – one focused day in the capital, the heart of the trip in Bocas del Toro, and the parts that did not earn their place.",
+    image: panamaHero,
+    alt: "A palm-covered island ringed by white sand and clear green water in Bocas del Toro, Panama",
+  },
   {
     name: "Iceland",
     href: "/destinations/iceland",
