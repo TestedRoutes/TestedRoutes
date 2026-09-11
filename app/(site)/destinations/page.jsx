@@ -41,6 +41,15 @@ const DESTINATIONS = [
     alt: "Orange volcanic glow rising through smoke from the Santiago crater at Masaya volcano at night, Nicaragua",
   },
   {
+    name: "Liechtenstein",
+    href: "/destinations/liechtenstein",
+    region: "Switzerland & the Alps · The Rhine valley",
+    blurb:
+      "Whether the sixth-smallest country in the world is worth your day, whether a day is enough, and why the two-hour version is the reason people say there is nothing here.",
+    image: null,
+    alt: null,
+  },
+  {
     name: "Costa Rica",
     href: "/destinations/costa-rica",
     region: "Americas · Central America",
