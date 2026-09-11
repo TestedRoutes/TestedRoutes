@@ -21,6 +21,7 @@ import lanzaroteHero from "../../../content/countries/canary-islands/destination
 import fuerteventuraHero from "../../../content/countries/canary-islands/destination/generated/web/cofete-coast-from-the-mirador.jpg";
 import southKoreaHero from "../../../content/countries/south-korea/destination/generated/web/gwanghwamun-gate-last-morning.jpg";
 import panamaHero from "../../../content/countries/panama/destination/generated/web/island-and-clear-water-bocas.jpg";
+import costaRicaHero from "../../../content/countries/costa-rica/destination/generated/web/arenal-cone-over-the-lodge-pool.jpg";
 
 export const metadata = {
   title: "Destinations · TestedRoutes",
@@ -29,6 +30,15 @@ export const metadata = {
 };
 
 const DESTINATIONS = [
+  {
+    name: "Costa Rica",
+    href: "/destinations/costa-rica",
+    region: "Americas · Central America",
+    blurb:
+      "Is it worth what it charges, how many days you need, and which coast – the polished, expensive one, with the two coasts on opposite weather calendars.",
+    image: costaRicaHero,
+    alt: "Arenal volcano's cone under a cap of cloud, above a lodge garden and pool near La Fortuna, Costa Rica",
+  },
   {
     name: "Panama",
     href: "/destinations/panama",

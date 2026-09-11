@@ -102,11 +102,16 @@ DOCX_META_KEYS = {
     "photos_file", "resolved", "last_reviewed",
 }
 
-# Template noise inside story docx files that must never reach the body:
-# a literal FRONTMATTER heading and pipe-separated tag lines like
-# "Inspire | List | Brand".
+# Template noise inside story files that must never reach the body: a literal
+# FRONTMATTER heading and the eyebrow tag line ("Inspire | List | Brand",
+# "WOW  ·  INSPIRE  ·  BRAND"). The separator is a pipe OR a middle dot: the
+# sessions' drafts use "·", and until 2026-09-11 only "|" was recognised, so
+# the five Panama stories went live with "DE-RISK · INSPIRE · BRAND" and a
+# repeated title as their first two body paragraphs, and the content-marker
+# check passed because the prose was still there underneath.
+_SEP = r"\s*[|·•]\s*"
 NOISE_LINE = re.compile(
-    r"^(frontmatter|inspire(\s*\|\s*[\w &+-]+)+|[\w &+-]+(\s*\|\s*[\w &+-]+){1,3})$",
+    r"^(frontmatter|inspire(" + _SEP + r"[\w &+-]+)+|[\w &+-]+(" + _SEP + r"[\w &+-]+){1,3})$",
     re.I,
 )
 
@@ -258,6 +263,12 @@ def extract_docx(docx_path, plan_title):
             if km and km.group(1) in DOCX_META_KEYS:
                 meta[km.group(1)] = km.group(2).strip()
                 continue
+            if km:
+                # A lowercase key: value line in the header region is still
+                # frontmatter even when the key is not one we store (a draft's
+                # "title_status: PROPOSED retitle ..." note). Left in, it became
+                # the first body paragraph and everything after it followed.
+                continue
             # A paragraph that IS a bare meta key (metadata laid out as
             # alternating key/value paragraphs rather than a table).
             bare = re.sub(r"[^a-z_]", "_", s.lower().replace(" ", "_"))
@@ -342,8 +353,10 @@ def clip_start(name):
 def clip_duration(name, start):
     """Cut length in seconds, capped at 7. "..._1 until sec 6.mp4" means the
     clip must END at 6s, so the duration is 6 minus the start (founder
-    convention added 2026-08-07 alongside "from sec")."""
-    m = re.search(r"until\s*(?:sec\w*\s*)?(\d+(?:\.\d+)?)", name, re.IGNORECASE)
+    convention added 2026-08-07 alongside "from sec"). He also writes it as
+    "till sec 5" (Costa Rica cull, 2026-09-11) - same meaning, so both spellings
+    are accepted; an unrecognised end mark would silently cut 7 s instead."""
+    m = re.search(r"(?:un)?till?\s*(?:sec\w*\s*)?(\d+(?:\.\d+)?)", name, re.IGNORECASE)
     if m:
         return max(0.5, min(7.0, float(m.group(1)) - start))
     return 7.0
@@ -552,6 +565,12 @@ def main():
                         docx_meta = {}
                     body = body[fm.end():]
                 body = body.lstrip()
+                # The eyebrow tag line ("WOW  ·  INSPIRE") sits between the
+                # frontmatter and the H1 in the sessions' .md drafts; it is
+                # template noise, same as in the docx layout, and the H1 strip
+                # below only fires once it is gone.
+                while body and NOISE_LINE.match(body.partition("\n")[0].strip()):
+                    body = body.partition("\n")[2].lstrip()
                 if body.startswith("#"):
                     first, _, rest = body.partition("\n")
                     if row["title"] and first.lstrip("# ").strip().lower() == str(row["title"]).strip().lower():
