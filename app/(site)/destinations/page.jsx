@@ -22,6 +22,7 @@ import fuerteventuraHero from "../../../content/countries/canary-islands/destina
 import southKoreaHero from "../../../content/countries/south-korea/destination/generated/web/gwanghwamun-gate-last-morning.jpg";
 import panamaHero from "../../../content/countries/panama/destination/generated/web/island-and-clear-water-bocas.jpg";
 import costaRicaHero from "../../../content/countries/costa-rica/destination/generated/web/arenal-cone-over-the-lodge-pool.jpg";
+import nicaraguaHero from "../../../content/countries/nicaragua/destination/generated/web/masaya-crater-glow-at-night.jpg";
 
 export const metadata = {
   title: "Destinations · TestedRoutes",
@@ -30,6 +31,15 @@ export const metadata = {
 };
 
 const DESTINATIONS = [
+  {
+    name: "Nicaragua",
+    href: "/destinations/nicaragua",
+    region: "Americas · Central America",
+    blurb:
+      "Is it safe now, and is the risk the one you think it is – the country the founder ranked first of three, set against what has changed since.",
+    image: nicaraguaHero,
+    alt: "Orange volcanic glow rising through smoke from the Santiago crater at Masaya volcano at night, Nicaragua",
+  },
   {
     name: "Costa Rica",
     href: "/destinations/costa-rica",
