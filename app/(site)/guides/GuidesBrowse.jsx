@@ -10,9 +10,29 @@ import {
 } from "../../_lib/continents";
 import {
   buildGuideFilterOptions,
+  cardActivity,
+  cardCountry,
+  cardSeasons,
   matchesGuideFilters,
   matchesGuideSearch,
 } from "../../_lib/guideFilters";
+import {
+  ArrowIcon,
+  BLOCK_CLASS,
+  CAPSULE_CLASS,
+  ContinentRail,
+  ContinentTabs,
+  EYEBROW_CLASS,
+  fill,
+  FilterChip,
+  FilterPill,
+  MagnifierIcon,
+  PANEL_CLASS,
+  PanelFooter,
+  SEARCH_BUTTON_CLASS,
+  SEARCH_INPUT_CLASS,
+  TickList,
+} from "../../_components/FilterUi";
 
 // Line icons for the trust trio, drawn light on the Taupe band:
 // mountain / PDF document ("Made for the road") / pin.
@@ -28,6 +48,22 @@ function continentBucket(guide) {
   return bucketOf(guide.metadata?.geography?.continent);
 }
 
+// The filter block, the Inspire treatment (founder 2026-09-04: "do the same
+// now on Guides page. I want searches to have the same look and feel"): one
+// rounded block holds the search capsule, the continent tabs with counts, a
+// control row of four pills and a status row of dismissable chips. Every
+// pill opens a panel of the same multi-column tickbox list — Country keeps
+// the continent rail, since continent is the one dimension that scopes it.
+//
+// The four filters became multi-select with the tickboxes: a checkbox that
+// silently unticks its neighbour would be lying about what it does, and
+// "Iceland or Norway" is how a trip actually gets planned.
+//
+// Counts: the tab row is unscoped (whole library — it is navigation, not a
+// result preview), while every count inside a panel respects the OTHER
+// active filters, so a number always means "guides you would get by ticking
+// this". Only the status line and the panels' Show button follow the live
+// result set.
 export default function GuidesBrowse({
   guides,
   t,
@@ -36,28 +72,35 @@ export default function GuidesBrowse({
   initialSearch = "",
   interlude = null,
 }) {
+  const ti = t.inspireList;
   const [search, setSearch] = useState(initialSearch);
   const [continent, setContinent] = useState("");
   const [filters, setFilters] = useState({
-    country: "",
-    length: "",
-    activity: "",
-    season: "",
+    country: [],
+    length: [],
+    activity: [],
+    season: [],
   });
-  const [panelOpen, setPanelOpen] = useState(false);
+  // One panel at a time, keyed by filter name; "" is all closed.
+  const [openPanel, setOpenPanel] = useState("");
   const [countryQuery, setCountryQuery] = useState("");
   const panelRef = useRef(null);
-  const setFilter = (key, value) => setFilters((f) => ({ ...f, [key]: value }));
 
-  // The country panel closes on outside click or Escape, like a native
-  // dropdown would.
+  const toggle = (key, value) =>
+    setFilters((f) => ({
+      ...f,
+      [key]: f[key].includes(value) ? f[key].filter((v) => v !== value) : [...f[key], value],
+    }));
+  const clearFilter = (key) => setFilters((f) => ({ ...f, [key]: [] }));
+
+  // Panels close on outside click or Escape, like a native dropdown would.
   useEffect(() => {
-    if (!panelOpen) return;
+    if (!openPanel) return;
     const onDown = (e) => {
-      if (panelRef.current && !panelRef.current.contains(e.target)) setPanelOpen(false);
+      if (panelRef.current && !panelRef.current.contains(e.target)) setOpenPanel("");
     };
     const onKey = (e) => {
-      if (e.key === "Escape") setPanelOpen(false);
+      if (e.key === "Escape") setOpenPanel("");
     };
     document.addEventListener("pointerdown", onDown);
     document.addEventListener("keydown", onKey);
@@ -65,39 +108,86 @@ export default function GuidesBrowse({
       document.removeEventListener("pointerdown", onDown);
       document.removeEventListener("keydown", onKey);
     };
-  }, [panelOpen]);
+  }, [openPanel]);
 
   // Only continents that actually have guides get a tab.
-  const tabs = useMemo(() => {
-    const present = new Set(guides.map(continentBucket).filter(Boolean));
-    return TAB_ORDER.filter((b) => present.has(b));
-  }, [guides]);
-
-  // Country counts scoped to the active tab — the panel's "most guides"
-  // chips and A–Z list both read from this.
-  const countryCounts = useMemo(() => {
+  const continentCounts = useMemo(() => {
     const counts = new Map();
     for (const g of guides) {
-      if (continent && continentBucket(g) !== continent) continue;
-      const country = prettyGeo(g.metadata?.geography?.country);
-      if (!country) continue;
-      counts.set(country, (counts.get(country) || 0) + 1);
+      const bucket = continentBucket(g);
+      if (bucket) counts.set(bucket, (counts.get(bucket) || 0) + 1);
     }
-    return [...counts.entries()].sort((a, b) => a[0].localeCompare(b[0]));
-  }, [guides, continent]);
+    return counts;
+  }, [guides]);
+  const continentRows = [
+    { key: "", label: tl.filterAll, count: guides.length },
+    ...TAB_ORDER.filter((b) => continentCounts.has(b)).map((b) => ({
+      key: b,
+      label: bucketLabel(b),
+      count: continentCounts.get(b) || 0,
+    })),
+  ];
 
-  const topCountries = useMemo(
-    () => [...countryCounts].sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0])).slice(0, 4),
-    [countryCounts],
-  );
+  // Everything except one facet, so that facet's own counts do not collapse
+  // to what it has already selected.
+  const matchesExcept = (guide, skip) =>
+    matchesGuideSearch(guide, search) &&
+    (!continent || continentBucket(guide) === continent) &&
+    matchesGuideFilters(guide, skip ? { ...filters, [skip]: [] } : filters);
 
+  const facetCounts = useMemo(() => {
+    const count = (skip, valuesOf) => {
+      const counts = new Map();
+      for (const g of guides) {
+        if (!matchesExcept(g, skip)) continue;
+        for (const v of new Set(valuesOf(g).filter(Boolean))) {
+          counts.set(v, (counts.get(v) || 0) + 1);
+        }
+      }
+      return counts;
+    };
+    return {
+      country: count("country", (g) => [cardCountry(g)]),
+      length: count("length", (g) => [g.category]),
+      activity: count("activity", (g) => [cardActivity(g)]),
+      season: count("season", cardSeasons),
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [guides, search, continent, filters]);
+
+  // The country list is the active continent's countries, most guides
+  // first; a country the other filters have emptied drops out unless it is
+  // one of the picked ones, which must stay tickable to be unticked.
+  const countryRows = useMemo(() => {
+    const names = new Set();
+    for (const g of guides) {
+      if (continent && continentBucket(g) !== continent) continue;
+      const name = cardCountry(g);
+      if (name) names.add(name);
+    }
+    return [...names]
+      .map((name) => ({ key: name, label: name, count: facetCounts.country.get(name) || 0 }))
+      .filter((row) => row.count > 0 || filters.country.includes(row.key))
+      .sort((a, b) => b.count - a.count || a.label.localeCompare(b.label));
+  }, [guides, continent, facetCounts, filters.country]);
   const listedCountries = useMemo(() => {
     const needle = countryQuery.trim().toLowerCase();
-    if (!needle) return countryCounts;
-    return countryCounts.filter(([country]) => country.toLowerCase().includes(needle));
-  }, [countryCounts, countryQuery]);
+    if (!needle) return countryRows;
+    return countryRows.filter((row) => row.label.toLowerCase().includes(needle));
+  }, [countryRows, countryQuery]);
 
+  // Length and Season keep the trip/calendar order buildGuideFilterOptions
+  // gives them; Activity is alphabetical there.
   const options = useMemo(() => buildGuideFilterOptions(guides), [guides]);
+  const facetRows = (key, values, display) =>
+    values
+      .map((value) => ({
+        key: value,
+        label: display ? display(value) : value,
+        count: facetCounts[key].get(value) || 0,
+      }))
+      .filter((row) => row.count > 0 || filters[key].includes(row.key));
+
   const filtered = useMemo(
     () =>
       guides.filter(
@@ -109,42 +199,82 @@ export default function GuidesBrowse({
     [guides, search, continent, filters],
   );
 
-  const selectTab = (bucket) => {
+  // Switching continent drops any picked country that is not in it: a
+  // hidden Iceland filter under the Africa tab would empty the grid with no
+  // visible reason.
+  const selectContinent = (bucket) => {
     setContinent(bucket);
-    setFilters((f) => ({ ...f, country: "" }));
-    setPanelOpen(false);
     setCountryQuery("");
+    if (bucket) {
+      const inBucket = new Set(
+        guides.filter((g) => continentBucket(g) === bucket).map(cardCountry).filter(Boolean),
+      );
+      setFilters((f) => ({ ...f, country: f.country.filter((name) => inBucket.has(name)) }));
+    }
   };
-  const pickCountry = (country) => {
-    setFilters((f) => ({ ...f, country: f.country === country ? "" : country }));
-    setPanelOpen(false);
+  const clearAll = () => {
+    setSearch("");
+    setContinent("");
+    setFilters({ country: [], length: [], activity: [], season: [] });
+    setCountryQuery("");
+    setOpenPanel("");
   };
 
-  const scopeLabel = continent
-    ? tl.allOfContinent.replace("{name}", bucketLabel(continent))
-    : tl.allCountries;
-  const countryPillLabel = filters.country || (continent ? scopeLabel : tl.filterAll);
+  const openOnly = (key) => setOpenPanel((open) => (open === key ? "" : key));
+  const pillValue = (key, display) => {
+    const list = filters[key];
+    if (!list.length) return tl.filterAll;
+    if (list.length === 1) return display ? display(list[0]) : list[0];
+    return fill(tl.selectedCount, { n: list.length });
+  };
+
+  // A facet earns a pill when the library has values for it at all — not
+  // when the current filters leave it any. Dropping the pill as its last
+  // row disappears would shuffle the row under the cursor and leave the
+  // visitor hunting for a control that was there a click ago; the empty
+  // panel says so instead.
+  const facets = [
+    {
+      key: "length",
+      label: tl.filterLength,
+      values: options.lengths,
+      rows: facetRows("length", options.lengths, prettyGeo),
+      display: prettyGeo,
+    },
+    {
+      key: "activity",
+      label: tl.filterActivity,
+      values: options.activities,
+      rows: facetRows("activity", options.activities),
+    },
+    {
+      key: "season",
+      label: tl.filterSeason,
+      values: options.seasons,
+      rows: facetRows("season", options.seasons, prettyGeo),
+      display: prettyGeo,
+    },
+  ].filter((f) => f.values.length);
 
   const chips = [
-    filters.country ? { key: "country", label: filters.country } : null,
-    filters.length ? { key: "length", label: prettyGeo(filters.length) } : null,
-    filters.activity ? { key: "activity", label: filters.activity } : null,
-    filters.season ? { key: "season", label: prettyGeo(filters.season) } : null,
+    continent
+      ? { key: "continent", label: bucketLabel(continent), clear: () => selectContinent("") }
+      : null,
+    ...["country", "length", "activity", "season"].flatMap((key) =>
+      filters[key].map((value) => ({
+        key: `${key}:${value}`,
+        label: key === "country" || key === "activity" ? value : prettyGeo(value),
+        clear: () => toggle(key, value),
+      })),
+    ),
   ].filter(Boolean);
+  const hasFilters = !!(search.trim() || continent || chips.length);
 
-  // Same responsive treatment as GuideFilterRow: on phones the pill and
-  // selects wrap two per row at a readable size (one row of five shrank
-  // them to unreadable slivers); from `sm` up they sit in one row,
-  // equal-width, capped at 160px. The Country pill carries the same
-  // flex-1/max-w-40 sizing as the selects — content-sized it came out
-  // visibly narrower than its three neighbours.
-  const selectClass =
-    "h-10 min-w-[calc(50%-0.25rem)] flex-1 cursor-pointer truncate rounded-full border border-slate-200 bg-white px-3 text-sm font-semibold text-slate-700 transition hover:border-slate-300 focus:border-slate-400 focus:outline-none sm:h-9 sm:min-w-0 sm:max-w-40 sm:text-xs";
-  const dropdowns = [
-    { key: "length", label: tl.filterLength, values: options.lengths, display: prettyGeo },
-    { key: "activity", label: tl.filterActivity, values: options.activities },
-    { key: "season", label: tl.filterSeason, values: options.seasons, display: prettyGeo },
-  ];
+  const scopeLabel = continent ? bucketLabel(continent) : ti.allContinents;
+  const showLabel =
+    filtered.length === 1
+      ? tl.showGuide
+      : fill(tl.showGuides, { n: filtered.length });
 
   const cardGrid = (cards) => (
     <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
@@ -162,199 +292,161 @@ export default function GuidesBrowse({
 
   return (
     <div className="space-y-10">
-      <div className="w-full max-w-2xl">
-        <div className="flex w-full items-center gap-2 rounded-full bg-white p-1.5 shadow-md ring-1 ring-slate-200 ">
+      <div className={BLOCK_CLASS}>
+        <label htmlFor="guides-search" className="sr-only">
+          {tl.searchPlaceholder}
+        </label>
+        <div className={CAPSULE_CLASS}>
           <input
+            id="guides-search"
             type="search"
+            autoComplete="off"
             value={search}
-            onChange={(e) => setSearch(e.target.value)}
+            onChange={(e) => {
+              setSearch(e.target.value);
+              setOpenPanel("");
+            }}
             placeholder={tl.searchPlaceholder}
-            className="min-w-0 flex-1 bg-transparent px-4 py-3 text-sm text-brand-ink outline-none placeholder:text-slate-400 md:px-5 md:text-base"
+            className={SEARCH_INPUT_CLASS}
           />
+          {/* Search is live as you type; the button is the visible "go"
+              that phones expect and just closes the keyboard. */}
           <button
             type="button"
-            className="shrink-0 rounded-full bg-brand-terracotta px-4 py-3 text-sm font-normal tracking-[0.05em] text-white transition hover:bg-brand-terracotta/90 md:px-6 md:text-base"
+            onClick={() => document.getElementById("guides-search")?.blur()}
+            aria-label={ti.searchButton}
+            className={SEARCH_BUTTON_CLASS}
           >
-            {t.inspireList.searchButton}
+            <ArrowIcon className="h-5 w-5 sm:hidden" />
+            <span className="hidden sm:inline">{ti.searchButton}</span>
           </button>
+        </div>
+
+        <div className="mt-4">
+          <ContinentTabs rows={continentRows} active={continent} onPick={selectContinent} />
+        </div>
+
+        {/* Control row: one pill per filter, each opening its panel below.
+            Two per row at thumb size on phones, one compact row from sm. */}
+        <div ref={panelRef} className="relative mt-4">
+          <div className="flex w-full flex-wrap items-center gap-2">
+            <FilterPill
+              label={tl.filterCountry}
+              value={pillValue("country")}
+              open={openPanel === "country"}
+              active={filters.country.length > 0}
+              onClick={() => openOnly("country")}
+            />
+            {facets.map((f) => (
+              <FilterPill
+                key={f.key}
+                label={f.label}
+                value={pillValue(f.key, f.display)}
+                open={openPanel === f.key}
+                active={filters[f.key].length > 0}
+                onClick={() => openOnly(f.key)}
+              />
+            ))}
+          </div>
+
+          {/* Country panel: continent rail (the same state as the tab row
+              above) from md up, the searchable tickbox list always. */}
+          {openPanel === "country" ? (
+            <div role="dialog" aria-label={tl.filterCountry} className={PANEL_CLASS}>
+              <div className="flex">
+                <ContinentRail rows={continentRows} active={continent} onPick={selectContinent} />
+                <div className="min-w-0 flex-1 p-4 md:p-6">
+                  <div className="flex flex-wrap items-center justify-between gap-3">
+                    <p className={EYEBROW_CLASS}>
+                      {scopeLabel} · {countryRows.length} {tl.countriesWord}
+                    </p>
+                    <div className="flex w-full items-center gap-2 rounded-full bg-slate-50 px-4 ring-1 ring-brand-line sm:w-56">
+                      <MagnifierIcon className="h-3.5 w-3.5 shrink-0 text-slate-400" />
+                      <input
+                        type="search"
+                        value={countryQuery}
+                        onChange={(e) => setCountryQuery(e.target.value)}
+                        placeholder={tl.typeCountry}
+                        aria-label={tl.typeCountry}
+                        className="min-w-0 flex-1 bg-transparent py-2 text-sm text-brand-ink outline-none placeholder:text-slate-400"
+                      />
+                    </div>
+                  </div>
+                  <TickList
+                    rows={listedCountries}
+                    isChecked={(key) => filters.country.includes(key)}
+                    onToggle={(key) => toggle("country", key)}
+                    emptyLabel={ti.noCountryMatch}
+                    className="mt-4"
+                  />
+                  <PanelFooter
+                    clearLabel={ti.clearSelection}
+                    onClear={() => clearFilter("country")}
+                    showLabel={showLabel}
+                    onClose={() => setOpenPanel("")}
+                  />
+                </div>
+              </div>
+            </div>
+          ) : null}
+
+          {/* Length, Activity and Season: the same panel without the rail —
+              they have no second dimension to scope by, so the list takes
+              the whole width. */}
+          {facets.map((f) =>
+            openPanel === f.key ? (
+              <div
+                key={f.key}
+                role="dialog"
+                aria-label={f.label}
+                className={`${PANEL_CLASS} p-4 md:p-6`}
+              >
+                {/* The facet's own name rather than a row count: these
+                    lists are short enough to take in at a glance, and a
+                    count here would need a plural form per language to
+                    avoid "1 options". */}
+                <p className={EYEBROW_CLASS}>
+                  {scopeLabel} · {f.label}
+                </p>
+                <TickList
+                  rows={f.rows}
+                  isChecked={(key) => filters[f.key].includes(key)}
+                  onToggle={(key) => toggle(f.key, key)}
+                  emptyLabel={tl.noOptions}
+                  className="mt-4"
+                />
+                <PanelFooter
+                  clearLabel={ti.clearSelection}
+                  onClear={() => clearFilter(f.key)}
+                  showLabel={showLabel}
+                  onClose={() => setOpenPanel("")}
+                />
+              </div>
+            ) : null,
+          )}
+        </div>
+
+        {/* Status row: live count, one chip per active filter, Clear all. */}
+        <div className="mt-4 flex flex-wrap items-center gap-2 border-t border-brand-line pt-4">
+          <p className="mr-1 text-sm tabular-nums text-slate-600">
+            {fill(tl.showing, { shown: filtered.length, total: guides.length })}
+          </p>
+          {chips.map((chip) => (
+            <FilterChip key={chip.key} label={chip.label} onClear={chip.clear} />
+          ))}
+          {hasFilters ? (
+            <button
+              type="button"
+              onClick={clearAll}
+              className="ml-1 text-sm font-medium text-brand-terracotta underline underline-offset-4 transition hover:text-brand-ink"
+            >
+              {ti.clearAll}
+            </button>
+          ) : null}
         </div>
       </div>
 
-      <section className="space-y-6">
-        {/* Continent tabs (founder mockup 2026-08-08): All + one tab per
-            continent that has guides, active tab underlined in Brandy. */}
-        <div className="border-b border-brand-line">
-          <div className="flex gap-6 overflow-x-auto [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-            <button
-              type="button"
-              onClick={() => selectTab("")}
-              className={`-mb-px shrink-0 border-b-2 pb-3 font-sans text-base font-bold transition-colors ${
-                continent === ""
-                  ? "border-brand-terracotta text-brand-ink"
-                  : "border-transparent text-slate-400 hover:text-slate-600"
-              }`}
-            >
-              {tl.filterAll}
-            </button>
-            {tabs.map((b) => (
-              <button
-                key={b}
-                type="button"
-                onClick={() => selectTab(b)}
-                className={`-mb-px shrink-0 border-b-2 pb-3 font-sans text-base font-bold transition-colors ${
-                  continent === b
-                    ? "border-brand-terracotta text-brand-ink"
-                    : "border-transparent text-slate-400 hover:text-slate-600"
-                }`}
-              >
-                {bucketLabel(b)}
-              </button>
-            ))}
-          </div>
-        </div>
-
-        {/* Pill row: the Country pill opens the panel below; Length,
-            Activity and Season stay plain selects; active filters trail as
-            dismissable chips. */}
-        <div ref={panelRef} className="relative">
-          <div className="flex w-full flex-wrap items-center gap-2">
-            <button
-              type="button"
-              onClick={() => setPanelOpen((o) => !o)}
-              aria-expanded={panelOpen}
-              className={`flex h-10 min-w-[calc(50%-0.25rem)] flex-1 items-center justify-between gap-2 rounded-full px-3 text-sm font-semibold transition sm:h-9 sm:min-w-0 sm:max-w-40 sm:text-xs ${
-                panelOpen || filters.country
-                  ? "border border-transparent bg-brand-ink text-white"
-                  : "border border-slate-200 bg-white text-slate-700 hover:border-slate-300"
-              }`}
-            >
-              <span className="truncate">
-                {tl.filterCountry}: {countryPillLabel}
-              </span>
-              <svg
-                viewBox="0 0 12 8"
-                aria-hidden="true"
-                className={`h-2 w-3 shrink-0 transition-transform ${panelOpen ? "rotate-180" : ""}`}
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              >
-                <path d="M1 1.5 L6 6.5 L11 1.5" />
-              </svg>
-            </button>
-            {dropdowns.map((d) =>
-              d.values.length ? (
-                <select
-                  key={d.key}
-                  value={filters[d.key]}
-                  onChange={(e) => setFilter(d.key, e.target.value)}
-                  className={selectClass}
-                  aria-label={d.label}
-                >
-                  <option value="">{`${d.label}: ${tl.filterAll}`}</option>
-                  {d.values.map((v) => (
-                    <option key={v} value={v}>
-                      {d.display ? d.display(v) : v}
-                    </option>
-                  ))}
-                </select>
-              ) : null,
-            )}
-            {chips.map((chip) => (
-              <button
-                key={chip.key}
-                type="button"
-                onClick={() => setFilter(chip.key, "")}
-                className="flex h-10 shrink-0 items-center gap-2 rounded-full px-3 text-sm font-semibold text-slate-700 transition hover:bg-brand-ink/5 sm:h-9 sm:text-xs"
-              >
-                {chip.label}
-                <span aria-hidden="true" className="text-brand-terracotta">
-                  ✕
-                </span>
-                <span className="sr-only">Clear {chip.key} filter</span>
-              </button>
-            ))}
-            <p className="ml-auto shrink-0 text-xs font-medium tabular-nums text-slate-500">
-              {filtered.length} {filtered.length === 1 ? tl.guide : tl.guides}
-            </p>
-          </div>
-
-          {/* The panel is half the page wide from md up (founder
-              2026-08-08), anchored to the pill; full width only on phones. */}
-          {panelOpen ? (
-            <div className="absolute left-0 top-full z-20 mt-3 w-full rounded-3xl bg-white p-5 shadow-card-hover ring-1 ring-brand-line md:w-1/2 md:p-8">
-              <div className="flex items-center gap-3 rounded-full bg-slate-50 px-4 ring-1 ring-brand-line">
-                <svg
-                  viewBox="0 0 24 24"
-                  aria-hidden="true"
-                  className="h-4 w-4 shrink-0 text-slate-400"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                >
-                  <circle cx="11" cy="11" r="7" />
-                  <path d="M16.5 16.5 L21 21" />
-                </svg>
-                <input
-                  type="search"
-                  value={countryQuery}
-                  onChange={(e) => setCountryQuery(e.target.value)}
-                  placeholder={tl.typeCountry}
-                  className="min-w-0 flex-1 bg-transparent py-2.5 text-sm text-brand-ink outline-none placeholder:text-slate-400"
-                />
-              </div>
-
-              {topCountries.length ? (
-                <>
-                  <p className="mt-6 font-sans text-[11px] font-medium uppercase tracking-[0.2em] text-slate-400">
-                    {tl.mostGuides}
-                  </p>
-                  <div className="mt-3 flex flex-wrap gap-2">
-                    {topCountries.map(([country, count]) => (
-                      <button
-                        key={country}
-                        type="button"
-                        onClick={() => pickCountry(country)}
-                        className={`rounded-full px-4 py-2 text-sm font-semibold transition ${
-                          filters.country === country
-                            ? "bg-brand-terracotta-soft text-brand-terracotta"
-                            : "bg-slate-50 text-slate-700 hover:bg-slate-100"
-                        }`}
-                      >
-                        {country} · {count}
-                      </button>
-                    ))}
-                  </div>
-                </>
-              ) : null}
-
-              <p className="mt-6 font-sans text-[11px] font-medium uppercase tracking-[0.2em] text-slate-400">
-                {scopeLabel} · {countryCounts.length} {tl.countriesWord}
-              </p>
-              <ul className="mt-3 grid gap-x-8 gap-y-2.5 sm:grid-cols-2">
-                {listedCountries.map(([country, count]) => (
-                  <li key={country}>
-                    <button
-                      type="button"
-                      onClick={() => pickCountry(country)}
-                      className={`flex items-baseline gap-2 text-[15px] transition hover:text-brand-terracotta ${
-                        filters.country === country
-                          ? "font-semibold text-brand-terracotta"
-                          : "text-slate-800"
-                      }`}
-                    >
-                      {country} <span className="text-sm text-slate-400">{count}</span>
-                    </button>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ) : null}
-        </div>
-
+      <section className="space-y-10">
         {cardGrid(firstBlock)}
 
         {/* Trust trio (founder 2026-08-08): after the first two rows of guides,
@@ -390,7 +482,7 @@ export default function GuidesBrowse({
         {rest.length ? cardGrid(rest) : null}
 
         {filtered.length === 0 ? (
-          <p className="text-center text-sm text-slate-500">{t.inspireList.noMatchTitle}</p>
+          <p className="text-center text-sm text-slate-500">{ti.noMatchTitle}</p>
         ) : null}
       </section>
     </div>

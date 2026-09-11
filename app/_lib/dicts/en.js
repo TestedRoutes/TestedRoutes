@@ -134,10 +134,14 @@ const en = {
     filterActivity: "Activity",
     filterSeason: "Season",
     typeCountry: "Type a country…",
-    mostGuides: "Most guides",
-    allOfContinent: "All of {name}",
-    allCountries: "All countries",
     countriesWord: "countries",
+    // Filter block (2026-09-04): the Inspire treatment on /guides.
+    // {n}/{shown}/{total} are filled by the browse component.
+    showing: "Showing {shown} of {total} guides",
+    showGuides: "Show {n} guides",
+    showGuide: "Show 1 guide",
+    selectedCount: "{n} selected",
+    noOptions: "Nothing left to pick here",
     trust: [
       { title: "Walked in person", body: "Tested on the ground, not behind a screen" },
       { title: "Made for the road", body: "One PDF, offline-ready, no app required" },

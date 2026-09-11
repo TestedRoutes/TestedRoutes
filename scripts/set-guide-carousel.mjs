@@ -100,6 +100,30 @@ const ALT = {
     "10.jpg": { alt: "A waterfall ribboning into a green pool in the rainforest" },
     "11.mp4": { alt: "Driving Upolu's coast road behind an island van" },
   },
+  // Seoul 2-day: founder's cull of 2026-09-11 (12 stills + 5 clips, numbered
+  // from 3 in his order); ALTs written from a contact sheet of the actual
+  // frames and clip mid-frames, never from the shortlist reasons.
+  "story-seoul-2-days": {
+    "1. cover.jpg": { alt: "Cover of the Seoul two-day weekend itinerary guide" },
+    "2. snapshot.jpg": { alt: "Route snapshot page: why this trip, at a glance, and the route map" },
+    "3.jpg": { alt: "The founder in a rented hanbok in front of the throne-hall gate at Gyeongbokgung" },
+    "4. clip.mp4": { alt: "The tiled roofs of Changdeokgung with the Seoul skyline behind, filmed on the route" },
+    "5. clip.mp4": { alt: "The crowd moving through Myeongdong under lit signs at dusk" },
+    "6. clip.mp4": { alt: "A wet palace courtyard at Gyeongbokgung, then the founder in hanbok under the gate" },
+    "7.jpg": { alt: "Gwanghwamun gate from the palace steps, visitors crossing the courtyard" },
+    "8. clip.mp4": { alt: "Myeongdong after dark: restaurant fronts, street food and the evening crowd" },
+    "9.jpg": { alt: "Tea with floating pine nuts and rice cakes on a wooden table in an Insadong teahouse" },
+    "10.jpg": { alt: "A Bukchon hanok lit at night, its terrace table under the tiled roof" },
+    "11. clip.mp4": { alt: "A lane of hanok walls in Bukchon with the towers of Seoul at the end of it" },
+    "12.jpg": { alt: "A tea tray at the hanok window, the city beyond the glass" },
+    "13.jpg": { alt: "Sunset over the Han River with the skyline in silhouette" },
+    "14.jpg": { alt: "The GangnamDol figure in sunglasses on K-Star Road, Gangnam" },
+    "15.jpg": { alt: "N Seoul Tower lit blue at night above the pines on Namsan" },
+    "16.jpg": { alt: "The Cheonggyecheon stream between office towers, a pink sculpture on the water" },
+    "17.jpg": { alt: "A teahouse table under calligraphy scrolls, tea and sweets, Insadong" },
+    "18.jpg": { alt: "Injeongjeon, the throne hall of Changdeokgung, on its stone terrace under a cloudy sky" },
+    "19.jpg": { alt: "Visitors in hanbok walking toward the inner gate of Gyeongbokgung" },
+  },
   "story-kuwait-2-days": {
     "1. cover.jpg": { alt: "Cover of the Kuwait two-day city and desert guide" },
     "2. snapshot.jpg": { alt: "Route snapshot page: why this trip, at a glance, and the photo spread" },
