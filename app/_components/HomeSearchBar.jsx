@@ -3,43 +3,51 @@
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
-import { HIDDEN_DESTINATION_SLUGS } from "../_lib/destinations";
+import { VISIBLE_DESTINATION_SLUGS } from "../_lib/destinations";
 import { langFromPathname, localePath } from "../_lib/locale";
 
 // Supports either uncontrolled (own state) or controlled (parent owns query
 // via `query` + `onQueryChange`). The controlled mode lets neighbour widgets
 // like CategoryStrip drive the search.
 
-const DESTINATION_TERMS = ["switzerland", "swiss", "zurich", "geneva", "lucerne", "interlaken"];
+// Swiss search terms → destination hub. The Switzerland hub is a country
+// page plus (planned) regional sub-hubs at /destinations/<region>; a query
+// naming a region lands on that region's page once it exists, and on the
+// country page until then. Order matters only where terms overlap - none
+// do today. The old filter page took ?length=&start= querystrings; the
+// editorial hub has no filters, so a search carries nothing but the path.
+const SWISS_HUB_TERMS = [
+  { terms: ["zurich", "zürich"], slug: "zurich" },
+  { terms: ["geneva"], slug: "geneva" },
+  { terms: ["lucerne", "luzern"], slug: "lucerne" },
+  { terms: ["interlaken"], slug: "interlaken" },
+  { terms: ["zermatt"], slug: "zermatt" },
+  { terms: ["lugano"], slug: "lugano" },
+  { terms: ["st. moritz", "st moritz"], slug: "st-moritz" },
+  { terms: ["appenzell"], slug: "appenzell" },
+];
+const SWISS_COUNTRY_TERMS = ["switzerland", "swiss"];
 
 function resolveDestinationSearch(query) {
-  // The Switzerland hub is hidden (_lib/destinations.js): deep-linking a
-  // search there would land on a redirect to the generic index, which reads
-  // as a broken search. Swiss queries fall through to guide matching instead
-  // — the Swiss guides all still exist. Un-hide the hub and this gate can go.
-  if (HIDDEN_DESTINATION_SLUGS.includes("switzerland")) return null;
   const normalized = query.toLowerCase().trim();
   if (!normalized) return null;
-  if (!DESTINATION_TERMS.some((term) => normalized.includes(term))) return null;
-
-  let length = null;
-  if (normalized.includes("weekend")) length = "weekend";
-  else if (normalized.includes("day trip") || normalized.includes("day trips") || normalized.includes("daytrip") || normalized.includes("1 day")) length = "daytrip";
-  else if (normalized.includes("expedition")) length = "expedition";
-  else if (normalized.includes("2 week") || normalized.includes("two week") || normalized.includes("14 day")) length = "2weeks";
-  else if (normalized.includes("5-7") || normalized.includes("week")) length = "week";
-
-  let start = null;
-  if (normalized.includes("zurich")) start = "zurich";
-  else if (normalized.includes("geneva")) start = "geneva";
-  else if (normalized.includes("lucerne")) start = "lucerne";
-  else if (normalized.includes("interlaken")) start = "interlaken";
-
-  const params = new URLSearchParams();
-  if (length) params.set("length", length);
-  if (start) params.set("start", start);
-  const qs = params.toString();
-  return `/destinations/switzerland${qs ? `?${qs}` : ""}`;
+  // A hub is only a valid landing when it is visible (_lib/destinations.js):
+  // a sub-hub that has no page yet, or a hub that is paused, must not be
+  // deep-linked from search - that reads as a broken search. Region first,
+  // then the country page, then nothing (the caller falls through to
+  // /guides?q=).
+  const region = SWISS_HUB_TERMS.find((entry) =>
+    entry.terms.some((term) => normalized.includes(term)),
+  );
+  if (region && VISIBLE_DESTINATION_SLUGS.includes(region.slug)) {
+    return `/destinations/${region.slug}`;
+  }
+  const isSwiss =
+    Boolean(region) || SWISS_COUNTRY_TERMS.some((term) => normalized.includes(term));
+  if (isSwiss && VISIBLE_DESTINATION_SLUGS.includes("switzerland")) {
+    return "/destinations/switzerland";
+  }
+  return null;
 }
 
 function matchGuides(guides, query) {

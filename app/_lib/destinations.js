@@ -13,14 +13,17 @@ export const DESTINATION_SLUGS = ["iceland", "seychelles", "tuvalu", "switzerlan
 
 /**
  * Hidden hubs — pages that exist in the repo but are paused from every
- * public surface (founder 2026-08-21: the Switzerland hub is outdated and
- * there is no time to fix it now). The page route 307-redirects to
- * /destinations (vercel.json), and every list that would link or index it
- * filters on VISIBLE_DESTINATION_SLUGS instead. To bring a hub back: remove
- * its slug here and delete its redirect from vercel.json — the page and its
- * card are untouched underneath.
+ * public surface. A slug listed here keeps its page and its index card in
+ * the tree, but every list that would link or index it (sitemap, llms-full,
+ * the /destinations grid, guide and story back-links, the search bar)
+ * filters on VISIBLE_DESTINATION_SLUGS instead. To hide a hub: add its slug
+ * here AND add a 307 from its route to /destinations in vercel.json, so a
+ * direct hit does not serve a page nothing links to. To bring it back:
+ * remove both in the same commit. Empty today; the mechanism stays because
+ * pausing a hub has been needed once already and is a two-line change when
+ * it is needed again.
  */
-export const HIDDEN_DESTINATION_SLUGS = ["switzerland"];
+export const HIDDEN_DESTINATION_SLUGS = [];
 export const VISIBLE_DESTINATION_SLUGS = DESTINATION_SLUGS.filter(
   (slug) => !HIDDEN_DESTINATION_SLUGS.includes(slug),
 );

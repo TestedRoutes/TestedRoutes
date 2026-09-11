@@ -38,6 +38,21 @@ const DESTINATIONS = [
     alt: "Svartifoss falling between dark basalt columns into a green gorge, Iceland",
   },
   {
+    name: "Switzerland",
+    href: "/destinations/switzerland",
+    region: "Europe · The Alps",
+    blurb:
+      "How many days you need and whether a rail pass pays – Zürich or Geneva as a base, car or no car, and the weekend hikes the trains are built for.",
+    // TODO(images): the founder has not culled Switzerland photographs yet.
+    // When the hero rendition lands at
+    // content/countries/switzerland/destination/generated/web/<hero>.jpg,
+    // import it here (the hub reuses its hero as the index card, playbook
+    // §11) and set alt. Until then the card renders the name on a grey
+    // frame, which the grid already handles.
+    image: null,
+    alt: null,
+  },
+  {
     name: "Seychelles",
     href: "/destinations/seychelles",
     region: "East & Southern Africa",
@@ -180,15 +195,6 @@ const DESTINATIONS = [
       "How many days you need and which end to stay on – the biggest easy sands in the Canaries, and the wildest beach of all behind a mountain wall.",
     image: fuerteventuraHero,
     alt: "The Cofete coast and the Jandía ridge from the mirador, Fuerteventura",
-  },
-  {
-    name: "Switzerland",
-    href: "/destinations/switzerland",
-    region: "Switzerland & the Alps",
-    blurb:
-      "Day trips, weekend trips and multi-day itineraries across the Alps, all doable without a tour.",
-    image: null,
-    alt: null,
   },
   {
     name: "South Korea",
