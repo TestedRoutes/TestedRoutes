@@ -103,9 +103,14 @@ export default async function HomePage() {
             band, still driving the grid over the same window events. The
             explicit key matters: server-created elements arrive frozen on
             the client, so React key-checks them among siblings. */}
+        {/* The home body is English whatever the path prefix ([lang]/page.jsx
+            renders this page), so the filter block gets the English dict.
+            Both halves go down: `t` for the strings the block shares with
+            /inspire, `tl` for the guide ones. */}
         <HomeBrowse
           cards={guideCards}
-          t={getDict("en").guideList}
+          t={getDict("en")}
+          tl={getDict("en").guideList}
           interlude={
             // Full-page-width Taupe Grey #5F524D band (founder 2026-08-08),
             // breaking out of the max-w container like the guides-page bands.
