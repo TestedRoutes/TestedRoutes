@@ -1,9 +1,10 @@
 import { prettyGeo } from "./continents";
 
 // Shared filter logic for the guide grids on home and /guides (founder
-// 2026-08-08: both pages carry the same four dropdowns — Country, Length,
-// Activity, Season). Options always derive from the cards actually passed
-// in, so a tier or season only appears once a guide carries it.
+// 2026-08-08: both pages carry the same four filters — Country, Length,
+// Activity, Season; since 2026-09-11 through the same GuideFilterBlock).
+// Options always derive from the cards actually passed in, so a tier or
+// season only appears once a guide carries it.
 
 // Length is the trip tier (the guide's journey category), shown in trip
 // order rather than alphabetically: Day Trip, Weekend, Week, Two weeks,
@@ -44,10 +45,11 @@ export function buildGuideFilterOptions(guides) {
 }
 
 // A filter value is "All" (empty string or empty array), one pick (a
-// string), or several OR-ed together (an array). /guides picks several —
-// its panels are tickboxes since 2026-09-04, and "Iceland or Norway" is
-// how a trip actually gets planned; home still passes single strings from
-// its selects, so both shapes stay supported.
+// string), or several OR-ed together (an array). The browse pages pick
+// several — their panels are tickboxes since 2026-09-04, and "Iceland or
+// Norway" is how a trip actually gets planned. The single-string shape
+// stays supported for a caller that only ever picks one (?q= links, a
+// future country page); it costs one line here and nothing elsewhere.
 const picked = (value, test) => {
   if (Array.isArray(value)) return !value.length || value.some(test);
   return !value || test(value);
