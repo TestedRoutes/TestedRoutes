@@ -20,6 +20,16 @@ dashboard: https://polar.sh/dashboard/testedroutes
   the future subscription launch.
 - `package.json` — removed `@polar-sh/nextjs` (SDK-direct everywhere now).
 
+## API version pin (2026-09-11)
+
+Every request is pinned to `Polar-Version: 2026-04` via `createPolarClient`
+in `app/_lib/polar.js` (the API routes and `sync-polar-products.mjs` share
+it). Polar rolls the default version quarterly — first on 2026-10-01 — and
+removes 2026-04 at the January 2027 release, so migrate to 2026-10 before
+then by bumping `POLAR_API_VERSION` and re-testing checkout, webhooks and
+the sync script. The webhook payload version is set on the endpoint in the
+Polar dashboard, not by this header.
+
 ## Env keys (names only — values live in `.env.local` and Vercel)
 
 - `POLAR_ACCESS_TOKEN` — production org token (products, checkouts,

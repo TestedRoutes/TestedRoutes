@@ -36,7 +36,7 @@
  *   NEXT_PUBLIC_SANITY_*      project, dataset
  *   SANITY_API_WRITE_TOKEN    Editor role
  */
-import { Polar } from "@polar-sh/sdk";
+import { createPolarClient } from "../app/_lib/polar.js";
 import { createClient } from "next-sanity";
 import crypto from "node:crypto";
 
@@ -83,8 +83,10 @@ const sanity = createClient({
   token: SANITY_TOKEN,
 });
 
+// Same factory as the API routes, so the script speaks the same pinned
+// Polar-Version as production (see POLAR_API_VERSION in app/_lib/polar.js).
 const polar = POLAR_TOKEN
-  ? new Polar({ accessToken: POLAR_TOKEN, server: POLAR_SERVER })
+  ? createPolarClient({ accessToken: POLAR_TOKEN, server: POLAR_SERVER })
   : null;
 
 /* ────────── helpers ────────── */
