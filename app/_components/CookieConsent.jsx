@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
+import * as Sentry from "@sentry/nextjs";
 import klaroConfig from "../_lib/klaroConfig";
 import "./klaroOverrides.css";
 
@@ -15,8 +16,35 @@ import "./klaroOverrides.css";
  * To open the modal manually (e.g. from a "Cookie settings" footer link):
  *   window.klaro?.show()
  */
+
+/**
+ * Can this document touch sessionStorage at all?
+ *
+ * Klaro's ConsentManager constructor always builds a sessionStorage-backed
+ * auxiliary store - `new SessionStorageStore(this)`, hard-coded, ignoring our
+ * `storageMethod: "cookie"`. Chrome throws on the bare `sessionStorage` lookup
+ * whenever site data is blocked outright (privacy-hardened profiles, headless
+ * crawlers) or the document has an opaque origin, so `klaro.setup()` died
+ * before the banner mounted and the rejection reached Sentry unhandled
+ * (SecurityError: "Failed to read the 'sessionStorage' property from
+ * 'Window': Access is denied for this document.", /inspire/:slug, 2026-09-07).
+ *
+ * Probing first costs one property read and skips the Klaro chunk (70 KB over
+ * the wire) for those visitors. Nothing is lost: a browser that refuses all
+ * site data can't store a consent choice, and no service here can set a
+ * cookie without one.
+ */
+function storageAvailable() {
+  try {
+    return Boolean(window.sessionStorage);
+  } catch {
+    return false;
+  }
+}
+
 export default function CookieConsent() {
   useEffect(() => {
+    if (!storageAvailable()) return;
     let mounted = true;
     (async () => {
       const klaro = await import("klaro/dist/klaro");
@@ -28,7 +56,14 @@ export default function CookieConsent() {
         window.klaro = klaro;
       }
       klaro.setup(klaroConfig);
-    })();
+    })().catch((err) => {
+      // A consent banner that fails to mount must not surface as an unhandled
+      // rejection: Sentry files those with no frames of ours and no way to act
+      // on them. Whatever still lands here is genuinely unexpected - a config
+      // the next Klaro version rejects, a chunk that never arrived - so report
+      // it as handled instead of swallowing it.
+      Sentry.captureException(err, { tags: { area: "cookie-consent" } });
+    });
     return () => {
       mounted = false;
     };

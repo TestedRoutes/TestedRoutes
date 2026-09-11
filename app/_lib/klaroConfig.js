@@ -167,6 +167,11 @@ const klaroConfig = {
           } else if (posthog.__loaded) {
             posthog.opt_out_capturing();
           }
+        }).catch(() => {
+          // Analytics is optional and this import fails for reasons we can do
+          // nothing about - an extension blocking the chunk, a navigation that
+          // killed the fetch. Swallowed on purpose: unhandled, it would reach
+          // Sentry as a stackless rejection; handled, it would still be noise.
         });
       },
     },
