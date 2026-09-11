@@ -44,9 +44,11 @@ import sunsetStepsUnderBanpoBridge from "../../../../content/countries/south-kor
  * is the strict one. The only execution-flavoured facts on the page are ones a
  * published inspire story already gives away (hanbok = free palace entry; the
  * meat-and-heater dinner; "do not come in July").
- * NOTE: the SKU is approved but NOT built, so no sentence may say "the guide
- * carries X" - mechanics are asserted to exist, unreferenced. When the SKU
- * publishes, do a pointer pass over the FAQ and the how-long section.
+ * POINTER PASS DONE 2026-09-11, the day the SKU published: the how-long
+ * weekend row, three FAQ answers and the closing-days tip now point at "the
+ * guide" for the mechanics they withhold. The pointers name that the guide
+ * carries a thing (the timing, the booking rule, the beds), never the thing
+ * itself - the budget above is unchanged.
  * HONESTY NOTE, and it shapes the page: the founder had four days, 25-29 July
  * 2024, a long weekend from Hong Kong booked around the Boryeong Mud Festival.
  * He saw Seoul (the old city on foot, a hanok night in Bukchon, a hanbok
@@ -85,7 +87,7 @@ const WHEN_TO_GO = [
 
 const HOW_LONG = [
   ["A layover", "Honestly, no. Incheon is a proper distance from the centre, and a short connection buys you the airport, a train and one palace with your bag. If you have a full day, it becomes a real visit – but plan it as a day, not a layover."],
-  ["A weekend", "The right size for Seoul's core, and the shape almost everyone should take first: the old city on foot with the palaces and the hanok villages, tea in Insadong, Myeongdong after dark, and the view from Namsan. The city is dense, the metro is superb, and two days used well feel like four. This is the trip the planned guide is built around."],
+  ["A weekend", "The right size for Seoul's core, and the shape almost everyone should take first: the old city on foot with the palaces and the hanok villages, tea in Insadong, Myeongdong after dark, and the view from Namsan. The city is dense, the metro is superb, and two days used well feel like four. This is the trip the guide is built around, both days timed end to end."],
   ["Four days", "The weekend plus one day at the DMZ, which is the day trip the whole peninsula is arranged around, and one more: in July, the mud festival on the coast; in any other month, a second Seoul day that goes slower. This is what we had, from Hong Kong, and it was enough to feel we had seen the city rather than changed trains in it."],
   ["A week or more", "Seoul plus the country: Busan and the south coast, Gyeongju's tombs and temples, Jeju by air, the mountains of Seoraksan. All of it is a fast train away, and none of it is something we have tested, so this page makes no promises about it. What we can say is that a long weekend does not do justice to South Korea – the country is compact and the next adventure is always only a few hours off."],
 ];
@@ -152,21 +154,21 @@ const COSTS = [
 
 const TIPS = [
   ["Wear a hanbok and the palaces are free.", "Rent the traditional dress near Gyeongbokgung and every grand palace lets you in without a ticket – and, more to the point, you stop being a person photographing the place and become, a little, part of it. In July the costume holds heat like a duvet. Do it anyway."],
-  ["The day of the week decides which palace you see.", "Gyeongbokgung closes on Tuesdays and the other palaces on Mondays, and the DMZ sites are shut on Mondays too. On a weekend-sized trip that one fact sets which day is the palace day and which is the border day before you look at anything else."],
+  ["Check the closing days before you fix the order.", "Gyeongbokgung closes on Tuesdays and the other palaces on Mondays, and the DMZ sites are shut on Mondays too. None of it rules out a weekend – it decides which day is the palace day and which is the border day, and the guide prints the closing day and the stand-in beside every stop that has one."],
   ["Do not come in July expecting anything but a sauna.", "Late June to August is monsoon, then heat that does not break at night. We did it because the mud festival only happens then, and it was still a good trip – but if the festival is not your reason, take October or April and get the same city in clear air."],
 ];
 
 const FAQ = [
   ["Is South Korea worth visiting?", "Yes, and Seoul alone justifies the flight. It is a capital where five royal palaces and whole neighbourhoods of traditional houses sit inside a modern mega-city, where the metro makes a weekend feel like four days, and where the food is cheap, communal and better than the raw-meat posters on the restaurant doors suggest. Add a border you can look across and, in July, a beach festival built entirely around mud, and it is one of the better long weekends in Asia. What we cannot vouch for is the rest of the country – Busan, Gyeongju, Jeju – because four days did not reach it."],
-  ["How many days do you need in Seoul?", "Two full days for the city itself, four if you add the DMZ and one more day trip. Two days used well cover the old city on foot – the palaces, the hanok villages, tea in Insadong – plus Myeongdong after dark and the view from Namsan. The third day is the DMZ, which the whole peninsula is arranged around. The fourth is the mud festival in July or a slower second city day in any other month. A week lets you leave Seoul, but that is a different trip and one we have not tested."],
-  ["Is a weekend in Seoul enough?", "For the city, yes – it is the right size for a first visit. The good things sit close together, the metro is excellent, and a weekend built on the old city and the evening city leaves you feeling you saw Seoul rather than changed trains in it. It is not enough for the DMZ as well; that costs a third day, and it is the day worth adding."],
+  ["How many days do you need in Seoul?", "Two full days for the city itself, four if you add the DMZ and one more day trip. Two days used well cover the old city on foot – the palaces, the hanok villages, tea in Insadong – plus Myeongdong after dark and the view from Namsan. The third day is the DMZ, which the whole peninsula is arranged around. The fourth is the mud festival in July or a slower second city day in any other month. A week lets you leave Seoul, but that is a different trip and one we have not tested. The two city days are what the guide times out, hour by hour."],
+  ["Is a weekend in Seoul enough?", "For the city, yes – it is the right size for a first visit. The good things sit close together, the metro is excellent, and a weekend built on the old city and the evening city leaves you feeling you saw Seoul rather than changed trains in it. It is not enough for the DMZ as well; that costs a third day, and it is the day worth adding. The guide plans exactly that weekend – both days, the closing days, the beds and the bookings in the order they have to be made."],
   ["When is the best time to visit Seoul?", "October, then April. Autumn gives clear, dry air and the palaces backed by red hillsides; spring gives cherry blossom and mild days but bigger crowds. Late June to August is monsoon followed by heavy, humid heat – we were there at the end of July and it was a sauna – and the only reason to accept it is the mud festival, which cannot be moved. Winter is cold, bright and empty, and a fair choice for a Seoul-only weekend."],
   ["Is Seoul safe?", "Yes – it is one of the safest big cities anywhere, with low violent crime and a metro you can ride at midnight without a thought. Check your government's travel advice before you book, as always, and you will find it says much the same. The North Korean border makes headlines and does not affect a visit; the DMZ is visited on controlled tours and the atmosphere there is tense on purpose."],
   ["Do you need a visa for South Korea?", "Most Western passports do not, for stays of up to 90 days. There is normally an online travel authorisation to apply for beforehand, the K-ETA, but Korea has suspended that requirement for visitors from 22 countries – including the UK, the US, Germany, France, Spain and most of western Europe – until the end of 2026, so at the time of writing you simply fly in. Check the current rule for your passport before booking, because the exemption has a date on it."],
   ["Is the DMZ worth visiting from Seoul?", "Yes, and it is the one thing here you cannot do on your own. You go on a guided tour, they are all much the same, and the day is a strange, heavy one: the Bridge of Freedom and a bullet-riddled train at Imjingak, a walk into a tunnel the North dug under the border, a hilltop with a clear look across the river at North Korea and its flag, and a gondola over the Imjin to a former American base. You are back in the centre by mid-afternoon, which is the oddest part. It is not a fun day out. It is one you do not forget."],
   ["Is Seoul expensive?", "Getting there is the one unavoidable cost: return flights from western Europe run about €600 booked ahead, and sale prices go well under that. That is what reaching Korea costs, not what the trip costs. On the ground Seoul is cheaper than Tokyo, Singapore or Hong Kong for a visitor – street food and barbecue are cheap, the metro is cheap, the palaces are almost free – and the bed is the only line with real range."],
   ["Is the Boryeong Mud Festival worth it?", "Yes, if a stupid, joyful day is your idea of a good one. It runs for about two weeks from late July at Daecheon Beach, a couple of hours south of Seoul on the west coast: mud pools, mud slides, a mud prison and team games, with the sea right there to rinse off in. Most of the crowd are teenagers and their parents, which changes nothing. It is not deep or cultural, it is a day trip from the capital, and it is the reason to accept July."],
-  ["Can you wear a hanbok at the palaces, and is it really free?", "Yes on both counts. Anyone properly dressed in hanbok – the full traditional dress, not a jacket over jeans – enters Seoul's grand palaces free, a policy that has run for years, and rental shops cluster around Gyeongbokgung's gate. The better reason to do it is how it feels: walking the throne-hall courtyard in costume moves you from watching the place to being in it. Emperor Pau-Lee, our founder's palace name for the afternoon, explored every corner."],
+  ["Can you wear a hanbok at the palaces, and is it really free?", "Yes on both counts. Anyone properly dressed in hanbok – the full traditional dress, not a jacket over jeans – enters Seoul's grand palaces free, a policy that has run for years, and rental shops cluster around Gyeongbokgung's gate. The better reason to do it is how it feels: walking the throne-hall courtyard in costume moves you from watching the place to being in it. Emperor Pau-Lee, our founder's palace name for the afternoon, explored every corner. Where to rent, when to arrive and how the free entry works are in the guide."],
   ["Does Google Maps work in South Korea?", "Not for directions – it will show you where things are but will not route you on foot or by car, for legal reasons that have nothing to do with you. Every local uses one of two Korean map apps instead, and they work in English well enough. Install one before you land; it is the single most useful thing on your phone in Seoul."],
 ];
 
@@ -176,13 +178,16 @@ function SectionHeading({ children }) {
   );
 }
 
-// The Seoul 2-day SKU is approved but not built. The fetch takes all guides so
-// that the SKU appears as its own card with no code change the day it
-// publishes; until then the guide sections and the BuyBox simply do not render.
-// When it does publish, add its slug here with a blurb that sells what this
-// page withheld (the day plan, the palace-day/border-day logic, the beds, the
-// DMZ operator choice, the hanbok mechanics).
-const GUIDE_BLURBS = {};
+// Card blurbs per SKU, keyed by guide slug. Scope boundary (destination
+// playbook §7): each blurb sells what this page deliberately withholds -
+// mechanics are asserted to exist, never demonstrated. No fares, clock
+// times, booking channels or within-day sequencing. Unknown future SKUs
+// fall back to the guide's own subtitle. The fetch takes all guides, so a
+// second Korea SKU appears as its own card with no code change.
+const GUIDE_BLURBS = {
+  "seoul-2-days":
+    "Everything this page deliberately leaves out: both days hour by hour, the Secret Garden booking rule, the hanbok mechanics and the Bukchon curfew, nine beds and nine tables each with a QR link, a three-tier budget for two nights, and the companion Google map with every pin.",
+};
 
 async function fetchSouthKoreaContent() {
   try {
