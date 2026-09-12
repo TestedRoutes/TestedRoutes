@@ -38,6 +38,7 @@ const es = {
       { eyebrow: "Suiza", title: "Alpine Passes Trail", blurb: "Travesía de refugio en refugio" },
       { eyebrow: "Nueva Zelanda", title: "Isla Sur de NZ", blurb: "Roadtrip de 10 días" },
       { eyebrow: "Asia Central", title: "Mongol Rally", blurb: "Rally por tierra" },
+      { eyebrow: "África Occidental", title: "Africa Rally", blurb: "Ruta overland de varios años" },
       { eyebrow: "Todo el mundo", title: "7 Cumbres", blurb: "Proyecto de escalada" },
     ],
     heading: "Viajes, no solo publicaciones",

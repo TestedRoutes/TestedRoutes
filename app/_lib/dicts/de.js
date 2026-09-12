@@ -38,6 +38,7 @@ const de = {
       { eyebrow: "Schweiz", title: "Alpine Passes Trail", blurb: "Traverse von Hütte zu Hütte" },
       { eyebrow: "Neuseeland", title: "Südinsel Neuseelands", blurb: "10-Tage-Roadtrip" },
       { eyebrow: "Zentralasien", title: "Mongol Rally", blurb: "Overland-Rallye" },
+      { eyebrow: "Westafrika", title: "Africa Rally", blurb: "Mehrjährige Overland-Fahrt" },
       { eyebrow: "Weltweit", title: "7 Summits", blurb: "Bergsteigerprojekt" },
     ],
     heading: "Reisen, nicht nur Posts",
