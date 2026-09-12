@@ -16,6 +16,7 @@ import guineaHero from "../../../content/countries/guinea/destination/generated/
 import guineaBissauHero from "../../../content/countries/guinea-bissau/destination/generated/web/colonial-street-palms-bissau-velho.jpg";
 import ghanaHero from "../../../content/countries/ghana/destination/generated/web/cape-coast-town-and-harbour-from-the-fort.jpg";
 import togoHero from "../../../content/countries/togo/destination/generated/web/akodessawa-table-of-skulls-and-skins.jpg";
+import beninHero from "../../../content/countries/benin/destination/generated/web/airliner-on-the-sand-cotonou.jpg";
 import canaryIslandsHero from "../../../content/countries/canary-islands/destination/generated/web/papagayo-first-evening-sunset.jpg";
 import tenerifeHero from "../../../content/countries/canary-islands/destination/generated/web/teide-cone-clear-morning.jpg";
 import granCanariaHero from "../../../content/countries/canary-islands/destination/generated/web/mirador-signpost-at-dusk.jpg";
@@ -186,30 +187,15 @@ const DESTINATIONS = [
     image: togoHero,
     alt: "A table of dried animal skulls, skins and bones under a thatched roof at Akodessawa fetish market, Lomé, Togo",
   },
-  /*
-   * BENIN - card BLOCKED on the founder's media cull (Ghana's and Togo's landed
-   * 2026-09-12; their cards are live above). The page exists
-   * (app/(site)/destinations/benin/page.jsx) and its slug goes into
-   * DESTINATION_SLUGS in the same commit as the card. A card needs a hero
-   * rendition, and media selection v9 forbids producing one before he has
-   * culled - he substitutes frames and adds his own. Candidates are staged at
-   * content/countries/benin/destination/_shortlist-run1/.
-   *
-   * When the cull lands: add the static import at the top of this file from
-   * content/countries/benin/destination/generated/web/<frame>.jpg, then paste
-   * the entry in here directly after Togo. Copy is written and agreed; only
-   * image and alt are open.
-   *
-   * {
-   *   name: "Benin",
-   *   href: "/destinations/benin",
-   *   region: "North & West Africa · The Gulf of Guinea",
-   *   blurb:
-   *     "Is it worth it and when is the voodoo festival – a town of 37,000 built on a lagoon, the door the slave ships loaded from, and two days that beat the fortnight around them.",
-   *   image: beninHero,
-   *   alt: "<written at cull, from the chosen frame>",
-   * },
-   */
+  {
+    name: "Benin",
+    href: "/destinations/benin",
+    region: "North & West Africa · The Gulf of Guinea",
+    blurb:
+      "Is it worth it and when is the voodoo festival – a town of 37,000 built on a lagoon, the door the slave ships loaded from, and two days that beat the fortnight around them.",
+    image: beninHero,
+    alt: "A three-engined airliner parked on the sand with a boarding staircase at its door, palms behind, Cotonou, Benin",
+  },
   {
     name: "Canary Islands",
     href: "/destinations/canary-islands",
