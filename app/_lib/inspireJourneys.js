@@ -15,6 +15,7 @@ import alpinePassesTrail from "../../content/about/Alpine passes trail.jpg";
 import milfordSound from "../../content/about/Milford Sound - NZ 2025.jpg";
 import mongolRally from "../../content/about/Mongol rally.jpg";
 import aconcagua from "../../content/about/7_Summits_Aconcagua 2017.jpg";
+import africaRally from "../../content/about/Africa Rally - Sierra Leone 2024.jpg";
 
 export const INSPIRE_JOURNEYS = [
   {
@@ -29,6 +30,40 @@ export const INSPIRE_JOURNEYS = [
       countries: ["Kazakhstan", "Kyrgyzstan", "Tajikistan", "Turkmenistan", "Uzbekistan"],
     },
     image: mongolRally,
+  },
+  // One multi-year overland drive down the west coast of Africa, not a
+  // collection: the 2023 leg ran Gibraltar to Guinea, the 2024 leg Guinea to
+  // Benin, and later legs carry on toward the Congo. Every inspire story
+  // filed under these nine countries came off it - checked folder by folder
+  // on 2026-09-12, all 2023/2024-prefixed. MOROCCO IS DELIBERATELY ABSENT:
+  // one of its sixteen stories is rally material and the other fifteen are
+  // not, so including it would drag an unrelated country's library in here.
+  // "Africa Rally" is in the list because the leg-anchor stories are filed
+  // under that as their country, and journeyMatches tests card.country.
+  // Country strings are the Sanity destination docs' own `country` values -
+  // note "Gambia", not "The Gambia".
+  //
+  // This card is also the STRUCTURAL replacement for the rally-link sentence
+  // that used to close every story (founder ruling 2026-09-12, it read as a
+  // tic). The cluster is carried by this card, the hubs' story lists and the
+  // leg anchors' own links - not by a line of boilerplate in fifteen pieces.
+  {
+    key: "africa-rally",
+    match: {
+      countries: [
+        "Western Sahara",
+        "Mauritania",
+        "Senegal",
+        "Gambia",
+        "Guinea-Bissau",
+        "Guinea",
+        "Ghana",
+        "Togo",
+        "Benin",
+        "Africa Rally",
+      ],
+    },
+    image: africaRally,
   },
   { key: "seven-summits", match: { countries: ["7 Summits"] }, image: aconcagua },
 ];

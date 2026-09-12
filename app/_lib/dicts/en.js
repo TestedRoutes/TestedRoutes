@@ -38,6 +38,7 @@ const en = {
       { eyebrow: "Switzerland", title: "Alpine Passes Trail", blurb: "Hut-to-hut traverse" },
       { eyebrow: "New Zealand", title: "NZ South Island", blurb: "10-day roadtrip" },
       { eyebrow: "Central Asia", title: "Mongol Rally", blurb: "Overland rally" },
+      { eyebrow: "West Africa", title: "Africa Rally", blurb: "Multi-year overland drive" },
       { eyebrow: "Worldwide", title: "7 Summits", blurb: "Climbing project" },
     ],
     heading: "Journeys, not just posts",
