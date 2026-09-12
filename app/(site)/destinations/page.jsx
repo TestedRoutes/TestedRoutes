@@ -15,6 +15,7 @@ import senegalHero from "../../../content/countries/senegal/destination/generate
 import guineaHero from "../../../content/countries/guinea/destination/generated/web/village-and-mango-tree-at-dawn.jpg";
 import guineaBissauHero from "../../../content/countries/guinea-bissau/destination/generated/web/colonial-street-palms-bissau-velho.jpg";
 import ghanaHero from "../../../content/countries/ghana/destination/generated/web/cape-coast-town-and-harbour-from-the-fort.jpg";
+import togoHero from "../../../content/countries/togo/destination/generated/web/akodessawa-table-of-skulls-and-skins.jpg";
 import canaryIslandsHero from "../../../content/countries/canary-islands/destination/generated/web/papagayo-first-evening-sunset.jpg";
 import tenerifeHero from "../../../content/countries/canary-islands/destination/generated/web/teide-cone-clear-morning.jpg";
 import granCanariaHero from "../../../content/countries/canary-islands/destination/generated/web/mirador-signpost-at-dusk.jpg";
@@ -176,29 +177,29 @@ const DESTINATIONS = [
     image: ghanaHero,
     alt: "Cape Coast town and its harbour full of painted fishing boats, seen from the castle above, Ghana",
   },
+  {
+    name: "Togo",
+    href: "/destinations/togo",
+    region: "North & West Africa · The Gulf of Guinea",
+    blurb:
+      "Why one day is the honest answer – a capital on the border, the largest fetish market in the world, and a boat with no engine poled across a lake.",
+    image: togoHero,
+    alt: "A table of dried animal skulls, skins and bones under a thatched roof at Akodessawa fetish market, Lomé, Togo",
+  },
   /*
-   * TOGO and BENIN - cards BLOCKED on the founder's media cull (Ghana's landed
-   * 2026-09-12 and its card is live above). The two pages exist
-   * (app/(site)/destinations/{togo,benin}/page.jsx) and their slugs go into
-   * DESTINATION_SLUGS in the same commit as each card. A card needs a hero
-   * rendition, and media selection v8 forbids producing one before he has
-   * culled - he substitutes frames and adds his own. Candidates are staged per
-   * country at content/countries/<c>/destination/_shortlist-run1/.
+   * BENIN - card BLOCKED on the founder's media cull (Ghana's and Togo's landed
+   * 2026-09-12; their cards are live above). The page exists
+   * (app/(site)/destinations/benin/page.jsx) and its slug goes into
+   * DESTINATION_SLUGS in the same commit as the card. A card needs a hero
+   * rendition, and media selection v9 forbids producing one before he has
+   * culled - he substitutes frames and adds his own. Candidates are staged at
+   * content/countries/benin/destination/_shortlist-run1/.
    *
-   * When each cull lands: add the static import at the top of this file from
-   * content/countries/<c>/destination/generated/web/<frame>.jpg, then paste
-   * the entry in here directly after Ghana. Copy is written and agreed; only
+   * When the cull lands: add the static import at the top of this file from
+   * content/countries/benin/destination/generated/web/<frame>.jpg, then paste
+   * the entry in here directly after Togo. Copy is written and agreed; only
    * image and alt are open.
    *
-   * {
-   *   name: "Togo",
-   *   href: "/destinations/togo",
-   *   region: "North & West Africa · The Gulf of Guinea",
-   *   blurb:
-   *     "Why one day is the honest answer – a capital on the border, the largest fetish market in the world, and a boat with no engine poled across a lake.",
-   *   image: togoHero,
-   *   alt: "<written at cull, from the chosen frame>",
-   * },
    * {
    *   name: "Benin",
    *   href: "/destinations/benin",
