@@ -111,7 +111,7 @@ def sweep(slugs):
     results = {}
     for slug in list(slugs) + [CONTROL_SLUG]:
         slug = slug.replace("\r", "").strip()      # a \r makes every URL wrong
-        if not slug:
+        if not slug or slug.startswith("f-"):        # f-<slug> is the /f/ corrections form, not a /go/ alias (s12.7)
             continue
         try:
             url = subprocess.run(
@@ -192,7 +192,11 @@ def main():
         seen_pos[(q["slide"], q["top"], q["left"])].append(q["alias"])
         pm = payload_matches(q["blob"], q["alias"], a.qr_dir)
         hl = q["hyperlink"]
-        hm = bool(hl) and ("go/" + q["alias"]) in hl
+        # The corrections QR (playbook s12.7) encodes testedroutes.com/f/<guide-slug>; the pool
+        # stores it as f-<guide-slug>.png, so the alias-in-hyperlink test needs the /f/ form.
+        alias = q["alias"]
+        expect = ("/f/" + alias[2:]) if alias.startswith("f-") else ("go/" + alias)
+        hm = bool(hl) and expect in hl
         trace.append({"check": "qr", "slide": q["slide"], "alias": q["alias"],
                       "payload_matches": pm, "hyperlink": hl,
                       "hyperlink_matches": hm,
