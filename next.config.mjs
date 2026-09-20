@@ -25,7 +25,11 @@ const nextConfig = {
   // reader page would work locally and 404 in production. Remove when the
   // reader reads from Postgres.
   outputFileTracingIncludes: {
-    "/reader/**": ["./content/countries/*/places.yaml", "./content/countries/*/guides/*/sku.yaml"],
+    "/reader/**": [
+      "./content/countries/*/country.yaml",
+      "./content/countries/*/places.yaml",
+      "./content/countries/*/guides/*/sku.yaml",
+    ],
   },
   images: {
     remotePatterns: [

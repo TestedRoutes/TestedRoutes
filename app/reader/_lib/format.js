@@ -23,9 +23,12 @@ export function dayChip(page) {
   return page.dayFrom === page.dayTo ? String(page.dayFrom) : `${page.dayFrom}–${page.dayTo}`;
 }
 
-/** Path of a day page. Multi-day pages are addressed by their first day. */
-export function dayHref(slug, page) {
-  return `/reader/${slug}/day/${page.dayFrom}`;
+/**
+ * Path of a day page inside the country reader. Multi-day pages are
+ * addressed by their first day.
+ */
+export function dayHref(country, slug, page) {
+  return `/reader/${country}/itineraries/${slug}/day/${page.dayFrom}`;
 }
 
 /** The day page that covers calendar day n, or null. */
@@ -88,4 +91,76 @@ export function groupBy(items, keyFn) {
     out.get(k).push(item);
   }
   return [...out.entries()];
+}
+
+/** Spots vocabulary → label and a short icon glyph for cards and pins. */
+export const CATEGORY = {
+  sight: { label: "Sightseeing", glyph: "◎" },
+  stay: { label: "Stay", glyph: "⌂" },
+  food: { label: "Food", glyph: "✦" },
+  transport: { label: "Transport", glyph: "➤" },
+  dive: { label: "Dive", glyph: "◈" },
+  snorkel: { label: "Snorkel", glyph: "≈" },
+  walk: { label: "Walk", glyph: "↟" },
+};
+
+export function categoryLabel(key) {
+  return CATEGORY[key]?.label || (key ? String(key) : "Place");
+}
+
+/** Path helpers for the country-scoped reader. */
+export const readerPaths = {
+  country: (c) => `/reader/${c}`,
+  spots: (c) => `/reader/${c}/spots`,
+  spot: (c, pin) => `/reader/${c}/spots/${pin}`,
+  itineraries: (c) => `/reader/${c}/itineraries`,
+  itinerary: (c, sku) => `/reader/${c}/itineraries/${sku}`,
+  day: (c, sku, n) => `/reader/${c}/itineraries/${sku}/day/${n}`,
+  bookings: (c) => `/reader/${c}/bookings`,
+  pack: (c) => `/reader/${c}/pack`,
+  tips: (c) => `/reader/${c}/tips`,
+};
+
+/** The route pins of a day in day/order sequence, from the SKU's join rows. */
+export function routePinsForDay(sku, dayNumber) {
+  return sku.skuPlaces
+    .filter((j) => j.role === "route" && j.dayNumber === dayNumber)
+    .sort((a, b) => (a.orderInDay ?? 99) - (b.orderInDay ?? 99))
+    .map((j) => j.pinId);
+}
+
+/** Every route pin of the SKU in day/order sequence (the trip line). */
+export function routePinsInOrder(sku) {
+  return sku.skuPlaces
+    .filter((j) => j.role === "route" && j.dayNumber != null)
+    .sort((a, b) => a.dayNumber - b.dayNumber || (a.orderInDay ?? 99) - (b.orderInDay ?? 99))
+    .map((j) => j.pinId);
+}
+
+/** Pick the amount for a currency from a country price list, EUR fallback. */
+export function pickPrice(prices, currency) {
+  if (!Array.isArray(prices) || !prices.length) return null;
+  return prices.find((p) => p.currency === currency) || prices.find((p) => p.currency === "EUR") || prices[0];
+}
+
+/**
+ * Price label, the same rule as the sales pages (sanityStory's private
+ * formatPrice). Copied rather than imported: that module pulls in the
+ * Sanity client at import time, which must never be a dependency of the
+ * reader (it renders from the repo YAML and has to work with no Sanity env).
+ */
+export function formatPrice(amount, currency) {
+  const n = Number(amount);
+  if (!Number.isFinite(n)) return "";
+  const symbol = currency === "USD" ? "$" : currency === "GBP" ? "£" : currency === "CHF" ? "CHF " : "€";
+  const rounded = n % 1 === 0 ? n.toString() : n.toFixed(2);
+  return `${symbol}${rounded}`;
+}
+
+/** "2026-08-21" → "21 August 2026" for the kept-current line. */
+export function longDate(iso) {
+  if (!iso) return null;
+  const d = new Date(`${iso}T00:00:00Z`);
+  if (Number.isNaN(d.getTime())) return String(iso);
+  return d.toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric", timeZone: "UTC" });
 }

@@ -36,6 +36,7 @@ content/countries/**
 # reads (places.yaml per country, sku.yaml per guide) is small text and is
 # the authoring truth for the paid layer, so it is versioned here. The
 # photos, PDFs and workbooks beside them stay ignored.
+!content/countries/*/country.yaml
 !content/countries/*/places.yaml
 !content/countries/*/guides/*/sku.yaml
 

@@ -1,0 +1,61 @@
+# Fiji country guide — the storefront and reader frame for every Fiji route.
+#
+# One file per country, next to places.yaml. It carries what no single
+# sku.yaml can: the country-level title (search intent: "Fiji Itinerary"),
+# the creator line, the list of routes through the shared place pool in
+# display order, the free sample layer, the price of the country guide, and
+# the last-verified date the reader shows as "kept current".
+#
+# Routes reference sku.yaml files by slug. A route whose sku.yaml does not
+# exist yet renders as "coming" on the chooser — listed, never linked — so
+# the page is honest about the catalogue while the founder's extraction
+# produces the remaining decks. `free: true` marks the sample layer: the
+# founder's decision (2026-09-20) is that the 1-day Fiji route is free, and
+# until its sku.yaml exists the 14-day's complete Day 2 stands in as the
+# open sample (see `sample:`).
+#
+# Copy sources: the Fiji destination page (app/(site)/destinations/fiji,
+# destination playbook v5) for the who-for lines and the intro, the 14-day
+# data module for the tested-when facts. Nothing is written from memory.
+country: fj
+slug: fiji
+title: Fiji Itinerary
+subtitle: Every route I have tested, on one map. AI has not been there. I have.
+creator_line: Tested on the ground by Paulius Pikelis · December into the New Year · Nadi, the Yasawas and Taveuni
+intro: >-
+  Whether Fiji is worth it, which islands to pick, how many days you need,
+  when to go and what it costs – tested on the ground from Nadi to the
+  Yasawas and Taveuni.
+hero_photo: yasawa-ridge-reef.jpg
+hero_alt: Looking down over a green Yasawa island ridge to turquoise reef water and an offshore islet, Fiji
+verified: 2026-08-21
+# The country guide's price. Proposed at the 14-day route's rung (the plan's
+# 2-week ladder, 2026-08-16) until the founder sets it; the buy box shows
+# the visitor's currency, EUR as the fallback.
+price:
+  - { currency: EUR, amount: 49 }
+  - { currency: CHF, amount: 49 }
+  - { currency: GBP, amount: 49 }
+  - { currency: USD, amount: 59 }
+routes:
+  - slug: fiji-nadi-1-day
+    title: Fiji 1-Day Itinerary
+    days: 1
+    who: A single day between flights is genuinely usable, because Nadi is the region's transit hub.
+    free: true
+  - slug: fiji-yasawa-7-days
+    title: Fiji 7-Day Itinerary
+    days: 7
+    who: A week covers the Yasawa islands properly, on the one daily catamaran.
+  - slug: fiji-10-days
+    title: Fiji 10-Day Itinerary
+    days: 10
+    who: Ten days adds Taveuni and its reef, and is the most-searched length for a reason.
+  - slug: fiji-honeymoon-14-days
+    title: Fiji 14-Day Honeymoon Itinerary
+    days: 14
+    who: The honeymoon shape – the islands at two nights each so no stop is rushed, then Taveuni given the days its reef deserves.
+sample:
+  route: fiji-honeymoon-14-days
+  day: 2
+  pins: [FJ-P01, FJ-P02, FJ-P03, FJ-P04]

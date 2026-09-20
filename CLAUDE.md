@@ -130,34 +130,60 @@ mistake.
 
 ## Gated guide reader — prototype (2026-09-20)
 
-`app/reader/<slug>` renders a purchased guide as web pages (Overview, Day
-timeline, Bookings, Pack, Guide) from the structured content. It is a
-**prototype ahead of any billing or public-site change** (founder decision
-2026-09-20: see a working reader on a phone first), so three things are
-deliberately provisional:
+`app/reader/<country>` is the country guide: the storefront when ungated,
+the reader when unlocked. Fiji only. Built **ahead of any billing or
+public-site change** (founder decision 2026-09-20: a working prototype
+first, then scope it down and measure), so the seams are deliberate:
 
-- **Gate = one preview key**, not purchase tokens: `READER_PREVIEW_SECRET`
-  in the environment, entered once on the gate page (or
-  `/reader/unlock?key=…&to=/reader/<slug>`), held as an HMAC in an httpOnly
-  cookie scoped to `/reader`. `app/reader/_lib/access.js` is the swap point
-  for the live `requireGuideAccess` (token → purchase doc → slug). Pages
-  never check access; the `[slug]/layout.jsx` does, once.
-- **Data = repo YAML, no database**: `app/reader/_lib/loadReaderSku.js`
-  calls `db/skuFromYaml.js`, the builder factored out of `publish-sku.mjs`
-  (its `--json` output is byte-identical before and after). Going live is
-  one import change to `db/loadSku.js`; both return the canonical shape
-  `check:sku` enforces. `outputFileTracingIncludes` in `next.config.mjs`
-  ships the YAML with the Vercel function — remove it with the swap.
-- **Fiji content is a hand-seeded subset**: Day 2 complete, Day 1 partial,
-  the other day pages title-only; bookings, pack and stays real. Both files
-  say so in their headers. `places.yaml` pins are `FJ-P##` (provisional) —
-  the real `npm run import:master` + `extract_fiji_deck.py` run on the
-  founder's machine replaces both files wholesale and remaps the pins.
+- **Structure.** Two storefront shapes on one content model, chosen per
+  country: a *country guide* (Rexby shape: one map, every tested place, the
+  routes through it; Fiji, Kuwait, UAE and the other small catalogues) and a
+  *catalogue of guides* (GetYourGuide shape, each guide priced; Switzerland,
+  later Iceland). Only the country guide is built. Switzerland follows once
+  Fiji shows checkout clicks.
+- **Titles follow search intent.** Country page "Fiji Itinerary", route
+  "Fiji 14-Day Honeymoon Itinerary"; the brand claim lives in the subtitle.
+  The 14-day data module carries the new title; `check:guides` shows drift
+  until the founder republishes locally, which is the intended signal.
+- **Content.** `content/countries/<c>/country.yaml` (title, creator line,
+  routes in order, `free: true` on the sample route, price list, verified
+  date, sample day and pins) + `places.yaml` (with `photo_ref`,
+  `attributes`, a normalised `category`) + `guides/<sku>/sku.yaml`. Builders:
+  `db/skuFromYaml.js`, `db/countryFromYaml.js`; the DB loader mirrors the
+  same shape (`attributes` is part of the hash, `photoRef` is scrubbed by
+  `check:sku`). The Fiji files are a hand-seeded subset (headers say what is
+  provisional; `FJ-P##` pins are remapped when the founder's import runs).
+  `.gitignore` re-includes exactly these three YAML shapes.
+- **Gate.** One preview key (`READER_PREVIEW_SECRET`) held as an HMAC in an
+  httpOnly cookie scoped to `/reader`; `app/reader/_lib/access.js` is the
+  swap point for the purchase-token `requireGuideAccess`. Ungated visitors
+  get the storefront on every URL (a 200, never a 403). Legacy
+  `/reader/<sku>` URLs redirect into the country reader.
+- **Data path.** `app/reader/_lib/loadReaderSku.js` wraps the YAML builders;
+  swapping to `db/loadSku.js` is that file only. `outputFileTracingIncludes`
+  in `next.config.mjs` ships the YAML with the Vercel function; remove it
+  with the swap. The reader never imports the Sanity client at module
+  level (it must render with no Sanity env); the route cards' prices and
+  Polar checkout links come from a lazy `loadGuideBySlug` and degrade to
+  nothing without it.
+- **Measurement.** Real price, real "Get the guide": until a Polar product
+  exists for the country guide, the click posts to `/api/reader/interest`
+  (Beehiiv `interest_country`, a Resend note to the founder who sends the
+  access link by hand, an anonymous `reader_buy_click`). Route cards buy
+  through the existing `/api/checkout` (`checkout_started`). Every reader
+  page captures an anonymous `reader_page_view` server-side
+  (`app/reader/_lib/track.js`); client PostHog never initialises here
+  because the cookie banner is suppressed on `/reader`.
+- **Affiliate slots** (`AffiliateSlot`) on place cards, stays, bookings and
+  activities all go through `/go/<alias>`; an empty alias renders nothing.
+  The seed has no aliases: they are filled from the live `affiliateLink`
+  docs (the import script's check), never invented.
+- **Not in this round:** saved places / localStorage, a country-wide Map
+  tab (the storefront preview and the per-day and per-route maps exist),
+  the Switzerland catalogue, the full Fiji extraction, Postgres, print.
 
-`.gitignore` re-includes exactly `content/countries/*/places.yaml` and
-`content/countries/*/guides/*/sku.yaml`; everything else under
-`content/countries` stays out of git. `/reader/` is disallowed in robots and
-every reader page is `noindex` + `no-store`; the gate is the protection.
+`/reader/` is disallowed in robots and every reader page is `noindex` +
+`no-store`; the gate is the protection.
 
 ## Conventions
 

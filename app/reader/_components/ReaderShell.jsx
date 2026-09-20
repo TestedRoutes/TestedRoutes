@@ -1,32 +1,26 @@
-import Link from "next/link";
-import ReaderTabs from "./ReaderTabs";
+import ReaderRail from "./ReaderRail";
 
 /**
- * The reader chrome: a sticky top bar with the guide's eyebrow and the four
- * section tabs, then the page. Phone-first (the canvas direction is "D on
- * the phone"); on wider screens the same column sits centred at a reading
- * width rather than stretching into a desktop layout — the desktop reader
- * is its own design decision, not a media query.
+ * The gated reader chrome: rail on the left at laptop width, tab bar on the
+ * phone, the page beside or below it. Laptop first (founder, 2026-09-20:
+ * build for the website on laptops, then simplify to mobile), so the
+ * desktop layout is the design and the phone one is its collapse, not the
+ * other way round.
  */
-export default function ReaderShell({ sku, children }) {
-  const base = `/reader/${sku.sku.slug}`;
+export default function ReaderShell({ country, children }) {
+  const c = country.country;
   return (
-    <div className="min-h-screen">
-      <header className="sticky top-0 z-20 border-b border-brand-line bg-brand-parchment/95 backdrop-blur">
-        <div className="mx-auto w-full max-w-2xl px-4 pt-3">
-          <div className="flex items-baseline justify-between gap-3">
-            <Link
-              href={base}
-              className="truncate font-sans text-[11px] font-bold uppercase tracking-[0.16em] text-brand-terracotta"
-            >
-              {sku.sku.title.replace(":", " ·")}
-            </Link>
-            <span className="shrink-0 font-script text-sm text-slate-500">prototype</span>
-          </div>
-          <ReaderTabs slug={sku.sku.slug} />
-        </div>
-      </header>
-      <main className="mx-auto w-full max-w-2xl px-4 pb-24 pt-5">{children}</main>
+    <div className="min-h-screen md:flex">
+      <ReaderRail
+        country={c.slug}
+        title={c.title}
+        subtitle={c.subtitle}
+        placeCount={country.places.length}
+        verified={c.verified}
+      />
+      <main className="w-full min-w-0 flex-1 px-4 pb-24 pt-5 md:px-10 md:pt-8">
+        <div className="mx-auto w-full max-w-5xl">{children}</div>
+      </main>
     </div>
   );
 }

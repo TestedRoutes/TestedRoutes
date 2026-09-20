@@ -16,7 +16,7 @@ export const dynamic = "force-dynamic";
 
 function safeTarget(to) {
   const t = String(to || "");
-  return /^\/reader\/[a-z0-9-]+(\/[a-z0-9\/-]*)?$/.test(t) ? t : "/reader";
+  return /^\/reader\/[a-z0-9-]+(\/[A-Za-z0-9\/-]*)?$/.test(t) ? t : "/reader";
 }
 
 export async function GET(request) {

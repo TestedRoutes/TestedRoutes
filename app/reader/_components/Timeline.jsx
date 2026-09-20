@@ -1,4 +1,5 @@
-import { directionsHref, stopNumbers } from "../_lib/format";
+import Link from "next/link";
+import { directionsHref, readerPaths, stopNumbers } from "../_lib/format";
 
 /**
  * The executable day: an hour rail with timed moves, never a stop list.
@@ -7,7 +8,7 @@ import { directionsHref, stopNumbers } from "../_lib/format";
  * moves carry their stop number in Brandy so the numbers match the day map;
  * legs and meals hang off the rail unnumbered.
  */
-export default function Timeline({ page, places }) {
+export default function Timeline({ country, page, places }) {
   const numbers = stopNumbers(page);
   return (
     <ol className="relative ml-[3.75rem] border-l border-brand-ink/15">
@@ -32,7 +33,13 @@ export default function Timeline({ page, places }) {
               {n || ""}
             </span>
             <h3 className={"font-sans text-[15px] font-bold leading-tight " + (n ? "pl-1" : "")}>
-              {slot.title}
+              {place && country ? (
+                <Link href={readerPaths.spot(country, place.pinId)} className="hover:text-brand-terracotta">
+                  {slot.title}
+                </Link>
+              ) : (
+                slot.title
+              )}
             </h3>
             {slot.body ? (
               <p className={"mt-1 text-[15px] leading-snug text-slate-700 " + (n ? "pl-1" : "")}>

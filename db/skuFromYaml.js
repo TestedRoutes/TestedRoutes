@@ -253,6 +253,12 @@ export function buildCanonicalSku(sku, pool) {
       mapUrl: p.map_url ?? null,
       category: p.category ?? null,
       goSlug: p.go_slug ?? null,
+      // The practical facts a place card shows (access, time_needed,
+      // cost_band, season, parking, road) — part of what the buyer sees, so
+      // part of the hash. photoRef rides along for the reader but is scrubbed
+      // by check-sku: the per-place photo pass owns it, not this file.
+      attributes: p.attributes ?? null,
+      photoRef: p.photo_ref ?? null,
     };
   });
 
