@@ -6,15 +6,12 @@ import { loadReaderCountry } from "../../../../_lib/loadReaderSku";
 import { trackReaderView } from "../../../../_lib/track";
 import { photoFor } from "../../../../_lib/photos";
 import { categoryLabel, directionsHref, readerPaths, distanceKm, kmLabel } from "../../../../_lib/format";
-import { pinsForMap } from "../../../../_lib/serialise";
+import { pinsForMap, routesForPlace } from "../../../../_lib/serialise";
 import PlaceFacts from "../../../../_components/PlaceFacts";
 import AffiliateSlot from "../../../../_components/AffiliateSlot";
 import RouteMap from "../../../../_components/RouteMap";
 import SaveButton from "../../../../_components/SaveButton";
 import LockedBox from "../../../../_components/LockedBox";
-
-/** SKU code "fiji-14d" → the places.yaml skus key "14D". */
-const skuKey = (sku) => sku.sku.skuCode.split("-").pop().toUpperCase();
 
 /**
  * One place card: photo, what it is, the practical facts, where it sits in
@@ -60,10 +57,7 @@ export default async function ReaderSpot({ params }) {
   }
 
   const dir = directionsHref(place);
-  const appearances = data.routes
-    .filter((r) => r.sku)
-    .map((r) => ({ route: r, entry: place.skus?.[skuKey(r.sku)] }))
-    .filter((x) => x.entry);
+  const appearances = routesForPlace(country, data, place);
   const nearby =
     place.lat != null
       ? data.places
@@ -111,20 +105,12 @@ export default async function ReaderSpot({ params }) {
             <section className="mt-5">
               <h2 className="font-sans text-[11px] font-bold uppercase tracking-[0.14em] text-slate-500">In the routes</h2>
               <ul className="mt-2 divide-y divide-brand-line rounded-xl border border-brand-line bg-white/70">
-                {appearances.map(({ route, entry }) => {
-                  const page = entry.day != null ? route.sku.days.find((d) => d.dayFrom <= entry.day && entry.day <= d.dayTo) : null;
-                  const href = page ? readerPaths.day(country, route.slug, page.dayFrom) : readerPaths.itinerary(country, route.slug);
-                  return (
-                    <li key={route.slug} className="px-3.5 py-2.5">
-                      <Link href={href} className="font-sans text-[14px] font-bold hover:text-brand-terracotta">{route.title}</Link>
-                      <p className="mt-0.5 font-sans text-[12px] text-slate-600">
-                        {entry.day != null ? `Day ${entry.day}` : "Anytime"}
-                        {entry.order != null ? ` · stop ${entry.order}` : ""}
-                        {entry.role && entry.role !== "route" ? ` · ${entry.role}` : ""}
-                      </p>
-                    </li>
-                  );
-                })}
+                {appearances.map((r) => (
+                  <li key={r.slug} className="px-3.5 py-2.5">
+                    <Link href={r.href} className="font-sans text-[14px] font-bold hover:text-brand-terracotta">{r.title}</Link>
+                    <p className="mt-0.5 font-sans text-[12px] text-slate-600">{r.label}</p>
+                  </li>
+                ))}
               </ul>
             </section>
           ) : null}

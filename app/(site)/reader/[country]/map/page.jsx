@@ -3,9 +3,9 @@ import { getRequestCurrency } from "../../../../_lib/currency";
 import { hasReaderAccess } from "../../_lib/access";
 import { loadReaderCountry } from "../../_lib/loadReaderSku";
 import { trackReaderView } from "../../_lib/track";
-import { placeForClient } from "../../_lib/serialise";
+import { placeForMap } from "../../_lib/serialise";
 import { countryPrice } from "../../_lib/commerce";
-import { readerPaths } from "../../_lib/format";
+import { longDate, readerPaths } from "../../_lib/format";
 import MapPage from "../../_components/MapPage";
 
 /** The full-screen map, outside the frame: every pin, the photo strip, bookmarks. */
@@ -16,7 +16,7 @@ export default async function ReaderMap({ params }) {
   const owned = await hasReaderAccess();
   trackReaderView(country, "map", { access: owned });
   const sample = new Set(data.sample.pins);
-  const places = data.places.map((p) => placeForClient(country, p, { locked: !owned && !sample.has(p.pinId) }));
+  const places = data.places.map((p) => placeForMap(country, data, p, { locked: !owned && !sample.has(p.pinId) }));
   const price = owned ? null : countryPrice(data.country, await getRequestCurrency());
   return (
     <MapPage
@@ -26,6 +26,7 @@ export default async function ReaderMap({ params }) {
       backHref={readerPaths.country(country)}
       buyHref={price ? `${readerPaths.country(country)}#get-the-guide` : null}
       priceLabel={price?.label || null}
+      reviewedLabel={data.country.reviewed ? longDate(data.country.reviewed) : null}
     />
   );
 }

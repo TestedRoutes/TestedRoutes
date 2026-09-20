@@ -185,7 +185,12 @@ first, then scope it down and measure), so the seams are deliberate:
   The seed has no aliases: they are filled from the live `affiliateLink`
   docs (the import script's check), never invented.
 - **Itineraries use the site's `GuideListCard`** (founder: same cards as
-  the guides), fed by `routeCards()` in `_lib/commerce.js`. **Travel tips**
+  the guides), fed by `routeCards()` in `_lib/commerce.js`. The route
+  overview is a split page (founder's mock 2026-09-20): day cards with
+  stop tiles on the left, the whole route on a sticky map with "1a, 1b,
+  2a…" pins and a chip per day on the right (`RouteOverviewMap`). On the
+  map page, "Details" on the selected card opens the place as a sheet
+  over the map (`PlaceSheet`, fed by `placeForMap`) rather than leaving. **Travel tips**
   are cards authored in `country.yaml` `tips:`. Bookmarks are
   `_lib/saved.js` (localStorage per country).
 - **Not in this round:** the Switzerland catalogue, the full Fiji

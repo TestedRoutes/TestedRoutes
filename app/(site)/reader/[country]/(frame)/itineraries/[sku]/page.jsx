@@ -1,19 +1,40 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { getRequestCurrency } from "../../../../../../_lib/currency";
 import { hasReaderAccess } from "../../../../_lib/access";
 import { loadReaderCountry } from "../../../../_lib/loadReaderSku";
 import { trackReaderView } from "../../../../_lib/track";
-import { dayBadge, dayHref, placeIndex, readerPaths, routePinsInOrder, stopNumbers, titleCase, CATEGORY } from "../../../../_lib/format";
-import { pinsForMap } from "../../../../_lib/serialise";
+import { routesWithCommerce } from "../../../../_lib/commerce";
+import { photoFor } from "../../../../_lib/photos";
+import { categoryLabel, dayBadge, dayChip, dayHref, placeIndex, readerPaths, routePinsInOrder, titleCase, CATEGORY } from "../../../../_lib/format";
 import DayChips from "../../../../_components/DayChips";
-import RouteMap from "../../../../_components/RouteMap";
+import RouteOverviewMap from "../../../../_components/RouteOverviewMap";
 import LockedBox from "../../../../_components/LockedBox";
 
+/** The distinct places of a day page, in stop order. */
+function dayStops(page, places) {
+  const seen = new Set();
+  const out = [];
+  for (const s of page.slots) {
+    if (!s.pinId || seen.has(s.pinId)) continue;
+    const place = places.get(s.pinId);
+    if (!place) continue;
+    seen.add(s.pinId);
+    out.push({ place, title: s.title });
+  }
+  return out;
+}
+
 /**
- * The itinerary overview: left, what you will do and every day as a stop
- * list; right, the whole route on one map with the trip line and the stops
- * numbered in trip order. Without access the sample day is the one day
- * that opens; the others show what they hold and the buy box.
+ * The itinerary overview (founder's mock, 2026-09-20): left, the route's
+ * eyebrow, title and one line, the day chips, then one card per day with
+ * its stops as photo tiles ("name · category • time") and the day's one-line
+ * summary; right, the whole route on a map that stays put while the days
+ * scroll, every stop pinned "1a, 1b, 2a…" and a chip per day to show one
+ * day alone. Photos and names are the shop window, so every day shows its
+ * tiles; without access only the sample day links through, the others say
+ * "With the guide". The route's price sits top right and buys through the
+ * same checkout as its card.
  */
 export default async function ReaderItinerary({ params }) {
   const { country, sku: skuSlug } = await params;
@@ -28,86 +49,119 @@ export default async function ReaderItinerary({ params }) {
 
   const places = placeIndex({ places: data.places });
   const order = routePinsInOrder(sku);
-  const numbered = new Map(order.map((pin, i) => [pin, i + 1]));
-  const optional = new Set(sku.skuPlaces.filter((j) => j.role === "extra" || j.role === "detour").map((j) => j.pinId));
-  const pins = pinsForMap(country, data.places.filter((p) => numbered.has(p.pinId) || optional.has(p.pinId)), { numbered, link: owned });
-  const line = order.map((pin) => places.get(pin)).filter((p) => p?.lat != null).map((p) => [p.lat, p.lng]);
   const dayOpen = (page) => owned || (sampleDay != null && page.dayFrom <= sampleDay && sampleDay <= page.dayTo);
+  const [commerce] = owned ? [null] : await routesWithCommerce([route], await getRequestCurrency());
+
+  // Pins in trip order, "1a, 1b, 2a…": the day number and the stop's letter
+  // within it. A place that recurs on a later day gets a pin per day.
+  const pins = [];
+  for (const page of sku.days) {
+    dayStops(page, places).forEach(({ place }, i) => {
+      if (place.lat == null || place.lng == null) return;
+      pins.push({
+        id: `${place.pinId}-${page.dayFrom}`,
+        day: page.dayFrom,
+        name: place.name,
+        sub: `${dayBadge(page)} · ${categoryLabel(place.category)}`,
+        lat: place.lat,
+        lng: place.lng,
+        kind: "number",
+        label: `${page.dayFrom}${String.fromCharCode(97 + i)}`,
+        photoUrl: null,
+        href: dayOpen(page) ? readerPaths.spot(country, place.pinId) : null,
+      });
+    });
+  }
+  const dayChipsForMap = sku.days.map((d) => ({ dayFrom: d.dayFrom, label: `Day ${dayChip(d)}`, title: titleCase(d.title) }));
 
   return (
-    <>
-      <Link href={readerPaths.itineraries(country)} className="font-sans text-[12px] font-semibold uppercase tracking-[0.12em] text-slate-600 hover:text-brand-terracotta">← Itineraries</Link>
-      <div className="mt-3 grid gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)]">
-        <div className="min-w-0">
-          <p className="font-sans text-[11px] font-bold uppercase tracking-[0.14em] text-brand-terracotta">{route.days} days · {order.length} stops</p>
-          <h2 className="mt-1 text-3xl leading-tight">{route.title}</h2>
-          {route.who ? <p className="mt-2 text-[16px] leading-snug text-slate-700">{route.who}</p> : null}
-          <div className="mt-5">
-            <DayChips country={country} sku={sku} current={null} />
-          </div>
-          <ol className="mt-4 divide-y divide-brand-line">
-            {sku.days.map((page) => {
-              const nums = stopNumbers(page);
-              const open = dayOpen(page);
-              return (
-                <li key={page.dayFrom} className="py-4">
-                  {open ? (
-                    <Link href={dayHref(country, skuSlug, page)} className="group flex items-baseline justify-between gap-3">
-                      <span>
-                        <span className="font-sans text-[11px] font-bold uppercase tracking-[0.14em] text-brand-terracotta">{dayBadge(page)}</span>
-                        <span className="ml-2 text-xl group-hover:text-brand-terracotta">{titleCase(page.title)}</span>
-                      </span>
-                      <span className="shrink-0 font-sans text-[11px] font-bold uppercase tracking-[0.12em] text-slate-500 group-hover:text-brand-terracotta">
-                        {page.slots.length ? "Open the day →" : "Pending"}
-                      </span>
-                    </Link>
-                  ) : (
-                    <div className="flex items-baseline justify-between gap-3">
-                      <span>
-                        <span className="font-sans text-[11px] font-bold uppercase tracking-[0.14em] text-brand-terracotta">{dayBadge(page)}</span>
-                        <span className="ml-2 text-xl">{titleCase(page.title)}</span>
-                      </span>
-                      <span className="shrink-0 font-sans text-[11px] font-bold uppercase tracking-[0.12em] text-slate-400">With the guide</span>
-                    </div>
-                  )}
-                  {open && page.slots.length ? (
-                    <ul className="mt-2 space-y-1">
-                      {page.slots.map((s, i) => {
-                        const place = s.pinId ? places.get(s.pinId) : null;
-                        return (
-                          <li key={i} className="flex items-center gap-2 text-[14px] text-slate-700">
-                            <span aria-hidden className="w-5 text-center text-slate-400">{CATEGORY[place?.category]?.glyph || "·"}</span>
-                            {place && owned ? (
-                              <Link href={readerPaths.spot(country, place.pinId)} className="hover:text-brand-terracotta">{s.title}</Link>
-                            ) : (
-                              <span>{s.title}</span>
-                            )}
-                            {nums[i] ? <span className="font-sans text-[10px] font-bold text-brand-terracotta">{nums[i]}</span> : null}
-                            {place && optional.has(place.pinId) ? <span className="font-sans text-[10px] uppercase tracking-[0.1em] text-slate-500">Optional</span> : null}
-                          </li>
-                        );
-                      })}
-                    </ul>
-                  ) : (
-                    <p className="mt-1 text-[13px] text-slate-500">{page.subtitle}</p>
-                  )}
-                </li>
-              );
-            })}
-          </ol>
-          {!owned ? (
-            <div className="mt-8">
-              <LockedBox data={data} what={`${route.title}: every day timed hour by hour, with its stops and bookings.`} />
-            </div>
+    <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.4fr)]">
+      <div className="min-w-0">
+        <div className="flex items-center justify-between gap-3">
+          <Link href={readerPaths.itineraries(country)} className="rounded-full bg-white px-4 py-2 font-sans text-[13px] font-semibold text-brand-ink ring-1 ring-brand-line hover:bg-brand-ink/5">← Itineraries</Link>
+          {commerce?.priceLabel ? (
+            commerce.checkoutHref ? (
+              <a href={commerce.checkoutHref} className="font-sans text-[12px] font-bold uppercase tracking-[0.14em] text-brand-terracotta hover:text-brand-ink">{commerce.priceLabel}</a>
+            ) : (
+              <span className="font-sans text-[12px] font-bold uppercase tracking-[0.14em] text-slate-500">{commerce.priceLabel}</span>
+            )
           ) : null}
         </div>
-        <div className="lg:sticky lg:top-24 lg:self-start">
-          <div className="h-[380px] lg:h-[calc(100vh-8rem)]">
-            <RouteMap pins={pins} line={line} height="100%" maxZoom={10} />
+        <p className="mt-5 font-sans text-[11px] font-semibold uppercase tracking-[0.2em] text-slate-500">
+          {data.country.name} • {route.days} days • {order.length} stops
+        </p>
+        <h2 className="mt-1 text-3xl leading-tight md:text-4xl">{route.title}</h2>
+        {route.who ? <p className="mt-2 text-[15px] leading-snug text-slate-600">{route.who}</p> : null}
+        <hr className="my-5 border-brand-line" />
+        <DayChips country={country} sku={sku} current={null} />
+
+        <ol className="mt-4 grid gap-4">
+          {sku.days.map((page) => {
+            const stops = dayStops(page, places);
+            const open = dayOpen(page);
+            const stub = page.slots.length === 0;
+            const head = (
+              <span className="flex items-baseline gap-3">
+                <span className="font-sans text-[11px] font-semibold uppercase tracking-[0.2em] text-slate-500">{dayBadge(page)}</span>
+                <span className="text-xl">{titleCase(page.title)}</span>
+              </span>
+            );
+            return (
+              <li key={page.dayFrom} className="rounded-2xl bg-white p-4 shadow-sm ring-1 ring-brand-line">
+                <div className="flex items-baseline justify-between gap-3">
+                  {open && !stub ? (
+                    <Link href={dayHref(country, skuSlug, page)} className="group min-w-0 hover:text-brand-terracotta">{head}</Link>
+                  ) : (
+                    <div className="min-w-0">{head}</div>
+                  )}
+                  <span className="shrink-0 font-sans text-[11px] text-slate-500">
+                    {stub ? "Pending" : !open ? "With the guide" : `${stops.length} ${stops.length === 1 ? "stop" : "stops"}`}
+                  </span>
+                </div>
+                {stops.length ? (
+                  <ul className="mt-3 grid grid-cols-3 gap-2">
+                    {stops.map(({ place, title }) => {
+                      const photo = photoFor(country, place.photoRef);
+                      const tile = (
+                        <>
+                          <div className="relative aspect-[4/3] overflow-hidden rounded-xl bg-brand-parchment ring-1 ring-inset ring-brand-line">
+                            {photo ? (
+                              // eslint-disable-next-line @next/next/no-img-element
+                              <img src={photo.src} alt="" className="h-full w-full object-cover" loading="lazy" />
+                            ) : (
+                              <span className="absolute inset-0 flex items-center justify-center text-3xl text-brand-terracotta/70">{CATEGORY[place.category]?.glyph || "◎"}</span>
+                            )}
+                          </div>
+                          <p className="mt-2 truncate font-sans text-[13px] font-semibold text-slate-900">{place.name || title}</p>
+                          <p className="truncate font-sans text-[11px] text-slate-500">
+                            {categoryLabel(place.category)}{place.attributes?.time_short ? ` • ${place.attributes.time_short}` : ""}
+                          </p>
+                        </>
+                      );
+                      return (
+                        <li key={place.pinId} className="min-w-0">
+                          {open ? <Link href={readerPaths.spot(country, place.pinId)} className="block hover:text-brand-terracotta">{tile}</Link> : tile}
+                        </li>
+                      );
+                    })}
+                  </ul>
+                ) : null}
+                {page.subtitle ? <p className="mt-3 text-[13px] leading-snug text-slate-600">{page.subtitle}</p> : null}
+              </li>
+            );
+          })}
+        </ol>
+        {!owned ? (
+          <div className="mt-8">
+            <LockedBox data={data} what={`${route.title}: every day timed hour by hour, with its stops and bookings.`} />
           </div>
-          <p className="mt-2 font-sans text-[11px] uppercase tracking-[0.12em] text-slate-500">Numbered in trip order · dots are optional extras</p>
+        ) : null}
+      </div>
+      <div className="lg:sticky lg:top-24 lg:self-start">
+        <div className="h-[380px] overflow-hidden rounded-2xl ring-1 ring-brand-line lg:h-[calc(100vh-8rem)]">
+          <RouteOverviewMap pins={pins} days={dayChipsForMap} maxZoom={10} />
         </div>
       </div>
-    </>
+    </div>
   );
 }

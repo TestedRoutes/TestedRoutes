@@ -6,6 +6,7 @@ import { CATEGORY, categoryLabel, distanceKm, kmLabel } from "../_lib/format";
 import { useSaved } from "../_lib/saved";
 import RouteMap from "./RouteMap";
 import SaveButton from "./SaveButton";
+import PlaceSheet from "./PlaceSheet";
 
 /**
  * The full-screen map, per the founder's mock (2026-09-20, second pass):
@@ -14,7 +15,9 @@ import SaveButton from "./SaveButton";
  * name, "category • time", bookmark. Click a row and the map pans to its
  * pin; click a pin and its row highlights and scrolls into view. The
  * selected place also shows as a small card over the map's bottom-left
- * corner, with the link to its page. Search and chips filter both sides.
+ * corner; its "Details" opens the place as a sheet over the map
+ * (PlaceSheet) rather than leaving for the place page. Search and chips
+ * filter both sides.
  *
  * Phones have no room for a side panel: there the list collapses to the
  * photo strip along the bottom.
@@ -26,10 +29,11 @@ import SaveButton from "./SaveButton";
  *
  * Without access the locked pins sit muted and their rows carry a lock.
  */
-export default function MapPage({ country, title, places, backHref, buyHref, priceLabel }) {
+export default function MapPage({ country, title, places, backHref, buyHref, priceLabel, reviewedLabel }) {
   const [q, setQ] = useState("");
   const [cat, setCat] = useState("");
   const [selected, setSelected] = useState(null);
+  const [details, setDetails] = useState(null); // pinId whose sheet is open
   const [me, setMe] = useState(null); // { lat, lng } once granted
   const [locating, setLocating] = useState("idle"); // idle | asking | on | denied | unsupported
   const { saved, ready } = useSaved(country);
@@ -179,10 +183,15 @@ export default function MapPage({ country, title, places, backHref, buyHref, pri
             <div className="min-w-0">
               <p className="truncate font-sans text-[10px] font-semibold uppercase tracking-[0.16em] text-slate-500">{current.region || "Fiji"} • {categoryLabel(current.category)}</p>
               <p className="truncate text-lg leading-tight">{current.name}</p>
-              <p className="truncate font-sans text-[12px] text-slate-500">Pin {current.n}{current.timeShort ? ` • ${current.timeShort}` : ""}</p>
-              {!current.locked ? (
-                <Link href={`/reader/${country}/spots/${current.pinId}`} className="font-sans text-[11px] font-bold uppercase tracking-[0.12em] text-brand-terracotta">Open the spot →</Link>
-              ) : null}
+              <p className="truncate font-sans text-[12px] text-slate-500">
+                Pin {current.n}{current.timeShort ? ` • ${current.timeShort}` : ""}
+                {!current.locked ? (
+                  <>
+                    {" • "}
+                    <button type="button" onClick={() => setDetails(current.pinId)} className="font-semibold text-brand-ink hover:text-brand-terracotta">Details →</button>
+                  </>
+                ) : null}
+              </p>
             </div>
           </div>
         ) : null}
@@ -190,7 +199,7 @@ export default function MapPage({ country, title, places, backHref, buyHref, pri
         <div className="pointer-events-auto absolute inset-x-0 top-16 z-10 flex flex-col gap-2 px-3 md:hidden">{filters}</div>
         <div ref={stripRef} className="absolute inset-x-0 bottom-0 z-10 flex gap-3 overflow-x-auto px-3 pb-3 pt-6 md:hidden" style={{ scrollbarWidth: "thin" }}>
           {numbered.map((p) => (
-            <div key={p.pinId} data-pin={p.pinId} onClick={() => setSelected(p.pinId)} className={"w-36 shrink-0 cursor-pointer rounded-2xl bg-white p-2 shadow-card " + (selected === p.pinId ? "ring-2 ring-brand-ink" : "ring-1 ring-brand-line")}>
+            <div key={p.pinId} data-pin={p.pinId} onClick={() => (selected === p.pinId && !p.locked ? setDetails(p.pinId) : setSelected(p.pinId))} className={"w-36 shrink-0 cursor-pointer rounded-2xl bg-white p-2 shadow-card " + (selected === p.pinId ? "ring-2 ring-brand-ink" : "ring-1 ring-brand-line")}>
               <div className="relative">
                 {thumb(p, "aspect-square w-full")}
                 <span className="absolute left-2 top-2 rounded-full bg-brand-ink px-2 py-0.5 font-sans text-[10px] font-bold text-white">{p.n}</span>
@@ -200,6 +209,19 @@ export default function MapPage({ country, title, places, backHref, buyHref, pri
             </div>
           ))}
         </div>
+        {details ? (
+          <PlaceSheet
+            country={country}
+            place={numbered.find((p) => p.pinId === details) || places.find((p) => p.pinId === details)}
+            pinNumber={numbered.find((p) => p.pinId === details)?.n ?? "•"}
+            reviewedLabel={reviewedLabel}
+            onClose={() => setDetails(null)}
+            onShowOnMap={() => {
+              setSelected(details);
+              setDetails(null);
+            }}
+          />
+        ) : null}
       </div>
 
       {/* Desktop: the panel */}
