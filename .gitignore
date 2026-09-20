@@ -32,6 +32,13 @@ drafts/
 content/countries/**
 !content/countries/**/
 !content/countries/*/destination/generated/web/**
+# Exception: the structured-content YAML pair that scripts/publish-sku.mjs
+# reads (places.yaml per country, sku.yaml per guide) is small text and is
+# the authoring truth for the paid layer, so it is versioned here. The
+# photos, PDFs and workbooks beside them stay ignored.
+!content/countries/*/country.yaml
+!content/countries/*/places.yaml
+!content/countries/*/guides/*/sku.yaml
 
 # Per-folder artifacts written by `npm run publish -- --generate-metadata`.
 # These can land in tracked story folders (e.g. public/Content/Stories/...)

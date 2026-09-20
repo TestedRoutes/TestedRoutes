@@ -1,0 +1,314 @@
+# Fiji 14-day honeymoon — structured content, PROTOTYPE SEED (2026-09-20).
+#
+# The authoring truth for this file is the sellable deck; the one-time
+# extraction (`scripts/extract_fiji_deck.py`) reads the deck-builder sources
+# on the founder's machine and cannot run remotely. This seed is what the
+# gated-reader prototype renders until that extraction lands, and it is
+# built only from text already published by the founder: the Reader
+# Directions canvas (Day 2 verbatim, the app screens for bookings, pack and
+# stays), the Guide Content Architecture doc (Day 1 slots), and the
+# sales-page data module. Nothing is written from memory.
+#
+# Honesty markers, so the prototype cannot be mistaken for the guide:
+#   - Day 2 is complete. Day 1 carries the three slots and three callouts the
+#     architecture doc quotes; its source truncated them mid-sentence, so
+#     the remaining four moves are absent and the bodies end where the quote
+#     ended. Every other day page is a title-only stub (the publisher warns
+#     "N slots, deck convention is 7" for each — that warning is the point).
+#   - The extraction replaces this file wholesale. Do not hand-extend the
+#     stubs here; the deck is the source.
+#   - `place:` references use the provisional FJ-P## pins from the seed
+#     places.yaml — see its header for the remap rule.
+slug: fiji-honeymoon-14-days
+country: fj
+sku_code: fiji-14d
+structure_type: week_guide
+duration_days: 14
+sample_day: 2
+status: draft
+title: "Fiji: 14-Day Honeymoon"
+subtitle: Which island for which couple – mainland vs resort.
+
+days:
+  - day_from: 1
+    day_to: 1
+    page_group: 1
+    badge: DAY 1
+    title: NADI ARRIVAL
+    subtitle: Land, get to Denarau, and let the first day be soft.
+    rail_start: 9
+    rail_end: 23
+    photo_caption: Denarau · the strip at dusk
+    # EXTRACTION PENDING: 3 of 7 moves; bodies end where the source quote ended.
+    slots:
+      - time: "10:00"
+        title: Land at NAN
+        body: Allow up to an hour behind a widebody.
+        place: FJ-P01
+      - time: "11:30"
+        title: Transfer to Denarau
+        body: About 20 minutes. Agree the fare before you get in.
+      - time: "22:00"
+        title: Night · the Hilton
+        body: A run of pools along the water.
+        place: FJ-P02
+    callouts:
+      - kind: info
+        title: NO BUDGET BED
+        body: On Denarau, by design. Cheap means Nadi.
+      - kind: info
+        title: LANDED LATE?
+        body: Nothing today is timed.
+      - kind: warning
+        title: NO METERS
+        body:
+          - Taxis have no meters anywhere in Fiji.
+          - FJD 8 per person into Nadi town.
+
+  - day_from: 2
+    day_to: 2
+    page_group: 2
+    badge: DAY 2
+    title: THE ISLAND DAY
+    subtitle: Out to a Mamanuca island on your first full day, because it is what you came for.
+    rail_start: 8
+    rail_end: 18
+    photo_caption: Port Denarau · the departure quay, 08:40
+    slots:
+      - time: "08:45"
+        title: Port Denarau
+        body: Check in 45 minutes before sailing. The quay is a 10 minute walk or a short taxi from any Denarau hotel.
+        place: FJ-P03
+      - time: "09:30"
+        title: Catamaran out
+        body: About 90 minutes across the Mamanuca cays.
+      - time: "11:00"
+        title: Castaway Island
+        body: A resort island rather than a day-trip facility, and the day boat is capped at twenty passengers, so the beach never fills.
+        place: FJ-P04
+      - time: "12:30"
+        title: Lunch, then the reef
+        body: Snorkel gear, kayaks and paddleboards come with the ticket.
+      - time: "14:30"
+        title: The pools, or the sand
+        body: Five hours ashore, and already the pale blue the Yasawas do.
+      - time: "16:20"
+        title: Leave the island
+        body: Same boat, same route back.
+      - time: "18:00"
+        title: Back at Port Denarau
+        body: "Dinner on the quay. Pack tonight: 15 kg goes north."
+        place: FJ-P03
+    callouts:
+      - kind: warning
+        title: 20 SEATS
+        body:
+          - Twenty passengers a day is the whole argument for Castaway, and it is also why this is not a turn-up-and-buy.
+          - FJD 335 per adult. Book it before you fly.
+      - kind: info
+        title: DRINKS EXTRA
+        body: Transfers, lunch and every piece of kit are in. The bar is a card.
+      - kind: info
+        title: ALL INCLUSIVE?
+        body: Captain Cook's Kadavu Lailai sail includes drinks, but up to 200 ashore.
+
+  # ---- Title-only stubs from here down (extraction pending) ----------------
+  - day_from: 3
+    day_to: 3
+    page_group: 3
+    badge: DAY 3
+    title: THE KAVA NIGHT
+    subtitle: Gardens, mud, the temple, kava · Mon/Wed/Sat
+    slots: []
+  - day_from: 4
+    day_to: 5
+    page_group: 4
+    badge: DAYS 4–5
+    title: WAYA & KUATA
+    subtitle: The pass activates · sharks on the second morning
+    slots: []
+  - day_from: 6
+    day_to: 7
+    page_group: 5
+    badge: DAYS 6–7
+    title: NANUYA BALAVU
+    subtitle: The manta channel · when the lali drum beats
+    slots: []
+  - day_from: 8
+    day_to: 9
+    page_group: 6
+    badge: DAYS 8–9
+    title: THE BLUE LAGOON
+    subtitle: Nacula, the lagoon, then Sawa-i-Lau before 09:00
+    slots: []
+  - day_from: 10
+    day_to: 10
+    page_group: 7
+    badge: DAY 10
+    title: THE HELICOPTER BACK
+    subtitle: Island Hoppers to Nadi in about 25 minutes, instead of a day at sea
+    slots: []
+  - day_from: 11
+    day_to: 13
+    page_group: 8
+    badge: DAYS 11–13
+    title: TAVEUNI
+    subtitle: Rainforest, waterfalls and the Rainbow Reef · the wall on the right tide
+    slots: []
+  - day_from: 14
+    day_to: 14
+    page_group: 9
+    badge: DAY 14
+    title: BUFFER DAY
+    subtitle: Between the small plane and the long-haul home
+    slots: []
+
+stay_picks:
+  - block_heading: NIGHTS 1–3 · DENARAU
+    tier: mid
+    tier_label: Comfort
+    name: Hilton Fiji Beach Resort
+    place: FJ-P02
+    body: The pick on every Denarau night, a run of pools along the water.
+  - block_heading: NIGHTS 4+5 · WAYA
+    tier: mid
+    tier_label: Mid
+    name: Octopus Resort
+    place: FJ-P09
+    body: "The tested base: white sand bay, house reef, dive boats off the beach."
+  - block_heading: NIGHTS 6+7 · NANUYA BALAVU
+    tier: budget
+    tier_label: Budget
+    name: Barefoot Manta
+    place: FJ-P13
+    body: Closest bed to the channel, home of the chain's conservation centre.
+  - block_heading: NIGHTS 6+7 · NANUYA BALAVU
+    tier: mid
+    tier_label: Mid
+    name: Mantaray Island Resort
+    place: FJ-P11
+    body: The tested stop for the manta channel; the lali drum sets the timing.
+  - block_heading: NIGHTS 8+9 · NACULA
+    tier: mid
+    tier_label: Mid
+    name: Coconut Beach Resort
+    place: FJ-P14
+    body: Where the Sawa-i-Lau cave trip is booked. Out before 09:00.
+  - block_heading: NIGHTS 11–13 · TAVEUNI
+    tier: splurge
+    tier_label: Splurge
+    name: Taveuni Palms
+    place: FJ-P18
+    body: Two villas, each on its own private acre with a pool and its own staff.
+
+reservation_rules:
+  - group: Before you fly · days 1 to 14
+    label: "Hotels: all 14 nights"
+    lead_time_days: 120
+    lead_time_label: 3–6 months
+    criticality: must
+    note: Island beds first; Taveuni Palms furthest ahead of all.
+  - group: Before you fly · days 1 to 14
+    label: "Flights: Nadi to Taveuni"
+    lead_time_days: 45
+    lead_time_label: 1–2 months
+    criticality: must
+    note: Day 11 out, Day 14 back, domestic terminal.
+  - group: Before you fly · days 1 to 14
+    label: Bula Pass
+    lead_time_days: 30
+    lead_time_label: 1 month
+    criticality: must
+    note: Days 4 to 10 · duration set by the helicopter or the ferry.
+  - group: Day 2 to Day 13
+    label: Castaway day trip
+    lead_time_days: 21
+    lead_time_label: 2–4 weeks
+    criticality: must
+    place: FJ-P04
+    note: Day 2 · twenty seats a day, not a turn-up-and-buy.
+  - group: Day 2 to Day 13
+    label: Island Hoppers helicopter
+    lead_time_days: 30
+    lead_time_label: 1 month
+    criticality: must
+    note: Day 10 · minimum two seats, 15 kg per bag, booked by email.
+  - group: Day 2 to Day 13
+    label: Robinson Crusoe SCDS
+    lead_time_days: 21
+    lead_time_label: 2–4 weeks
+    criticality: should
+    place: FJ-P08
+    note: Day 3 · Monday, Wednesday or Saturday only.
+  - group: Day 2 to Day 13
+    label: Taveuni Ocean Sports
+    lead_time_days: 30
+    lead_time_label: 1 month
+    criticality: should
+    place: FJ-P21
+    note: Days 12 and 13 · ask about the Great White Wall window.
+  - group: Arrange on the ground
+    label: The Awakening Shark Dive
+    criticality: nice
+    place: FJ-P10
+    note: Day 5 · at Octopus, 08:00 or 11:00 · at the resort
+  - group: Arrange on the ground
+    label: Sawa-i-Lau cave trip
+    criticality: nice
+    place: FJ-P16
+    note: Day 9 · out before 09:00 · booked at Coconut Beach
+
+pack_items:
+  - group: On you
+    label: Quick-dry everything
+    note: cotton stays wet in the humidity
+  - group: On you
+    label: Sandals plus reef shoes
+    note: for coral and the Lavena stream
+  - group: On you
+    label: Sunglasses and a hat that survives a boat deck
+  - group: On you
+    label: A sarong
+    note: covers shoulders and knees for the temple and any village
+  - group: In pack
+    label: Swimsuits ×2
+    note: so one is always dry
+  - group: In pack
+    label: Reef-safe sunscreen and SPF lip balm
+  - group: In pack
+    label: Dry bag
+    note: boat transfers land on beaches, bags ride in spray
+  - group: In pack
+    label: Certification card and logbook
+  - group: In pack
+    label: Prescription medicines
+    note: no pharmacy on Taveuni
+  - group: In pack
+    label: Your own snorkel mask
+    note: if fit matters to you
+  - group: In pack
+    label: Type I power adapter
+    note: the Australia / NZ pin layout
+  - group: In pack
+    label: Motion-sickness tablets
+    note: the longest Flyer leg is 4 h 45 in open water
+  - group: In pocket
+    label: Passport
+  - group: In pocket
+    label: Every booking confirmation saved offline
+    note: before the first boat
+  - group: In pocket
+    label: Small Fijian-dollar notes from day one
+    note: taxis, park gates and villages are cash
+
+activity_rows:
+  - name: Castaway day trip
+    price_label: FJD 335 per adult
+    note: Transfers, lunch and every piece of kit included; drinks extra.
+    place: FJ-P04
+
+sections:
+  - type: pack
+    payload:
+      title: Pack for this trip
+      intro: "Boats and small planes: 15 kg checked on every domestic hop."

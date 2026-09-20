@@ -128,6 +128,96 @@ failure becomes a warning that prints on every run. Say next to it why and
 since when — an acknowledgement nobody can date is indistinguishable from a
 mistake.
 
+## Gated guide reader — prototype (2026-09-20)
+
+`app/(site)/reader/<country>` is the country guide inside the site chrome:
+Itineraries · Places · Inspire · Travel tips (that order, founder's header
+mock 2026-09-20; Itineraries is the country root, the place grid is
+`/places`, place pages keep `/spots/<pin>`, Inspire lists the country's
+public stories on the `/inspire` card), "Open the map" to a full-screen
+map with a photo strip, device-local bookmarks. Every page renders for everyone; the
+sample day, the sample pins and the first tips are open, the rest shows the
+buy box inline. Fiji only. Built **ahead of any billing or
+public-site change** (founder decision 2026-09-20: a working prototype
+first, then scope it down and measure), so the seams are deliberate:
+
+- **Structure.** Two storefront shapes on one content model, chosen per
+  country: a *country guide* (Rexby shape: one map, every tested place, the
+  routes through it; Fiji, Kuwait, UAE and the other small catalogues) and a
+  *catalogue of guides* (GetYourGuide shape, each guide priced; Switzerland,
+  later Iceland). Only the country guide is built. Switzerland follows once
+  Fiji shows checkout clicks.
+- **Titles follow search intent.** Country page "Fiji Itinerary", route
+  "Fiji 14-Day Honeymoon Itinerary"; the brand claim lives in the subtitle.
+  The 14-day data module carries the new title; `check:guides` shows drift
+  until the founder republishes locally, which is the intended signal.
+- **Content.** `content/countries/<c>/country.yaml` (title, creator line,
+  routes in order, `free: true` on the sample route, price list, verified
+  date, sample day and pins) + `places.yaml` (with `photo_ref`,
+  `attributes`, a normalised `category`) + `guides/<sku>/sku.yaml`. Builders:
+  `db/skuFromYaml.js`, `db/countryFromYaml.js`; the DB loader mirrors the
+  same shape (`attributes` is part of the hash, `photoRef` is scrubbed by
+  `check:sku`). The Fiji files are a hand-seeded subset (headers say what is
+  provisional; `FJ-P##` pins are remapped when the founder's import runs).
+  `.gitignore` re-includes exactly these three YAML shapes.
+- **Gate.** One preview key (`READER_PREVIEW_SECRET`) held as an HMAC in an
+  httpOnly cookie scoped to `/reader`; `_lib/access.js` is the swap point
+  for the purchase-token `requireGuideAccess`. Pages ask `hasReaderAccess()`
+  per section; nothing is ever a 403. Legacy `/reader/<sku>`, `/spots`,
+  `/bookings`, `/pack` URLs redirect.
+- **Data path.** `_lib/loadReaderSku.js` wraps the YAML builders;
+  swapping to `db/loadSku.js` is that file only. `outputFileTracingIncludes`
+  in `next.config.mjs` ships the YAML with the Vercel function; remove it
+  with the swap. The reader never imports the Sanity client at module
+  level (it must render with no Sanity env); the route cards' prices and
+  Polar checkout links come from a lazy `loadGuideBySlug` and degrade to
+  nothing without it.
+- **Measurement.** Real price, real "Get the guide": until a Polar product
+  exists for the country guide, the click posts to `/api/reader/interest`
+  (Beehiiv `interest_country`, a Resend note to the founder who sends the
+  access link by hand, an anonymous `reader_buy_click`). Route cards buy
+  through the existing `/api/checkout` (`checkout_started`). Every reader
+  page captures an anonymous `reader_page_view` server-side
+  (`_lib/track.js`); client PostHog never initialises here because the
+  cookie banner is suppressed on `/reader`.
+- **Affiliate slots** (`AffiliateSlot`) on place cards, stays, bookings and
+  activities all go through `/go/<alias>`; an empty alias renders nothing.
+  The seed has no aliases: they are filled from the live `affiliateLink`
+  docs (the import script's check), never invented.
+- **Itineraries use the site's `GuideListCard`** (founder: same cards as
+  the guides), fed by `routeCards()` in `_lib/commerce.js`. The route
+  overview is a split page (founder's mock 2026-09-20): day cards with
+  stop tiles on the left, the whole route on a sticky map with "1a, 1b,
+  2a…" pins and a chip per day on the right (`RouteOverviewMap`). On the
+  map page, "Details" on the selected card opens the place as a sheet
+  over the map (`PlaceSheet`, fed by `placeForMap`) rather than leaving. **Travel tips**
+  are cards authored in `country.yaml` `tips:`. Bookmarks are
+  `_lib/saved.js` (localStorage per country).
+- **Not in this round:** the Switzerland catalogue, the full Fiji
+  extraction, Postgres, print, the sales-page map on Google.
+
+`/reader/` is disallowed in robots and every reader page is `noindex` +
+`no-store`; the gate is the protection.
+
+## Dates on any surface
+
+**"Last reviewed <day month year>" is the only date a reader, a card or a
+page shows** (founder rule, repeated 2026-09-20). It is the date the content
+was last reviewed, from `reviewed:` in `country.yaml`, formatted by
+`longDate()`. Never "verified", "tested on", "on the ground" with a date,
+or the founder's travel dates: when he travelled is not the buyer's
+concern and reads as a staleness warning.
+
+## Maps
+
+**Google Maps only** (founder rule, 2026-09-20): never OpenStreetMap or
+Leaflet on any new surface. The reader's map is
+`app/(site)/reader/_components/RouteMapGoogle.jsx` on `@vis.gl/react-google-maps`
+(`NEXT_PUBLIC_GOOGLE_MAPS_API_KEY`, `NEXT_PUBLIC_GOOGLE_MAPS_MAP_ID`); it
+renders a labelled placeholder without the key. The sales-page
+`LocationMap.jsx` predates the rule and still draws Leaflet on OSM tiles;
+it moves to Google Maps with the next public-site change.
+
 ## Conventions
 
 - **Deliverables are append-only: publish a new version, never overwrite.**

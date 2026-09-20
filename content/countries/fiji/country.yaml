@@ -1,0 +1,101 @@
+# Fiji country guide — the storefront and reader frame for every Fiji route.
+#
+# One file per country, next to places.yaml. It carries what no single
+# sku.yaml can: the country-level title (search intent: "Fiji Itinerary"),
+# the creator line, the list of routes through the shared place pool in
+# display order, the free sample layer, the price of the country guide, and
+# the last-verified date the reader shows as "kept current".
+#
+# Routes reference sku.yaml files by slug. A route whose sku.yaml does not
+# exist yet renders as "coming" on the chooser — listed, never linked — so
+# the page is honest about the catalogue while the founder's extraction
+# produces the remaining decks. `free: true` marks the sample layer: the
+# founder's decision (2026-09-20) is that the 1-day Fiji route is free, and
+# until its sku.yaml exists the 14-day's complete Day 2 stands in as the
+# open sample (see `sample:`).
+#
+# Copy sources: the Fiji destination page (app/(site)/destinations/fiji,
+# destination playbook v5) for the who-for lines and the intro, the 14-day
+# data module for the tested-when facts. Nothing is written from memory.
+country: fj
+slug: fiji
+# `name` is the H1 on the page (founder: "why don't we simply say Fiji");
+# `title` is the search-intent title for the browser tab and metadata.
+name: Fiji
+title: Fiji Itinerary
+subtitle: Routes that I tested on the ground. Take curated itineraries or string the places into a route yourself.
+creator_line: Tested on the ground by Paulius Pikelis · December into the New Year · Nadi, the Yasawas and Taveuni
+intro: >-
+  Whether Fiji is worth it, which islands to pick, how many days you need,
+  when to go and what it costs – tested on the ground from Nadi to the
+  Yasawas and Taveuni.
+hero_photo: yasawa-ridge-reef.jpg
+hero_alt: Looking down over a green Yasawa island ridge to turquoise reef water and an offshore islet, Fiji
+region_label: South Pacific
+# The one date the reader shows: when the content was last reviewed.
+# Never a travel date, never "verified on the ground" (founder rule).
+reviewed: 2026-08-21
+# The country guide's price. Proposed at the 14-day route's rung (the plan's
+# 2-week ladder, 2026-08-16) until the founder sets it; the buy box shows
+# the visitor's currency, EUR as the fallback.
+price:
+  - { currency: EUR, amount: 49 }
+  - { currency: CHF, amount: 49 }
+  - { currency: GBP, amount: 49 }
+  - { currency: USD, amount: 59 }
+routes:
+  - slug: fiji-nadi-1-day
+    title: Fiji 1-Day Itinerary
+    days: 1
+    who: A single day between flights is genuinely usable, because Nadi is the region's transit hub.
+    free: true
+  - slug: fiji-yasawa-7-days
+    title: Fiji 7-Day Itinerary
+    days: 7
+    who: A week covers the Yasawa islands properly, on the one daily catamaran.
+  - slug: fiji-10-days
+    title: Fiji 10-Day Itinerary
+    days: 10
+    who: Ten days adds Taveuni and its reef, and is the most-searched length for a reason.
+  - slug: fiji-honeymoon-14-days
+    title: Fiji 14-Day Honeymoon Itinerary
+    days: 14
+    who: The honeymoon shape – the islands at two nights each so no stop is rushed, then Taveuni given the days its reef deserves.
+sample:
+  route: fiji-honeymoon-14-days
+  day: 2
+  pins: [FJ-P01, FJ-P02, FJ-P03, FJ-P04]
+
+# Travel tips: the cards on the Travel tips tab (eyebrow · title · body),
+# authored here so the founder edits YAML, not code. Seeded verbatim from his
+# own text in the 14-day data module and the Fiji destination page. `link`
+# points a card at a fuller page inside the reader.
+tips:
+  - eyebrow: When to go
+    title: May, June or September
+    body: Dry-season certainty without the July-to-August crowds or the holiday premium. December and January carry holiday pricing on top of the wet; we honeymooned in December and it worked, but it cost us rain days.
+  - eyebrow: Getting around
+    title: One catamaran a day
+    body: The Yasawa Flyer runs the chain once a day each way, leaving Port Denarau by 08:45. It never docks at the islands – each resort sends its own boat out to meet it. The longest leg is 4 h 45 in open water.
+  - eyebrow: Money
+    title: Cash past Denarau
+    body: Carry small Fijian-dollar notes from day one – taxis, park gates and villages are cash. Taxis have no meters anywhere in Fiji.
+  - eyebrow: Bookings
+    title: Island beds first
+    body: All 14 hotel nights 3 to 6 months ahead, island beds first because they set the route. The Bula Pass and the Nadi to Taveuni flights 1 to 2 months ahead; the helicopter, the Castaway day boat and the dive days about a month ahead.
+    link: tips/bookings
+    link_label: The full checklist
+  - eyebrow: Pack
+    title: Pack to 15 kg from home
+    body: It is the checked limit on the helicopter and the Taveuni flights alike. Reef shoes for the coral and the Lavena stream, a dry bag because boat transfers land on beaches and bags ride in spray.
+    link: tips/pack
+    link_label: The full list
+  - eyebrow: Etiquette
+    title: Shoulders and knees
+    body: A sarong covers both for the temple and any village. Read the activities board the moment you land on each island – almost none of it is online. When the lali drum beats, drop everything and get to the boat.
+  - eyebrow: Mistakes
+    title: The five that cost people
+    body: Comparing island beds without the compulsory meal plan. Turning up for Castaway without a seat. Walking to the wrong Nadi terminal. Building a December trip around a manta. Adding an afternoon dive on Day 13, which breaks the 18-hour flying-after-diving margin.
+  - eyebrow: Paperwork
+    title: Visitor permit on arrival
+    body: Covers most passports, and Fiji is not a malaria zone. International and domestic terminals at Nadi are separate buildings.

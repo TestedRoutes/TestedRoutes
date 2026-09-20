@@ -1,0 +1,323 @@
+# Fiji place pool — PROTOTYPE SEED (2026-09-20).
+#
+# The real file is machine-owned: `npm run import:master` regenerates it
+# wholesale from TestedRoutes_Fiji_Master_v<N>.xlsx, which lives on the
+# founder's machine and cannot be read from a remote session. This seed
+# exists so the gated-reader prototype has something to render before that
+# import has run. Two consequences, both deliberate:
+#
+#   - pin_ids are provisional (FJ-P##, "P" for prototype) so they can never
+#     collide with the workbook's numeric FJ-### ids. When the import runs,
+#     sku.yaml's `place:` references must be remapped to the workbook ids in
+#     the same commit — the publish script fails loudly on an unknown pin, so
+#     a missed one cannot slip through.
+#   - go_slug is left empty everywhere. Aliases are frozen printed contracts
+#     and the import validates each against live Sanity; guessing one here
+#     would put an unverified link in front of a buyer.
+#
+# Coordinates come from the sales-page data module (scripts/guides/
+# fiji-honeymoon-14-days.mjs), which took them from master v9. Taveuni-side
+# longitudes are stored past 180 on purpose: the reader's map fits bounds on
+# a continuous plane, and the negative form would draw the route the long
+# way round the world. Pins without coordinates in that module carry none —
+# nothing here is written from memory.
+#
+# photo_ref names a file in destination/generated/web/ (the founder's curated
+# set) and is set only where that photo unambiguously shows the pin; the
+# per-place photo pass fills the rest. `attributes` carries the practical
+# facts the reader shows on a place card (access, time_needed, cost_band,
+# season, parking, road), only where the published text states them;
+# time_short is the one-word duration on a spot card ("Half day", "2 nights").
+country: fj
+places:
+  - pin_id: FJ-P01
+    name: Nadi International Airport
+    type: Airport
+    region: Nadi & Denarau
+    lat: -17.753308
+    lng: 177.450758
+    category: transport
+    attributes:
+      time_short: 1 h
+      access: International and domestic are separate buildings; allow up to an hour behind a widebody
+    skus:
+      14D: { role: route, day: 1, order: 1 }
+  - pin_id: FJ-P02
+    name: Hilton Fiji Beach Resort
+    type: Resort
+    region: Nadi & Denarau
+    tier: "3"
+    description: The pick on every Denarau night, a run of pools along the water.
+    lat: -17.768362
+    lng: 177.377492
+    category: stay
+    attributes:
+      time_short: 3 nights
+      cost_band: "€€€"
+      time_needed: Nights 1 to 3
+    skus:
+      14D: { role: route, day: 1, order: 2 }
+  - pin_id: FJ-P03
+    name: Port Denarau Marina
+    type: Marina
+    region: Nadi & Denarau
+    description: The departure quay for every Mamanuca and Yasawa boat.
+    lat: -17.772825
+    lng: 177.380814
+    category: transport
+    photo_ref: port-denarau-marina.jpg
+    attributes:
+      time_short: 30 min
+      access: 10 minute walk or a short taxi from any Denarau hotel
+      time_needed: Check in 45 minutes before sailing
+    skus:
+      14D: { role: route, day: 2, order: 1 }
+  - pin_id: FJ-P04
+    name: Castaway Island
+    type: Resort / Day trip
+    region: Mamanucas
+    tier: "2"
+    description: A resort island rather than a day-trip facility; the day boat is capped at twenty passengers.
+    lat: -17.735284
+    lng: 177.129375
+    category: sight
+    attributes:
+      time_short: Full day
+      access: Day boat from Port Denarau, capped at twenty passengers – book before you fly
+      time_needed: "Full day, 08:45 to 18:00"
+      cost_band: FJD 335 per adult, transfers, lunch and kit in, drinks extra
+    skus:
+      14D: { role: route, day: 2, order: 2 }
+  - pin_id: FJ-P05
+    name: Garden of the Sleeping Giant
+    type: Garden
+    region: Nadi & Denarau
+    lat: -17.713029
+    lng: 177.469247
+    category: sight
+    attributes:
+      time_short: 1 h
+    skus:
+      14D: { role: route, day: 3, order: 1 }
+  - pin_id: FJ-P06
+    name: Sabeto Hot Springs and Mud Pool
+    type: Hot springs
+    region: Nadi & Denarau
+    lat: -17.718211
+    lng: 177.484435
+    category: sight
+    attributes:
+      time_short: 1 h
+    skus:
+      14D: { role: route, day: 3, order: 2 }
+  - pin_id: FJ-P07
+    name: Sri Siva Subramaniya Temple
+    type: Temple
+    region: Nadi & Denarau
+    lat: -17.807254
+    lng: 177.415068
+    category: sight
+    photo_ref: nadi-temple-ceiling.jpg
+    attributes:
+      time_short: 1 h
+      access: Covered shoulders and knees; a sarong does it
+    skus:
+      14D: { role: route, day: 3, order: 3 }
+  - pin_id: FJ-P08
+    name: Robinson Crusoe Island
+    type: Day trip
+    region: Coral Coast
+    description: The Sunset Cruise Dinner Show runs Monday, Wednesday and Saturday only.
+    lat: -18.055979
+    lng: 177.2874
+    category: sight
+    attributes:
+      time_short: Evening
+      season: Sunset Cruise Dinner Show on Monday, Wednesday and Saturday only
+    skus:
+      14D: { role: route, day: 3, order: 4 }
+  - pin_id: FJ-P09
+    name: Octopus Resort
+    type: Resort
+    region: Yasawa Islands
+    tier: "2"
+    description: The tested base on Waya. White sand bay, house reef, dive boats off the beach.
+    lat: -17.276837
+    lng: 177.107057
+    category: stay
+    attributes:
+      time_short: 2 nights
+      cost_band: "€€"
+      time_needed: Nights 4 and 5
+    skus:
+      14D: { role: route, day: 4, order: 1 }
+  - pin_id: FJ-P10
+    name: The Awakening Shark Dive, Kuata
+    type: Dive
+    region: Yasawa Islands
+    description: Runs at 08:00 and 11:00 daily off Kuata; an introductory option needs no licence.
+    lat: -17.361946
+    lng: 177.13437
+    category: dive
+    photo_ref: shark-dive-kuata.jpg
+    attributes:
+      time_short: Half day
+      time_needed: "08:00 or 11:00 slots"
+      access: Arranged at Octopus; an introductory option needs no licence
+    skus:
+      14D: { role: route, day: 5, order: 1 }
+  - pin_id: FJ-P11
+    name: Mantaray Island Resort
+    type: Resort
+    region: Yasawa Islands
+    tier: "2"
+    lat: -17.175631
+    lng: 177.184749
+    category: stay
+    attributes:
+      time_short: 2 nights
+      cost_band: "€€"
+      time_needed: Nights 6 and 7
+    skus:
+      14D: { role: route, day: 6, order: 1 }
+  - pin_id: FJ-P12
+    name: The manta channel, Drawaqa
+    type: Snorkel
+    region: Yasawa Islands
+    description: Snorkel with rays when the lali drum beats. They feed May to October.
+    lat: -17.171958
+    lng: 177.191903
+    category: snorkel
+    attributes:
+      time_short: 2 h
+      season: Mantas feed May to October
+      access: When the lali drum beats, drop everything and get to the boat
+    skus:
+      14D: { role: route, day: 7, order: 1 }
+  - pin_id: FJ-P13
+    name: Barefoot Manta
+    type: Resort
+    region: Yasawa Islands
+    tier: "1"
+    description: Closest bed to the channel, home of the chain's conservation centre.
+    category: stay
+    attributes:
+      time_short: 2 nights
+      cost_band: "€"
+    skus:
+      14D: { role: extra, day: 6 }
+  - pin_id: FJ-P14
+    name: Coconut Beach Resort
+    type: Resort
+    region: Yasawa Islands
+    tier: "2"
+    lat: -16.933875
+    lng: 177.357662
+    category: stay
+    attributes:
+      time_short: 2 nights
+      cost_band: "€€"
+      time_needed: Nights 8 and 9
+    skus:
+      14D: { role: route, day: 8, order: 1 }
+  - pin_id: FJ-P15
+    name: The Blue Lagoon
+    type: Snorkel
+    region: Yasawa Islands
+    lat: -16.91182
+    lng: 177.38223
+    category: snorkel
+    photo_ref: blue-lagoon-beach.jpg
+    attributes:
+      time_short: Half day
+    skus:
+      14D: { role: route, day: 8, order: 2 }
+  - pin_id: FJ-P16
+    name: Sawa-i-Lau Caves
+    type: Caves
+    region: Yasawa Islands
+    description: Half-flooded limestone chambers you swim into. Out before 09:00, booked at Coconut Beach.
+    lat: -16.850966
+    lng: 177.466709
+    category: sight
+    photo_ref: sawa-i-lau-cave-pool.jpg
+    attributes:
+      time_short: Half day
+      access: "Booked at Coconut Beach; out before 09:00"
+    skus:
+      14D: { role: route, day: 9, order: 1 }
+  - pin_id: FJ-P17
+    name: Taveuni Airport (Matei)
+    type: Airport
+    region: Taveuni
+    lat: -16.688113
+    lng: 180.118937
+    category: transport
+    attributes:
+      time_short: 25 min
+      access: Island Hoppers, about 25 minutes from Nadi; 15 kg checked per bag
+    skus:
+      14D: { role: route, day: 11, order: 1 }
+  - pin_id: FJ-P18
+    name: Taveuni Palms
+    type: Resort
+    region: Taveuni
+    tier: "3"
+    description: Two villas, each on its own private acre with a pool and its own staff.
+    category: stay
+    attributes:
+      time_short: 3 nights
+      cost_band: "€€€"
+      time_needed: Nights 11 to 13
+    skus:
+      14D: { role: route, day: 11, order: 2 }
+  - pin_id: FJ-P19
+    name: Tavoro Falls, Bouma
+    type: Waterfall
+    region: Taveuni
+    lat: -16.8268796
+    lng: 180.1213125
+    category: sight
+    photo_ref: tavoro-falls.jpg
+    attributes:
+      time_short: 2 h
+    skus:
+      14D: { role: route, day: 12 }
+  - pin_id: FJ-P20
+    name: Lavena Coastal Walk
+    type: Walk
+    region: Taveuni
+    lat: -16.872341
+    lng: 180.098606
+    category: walk
+    attributes:
+      time_short: Half day
+      access: A stream crossing on the walk – reef shoes
+    skus:
+      14D: { role: route, day: 12 }
+  - pin_id: FJ-P21
+    name: Rainbow Reef
+    type: Dive
+    region: Taveuni
+    lat: -16.784602
+    lng: 179.92309
+    category: dive
+    photo_ref: rainbow-reef-corals.jpg
+    attributes:
+      time_short: Half day
+      access: Taveuni Ocean Sports; ask about the Great White Wall window
+    skus:
+      14D: { role: route, day: 12 }
+  - pin_id: FJ-P22
+    name: Great White Wall
+    type: Dive
+    region: Taveuni
+    description: A cliff face of white soft coral, 25 to 30 m, certified divers only, tide-dependent.
+    lat: -16.7754
+    lng: 179.899
+    category: dive
+    attributes:
+      time_short: Half day
+      access: Certified divers only, 25 to 30 m, tide-dependent; keep Day 13 flexible and mind the 18-hour flying-after-diving clock
+    skus:
+      14D: { role: route, day: 13, order: 1 }

@@ -56,7 +56,11 @@ export default {
   },
 
   doc: {
-    title: "Fiji Honeymoon: A 2-Week Itinerary",
+    // Search-intent title (founder, 2026-09-20): the country page is "Fiji
+    // Itinerary", each route "Fiji <N>-Day … Itinerary"; the brand claim
+    // lives in the subtitle. The former "Fiji Honeymoon: A 2-Week
+    // Itinerary" read as a package to the test panel.
+    title: "Fiji 14-Day Honeymoon Itinerary",
     slug: { _type: "slug", current: "fiji-honeymoon-14-days" },
     storyId: "fiji-honeymoon-14-days-2026",
     language: "en",
@@ -69,7 +73,7 @@ export default {
 
     eyebrow: "FIJI • 14-DAY HONEYMOON • YASAWAS & TAVEUNI",
     subtitle: "Which island for which couple – mainland vs resort.",
-    metaTitle: "Fiji Honeymoon: A 2-Week Itinerary",
+    metaTitle: "Fiji 14-Day Honeymoon Itinerary",
     metaDescription:
       "A tested 14-day Fiji honeymoon itinerary: three Yasawa island stops on the Bula Pass, the Kuata shark dive, the manta channel, then Taveuni's Rainbow Reef.",
 

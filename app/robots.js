@@ -12,7 +12,9 @@ export default function robots() {
         // to index; keeps Google focused on canonical /guides/<slug> pages.
         // /api/* are server endpoints, never indexed.
         // /studio/* is the embedded Sanity Studio — editor UI only.
-        disallow: ["/go/", "/api/", "/studio/"],
+        // /reader/* is the gated guide reader: paid content behind a key,
+        // never indexed. The gate is the protection; this is the courtesy.
+        disallow: ["/go/", "/api/", "/studio/", "/reader/"],
       },
     ],
     sitemap: `${SITE_URL}/sitemap.xml`,

@@ -24,15 +24,11 @@
  *   --json         print the canonical object as JSON and nothing else
  *                  (parity checks; implies --dry-run)
  */
-import { createHash } from "node:crypto";
-import { readFileSync, readdirSync, existsSync } from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import yaml from "js-yaml";
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const REPO = path.resolve(HERE, "..");
-const COUNTRIES = path.join(REPO, "content", "countries");
 
 // ---------------------------------------------------------------------------
 // Arguments
@@ -54,211 +50,27 @@ if (!args.slug) {
 }
 
 // ---------------------------------------------------------------------------
-// Locate and load the YAML pair
+// Load the YAML pair and build the canonical object. The builder lives in
+// db/skuFromYaml.js so the gated reader can render from the same definition
+// without a database; this script owns only the write. db/loadSku.js
+// reconstructs exactly this shape from the tables and check-sku.mjs diffs
+// the two. Array order is meaning; DB ids and timestamps never appear.
 // ---------------------------------------------------------------------------
-function findSkuFile(slug) {
-  for (const country of readdirSync(COUNTRIES)) {
-    const p = path.join(COUNTRIES, country, "guides", slug, "sku.yaml");
-    if (existsSync(p)) return { skuPath: p, countryDir: path.join(COUNTRIES, country) };
-  }
-  return null;
-}
+const { readSkuYaml, buildCanonicalSku } = await import(
+  new URL("../db/skuFromYaml.js", import.meta.url)
+);
 
-const located = findSkuFile(args.slug);
-if (!located) {
-  console.error(`No sku.yaml found for "${args.slug}" under content/countries/*/guides/.`);
+let loaded;
+try {
+  loaded = readSkuYaml(args.slug, { repoRoot: REPO });
+} catch (err) {
+  console.error(err.message);
   process.exit(1);
 }
-const sku = yaml.load(readFileSync(located.skuPath, "utf8"));
-const placesPath = path.join(located.countryDir, "places.yaml");
-if (!existsSync(placesPath)) {
-  console.error(`Missing ${path.relative(REPO, placesPath)} — run npm run import:master first.`);
-  process.exit(1);
-}
-const pool = yaml.load(readFileSync(placesPath, "utf8"));
-
-// The workbook keys per-SKU columns "1D"/"7D"/"10D"/"14D"; sku_code ends in
-// the same token ("fiji-14d" -> "14D").
-const skuKey = sku.sku_code.split("-").pop().toUpperCase();
-
-// ---------------------------------------------------------------------------
-// Build the canonical object — the single shape the DB is compared against.
-// db/loadSku.js reconstructs exactly this from the tables; check-sku.mjs
-// diffs the two. Array order is meaning; DB ids and timestamps never appear.
-// ---------------------------------------------------------------------------
-const problems = [];
-const warnings = [];
-
-const poolByPin = new Map(pool.places.map((p) => [p.pin_id, p]));
-
-function checkPin(pinId, where) {
-  if (pinId && !poolByPin.has(pinId)) problems.push(`${where}: unknown pin "${pinId}"`);
-  return pinId ?? null;
-}
-
-const days = (sku.days ?? []).map((d, di) => {
-  const slots = (d.slots ?? []).map((s, si) => ({
-    timeLabel: s.time ?? null,
-    title: s.title,
-    body: s.body ?? null,
-    pinId: checkPin(s.place, `day ${d.day_from} slot ${si + 1}`),
-    goSlug: s.go ?? null,
-    dayNumber: s.day ?? null,
-  }));
-  if (slots.length !== 7) {
-    warnings.push(`day page ${di + 1} has ${slots.length} slots (deck convention is 7)`);
-  }
-  return {
-    dayFrom: d.day_from,
-    dayTo: d.day_to,
-    pageGroup: d.page_group,
-    title: d.title,
-    subtitle: d.subtitle ?? null,
-    badge: d.badge ?? null,
-    railStart: d.rail_start ?? null,
-    railEnd: d.rail_end ?? null,
-    photoRef: d.photo_ref ?? null,
-    photoCaption: d.photo_caption ?? null,
-    slots,
-    callouts: (d.callouts ?? []).map((c) => ({
-      kind: c.kind ?? "info",
-      title: c.title,
-      body: Array.isArray(c.body) ? c.body : [c.body],
-    })),
-  };
-});
-
-const covered = new Set();
-for (const d of days) for (let n = d.dayFrom; n <= d.dayTo; n++) covered.add(n);
-for (let n = 1; n <= sku.duration_days; n++) {
-  if (!covered.has(n)) problems.push(`day ${n} is not covered by any day page`);
-}
-
-const joins = [];
-for (const p of pool.places) {
-  const entry = p.skus?.[skuKey];
-  if (!entry) continue;
-  joins.push({
-    pinId: p.pin_id,
-    role: entry.role,
-    dayNumber: entry.day ?? null,
-    orderInDay: entry.order ?? null,
-  });
-}
-if (!joins.length) {
-  problems.push(`places.yaml has no entries for SKU key "${skuKey}"`);
-}
-// Join rows carry their itinerary meaning in day/order fields; the array
-// itself is canonically sorted by pinId so the DB round-trip compares clean.
-joins.sort((a, b) => (a.pinId < b.pinId ? -1 : 1));
-
-const canonical = {
-  sku: {
-    slug: sku.slug,
-    country: sku.country,
-    skuCode: sku.sku_code,
-    structureType: sku.structure_type,
-    durationDays: sku.duration_days,
-    sampleDay: sku.sample_day ?? null,
-    status: sku.status ?? "draft",
-    title: sku.title,
-    subtitle: sku.subtitle ?? null,
-  },
-  days,
-  skuPlaces: joins,
-  stayPicks: (sku.stay_picks ?? []).map((p) => ({
-    blockHeading: p.block_heading,
-    tier: p.tier,
-    tierLabel: p.tier_label ?? null,
-    name: p.name,
-    pinId: checkPin(p.place, `stay pick ${p.name}`),
-    body: p.body ?? null,
-    goSlug: p.go ?? null,
-  })),
-  foodPicks: (sku.food_picks ?? []).map((p) => ({
-    area: p.area ?? null,
-    tierLabel: p.tier_label ?? null,
-    name: p.name,
-    body: p.body ?? null,
-    pinId: checkPin(p.place, `food pick ${p.name}`),
-    goSlug: p.go ?? null,
-  })),
-  costItems: (sku.cost_items ?? []).map((c) => ({
-    section: c.section,
-    tier: c.tier ?? null,
-    label: c.label,
-    priceLabel: c.price_label ?? null,
-    amountLow: c.amount_low ?? null,
-    amountHigh: c.amount_high ?? null,
-    currency: c.currency ?? null,
-    per: c.per ?? null,
-    note: c.note ?? null,
-  })),
-  reservationRules: (sku.reservation_rules ?? []).map((r) => ({
-    group: r.group ?? null,
-    label: r.label,
-    leadTimeDays: r.lead_time_days ?? null,
-    leadTimeLabel: r.lead_time_label ?? null,
-    criticality: r.criticality ?? "should",
-    pinId: checkPin(r.place, `reservation ${r.label}`),
-    goSlug: r.go ?? null,
-    note: r.note ?? null,
-  })),
-  packItems: (sku.pack_items ?? []).map((p) => ({
-    group: p.group ?? null,
-    label: p.label,
-    note: p.note ?? null,
-  })),
-  activityRows: (sku.activity_rows ?? []).map((a) => ({
-    name: a.name,
-    priceLabel: a.price_label ?? null,
-    note: a.note ?? null,
-    pinId: checkPin(a.place, `activity ${a.name}`),
-    goSlug: a.go ?? null,
-  })),
-  sections: (sku.sections ?? []).map((s) => ({
-    type: s.type,
-    payload: s.payload,
-    photoRefs: s.photo_refs ?? null,
-  })),
-};
-
-// Places referenced by this SKU (joins or content links) are part of what the
-// buyer sees, so they participate in the hash; the rest of the country pool
-// does not — an unrelated SKU's pin edit must not bump this SKU's version.
-const referencedPins = new Set(joins.map((j) => j.pinId));
-for (const group of [canonical.days.flatMap((d) => d.slots), canonical.stayPicks,
-  canonical.foodPicks, canonical.reservationRules, canonical.activityRows]) {
-  for (const item of group) if (item.pinId) referencedPins.add(item.pinId);
-}
-canonical.places = [...referencedPins].sort().map((pin) => {
-  const p = poolByPin.get(pin);
-  return {
-    pinId: p.pin_id,
-    name: p.name,
-    type: p.type ?? null,
-    region: p.region ?? null,
-    tier: p.tier ?? null,
-    description: p.description ?? null,
-    lat: p.lat ?? null,
-    lng: p.lng ?? null,
-    mapUrl: p.map_url ?? null,
-    category: p.category ?? null,
-    goSlug: p.go_slug ?? null,
-  };
-});
-
-// ---------------------------------------------------------------------------
-// Report / emit
-// ---------------------------------------------------------------------------
-function stable(value) {
-  if (Array.isArray(value)) return value.map(stable);
-  if (value && typeof value === "object") {
-    return Object.fromEntries(Object.keys(value).sort().map((k) => [k, stable(value[k])]));
-  }
-  return value;
-}
-const contentHash = createHash("sha256").update(JSON.stringify(stable(canonical))).digest("hex");
+const { sku, pool } = loaded;
+const { canonical, contentHash, problems, warnings } = buildCanonicalSku(sku, pool);
+const days = canonical.days;
+const joins = canonical.skuPlaces;
 
 if (args.json) {
   process.stdout.write(JSON.stringify(canonical));

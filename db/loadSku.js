@@ -176,6 +176,7 @@ export async function loadSku(slug) {
       pinId: p.pinId, name: p.name, type: p.type, region: p.region, tier: p.tier,
       description: p.description, lat: p.lat, lng: p.lng, mapUrl: p.mapUrl,
       category: p.category, goSlug: p.goSlug,
+      attributes: p.attributes ?? null,
       // photoRef is owned by the (future) per-place photo pass, not by
       // publish-sku — the checker scrubs it, the map renders photo pins
       // where it is set.

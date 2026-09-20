@@ -17,6 +17,20 @@ const nextConfig = {
   // './vendor-chunks/drizzle-orm.js'"); externalizing means Node resolves
   // these from node_modules directly, in dev and in production alike.
   serverExternalPackages: ["drizzle-orm", "@neondatabase/serverless"],
+  // The gated reader's prototype path renders straight from the repo YAML
+  // (db/skuFromYaml.js reads content/countries/<c>/places.yaml and
+  // guides/<slug>/sku.yaml at request time). Vercel ships each function
+  // with only the files its trace finds, and a readdirSync over a
+  // slug-shaped path is invisible to that trace — so without this every
+  // reader page would work locally and 404 in production. Remove when the
+  // reader reads from Postgres.
+  outputFileTracingIncludes: {
+    "/reader/**": [
+      "./content/countries/*/country.yaml",
+      "./content/countries/*/places.yaml",
+      "./content/countries/*/guides/*/sku.yaml",
+    ],
+  },
   images: {
     remotePatterns: [
       { protocol: "https", hostname: "cdn.sanity.io" },
