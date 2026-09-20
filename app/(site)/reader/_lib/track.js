@@ -13,7 +13,7 @@ import { captureServer } from "../../../_lib/serverAnalytics";
 
 /**
  * @param {string} country   country slug ("fiji")
- * @param {string} surface   "storefront" | "spots" | "spot" | "itineraries" | "itinerary" | "day" | "bookings" | "pack" | "tips"
+ * @param {string} surface   "storefront" | "places" | "spot" | "inspire" | "itineraries" | "itinerary" | "day" | "bookings" | "pack" | "tips"
  * @param {object} extra     non-identifying properties (route slug, day number)
  */
 export function trackReaderView(country, surface, extra = {}) {

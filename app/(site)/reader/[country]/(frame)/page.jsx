@@ -1,35 +1,30 @@
-import Link from "next/link";
 import { notFound } from "next/navigation";
+import { getRequestCurrency } from "../../../../_lib/currency";
 import { hasReaderAccess } from "../../_lib/access";
 import { loadReaderCountry } from "../../_lib/loadReaderSku";
 import { trackReaderView } from "../../_lib/track";
-import { placeForClient } from "../../_lib/serialise";
-import { readerPaths } from "../../_lib/format";
-import PlaceGrid from "../../_components/PlaceGrid";
+import { routeCards } from "../../_lib/commerce";
+import { photoFor } from "../../_lib/photos";
+import RoutesChooser from "../../_components/RoutesChooser";
 
-/**
- * Places — the country root and the default tab. Every place shows as a
- * card for everyone (names and photos are the shop window); without
- * access, the cards outside the sample set carry a lock and their pages
- * show the buy box.
- */
-export default async function ReaderPlaces({ params }) {
+/** Itineraries: the country root and the landing tab, every route on the site's guide card. */
+export default async function ReaderItineraries({ params }) {
   const { country } = await params;
   const data = await loadReaderCountry(country);
   if (!data) notFound();
   const owned = await hasReaderAccess();
-  trackReaderView(country, "spots", { access: owned });
-  const sample = new Set(data.sample.pins);
-  const places = data.places.map((p) => placeForClient(country, p, { locked: !owned && !sample.has(p.pinId) }));
+  trackReaderView(country, "itineraries", { access: owned });
+  const hero = photoFor(country, data.country.heroPhoto);
+  const cards = await routeCards(country, data.routes, await getRequestCurrency(), {
+    heroSrc: hero ? hero.src : null,
+    ownedHrefOnly: owned,
+  });
   return (
     <>
-      <PlaceGrid country={country} places={places} mapHref={readerPaths.map(country)} />
-      {!owned ? (
-        <p className="mt-6 text-sm text-slate-600">
-          {sample.size} places are open to read now; the rest open with the guide.{" "}
-          <Link href="#get-the-guide" className="font-bold text-brand-terracotta">Get the guide</Link>
-        </p>
-      ) : null}
+      <p className="mb-6 max-w-2xl text-[15px] text-slate-600">
+        Every route through the same tested places. Days are timed; stops are the places.
+      </p>
+      <RoutesChooser cards={cards} />
     </>
   );
 }

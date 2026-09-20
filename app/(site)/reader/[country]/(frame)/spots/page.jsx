@@ -1,7 +1,7 @@
 import { redirect } from "next/navigation";
 
-/** Spots is the country root; the old /spots URL redirects there. */
+/** The place grid lives at /places; the old /spots URL redirects there (place pages stay at /spots/<pin>). */
 export default async function SpotsRedirect({ params }) {
   const { country } = await params;
-  redirect(`/reader/${country}`);
+  redirect(`/reader/${country}/places`);
 }

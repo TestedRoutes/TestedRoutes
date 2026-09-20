@@ -7,8 +7,8 @@ import ReaderBuyBox from "./ReaderBuyBox";
 
 /**
  * The country page frame, from the founder's mock: eyebrow (region · place
- * count · last reviewed), H1, intro, and on the right "Open the map" plus,
- * for visitors without access, "Get the guide · <price>". Then the three
+ * count · last reviewed), H1, subtitle, and on the right "Open the map" plus,
+ * for visitors without access, "Get the guide · <price>". Then the four
  * tabs. The same frame serves the storefront and the reader; what differs
  * is what the pages below it unlock.
  *
@@ -28,8 +28,9 @@ export default async function CountryFrame({ data, owned, children }) {
       <header className="md:flex md:items-start md:justify-between md:gap-8">
         <div className="min-w-0 max-w-3xl">
           <p className="font-sans text-[12px] uppercase tracking-[0.2em] text-slate-500">{eyebrow}</p>
-          {/* H1 is the country name; the search-intent title lives in the tab title and metadata. The hub's intro paragraph is not rendered here (founder: adds no value on this page). */}
+          {/* H1 is the country name; the search-intent title lives in the tab title and metadata. Under it the one-line subtitle from country.yaml (founder's mock 2026-09-20); the hub's intro paragraph is not rendered here (adds no value on this page). */}
           <h1 className="mt-2 text-5xl leading-none md:text-6xl">{c.name}</h1>
+          {c.subtitle ? <p className="mt-3 max-w-2xl font-serif text-lg leading-snug text-slate-600 md:text-xl">{c.subtitle}</p> : null}
         </div>
         <div className="mt-5 flex shrink-0 flex-wrap items-center gap-2 md:mt-10 md:justify-end">
           <Link

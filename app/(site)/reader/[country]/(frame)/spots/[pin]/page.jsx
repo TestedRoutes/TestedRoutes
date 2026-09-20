@@ -34,7 +34,7 @@ export default async function ReaderSpot({ params }) {
 
   const photo = photoFor(country, place.photoRef);
   const back = (
-    <Link href={readerPaths.country(country)} className="font-sans text-[12px] font-semibold uppercase tracking-[0.12em] text-slate-600 hover:text-brand-terracotta">← Places</Link>
+    <Link href={readerPaths.places(country)} className="font-sans text-[12px] font-semibold uppercase tracking-[0.12em] text-slate-600 hover:text-brand-terracotta">← Places</Link>
   );
 
   if (!open) {

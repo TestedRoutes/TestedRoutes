@@ -48,7 +48,9 @@ function prettyCategory(value) {
   return words.charAt(0).toUpperCase() + words.slice(1);
 }
 
-function buildCard(story, lang) {
+// Exported for the reader's Inspire tab, which lists one country's stories on
+// the same card as the index.
+export function buildInspireCard(story, lang = "en") {
   const display = getInspireFeaturedCardDisplay(story) || {};
   const cls = story.metadata?.classification || {};
   return {
@@ -118,7 +120,7 @@ export async function buildInspireIndexMetadata(lang) {
 export default async function InspireIndexPage({ lang = "en", continent = "", q = "" }) {
   const t = getDict(lang).inspireList;
   const stories = await loadInspireStories(lang);
-  const cards = stories.map((s) => buildCard(s, lang));
+  const cards = stories.map((s) => buildInspireCard(s, lang));
   // Home links in per continent ("See all in Africa"); ignore a slug that
   // no story matches so a stale link still shows the full index.
   const wantedContinent = continentBucket(continent);

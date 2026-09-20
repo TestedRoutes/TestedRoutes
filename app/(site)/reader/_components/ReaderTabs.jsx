@@ -5,14 +5,15 @@ import { usePathname } from "next/navigation";
 import { readerPaths } from "../_lib/format";
 
 /**
- * The three tabs from the founder's mock, as underlined text: Places ·
- * Itineraries · Travel tips. Places is the country root. Place pages count
- * as Places, itinerary and day pages as Itineraries, the bookings and pack
- * pages as Travel tips.
+ * The four tabs from the founder's header mock (2026-09-20), as underlined
+ * text: Itineraries · Places · Inspire · Travel tips. Itineraries is the
+ * country root. Route and day pages count as Itineraries, place pages
+ * (/spots/<pin>) as Places, the bookings and pack pages as Travel tips.
  */
 const TABS = [
-  { key: "", label: "Places" },
-  { key: "itineraries", label: "Itineraries" },
+  { key: "", label: "Itineraries" },
+  { key: "places", label: "Places" },
+  { key: "inspire", label: "Inspire" },
   { key: "tips", label: "Travel tips" },
 ];
 
@@ -21,7 +22,7 @@ export default function ReaderTabs({ country }) {
   const pathname = usePathname() || base;
   const rest = pathname.startsWith(base) ? pathname.slice(base.length) : "";
   const first = rest.split("/").filter(Boolean)[0] || "";
-  const active = first === "spots" ? "" : first === "bookings" || first === "pack" ? "tips" : first;
+  const active = first === "itineraries" ? "" : first === "spots" ? "places" : first === "bookings" || first === "pack" ? "tips" : first;
   return (
     // overflow-y-hidden matters: an underline hanging a pixel below the row
     // gave Windows a vertical scrollbar whose arrows read as a control.

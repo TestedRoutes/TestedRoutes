@@ -125,9 +125,14 @@ export function categoryLabel(key) {
 /** Path helpers for the country-scoped reader. */
 export const readerPaths = {
   country: (c) => `/reader/${c}`,
-  spots: (c) => `/reader/${c}/spots`,
+  // Itineraries is the country root (founder's header mock, 2026-09-20); the
+  // place grid sits at /places while place pages keep their /spots/<pin>
+  // URLs so shared links survive.
+  places: (c) => `/reader/${c}/places`,
+  spots: (c) => `/reader/${c}/places`,
   spot: (c, pin) => `/reader/${c}/spots/${pin}`,
-  itineraries: (c) => `/reader/${c}/itineraries`,
+  itineraries: (c) => `/reader/${c}`,
+  inspire: (c) => `/reader/${c}/inspire`,
   itinerary: (c, sku) => `/reader/${c}/itineraries/${sku}`,
   day: (c, sku, n) => `/reader/${c}/itineraries/${sku}/day/${n}`,
   tips: (c) => `/reader/${c}/tips`,

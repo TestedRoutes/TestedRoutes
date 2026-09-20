@@ -131,8 +131,11 @@ mistake.
 ## Gated guide reader — prototype (2026-09-20)
 
 `app/(site)/reader/<country>` is the country guide inside the site chrome:
-Spots · Itineraries · Travel tips, "Open the map" to a full-screen map with
-a photo strip, device-local bookmarks. Every page renders for everyone; the
+Itineraries · Places · Inspire · Travel tips (that order, founder's header
+mock 2026-09-20; Itineraries is the country root, the place grid is
+`/places`, place pages keep `/spots/<pin>`, Inspire lists the country's
+public stories on the `/inspire` card), "Open the map" to a full-screen
+map with a photo strip, device-local bookmarks. Every page renders for everyone; the
 sample day, the sample pins and the first tips are open, the rest shows the
 buy box inline. Fiji only. Built **ahead of any billing or
 public-site change** (founder decision 2026-09-20: a working prototype
