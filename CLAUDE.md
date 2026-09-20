@@ -185,6 +185,16 @@ first, then scope it down and measure), so the seams are deliberate:
 `/reader/` is disallowed in robots and every reader page is `noindex` +
 `no-store`; the gate is the protection.
 
+## Maps
+
+**Google Maps only** (founder rule, 2026-09-20): never OpenStreetMap or
+Leaflet on any new surface. The reader's map is
+`app/reader/_components/RouteMapGoogle.jsx` on `@vis.gl/react-google-maps`
+(`NEXT_PUBLIC_GOOGLE_MAPS_API_KEY`, `NEXT_PUBLIC_GOOGLE_MAPS_MAP_ID`); it
+renders a labelled placeholder without the key. The sales-page
+`LocationMap.jsx` predates the rule and still draws Leaflet on OSM tiles;
+it moves to Google Maps with the next public-site change.
+
 ## Conventions
 
 - **Deliverables are append-only: publish a new version, never overwrite.**
