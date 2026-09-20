@@ -128,6 +128,37 @@ failure becomes a warning that prints on every run. Say next to it why and
 since when — an acknowledgement nobody can date is indistinguishable from a
 mistake.
 
+## Gated guide reader — prototype (2026-09-20)
+
+`app/reader/<slug>` renders a purchased guide as web pages (Overview, Day
+timeline, Bookings, Pack, Guide) from the structured content. It is a
+**prototype ahead of any billing or public-site change** (founder decision
+2026-09-20: see a working reader on a phone first), so three things are
+deliberately provisional:
+
+- **Gate = one preview key**, not purchase tokens: `READER_PREVIEW_SECRET`
+  in the environment, entered once on the gate page (or
+  `/reader/unlock?key=…&to=/reader/<slug>`), held as an HMAC in an httpOnly
+  cookie scoped to `/reader`. `app/reader/_lib/access.js` is the swap point
+  for the live `requireGuideAccess` (token → purchase doc → slug). Pages
+  never check access; the `[slug]/layout.jsx` does, once.
+- **Data = repo YAML, no database**: `app/reader/_lib/loadReaderSku.js`
+  calls `db/skuFromYaml.js`, the builder factored out of `publish-sku.mjs`
+  (its `--json` output is byte-identical before and after). Going live is
+  one import change to `db/loadSku.js`; both return the canonical shape
+  `check:sku` enforces. `outputFileTracingIncludes` in `next.config.mjs`
+  ships the YAML with the Vercel function — remove it with the swap.
+- **Fiji content is a hand-seeded subset**: Day 2 complete, Day 1 partial,
+  the other day pages title-only; bookings, pack and stays real. Both files
+  say so in their headers. `places.yaml` pins are `FJ-P##` (provisional) —
+  the real `npm run import:master` + `extract_fiji_deck.py` run on the
+  founder's machine replaces both files wholesale and remaps the pins.
+
+`.gitignore` re-includes exactly `content/countries/*/places.yaml` and
+`content/countries/*/guides/*/sku.yaml`; everything else under
+`content/countries` stays out of git. `/reader/` is disallowed in robots and
+every reader page is `noindex` + `no-store`; the gate is the protection.
+
 ## Conventions
 
 - **Deliverables are append-only: publish a new version, never overwrite.**

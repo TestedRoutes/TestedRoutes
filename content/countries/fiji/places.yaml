@@ -1,0 +1,237 @@
+# Fiji place pool — PROTOTYPE SEED (2026-09-20).
+#
+# The real file is machine-owned: `npm run import:master` regenerates it
+# wholesale from TestedRoutes_Fiji_Master_v<N>.xlsx, which lives on the
+# founder's machine and cannot be read from a remote session. This seed
+# exists so the gated-reader prototype has something to render before that
+# import has run. Two consequences, both deliberate:
+#
+#   - pin_ids are provisional (FJ-P##, "P" for prototype) so they can never
+#     collide with the workbook's numeric FJ-### ids. When the import runs,
+#     sku.yaml's `place:` references must be remapped to the workbook ids in
+#     the same commit — the publish script fails loudly on an unknown pin, so
+#     a missed one cannot slip through.
+#   - go_slug is left empty everywhere. Aliases are frozen printed contracts
+#     and the import validates each against live Sanity; guessing one here
+#     would put an unverified link in front of a buyer.
+#
+# Coordinates come from the sales-page data module (scripts/guides/
+# fiji-honeymoon-14-days.mjs), which took them from master v9. Taveuni-side
+# longitudes are stored past 180 on purpose: the reader's map fits bounds on
+# a continuous plane, and the negative form would draw the route the long
+# way round the world. Pins without coordinates in that module carry none —
+# nothing here is written from memory.
+country: fj
+places:
+  - pin_id: FJ-P01
+    name: Nadi International Airport
+    type: Airport
+    region: Nadi & Denarau
+    lat: -17.753308
+    lng: 177.450758
+    category: transport
+    skus:
+      14D: { role: route, day: 1, order: 1 }
+  - pin_id: FJ-P02
+    name: Hilton Fiji Beach Resort
+    type: Resort
+    region: Nadi & Denarau
+    tier: "3"
+    description: The pick on every Denarau night, a run of pools along the water.
+    lat: -17.768362
+    lng: 177.377492
+    category: stay
+    skus:
+      14D: { role: route, day: 1, order: 2 }
+  - pin_id: FJ-P03
+    name: Port Denarau Marina
+    type: Marina
+    region: Nadi & Denarau
+    description: The departure quay for every Mamanuca and Yasawa boat.
+    lat: -17.772825
+    lng: 177.380814
+    category: transport
+    skus:
+      14D: { role: route, day: 2, order: 1 }
+  - pin_id: FJ-P04
+    name: Castaway Island
+    type: Resort / Day trip
+    region: Mamanucas
+    tier: "2"
+    description: A resort island rather than a day-trip facility; the day boat is capped at twenty passengers.
+    lat: -17.735284
+    lng: 177.129375
+    category: highlight
+    skus:
+      14D: { role: route, day: 2, order: 2 }
+  - pin_id: FJ-P05
+    name: Garden of the Sleeping Giant
+    type: Garden
+    region: Nadi & Denarau
+    lat: -17.713029
+    lng: 177.469247
+    category: sight
+    skus:
+      14D: { role: route, day: 3, order: 1 }
+  - pin_id: FJ-P06
+    name: Sabeto Hot Springs and Mud Pool
+    type: Hot springs
+    region: Nadi & Denarau
+    lat: -17.718211
+    lng: 177.484435
+    category: sight
+    skus:
+      14D: { role: route, day: 3, order: 2 }
+  - pin_id: FJ-P07
+    name: Sri Siva Subramaniya Temple
+    type: Temple
+    region: Nadi & Denarau
+    lat: -17.807254
+    lng: 177.415068
+    category: sight
+    skus:
+      14D: { role: route, day: 3, order: 3 }
+  - pin_id: FJ-P08
+    name: Robinson Crusoe Island
+    type: Day trip
+    region: Coral Coast
+    description: The Sunset Cruise Dinner Show runs Monday, Wednesday and Saturday only.
+    lat: -18.055979
+    lng: 177.2874
+    category: highlight
+    skus:
+      14D: { role: route, day: 3, order: 4 }
+  - pin_id: FJ-P09
+    name: Octopus Resort
+    type: Resort
+    region: Yasawa Islands
+    tier: "2"
+    description: The tested base on Waya. White sand bay, house reef, dive boats off the beach.
+    lat: -17.276837
+    lng: 177.107057
+    category: stay
+    skus:
+      14D: { role: route, day: 4, order: 1 }
+  - pin_id: FJ-P10
+    name: The Awakening Shark Dive, Kuata
+    type: Dive
+    region: Yasawa Islands
+    description: Runs at 08:00 and 11:00 daily off Kuata; an introductory option needs no licence.
+    lat: -17.361946
+    lng: 177.13437
+    category: highlight
+    skus:
+      14D: { role: route, day: 5, order: 1 }
+  - pin_id: FJ-P11
+    name: Mantaray Island Resort
+    type: Resort
+    region: Yasawa Islands
+    tier: "2"
+    lat: -17.175631
+    lng: 177.184749
+    category: stay
+    skus:
+      14D: { role: route, day: 6, order: 1 }
+  - pin_id: FJ-P12
+    name: The manta channel, Drawaqa
+    type: Snorkel
+    region: Yasawa Islands
+    description: Snorkel with rays when the lali drum beats. They feed May to October.
+    lat: -17.171958
+    lng: 177.191903
+    category: highlight
+    skus:
+      14D: { role: route, day: 7, order: 1 }
+  - pin_id: FJ-P13
+    name: Barefoot Manta
+    type: Resort
+    region: Yasawa Islands
+    tier: "1"
+    description: Closest bed to the channel, home of the chain's conservation centre.
+    category: stay
+    skus:
+      14D: { role: extra, day: 6 }
+  - pin_id: FJ-P14
+    name: Coconut Beach Resort
+    type: Resort
+    region: Yasawa Islands
+    tier: "2"
+    lat: -16.933875
+    lng: 177.357662
+    category: stay
+    skus:
+      14D: { role: route, day: 8, order: 1 }
+  - pin_id: FJ-P15
+    name: The Blue Lagoon
+    type: Snorkel
+    region: Yasawa Islands
+    lat: -16.91182
+    lng: 177.38223
+    category: highlight
+    skus:
+      14D: { role: route, day: 8, order: 2 }
+  - pin_id: FJ-P16
+    name: Sawa-i-Lau Caves
+    type: Caves
+    region: Yasawa Islands
+    description: Half-flooded limestone chambers you swim into. Out before 09:00, booked at Coconut Beach.
+    lat: -16.850966
+    lng: 177.466709
+    category: highlight
+    skus:
+      14D: { role: route, day: 9, order: 1 }
+  - pin_id: FJ-P17
+    name: Taveuni Airport (Matei)
+    type: Airport
+    region: Taveuni
+    lat: -16.688113
+    lng: 180.118937
+    category: transport
+    skus:
+      14D: { role: route, day: 11, order: 1 }
+  - pin_id: FJ-P18
+    name: Taveuni Palms
+    type: Resort
+    region: Taveuni
+    tier: "3"
+    description: Two villas, each on its own private acre with a pool and its own staff.
+    category: stay
+    skus:
+      14D: { role: route, day: 11, order: 2 }
+  - pin_id: FJ-P19
+    name: Tavoro Falls, Bouma
+    type: Waterfall
+    region: Taveuni
+    lat: -16.8268796
+    lng: 180.1213125
+    category: highlight
+    skus:
+      14D: { role: route, day: 12 }
+  - pin_id: FJ-P20
+    name: Lavena Coastal Walk
+    type: Walk
+    region: Taveuni
+    lat: -16.872341
+    lng: 180.098606
+    category: highlight
+    skus:
+      14D: { role: route, day: 12 }
+  - pin_id: FJ-P21
+    name: Rainbow Reef
+    type: Dive
+    region: Taveuni
+    lat: -16.784602
+    lng: 179.92309
+    category: highlight
+    skus:
+      14D: { role: route, day: 12 }
+  - pin_id: FJ-P22
+    name: Great White Wall
+    type: Dive
+    region: Taveuni
+    description: A cliff face of white soft coral, 25 to 30 m, certified divers only, tide-dependent.
+    lat: -16.7754
+    lng: 179.899
+    category: highlight
+    skus:
+      14D: { role: route, day: 13, order: 1 }

@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
+import { usePathname } from "next/navigation";
 import klaroConfig from "../_lib/klaroConfig";
 import "./klaroOverrides.css";
 
@@ -16,7 +17,14 @@ import "./klaroOverrides.css";
  *   window.klaro?.show()
  */
 export default function CookieConsent() {
+  // The gated guide reader (/reader/*) sits outside the (site) layout and
+  // loads no PostHog, no Beehiiv, no marketing pixel — there is nothing to
+  // consent to, and the banner would sit over the first day page a buyer
+  // opens on a phone. Vercel Web Analytics is cookie-free by design.
+  const pathname = usePathname();
+  const suppressed = Boolean(pathname && pathname.startsWith("/reader"));
   useEffect(() => {
+    if (suppressed) return undefined;
     let mounted = true;
     (async () => {
       const klaro = await import("klaro/dist/klaro");
@@ -32,7 +40,8 @@ export default function CookieConsent() {
     return () => {
       mounted = false;
     };
-  }, []);
+  }, [suppressed]);
 
+  if (suppressed) return null;
   return <div id="klaro" />;
 }
