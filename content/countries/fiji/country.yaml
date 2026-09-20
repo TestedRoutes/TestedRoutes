@@ -28,7 +28,10 @@ intro: >-
   Yasawas and Taveuni.
 hero_photo: yasawa-ridge-reef.jpg
 hero_alt: Looking down over a green Yasawa island ridge to turquoise reef water and an offshore islet, Fiji
-verified: 2026-08-21
+region_label: South Pacific
+# The one date the reader shows: when the content was last reviewed.
+# Never a travel date, never "verified on the ground" (founder rule).
+reviewed: 2026-08-21
 # The country guide's price. Proposed at the 14-day route's rung (the plan's
 # 2-week ladder, 2026-08-16) until the founder sets it; the buy box shows
 # the visitor's currency, EUR as the fallback.
@@ -59,3 +62,37 @@ sample:
   route: fiji-honeymoon-14-days
   day: 2
   pins: [FJ-P01, FJ-P02, FJ-P03, FJ-P04]
+
+# Travel tips: the cards on the Travel tips tab (eyebrow · title · body),
+# authored here so the founder edits YAML, not code. Seeded verbatim from his
+# own text in the 14-day data module and the Fiji destination page. `link`
+# points a card at a fuller page inside the reader.
+tips:
+  - eyebrow: When to go
+    title: May, June or September
+    body: Dry-season certainty without the July-to-August crowds or the holiday premium. December and January carry holiday pricing on top of the wet; we honeymooned in December and it worked, but it cost us rain days.
+  - eyebrow: Getting around
+    title: One catamaran a day
+    body: The Yasawa Flyer runs the chain once a day each way, leaving Port Denarau by 08:45. It never docks at the islands – each resort sends its own boat out to meet it. The longest leg is 4 h 45 in open water.
+  - eyebrow: Money
+    title: Cash past Denarau
+    body: Carry small Fijian-dollar notes from day one – taxis, park gates and villages are cash. Taxis have no meters anywhere in Fiji.
+  - eyebrow: Bookings
+    title: Island beds first
+    body: All 14 hotel nights 3 to 6 months ahead, island beds first because they set the route. The Bula Pass and the Nadi to Taveuni flights 1 to 2 months ahead; the helicopter, the Castaway day boat and the dive days about a month ahead.
+    link: tips/bookings
+    link_label: The full checklist
+  - eyebrow: Pack
+    title: Pack to 15 kg from home
+    body: It is the checked limit on the helicopter and the Taveuni flights alike. Reef shoes for the coral and the Lavena stream, a dry bag because boat transfers land on beaches and bags ride in spray.
+    link: tips/pack
+    link_label: The full list
+  - eyebrow: Etiquette
+    title: Shoulders and knees
+    body: A sarong covers both for the temple and any village. Read the activities board the moment you land on each island – almost none of it is online. When the lali drum beats, drop everything and get to the boat.
+  - eyebrow: Mistakes
+    title: The five that cost people
+    body: Comparing island beds without the compulsory meal plan. Turning up for Castaway without a seat. Walking to the wrong Nadi terminal. Building a December trip around a manta. Adding an afternoon dive on Day 13, which breaks the 18-hour flying-after-diving margin.
+  - eyebrow: Paperwork
+    title: Visitor permit on arrival
+    body: Covers most passports, and Fiji is not a malaria zone. International and domestic terminals at Nadi are separate buildings.

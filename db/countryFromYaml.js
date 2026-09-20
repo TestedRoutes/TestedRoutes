@@ -63,7 +63,8 @@ function shapePlace(p) {
  *
  * Returns:
  *   country   the yaml's scalar fields (title, subtitle, creatorLine, intro,
- *             heroPhoto, heroAlt, verified, price[])
+ *             heroPhoto, heroAlt, regionLabel, reviewed, price[])
+ *   tips      the Travel tips cards in authored order
  *   routes    [{ slug, title, days, who, free, sku }] in authored order
  *   places    every pin in the country pool, reader shape
  *   sample    { routeSlug, day, pins[] } resolved: `route` is the canonical
@@ -105,13 +106,23 @@ export function loadCountryFromYaml(slug, opts = {}) {
       heroAlt: c.hero_alt ?? null,
       // js-yaml parses a bare date into a Date; the reader wants the plain
       // ISO day, never a locale string.
-      verified: c.verified
-        ? c.verified instanceof Date
-          ? c.verified.toISOString().slice(0, 10)
-          : String(c.verified)
+      regionLabel: c.region_label ?? null,
+      // The only date the reader shows. js-yaml parses a bare date into a
+      // Date; the reader wants the plain ISO day, never a locale string.
+      reviewed: c.reviewed
+        ? c.reviewed instanceof Date
+          ? c.reviewed.toISOString().slice(0, 10)
+          : String(c.reviewed)
         : null,
       price: Array.isArray(c.price) ? c.price : [],
     },
+    tips: (c.tips ?? []).map((t) => ({
+      eyebrow: t.eyebrow ?? null,
+      title: t.title,
+      body: t.body ?? null,
+      link: t.link ?? null,
+      linkLabel: t.link_label ?? null,
+    })),
     routes,
     places: (pool.places ?? []).map(shapePlace),
     sample: {

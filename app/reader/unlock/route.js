@@ -10,7 +10,7 @@
  * would be a phishing gift, prototype or not.
  */
 import { NextResponse } from "next/server";
-import { accessCookie, keyMatches } from "../_lib/access";
+import { accessCookie, keyMatches } from "../../(site)/reader/_lib/access";
 
 export const dynamic = "force-dynamic";
 

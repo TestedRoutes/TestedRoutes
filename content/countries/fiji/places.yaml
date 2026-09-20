@@ -26,7 +26,8 @@
 # set) and is set only where that photo unambiguously shows the pin; the
 # per-place photo pass fills the rest. `attributes` carries the practical
 # facts the reader shows on a place card (access, time_needed, cost_band,
-# season, parking, road), only where the published text states them.
+# season, parking, road), only where the published text states them;
+# time_short is the one-word duration on a spot card ("Half day", "2 nights").
 country: fj
 places:
   - pin_id: FJ-P01
@@ -37,6 +38,7 @@ places:
     lng: 177.450758
     category: transport
     attributes:
+      time_short: 1 h
       access: International and domestic are separate buildings; allow up to an hour behind a widebody
     skus:
       14D: { role: route, day: 1, order: 1 }
@@ -50,6 +52,7 @@ places:
     lng: 177.377492
     category: stay
     attributes:
+      time_short: 3 nights
       cost_band: "€€€"
       time_needed: Nights 1 to 3
     skus:
@@ -64,6 +67,7 @@ places:
     category: transport
     photo_ref: port-denarau-marina.jpg
     attributes:
+      time_short: 30 min
       access: 10 minute walk or a short taxi from any Denarau hotel
       time_needed: Check in 45 minutes before sailing
     skus:
@@ -78,6 +82,7 @@ places:
     lng: 177.129375
     category: sight
     attributes:
+      time_short: Full day
       access: Day boat from Port Denarau, capped at twenty passengers – book before you fly
       time_needed: "Full day, 08:45 to 18:00"
       cost_band: FJD 335 per adult, transfers, lunch and kit in, drinks extra
@@ -90,6 +95,8 @@ places:
     lat: -17.713029
     lng: 177.469247
     category: sight
+    attributes:
+      time_short: 1 h
     skus:
       14D: { role: route, day: 3, order: 1 }
   - pin_id: FJ-P06
@@ -99,6 +106,8 @@ places:
     lat: -17.718211
     lng: 177.484435
     category: sight
+    attributes:
+      time_short: 1 h
     skus:
       14D: { role: route, day: 3, order: 2 }
   - pin_id: FJ-P07
@@ -110,6 +119,7 @@ places:
     category: sight
     photo_ref: nadi-temple-ceiling.jpg
     attributes:
+      time_short: 1 h
       access: Covered shoulders and knees; a sarong does it
     skus:
       14D: { role: route, day: 3, order: 3 }
@@ -122,6 +132,7 @@ places:
     lng: 177.2874
     category: sight
     attributes:
+      time_short: Evening
       season: Sunset Cruise Dinner Show on Monday, Wednesday and Saturday only
     skus:
       14D: { role: route, day: 3, order: 4 }
@@ -135,6 +146,7 @@ places:
     lng: 177.107057
     category: stay
     attributes:
+      time_short: 2 nights
       cost_band: "€€"
       time_needed: Nights 4 and 5
     skus:
@@ -149,6 +161,7 @@ places:
     category: dive
     photo_ref: shark-dive-kuata.jpg
     attributes:
+      time_short: Half day
       time_needed: "08:00 or 11:00 slots"
       access: Arranged at Octopus; an introductory option needs no licence
     skus:
@@ -162,6 +175,7 @@ places:
     lng: 177.184749
     category: stay
     attributes:
+      time_short: 2 nights
       cost_band: "€€"
       time_needed: Nights 6 and 7
     skus:
@@ -175,6 +189,7 @@ places:
     lng: 177.191903
     category: snorkel
     attributes:
+      time_short: 2 h
       season: Mantas feed May to October
       access: When the lali drum beats, drop everything and get to the boat
     skus:
@@ -187,6 +202,7 @@ places:
     description: Closest bed to the channel, home of the chain's conservation centre.
     category: stay
     attributes:
+      time_short: 2 nights
       cost_band: "€"
     skus:
       14D: { role: extra, day: 6 }
@@ -199,6 +215,7 @@ places:
     lng: 177.357662
     category: stay
     attributes:
+      time_short: 2 nights
       cost_band: "€€"
       time_needed: Nights 8 and 9
     skus:
@@ -211,6 +228,8 @@ places:
     lng: 177.38223
     category: snorkel
     photo_ref: blue-lagoon-beach.jpg
+    attributes:
+      time_short: Half day
     skus:
       14D: { role: route, day: 8, order: 2 }
   - pin_id: FJ-P16
@@ -223,6 +242,7 @@ places:
     category: sight
     photo_ref: sawa-i-lau-cave-pool.jpg
     attributes:
+      time_short: Half day
       access: "Booked at Coconut Beach; out before 09:00"
     skus:
       14D: { role: route, day: 9, order: 1 }
@@ -234,6 +254,7 @@ places:
     lng: 180.118937
     category: transport
     attributes:
+      time_short: 25 min
       access: Island Hoppers, about 25 minutes from Nadi; 15 kg checked per bag
     skus:
       14D: { role: route, day: 11, order: 1 }
@@ -245,6 +266,7 @@ places:
     description: Two villas, each on its own private acre with a pool and its own staff.
     category: stay
     attributes:
+      time_short: 3 nights
       cost_band: "€€€"
       time_needed: Nights 11 to 13
     skus:
@@ -257,6 +279,8 @@ places:
     lng: 180.1213125
     category: sight
     photo_ref: tavoro-falls.jpg
+    attributes:
+      time_short: 2 h
     skus:
       14D: { role: route, day: 12 }
   - pin_id: FJ-P20
@@ -267,6 +291,7 @@ places:
     lng: 180.098606
     category: walk
     attributes:
+      time_short: Half day
       access: A stream crossing on the walk – reef shoes
     skus:
       14D: { role: route, day: 12 }
@@ -279,6 +304,7 @@ places:
     category: dive
     photo_ref: rainbow-reef-corals.jpg
     attributes:
+      time_short: Half day
       access: Taveuni Ocean Sports; ask about the Great White Wall window
     skus:
       14D: { role: route, day: 12 }
@@ -291,6 +317,7 @@ places:
     lng: 179.899
     category: dive
     attributes:
+      time_short: Half day
       access: Certified divers only, 25 to 30 m, tide-dependent; keep Day 13 flexible and mind the 18-hour flying-after-diving clock
     skus:
       14D: { role: route, day: 13, order: 1 }
