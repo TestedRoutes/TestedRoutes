@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useMemo, useRef, useState } from "react";
-import { CATEGORY, categoryLabel } from "../_lib/format";
+import { CATEGORY, categoryLabel, distanceKm, kmLabel } from "../_lib/format";
 import { useSaved } from "../_lib/saved";
 import RouteMap from "./RouteMap";
 import SaveButton from "./SaveButton";
@@ -19,13 +19,37 @@ import SaveButton from "./SaveButton";
  * Phones have no room for a side panel: there the list collapses to the
  * photo strip along the bottom.
  *
+ * "Show my location" asks the browser for the visitor's position, drops
+ * the blue dot, pans to it and re-sorts the panel as one Nearby list with
+ * the distance on every row — the "what is near me" the founder asked for.
+ * Denied or unavailable: one line says so and nothing else changes.
+ *
  * Without access the locked pins sit muted and their rows carry a lock.
  */
 export default function MapPage({ country, title, places, backHref, buyHref, priceLabel }) {
   const [q, setQ] = useState("");
   const [cat, setCat] = useState("");
   const [selected, setSelected] = useState(null);
+  const [me, setMe] = useState(null); // { lat, lng } once granted
+  const [locating, setLocating] = useState("idle"); // idle | asking | on | denied | unsupported
   const { saved, ready } = useSaved(country);
+
+  function locate() {
+    if (typeof navigator === "undefined" || !navigator.geolocation) {
+      setLocating("unsupported");
+      return;
+    }
+    setLocating("asking");
+    navigator.geolocation.getCurrentPosition(
+      (pos) => {
+        setMe({ lat: pos.coords.latitude, lng: pos.coords.longitude });
+        setLocating("on");
+        setSelected("me");
+      },
+      () => setLocating("denied"),
+      { enableHighAccuracy: true, timeout: 10000, maximumAge: 60000 },
+    );
+  }
   const panelRef = useRef(null);
   const stripRef = useRef(null);
 
@@ -43,6 +67,13 @@ export default function MapPage({ country, title, places, backHref, buyHref, pri
   // Region groups in order of first appearance; numbering runs across them
   // so the list and the pins read as one sequence.
   const groups = useMemo(() => {
+    if (me) {
+      const sorted = shown
+        .map((p) => ({ ...p, km: p.lat != null && p.lng != null ? distanceKm(me, p) : null }))
+        .sort((a, b) => (a.km ?? 1e9) - (b.km ?? 1e9))
+        .map((p, i) => ({ ...p, n: i + 1 }));
+      return [["Nearby · from where you are", sorted]];
+    }
     const out = [];
     const by = new Map();
     shown.forEach((p) => {
@@ -55,11 +86,12 @@ export default function MapPage({ country, title, places, backHref, buyHref, pri
     });
     let n = 0;
     return out.map(([region, items]) => [region, items.map((p) => ({ ...p, n: ++n }))]);
-  }, [shown]);
+  }, [shown, me]);
   const numbered = useMemo(() => groups.flatMap(([, items]) => items), [groups]);
-  const current = selected ? numbered.find((p) => p.pinId === selected) || null : null;
+  const current = selected && selected !== "me" ? numbered.find((p) => p.pinId === selected) || null : null;
 
-  const pins = numbered
+  const mePin = me ? [{ id: "me", name: "You are here", sub: null, lat: me.lat, lng: me.lng, kind: "me", label: null, photoUrl: null, href: null }] : [];
+  const pins = [...mePin, ...numbered
     .filter((p) => p.lat != null && p.lng != null)
     .map((p) => ({
       id: p.pinId,
@@ -71,7 +103,7 @@ export default function MapPage({ country, title, places, backHref, buyHref, pri
       label: String(p.n),
       photoUrl: p.photoUrl,
       href: p.locked ? null : `/reader/${country}/spots/${p.pinId}`,
-    }));
+    }))];
 
   useEffect(() => {
     if (!selected) return;
@@ -86,12 +118,12 @@ export default function MapPage({ country, title, places, backHref, buyHref, pri
     (on ? "bg-brand-ink text-brand-cream" : "bg-white text-slate-700 ring-1 ring-brand-line hover:bg-brand-ink/5");
 
   const thumb = (p, size) => (
-    <div className={"relative shrink-0 overflow-hidden rounded-xl bg-brand-bone " + size}>
+    <div className={"relative shrink-0 overflow-hidden rounded-xl bg-brand-parchment ring-1 ring-inset ring-brand-line " + size}>
       {p.photoUrl ? (
         // eslint-disable-next-line @next/next/no-img-element
         <img src={p.photoUrl} alt="" className="h-full w-full object-cover" loading="lazy" />
       ) : (
-        <span className="absolute inset-0 flex items-center justify-center text-xl text-brand-ink/25">{CATEGORY[p.category]?.glyph || "◎"}</span>
+        <span className="absolute inset-0 flex items-center justify-center text-2xl text-brand-terracotta/70">{CATEGORY[p.category]?.glyph || "◎"}</span>
       )}
     </div>
   );
@@ -100,15 +132,23 @@ export default function MapPage({ country, title, places, backHref, buyHref, pri
     <>
       <label className="flex items-center gap-2 rounded-full bg-white px-4 py-2.5 ring-1 ring-brand-line">
         <span aria-hidden className="h-2 w-2 rounded-full bg-brand-ink" />
-        <input type="search" value={q} onChange={(e) => setQ(e.target.value)} placeholder="Search spots" className="w-full bg-transparent text-[15px] outline-none placeholder:text-slate-400" />
+        <input type="search" value={q} onChange={(e) => setQ(e.target.value)} placeholder="Search places" className="w-full bg-transparent text-[15px] outline-none placeholder:text-slate-400" />
       </label>
-      <div className="flex gap-2 overflow-x-auto pb-1">
+      <div className="flex gap-2 overflow-x-auto overflow-y-hidden pb-1">
+        <button type="button" onClick={locate} className={chip(locating === "on")} title="Uses your browser's location, never stored">
+          {locating === "asking" ? "Locating…" : locating === "on" ? "● Near me" : "Show my location"}
+        </button>
         <button type="button" onClick={() => setCat("")} className={chip(!cat)}>All</button>
         {cats.map((k) => (
           <button key={k} type="button" onClick={() => setCat(cat === k ? "" : k)} className={chip(cat === k)}>{CATEGORY[k].label}</button>
         ))}
         <button type="button" onClick={() => setCat(cat === "saved" ? "" : "saved")} className={chip(cat === "saved")}>Saved{ready && saved.size ? ` · ${saved.size}` : ""}</button>
       </div>
+      {locating === "denied" || locating === "unsupported" ? (
+        <p className="font-sans text-[12px] text-slate-500">
+          {locating === "denied" ? "Location was not shared, so the list stays by region." : "This browser cannot share a location."}
+        </p>
+      ) : null}
     </>
   );
 
@@ -168,7 +208,7 @@ export default function MapPage({ country, title, places, backHref, buyHref, pri
         <h1 className="mt-1 text-3xl leading-tight">Every tested place</h1>
         <div className="mt-4 flex flex-col gap-3">{filters}</div>
         {groups.length === 0 ? (
-          <p className="mt-10 text-center text-sm text-slate-500">{cat === "saved" ? "Nothing saved yet. Tap + on a place to keep it." : "No places match."}</p>
+          <p className="mt-10 text-center text-sm text-slate-500">{cat === "saved" ? "Nothing saved on this device yet. Tap + on a place to keep it here." : "No places match."}</p>
         ) : null}
         {groups.map(([region, items]) => (
           <section key={region} className="mt-6">
@@ -190,7 +230,10 @@ export default function MapPage({ country, title, places, backHref, buyHref, pri
                     {thumb(p, "h-12 w-12")}
                     <div className="min-w-0 flex-1">
                       <p className="truncate font-sans text-[15px] font-semibold text-slate-900">{p.name}</p>
-                      <p className="truncate font-sans text-[12px] text-slate-500">{categoryLabel(p.category)}{p.timeShort ? ` • ${p.timeShort}` : ""}</p>
+                      <p className="truncate font-sans text-[12px] text-slate-500">
+                        {categoryLabel(p.category)}{p.timeShort ? ` • ${p.timeShort}` : ""}
+                        {p.km != null ? <span className="text-brand-terracotta"> • {kmLabel(p.km)}</span> : null}
+                      </p>
                     </div>
                     {p.locked ? (
                       <span aria-label="Opens with the guide" className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-brand-ink/70 text-xs text-white">🔒</span>

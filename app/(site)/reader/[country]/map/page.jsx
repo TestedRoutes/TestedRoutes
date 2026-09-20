@@ -21,7 +21,7 @@ export default async function ReaderMap({ params }) {
   return (
     <MapPage
       country={country}
-      title={data.country.title.replace(/ itinerary$/i, "")}
+      title={data.country.name}
       places={places}
       backHref={readerPaths.country(country)}
       buyHref={price ? `${readerPaths.country(country)}#get-the-guide` : null}

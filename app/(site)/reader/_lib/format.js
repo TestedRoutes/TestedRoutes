@@ -82,6 +82,20 @@ export function directionsHref(place) {
   return `https://www.google.com/maps/dir/?api=1&destination=${place.lat},${lng}`;
 }
 
+/** Great-circle distance in km between two {lat,lng}; longitudes past 180 are fine. */
+export function distanceKm(a, b) {
+  const r = Math.PI / 180;
+  const dLat = (b.lat - a.lat) * r;
+  const dLng = (((b.lng - a.lng + 540) % 360) - 180) * r;
+  const h = Math.sin(dLat / 2) ** 2 + Math.cos(a.lat * r) * Math.cos(b.lat * r) * Math.sin(dLng / 2) ** 2;
+  return 6371 * 2 * Math.asin(Math.sqrt(h));
+}
+
+/** "0.8 km" / "27 km" */
+export function kmLabel(d) {
+  return `${d < 10 ? d.toFixed(1) : Math.round(d)} km`;
+}
+
 /** Group an array by a key function, preserving first-seen order. */
 export function groupBy(items, keyFn) {
   const out = new Map();
@@ -93,7 +107,7 @@ export function groupBy(items, keyFn) {
   return [...out.entries()];
 }
 
-/** Spots vocabulary → label and a short icon glyph for cards and pins. */
+/** Places vocabulary → label and a short icon glyph for cards and pins. */
 export const CATEGORY = {
   stay: { label: "Stay", glyph: "⌂" },
   walk: { label: "Hike", glyph: "↟" },

@@ -19,6 +19,9 @@
 # data module for the tested-when facts. Nothing is written from memory.
 country: fj
 slug: fiji
+# `name` is the H1 on the page (founder: "why don't we simply say Fiji");
+# `title` is the search-intent title for the browser tab and metadata.
+name: Fiji
 title: Fiji Itinerary
 subtitle: Every route I have tested, on one map. AI has not been there. I have.
 creator_line: Tested on the ground by Paulius Pikelis · December into the New Year · Nadi, the Yasawas and Taveuni

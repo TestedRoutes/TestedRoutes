@@ -5,22 +5,13 @@ import { hasReaderAccess } from "../../../../_lib/access";
 import { loadReaderCountry } from "../../../../_lib/loadReaderSku";
 import { trackReaderView } from "../../../../_lib/track";
 import { photoFor } from "../../../../_lib/photos";
-import { categoryLabel, directionsHref, readerPaths } from "../../../../_lib/format";
+import { categoryLabel, directionsHref, readerPaths, distanceKm, kmLabel } from "../../../../_lib/format";
 import { pinsForMap } from "../../../../_lib/serialise";
 import PlaceFacts from "../../../../_components/PlaceFacts";
 import AffiliateSlot from "../../../../_components/AffiliateSlot";
 import RouteMap from "../../../../_components/RouteMap";
 import SaveButton from "../../../../_components/SaveButton";
 import LockedBox from "../../../../_components/LockedBox";
-
-/** Great-circle distance in km, for "what is nearby". */
-function km(a, b) {
-  const r = Math.PI / 180;
-  const dLat = (b.lat - a.lat) * r;
-  const dLng = (((b.lng - a.lng + 540) % 360) - 180) * r;
-  const h = Math.sin(dLat / 2) ** 2 + Math.cos(a.lat * r) * Math.cos(b.lat * r) * Math.sin(dLng / 2) ** 2;
-  return 6371 * 2 * Math.asin(Math.sqrt(h));
-}
 
 /** SKU code "fiji-14d" → the places.yaml skus key "14D". */
 const skuKey = (sku) => sku.sku.skuCode.split("-").pop().toUpperCase();
@@ -43,7 +34,7 @@ export default async function ReaderSpot({ params }) {
 
   const photo = photoFor(country, place.photoRef);
   const back = (
-    <Link href={readerPaths.country(country)} className="font-sans text-[12px] font-semibold uppercase tracking-[0.12em] text-slate-600 hover:text-brand-terracotta">← Spots</Link>
+    <Link href={readerPaths.country(country)} className="font-sans text-[12px] font-semibold uppercase tracking-[0.12em] text-slate-600 hover:text-brand-terracotta">← Places</Link>
   );
 
   if (!open) {
@@ -77,7 +68,7 @@ export default async function ReaderSpot({ params }) {
     place.lat != null
       ? data.places
           .filter((p) => p.pinId !== place.pinId && p.lat != null)
-          .map((p) => ({ p, d: km(place, p) }))
+          .map((p) => ({ p, d: distanceKm(place, p) }))
           .sort((a, b) => a.d - b.d)
           .slice(0, 5)
       : [];
@@ -144,7 +135,7 @@ export default async function ReaderSpot({ params }) {
                 {nearby.map(({ p, d }) => (
                   <li key={p.pinId} className="flex items-baseline justify-between gap-3 px-3.5 py-2.5">
                     <Link href={readerPaths.spot(country, p.pinId)} className="min-w-0 font-sans text-[14px] font-bold hover:text-brand-terracotta">{p.name}</Link>
-                    <span className="shrink-0 font-sans text-[12px] tabular-nums text-slate-500">{categoryLabel(p.category)} · {d < 10 ? d.toFixed(1) : Math.round(d)} km</span>
+                    <span className="shrink-0 font-sans text-[12px] tabular-nums text-slate-500">{categoryLabel(p.category)} · {kmLabel(d)}</span>
                   </li>
                 ))}
               </ul>

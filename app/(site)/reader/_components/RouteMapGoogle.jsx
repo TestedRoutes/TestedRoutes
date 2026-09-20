@@ -10,6 +10,7 @@ import { APIProvider, Map, AdvancedMarker, InfoWindow, Polyline, useMap } from "
  *   photo   a circular photo — a place with photoRef, the Rexby-style pin
  *   dot     a small Taupe dot — the rest of the pool ("what is near me")
  *   muted   a faint dot — the storefront preview of locked pins
+ *   me      the visitor's own position (Show my location)
  *
  * Needs NEXT_PUBLIC_GOOGLE_MAPS_API_KEY (Maps JavaScript API enabled) and,
  * for the HTML markers, a Map ID: NEXT_PUBLIC_GOOGLE_MAPS_MAP_ID, with
@@ -28,6 +29,12 @@ const FONT = "-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif";
 const norm = (lng) => (lng > 180 ? lng - 360 : lng < -180 ? lng + 360 : lng);
 
 function PinBody({ pin }) {
+  if (pin.kind === "me") {
+    // The visitor's own position: the blue dot every map app taught people.
+    return (
+      <div style={{ width: 22, height: 22, borderRadius: 9999, background: "#1a73e8", border: "3px solid #fff", boxShadow: "0 0 0 6px rgba(26,115,232,.25), 0 2px 6px rgba(0,0,0,.35)" }} />
+    );
+  }
   if (pin.kind === "number") {
     return (
       <div style={{ width: 26, height: 26, borderRadius: 9999, background: BRANDY, border: "2px solid #fff", boxShadow: "0 2px 6px rgba(0,0,0,.35)", display: "flex", alignItems: "center", justifyContent: "center", color: "#fff", font: `700 11px/1 ${FONT}` }}>

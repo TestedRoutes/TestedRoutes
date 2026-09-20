@@ -2,7 +2,11 @@
 
 import { useSaved } from "../_lib/saved";
 
-/** The + / ✓ bookmark on a spot card, strip card or place page. */
+/**
+ * The + / ✓ bookmark on a place card, strip card or place page. A bookmark
+ * lives in this browser only (see _lib/saved.js); the label says so, because
+ * the founder asked what the tick gives and whether it needs an account.
+ */
 export default function SaveButton({ country, pinId, size = 36, className = "" }) {
   const { has, toggle, ready } = useSaved(country);
   const on = ready && has(pinId);
@@ -10,7 +14,8 @@ export default function SaveButton({ country, pinId, size = 36, className = "" }
     <button
       type="button"
       aria-pressed={on}
-      aria-label={on ? "Saved · remove from my trip" : "Save to my trip"}
+      aria-label={on ? "Saved to my places on this device · tap to remove" : "Save to my places (kept on this device)"}
+      title={on ? "Saved on this device" : "Save to my places (kept on this device)"}
       onClick={(e) => {
         e.preventDefault();
         e.stopPropagation();

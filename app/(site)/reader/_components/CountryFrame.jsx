@@ -28,8 +28,8 @@ export default async function CountryFrame({ data, owned, children }) {
       <header className="md:flex md:items-start md:justify-between md:gap-8">
         <div className="min-w-0 max-w-3xl">
           <p className="font-sans text-[12px] uppercase tracking-[0.2em] text-slate-500">{eyebrow}</p>
-          <h1 className="mt-2 text-5xl leading-none md:text-6xl">{c.title}</h1>
-          {c.intro ? <p className="mt-4 text-[17px] leading-relaxed text-slate-700">{c.intro}</p> : null}
+          {/* H1 is the country name; the search-intent title lives in the tab title and metadata. The hub's intro paragraph is not rendered here (founder: adds no value on this page). */}
+          <h1 className="mt-2 text-5xl leading-none md:text-6xl">{c.name}</h1>
         </div>
         <div className="mt-5 flex shrink-0 flex-wrap items-center gap-2 md:mt-10 md:justify-end">
           <Link

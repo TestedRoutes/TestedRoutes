@@ -8,12 +8,12 @@ import { readerPaths } from "../../_lib/format";
 import PlaceGrid from "../../_components/PlaceGrid";
 
 /**
- * Spots — the country root and the default tab. Every place shows as a
+ * Places — the country root and the default tab. Every place shows as a
  * card for everyone (names and photos are the shop window); without
  * access, the cards outside the sample set carry a lock and their pages
  * show the buy box.
  */
-export default async function ReaderSpots({ params }) {
+export default async function ReaderPlaces({ params }) {
   const { country } = await params;
   const data = await loadReaderCountry(country);
   if (!data) notFound();

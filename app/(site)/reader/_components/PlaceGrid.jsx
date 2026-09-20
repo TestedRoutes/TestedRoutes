@@ -7,7 +7,7 @@ import { useSaved } from "../_lib/saved";
 import SaveButton from "./SaveButton";
 
 /**
- * The Spots grid from the founder's mock: photo card with the region badge
+ * The Places grid from the founder's mock: photo card with the region badge
  * bottom-left and the bookmark top-right, then the name, then
  * "category • time". Search, category chips, a Saved chip, and a link to
  * the full-screen map. Places arrive serialised (photo as a URL) so this
@@ -38,11 +38,11 @@ export default function PlaceGrid({ country, places, mapHref }) {
             type="search"
             value={q}
             onChange={(e) => setQ(e.target.value)}
-            placeholder="Search spots"
+            placeholder="Search places"
             className="w-full bg-transparent text-[15px] outline-none placeholder:text-slate-400"
           />
         </label>
-        <div className="-mx-4 flex gap-2 overflow-x-auto px-4 lg:mx-0 lg:px-0">
+        <div className="-mx-4 flex gap-2 overflow-x-auto overflow-y-hidden px-4 lg:mx-0 lg:px-0">
           <button type="button" onClick={() => setCat("")} className={chip(!cat)}>All</button>
           {cats.map((k) => (
             <button key={k} type="button" onClick={() => setCat(cat === k ? "" : k)} className={chip(cat === k)}>
@@ -60,7 +60,7 @@ export default function PlaceGrid({ country, places, mapHref }) {
 
       {shown.length === 0 ? (
         <p className="mt-10 text-center text-sm text-slate-500">
-          {cat === "saved" ? "Nothing saved yet. Tap + on a spot to keep it." : "No spots match."}
+          {cat === "saved" ? "Nothing saved on this device yet. Tap + on a place to keep it here." : "No places match."}
         </p>
       ) : null}
 
@@ -73,7 +73,7 @@ export default function PlaceGrid({ country, places, mapHref }) {
                   // eslint-disable-next-line @next/next/no-img-element
                   <img src={p.photoUrl} alt={p.name} className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-[1.03]" loading="lazy" />
                 ) : (
-                  <span className="absolute inset-0 flex items-center justify-center bg-gradient-to-b from-brand-bone to-[#cfcabb] text-4xl text-brand-ink/25">
+                  <span className="absolute inset-0 flex items-center justify-center bg-brand-parchment text-5xl text-brand-terracotta/70 ring-1 ring-inset ring-brand-line">
                     {CATEGORY[p.category]?.glyph || "◎"}
                   </span>
                 )}

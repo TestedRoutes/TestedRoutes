@@ -98,6 +98,7 @@ export function loadCountryFromYaml(slug, opts = {}) {
     country: {
       code: c.country,
       slug: c.slug ?? slug,
+      name: c.name ?? c.title,
       title: c.title,
       subtitle: c.subtitle ?? null,
       creatorLine: c.creator_line ?? null,

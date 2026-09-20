@@ -1,5 +1,5 @@
 /**
- * Server → client shapes. Client components (the Spots grid, the map) take
+ * Server → client shapes. Client components (the Places grid, the map) take
  * plain serialisable objects: photos as URLs, never static-import objects,
  * and nothing the buyer should not see.
  */
